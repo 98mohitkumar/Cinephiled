@@ -15,7 +15,7 @@ const MovieDetails = ({ movieDetailsData, date }) => {
       if (luma === "light") {
         setIsDark(false);
       }
-    }, 1500);
+    }, 1000);
   });
 
   setTimeout(() => {
