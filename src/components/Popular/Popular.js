@@ -19,7 +19,7 @@ const Popular = ({ moviesData, TVData }) => {
   return (
     <>
       <h1 className="display-3 fw-bold mx-5 text-white text-center my-5">
-        What's Popular
+        What&#39;s Popular
       </h1>
       <TabSelector
         isMovies={isMovies}

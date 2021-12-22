@@ -5,7 +5,7 @@ import {
   SocialIconsContainer,
 } from "./FooterStyles";
 import { BsInstagram } from "react-icons/bs";
-import { FaTelegramPlane } from "react-icons/Fa";
+import { FaTelegramPlane } from "react-icons/fa";
 
 const Footer = () => {
   return (

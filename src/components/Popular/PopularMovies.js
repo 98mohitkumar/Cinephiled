@@ -23,7 +23,7 @@ const PopularMovies = (props) => {
       {props.movies.length > 0 &&
         props.movies.map((movies, i) => (
           <Cards key={movies.id}>
-            <Link href={"/movies/" + movies.id}>
+            <Link href={"/movies/" + movies.id} passHref>
               <PopularImg
                 data={movies.poster_path}
                 className="d-flex justify-content-end"
