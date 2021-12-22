@@ -12,7 +12,11 @@ const Footer = () => {
     <FooterWrapper className="d-flex justify-content-between align-items-center">
       <span className="fs-3 mx-3 fw-bold">Project name here</span>
       <SocialIconsContainer>
-        <SocialIcons href="https://www.themoviedb.org" target="_blank">
+        <SocialIcons
+          href="https://www.themoviedb.org"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FooterAttribute />
         </SocialIcons>
         <SocialIcons

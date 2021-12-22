@@ -18,6 +18,10 @@ const About = () => {
           href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://api.fontshare.com/css?f[]=satoshi@500,700&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <Wrapper>
         <AboutWrapper className="d-flex justify-content-between align-items-center flex-column">
@@ -40,7 +44,11 @@ const About = () => {
 
             <h2 className="my-5 fw-bold display-3">Credits</h2>
             <div className="d-flex mb-5 justify-content-between align-items-center w-50 m-auto">
-              <a href="https://www.themoviedb.org" target="_blank">
+              <a
+                href="https://www.themoviedb.org"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <FooterAttribute />
               </a>
               <div>
@@ -49,6 +57,7 @@ const About = () => {
                   className="text-primary mx-3"
                   href="https://www.behance.net/gallery/96475007/60-Days-Challenge-of-Movies-posters"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Behance
                 </a>
