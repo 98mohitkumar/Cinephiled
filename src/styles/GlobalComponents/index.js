@@ -62,7 +62,6 @@ export const MovieBg = styled.div`
   border-radius: 16px;
   background: ${(props) =>
     `Url(https://image.tmdb.org/t/p/original${props.backdrop}) no-repeat center center /cover`};
-  filter: brightness(70%);
   z-index: 4;
   inset: 0;
 `;

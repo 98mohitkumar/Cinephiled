@@ -20,8 +20,6 @@ const Hero = () => {
       );
 
       const res = await response.json();
-
-      console.log(res);
     }
   };
 

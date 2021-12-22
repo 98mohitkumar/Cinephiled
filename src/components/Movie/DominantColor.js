@@ -18,7 +18,11 @@ const DominantColor = ({ image }) => {
 
   hexCodes.length > 0 && updateCtx(hexCodes[0]);
 
-  return <>{hexCodes.length > 0 && <Colorful color={hexCodes} />}</>;
+  return (
+    <>
+      <Colorful color={hexCodes} />
+    </>
+  );
 };
 
 export default DominantColor;

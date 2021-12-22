@@ -3,20 +3,16 @@ import ColorsContext from "../../store/colorContext";
 import { MovieTitle } from "./MovieDetailsStyles";
 
 const MovieDetails = ({ movieDetailsData, date }) => {
+  let tinycolor = require("tinycolor2");
   const { initialState, clearInit } = useContext(ColorsContext);
-  const [isDark, setIsDark] = useState(true);
-  const [luma, setLuma] = useState("");
-
-  console.log("fired");
+  const [isDarkColor, setIsDark] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
-      setLuma(initialState.lumaEval);
-      if (luma === "light") {
-        setIsDark(false);
-      }
-    }, 1000);
-  });
+      let color = tinycolor(initialState.colorsArr[0] + "eb").isDark();
+      setIsDark(color);
+    }, 500);
+  }, []);
 
   setTimeout(() => {
     clearInit();
@@ -24,7 +20,7 @@ const MovieDetails = ({ movieDetailsData, date }) => {
 
   return (
     <>
-      <MovieTitle isDark={isDark}>
+      <MovieTitle isDark={isDarkColor}>
         {movieDetailsData.title} ({date})
       </MovieTitle>
     </>
