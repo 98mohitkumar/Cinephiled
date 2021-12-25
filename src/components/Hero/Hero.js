@@ -3,7 +3,7 @@ import { Container } from "../../styles/GlobalComponents";
 import { Banner, Button, Form, HeroDiv, HeroTitle } from "./HeroStyles";
 
 const Hero = () => {
-  const api_key = "146aefbfac856df49543995a6badbf0f";
+  const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
   const name = useRef("");
 
@@ -20,6 +20,7 @@ const Hero = () => {
       );
 
       const res = await response.json();
+      console.log(res);
     }
   };
 

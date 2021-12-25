@@ -22,7 +22,7 @@ export default function Home({ moviesData, TVData }) {
 }
 
 export async function getStaticProps() {
-  const api_key = "146aefbfac856df49543995a6badbf0f";
+  const api_key = process.env.API_KEY;
 
   const responseMovies = await fetch(
     `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&language=en-US&page=1`

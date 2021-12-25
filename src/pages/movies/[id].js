@@ -114,7 +114,7 @@ const movie = ({
 };
 
 movie.getInitialProps = async (ctx) => {
-  const api_key = "146aefbfac856df49543995a6badbf0f";
+  const api_key = process.env.NEXT_PUBLIC_API_KEY;
   const movie_id = ctx.query.id;
   const movieResponse = await fetch(
     `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${api_key}&language=en-US&append_to_response=images,credits,reviews&include_image_language=en,null`
