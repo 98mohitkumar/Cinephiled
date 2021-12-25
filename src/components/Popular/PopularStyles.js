@@ -95,7 +95,7 @@ export const MovieSelection = styled.div`
   font-weight: bold;
   cursor: pointer;
   z-index: 5;
-  transition: color 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+  transition: color 0.325s cubic-bezier(0.77, 0, 0.18, 1);
 `;
 
 export const Slider = styled.div`
@@ -109,7 +109,7 @@ export const Slider = styled.div`
       : `transform: translateX(100%);`}
   border-radius: 12px;
   z-index: 4;
-  transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+  transition: transform 0.325s cubic-bezier(0.77, 0, 0.18, 1);
 `;
 
 export const TVSelection = styled.div`

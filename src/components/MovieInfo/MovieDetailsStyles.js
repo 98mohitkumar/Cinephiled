@@ -168,11 +168,6 @@ export const BackdropsImg = styled.div`
   height: 100%;
   background: ${(props) =>
     `Url(https://image.tmdb.org/t/p/original${props.backdrop}) no-repeat center center /cover;`};
-  transition: transform 0.4s cubic-bezier(0.65, 0.05, 0.36, 1);
-
-  &:hover {
-    transform: scale(1.2);
-  }
 `;
 
 export const PostersContainer = styled.div`

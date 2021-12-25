@@ -12,7 +12,7 @@ const Hero = () => {
 
     const searchQuery = name.current.value;
 
-    if (name.current.value === "") {
+    if (searchQuery === "") {
       return;
     } else {
       const response = await fetch(
@@ -21,6 +21,8 @@ const Hero = () => {
 
       const res = await response.json();
       console.log(res);
+      name.current.value = "";
+      event.target.blur();
     }
   };
 
