@@ -18,6 +18,7 @@ const PopularMovies = (props) => {
     );
   }
   releaseDates();
+
   return (
     <PopularMoviesSection className="p-5">
       {props.movies.length > 0 &&

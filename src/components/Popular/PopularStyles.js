@@ -10,7 +10,6 @@ export const PopularMoviesSection = styled.div`
 
 export const Cards = styled.div`
   width: 14rem;
-  border-radius: 12px;
   max-height: auto;
   align-self: flex-start;
 `;

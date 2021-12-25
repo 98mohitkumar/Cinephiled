@@ -27,7 +27,9 @@ const Hero = () => {
     <Container className="d-flex justify-content-center align-items-center position-relative">
       <Banner />
       <HeroDiv>
-        <HeroTitle className="display-3 m-0">Project Name Here</HeroTitle>
+        <HeroTitle className="display-3 fw-bold m-0">
+          Project Name Here
+        </HeroTitle>
         <Form>
           <div className="m-2">
             <input

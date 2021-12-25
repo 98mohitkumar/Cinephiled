@@ -1,7 +1,5 @@
-import { useContext } from "react";
 import useImageColor from "use-image-color";
-import ColorsContext from "../../store/colorContext";
-import { Colorful } from "./MovieStyled";
+import { Colorful } from "./MovieStyles";
 
 const DominantColor = ({ image }) => {
   const pallete = useImageColor(`https://image.tmdb.org/t/p/original${image}`, {
@@ -14,13 +12,9 @@ const DominantColor = ({ image }) => {
   pallete.colors !== undefined &&
     pallete.colors.forEach((item) => hexCodes.push(item));
 
-  const { updateCtx } = useContext(ColorsContext);
-
-  hexCodes.length > 0 && updateCtx(hexCodes[0]);
-
   return (
     <>
-      <Colorful color={hexCodes} />
+      <Colorful className="position-absolute" color={hexCodes} />
     </>
   );
 };
