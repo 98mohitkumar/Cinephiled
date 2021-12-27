@@ -4,9 +4,9 @@ import {
   FactsLegend,
   FactsWrapper,
   Span,
-} from "./MovieDetailsStyles";
+} from "../MovieInfo/MovieDetailsStyles";
 
-const MovieFacts = ({ facts, languages }) => {
+const TVFacts = ({ facts, languages }) => {
   const ogLanguage = facts.language;
 
   let FactsLanguage = "";
@@ -32,29 +32,17 @@ const MovieFacts = ({ facts, languages }) => {
         </FlexWrapper>
 
         <FlexWrapper>
-          <Span>Budget</Span>
-          {facts.budget === 0 ? (
-            <Span className="fw-normal">-</Span>
-          ) : (
-            <Span className="fw-normal">
-              {"$" + facts.budget.toLocaleString()}
-            </Span>
-          )}
+          <Span>Network</Span>
+          <Span className="fw-normal">{facts.network}</Span>
         </FlexWrapper>
 
         <FlexWrapper>
-          <Span>Revenue</Span>
-          {facts.revenue === 0 ? (
-            <Span className="fw-normal">-</Span>
-          ) : (
-            <Span className="fw-normal">
-              {"$" + facts.revenue.toLocaleString()}
-            </Span>
-          )}
+          <Span>Type</Span>
+          <Span className="fw-normal">{facts.type}</Span>
         </FlexWrapper>
       </FactsWrapper>
     </FactsFieldSet>
   );
 };
 
-export default MovieFacts;
+export default TVFacts;

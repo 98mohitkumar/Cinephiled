@@ -8,6 +8,8 @@ import {
   ReleaseDate,
 } from "./PopularStyles";
 
+import Link from "next/link";
+
 const PopularTV = (props) => {
   const TVData = props.TV;
 
@@ -29,14 +31,16 @@ const PopularTV = (props) => {
       {TVData.length > 0 &&
         TVData.map((TV, i) => (
           <Cards key={TV.id}>
-            <PopularImg
-              data={TV.poster_path}
-              className="d-flex justify-content-end"
-            >
-              <Rating className="d-flex justify-content-center align-items-center me-3">
-                {TV.vote_average}
-              </Rating>
-            </PopularImg>
+            <Link href={"/tv/" + TV.id} passHref>
+              <PopularImg
+                data={TV.poster_path}
+                className="d-flex justify-content-end"
+              >
+                <Rating className="d-flex justify-content-center align-items-center me-3">
+                  {TV.vote_average}
+                </Rating>
+              </PopularImg>
+            </Link>
             <PopularTVInfo>
               <PopularTVInfoTitle>{TV.name}</PopularTVInfoTitle>
               <ReleaseDate>{arr[i]}</ReleaseDate>

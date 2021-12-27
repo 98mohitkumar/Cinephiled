@@ -10,7 +10,6 @@ export const HeroDiv = styled.div`
   align-items: center;
   gap: 3rem;
   z-index: 4;
-  background: rgb(18, 18, 18);
   background: -moz-linear-gradient(
     270deg,
     rgba(31, 31, 31, 0.5) 0%,

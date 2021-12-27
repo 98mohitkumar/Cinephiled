@@ -2,47 +2,68 @@ import Navigation from "../../components/Navigation/Navigation";
 import Head from "next/head";
 import Footer from "../../components/Footer/Footer";
 import {
-  MovieBg,
+  HeroBg,
   Error404,
-  MovieDetailsWrapper,
+  DetailsWrapper,
   Wrapper,
-  MovieImg,
-  MovieHeroWrap,
-  MovieBgContainer,
-  MovieContainer,
-  MovieInfo,
+  HeroImg,
+  DetailsHeroWrap,
+  HeroBgContainer,
+  HeroDetailsContainer,
+  HeroInfo,
 } from "../../styles/GlobalComponents";
-import DominantColor from "../../components/Movie/DominantColor";
+import DominantColor from "../../components/DominantColor/DominantColor";
 import MovieDetails from "../../components/MovieInfo/MovieDetails";
 import MovieTab from "../../components/MovieInfo/MovieTab";
 import MovieFacts from "../../components/MovieInfo/MovieFacts";
+import { Gradient } from "../../styles/GlobalComponents";
 
-const movie = ({
-  movieDetails,
-  creditsDetails,
-  error,
-  reviewDetails,
-  backdrops,
-  posters,
-  languages,
-}) => {
+const movie = ({ movieDetails, error, languages }) => {
   let directors = [];
   let writers = [];
   let characters = [];
-  const cast = creditsDetails.cast;
+  let cast = [];
+  let runtime = "";
+  let getyear = "";
+
+  let reviewDetails = [];
+  let backdrops = [];
+  let posters = [];
+  let creditsDetails = [];
+  let movieFacts = {};
 
   if (error === false) {
+    creditsDetails = movieDetails.credits;
+
     creditsDetails.crew.forEach((item, i) => {
       if (item.job === "Director") directors.push(creditsDetails.crew[i]);
       if (item.job === "Writer") writers.push(creditsDetails.crew[i]);
       if (item.job === "Characters") characters.push(creditsDetails.crew[i]);
     });
 
+    reviewDetails = movieDetails.reviews;
+    backdrops = movieDetails.images.backdrops;
+    posters = movieDetails.images.posters;
+    cast = creditsDetails.cast;
+
     cast.splice(15);
+
+    getyear = new Date(movieDetails.release_date).getFullYear();
+
+    const getH = Math.floor(movieDetails.runtime / 60);
+    const getM = Math.ceil((movieDetails.runtime / 60 - getH) * 60);
+    runtime = { getH, getM };
+
+    movieFacts = {
+      status: movieDetails.status,
+      language: movieDetails.original_language,
+      budget: movieDetails.budget,
+      revenue: movieDetails.revenue,
+    };
   }
 
-  if (directors.length > 1) {
-    directors.splice(1);
+  if (directors.length > 2) {
+    directors.splice(2);
   }
 
   if (writers.length > 3) {
@@ -54,50 +75,44 @@ const movie = ({
   }
 
   let crew = [...directors, ...writers, ...characters];
-
-  const getyear = new Date(movieDetails.release_date).getFullYear();
-
-  const getH = Math.floor(movieDetails.runtime / 60);
-  const getM = Math.ceil((movieDetails.runtime / 60 - getH) * 60);
-  const runtime = { getH, getM };
-
   // console.log(movieDetails);
   // console.log(languages);
 
   return (
     <>
       <Head>
-        <title>{movieDetails.title}</title>
+        <title>{error === false ? movieDetails.title : "Not Found"}</title>
       </Head>
       <Wrapper>
-        <MovieDetailsWrapper className="d-flex flex-column justify-content-between">
+        <DetailsWrapper className="d-flex flex-column justify-content-between">
           <Navigation />
           {error ? (
             <Error404>404</Error404>
           ) : (
             <>
-              <MovieContainer className="position-relative mb-auto">
-                <MovieBgContainer className="position-absolute">
-                  <MovieBg
+              <HeroDetailsContainer className="position-relative mb-auto">
+                <HeroBgContainer className="position-absolute">
+                  <HeroBg
                     backdrop={movieDetails.backdrop_path}
                     className="position-absolute"
-                  ></MovieBg>
+                  ></HeroBg>
                   <DominantColor image={movieDetails.poster_path} />
-                </MovieBgContainer>
+                </HeroBgContainer>
 
-                <MovieHeroWrap>
-                  <MovieImg data={movieDetails.poster_path} className="mx-5" />
-                  <MovieInfo className="d-flex justify-content-center align-items-center">
+                <DetailsHeroWrap>
+                  <HeroImg data={movieDetails.poster_path} className="mx-5" />
+                  <HeroInfo className="d-flex align-items-center">
+                    <Gradient />
                     <MovieDetails
                       movieDetailsData={movieDetails}
                       date={getyear}
                       runtime={runtime}
                       crew={crew}
                     />
-                  </MovieInfo>
-                </MovieHeroWrap>
-              </MovieContainer>
-              <MovieFacts facts={movieDetails} languages={languages} />
+                  </HeroInfo>
+                </DetailsHeroWrap>
+              </HeroDetailsContainer>
+              <MovieFacts facts={movieFacts} languages={languages} />
               <MovieTab
                 cast={cast}
                 reviews={reviewDetails.results}
@@ -107,7 +122,7 @@ const movie = ({
             </>
           )}
           <Footer />
-        </MovieDetailsWrapper>
+        </DetailsWrapper>
       </Wrapper>
     </>
   );
@@ -126,27 +141,19 @@ movie.getInitialProps = async (ctx) => {
 
   const error = movieResponse.ok ? false : true;
 
-  const movieDetails = await movieResponse.json();
+  if (error === true) {
+    return { error };
+  } else {
+    const movieDetails = await movieResponse.json();
 
-  const creditsDetails = await movieDetails.credits;
+    const languages = await languagesResponse.json();
 
-  const reviewDetails = await movieDetails.reviews;
-
-  const backdrops = await movieDetails.images.backdrops;
-
-  const posters = await movieDetails.images.posters;
-
-  const languages = await languagesResponse.json();
-
-  return {
-    movieDetails,
-    error,
-    creditsDetails,
-    reviewDetails,
-    backdrops,
-    posters,
-    languages,
-  };
+    return {
+      movieDetails,
+      error,
+      languages,
+    };
+  }
 };
 
 export default movie;

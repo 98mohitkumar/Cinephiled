@@ -1,15 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopularMovies from "./PopularMovies";
 import TabSelector from "./Tab";
 import PopularTV from "./PopularTV";
 
 const Popular = ({ moviesData, TVData }) => {
   const [isMovies, setIsMovies] = useState(true);
+
+  let tabState = null;
+
+  useEffect(() => {
+    tabState = localStorage.getItem("movieTab");
+    tabState === "false" && setIsMovies(false);
+  });
+
   const tabSelectionHandlerMovies = () => {
+    localStorage.setItem("movieTab", true);
     setIsMovies(true);
   };
 
   const tabSelectionHandlerTV = () => {
+    localStorage.setItem("movieTab", false);
     setIsMovies(false);
   };
 

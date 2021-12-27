@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const LightorDark = styled.div`
+export const HeroInfoWrapper = styled.div`
   color: white;
 `;
 
-export const MovieTitle = styled.h1`
+export const HeroInfoTitle = styled.h1`
   font-weight: bold;
   font-size: 2.25rem;
 `;
@@ -42,11 +42,11 @@ export const RtoR = styled.div`
   width: max-content;
 `;
 
-export const MovieRatingWrapper = styled.div`
+export const RatingWrapper = styled.div`
   margin: 1rem 0rem;
 `;
 
-export const MovieCreditWrapper = styled.div`
+export const CreditsWrapper = styled.div`
   display: grid;
   place-items: center start;
   grid-template-columns: repeat(3, 1fr);
@@ -54,19 +54,19 @@ export const MovieCreditWrapper = styled.div`
   margin-top: 2rem;
 `;
 
-export const MovieCredit = styled.div`
+export const Credits = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: column;
 `;
 
-export const MovieFactsWrapper = styled.div`
+export const FactsWrapper = styled.div`
   width: max-content;
   padding: 1rem;
   display: grid;
   place-items: center;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, max-content);
   gap: 2rem 5rem;
 `;
 
@@ -81,7 +81,7 @@ export const FactsLegend = styled.legend`
   width: max-content;
   padding: 0rem 1rem;
   margin: 0;
-  margin-left: 2rem;
+  margin-left: 1rem;
   float: none;
 `;
 

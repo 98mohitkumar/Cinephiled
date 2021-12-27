@@ -14,7 +14,11 @@ const PopularMovies = (props) => {
 
   function releaseDates() {
     props.movies.forEach((item) =>
-      arr.push(new Date(item.release_date.toString()).toDateString().slice(4))
+      arr.push(
+        new Date(item.release_date.toString()).toDateString().slice(4, -5) +
+          ", " +
+          new Date(item.release_date.toString()).getFullYear()
+      )
     );
   }
   releaseDates();

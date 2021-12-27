@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const MovieTabWrapper = styled.div`
+export const TabWrapper = styled.div`
   width: 40%;
   height: 4.5rem;
   display: grid;
@@ -33,7 +33,7 @@ export const MovieTabWrapper = styled.div`
   }
 `;
 
-export const MovieTabSlider = styled.div`
+export const TabSlider = styled.div`
   position: absolute;
   width: 25%;
   height: 4rem;
@@ -53,7 +53,7 @@ export const MovieTabSlider = styled.div`
   transition: transform 0.325s cubic-bezier(0.77, 0, 0.18, 1);
 `;
 
-export const MovieTabSelectionTitle = styled.div`
+export const TabSelectionTitle = styled.div`
   padding: 1rem;
   display: grid;
   place-items: center;

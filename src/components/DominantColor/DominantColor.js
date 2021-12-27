@@ -1,5 +1,5 @@
 import useImageColor from "use-image-color";
-import { Colorful } from "./MovieStyles";
+import { Colorful } from "./DominantColorStyles";
 
 const DominantColor = ({ image }) => {
   const pallete = useImageColor(`https://image.tmdb.org/t/p/original${image}`, {
