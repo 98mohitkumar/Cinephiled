@@ -2,7 +2,7 @@ import { Tab, Slider, MovieSelection, TVSelection } from "./PopularStyles";
 
 const TabSelector = (props) => {
   return (
-    <Tab className="mb-5">
+    <Tab>
       <Slider isMovies={props.isMovies} />
       <MovieSelection isMovies={props.isMovies} onClick={props.ClickMovies}>
         Movies

@@ -1,3 +1,4 @@
+import { NoDataText } from "../../styles/GlobalComponents";
 import {
   Review,
   ReviewAuthorImg,
@@ -27,9 +28,9 @@ const MovieReviews = ({ reviews }) => {
     <>
       <ReviewsContainer>
         {movieReviews.length === 0 ? (
-          <Review className="display-3 fw-bold text-center my-5">
+          <NoDataText className="display-3 fw-bold text-center my-5">
             No Reviews Yet
-          </Review>
+          </NoDataText>
         ) : (
           movieReviews.map((item) => (
             <ReviewsWrap key={item.id}>

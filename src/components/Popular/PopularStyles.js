@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const PopularMoviesSection = styled.div`
+export const MoviesSection = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -14,7 +14,7 @@ export const Cards = styled.div`
   align-self: flex-start;
 `;
 
-export const PopularImg = styled.div`
+export const CardImg = styled.div`
   height: 20rem;
   background: ${(
     props
@@ -30,11 +30,11 @@ export const PopularImg = styled.div`
   }
 `;
 
-export const PopularMovieInfo = styled.div`
+export const MoviesInfo = styled.div`
   padding: 1.75rem 1rem;
 `;
 
-export const PopularMovieInfoTitle = styled.h2`
+export const MoviesInfoTitle = styled.h2`
   font-size: 1.25rem;
   font-weight: 500;
 `;
@@ -57,7 +57,7 @@ export const Rating = styled.div`
   border: 5px solid #121212;
 `;
 
-export const PopularTVSection = styled.div`
+export const TVSection = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -65,11 +65,11 @@ export const PopularTVSection = styled.div`
   gap: 3rem 0rem;
 `;
 
-export const PopularTVInfo = styled.div`
+export const TVInfo = styled.div`
   padding: 1.75rem 1rem;
 `;
 
-export const PopularTVInfoTitle = styled.h2`
+export const TVInfoTitle = styled.h2`
   font-size: 1.25rem;
   font-weight: 500;
 `;
@@ -79,7 +79,7 @@ export const Tab = styled.div`
   height: 4.5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin: auto;
+  margin: 4rem auto;
   border: 4px solid white;
   background: white;
   border-radius: 14px;

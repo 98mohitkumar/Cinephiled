@@ -1,3 +1,4 @@
+import { NoDataText } from "../../styles/GlobalComponents";
 import {
   PostersContainer,
   PostersImg,
@@ -8,11 +9,17 @@ const MoviePosters = ({ posters }) => {
   return (
     <>
       <PostersContainer>
-        <PostersWrapper>
-          {posters.map((item, i) => (
-            <PostersImg key={i} poster={item.file_path} />
-          ))}
-        </PostersWrapper>
+        {posters.length === 0 ? (
+          <NoDataText className="display-3 fw-bold text-center my-5">
+            No Posters Yet
+          </NoDataText>
+        ) : (
+          <PostersWrapper>
+            {posters.map((item, i) => (
+              <PostersImg key={i} poster={item.file_path} />
+            ))}
+          </PostersWrapper>
+        )}
       </PostersContainer>
     </>
   );

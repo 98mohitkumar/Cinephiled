@@ -1,11 +1,11 @@
 import Link from "next/link";
 import {
-  PopularMoviesSection,
+  MoviesSection,
   Cards,
-  PopularImg,
+  CardImg,
   Rating,
-  PopularMovieInfo,
-  PopularMovieInfoTitle,
+  MoviesInfo,
+  MoviesInfoTitle,
   ReleaseDate,
 } from "./PopularStyles";
 
@@ -24,27 +24,27 @@ const PopularMovies = (props) => {
   releaseDates();
 
   return (
-    <PopularMoviesSection className="p-5">
+    <MoviesSection className="p-5">
       {props.movies.length > 0 &&
         props.movies.map((movies, i) => (
           <Cards key={movies.id}>
             <Link href={"/movies/" + movies.id} passHref>
-              <PopularImg
+              <CardImg
                 data={movies.poster_path}
                 className="d-flex justify-content-end"
               >
                 <Rating className="d-flex justify-content-center align-items-center me-3">
                   {movies.vote_average}
                 </Rating>
-              </PopularImg>
+              </CardImg>
             </Link>
-            <PopularMovieInfo>
-              <PopularMovieInfoTitle>{movies.title}</PopularMovieInfoTitle>
+            <MoviesInfo>
+              <MoviesInfoTitle>{movies.title}</MoviesInfoTitle>
               <ReleaseDate>{arr[i]}</ReleaseDate>
-            </PopularMovieInfo>
+            </MoviesInfo>
           </Cards>
         ))}
-    </PopularMoviesSection>
+    </MoviesSection>
   );
 };
 

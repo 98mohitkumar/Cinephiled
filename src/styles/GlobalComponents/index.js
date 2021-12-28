@@ -182,3 +182,7 @@ export const QueryDescription = styled.p`
   margin-top: 10px;
   margin-bottom: 0rem;
 `;
+
+export const NoDataText = styled.p`
+  padding: 1.25rem 6rem;
+`;

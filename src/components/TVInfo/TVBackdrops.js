@@ -1,3 +1,4 @@
+import { NoDataText } from "../../styles/GlobalComponents";
 import {
   BackdropsContainer,
   BackdropsImg,
@@ -9,13 +10,19 @@ const TVBackdrops = ({ backdrops }) => {
   return (
     <>
       <BackdropsContainer>
-        <BackdropsWrapper>
-          {backdrops.map((item, i) => (
-            <BackdropsImgContainer key={i}>
-              <BackdropsImg backdrop={item.file_path} />
-            </BackdropsImgContainer>
-          ))}
-        </BackdropsWrapper>
+        {backdrops.length === 0 ? (
+          <NoDataText className="display-3 fw-bold text-center my-5">
+            No Backdrops Yet
+          </NoDataText>
+        ) : (
+          <BackdropsWrapper>
+            {backdrops.map((item, i) => (
+              <BackdropsImgContainer key={i}>
+                <BackdropsImg backdrop={item.file_path} />
+              </BackdropsImgContainer>
+            ))}
+          </BackdropsWrapper>
+        )}
       </BackdropsContainer>
     </>
   );
