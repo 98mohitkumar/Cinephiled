@@ -54,7 +54,7 @@ export const SeasonDetailsDivider = styled.div`
   width: 1.5px;
   background: #121212;
   display: inline-block;
-  margin: 0rem 1.1rem;
+  margin: 0rem 1.3rem;
 `;
 
 export const SeaonDetailsWrapper = styled.div`

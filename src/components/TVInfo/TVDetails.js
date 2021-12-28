@@ -12,7 +12,7 @@ import {
 } from "../MovieInfo/MovieDetailsStyles";
 
 const TVDetails = ({ tvData, date, runtime, crew }) => {
-  tvData.genres > 3 && tvData.genres.splice(3);
+  tvData.genres.length > 3 && tvData.genres.splice(3);
 
   return (
     <>
