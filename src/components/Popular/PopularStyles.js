@@ -16,9 +16,7 @@ export const Cards = styled.div`
 
 export const CardImg = styled.div`
   height: 20rem;
-  background: ${(
-    props
-  ) => `url(https://image.tmdb.org/t/p/original${props.data})
+  background: ${(props) => `url(https://image.tmdb.org/t/p/w780${props.data})
     no-repeat center center / cover`};
   border-radius: 12px;
   box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.5);

@@ -20,8 +20,6 @@ import {
 } from "../../styles/GlobalComponents";
 
 const search = ({ movieRes, tvRes, error, searchQuery }) => {
-  // console.log(tvRes);
-
   let movieReleaseDates = [];
   let tvReleaseDates = [];
 

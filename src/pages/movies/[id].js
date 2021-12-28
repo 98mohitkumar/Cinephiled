@@ -35,10 +35,10 @@ const movie = ({ movieDetails, error, languages }) => {
   if (error === false) {
     creditsDetails = movieDetails.credits;
 
-    creditsDetails.crew.forEach((item, i) => {
-      if (item.job === "Director") directors.push(creditsDetails.crew[i]);
-      if (item.job === "Writer") writers.push(creditsDetails.crew[i]);
-      if (item.job === "Characters") characters.push(creditsDetails.crew[i]);
+    creditsDetails.crew.forEach((item) => {
+      if (item.job === "Director") directors.push(item);
+      if (item.job === "Writer") writers.push(item);
+      if (item.job === "Characters") characters.push(item);
     });
 
     reviewDetails = movieDetails.reviews;
@@ -75,8 +75,6 @@ const movie = ({ movieDetails, error, languages }) => {
   }
 
   let crew = [...directors, ...writers, ...characters];
-  // console.log(movieDetails);
-  // console.log(languages);
 
   return (
     <>
@@ -114,6 +112,7 @@ const movie = ({ movieDetails, error, languages }) => {
               </HeroDetailsContainer>
               <MovieFacts facts={movieFacts} languages={languages} />
               <MovieTab
+                id={movieDetails.id}
                 cast={cast}
                 reviews={reviewDetails.results}
                 backdrops={backdrops}

@@ -76,8 +76,6 @@ const tvShow = ({ tvData, error, languages }) => {
 
   let crew = [...creators, ...characters];
 
-  // console.log(tvData);
-  // console.log(languages);
   return (
     <>
       <Head>

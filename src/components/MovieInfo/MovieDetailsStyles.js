@@ -102,7 +102,7 @@ export const CastImg = styled.div`
   background: ${(props) =>
     props.data === null
       ? `Url(/Images/DefaultAvatar.png) no-repeat center center /cover`
-      : `Url(https://image.tmdb.org/t/p/original${props.data}) no-repeat center 5% /cover`};
+      : `Url(https://image.tmdb.org/t/p/w500${props.data}) no-repeat center 5% /cover`};
   width: 185px;
   height: 230px;
   border-radius: 16px;
@@ -167,7 +167,7 @@ export const BackdropsImg = styled.div`
   width: 100%;
   height: 100%;
   background: ${(props) =>
-    `Url(https://image.tmdb.org/t/p/original${props.backdrop}) no-repeat center center /cover;`};
+    `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover;`};
   transition: transform 0.25s cubic-bezier(0.79, 0.14, 0.15, 0.86);
 
   &:hover {
@@ -193,5 +193,5 @@ export const PostersImg = styled.div`
   border-radius: 16px;
   box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.5);
   background: ${(props) =>
-    `Url(https://image.tmdb.org/t/p/original${props.poster}) no-repeat center center /cover;`};
+    `Url(https://image.tmdb.org/t/p/w780${props.poster}) no-repeat center center /cover;`};
 `;

@@ -2,7 +2,7 @@ import useImageColor from "use-image-color";
 import { Colorful } from "./DominantColorStyles";
 
 const DominantColor = ({ image }) => {
-  const pallete = useImageColor(`https://image.tmdb.org/t/p/original${image}`, {
+  const pallete = useImageColor(`https://image.tmdb.org/t/p/w780${image}`, {
     cors: true,
     colors: 4,
   });

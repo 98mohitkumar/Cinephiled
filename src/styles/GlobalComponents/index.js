@@ -60,7 +60,7 @@ export const HeroBgContainer = styled.div`
 
 export const HeroBg = styled.div`
   background: ${(props) =>
-    `Url(https://image.tmdb.org/t/p/original${props.backdrop}) no-repeat center center /cover`};
+    `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover`};
   inset: 0;
 `;
 
@@ -69,8 +69,8 @@ export const HeroImg = styled.div`
   width: 20rem;
   background: ${(props) =>
     props.data !== null
-      ? `Url(https://image.tmdb.org/t/p/original${props.data}) no-repeat center center /cover`
-      : `Url(/images/DefaultImage.png) no-repeat center center /cover`};
+      ? `Url(https://image.tmdb.org/t/p/w780${props.data}) no-repeat center center /cover`
+      : `Url(/Images/DefaultImage.png) no-repeat center center /cover`};
   border-radius: 12px;
 `;
 
@@ -147,8 +147,8 @@ export const QueryImg = styled.div`
   height: 142px;
   background: ${(props) =>
     props.poster !== null
-      ? `Url(https://image.tmdb.org/t/p/original${props.poster}) no-repeat center center /cover`
-      : `Url(/images/DefaultImage.png) no-repeat center center /cover`};
+      ? `Url(https://image.tmdb.org/t/p/w500${props.poster}) no-repeat center center /cover`
+      : `Url(/Images/DefaultImage.png) no-repeat center center /cover`};
 `;
 
 export const QueryTitle = styled.span`
@@ -185,4 +185,31 @@ export const QueryDescription = styled.p`
 
 export const NoDataText = styled.p`
   padding: 1.25rem 6rem;
+`;
+
+export const RecommendationsContainer = styled.div`
+  width: 100%;
+  padding: 1rem 3rem;
+`;
+
+export const RecommendationsGrid = styled.div`
+  width: 100%;
+  padding: 0rem 3rem;
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(5, 1fr);
+`;
+
+export const RecommendedWrapper = styled.div`
+  width: 100%;
+  padding: 1rem;
+  align-self: flex-start;
+`;
+
+export const RecommendedImg = styled.div`
+  height: 150px;
+  background: ${(props) =>
+    `Url(https://image.tmdb.org/t/p/w500${props.backdrop}) no-repeat center center /cover`};
+  cursor: pointer;
+  border-radius: 16px;
 `;
