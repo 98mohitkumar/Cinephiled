@@ -22,7 +22,7 @@ const TVSeasons = ({ seasons }) => {
     )
   );
 
-  console.log(seasons);
+  const Today = new Date();
   return (
     <>
       <SeasonsContainer>
@@ -31,7 +31,13 @@ const TVSeasons = ({ seasons }) => {
             <SeasonImg poster={item.poster_path} />
             <SeasonInfoWrapper>
               <SeasonInfoMain>
-                <SeasonTitle>{item.name}</SeasonTitle>
+                <SeasonTitle>
+                  {item.name}
+                  {Today < new Date(seasonReleaseDates[i]) &&
+                  Today !== new Date(seasonReleaseDates[i])
+                    ? " (Upcoming)"
+                    : ""}
+                </SeasonTitle>
                 <SeaonDetailsWrapper>
                   <SeasonsRelease>{seasonReleaseDates[i]}</SeasonsRelease>
                   <SeasonDetailsDivider />
