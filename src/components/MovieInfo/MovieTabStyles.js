@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const TabWrapper = styled.div`
-  width: 40%;
+  width: 50%;
   height: 4.5rem;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   margin: auto;
   border: 4px solid white;
   background: white;
@@ -19,15 +19,20 @@ export const TabWrapper = styled.div`
 
   & div:nth-child(3) {
     ${(props) =>
-      props.tabCheck === "reviews" ? `color: white;` : `color: black;`}
+      props.tabCheck === "seasons" ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(4) {
     ${(props) =>
-      props.tabCheck === "backdrops" ? `color: white;` : `color: black;`}
+      props.tabCheck === "reviews" ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(5) {
+    ${(props) =>
+      props.tabCheck === "backdrops" ? `color: white;` : `color: black;`}
+  }
+
+  & div:nth-child(6) {
     ${(props) =>
       props.tabCheck === "posters" ? `color: white;` : `color: black;`}
   }
@@ -35,18 +40,20 @@ export const TabWrapper = styled.div`
 
 export const TabSlider = styled.div`
   position: absolute;
-  width: 25%;
+  width: 20%;
   height: 4rem;
   background: black;
   ${(props) =>
     props.tabCheck === "cast"
       ? `transform: translateX(0%);`
-      : props.tabCheck === "reviews"
+      : props.tabCheck === "seasons"
       ? `transform: translateX(100%);`
-      : props.tabCheck === "backdrops"
+      : props.tabCheck === "reviews"
       ? `transform: translateX(200%);`
-      : props.tabCheck === "posters"
+      : props.tabCheck === "backdrops"
       ? `transform: translateX(300%);`
+      : props.tabCheck === "posters"
+      ? `transform: translateX(400%);`
       : null}
   border-radius: 12px;
   z-index: 4;

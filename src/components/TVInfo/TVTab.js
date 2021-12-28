@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   TabSelectionTitle,
   TabSlider,
@@ -8,12 +8,17 @@ import TVBackdrops from "./TVBackdrops";
 import TVCast from "./TVCast";
 import TVPosters from "./TVPosters";
 import TVReviews from "./TVReviews";
+import TVSeasons from "./TVSeasons";
 
 const TVTab = (props) => {
   const [tabState, setTabState] = useState("cast");
 
   const castSelectionHandler = () => {
     setTabState("cast");
+  };
+
+  const seasonsSelectionHandler = () => {
+    setTabState("seasons");
   };
 
   const reviewSelectionHandler = () => {
@@ -35,6 +40,9 @@ const TVTab = (props) => {
         <TabSelectionTitle onClick={castSelectionHandler}>
           Cast
         </TabSelectionTitle>
+        <TabSelectionTitle onClick={seasonsSelectionHandler}>
+          Seasons
+        </TabSelectionTitle>
         <TabSelectionTitle onClick={reviewSelectionHandler}>
           Reviews
         </TabSelectionTitle>
@@ -46,6 +54,7 @@ const TVTab = (props) => {
         </TabSelectionTitle>
       </TabWrapper>
       {tabState === "cast" && <TVCast cast={props.cast} />}
+      {tabState === "seasons" && <TVSeasons seasons={props.seasons} />}
       {tabState === "reviews" && <TVReviews reviews={props.reviews} />}
       {tabState === "backdrops" && <TVBackdrops backdrops={props.backdrops} />}
       {tabState === "posters" && <TVPosters posters={props.posters} />}

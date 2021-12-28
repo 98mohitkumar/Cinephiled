@@ -119,6 +119,7 @@ const tvShow = ({ tvData, error, languages }) => {
               <TVFacts facts={tvFacts} languages={languages} />
               <TVTab
                 cast={cast}
+                seasons={tvData.seasons}
                 reviews={reviewDetails.results}
                 backdrops={backdrops}
                 posters={posters}

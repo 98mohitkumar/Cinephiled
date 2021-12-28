@@ -22,8 +22,6 @@ const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
 
   movieDetailsData.genres.length > 3 && movieDetailsData.genres.splice(3);
 
-  // console.log(movieDetailsData);
-
   return (
     <Fragment>
       <HeroInfoWrapper>
