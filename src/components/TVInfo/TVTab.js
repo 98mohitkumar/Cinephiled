@@ -35,8 +35,8 @@ const TVTab = (props) => {
 
   return (
     <>
-      <TabWrapper className="my-5" tabCheck={tabState}>
-        <TabSlider tabCheck={tabState} />
+      <TabWrapper className="my-5" tabCheck={tabState} tv={true}>
+        <TabSlider tabCheck={tabState} tv={true} />
         <TabSelectionTitle onClick={castSelectionHandler}>
           Cast
         </TabSelectionTitle>

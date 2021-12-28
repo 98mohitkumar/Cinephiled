@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 export const TabWrapper = styled.div`
-  width: 50%;
+  width: ${(props) => (props.tv ? `50%;` : `40%;`)};
   height: 4.5rem;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: ${(props) =>
+    props.tv ? `repeat(5, 1fr);` : `repeat(4, 1fr);`};
   margin: auto;
   border: 4px solid white;
   background: white;
@@ -12,48 +13,70 @@ export const TabWrapper = styled.div`
   box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.8);
   position: relative;
 
-  & div:nth-child(2) {
-    ${(props) =>
-      props.tabCheck === "cast" ? `color: white;` : `color: black;`}
+  ${(props) =>
+    props.tv
+      ? `& div:nth-child(2) {
+    ${props.tabCheck === "cast" ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(3) {
-    ${(props) =>
-      props.tabCheck === "seasons" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === "seasons" ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(4) {
-    ${(props) =>
-      props.tabCheck === "reviews" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === "reviews" ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(5) {
-    ${(props) =>
-      props.tabCheck === "backdrops" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === "backdrops" ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(6) {
-    ${(props) =>
-      props.tabCheck === "posters" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === "posters" ? `color: white;` : `color: black;`}
+  }`
+      : `& div:nth-child(2) {
+    ${props.tabCheck === "cast" ? `color: white;` : `color: black;`}
   }
+
+  & div:nth-child(3) {
+    ${props.tabCheck === "reviews" ? `color: white;` : `color: black;`}
+  }
+
+  & div:nth-child(4) {
+    ${props.tabCheck === "backdrops" ? `color: white;` : `color: black;`}
+  }
+
+  & div:nth-child(5) {
+    ${props.tabCheck === "posters" ? `color: white;` : `color: black;`}
+  }`}
 `;
 
 export const TabSlider = styled.div`
   position: absolute;
-  width: 20%;
+  width: ${(props) => (props.tv ? "20%;" : "25%;")};
   height: 4rem;
   background: black;
   ${(props) =>
-    props.tabCheck === "cast"
+    props.tv
+      ? props.tabCheck === "cast"
+        ? `transform: translateX(0%);`
+        : props.tabCheck === "seasons"
+        ? `transform: translateX(100%);`
+        : props.tabCheck === "reviews"
+        ? `transform: translateX(200%);`
+        : props.tabCheck === "backdrops"
+        ? `transform: translateX(300%);`
+        : props.tabCheck === "posters"
+        ? `transform: translateX(400%);`
+        : null
+      : props.tabCheck === "cast"
       ? `transform: translateX(0%);`
-      : props.tabCheck === "seasons"
-      ? `transform: translateX(100%);`
       : props.tabCheck === "reviews"
-      ? `transform: translateX(200%);`
+      ? `transform: translateX(100%);`
       : props.tabCheck === "backdrops"
-      ? `transform: translateX(300%);`
+      ? `transform: translateX(200%);`
       : props.tabCheck === "posters"
-      ? `transform: translateX(400%);`
+      ? `transform: translateX(300%);`
       : null}
   border-radius: 12px;
   z-index: 4;
