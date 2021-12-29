@@ -7,11 +7,13 @@ import {
 import TVBackdrops from "./TVBackdrops";
 import TVCast from "./TVCast";
 import TVPosters from "./TVPosters";
+import TVRecommendations from "./TVRecommendations";
 import TVReviews from "./TVReviews";
 import TVSeasons from "./TVSeasons";
 
 const TVTab = (props) => {
   const [tabState, setTabState] = useState("cast");
+  const [tvRecommended, setTvRecommended] = useState([]);
 
   const castSelectionHandler = () => {
     setTabState("cast");
@@ -32,6 +34,22 @@ const TVTab = (props) => {
   const posterSelectionHandler = () => {
     setTabState("posters");
   };
+
+  useEffect(() => {
+    const api_key = process.env.NEXT_PUBLIC_API_KEY;
+
+    async function getRecommended() {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/tv/${props.id}/recommendations?api_key=${api_key}&language=en-US&page=1`
+      );
+
+      const res = await response.json();
+
+      return res;
+    }
+
+    getRecommended().then((data) => setTvRecommended(data.results));
+  }, [props.id]);
 
   return (
     <>
@@ -58,6 +76,10 @@ const TVTab = (props) => {
       {tabState === "reviews" && <TVReviews reviews={props.reviews} />}
       {tabState === "backdrops" && <TVBackdrops backdrops={props.backdrops} />}
       {tabState === "posters" && <TVPosters posters={props.posters} />}
+      <h1 className="display-6 fw-bold text-white text-center">
+        Recommendations
+      </h1>
+      <TVRecommendations Tv={tvRecommended} />
     </>
   );
 };

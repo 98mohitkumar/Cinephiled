@@ -50,7 +50,7 @@ const tvShow = ({ tvData, error, languages }) => {
 
     getyear = new Date(tvData.first_air_date).getFullYear();
     endyear =
-      tvData.status === "Ended"
+      tvData.status === "Ended" || tvData.status === "Canceled"
         ? "-" + new Date(tvData.last_air_date).getFullYear()
         : "- ";
 
@@ -116,6 +116,7 @@ const tvShow = ({ tvData, error, languages }) => {
               </HeroDetailsContainer>
               <TVFacts facts={tvFacts} languages={languages} />
               <TVTab
+                id={tvData.id}
                 cast={cast}
                 seasons={tvData.seasons}
                 reviews={reviewDetails.results}
