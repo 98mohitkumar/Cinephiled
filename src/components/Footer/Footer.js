@@ -23,10 +23,15 @@ const Footer = () => {
           href="https://instagram.com/mohitkek"
           target="_blank"
           className="ms-3"
+          rel="noreferrer"
         >
           <BsInstagram size="2.25rem" />
         </SocialIcons>
-        <SocialIcons href="https://t.me/mohitkek" target="_blank">
+        <SocialIcons
+          href="https://t.me/mohitkek"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FaTelegramPlane size="2.25rem" />
         </SocialIcons>
       </SocialIconsContainer>

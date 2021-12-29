@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const HeroInfoWrapper = styled.div`
   color: white;
+  margin: 1rem 0rem;
 `;
 
 export const HeroInfoTitle = styled.h1`

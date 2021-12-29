@@ -1,7 +1,11 @@
 import Head from "next/head";
 import Footer from "../../components/Footer/Footer";
 import DominantColor from "../../components/DominantColor/DominantColor";
-import { Gradient } from "../../styles/GlobalComponents";
+import {
+  Gradient,
+  HeroImgWrapper,
+  HeroTrailer,
+} from "../../styles/GlobalComponents";
 import Navigation from "../../components/Navigation/Navigation";
 import TVDetails from "../../components/TVInfo/TVDetails";
 import {
@@ -17,8 +21,11 @@ import {
 } from "../../styles/GlobalComponents";
 import TVTab from "../../components/TVInfo/TVTab";
 import TVFacts from "../../components/TVInfo/TVFacts";
+import { FaYoutube } from "react-icons/fa";
+import { Span } from "../../components/MovieInfo/MovieDetailsStyles";
+import SocialMediaLinks from "../../components/SocialMediaLinks/SocialMediaLinks";
 
-const tvShow = ({ tvData, error, languages }) => {
+const tvShow = ({ tvData, error, languages, socialIds }) => {
   let creators = [];
   let characters = [];
   let cast = [];
@@ -26,6 +33,7 @@ const tvShow = ({ tvData, error, languages }) => {
   let reviewDetails = [];
   let backdrops = [];
   let posters = [];
+  let videos = [];
 
   let getyear = "";
   let endyear = "";
@@ -40,6 +48,10 @@ const tvShow = ({ tvData, error, languages }) => {
     tvData.created_by.length > 0 &&
       tvData.created_by.forEach((item) => creators.push(item));
 
+    tvData.videos.results.forEach(
+      (item) =>
+        item.site === "YouTube" && item.type === "Trailer" && videos.push(item)
+    );
     cast = creditsDetails.cast;
 
     cast.splice(15);
@@ -102,9 +114,29 @@ const tvShow = ({ tvData, error, languages }) => {
                   <DominantColor image={tvData.poster_path} />
                 </HeroBgContainer>
                 <DetailsHeroWrap>
-                  <HeroImg data={tvData.poster_path} className="mx-5" />
+                  <HeroImgWrapper>
+                    <HeroImg data={tvData.poster_path} className="mx-5" />
+                    {videos.length !== 0 && (
+                      <a
+                        href={`https://www.youtube.com/watch?v=${videos[0].key}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="trailer"
+                      >
+                        <HeroTrailer>
+                          <FaYoutube size="1.5rem" />
+                          <Span>Play Trailer</Span>
+                        </HeroTrailer>
+                      </a>
+                    )}
+                    <SocialMediaLinks
+                      links={socialIds}
+                      homepage={tvData.homepage}
+                    />
+                  </HeroImgWrapper>
+
                   <Gradient />
-                  <HeroInfo className="d-flex align-items-center">
+                  <HeroInfo className="d-flex">
                     <TVDetails
                       tvData={tvData}
                       date={getyear}
@@ -137,11 +169,15 @@ tvShow.getInitialProps = async (ctx) => {
   const tv_id = ctx.query.id;
 
   const tvResponse = await fetch(
-    `https://api.themoviedb.org/3/tv/${tv_id}?api_key=${api_key}&language=en-US&append_to_response=images,credits,reviews&include_image_language=en,null`
+    `https://api.themoviedb.org/3/tv/${tv_id}?api_key=${api_key}&language=en-US&append_to_response=images,videos,credits,reviews&include_image_language=en,null`
   );
 
   const languagesResponse = await fetch(
     `https://api.themoviedb.org/3/configuration/languages?api_key=${api_key}`
+  );
+
+  const socialLinks = await fetch(
+    `https://api.themoviedb.org/3/tv/${tv_id}/external_ids?api_key=${api_key}&language=en-US`
   );
 
   const error = tvResponse.ok ? false : true;
@@ -153,10 +189,13 @@ tvShow.getInitialProps = async (ctx) => {
 
     const languages = await languagesResponse.json();
 
+    const socialIds = await socialLinks.json();
+
     return {
       tvData,
       error,
       languages,
+      socialIds,
     };
   }
 };

@@ -65,8 +65,8 @@ export const HeroBg = styled.div`
 `;
 
 export const HeroImg = styled.div`
-  height: 30rem;
-  width: 20rem;
+  height: 25rem;
+  width: 17rem;
   background: ${(props) =>
     props.data !== null
       ? `Url(https://image.tmdb.org/t/p/w780${props.data}) no-repeat center center /cover`
@@ -212,4 +212,40 @@ export const RecommendedImg = styled.div`
     `Url(https://image.tmdb.org/t/p/w500${props.backdrop}) no-repeat center center /cover`};
   cursor: pointer;
   border-radius: 16px;
+`;
+
+export const HeroImgWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+`;
+
+export const HeroTrailer = styled.div`
+  background: #ebebeb;
+  color: #121212;
+  border-radius: 8px;
+  width: 17rem;
+  height: 45px;
+  padding: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+`;
+
+export const SocialMediaLinksWrapper = styled.div`
+  width: 17rem;
+  height: 45px;
+  color: #ebebeb;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.25rem;
+  display: ${(props) => (props.notShow ? "none;" : "flex;")};
 `;
