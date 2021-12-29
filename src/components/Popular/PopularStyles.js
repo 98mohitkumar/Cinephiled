@@ -3,9 +3,10 @@ import styled from "styled-components";
 export const MoviesSection = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(190px, 280px));
   place-items: center;
-  gap: 3rem 0rem;
+  justify-content: center;
+  gap: 2rem 0rem;
 `;
 
 export const Cards = styled.div`
@@ -58,9 +59,11 @@ export const Rating = styled.div`
 export const TVSection = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(190px, 280px));
   place-items: center;
-  gap: 3rem 0rem;
+  justify-content: center;
+  gap: 2rem 0rem;
+  margin: auto;
 `;
 
 export const TVInfo = styled.div`

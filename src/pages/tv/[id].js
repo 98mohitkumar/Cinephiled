@@ -42,8 +42,8 @@ const tvShow = ({ tvData, error, languages, socialIds }) => {
 
   if (error === false) {
     creditsDetails = tvData.credits;
-    creditsDetails.crew.forEach((item, i) => {
-      if (item.job === "Characters") characters.push(creditsDetails.crew[i]);
+    creditsDetails.crew.forEach((item) => {
+      if (item.job === "Characters") characters.push(item);
     });
     tvData.created_by.length > 0 &&
       tvData.created_by.forEach((item) => creators.push(item));

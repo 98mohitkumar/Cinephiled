@@ -8,10 +8,8 @@ import TrendingTv from "../Trending/TrendingTv";
 const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
   const [isMovies, setIsMovies] = useState(true);
 
-  let tabState = null;
-
   useEffect(() => {
-    tabState = localStorage.getItem("movieTab");
+    const tabState = localStorage.getItem("movieTab");
     tabState === "false" && setIsMovies(false);
   }, []);
 

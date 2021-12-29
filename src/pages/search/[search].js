@@ -10,7 +10,7 @@ import {
   Wrapper,
 } from "../../styles/GlobalComponents";
 
-const search = ({ movieRes, tvRes, error, searchQuery }) => {
+const search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
   let movieReleaseDates = [];
   let tvReleaseDates = [];
 
@@ -40,7 +40,7 @@ const search = ({ movieRes, tvRes, error, searchQuery }) => {
   return (
     <>
       <Head>
-        <title>{searchQuery}</title>
+        <title>{searchQuery} - Search</title>
       </Head>
       <Wrapper>
         <DetailsWrapper className="d-flex flex-column justify-content-between">
@@ -56,7 +56,7 @@ const search = ({ movieRes, tvRes, error, searchQuery }) => {
                 tv={tvRes}
                 movieReleaseDates={movieReleaseDates}
                 tvReleaseDates={tvReleaseDates}
-                search={searchQuery}
+                keywords={keywordsRes}
               />
             </SearchContainer>
           )}
@@ -90,19 +90,24 @@ search.getInitialProps = async (ctx) => {
       `https://api.themoviedb.org/3/search/tv?api_key=${api_key}&language=en-US&query=${searchQuery}&page=1&include_adult=false&first_air_date_year=${year}`
     );
 
-    const error = movieResponse.ok || tvResponse.ok ? false : true;
+    const keywordsResponse = await fetch(
+      `https://api.themoviedb.org/3/search/keyword?api_key=${api_key}&query=${searchQuery}&page=1`
+    );
 
-    const movieRes = await movieResponse.json();
-    const tvRes = await tvResponse.json();
+    const error = movieResponse.ok || tvResponse.ok ? false : true;
 
     if (error === true) {
       return { error };
     } else {
+      const movieRes = await movieResponse.json();
+      const tvRes = await tvResponse.json();
+      const keywordsRes = await keywordsResponse.json();
       return {
         movieRes: movieRes.results,
         tvRes: tvRes.results,
         error,
         searchQuery,
+        keywordsRes: keywordsRes.results,
       };
     }
   } else {
@@ -114,19 +119,24 @@ search.getInitialProps = async (ctx) => {
       `https://api.themoviedb.org/3/search/tv?api_key=${api_key}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
     );
 
-    const error = movieResponse.ok || tvResponse.ok ? false : true;
+    const keywordsResponse = await fetch(
+      `https://api.themoviedb.org/3/search/keyword?api_key=${api_key}&query=${searchQuery}&page=1`
+    );
 
-    const movieRes = await movieResponse.json();
-    const tvRes = await tvResponse.json();
+    const error = movieResponse.ok || tvResponse.ok ? false : true;
 
     if (error === true) {
       return { error };
     } else {
+      const movieRes = await movieResponse.json();
+      const tvRes = await tvResponse.json();
+      const keywordsRes = await keywordsResponse.json();
       return {
         movieRes: movieRes.results,
         tvRes: tvRes.results,
         error,
         searchQuery,
+        keywordsRes: keywordsRes.results,
       };
     }
   }

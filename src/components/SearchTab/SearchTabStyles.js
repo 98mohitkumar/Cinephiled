@@ -5,7 +5,7 @@ export const SearchTabWrapper = styled.div`
   height: 4.5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin: auto;
+  margin: 0rem auto 3rem;
   border: 4px solid white;
   background: white;
   border-radius: 14px;
@@ -22,7 +22,7 @@ export const SearchTabWrapper = styled.div`
   }
 
   & div:nth-child(4) {
-    ${props.tabState === "keyword" ? `color: white;` : `color: black;`}
+    ${props.tabState === "keywords" ? `color: white;` : `color: black;`}
   }
 
 `}
@@ -38,7 +38,7 @@ export const SearchTabSlider = styled.div`
       ? `transform: translateX(0%);`
       : props.tabState === "tv"
       ? `transform: translateX(100%);`
-      : props.tabState === "keyword"
+      : props.tabState === "keywords"
       ? `transform: translateX(200%);`
       : null}
   border-radius: 12px;
@@ -55,4 +55,9 @@ export const SearchTabSelectionTitle = styled.div`
   cursor: pointer;
   z-index: 5;
   transition: color 0.325s cubic-bezier(0.77, 0, 0.18, 1);
+`;
+
+export const Keyword = styled.h2`
+  font-size: 4rem;
+  font-weight: 500;
 `;
