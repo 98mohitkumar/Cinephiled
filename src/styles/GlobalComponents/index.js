@@ -112,6 +112,7 @@ export const SearchContainer = styled.div`
   width: 100%;
   height: auto;
   padding: 3rem 6rem;
+  margin-bottom: auto;
 `;
 
 export const BadQuery = styled.h1`
