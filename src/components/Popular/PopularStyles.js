@@ -59,6 +59,8 @@ export const CardImg = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     height: 15rem;
+    background: ${(props) => `url(https://image.tmdb.org/t/p/w500${props.data})
+    no-repeat center center / cover`};
   }
 `;
 
