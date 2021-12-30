@@ -9,6 +9,10 @@ export const Container = styled.div`
   width: 100%;
   height: 32rem;
   overflow: hidden;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    height: 25rem;
+  }
 `;
 
 export const AboutWrapper = styled.div`

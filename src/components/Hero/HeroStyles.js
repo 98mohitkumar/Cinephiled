@@ -39,10 +39,18 @@ export const Banner = styled.div`
   transform: rotate(10deg) scale(170%);
   filter: brightness(50%);
   z-index: 1;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    background: Url(/Images/poster.png) repeat center / 140%;
+  }
 `;
 
 export const Form = styled.form`
   width: 60%;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    width: 80%;
+  }
 `;
 
 export const Button = styled.button`
@@ -59,8 +67,15 @@ export const Button = styled.button`
   margin: auto;
   border: none;
   font-weight: 600;
-  padding: 0.65rem 1.5rem;
-  display: ${(props) => (props.show ? "block !important" : "none !important")};
+  padding: 0.65rem 2rem;
+  visibility: ${(props) =>
+    props.show ? "visible !important" : "none !important"};
+  opacity: ${(props) => (props.show ? "1 !important" : "0 !important")};
+  transition: all 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    padding: 0.45rem 2rem;
+  }
 `;
 
 export const UserInput = styled.input`
@@ -88,5 +103,10 @@ export const UserInput = styled.input`
     box-shadow: none;
     color: white;
     border-color: white;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.md} {
+    font-size: 1.2rem;
+    padding: 0.2rem;
   }
 `;

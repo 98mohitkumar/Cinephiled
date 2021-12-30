@@ -3,14 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import { Container } from "../../styles/GlobalComponents";
-import {
-  Banner,
-  Button,
-  Form,
-  HeroDiv,
-  HeroTitle,
-  UserInput,
-} from "./HeroStyles";
+import { Banner, Button, Form, HeroDiv, UserInput } from "./HeroStyles";
 
 const Hero = () => {
   const name = useRef("");
@@ -49,9 +42,6 @@ const Hero = () => {
     <Container className="d-flex justify-content-center align-items-center position-relative">
       <Banner />
       <HeroDiv>
-        {/* <HeroTitle className="display-3 fw-bold m-0">
-          Project Name Here
-        </HeroTitle> */}
         <Form>
           <div className="m-2">
             <UserInput

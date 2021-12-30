@@ -1,5 +1,6 @@
 import {
   FooterAttribute,
+  FooterBranding,
   FooterWrapper,
   SocialIcons,
   SocialIconsContainer,
@@ -10,7 +11,7 @@ import { FaTelegramPlane } from "react-icons/fa";
 const Footer = () => {
   return (
     <FooterWrapper className="d-flex justify-content-between align-items-center">
-      <span className="fs-3 mx-3 fw-bold">Project name here</span>
+      <FooterBranding>Project name here</FooterBranding>
       <SocialIconsContainer>
         <SocialIcons
           href="https://www.themoviedb.org"
@@ -22,7 +23,6 @@ const Footer = () => {
         <SocialIcons
           href="https://instagram.com/mohitkek"
           target="_blank"
-          className="ms-3"
           rel="noreferrer"
         >
           <BsInstagram size="2.25rem" />
