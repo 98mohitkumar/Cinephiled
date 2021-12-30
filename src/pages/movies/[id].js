@@ -38,8 +38,6 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
   let creditsDetails = [];
   let movieFacts = {};
 
-  console.log(movieDetails);
-
   if (error === false) {
     creditsDetails = movieDetails.credits;
 
@@ -92,7 +90,9 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
   return (
     <>
       <Head>
-        <title>{error === false ? movieDetails.title : "Not Found"}</title>
+        <title>
+          {error === false ? `${movieDetails.title} (${getyear})` : "Not Found"}
+        </title>
       </Head>
       <Wrapper>
         <DetailsWrapper className="d-flex flex-column justify-content-between">

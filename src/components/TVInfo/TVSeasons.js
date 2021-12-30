@@ -13,7 +13,6 @@ import {
 
 const TVSeasons = ({ seasons }) => {
   let seasonReleaseDates = [];
-  console.log(seasons);
 
   seasons.forEach(
     (item) =>
