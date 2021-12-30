@@ -53,22 +53,31 @@ const Keyword = ({ error, results, name }) => {
                       No movie results for this keyword.
                     </EmptySearch>
                   ) : (
-                    results.map((item, i) => (
-                      <Link key={item.id} href={"/movies/" + item.id} passHref>
-                        <QueryContainer>
-                          <QueryImg poster={item.poster_path} />
-                          <QueryInfoWrapper>
-                            <div>
-                              <QueryTitle>{item.title}</QueryTitle>
-                              <QueryRealeaseDate>
-                                {movieReleaseDates[i]}
-                              </QueryRealeaseDate>
-                            </div>
-                            <QueryDescription>{item.overview}</QueryDescription>
-                          </QueryInfoWrapper>
-                        </QueryContainer>
-                      </Link>
-                    ))
+                    <>
+                      <p className="fs-4">Results Matching : {name}</p>
+                      {results.map((item, i) => (
+                        <Link
+                          key={item.id}
+                          href={"/movies/" + item.id}
+                          passHref
+                        >
+                          <QueryContainer>
+                            <QueryImg poster={item.poster_path} />
+                            <QueryInfoWrapper>
+                              <div>
+                                <QueryTitle>{item.title}</QueryTitle>
+                                <QueryRealeaseDate>
+                                  {movieReleaseDates[i]}
+                                </QueryRealeaseDate>
+                              </div>
+                              <QueryDescription>
+                                {item.overview}
+                              </QueryDescription>
+                            </QueryInfoWrapper>
+                          </QueryContainer>
+                        </Link>
+                      ))}
+                    </>
                   )}
                 </SearchResultsContainer>
               </SearchContainer>
