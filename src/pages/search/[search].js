@@ -52,6 +52,7 @@ const search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
           ) : (
             <SearchContainer>
               <SearchTab
+                search={searchQuery}
                 movies={movieRes}
                 tv={tvRes}
                 movieReleaseDates={movieReleaseDates}

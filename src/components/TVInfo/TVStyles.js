@@ -7,13 +7,16 @@ export const SeasonsContainer = styled.div`
 `;
 
 export const SeasonWrapper = styled.div`
+  display: flex;
   width: 100%;
   height: 180px;
   border-radius: 10px;
   overflow: hidden;
   background: white;
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   outline: 1px solid rgba(255, 255, 255, 0.5);
-  display: flex;
 `;
 
 export const SeasonImg = styled.div`
@@ -54,7 +57,7 @@ export const SeasonDetailsDivider = styled.div`
   width: 1.5px;
   background: #121212;
   display: inline-block;
-  margin: 0rem 1.3rem;
+  margin: 0rem 1rem;
 `;
 
 export const SeaonDetailsWrapper = styled.div`

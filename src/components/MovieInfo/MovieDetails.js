@@ -25,7 +25,7 @@ const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
   return (
     <Fragment>
       <HeroInfoWrapper>
-        <HeroInfoTitle className="my-2">
+        <HeroInfoTitle className="mb-2">
           {movieDetailsData.title} ({date})
         </HeroInfoTitle>
         <RtoR className="my-3">
@@ -46,11 +46,13 @@ const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
             {runtime.getM > 0 && runtime.getM + "m"}
           </Span>
         </RtoR>
-        <i>
-          <Span className="fw-normal my-4 d-block">
-            {movieDetailsData.tagline}
-          </Span>
-        </i>
+        {movieDetailsData.tagline !== "" && (
+          <i>
+            <Span className="fw-normal my-4 d-block">
+              {movieDetailsData.tagline}
+            </Span>
+          </i>
+        )}
         <Span className="fw-normal">{movieDetailsData.overview}</Span>
         <RatingWrapper>
           <Span className="display-3 fw-bolder">

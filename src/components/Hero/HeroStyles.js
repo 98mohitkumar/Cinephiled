@@ -60,4 +60,33 @@ export const Button = styled.button`
   border: none;
   font-weight: 600;
   padding: 0.65rem 1.5rem;
+  display: ${(props) => (props.show ? "block !important" : "none !important")};
+`;
+
+export const UserInput = styled.input`
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  height: 4rem;
+  background-color: transparent;
+  font-size: x-large;
+  margin: auto;
+  font-weight: 500;
+  color: white;
+  font-family: "Manrope", sans-serif;
+  border-bottom: 1px solid #fff;
+  transition: background-color 0.75s ease-in-out;
+
+  &::placeholder {
+    color: #fff;
+    font-weight: 500;
+    font-family: "Manrope", sans-serif;
+  }
+
+  &:focus {
+    background-color: transparent;
+    box-shadow: none;
+    color: white;
+    border-color: white;
+  }
 `;

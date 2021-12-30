@@ -72,10 +72,11 @@ export const HeroImg = styled.div`
       ? `Url(https://image.tmdb.org/t/p/w780${props.data}) no-repeat center center /cover`
       : `Url(/Images/DefaultImage.png) no-repeat center center /cover`};
   border-radius: 12px;
+  box-shadow: 0 0 2rem rgb(12 12 12 /0.4);
 `;
 
 export const DetailsHeroWrap = styled.div`
-  padding: 3rem 5rem;
+  padding: 3.5rem 5rem;
   display: grid;
   grid-template-columns: 1fr 3fr;
   align-items: center;
@@ -139,7 +140,9 @@ export const QueryContainer = styled.div`
   display: flex;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0px 0px 2rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   outline: 1px solid rgba(255, 255, 255, 0.5);
 `;
 
@@ -211,8 +214,15 @@ export const RecommendedImg = styled.div`
   height: 150px;
   background: ${(props) =>
     `Url(https://image.tmdb.org/t/p/w500${props.backdrop}) no-repeat center center /cover`};
-  cursor: pointer;
-  border-radius: 16px;
+  border-radius: 12px;
+  transition: box-shadow 0.25s ease-in;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
+      0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
+      0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
+  }
 `;
 
 export const HeroImgWrapper = styled.div`
@@ -220,9 +230,8 @@ export const HeroImgWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 1.5rem;
 `;
 
 export const HeroTrailer = styled.div`

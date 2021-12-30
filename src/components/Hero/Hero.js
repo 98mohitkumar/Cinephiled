@@ -1,16 +1,39 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useState } from "react";
 import { useRef } from "react";
 import { Container } from "../../styles/GlobalComponents";
-import { Banner, Button, Form, HeroDiv, HeroTitle } from "./HeroStyles";
+import {
+  Banner,
+  Button,
+  Form,
+  HeroDiv,
+  HeroTitle,
+  UserInput,
+} from "./HeroStyles";
 
 const Hero = () => {
   const name = useRef("");
   const Router = useRouter();
+  const [userInput, setUserInput] = useState();
+  const [showButton, setShowButton] = useState(false);
+
+  const inputChangeHandler = (e) => {
+    setUserInput(e.target.value);
+  };
+
+  useEffect(() => {
+    let input = name.current.value;
+    if (input.length === 0 || input.trim().length === 0) {
+      setShowButton(false);
+    } else {
+      setShowButton(true);
+    }
+  }, [userInput]);
 
   const dbSearchHandler = async (event) => {
     event.preventDefault();
-
-    const searchQuery = name.current.value;
+    const searchQuery = userInput;
 
     if (searchQuery.length === 0 || searchQuery.trim().length === 0) {
       name.current.value = "";
@@ -26,21 +49,26 @@ const Hero = () => {
     <Container className="d-flex justify-content-center align-items-center position-relative">
       <Banner />
       <HeroDiv>
-        <HeroTitle className="display-3 fw-bold m-0">
+        {/* <HeroTitle className="display-3 fw-bold m-0">
           Project Name Here
-        </HeroTitle>
+        </HeroTitle> */}
         <Form>
           <div className="m-2">
-            <input
+            <UserInput
               type="text"
               className="form-control"
               placeholder="Search for a movie or tv show"
               id="inputData"
               ref={name}
               autoComplete="off"
+              onChange={inputChangeHandler}
             />
           </div>
-          <Button className="btn d-block mt-3" onClick={dbSearchHandler}>
+          <Button
+            show={showButton}
+            className="btn d-block mt-3"
+            onClick={dbSearchHandler}
+          >
             Search
           </Button>
         </Form>

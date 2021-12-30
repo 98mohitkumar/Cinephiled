@@ -20,12 +20,16 @@ export const CardImg = styled.div`
   background: ${(props) => `url(https://image.tmdb.org/t/p/w780${props.data})
     no-repeat center center / cover`};
   border-radius: 12px;
-  box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   transition: box-shadow 0.25s ease-in;
 
   &:hover {
     cursor: pointer;
-    box-shadow: 0px 0px 1.5rem rgba(0, 0, 0, 1);
+    box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
+      0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
+      0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
   }
 `;
 
@@ -84,7 +88,9 @@ export const Tab = styled.div`
   border: 4px solid white;
   background: white;
   border-radius: 14px;
-  box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   position: relative;
 `;
 

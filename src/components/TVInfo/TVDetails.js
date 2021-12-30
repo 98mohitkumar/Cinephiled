@@ -17,11 +17,11 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
   return (
     <>
       <HeroInfoWrapper>
-        <HeroInfoTitle className="my-2">
+        <HeroInfoTitle className="mb-2">
           {tvData.name} ({date})
         </HeroInfoTitle>
 
-        <RtoR>
+        <RtoR className="my-3">
           {tvData.genres.length > 0 && (
             <GenreWrap>
               {tvData.genres.map((item) => (
@@ -37,13 +37,21 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
             {runtime.getM > 0 && runtime.getM + "m"}
           </Span>
         </RtoR>
-        <i>
-          <Span className="fw-normal my-4 d-block">{tvData.tagline}</Span>
-        </i>
+        {tvData.tagline !== "" && (
+          <i>
+            <Span className="fw-normal my-4 d-block">{tvData.tagline}</Span>
+          </i>
+        )}
         <Span className="fw-normal">{tvData.overview}</Span>
         <RatingWrapper>
-          <Span className="display-3 fw-bolder">{tvData.vote_average}</Span>
-          <span> / 10</span>
+          {tvData.vote_average !== 0 ? (
+            <>
+              <Span className="display-3 fw-bolder">{tvData.vote_average}</Span>
+              <span> / 10</span>
+            </>
+          ) : (
+            <Span className="display-3 fw-bolder">NR</Span>
+          )}
         </RatingWrapper>
         <CreditsWrapper>
           {crew.length > 0 &&

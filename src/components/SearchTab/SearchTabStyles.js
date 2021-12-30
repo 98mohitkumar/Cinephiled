@@ -9,7 +9,9 @@ export const SearchTabWrapper = styled.div`
   border: 4px solid white;
   background: white;
   border-radius: 14px;
-  box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   position: relative;
 
   ${(props) =>

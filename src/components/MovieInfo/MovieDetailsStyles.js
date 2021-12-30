@@ -2,12 +2,13 @@ import styled from "styled-components";
 
 export const HeroInfoWrapper = styled.div`
   color: white;
-  margin: 1rem 0rem;
+  margin: 0rem;
 `;
 
 export const HeroInfoTitle = styled.h1`
   font-weight: bold;
   font-size: 2.25rem;
+  margin-top: 0rem;
 `;
 
 export const Span = styled.span`
@@ -106,8 +107,10 @@ export const CastImg = styled.div`
       : `Url(https://image.tmdb.org/t/p/w500${props.data}) no-repeat center 5% /cover`};
   width: 185px;
   height: 230px;
-  border-radius: 16px;
-  box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
 `;
 
 export const CastWrapper = styled.div`
@@ -159,9 +162,11 @@ export const BackdropsWrapper = styled.div`
 export const BackdropsImgContainer = styled.div`
   width: 100%;
   height: 400px;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
 `;
 
 export const BackdropsImg = styled.div`
@@ -191,8 +196,10 @@ export const PostersWrapper = styled.div`
 export const PostersImg = styled.div`
   width: 100%;
   height: 370px;
-  border-radius: 16px;
-  box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   background: ${(props) =>
     `Url(https://image.tmdb.org/t/p/w780${props.poster}) no-repeat center center /cover;`};
 `;
