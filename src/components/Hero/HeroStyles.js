@@ -35,13 +35,13 @@ export const Banner = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  background: Url(/Images/poster.png) repeat center / 70%;
+  background: Url(/Images/poster.webp) repeat center / 70%;
   transform: rotate(10deg) scale(170%);
   filter: brightness(50%);
   z-index: 1;
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    background: Url(/Images/poster.png) repeat center / 140%;
+    background: Url(/Images/poster.webp) repeat center / 140%;
   }
 `;
 
