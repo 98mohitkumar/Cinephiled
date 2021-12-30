@@ -85,8 +85,8 @@ export const Tab = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin: 4rem auto;
-  border: 4px solid white;
-  background: white;
+  border: 4px solid rgb(221, 221, 221);
+  background: rgb(221, 221, 221);
   border-radius: 14px;
   box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
     0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),

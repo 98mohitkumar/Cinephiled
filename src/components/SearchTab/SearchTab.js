@@ -65,7 +65,7 @@ const SearchTab = ({
           )}
           <p className="text-center mt-2 mb-0">
             <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your
-            results by year. Example: <b>&#39;Avatar y:2009&#39;</b>.
+            results by year. Example: <b>&#39;Avatar y:2009&#39;.</b>
           </p>
           <MoviesSearch
             movieRes={movies}

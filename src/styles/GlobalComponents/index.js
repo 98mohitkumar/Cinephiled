@@ -230,8 +230,8 @@ export const HeroImgWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
+  gap: 2rem 0rem;
 `;
 
 export const HeroTrailer = styled.div`
@@ -253,9 +253,8 @@ export const SocialMediaLinksWrapper = styled.div`
   width: 17rem;
   height: 45px;
   color: #ebebeb;
-  display: flex;
+  display: ${(props) => (props.notShow ? "none;" : "flex;")};
   justify-content: space-around;
   align-items: center;
   padding: 0.25rem;
-  display: ${(props) => (props.notShow ? "none;" : "flex;")};
 `;

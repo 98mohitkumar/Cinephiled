@@ -7,8 +7,8 @@ export const TabWrapper = styled.div`
   grid-template-columns: ${(props) =>
     props.tv ? `repeat(5, 1fr);` : `repeat(4, 1fr);`};
   margin: auto;
-  border: 4px solid white;
-  background: white;
+  border: 4px solid rgb(221, 221, 221);
+  background: rgb(221, 221, 221);
   border-radius: 14px;
   box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.8);
   position: relative;

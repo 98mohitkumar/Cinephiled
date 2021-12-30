@@ -38,6 +38,8 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
   let creditsDetails = [];
   let movieFacts = {};
 
+  console.log(movieDetails);
+
   if (error === false) {
     creditsDetails = movieDetails.credits;
 

@@ -13,13 +13,17 @@ import {
 
 const TVSeasons = ({ seasons }) => {
   let seasonReleaseDates = [];
+  console.log(seasons);
 
-  seasons.forEach((item) =>
-    seasonReleaseDates.push(
-      new Date(item.air_date.toString()).toDateString().slice(4, -5) +
-        ", " +
-        new Date(item.air_date.toString()).getFullYear()
-    )
+  seasons.forEach(
+    (item) =>
+      item.air_date !== null &&
+      item.air_date !== undefined &&
+      seasonReleaseDates.push(
+        new Date(item.air_date.toString()).toDateString().slice(4, -5) +
+          ", " +
+          new Date(item.air_date.toString()).getFullYear()
+      )
   );
 
   const Today = new Date();
@@ -39,8 +43,13 @@ const TVSeasons = ({ seasons }) => {
                     : ""}
                 </SeasonTitle>
                 <SeaonDetailsWrapper>
-                  <SeasonsRelease>{seasonReleaseDates[i]}</SeasonsRelease>
-                  <SeasonDetailsDivider />
+                  {seasonReleaseDates[i] !== null &&
+                    seasonReleaseDates[i] !== undefined && (
+                      <>
+                        <SeasonsRelease>{seasonReleaseDates[i]}</SeasonsRelease>
+                        <SeasonDetailsDivider />
+                      </>
+                    )}
                   <SeasonsRelease>{item.episode_count} Episodes</SeasonsRelease>
                 </SeaonDetailsWrapper>
                 {item.overview !== "" && (

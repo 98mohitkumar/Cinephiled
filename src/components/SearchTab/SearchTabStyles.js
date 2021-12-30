@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 export const SearchTabWrapper = styled.div`
-  width: 40%;
+  width: 50%;
   height: 4.5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin: 0rem auto 3rem;
-  border: 4px solid white;
-  background: white;
+  border: 4px solid rgb(221, 221, 221);
+  background: rgb(221, 221, 221);
   border-radius: 14px;
   box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
     0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
@@ -62,4 +62,10 @@ export const SearchTabSelectionTitle = styled.div`
 export const Keyword = styled.h2`
   font-size: 4rem;
   font-weight: 500;
+  transition: color 0.3s ease-in;
+
+  &:hover {
+    color: white;
+    cursor: pointer;
+  }
 `;

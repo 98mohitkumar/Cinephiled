@@ -63,7 +63,7 @@ const tvShow = ({ tvData, error, languages, socialIds }) => {
     getyear = new Date(tvData.first_air_date).getFullYear();
     endyear =
       tvData.status === "Ended" || tvData.status === "Canceled"
-        ? "-" + new Date(tvData.last_air_date).getFullYear()
+        ? "- " + new Date(tvData.last_air_date).getFullYear()
         : "- ";
 
     const getH = Math.floor(tvData.episode_run_time[0] / 60);
