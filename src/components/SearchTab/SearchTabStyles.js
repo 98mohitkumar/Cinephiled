@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SearchTabWrapper = styled.div`
-  width: 50%;
+  width: 60%;
   height: 4.5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -28,12 +28,31 @@ export const SearchTabWrapper = styled.div`
   }
 
 `}
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    width: 80%;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.md} {
+    height: 4rem;
+    font-size: 18px;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    width: 85%;
+    margin: 0rem auto 1.75rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    height: 3.25rem;
+    font-size: 0.8rem;
+    width: 100%;
+  }
 `;
 
 export const SearchTabSlider = styled.div`
   position: absolute;
   width: 33.33%;
-  height: 4rem;
+  height: 100%;
   background: black;
   ${(props) =>
     props.tabState === "movies"
@@ -57,6 +76,10 @@ export const SearchTabSelectionTitle = styled.div`
   cursor: pointer;
   z-index: 5;
   transition: color 0.325s cubic-bezier(0.77, 0, 0.18, 1);
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 0rem;
+  }
 `;
 
 export const Keyword = styled.h2`
@@ -67,5 +90,9 @@ export const Keyword = styled.h2`
   &:hover {
     color: white;
     cursor: pointer;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    font-size: 2.5rem;
   }
 `;

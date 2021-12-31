@@ -118,16 +118,36 @@ export const SearchContainer = styled.div`
   height: auto;
   padding: 3rem 6rem;
   margin-bottom: auto;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    padding: 3rem 4.5rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.md} {
+    padding: 3rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    padding: 3rem 1rem;
+  }
 `;
 
 export const BadQuery = styled.h1`
   font-weight: bold;
-  font-size: 10rem;
+  font-size: calc(4rem + 4vw);
   text-align: center;
 `;
 
 export const SearchResultsContainer = styled.div`
   padding: 2rem 3rem;
+
+  @media only ${(props) => props.theme.breakpoints.md} {
+    padding: 2rem 1rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 1rem 0rem;
+  }
 `;
 
 export const EmptySearch = styled.h3`
@@ -164,6 +184,15 @@ export const QueryTitle = styled.span`
   font-weight: 500;
   font-size: 1.5rem;
   display: block;
+
+  @media only ${(props) => props.theme.breakpoints.md} {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    font-size: 16px;
+  }
 `;
 
 export const QueryInfoWrapper = styled.div`
@@ -171,6 +200,11 @@ export const QueryInfoWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 0.5rem;
+  }
 `;
 
 export const QueryRealeaseDate = styled.p`
@@ -179,6 +213,10 @@ export const QueryRealeaseDate = styled.p`
   font-family: "Satoshi", sans-serif;
   font-weight: 400;
   margin-bottom: 0rem;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    font-size: 14px;
+  }
 `;
 
 export const QueryDescription = styled.p`
@@ -189,6 +227,13 @@ export const QueryDescription = styled.p`
   -webkit-line-clamp: 2;
   margin-top: 10px;
   margin-bottom: 0rem;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    padding: 0.1rem 0rem;
+    line-height: 1.2;
+  }
 `;
 
 export const NoDataText = styled.p`
