@@ -2,6 +2,7 @@ import Navigation from "../components/Navigation/Navigation";
 import Head from "next/head";
 import {
   AboutContainer,
+  AboutCreditsWrapper,
   AboutWrapper,
   Wrapper,
 } from "../styles/GlobalComponents";
@@ -32,8 +33,8 @@ const About = () => {
               using the social media linked at the bottom.
             </p>
 
-            <h2 className="my-5 fw-bold display-3">Credits</h2>
-            <div className="d-flex mb-5 justify-content-between align-items-center w-50 m-auto">
+            <h2 className="my-4 fw-bold display-3">Credits</h2>
+            <AboutCreditsWrapper>
               <a
                 href="https://www.themoviedb.org"
                 target="_blank"
@@ -53,7 +54,7 @@ const About = () => {
                 </a>
                 |
               </div>
-            </div>
+            </AboutCreditsWrapper>
           </AboutContainer>
           <Footer />
         </AboutWrapper>

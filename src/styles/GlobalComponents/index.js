@@ -20,7 +20,12 @@ export const AboutWrapper = styled.div`
 `;
 
 export const AboutContainer = styled.div`
-  margin: 2rem 4rem auto;
+  margin: 1rem 4rem auto;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    margin: 2rem;
+    margin-bottom: auto;
+  }
 `;
 
 export const Error404 = styled.h1`
@@ -306,4 +311,17 @@ export const SocialMediaLinksWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 0.25rem;
+`;
+
+export const AboutCreditsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin: auto;
+  margin-bottom: 26px;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    width: 80%;
+  }
 `;
