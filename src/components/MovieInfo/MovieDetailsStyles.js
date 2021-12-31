@@ -203,3 +203,7 @@ export const PostersImg = styled.div`
   background: ${(props) =>
     `Url(https://image.tmdb.org/t/p/w780${props.poster}) no-repeat center center /cover;`};
 `;
+
+export const Tagline = styled.span`
+  font-weight: 400;
+`;

@@ -184,6 +184,10 @@ export const MovieSelection = styled.div`
   z-index: 5;
   transition: color 0.325s cubic-bezier(0.77, 0, 0.18, 1);
 
+  @media only ${(props) => props.theme.breakpoints.md} {
+    margin-top: -3px;
+  }
+
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0.2rem;
     font-size: 1rem;
@@ -193,7 +197,7 @@ export const MovieSelection = styled.div`
 export const Slider = styled.div`
   position: absolute;
   width: 50%;
-  height: 4rem;
+  height: 100%;
   background: black;
   ${(props) =>
     props.isMovies
@@ -203,12 +207,7 @@ export const Slider = styled.div`
   z-index: 4;
   transition: transform 0.325s cubic-bezier(0.77, 0, 0.18, 1);
 
-  @media only ${(props) => props.theme.breakpoints.md} {
-    height: 3.5rem;
-  }
-
   @media only ${(props) => props.theme.breakpoints.xs} {
-    height: 2.75rem;
     border-radius: 8px;
   }
 `;
@@ -222,6 +221,10 @@ export const TVSelection = styled.div`
   cursor: pointer;
   z-index: 5;
   transition: color 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+
+  @media only ${(props) => props.theme.breakpoints.md} {
+    margin-top: -3px;
+  }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0.2rem;

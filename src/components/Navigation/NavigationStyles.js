@@ -27,4 +27,13 @@ export const NavBar = styled.nav`
       color: ${(props) => props.theme.colors.accent2};
     }
   }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    height: 3.25rem;
+    gap: 0rem 1.75rem;
+
+    & > a {
+      padding: 0.5rem 2rem;
+    }
+  }
 `;

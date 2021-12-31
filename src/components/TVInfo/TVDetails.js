@@ -9,6 +9,7 @@ import {
   Rounded,
   RtoR,
   Span,
+  Tagline,
 } from "../MovieInfo/MovieDetailsStyles";
 
 const TVDetails = ({ tvData, date, runtime, crew }) => {
@@ -39,7 +40,7 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
         </RtoR>
         {tvData.tagline !== "" && (
           <i>
-            <Span className="fw-normal my-4 d-block">{tvData.tagline}</Span>
+            <Tagline className="my-4 d-block">{tvData.tagline}</Tagline>
           </i>
         )}
         <Span className="fw-normal">{tvData.overview}</Span>

@@ -40,16 +40,46 @@ export const Banner = styled.div`
   filter: brightness(50%);
   z-index: 1;
 
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    background: Url(/Images/poster.webp) repeat center / 90%;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.md} {
+    background: Url(/Images/poster.webp) repeat center / 110%;
+  }
+
   @media only ${(props) => props.theme.breakpoints.sm} {
     background: Url(/Images/poster.webp) repeat center / 140%;
   }
 `;
 
 export const Form = styled.form`
-  width: 60%;
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    width: 65%;
+  }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     width: 80%;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    display: block;
+
+    & > div {
+      width: 100% !important;
+      margin: auto !important;
+    }
+
+    & > button {
+      margin-top: 1rem;
+      margin-inline: auto;
+    }
   }
 `;
 
@@ -64,7 +94,6 @@ export const Button = styled.button`
     ${props.theme.colors.accent3},
     ${props.theme.colors.accent2}
   );`}
-  margin: auto;
   border: none;
   font-weight: 600;
   padding: 0.65rem 2rem;
@@ -89,8 +118,7 @@ export const UserInput = styled.input`
   font-weight: 500;
   color: white;
   font-family: "Manrope", sans-serif;
-  border-bottom: 1px solid #fff;
-  transition: background-color 0.75s ease-in-out;
+  transition: border 0.75s ease-in-out;
 
   &::placeholder {
     color: #fff;

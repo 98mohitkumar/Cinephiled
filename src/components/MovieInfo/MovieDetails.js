@@ -10,6 +10,7 @@ import {
   Span,
   CreditsWrapper,
   Credits,
+  Tagline,
 } from "./MovieDetailsStyles";
 
 const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
@@ -48,9 +49,9 @@ const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
         </RtoR>
         {movieDetailsData.tagline !== "" && (
           <i>
-            <Span className="fw-normal my-4 d-block">
+            <Tagline className="my-4 d-block">
               {movieDetailsData.tagline}
-            </Span>
+            </Tagline>
           </i>
         )}
         <Span className="fw-normal">{movieDetailsData.overview}</Span>

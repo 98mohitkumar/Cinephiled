@@ -43,7 +43,7 @@ const Hero = () => {
       <Banner />
       <HeroDiv>
         <Form>
-          <div className="m-2">
+          <div className="m-2 w-75">
             <UserInput
               type="text"
               className="form-control"
@@ -56,7 +56,7 @@ const Hero = () => {
           </div>
           <Button
             show={showButton}
-            className="btn d-block mt-3"
+            className="btn d-block"
             onClick={dbSearchHandler}
           >
             Search
