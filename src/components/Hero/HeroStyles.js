@@ -120,13 +120,10 @@ export const UserInput = styled.input`
   font-family: "Manrope", sans-serif;
   border-bottom: 1.75px solid;
   border-image-slice: 1;
-  border-image-source: linear-gradient(
-    90deg,
-    rgb(81 81 81 / 0.1),
-    rgb(255 255 255 / 0.4)
-  );
 
-  animation: shift 3.5s alternate-reverse linear infinite;
+  animation: 3.5s linear 0s alternate-reverse none infinite shift;
+  -webkit-animation: 3.5s linear 0s alternate-reverse none infinite shift;
+  -moz-animation: 3.5s linear 0s alternate-reverse none infinite shift;
 
   &::placeholder {
     color: #fff;

@@ -202,7 +202,7 @@ export const SearchContainer = styled.div`
 
 export const BadQuery = styled.h1`
   font-weight: bold;
-  font-size: calc(4rem + 4vw);
+  font-size: calc(2rem + 4vw);
   text-align: center;
 `;
 
