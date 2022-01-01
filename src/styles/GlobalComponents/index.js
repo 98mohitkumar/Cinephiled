@@ -418,6 +418,10 @@ export const HeroTrailer = styled.div`
   font-size: 1.1rem;
   cursor: pointer;
 
+  & span {
+    font-weight: bold;
+  }
+
   @media only ${(props) => props.theme.breakpoints.ip} {
     width: 12rem;
     font-size: 1rem;
