@@ -11,6 +11,8 @@ import {
   SeasonWrapper,
 } from "./TVStyles";
 
+import { NoDataText } from "../../styles/GlobalComponents";
+
 const TVSeasons = ({ seasons }) => {
   let seasonReleaseDates = [];
 
@@ -29,35 +31,43 @@ const TVSeasons = ({ seasons }) => {
   return (
     <>
       <SeasonsContainer>
-        {seasons.map((item, i) => (
-          <SeasonWrapper key={item.id} className="mb-5">
-            <SeasonImg poster={item.poster_path} />
-            <SeasonInfoWrapper>
-              <SeasonInfoMain>
-                <SeasonTitle>
-                  {item.name}
-                  {Today < new Date(seasonReleaseDates[i]) &&
-                  Today !== new Date(seasonReleaseDates[i])
-                    ? " (Upcoming)"
-                    : ""}
-                </SeasonTitle>
-                <SeaonDetailsWrapper>
-                  {seasonReleaseDates[i] !== null &&
-                    seasonReleaseDates[i] !== undefined && (
-                      <>
-                        <SeasonsRelease>{seasonReleaseDates[i]}</SeasonsRelease>
-                        <SeasonDetailsDivider />
-                      </>
-                    )}
-                  <SeasonsRelease>{item.episode_count} Episodes</SeasonsRelease>
-                </SeaonDetailsWrapper>
-                {item.overview !== "" && (
-                  <SeaonsOverview>{item.overview}</SeaonsOverview>
-                )}
-              </SeasonInfoMain>
-            </SeasonInfoWrapper>
-          </SeasonWrapper>
-        ))}
+        {seasons.length === 0 ? (
+          <NoDataText className="fw-bold text-center my-5">TBA</NoDataText>
+        ) : (
+          seasons.map((item, i) => (
+            <SeasonWrapper key={item.id} className="mb-5">
+              <SeasonImg poster={item.poster_path} />
+              <SeasonInfoWrapper>
+                <SeasonInfoMain>
+                  <SeasonTitle>
+                    {item.name}
+                    {Today < new Date(seasonReleaseDates[i]) &&
+                    Today !== new Date(seasonReleaseDates[i])
+                      ? " (Upcoming)"
+                      : ""}
+                  </SeasonTitle>
+                  <SeaonDetailsWrapper>
+                    {seasonReleaseDates[i] !== null &&
+                      seasonReleaseDates[i] !== undefined && (
+                        <>
+                          <SeasonsRelease>
+                            {seasonReleaseDates[i]}
+                          </SeasonsRelease>
+                          <SeasonDetailsDivider />
+                        </>
+                      )}
+                    <SeasonsRelease>
+                      {item.episode_count} Episodes
+                    </SeasonsRelease>
+                  </SeaonDetailsWrapper>
+                  {item.overview !== "" && (
+                    <SeaonsOverview>{item.overview}</SeaonsOverview>
+                  )}
+                </SeasonInfoMain>
+              </SeasonInfoWrapper>
+            </SeasonWrapper>
+          ))
+        )}
       </SeasonsContainer>
     </>
   );

@@ -39,6 +39,12 @@ const tvShow = ({ tvData, error, languages, socialIds }) => {
   let endyear = "";
   let epRuntime = {};
   let tvFacts = {};
+  let tvStatus = "";
+  let ogLanguage = "";
+  let netwrok = "";
+  let type = "";
+
+  console.log(tvData);
 
   if (error === false) {
     creditsDetails = tvData.credits;
@@ -70,11 +76,37 @@ const tvShow = ({ tvData, error, languages, socialIds }) => {
     const getM = Math.ceil((tvData.episode_run_time[0] / 60 - getH) * 60);
     epRuntime = { getH, getM };
 
+    tvStatus =
+      tvData.status === null ||
+      tvData.status === "" ||
+      tvData.status === undefined
+        ? "TBA"
+        : tvData.status;
+
+    ogLanguage =
+      tvData.original_language === null ||
+      tvData.original_language === "" ||
+      tvData.original_language === undefined
+        ? "TBA"
+        : tvData.original_language;
+
+    netwrok =
+      tvData.networks[0] === null ||
+      tvData.networks[0] === "" ||
+      tvData.networks[0] === undefined
+        ? "TBA"
+        : tvData.networks[0].name;
+
+    type =
+      tvData.type === null || tvData.type === "" || tvData.type === undefined
+        ? "TBA"
+        : tvData.type;
+
     tvFacts = {
-      status: tvData.status,
-      language: tvData.original_language,
-      network: tvData.networks[0].name,
-      type: tvData.type,
+      status: tvStatus,
+      language: ogLanguage,
+      network: netwrok,
+      type: type,
     };
   }
 

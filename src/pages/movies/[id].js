@@ -38,6 +38,8 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
   let creditsDetails = [];
   let movieFacts = {};
 
+  let status = "";
+
   let country = "";
 
   if (error === false) {
@@ -72,8 +74,15 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
     const getM = Math.ceil((movieDetails.runtime / 60 - getH) * 60);
     runtime = { getH, getM };
 
+    status =
+      movieDetails.status === null ||
+      movieDetails.status === "" ||
+      movieDetails.status === undefined
+        ? "TBA"
+        : movieDetails.status;
+
     movieFacts = {
-      status: movieDetails.status,
+      status,
       language: movieDetails.original_language,
       budget: movieDetails.budget,
       revenue: movieDetails.revenue,
