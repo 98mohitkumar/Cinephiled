@@ -49,12 +49,39 @@ export const TabWrapper = styled.div`
   & div:nth-child(5) {
     ${props.tabCheck === "posters" ? `color: white;` : `color: black;`}
   }`}
+
+  @media only ${(props) => props.theme.breakpoints.xl} {
+    width: ${(props) => (props.tv ? `55%;` : `50%;`)};
+  }
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    width: ${(props) => (props.tv ? `70%;` : `60%;`)};
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    width: ${(props) => (props.tv ? `80%;` : `75%;`)};
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    font-size: 1.1rem;
+    width: ${(props) => (props.tv ? `90%;` : `85%;`)};
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    font-size: 1.1rem;
+    width: ${(props) => (props.tv ? `95%;` : `95%;`)};
+  }
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    font-size: 0.9rem;
+    height: 3.25rem;
+    width: ${(props) => (props.tv ? `95%;` : `95%;`)};
+  }
 `;
 
 export const TabSlider = styled.div`
   position: absolute;
   width: ${(props) => (props.tv ? "20%;" : "25%;")};
-  height: 4rem;
+  height: 100%;
   background: black;
   ${(props) =>
     props.tv
@@ -92,4 +119,8 @@ export const TabSelectionTitle = styled.div`
   cursor: pointer;
   z-index: 5;
   transition: color 0.325s cubic-bezier(0.77, 0, 0.18, 1);
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    padding: 0.25rem;
+  }
 `;

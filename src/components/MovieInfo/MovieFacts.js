@@ -1,4 +1,4 @@
-import { FlexWrapper } from "../../styles/GlobalComponents";
+import { FactsFlexWrapper } from "../../styles/GlobalComponents";
 import {
   FactsFieldSet,
   FactsLegend,
@@ -6,7 +6,13 @@ import {
   Span,
 } from "./MovieDetailsStyles";
 
-const MovieFacts = ({ facts, languages }) => {
+import countryToCurrency from "country-to-currency";
+
+import getSymbolFromCurrency from "currency-symbol-map";
+
+const MovieFacts = ({ facts, languages, country }) => {
+  const currencyCode = countryToCurrency[country];
+  const currency = getSymbolFromCurrency(currencyCode);
   const ogLanguage = facts.language;
 
   let FactsLanguage = "";
@@ -21,37 +27,37 @@ const MovieFacts = ({ facts, languages }) => {
     <FactsFieldSet>
       <FactsLegend className="fw-bold">Facts</FactsLegend>
       <FactsWrapper>
-        <FlexWrapper>
+        <FactsFlexWrapper>
           <Span>Status</Span>
           <Span className="fw-normal">{facts.status}</Span>
-        </FlexWrapper>
+        </FactsFlexWrapper>
 
-        <FlexWrapper>
+        <FactsFlexWrapper>
           <Span>Language</Span>
           <Span className="fw-normal">{FactsLanguage}</Span>
-        </FlexWrapper>
+        </FactsFlexWrapper>
 
-        <FlexWrapper>
+        <FactsFlexWrapper>
           <Span>Budget</Span>
           {facts.budget === 0 ? (
             <Span className="fw-normal">-</Span>
           ) : (
             <Span className="fw-normal">
-              {"$" + facts.budget.toLocaleString()}
+              {currency + " " + facts.budget.toLocaleString()}
             </Span>
           )}
-        </FlexWrapper>
+        </FactsFlexWrapper>
 
-        <FlexWrapper>
+        <FactsFlexWrapper>
           <Span>Revenue</Span>
           {facts.revenue === 0 ? (
             <Span className="fw-normal">-</Span>
           ) : (
             <Span className="fw-normal">
-              {"$" + facts.revenue.toLocaleString()}
+              {currency + " " + facts.revenue.toLocaleString()}
             </Span>
           )}
-        </FlexWrapper>
+        </FactsFlexWrapper>
       </FactsWrapper>
     </FactsFieldSet>
   );

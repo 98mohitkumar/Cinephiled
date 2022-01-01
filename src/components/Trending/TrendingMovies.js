@@ -8,8 +8,14 @@ import {
   MoviesInfoTitle,
   ReleaseDate,
 } from "../Popular/PopularStyles";
+
 const TrendingMovies = ({ movies }) => {
   movies.splice(15);
+
+  movies.forEach((item) => {
+    if (item.vote_average === 0) item.vote_average = "NR";
+  });
+
   let arr = [];
 
   function releaseDates() {

@@ -5,6 +5,7 @@ import {
   GenreWrap,
   HeroInfoTitle,
   HeroInfoWrapper,
+  Overview,
   RatingWrapper,
   Rounded,
   RtoR,
@@ -28,7 +29,7 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
               {tvData.genres.map((item) => (
                 <Rounded key={item.id}>{item.name}</Rounded>
               ))}
-              <Divider className="me-3 ms-2" />
+              <Divider />
             </GenreWrap>
           )}
           <Span>
@@ -43,7 +44,7 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
             <Tagline className="my-4 d-block">{tvData.tagline}</Tagline>
           </i>
         )}
-        <Span className="fw-normal">{tvData.overview}</Span>
+        <Overview className="fw-normal">{tvData.overview}</Overview>
         <RatingWrapper>
           {tvData.vote_average !== 0 ? (
             <>

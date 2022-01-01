@@ -4,6 +4,19 @@ export const SeasonsContainer = styled.div`
   width: 80%;
   margin: auto;
   padding: 3rem 5rem;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    padding: 3rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    width: 90%;
+    padding: 3rem 2rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    padding: 3rem 0rem;
+  }
 `;
 
 export const SeasonWrapper = styled.div`

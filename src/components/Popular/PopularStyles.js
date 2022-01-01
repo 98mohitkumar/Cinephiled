@@ -8,7 +8,7 @@ export const MoviesSection = styled.div`
   justify-content: center;
   gap: 2rem 0rem;
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     grid-template-columns: repeat(auto-fit, minmax(190px, 235px));
     padding: 1.75rem !important;
     gap: 1.25rem 0rem;
@@ -20,8 +20,8 @@ export const MoviesSection = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0.75rem !important;
-    gap: 0.35rem 0rem;
+    padding: 0.5rem !important;
+    gap: 0.35rem 0.25rem;
     grid-template-columns: repeat(auto-fit, minmax(160px, 175px));
   }
 `;
@@ -31,7 +31,7 @@ export const Cards = styled.div`
   max-height: auto;
   align-self: flex-start;
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     width: 13.2rem;
   }
 
@@ -112,7 +112,7 @@ export const TVSection = styled.div`
   gap: 2rem 0rem;
   margin: auto;
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     grid-template-columns: repeat(auto-fit, minmax(190px, 235px));
     padding: 1.75rem !important;
     gap: 1.25rem 0rem;
@@ -124,8 +124,8 @@ export const TVSection = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0.75rem !important;
-    gap: 0.35rem 0rem;
+    padding: 0.5rem !important;
+    gap: 0.35rem 0.25rem;
     grid-template-columns: repeat(auto-fit, minmax(160px, 175px));
   }
 `;
@@ -161,7 +161,7 @@ export const Tab = styled.div`
     width: 50%;
   }
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     width: 75%;
     height: 4rem;
     margin: 2rem auto;
@@ -184,13 +184,14 @@ export const MovieSelection = styled.div`
   z-index: 5;
   transition: color 0.325s cubic-bezier(0.77, 0, 0.18, 1);
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     margin-top: -3px;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0.2rem;
     font-size: 1rem;
+    margin-top: 0px;
   }
 `;
 
@@ -222,12 +223,13 @@ export const TVSelection = styled.div`
   z-index: 5;
   transition: color 0.4s cubic-bezier(0.77, 0, 0.18, 1);
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     margin-top: -3px;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0.2rem;
     font-size: 1rem;
+    margin-top: 0px;
   }
 `;

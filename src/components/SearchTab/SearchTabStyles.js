@@ -32,7 +32,7 @@ export const SearchTabWrapper = styled.div`
     width: 80%;
   }
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     height: 4rem;
     font-size: 18px;
   }
@@ -44,7 +44,7 @@ export const SearchTabWrapper = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     height: 3.25rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     width: 100%;
   }
 `;

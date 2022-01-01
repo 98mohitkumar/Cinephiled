@@ -1,4 +1,4 @@
-import { FlexWrapper } from "../../styles/GlobalComponents";
+import { FactsFlexWrapper } from "../../styles/GlobalComponents";
 import {
   FactsFieldSet,
   FactsLegend,
@@ -21,25 +21,25 @@ const TVFacts = ({ facts, languages }) => {
     <FactsFieldSet>
       <FactsLegend className="fw-bold">Facts</FactsLegend>
       <FactsWrapper>
-        <FlexWrapper>
+        <FactsFlexWrapper>
           <Span>Status</Span>
           <Span className="fw-normal">{facts.status}</Span>
-        </FlexWrapper>
+        </FactsFlexWrapper>
 
-        <FlexWrapper>
+        <FactsFlexWrapper>
           <Span>Language</Span>
           <Span className="fw-normal">{FactsLanguage}</Span>
-        </FlexWrapper>
+        </FactsFlexWrapper>
 
-        <FlexWrapper>
+        <FactsFlexWrapper>
           <Span>Network</Span>
           <Span className="fw-normal">{facts.network}</Span>
-        </FlexWrapper>
+        </FactsFlexWrapper>
 
-        <FlexWrapper>
+        <FactsFlexWrapper>
           <Span>Type</Span>
           <Span className="fw-normal">{facts.type}</Span>
-        </FlexWrapper>
+        </FactsFlexWrapper>
       </FactsWrapper>
     </FactsFieldSet>
   );

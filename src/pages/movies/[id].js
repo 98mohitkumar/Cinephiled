@@ -38,6 +38,8 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
   let creditsDetails = [];
   let movieFacts = {};
 
+  let country = "";
+
   if (error === false) {
     creditsDetails = movieDetails.credits;
 
@@ -58,6 +60,11 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
     cast = creditsDetails.cast;
 
     cast.splice(15);
+
+    country =
+      movieDetails.production_countries[0] === undefined
+        ? "US"
+        : movieDetails.production_countries[0].iso_3166_1;
 
     getyear = new Date(movieDetails.release_date).getFullYear();
 
@@ -112,7 +119,7 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
 
                 <DetailsHeroWrap>
                   <HeroImgWrapper>
-                    <HeroImg data={movieDetails.poster_path} className="mx-5" />
+                    <HeroImg data={movieDetails.poster_path} />
                     {videos.length !== 0 && (
                       <a
                         href={`https://www.youtube.com/watch?v=${videos[0].key}`}
@@ -142,7 +149,11 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
                   </HeroInfo>
                 </DetailsHeroWrap>
               </HeroDetailsContainer>
-              <MovieFacts facts={movieFacts} languages={languages} />
+              <MovieFacts
+                facts={movieFacts}
+                languages={languages}
+                country={country}
+              />
               <MovieTab
                 id={movieDetails.id}
                 cast={cast}

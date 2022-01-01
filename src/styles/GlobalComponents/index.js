@@ -65,6 +65,14 @@ export const HeroDetailsContainer = styled.div`
 export const HeroBgContainer = styled.div`
   inset: 0;
   z-index: -1;
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    bottom: 20rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    bottom: 45rem;
+  }
 `;
 
 export const HeroBg = styled.div`
@@ -82,16 +90,40 @@ export const HeroImg = styled.div`
       : `Url(/Images/DefaultImage.png) no-repeat center center /cover`};
   border-radius: 12px;
   box-shadow: 0 0 2rem rgb(12 12 12 /0.4);
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    margin: 0rem !important;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    height: 18rem;
+    width: 12rem;
+  }
 `;
 
 export const DetailsHeroWrap = styled.div`
-  padding: 3.5rem 5rem;
+  padding: 3.5rem 4.2vw;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 315px 1fr;
   align-items: center;
   justify-items: center;
   min-height: 40rem;
   gap: 0rem 2rem;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    grid-template-columns: 280px 1fr;
+    padding: 3rem 2rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 3rem 1rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 2rem 5px;
+  }
 `;
 
 export const HeroInfo = styled.div`
@@ -105,6 +137,29 @@ export const FlexWrapper = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: column;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    & span {
+      font-size: 14px;
+    }
+  }
+`;
+
+export const FactsFlexWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    & > :nth-child(1) {
+      font-size: 20px;
+    }
+
+    & > :nth-child(2) {
+      font-size: 16px;
+    }
+  }
 `;
 
 export const Gradient = styled.div`
@@ -112,6 +167,14 @@ export const Gradient = styled.div`
   background: linear-gradient(0deg, #121212 14%, rgba(21, 21, 21, 0.5) 100%);
   inset: 0;
   z-index: -1;
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    bottom: 20rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    bottom: 45rem;
+  }
 `;
 
 export const SearchHeading = styled.h1`
@@ -128,7 +191,7 @@ export const SearchContainer = styled.div`
     padding: 3rem 4.5rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     padding: 3rem;
   }
 
@@ -146,7 +209,7 @@ export const BadQuery = styled.h1`
 export const SearchResultsContainer = styled.div`
   padding: 2rem 3rem;
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     padding: 2rem 1rem;
   }
 
@@ -190,7 +253,7 @@ export const QueryTitle = styled.span`
   font-size: 1.5rem;
   display: block;
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     font-size: 20px;
     line-height: 1.2;
   }
@@ -248,6 +311,14 @@ export const NoDataText = styled.p`
 export const RecommendationsContainer = styled.div`
   width: 100%;
   padding: 1rem 3rem;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    padding: 1rem 2rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 1rem;
+  }
 `;
 
 export const RecommendationsGrid = styled.div`
@@ -256,12 +327,35 @@ export const RecommendationsGrid = styled.div`
   display: grid;
   place-items: center;
   grid-template-columns: repeat(5, 1fr);
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0rem 1rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    grid-template-columns: 1fr;
+    padding: 0px;
+  }
 `;
 
 export const RecommendedWrapper = styled.div`
   width: 100%;
   padding: 1rem;
   align-self: flex-start;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    grid-template-columns: 1fr;
+    padding: 0.5rem 0rem;
+  }
 `;
 
 export const RecommendedImg = styled.div`
@@ -277,15 +371,38 @@ export const RecommendedImg = styled.div`
       0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
       0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
   }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    height: 200px;
+  }
 `;
 
 export const HeroImgWrapper = styled.div`
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: max-content;
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
   gap: 2rem 0rem;
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    padding: 0rem;
+    grid-template-columns: 192px;
+    justify-items: flex-start;
+    padding: 0rem 1rem;
+    gap: 2rem;
+
+    & > div:first-child {
+      grid-column: 1 / span 2;
+    }
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    gap: 1.75rem;
+    & > div:first-child {
+      grid-column: 1 / span 1;
+    }
+  }
 `;
 
 export const HeroTrailer = styled.div`
@@ -301,6 +418,11 @@ export const HeroTrailer = styled.div`
   gap: 0.75rem;
   font-size: 1.1rem;
   cursor: pointer;
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    width: 12rem;
+    font-size: 1rem;
+  }
 `;
 
 export const SocialMediaLinksWrapper = styled.div`
@@ -311,6 +433,16 @@ export const SocialMediaLinksWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 0.25rem;
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    justify-content: flex-start;
+    width: max-content;
+    gap: 4rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    gap: 3rem;
+  }
 `;
 
 export const AboutCreditsWrapper = styled.div`

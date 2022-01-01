@@ -13,7 +13,7 @@ export const FooterWrapper = styled.footer`
     ${props.theme.colors.accent1}
   )`};
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     padding: 1rem 2.5rem;
   }
 
@@ -32,7 +32,7 @@ export const FooterBranding = styled.span`
   font-size: calc(1.3rem + 0.6vw);
   margin: 0rem 1rem;
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     margin: 0rem;
   }
 `;
@@ -43,9 +43,9 @@ export const FooterAttribute = styled.div`
   background: url("https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg")
     no-repeat center center / contain;
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    width: 4rem;
-    height: 2rem;
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    width: 4.25rem;
+    height: 2.5rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
@@ -61,7 +61,7 @@ export const SocialIconsContainer = styled.div`
   gap: 0rem 5rem;
   margin: 0 1rem;
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     margin: 0rem;
     gap: 0rem 3rem;
   }
@@ -75,7 +75,7 @@ export const SocialIcons = styled.a`
     cursor: pointer;
   }
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     & > svg {
       width: 2rem;
       height: 2rem;

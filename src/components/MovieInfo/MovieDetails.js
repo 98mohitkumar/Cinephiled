@@ -11,6 +11,8 @@ import {
   CreditsWrapper,
   Credits,
   Tagline,
+  ReleaseDateWrapper,
+  Overview,
 } from "./MovieDetailsStyles";
 
 const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
@@ -30,14 +32,16 @@ const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
           {movieDetailsData.title} ({date})
         </HeroInfoTitle>
         <RtoR className="my-3">
-          <Span>{releaseDate}</Span>
-          <Divider className="mx-3" />
+          <ReleaseDateWrapper>
+            <Span>{releaseDate}</Span>
+          </ReleaseDateWrapper>
           {movieDetailsData.genres.length > 0 && (
             <GenreWrap className="fw-bold">
+              <Divider />
               {movieDetailsData.genres.map((item) => (
                 <Rounded key={item.id}>{item.name}</Rounded>
               ))}
-              <Divider className="me-3 ms-2" />
+              <Divider />
             </GenreWrap>
           )}
           <Span>
@@ -54,12 +58,18 @@ const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
             </Tagline>
           </i>
         )}
-        <Span className="fw-normal">{movieDetailsData.overview}</Span>
+        <Overview className="fw-normal">{movieDetailsData.overview}</Overview>
         <RatingWrapper>
-          <Span className="display-3 fw-bolder">
-            {movieDetailsData.vote_average}
-          </Span>
-          <span> / 10</span>
+          {movieDetailsData.vote_average !== 0 ? (
+            <>
+              <Span className="display-3 fw-bolder">
+                {movieDetailsData.vote_average}
+              </Span>
+              <span> / 10</span>
+            </>
+          ) : (
+            <Span className="display-3 fw-bolder">NR</Span>
+          )}
         </RatingWrapper>
         <CreditsWrapper>
           {crew.map((item) => (

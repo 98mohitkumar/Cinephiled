@@ -44,7 +44,7 @@ export const Banner = styled.div`
     background: Url(/Images/poster.webp) repeat center / 90%;
   }
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     background: Url(/Images/poster.webp) repeat center / 110%;
   }
 
@@ -133,7 +133,7 @@ export const UserInput = styled.input`
     border-color: white;
   }
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${(props) => props.theme.breakpoints.ip} {
     font-size: 1.2rem;
     padding: 0.2rem;
   }

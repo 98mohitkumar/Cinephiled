@@ -115,7 +115,7 @@ const tvShow = ({ tvData, error, languages, socialIds }) => {
                 </HeroBgContainer>
                 <DetailsHeroWrap>
                   <HeroImgWrapper>
-                    <HeroImg data={tvData.poster_path} className="mx-5" />
+                    <HeroImg data={tvData.poster_path} />
                     {videos.length !== 0 && (
                       <a
                         href={`https://www.youtube.com/watch?v=${videos[0].key}`}
