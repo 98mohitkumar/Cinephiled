@@ -37,7 +37,7 @@ export const GenreWrap = styled.div`
   justify-content: flex-start;
   align-items: center;
   max-width: 88vw;
-  width: max-content;
+  width: fit-content;
   gap: 0rem 1rem;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
@@ -91,7 +91,8 @@ export const RtoR = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: max-content;
+  flex-wrap: wrap;
+  width: fit-content;
   gap: 1rem;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
@@ -176,8 +177,10 @@ export const FactsWrapper = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    gap: 2rem 2.5rem;
+    gap: 2rem 6rem;
     padding: 0.5rem;
+    grid-template-columns: repeat(2, max-content);
+    justify-items: flex-start;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {

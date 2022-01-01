@@ -72,9 +72,9 @@ export const TabWrapper = styled.div`
     width: ${(props) => (props.tv ? `95%;` : `95%;`)};
   }
   @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     height: 3.25rem;
-    width: ${(props) => (props.tv ? `95%;` : `95%;`)};
+    width: ${(props) => (props.tv ? `95%;` : `90%;`)};
   }
 `;
 

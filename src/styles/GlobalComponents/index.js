@@ -383,6 +383,8 @@ export const HeroImgWrapper = styled.div`
   grid-template-columns: 1fr;
   place-items: center;
   gap: 2rem 0rem;
+  align-self: flex-start;
+  padding-top: 1rem;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     padding: 0rem;
@@ -439,7 +441,7 @@ export const SocialMediaLinksWrapper = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     justify-content: flex-start;
-    width: max-content;
+    width: fit-content;
     gap: 4rem;
   }
 
