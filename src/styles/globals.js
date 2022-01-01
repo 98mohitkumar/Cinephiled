@@ -56,6 +56,12 @@ const GlobalStyles = createGlobalStyle`
   a {
     text-decoration: none;
     color: #ddd;
+
+    @media ${(props) => props.theme.breakpoints.lg}{
+      &:hover {
+        color: #ddd;
+      }
+    }
   }
   li{
     list-style: none;

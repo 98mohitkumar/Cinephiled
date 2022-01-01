@@ -75,6 +75,12 @@ export const SocialIcons = styled.a`
     cursor: pointer;
   }
 
+  @media ${(props) => props.theme.breakpoints.lg} {
+    &:hover {
+      color: #ddd;
+    }
+  }
+
   @media only ${(props) => props.theme.breakpoints.ip} {
     & > svg {
       width: 2rem;

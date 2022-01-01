@@ -427,7 +427,7 @@ export const BackdropsImg = styled.div`
     transform: scale(1.2);
   }
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${(props) => props.theme.breakpoints.lg} {
     &:hover {
       transform: scale(1.4);
     }
