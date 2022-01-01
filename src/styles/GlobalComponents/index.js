@@ -305,7 +305,8 @@ export const QueryDescription = styled.p`
 `;
 
 export const NoDataText = styled.p`
-  padding: 1.25rem 6rem;
+  padding: 1.25rem;
+  font-size: 2.25rem;
 `;
 
 export const RecommendationsContainer = styled.div`
@@ -322,7 +323,6 @@ export const RecommendationsContainer = styled.div`
 `;
 
 export const RecommendationsGrid = styled.div`
-  width: 100%;
   padding: 0rem 3rem;
   display: grid;
   place-items: center;
@@ -353,7 +353,6 @@ export const RecommendedWrapper = styled.div`
   align-self: flex-start;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    grid-template-columns: 1fr;
     padding: 0.5rem 0rem;
   }
 `;

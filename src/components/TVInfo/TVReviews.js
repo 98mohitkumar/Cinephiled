@@ -28,7 +28,7 @@ const TVReviews = ({ reviews }) => {
     <>
       <ReviewsContainer>
         {tvReviews.length === 0 ? (
-          <NoDataText className="display-3 fw-bold text-center my-5">
+          <NoDataText className="fw-bold text-center my-5">
             No Reviews Yet
           </NoDataText>
         ) : (

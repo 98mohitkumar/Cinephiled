@@ -15,7 +15,7 @@ const TVRecommendations = ({ Tv }) => {
     <>
       <RecommendationsContainer>
         {Tv.length === 0 ? (
-          <NoDataText className="display-3 fw-bold text-center my-5">
+          <NoDataText className="fw-bold text-center my-5">
             No Recommendations For Now
           </NoDataText>
         ) : (

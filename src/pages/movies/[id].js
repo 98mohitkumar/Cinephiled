@@ -138,8 +138,8 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
                       homepage={movieDetails.homepage}
                     />
                   </HeroImgWrapper>
+                  <Gradient />
                   <HeroInfo className="d-flex">
-                    <Gradient />
                     <MovieDetails
                       movieDetailsData={movieDetails}
                       date={getyear}

@@ -12,9 +12,7 @@ const TVCast = ({ cast }) => {
   return (
     <CastContainer>
       {cast.length === 0 ? (
-        <NoDataText className="display-3 fw-bold text-center my-5">
-          TBA
-        </NoDataText>
+        <NoDataText className="fw-bold text-center my-5">TBA</NoDataText>
       ) : (
         <CastGrid>
           {cast.map((item) => (
