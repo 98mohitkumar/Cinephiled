@@ -20,10 +20,10 @@ export const AboutWrapper = styled.div`
 `;
 
 export const AboutContainer = styled.div`
-  margin: 1rem 4rem auto;
+  margin: 0rem 4rem auto;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    margin: 2rem;
+    margin: 0rem 2rem;
     margin-bottom: auto;
   }
 `;
