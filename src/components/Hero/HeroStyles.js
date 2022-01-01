@@ -111,14 +111,22 @@ export const UserInput = styled.input`
   border: none;
   box-shadow: none;
   border-radius: 0;
-  height: 4rem;
+  height: 3rem;
   background-color: transparent;
   font-size: x-large;
   margin: auto;
   font-weight: 500;
   color: white;
   font-family: "Manrope", sans-serif;
-  transition: border 0.75s ease-in-out;
+  border-bottom: 1.75px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(
+    90deg,
+    rgb(81 81 81 / 0.1),
+    rgb(255 255 255 / 0.4)
+  );
+
+  animation: shift 3.5s alternate-reverse linear infinite;
 
   &::placeholder {
     color: #fff;
@@ -131,6 +139,24 @@ export const UserInput = styled.input`
     box-shadow: none;
     color: white;
     border-color: white;
+  }
+
+  @keyframes shift {
+    from {
+      border-image-source: linear-gradient(
+        90deg,
+        rgb(51 51 51 / 0.1),
+        rgb(255 255 255 / 1)
+      );
+    }
+
+    to {
+      border-image-source: linear-gradient(
+        270deg,
+        rgb(51 51 51 / 0.1),
+        rgb(255 255 255 / 1)
+      );
+    }
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
