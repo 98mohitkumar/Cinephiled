@@ -36,6 +36,7 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
       <h1 className="display-5 fw-bold text-white text-center my-4">
         What&#39;s Popular
       </h1>
+
       {isMovies && (
         <>
           <PopularMovies movies={moviesData} />
@@ -45,6 +46,7 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
           <TrendingMovies movies={trendingMovies} />
         </>
       )}
+
       {!isMovies && (
         <>
           <PopularTV TV={TVData} />
