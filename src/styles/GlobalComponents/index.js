@@ -71,7 +71,7 @@ export const HeroBgContainer = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    bottom: 45rem;
+    bottom: 50%;
   }
 `;
 
@@ -175,7 +175,7 @@ export const Gradient = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    bottom: 45rem;
+    bottom: 50%;
   }
 `;
 
@@ -308,7 +308,7 @@ export const QueryDescription = styled.p`
 
 export const NoDataText = styled.p`
   padding: 1.25rem;
-  font-size: 2.25rem;
+  font-size: 2rem;
 `;
 
 export const RecommendationsContainer = styled.div`
@@ -320,7 +320,7 @@ export const RecommendationsContainer = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1rem;
+    padding: 0.5rem;
   }
 `;
 
