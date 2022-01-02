@@ -28,17 +28,17 @@ const MovieFacts = ({ facts, languages, country }) => {
       <FactsLegend className="fw-bold">Facts</FactsLegend>
       <FactsWrapper>
         <FactsFlexWrapper>
-          <Span>Status</Span>
+          <Span className="fw-bold">Status</Span>
           <Span className="fw-normal">{facts.status}</Span>
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
-          <Span>Language</Span>
+          <Span className="fw-bold">Language</Span>
           <Span className="fw-normal">{FactsLanguage}</Span>
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
-          <Span>Budget</Span>
+          <Span className="fw-bold">Budget</Span>
           {facts.budget === 0 ? (
             <Span className="fw-normal">-</Span>
           ) : (
@@ -49,7 +49,7 @@ const MovieFacts = ({ facts, languages, country }) => {
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
-          <Span>Revenue</Span>
+          <Span className="fw-bold">Revenue</Span>
           {facts.revenue === 0 ? (
             <Span className="fw-normal">-</Span>
           ) : (

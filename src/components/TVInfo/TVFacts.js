@@ -22,22 +22,22 @@ const TVFacts = ({ facts, languages }) => {
       <FactsLegend className="fw-bold">Facts</FactsLegend>
       <FactsWrapper>
         <FactsFlexWrapper>
-          <Span>Status</Span>
+          <Span className="fw-bold">Status</Span>
           <Span className="fw-normal">{facts.status}</Span>
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
-          <Span>Language</Span>
+          <Span className="fw-bold">Language</Span>
           <Span className="fw-normal">{FactsLanguage}</Span>
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
-          <Span>Network</Span>
+          <Span className="fw-bold">Network</Span>
           <Span className="fw-normal">{facts.network}</Span>
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
-          <Span>Type</Span>
+          <Span className="fw-bold">Type</Span>
           <Span className="fw-normal">{facts.type}</Span>
         </FactsFlexWrapper>
       </FactsWrapper>
