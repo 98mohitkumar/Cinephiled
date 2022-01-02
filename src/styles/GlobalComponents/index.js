@@ -464,3 +464,14 @@ export const AboutCreditsWrapper = styled.div`
     width: 80%;
   }
 `;
+
+export const Loader = styled.div`
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  background: Url(/Images/Loader.svg) no-repeat center center / contain;
+`;

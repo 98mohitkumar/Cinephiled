@@ -64,6 +64,10 @@ export const Form = styled.form`
     width: 65%;
   }
 
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    gap: 2.5rem;
+  }
+
   @media only ${(props) => props.theme.breakpoints.sm} {
     width: 80%;
   }
