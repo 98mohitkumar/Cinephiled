@@ -9,6 +9,7 @@ import {
   QueryDescription,
 } from "../../styles/GlobalComponents";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const TVSearch = ({ tvRes, tvReleaseDates }) => {
   return (
@@ -20,18 +21,20 @@ const TVSearch = ({ tvRes, tvReleaseDates }) => {
           </EmptySearch>
         ) : (
           tvRes.map((item, i) => (
-            <Link key={item.id} href={"/tv/" + item.id} passHref>
-              <QueryContainer>
-                <QueryImg poster={item.poster_path} />
-                <QueryInfoWrapper>
-                  <div>
-                    <QueryTitle>{item.name}</QueryTitle>
-                    <QueryRealeaseDate>{tvReleaseDates[i]}</QueryRealeaseDate>
-                  </div>
-                  <QueryDescription>{item.overview}</QueryDescription>
-                </QueryInfoWrapper>
-              </QueryContainer>
-            </Link>
+            <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
+              <Link href={"/tv/" + item.id} passHref>
+                <QueryContainer>
+                  <QueryImg poster={item.poster_path} />
+                  <QueryInfoWrapper>
+                    <div>
+                      <QueryTitle>{item.name}</QueryTitle>
+                      <QueryRealeaseDate>{tvReleaseDates[i]}</QueryRealeaseDate>
+                    </div>
+                    <QueryDescription>{item.overview}</QueryDescription>
+                  </QueryInfoWrapper>
+                </QueryContainer>
+              </Link>
+            </motion.div>
           ))
         )}
       </SearchResultsContainer>

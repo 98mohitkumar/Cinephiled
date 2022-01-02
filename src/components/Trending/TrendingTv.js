@@ -10,6 +10,8 @@ import {
 
 import Link from "next/link";
 
+import { motion } from "framer-motion";
+
 const TrendingTv = ({ Tv }) => {
   Tv.splice(15);
   Tv.forEach((item) => {
@@ -30,16 +32,24 @@ const TrendingTv = ({ Tv }) => {
         {Tv.length > 0 &&
           Tv.map((TV, i) => (
             <Cards key={TV.id}>
-              <Link href={"/tv/" + TV.id} passHref>
-                <CardImg
-                  data={TV.poster_path}
-                  className="d-flex justify-content-end"
-                >
-                  <Rating className="d-flex justify-content-center align-items-center me-3">
-                    {TV.vote_average}
-                  </Rating>
-                </CardImg>
-              </Link>
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.1 },
+                }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Link href={"/tv/" + TV.id} passHref>
+                  <CardImg
+                    data={TV.poster_path}
+                    className="d-flex justify-content-end"
+                  >
+                    <Rating className="d-flex justify-content-center align-items-center me-3">
+                      {TV.vote_average}
+                    </Rating>
+                  </CardImg>
+                </Link>
+              </motion.div>
               <TVInfo>
                 <TVInfoTitle>{TV.name}</TVInfoTitle>
                 <ReleaseDate>{arr[i]}</ReleaseDate>

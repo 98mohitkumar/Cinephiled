@@ -76,7 +76,7 @@ export const Form = styled.form`
       margin: auto !important;
     }
 
-    & > button {
+    & > div > button {
       margin-top: 1rem;
       margin-inline: auto;
     }
@@ -97,6 +97,8 @@ export const Button = styled.button`
   border: none;
   font-weight: 600;
   padding: 0.65rem 2rem;
+  cursor: ${(props) =>
+    props.show ? "pointer !important" : "default !important"};
   visibility: ${(props) =>
     props.show ? "visible !important" : "none !important"};
   opacity: ${(props) => (props.show ? "1 !important" : "0 !important")};

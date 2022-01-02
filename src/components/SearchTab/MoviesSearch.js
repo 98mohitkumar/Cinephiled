@@ -9,6 +9,7 @@ import {
   QueryDescription,
 } from "../../styles/GlobalComponents";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const MoviesSearch = ({ movieRes, movieReleaseDates }) => {
   return (
@@ -20,20 +21,22 @@ const MoviesSearch = ({ movieRes, movieReleaseDates }) => {
           </EmptySearch>
         ) : (
           movieRes.map((item, i) => (
-            <Link key={item.id} href={"/movies/" + item.id} passHref>
-              <QueryContainer>
-                <QueryImg poster={item.poster_path} />
-                <QueryInfoWrapper>
-                  <div>
-                    <QueryTitle>{item.title}</QueryTitle>
-                    <QueryRealeaseDate>
-                      {movieReleaseDates[i]}
-                    </QueryRealeaseDate>
-                  </div>
-                  <QueryDescription>{item.overview}</QueryDescription>
-                </QueryInfoWrapper>
-              </QueryContainer>
-            </Link>
+            <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
+              <Link href={"/movies/" + item.id} passHref>
+                <QueryContainer>
+                  <QueryImg poster={item.poster_path} />
+                  <QueryInfoWrapper>
+                    <div>
+                      <QueryTitle>{item.title}</QueryTitle>
+                      <QueryRealeaseDate>
+                        {movieReleaseDates[i]}
+                      </QueryRealeaseDate>
+                    </div>
+                    <QueryDescription>{item.overview}</QueryDescription>
+                  </QueryInfoWrapper>
+                </QueryContainer>
+              </Link>
+            </motion.div>
           ))
         )}
       </SearchResultsContainer>

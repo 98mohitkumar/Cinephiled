@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRef } from "react";
 import { Container } from "../../styles/GlobalComponents";
 import { Banner, Button, Form, HeroDiv, UserInput } from "./HeroStyles";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const name = useRef("");
@@ -28,7 +29,11 @@ const Hero = () => {
     event.preventDefault();
     const searchQuery = userInput;
 
-    if (searchQuery.length === 0 || searchQuery.trim().length === 0) {
+    if (
+      searchQuery === undefined ||
+      searchQuery.length === 0 ||
+      searchQuery.trim().length === 0
+    ) {
       name.current.value = "";
       return;
     } else {
@@ -54,13 +59,21 @@ const Hero = () => {
               onChange={inputChangeHandler}
             />
           </div>
-          <Button
-            show={showButton}
-            className="btn d-block"
-            onClick={dbSearchHandler}
+
+          <motion.div
+            whileHover={{
+              scale: 1.05,
+            }}
+            whileTap={{ scale: 0.9 }}
           >
-            Search
-          </Button>
+            <Button
+              show={showButton}
+              className="btn d-block"
+              onClick={dbSearchHandler}
+            >
+              Search
+            </Button>
+          </motion.div>
         </Form>
       </HeroDiv>
     </Container>

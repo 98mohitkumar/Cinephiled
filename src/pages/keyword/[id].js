@@ -9,6 +9,7 @@ import {
   Wrapper,
 } from "../../styles/GlobalComponents";
 import { EmptySearch } from "../../styles/GlobalComponents";
+import { motion } from "framer-motion";
 
 import Link from "next/link";
 import {
@@ -41,53 +42,60 @@ const Keyword = ({ error, results, name }) => {
           {error === false ? `"${name}" - Movies` : "Not Found - Cinephiled"}
         </title>
       </Head>
-      <Wrapper>
-        <DetailsWrapper className="d-flex flex-column justify-content-between">
-          <Navigation />
-          {error ? (
-            <Error404>404</Error404>
-          ) : (
-            <>
-              <SearchContainer>
-                <SearchResultsContainer>
-                  {results.length === 0 ? (
-                    <EmptySearch className="display-5 text-center">
-                      No movie results for this keyword.
-                    </EmptySearch>
-                  ) : (
-                    <>
-                      <p className="fs-4">Results Matching : {name}</p>
-                      {results.map((item, i) => (
-                        <Link
-                          key={item.id}
-                          href={"/movies/" + item.id}
-                          passHref
-                        >
-                          <QueryContainer>
-                            <QueryImg poster={item.poster_path} />
-                            <QueryInfoWrapper>
-                              <div>
-                                <QueryTitle>{item.title}</QueryTitle>
-                                <QueryRealeaseDate>
-                                  {movieReleaseDates[i]}
-                                </QueryRealeaseDate>
-                              </div>
-                              <QueryDescription>
-                                {item.overview}
-                              </QueryDescription>
-                            </QueryInfoWrapper>
-                          </QueryContainer>
-                        </Link>
-                      ))}
-                    </>
-                  )}
-                </SearchResultsContainer>
-              </SearchContainer>
-            </>
-          )}
-          <Footer />
-        </DetailsWrapper>
-      </Wrapper>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <Wrapper>
+          <DetailsWrapper className="d-flex flex-column justify-content-between">
+            <Navigation />
+            {error ? (
+              <Error404>404</Error404>
+            ) : (
+              <>
+                <SearchContainer>
+                  <SearchResultsContainer>
+                    {results.length === 0 ? (
+                      <EmptySearch className="display-5 text-center">
+                        No movie results for this keyword.
+                      </EmptySearch>
+                    ) : (
+                      <>
+                        <p className="fs-4">Results Matching : {name}</p>
+                        {results.map((item, i) => (
+                          <Link
+                            key={item.id}
+                            href={"/movies/" + item.id}
+                            passHref
+                          >
+                            <QueryContainer>
+                              <QueryImg poster={item.poster_path} />
+                              <QueryInfoWrapper>
+                                <div>
+                                  <QueryTitle>{item.title}</QueryTitle>
+                                  <QueryRealeaseDate>
+                                    {movieReleaseDates[i]}
+                                  </QueryRealeaseDate>
+                                </div>
+                                <QueryDescription>
+                                  {item.overview}
+                                </QueryDescription>
+                              </QueryInfoWrapper>
+                            </QueryContainer>
+                          </Link>
+                        ))}
+                      </>
+                    )}
+                  </SearchResultsContainer>
+                </SearchContainer>
+              </>
+            )}
+            <Footer />
+          </DetailsWrapper>
+        </Wrapper>
+      </motion.div>
     </>
   );
 };

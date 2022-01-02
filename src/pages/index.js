@@ -5,6 +5,7 @@ import Hero from "../components/Hero/Hero";
 import Navigation from "../components/Navigation/Navigation";
 import IndexTab from "../components/Popular/IndexTab";
 import { Wrapper } from "../styles/GlobalComponents";
+import { motion } from "framer-motion";
 
 export default function Home({ moviesData, TVData }) {
   const [trendingTv, setTrendingTv] = useState([]);
@@ -44,17 +45,24 @@ export default function Home({ moviesData, TVData }) {
       <Head>
         <title>Home - Cinephiled</title>
       </Head>
-      <Wrapper>
-        <Navigation />
-        <Hero />
-        <IndexTab
-          moviesData={moviesData}
-          TVData={TVData}
-          trendingMovies={trendingMovies}
-          trendingTv={trendingTv}
-        />
-        <Footer />
-      </Wrapper>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <Wrapper>
+          <Navigation />
+          <Hero />
+          <IndexTab
+            moviesData={moviesData}
+            TVData={TVData}
+            trendingMovies={trendingMovies}
+            trendingTv={trendingTv}
+          />
+          <Footer />
+        </Wrapper>
+      </motion.div>
     </>
   );
 }

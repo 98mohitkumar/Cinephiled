@@ -8,6 +8,7 @@ import {
   MoviesInfoTitle,
   ReleaseDate,
 } from "./PopularStyles";
+import { motion } from "framer-motion";
 
 const PopularMovies = (props) => {
   let arr = [];
@@ -24,27 +25,40 @@ const PopularMovies = (props) => {
   releaseDates();
 
   return (
-    <MoviesSection className="p-5">
-      {props.movies.length > 0 &&
-        props.movies.map((movies, i) => (
-          <Cards key={movies.id}>
-            <Link href={"/movies/" + movies.id} passHref>
-              <CardImg
-                data={movies.poster_path}
-                className="d-flex justify-content-end"
+    <motion.div
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 0.992, opacity: 1 }}
+    >
+      <MoviesSection className="p-5">
+        {props.movies.length > 0 &&
+          props.movies.map((movies, i) => (
+            <Cards key={movies.id}>
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.1 },
+                }}
+                whileTap={{ scale: 0.9 }}
               >
-                <Rating className="d-flex justify-content-center align-items-center me-3">
-                  {movies.vote_average}
-                </Rating>
-              </CardImg>
-            </Link>
-            <MoviesInfo>
-              <MoviesInfoTitle>{movies.title}</MoviesInfoTitle>
-              <ReleaseDate>{arr[i]}</ReleaseDate>
-            </MoviesInfo>
-          </Cards>
-        ))}
-    </MoviesSection>
+                <Link href={"/movies/" + movies.id} passHref>
+                  <CardImg
+                    data={movies.poster_path}
+                    className="d-flex justify-content-end"
+                  >
+                    <Rating className="d-flex justify-content-center align-items-center me-3">
+                      {movies.vote_average}
+                    </Rating>
+                  </CardImg>
+                </Link>
+              </motion.div>
+              <MoviesInfo>
+                <MoviesInfoTitle>{movies.title}</MoviesInfoTitle>
+                <ReleaseDate>{arr[i]}</ReleaseDate>
+              </MoviesInfo>
+            </Cards>
+          ))}
+      </MoviesSection>
+    </motion.div>
   );
 };
 

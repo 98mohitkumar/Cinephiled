@@ -9,6 +9,7 @@ import {
   SearchContainer,
   Wrapper,
 } from "../../styles/GlobalComponents";
+import { motion } from "framer-motion";
 
 const search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
   let movieReleaseDates = [];
@@ -42,28 +43,35 @@ const search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
       <Head>
         <title>{searchQuery} - Search</title>
       </Head>
-      <Wrapper>
-        <DetailsWrapper className="d-flex flex-column justify-content-between">
-          <Navigation />
-          {error ? (
-            <Error404>404</Error404>
-          ) : movieRes.length === 0 && tvRes.length === 0 ? (
-            <BadQuery>Bad Query :(</BadQuery>
-          ) : (
-            <SearchContainer>
-              <SearchTab
-                search={searchQuery}
-                movies={movieRes}
-                tv={tvRes}
-                movieReleaseDates={movieReleaseDates}
-                tvReleaseDates={tvReleaseDates}
-                keywords={keywordsRes}
-              />
-            </SearchContainer>
-          )}
-          <Footer />
-        </DetailsWrapper>
-      </Wrapper>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <Wrapper>
+          <DetailsWrapper className="d-flex flex-column justify-content-between">
+            <Navigation />
+            {error ? (
+              <Error404>404</Error404>
+            ) : movieRes.length === 0 && tvRes.length === 0 ? (
+              <BadQuery>Bad Query :(</BadQuery>
+            ) : (
+              <SearchContainer>
+                <SearchTab
+                  search={searchQuery}
+                  movies={movieRes}
+                  tv={tvRes}
+                  movieReleaseDates={movieReleaseDates}
+                  tvReleaseDates={tvReleaseDates}
+                  keywords={keywordsRes}
+                />
+              </SearchContainer>
+            )}
+            <Footer />
+          </DetailsWrapper>
+        </Wrapper>
+      </motion.div>
     </>
   );
 };

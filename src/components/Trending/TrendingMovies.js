@@ -9,6 +9,8 @@ import {
   ReleaseDate,
 } from "../Popular/PopularStyles";
 
+import { motion } from "framer-motion";
+
 const TrendingMovies = ({ movies }) => {
   movies.splice(15);
 
@@ -35,16 +37,24 @@ const TrendingMovies = ({ movies }) => {
         {movies.length > 0 &&
           movies.map((movies, i) => (
             <Cards key={movies.id}>
-              <Link href={"/movies/" + movies.id} passHref>
-                <CardImg
-                  data={movies.poster_path}
-                  className="d-flex justify-content-end"
-                >
-                  <Rating className="d-flex justify-content-center align-items-center me-3">
-                    {movies.vote_average}
-                  </Rating>
-                </CardImg>
-              </Link>
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.1 },
+                }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Link href={"/movies/" + movies.id} passHref>
+                  <CardImg
+                    data={movies.poster_path}
+                    className="d-flex justify-content-end"
+                  >
+                    <Rating className="d-flex justify-content-center align-items-center me-3">
+                      {movies.vote_average}
+                    </Rating>
+                  </CardImg>
+                </Link>
+              </motion.div>
               <MoviesInfo>
                 <MoviesInfoTitle>{movies.title}</MoviesInfoTitle>
                 <ReleaseDate>{arr[i]}</ReleaseDate>

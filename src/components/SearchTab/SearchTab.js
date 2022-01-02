@@ -10,6 +10,7 @@ import TVSearch from "./TVSearch";
 import { Span } from "../MovieInfo/MovieDetailsStyles";
 import { useEffect } from "react";
 import KeywordSearch from "./KeywordSearch";
+import { motion } from "framer-motion";
 
 const SearchTab = ({
   movies,
@@ -58,38 +59,59 @@ const SearchTab = ({
 
       {tabState === "movies" && (
         <>
-          {movies.length !== 0 && (
-            <Span className="d-block display-6 text-center">
-              Movies matching : {search}
-            </Span>
-          )}
-          <p className="text-center mt-2 mb-0">
-            <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your
-            results by year. Example: <b>&#39;Avatar y:2009&#39;.</b>
-          </p>
-          <MoviesSearch
-            movieRes={movies}
-            movieReleaseDates={movieReleaseDates}
-          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            {movies.length !== 0 && (
+              <Span className="d-block display-6 text-center">
+                Movies matching : {search}
+              </Span>
+            )}
+            <p className="text-center mt-2 mb-0">
+              <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your
+              results by year. Example: <b>&#39;Avatar y:2009&#39;.</b>
+            </p>
+            <MoviesSearch
+              movieRes={movies}
+              movieReleaseDates={movieReleaseDates}
+            />
+          </motion.div>
         </>
       )}
       {tabState === "tv" && (
         <>
-          {tv.length !== 0 && (
-            <Span className="d-block display-6 text-center">
-              TV shows matching : {search}
-            </Span>
-          )}
-          <p className="text-center mt-2 mb-0">
-            <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your
-            results by year. Example: <b>&#39;Sherlock y:2010&#39;</b>.
-          </p>
-          <TVSearch tvRes={tv} tvReleaseDates={tvReleaseDates} />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            {tv.length !== 0 && (
+              <Span className="d-block display-6 text-center">
+                TV shows matching : {search}
+              </Span>
+            )}
+            <p className="text-center mt-2 mb-0">
+              <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your
+              results by year. Example: <b>&#39;Sherlock y:2010&#39;</b>.
+            </p>
+            <TVSearch tvRes={tv} tvReleaseDates={tvReleaseDates} />
+          </motion.div>
         </>
       )}
       {tabState === "keywords" && (
         <>
-          <KeywordSearch keywords={keywords} />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <KeywordSearch keywords={keywords} />
+          </motion.div>
         </>
       )}
     </>
