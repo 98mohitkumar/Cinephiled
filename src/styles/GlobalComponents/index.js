@@ -362,7 +362,9 @@ export const RecommendedWrapper = styled.div`
 export const RecommendedImg = styled.div`
   height: 150px;
   background: ${(props) =>
-    `Url(https://image.tmdb.org/t/p/w500${props.backdrop}) no-repeat center center /cover`};
+    !props.backdrop
+      ? `Url(/Images/DefaultBackdrop.png) no-repeat center center /cover`
+      : `Url(https://image.tmdb.org/t/p/w500${props.backdrop}) no-repeat center center /cover`};
   border-radius: 12px;
   transition: box-shadow 0.25s ease-in;
 
