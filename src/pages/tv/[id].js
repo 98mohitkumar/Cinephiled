@@ -126,8 +126,8 @@ const tvShow = ({ tvData, error, languages, socialIds }) => {
         <title>
           {error === false
             ? `${tvData.name} (TV Series ${getyear}
-          ${endyear})`
-            : "Not Found"}
+          ${endyear}) - Cinephiled`
+            : "Not Found - Cinephiled"}
         </title>
       </Head>
       <Wrapper>

@@ -8,11 +8,16 @@ import {
 } from "../styles/GlobalComponents";
 import Footer from "../components/Footer/Footer";
 import { FooterAttribute } from "../components/Footer/FooterStyles";
+import { useEffect } from "react";
 const About = () => {
+  useEffect(() => {
+    localStorage.setItem("SearchTabPosition", "");
+  });
+
   return (
     <>
       <Head>
-        <title>About</title>
+        <title>About - Cinephiled</title>
       </Head>
       <Wrapper>
         <AboutWrapper className="d-flex justify-content-between align-items-center flex-column">
@@ -22,7 +27,7 @@ const About = () => {
             <p className="fs-5">
               On my journey of learning front end web development, i have now
               learned React js and a framework called next.js. <br />
-              Project Name Here is made using Next.js and data is fetched from
+              <b>Cinephiled</b> is made using Next.js and data is fetched from
               The Movie database aka <b>TMDB</b> using REST Api.
               <br />
               <br />

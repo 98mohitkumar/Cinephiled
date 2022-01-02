@@ -29,8 +29,10 @@ export const NavBar = styled.nav`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
+    height: 3.5rem;
     gap: 0rem 1.75rem;
     font-size: 1.25rem;
+    padding: 0rem 3rem;
 
     & > a {
       padding: 1rem 2rem;

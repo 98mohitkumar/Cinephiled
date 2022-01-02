@@ -37,7 +37,9 @@ const Keyword = ({ error, results, name }) => {
   return (
     <>
       <Head>
-        <title>{error === false ? `"${name}" - Movies` : "Not Found"}</title>
+        <title>
+          {error === false ? `"${name}" - Movies` : "Not Found - Cinephiled"}
+        </title>
       </Head>
       <Wrapper>
         <DetailsWrapper className="d-flex flex-column justify-content-between">

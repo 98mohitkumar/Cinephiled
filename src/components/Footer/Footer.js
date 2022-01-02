@@ -11,7 +11,7 @@ import { FaTelegramPlane } from "react-icons/fa";
 const Footer = () => {
   return (
     <FooterWrapper className="d-flex justify-content-between align-items-center">
-      <FooterBranding>Project name here</FooterBranding>
+      <FooterBranding>Cinephiled</FooterBranding>
       <SocialIconsContainer>
         <SocialIcons
           href="https://www.themoviedb.org"

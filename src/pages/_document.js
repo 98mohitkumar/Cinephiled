@@ -40,6 +40,28 @@ export default class MyDocument extends Document {
             href="https://api.fontshare.com/css?f[]=satoshi@500,700&display=swap"
             rel="stylesheet"
           />
+          <meta name="keywords" content="Cinema, Tv, Movies"></meta>
+          <meta
+            name="description"
+            content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, discription and posters."
+          />
+
+          <meta
+            property="og:description"
+            content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, discription and posters."
+          />
+
+          <meta property="og:image" content="https://i.imgur.com/Jtl3tJG.png" />
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta property="twitter:title" content="Cinephiled" />
+          <meta
+            property="twitter:description"
+            content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, discription and posters."
+          />
+          <meta
+            property="twitter:image"
+            content="https://i.imgur.com/Jtl3tJG.png"
+          />
         </Head>
         <body>
           <Main />

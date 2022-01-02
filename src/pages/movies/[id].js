@@ -107,7 +107,9 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
     <>
       <Head>
         <title>
-          {error === false ? `${movieDetails.title} (${getyear})` : "Not Found"}
+          {error === false
+            ? `${movieDetails.title} (${getyear}) - Cinephiled`
+            : "Not Found - Cinephiled"}
         </title>
       </Head>
       <Wrapper>

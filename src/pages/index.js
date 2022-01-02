@@ -11,6 +11,7 @@ export default function Home({ moviesData, TVData }) {
   const [trendingMovies, setTrendingMovies] = useState([]);
 
   useEffect(() => {
+    localStorage.setItem("SearchTabPosition", "");
     const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
     async function getTrending() {
@@ -41,7 +42,7 @@ export default function Home({ moviesData, TVData }) {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Home - Cinephiled</title>
       </Head>
       <Wrapper>
         <Navigation />

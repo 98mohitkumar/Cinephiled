@@ -37,7 +37,7 @@ export const Banner = styled.div`
   height: 100%;
   background: Url(/Images/poster.webp) repeat center / 70%;
   transform: rotate(10deg) scale(170%);
-  filter: brightness(50%);
+  filter: brightness(70%);
   z-index: 1;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
