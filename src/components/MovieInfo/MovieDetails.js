@@ -82,7 +82,7 @@ const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
         <CreditsWrapper>
           {crew.map((item) => (
             <Credits key={item.credit_id}>
-              <Span className="d-block">{item.name}</Span>
+              <Span className="d-block fw-bold">{item.name}</Span>
               <Span className="d-block fw-normal">{item.job}</Span>
             </Credits>
           ))}

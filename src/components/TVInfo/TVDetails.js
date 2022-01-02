@@ -25,7 +25,7 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
 
         <RtoR className="my-3">
           {tvData.genres.length > 0 && (
-            <GenreWrap>
+            <GenreWrap className="fw-bold">
               {tvData.genres.map((item) => (
                 <Rounded key={item.id}>{item.name}</Rounded>
               ))}
@@ -59,7 +59,7 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
           {crew.length > 0 &&
             crew.map((item) => (
               <Credits key={item.credit_id}>
-                <Span className="d-block">{item.name}</Span>
+                <Span className="d-block fw-bold">{item.name}</Span>
                 <Span className="d-block fw-normal">
                   {item.job ? item.job : "Creator"}
                 </Span>
