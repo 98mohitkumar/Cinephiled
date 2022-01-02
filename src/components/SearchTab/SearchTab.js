@@ -23,7 +23,6 @@ const SearchTab = ({
 
   useEffect(() => {
     let tabPosition = localStorage.getItem("SearchTabPosition");
-    console.log(tabPosition);
     tabPosition !== "" && setTabState(tabPosition);
   }, []);
 

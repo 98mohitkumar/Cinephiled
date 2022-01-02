@@ -16,6 +16,8 @@ import {
 const TVDetails = ({ tvData, date, runtime, crew }) => {
   tvData.genres.length > 3 && tvData.genres.splice(3);
 
+  console.log(tvData);
+
   return (
     <>
       <HeroInfoWrapper>

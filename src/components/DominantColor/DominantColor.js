@@ -2,21 +2,29 @@ import useImageColor from "use-image-color";
 import { Colorful } from "./DominantColorStyles";
 
 const DominantColor = ({ image }) => {
-  const pallete = useImageColor(`https://image.tmdb.org/t/p/w780${image}`, {
-    cors: true,
-    colors: 4,
-  });
+  if (!image) {
+    return (
+      <>
+        <Colorful className="position-absolute" />
+      </>
+    );
+  } else {
+    const pallete = useImageColor(`https://image.tmdb.org/t/p/w780${image}`, {
+      cors: true,
+      colors: 4,
+    });
 
-  let hexCodes = [];
+    let hexCodes = [];
 
-  pallete.colors !== undefined &&
-    pallete.colors.forEach((item) => hexCodes.push(item));
+    pallete.colors !== undefined &&
+      pallete.colors.forEach((item) => hexCodes.push(item));
 
-  return (
-    <>
-      <Colorful className="position-absolute" color={hexCodes} />
-    </>
-  );
+    return (
+      <>
+        <Colorful className="position-absolute" color={hexCodes} />
+      </>
+    );
+  }
 };
 
 export default DominantColor;

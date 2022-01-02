@@ -68,7 +68,10 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
         ? "US"
         : movieDetails.production_countries[0].iso_3166_1;
 
-    getyear = new Date(movieDetails.release_date).getFullYear();
+    getyear =
+      movieDetails.release_date === ""
+        ? "TBA"
+        : new Date(movieDetails.release_date).getFullYear();
 
     const getH = Math.floor(movieDetails.runtime / 60);
     const getM = Math.ceil((movieDetails.runtime / 60 - getH) * 60);

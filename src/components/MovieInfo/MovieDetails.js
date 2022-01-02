@@ -17,11 +17,13 @@ import {
 
 const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
   const releaseDate =
-    new Date(movieDetailsData.release_date.toString())
-      .toDateString()
-      .slice(4, -5) +
-    ", " +
-    new Date(movieDetailsData.release_date.toString()).getFullYear();
+    movieDetailsData.release_date === ""
+      ? "TBA"
+      : new Date(movieDetailsData.release_date.toString())
+          .toDateString()
+          .slice(4, -5) +
+        ", " +
+        new Date(movieDetailsData.release_date.toString()).getFullYear();
 
   movieDetailsData.genres.length > 3 && movieDetailsData.genres.splice(3);
 
@@ -44,12 +46,16 @@ const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
               <Divider />
             </GenreWrap>
           )}
-          <Span>
-            {runtime.getH === 1 && runtime.getM === 0
-              ? "60m"
-              : runtime.getH > 0 && runtime.getH + "h "}
-            {runtime.getM > 0 && runtime.getM + "m"}
-          </Span>
+          {runtime.getH === 0 && runtime.getM === 0 ? (
+            <Span>TBA</Span>
+          ) : (
+            <Span>
+              {runtime.getH === 1 && runtime.getM === 0
+                ? "60m"
+                : runtime.getH > 0 && runtime.getH + "h "}
+              {runtime.getM > 0 && runtime.getM + "m"}
+            </Span>
+          )}
         </RtoR>
         {movieDetailsData.tagline !== "" && (
           <i>
@@ -58,7 +64,9 @@ const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
             </Tagline>
           </i>
         )}
-        <Overview className="fw-normal">{movieDetailsData.overview}</Overview>
+        <Overview className="fw-normal">
+          {movieDetailsData.overview === "" ? "-" : movieDetailsData.overview}
+        </Overview>
         <RatingWrapper>
           {movieDetailsData.vote_average !== 0 ? (
             <>

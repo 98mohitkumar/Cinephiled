@@ -77,7 +77,9 @@ export const HeroBgContainer = styled.div`
 
 export const HeroBg = styled.div`
   background: ${(props) =>
-    `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover`};
+    props.backdrop === null
+      ? "#121212"
+      : `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover`};
   inset: 0;
 `;
 
@@ -85,9 +87,9 @@ export const HeroImg = styled.div`
   height: 25rem;
   width: 17rem;
   background: ${(props) =>
-    props.data !== null
-      ? `Url(https://image.tmdb.org/t/p/w780${props.data}) no-repeat center center /cover`
-      : `Url(/Images/DefaultImage.png) no-repeat center center /cover`};
+    !props.data
+      ? `Url(/Images/DefaultImage.png) no-repeat center center /cover`
+      : `Url(https://image.tmdb.org/t/p/w780${props.data}) no-repeat center center /cover`};
   border-radius: 12px;
   box-shadow: 0 0 2rem rgb(12 12 12 /0.4);
 

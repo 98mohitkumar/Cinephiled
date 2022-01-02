@@ -44,8 +44,6 @@ const tvShow = ({ tvData, error, languages, socialIds }) => {
   let netwrok = "";
   let type = "";
 
-  console.log(tvData);
-
   if (error === false) {
     creditsDetails = tvData.credits;
     creditsDetails.crew.forEach((item) => {
