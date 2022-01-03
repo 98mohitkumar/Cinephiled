@@ -1,23 +1,19 @@
 import Head from "next/head";
-import Footer from "../../components/Footer/Footer";
 import DominantColor from "../../components/DominantColor/DominantColor";
 import {
   Gradient,
   HeroImgWrapper,
   HeroTrailer,
 } from "../../styles/GlobalComponents";
-import Navigation from "../../components/Navigation/Navigation";
 import TVDetails from "../../components/TVInfo/TVDetails";
 import {
   DetailsHeroWrap,
-  DetailsWrapper,
   Error404,
   HeroBg,
   HeroBgContainer,
   HeroDetailsContainer,
   HeroImg,
   HeroInfo,
-  Wrapper,
 } from "../../styles/GlobalComponents";
 import TVTab from "../../components/TVInfo/TVTab";
 import TVFacts from "../../components/TVInfo/TVFacts";
@@ -135,69 +131,63 @@ const tvShow = ({ tvData, error, languages, socialIds }) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <Wrapper>
-          <DetailsWrapper className="d-flex flex-column justify-content-between">
-            <Navigation />
-            {error ? (
-              <Error404>404</Error404>
-            ) : (
-              <>
-                <HeroDetailsContainer className="position-relative mb-auto">
-                  <HeroBgContainer className="position-absolute">
-                    <HeroBg
-                      backdrop={tvData.backdrop_path}
-                      className="position-absolute"
-                    ></HeroBg>
-                    <DominantColor image={tvData.poster_path} />
-                  </HeroBgContainer>
-                  <DetailsHeroWrap>
-                    <HeroImgWrapper>
-                      <HeroImg data={tvData.poster_path} />
+        {error ? (
+          <Error404>404</Error404>
+        ) : (
+          <>
+            <HeroDetailsContainer className="position-relative mb-auto">
+              <HeroBgContainer className="position-absolute">
+                <HeroBg
+                  backdrop={tvData.backdrop_path}
+                  className="position-absolute"
+                ></HeroBg>
+                <DominantColor image={tvData.poster_path} />
+              </HeroBgContainer>
+              <DetailsHeroWrap>
+                <HeroImgWrapper>
+                  <HeroImg data={tvData.poster_path} />
 
-                      {videos.length !== 0 && (
-                        <a
-                          href={`https://www.youtube.com/watch?v=${videos[0].key}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          aria-label="trailer"
-                        >
-                          <HeroTrailer>
-                            <FaYoutube size="1.5rem" />
-                            <Span>Play Trailer</Span>
-                          </HeroTrailer>
-                        </a>
-                      )}
-                      <SocialMediaLinks
-                        links={socialIds}
-                        homepage={tvData.homepage}
-                      />
-                    </HeroImgWrapper>
+                  {videos.length !== 0 && (
+                    <a
+                      href={`https://www.youtube.com/watch?v=${videos[0].key}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="trailer"
+                    >
+                      <HeroTrailer>
+                        <FaYoutube size="1.5rem" />
+                        <Span>Play Trailer</Span>
+                      </HeroTrailer>
+                    </a>
+                  )}
+                  <SocialMediaLinks
+                    links={socialIds}
+                    homepage={tvData.homepage}
+                  />
+                </HeroImgWrapper>
 
-                    <Gradient />
-                    <HeroInfo className="d-flex">
-                      <TVDetails
-                        tvData={tvData}
-                        date={getyear}
-                        runtime={epRuntime}
-                        crew={crew}
-                      />
-                    </HeroInfo>
-                  </DetailsHeroWrap>
-                </HeroDetailsContainer>
-                <TVFacts facts={tvFacts} languages={languages} />
-                <TVTab
-                  id={tvData.id}
-                  cast={cast}
-                  seasons={tvData.seasons}
-                  reviews={reviewDetails.results}
-                  backdrops={backdrops}
-                  posters={posters}
-                />
-              </>
-            )}
-            <Footer />
-          </DetailsWrapper>
-        </Wrapper>
+                <Gradient />
+                <HeroInfo className="d-flex">
+                  <TVDetails
+                    tvData={tvData}
+                    date={getyear}
+                    runtime={epRuntime}
+                    crew={crew}
+                  />
+                </HeroInfo>
+              </DetailsHeroWrap>
+            </HeroDetailsContainer>
+            <TVFacts facts={tvFacts} languages={languages} />
+            <TVTab
+              id={tvData.id}
+              cast={cast}
+              seasons={tvData.seasons}
+              reviews={reviewDetails.results}
+              backdrops={backdrops}
+              posters={posters}
+            />
+          </>
+        )}
       </motion.div>
     </>
   );

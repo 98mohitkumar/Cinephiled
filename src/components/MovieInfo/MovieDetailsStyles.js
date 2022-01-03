@@ -173,19 +173,19 @@ export const FactsWrapper = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     font-size: 18px;
-    gap: 2rem 4rem;
+    gap: 2rem 3rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     gap: 2rem 6rem;
-    padding: 0.5rem;
+    padding: 1rem;
     grid-template-columns: repeat(2, max-content);
     justify-items: flex-start;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     gap: 2rem 3rem;
-    padding: 0rem 0rem 0rem 1rem;
+    padding: 0rem 0rem 0rem 0.5rem;
     justify-items: flex-start;
     grid-template-columns: repeat(2, 1fr);
   }
@@ -196,10 +196,15 @@ export const FactsFieldSet = styled.fieldset`
   margin: 1rem auto;
   border: 2px solid #fff;
   border-radius: 20px;
+  max-width: max-content;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    max-width: 100%;
+    border: none;
+  }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    width: 100%;
-    border: none;
+    padding: 1rem 21px;
   }
 `;
 
@@ -210,10 +215,14 @@ export const FactsLegend = styled.legend`
   margin-left: 1rem;
   float: none;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     margin: 0;
-    padding: 0rem 0.5rem;
+    padding: 0rem 1rem;
     font-size: 2.5rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 0;
   }
 `;
 

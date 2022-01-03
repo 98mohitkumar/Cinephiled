@@ -1,10 +1,7 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import Footer from "../components/Footer/Footer";
 import Hero from "../components/Hero/Hero";
-import Navigation from "../components/Navigation/Navigation";
 import IndexTab from "../components/Popular/IndexTab";
-import { Wrapper } from "../styles/GlobalComponents";
 import { motion } from "framer-motion";
 
 export default function Home({ moviesData, TVData }) {
@@ -51,17 +48,13 @@ export default function Home({ moviesData, TVData }) {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <Wrapper>
-          <Navigation />
-          <Hero />
-          <IndexTab
-            moviesData={moviesData}
-            TVData={TVData}
-            trendingMovies={trendingMovies}
-            trendingTv={trendingTv}
-          />
-          <Footer />
-        </Wrapper>
+        <Hero />
+        <IndexTab
+          moviesData={moviesData}
+          TVData={TVData}
+          trendingMovies={trendingMovies}
+          trendingTv={trendingTv}
+        />
       </motion.div>
     </>
   );

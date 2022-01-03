@@ -1,12 +1,8 @@
 import Head from "next/head";
-import Footer from "../../components/Footer/Footer";
-import Navigation from "../../components/Navigation/Navigation";
 import {
-  DetailsWrapper,
   Error404,
   SearchContainer,
   SearchResultsContainer,
-  Wrapper,
 } from "../../styles/GlobalComponents";
 import { EmptySearch } from "../../styles/GlobalComponents";
 import { motion } from "framer-motion";
@@ -48,53 +44,41 @@ const Keyword = ({ error, results, name }) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <Wrapper>
-          <DetailsWrapper className="d-flex flex-column justify-content-between">
-            <Navigation />
-            {error ? (
-              <Error404>404</Error404>
-            ) : (
-              <>
-                <SearchContainer>
-                  <SearchResultsContainer>
-                    {results.length === 0 ? (
-                      <EmptySearch className="display-5 text-center">
-                        No movie results for this keyword.
-                      </EmptySearch>
-                    ) : (
-                      <>
-                        <p className="fs-4">Results Matching : {name}</p>
-                        {results.map((item, i) => (
-                          <Link
-                            key={item.id}
-                            href={"/movies/" + item.id}
-                            passHref
-                          >
-                            <QueryContainer>
-                              <QueryImg poster={item.poster_path} />
-                              <QueryInfoWrapper>
-                                <div>
-                                  <QueryTitle>{item.title}</QueryTitle>
-                                  <QueryRealeaseDate>
-                                    {movieReleaseDates[i]}
-                                  </QueryRealeaseDate>
-                                </div>
-                                <QueryDescription>
-                                  {item.overview}
-                                </QueryDescription>
-                              </QueryInfoWrapper>
-                            </QueryContainer>
-                          </Link>
-                        ))}
-                      </>
-                    )}
-                  </SearchResultsContainer>
-                </SearchContainer>
-              </>
-            )}
-            <Footer />
-          </DetailsWrapper>
-        </Wrapper>
+        {error ? (
+          <Error404>404</Error404>
+        ) : (
+          <>
+            <SearchContainer>
+              <SearchResultsContainer>
+                {results.length === 0 ? (
+                  <EmptySearch className="display-5 text-center">
+                    No movie results for this keyword.
+                  </EmptySearch>
+                ) : (
+                  <>
+                    <p className="fs-4">Results Matching : {name}</p>
+                    {results.map((item, i) => (
+                      <Link key={item.id} href={"/movies/" + item.id} passHref>
+                        <QueryContainer>
+                          <QueryImg poster={item.poster_path} />
+                          <QueryInfoWrapper>
+                            <div>
+                              <QueryTitle>{item.title}</QueryTitle>
+                              <QueryRealeaseDate>
+                                {movieReleaseDates[i]}
+                              </QueryRealeaseDate>
+                            </div>
+                            <QueryDescription>{item.overview}</QueryDescription>
+                          </QueryInfoWrapper>
+                        </QueryContainer>
+                      </Link>
+                    ))}
+                  </>
+                )}
+              </SearchResultsContainer>
+            </SearchContainer>
+          </>
+        )}
       </motion.div>
     </>
   );

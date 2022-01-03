@@ -1,13 +1,9 @@
 import Head from "next/head";
-import Footer from "../../components/Footer/Footer";
-import Navigation from "../../components/Navigation/Navigation";
 import SearchTab from "../../components/SearchTab/SearchTab";
 import {
   BadQuery,
-  DetailsWrapper,
   Error404,
   SearchContainer,
-  Wrapper,
 } from "../../styles/GlobalComponents";
 import { motion } from "framer-motion";
 
@@ -49,28 +45,22 @@ const search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <Wrapper>
-          <DetailsWrapper className="d-flex flex-column justify-content-between">
-            <Navigation />
-            {error ? (
-              <Error404>404</Error404>
-            ) : movieRes.length === 0 && tvRes.length === 0 ? (
-              <BadQuery>Bad Query :(</BadQuery>
-            ) : (
-              <SearchContainer>
-                <SearchTab
-                  search={searchQuery}
-                  movies={movieRes}
-                  tv={tvRes}
-                  movieReleaseDates={movieReleaseDates}
-                  tvReleaseDates={tvReleaseDates}
-                  keywords={keywordsRes}
-                />
-              </SearchContainer>
-            )}
-            <Footer />
-          </DetailsWrapper>
-        </Wrapper>
+        {error ? (
+          <Error404>404</Error404>
+        ) : movieRes.length === 0 && tvRes.length === 0 ? (
+          <BadQuery>Bad Query :(</BadQuery>
+        ) : (
+          <SearchContainer>
+            <SearchTab
+              search={searchQuery}
+              movies={movieRes}
+              tv={tvRes}
+              movieReleaseDates={movieReleaseDates}
+              tvReleaseDates={tvReleaseDates}
+              keywords={keywordsRes}
+            />
+          </SearchContainer>
+        )}
       </motion.div>
     </>
   );

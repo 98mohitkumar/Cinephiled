@@ -4,6 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Loader } from "../styles/GlobalComponents";
+import Layout from "../components/Layout/Layout";
 
 function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +27,15 @@ function MyApp({ Component, pageProps }) {
   return (
     <Theme>
       <AnimatePresence exitBeforeEnter>
-        <>{isLoading ? <Loader /> : <Component {...pageProps} />}</>
+        <>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          )}
+        </>
       </AnimatePresence>
     </Theme>
   );
