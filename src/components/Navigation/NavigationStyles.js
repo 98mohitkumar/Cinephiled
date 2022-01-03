@@ -2,21 +2,30 @@ import styled from "styled-components";
 
 export const NavBar = styled.nav`
   display: flex;
+  position: relative;
   height: 4rem;
   width: 100%;
   padding: 0rem 5rem;
   justify-content: space-evenly;
   align-items: center;
   background: #121212;
-  border-bottom: 2px solid;
-  border-image-slice: 1;
-  border-image-source: ${(props) => `linear-gradient(
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: ${(props) => `linear-gradient(
     90deg,
     ${props.theme.colors.accent1},
     ${props.theme.colors.accent2},
     ${props.theme.colors.accent3},
     ${props.theme.colors.accent1}
   )`};
+  }
 
   a {
     color: white;

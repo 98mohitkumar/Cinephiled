@@ -1,17 +1,26 @@
 import styled from "styled-components";
 export const FooterWrapper = styled.footer`
+  position: relative;
   width: 100%;
   height: auto;
   padding: 1rem 5rem;
-  border-top: 2px solid;
-  border-image-slice: 1;
-  border-image-source: ${(props) => `linear-gradient(
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: ${(props) => `linear-gradient(
     90deg,
     ${props.theme.colors.accent1},
     ${props.theme.colors.accent2},
     ${props.theme.colors.accent3},
     ${props.theme.colors.accent1}
   )`};
+  }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     padding: 1rem 4rem;
