@@ -3,7 +3,13 @@ import {
   TabSelectionTitle,
   TabSlider,
   TabWrapper,
+  TabIcon,
 } from "../MovieInfo/MovieTabStyles";
+import BackdropsSvg from "../Svg/backdrops";
+import CastSvg from "../Svg/cast";
+import PostersSvg from "../Svg/posters";
+import ReviewsSvg from "../Svg/reviews";
+import SeasonsSvg from "../Svg/seasons";
 import TVBackdrops from "./TVBackdrops";
 import TVCast from "./TVCast";
 import TVPosters from "./TVPosters";
@@ -55,19 +61,36 @@ const TVTab = (props) => {
     <>
       <TabWrapper className="my-5" tabCheck={tabState} tv={true}>
         <TabSlider tabCheck={tabState} tv={true} />
-        <TabSelectionTitle onClick={castSelectionHandler}>
+        <TabSelectionTitle tv={true} onClick={castSelectionHandler}>
+          <TabIcon>
+            <CastSvg color={tabState === "cast" ? "white" : "black"} />
+          </TabIcon>
           Cast
         </TabSelectionTitle>
-        <TabSelectionTitle onClick={seasonsSelectionHandler}>
+        <TabSelectionTitle tv={true} onClick={seasonsSelectionHandler}>
+          <TabIcon>
+            <SeasonsSvg color={tabState === "seasons" ? "white" : "black"} />
+          </TabIcon>
           Seasons
         </TabSelectionTitle>
-        <TabSelectionTitle onClick={reviewSelectionHandler}>
+        <TabSelectionTitle tv={true} onClick={reviewSelectionHandler}>
+          <TabIcon>
+            <ReviewsSvg color={tabState === "reviews" ? "white" : "black"} />
+          </TabIcon>
           Reviews
         </TabSelectionTitle>
-        <TabSelectionTitle onClick={backdropSelectionHandler}>
+        <TabSelectionTitle tv={true} onClick={backdropSelectionHandler}>
+          <TabIcon>
+            <BackdropsSvg
+              color={tabState === "backdrops" ? "white" : "black"}
+            />
+          </TabIcon>
           Backdrops
         </TabSelectionTitle>
-        <TabSelectionTitle onClick={posterSelectionHandler}>
+        <TabSelectionTitle tv={true} onClick={posterSelectionHandler}>
+          <TabIcon>
+            <PostersSvg color={tabState === "posters" ? "white" : "black"} />
+          </TabIcon>
           Posters
         </TabSelectionTitle>
       </TabWrapper>

@@ -261,6 +261,7 @@ export const CastGrid = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     gap: 0.35rem 0rem;
+    padding: 0rem;
     grid-template-columns: repeat(2, 1fr);
   }
 `;

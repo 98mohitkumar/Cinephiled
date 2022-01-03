@@ -73,8 +73,18 @@ export const TabWrapper = styled.div`
   }
   @media only ${(props) => props.theme.breakpoints.xs} {
     font-size: 0.95rem;
-    height: 3.25rem;
     width: ${(props) => (props.tv ? `95%;` : `90%;`)};
+  }
+`;
+
+export const TabIcon = styled.div`
+  display: none;
+  width: 40px;
+  height: 24px;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    display: grid;
+    place-items: center;
   }
 `;
 
@@ -122,5 +132,15 @@ export const TabSelectionTitle = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     padding: 0.25rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    font-size: ${(props) => (props.tv ? "0.6rem" : "0.7rem")};
+    font-weight: 500;
+    padding: ${(props) => (props.tv ? "0.6rem 0.7rem" : "0.5rem")};
+
+    & > div svg path {
+      transition: fill 0.325s cubic-bezier(0.77, 0, 0.18, 1);
+    }
   }
 `;

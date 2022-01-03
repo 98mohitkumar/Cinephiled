@@ -1,10 +1,19 @@
 import { useState, useEffect } from "react";
+import BackdropsSvg from "../Svg/backdrops";
+import CastSvg from "../Svg/cast";
+import PostersSvg from "../Svg/posters";
+import ReviewsSvg from "../Svg/reviews";
 import MovieBackdrops from "./MovieBackdrops";
 import MovieCast from "./MovieCast";
 import MoviePosters from "./MoviePosters";
 import MovieRecommendations from "./MovieRecommendations";
 import MovieReviews from "./MovieReviews";
-import { TabSelectionTitle, TabSlider, TabWrapper } from "./MovieTabStyles";
+import {
+  TabIcon,
+  TabSelectionTitle,
+  TabSlider,
+  TabWrapper,
+} from "./MovieTabStyles";
 
 const MovieTab = (props) => {
   const [tabState, setTabState] = useState("cast");
@@ -47,15 +56,29 @@ const MovieTab = (props) => {
       <TabWrapper className="my-5" tabCheck={tabState}>
         <TabSlider tabCheck={tabState} />
         <TabSelectionTitle onClick={castSelectionHandler}>
+          <TabIcon>
+            <CastSvg color={tabState === "cast" ? "white" : "black"} />
+          </TabIcon>
           Cast
         </TabSelectionTitle>
         <TabSelectionTitle onClick={reviewSelectionHandler}>
+          <TabIcon>
+            <ReviewsSvg color={tabState === "reviews" ? "white" : "black"} />
+          </TabIcon>
           Reviews
         </TabSelectionTitle>
         <TabSelectionTitle onClick={backdropSelectionHandler}>
+          <TabIcon>
+            <BackdropsSvg
+              color={tabState === "backdrops" ? "white" : "black"}
+            />
+          </TabIcon>
           Backdrops
         </TabSelectionTitle>
         <TabSelectionTitle onClick={posterSelectionHandler}>
+          <TabIcon>
+            <PostersSvg color={tabState === "posters" ? "white" : "black"} />
+          </TabIcon>
           Posters
         </TabSelectionTitle>
       </TabWrapper>
