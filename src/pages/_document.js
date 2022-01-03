@@ -43,12 +43,12 @@ export default class MyDocument extends Document {
           <meta name="keywords" content="Cinema, Tv, Movies"></meta>
           <meta
             name="description"
-            content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, discription and posters."
+            content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters."
           />
 
           <meta
             property="og:description"
-            content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, discription and posters."
+            content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters."
           />
 
           <meta property="og:image" content="https://i.imgur.com/Jtl3tJG.png" />
