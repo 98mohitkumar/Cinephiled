@@ -468,8 +468,8 @@ export const AboutCreditsWrapper = styled.div`
 `;
 
 export const Loader = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 12vw;
+  height: 12vw;
   position: absolute;
   inset: 0;
   margin: auto;
