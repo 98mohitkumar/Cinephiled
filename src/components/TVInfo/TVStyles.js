@@ -26,6 +26,7 @@ export const SeasonWrapper = styled.div`
   border-radius: 10px;
   overflow: hidden;
   background: white;
+  cursor: pointer;
   box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
     0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
@@ -35,9 +36,9 @@ export const SeasonWrapper = styled.div`
 export const SeasonImg = styled.div`
   min-width: 7.5rem;
   background: ${(props) =>
-    props.poster !== null
-      ? `Url(https://image.tmdb.org/t/p/w500${props.poster}) no-repeat center center /cover`
-      : `Url(/Images/DefaultImage.png) no-repeat center center /cover`};
+    !props.poster
+      ? `Url(/Images/DefaultImage.png) no-repeat center center /cover`
+      : `Url(https://image.tmdb.org/t/p/w500${props.poster}) no-repeat center center /cover`};
 `;
 
 export const SeasonInfoWrapper = styled.div`

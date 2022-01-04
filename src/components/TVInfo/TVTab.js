@@ -21,24 +21,36 @@ const TVTab = (props) => {
   const [tabState, setTabState] = useState("cast");
   const [tvRecommended, setTvRecommended] = useState([]);
 
+  useEffect(() => {
+    let tabPosition = localStorage.getItem("TvTabState");
+    tabPosition === null || tabPosition === ""
+      ? setTabState("cast")
+      : setTabState(tabPosition);
+  }, []);
+
   const castSelectionHandler = () => {
     setTabState("cast");
+    localStorage.setItem("TvTabState", "cast");
   };
 
   const seasonsSelectionHandler = () => {
     setTabState("seasons");
+    localStorage.setItem("TvTabState", "seasons");
   };
 
   const reviewSelectionHandler = () => {
     setTabState("reviews");
+    localStorage.setItem("TvTabState", "reviews");
   };
 
   const backdropSelectionHandler = () => {
     setTabState("backdrops");
+    localStorage.setItem("TvTabState", "backdrops");
   };
 
   const posterSelectionHandler = () => {
     setTabState("posters");
+    localStorage.setItem("TvTabState", "posters");
   };
 
   useEffect(() => {

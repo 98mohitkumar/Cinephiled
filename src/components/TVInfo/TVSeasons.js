@@ -12,9 +12,15 @@ import {
 } from "./TVStyles";
 
 import { NoDataText } from "../../styles/GlobalComponents";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 
 const TVSeasons = ({ seasons }) => {
   let seasonReleaseDates = [];
+
+  const router = useRouter();
+  const route = router.asPath;
 
   seasons.forEach(
     (item) =>
@@ -35,37 +41,41 @@ const TVSeasons = ({ seasons }) => {
           <NoDataText className="fw-bold text-center my-5">TBA</NoDataText>
         ) : (
           seasons.map((item, i) => (
-            <SeasonWrapper key={item.id} className="mb-5">
-              <SeasonImg poster={item.poster_path} />
-              <SeasonInfoWrapper>
-                <SeasonInfoMain>
-                  <SeasonTitle>
-                    {item.name}
-                    {Today < new Date(seasonReleaseDates[i]) &&
-                    Today !== new Date(seasonReleaseDates[i])
-                      ? " (Upcoming)"
-                      : ""}
-                  </SeasonTitle>
-                  <SeaonDetailsWrapper>
-                    {seasonReleaseDates[i] !== null &&
-                      seasonReleaseDates[i] !== undefined && (
-                        <>
-                          <SeasonsRelease>
-                            {seasonReleaseDates[i]}
-                          </SeasonsRelease>
-                          <SeasonDetailsDivider />
-                        </>
+            <motion.div key={item.id} whileTap={{ scale: 0.9 }}>
+              <Link href={`${route}/season/${item.season_number}`} passHref>
+                <SeasonWrapper className="mb-4">
+                  <SeasonImg poster={item.poster_path} />
+                  <SeasonInfoWrapper>
+                    <SeasonInfoMain>
+                      <SeasonTitle>
+                        {item.name}
+                        {Today < new Date(seasonReleaseDates[i]) &&
+                        Today !== new Date(seasonReleaseDates[i])
+                          ? " (Upcoming)"
+                          : ""}
+                      </SeasonTitle>
+                      <SeaonDetailsWrapper>
+                        {seasonReleaseDates[i] !== null &&
+                          seasonReleaseDates[i] !== undefined && (
+                            <>
+                              <SeasonsRelease>
+                                {seasonReleaseDates[i]}
+                              </SeasonsRelease>
+                              <SeasonDetailsDivider />
+                            </>
+                          )}
+                        <SeasonsRelease>
+                          {item.episode_count} Episodes
+                        </SeasonsRelease>
+                      </SeaonDetailsWrapper>
+                      {item.overview !== "" && (
+                        <SeaonsOverview>{item.overview}</SeaonsOverview>
                       )}
-                    <SeasonsRelease>
-                      {item.episode_count} Episodes
-                    </SeasonsRelease>
-                  </SeaonDetailsWrapper>
-                  {item.overview !== "" && (
-                    <SeaonsOverview>{item.overview}</SeaonsOverview>
-                  )}
-                </SeasonInfoMain>
-              </SeasonInfoWrapper>
-            </SeasonWrapper>
+                    </SeasonInfoMain>
+                  </SeasonInfoWrapper>
+                </SeasonWrapper>
+              </Link>
+            </motion.div>
           ))
         )}
       </SeasonsContainer>

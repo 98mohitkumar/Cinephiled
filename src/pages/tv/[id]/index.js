@@ -1,11 +1,11 @@
 import Head from "next/head";
-import DominantColor from "../../components/DominantColor/DominantColor";
+import DominantColor from "../../../components/DominantColor/DominantColor";
 import {
   Gradient,
   HeroImgWrapper,
   HeroTrailer,
-} from "../../styles/GlobalComponents";
-import TVDetails from "../../components/TVInfo/TVDetails";
+} from "../../../styles/GlobalComponents";
+import TVDetails from "../../../components/TVInfo/TVDetails";
 import {
   DetailsHeroWrap,
   Error404,
@@ -14,12 +14,12 @@ import {
   HeroDetailsContainer,
   HeroImg,
   HeroInfo,
-} from "../../styles/GlobalComponents";
-import TVTab from "../../components/TVInfo/TVTab";
-import TVFacts from "../../components/TVInfo/TVFacts";
+} from "../../../styles/GlobalComponents";
+import TVTab from "../../../components/TVInfo/TVTab";
+import TVFacts from "../../../components/TVInfo/TVFacts";
 import { FaYoutube } from "react-icons/fa";
-import { Span } from "../../components/MovieInfo/MovieDetailsStyles";
-import SocialMediaLinks from "../../components/SocialMediaLinks/SocialMediaLinks";
+import { Span } from "../../../components/MovieInfo/MovieDetailsStyles";
+import SocialMediaLinks from "../../../components/SocialMediaLinks/SocialMediaLinks";
 
 const tvShow = ({ tvData, error, languages, socialIds }) => {
   let creators = [];

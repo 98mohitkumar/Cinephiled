@@ -255,9 +255,9 @@ export const QueryImg = styled.div`
   min-width: 6rem;
   height: 142px;
   background: ${(props) =>
-    props.poster !== null
-      ? `Url(https://image.tmdb.org/t/p/w500${props.poster}) no-repeat center center /cover`
-      : `Url(/Images/DefaultImage.png) no-repeat center center /cover`};
+    !props.poster
+      ? `Url(/Images/DefaultImage.png) no-repeat center center /cover`
+      : `Url(https://image.tmdb.org/t/p/w500${props.poster}) no-repeat center center /cover`};
 `;
 
 export const QueryTitle = styled.span`
@@ -487,4 +487,174 @@ export const Loader = styled.div`
   display: grid;
   place-items: center;
   background: Url(/Images/Loader.svg) no-repeat center center / contain;
+`;
+
+export const SeasonExpandedContainer = styled.div`
+  width: 100%;
+  padding: 3rem 6vw;
+  margin-bottom: auto;
+`;
+
+export const SeasonShowcaseWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 4.5rem;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    gap: 3rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+`;
+
+export const SeasonShowcaseImg = styled.div`
+  min-width: 10rem;
+  height: 15rem;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
+  background: ${(props) =>
+    !props.poster
+      ? `Url(/Images/DefaultImage.png) no-repeat center center /cover`
+      : `Url(https://image.tmdb.org/t/p/w780/${props.poster}) no-repeat center center /cover`};
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    margin: 0.5rem 0rem;
+  }
+`;
+
+export const SeasonShowcaseTitle = styled.h2`
+  font-weight: bold;
+  font-size: 2rem;
+`;
+
+export const SeasonEpisodesWrapper = styled.div`
+  width: 100%;
+  padding: 3rem 0rem;
+
+  & > div:nth-of-type(1) {
+    margin-top: 1rem !important;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    padding: 2rem 0rem;
+  }
+
+  .episodesTitle {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .text {
+    color: rgb(221 221 221);
+  }
+
+  .airDate {
+    @media only ${(props) => props.theme.breakpoints.sm} {
+      font-size: 1.1rem;
+    }
+  }
+
+  .episodesBox {
+    gap: 2.5rem;
+
+    @media only ${(props) => props.theme.breakpoints.ip} {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .ipRes {
+      @media only ${(props) => props.theme.breakpoints.ip} {
+        padding: 0rem;
+      }
+    }
+  }
+`;
+
+export const SeasonCommonOverview = styled.p`
+  font-size: 1.15rem;
+  margin-top: 1rem;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    font-size: 1rem;
+  }
+`;
+
+export const EpisodeImg = styled.div`
+  min-width: 15rem;
+  height: 140px;
+  border-radius: 12px;
+  margin: 1.25rem 0rem;
+  background: ${(props) =>
+    !props.img
+      ? `Url(/Images/DefaultBackdrop.png) no-repeat center center /cover`
+      : `Url(https://image.tmdb.org/t/p/w500/${props.img}) no-repeat center center /cover`};
+  align-self: flex-start;
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    margin: 0.5rem 0rem;
+  }
+`;
+
+export const TrWrapper = styled.div`
+  width: max-content;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem 1.5rem;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  h3 {
+    margin: 0px;
+
+    @media only ${(props) => props.theme.breakpoints.xs} {
+      font-size: 1.5rem;
+    }
+  }
+`;
+
+export const Rating = styled.div`
+  width: 55px;
+  height: 30px;
+  border-radius: 20px;
+  background-color: rgb(221 221 221);
+  color: #121212;
+  text-align: center;
+  font-weight: 500;
+  font-family: "Satoshi", sans-serif;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    margin: 0rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    width: 45px;
+    height: 25px;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    width: 45px;
+    height: 25px;
+    font-size: 1rem;
+  }
 `;
