@@ -64,7 +64,7 @@ search.getInitialProps = async (ctx) => {
 
   let year = "";
   if (searchQuery.includes('"') || searchQuery.includes("'")) {
-    searchQuery = searchQuery.replace(/["']/g, "");
+    searchQuery = searchQuery.replace(/(^['"]|['"]$)/g, "");
   }
 
   if (searchQuery.includes("y:")) {
