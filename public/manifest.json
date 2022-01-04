@@ -12,7 +12,7 @@
       "src": "maskable.png",
       "sizes": "196x196",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     },
     { "src": "logo192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "logo256.png", "sizes": "256x256", "type": "image/png" },
