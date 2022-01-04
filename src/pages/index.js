@@ -40,7 +40,7 @@ export default function Home({ moviesData, TVData }) {
   return (
     <>
       <Head>
-        <title>Home - Cinephiled</title>
+        <title>Cinephiled</title>
       </Head>
       <Hero />
       <IndexTab
