@@ -18,7 +18,6 @@ import { Gradient } from "../../styles/GlobalComponents";
 import { Span } from "../../components/MovieInfo/MovieDetailsStyles";
 import { FaYoutube } from "react-icons/fa";
 import SocialMediaLinks from "../../components/SocialMediaLinks/SocialMediaLinks";
-import { motion } from "framer-motion";
 
 const movie = ({ movieDetails, error, languages, socialIds }) => {
   let directors = [];
@@ -112,73 +111,66 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
             : "Not Found - Cinephiled"}
         </title>
       </Head>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        {error ? (
-          <Error404>404</Error404>
-        ) : (
-          <>
-            <HeroDetailsContainer className="position-relative mb-auto">
-              <HeroBgContainer className="position-absolute">
-                <HeroBg
-                  backdrop={movieDetails.backdrop_path}
-                  className="position-absolute"
-                ></HeroBg>
-                <DominantColor image={movieDetails.poster_path} />
-              </HeroBgContainer>
+      {error ? (
+        <Error404>404</Error404>
+      ) : (
+        <>
+          <HeroDetailsContainer className="position-relative mb-auto">
+            <HeroBgContainer className="position-absolute">
+              <HeroBg
+                backdrop={movieDetails.backdrop_path}
+                className="position-absolute"
+              ></HeroBg>
+              <DominantColor image={movieDetails.poster_path} />
+            </HeroBgContainer>
 
-              <DetailsHeroWrap>
-                <HeroImgWrapper>
-                  <HeroImg data={movieDetails.poster_path} />
+            <DetailsHeroWrap>
+              <HeroImgWrapper>
+                <HeroImg data={movieDetails.poster_path} />
 
-                  {videos.length !== 0 && (
-                    <a
-                      href={`https://www.youtube.com/watch?v=${videos[0].key}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="trailer"
-                    >
-                      <HeroTrailer>
-                        <FaYoutube size="1.5rem" />
-                        <Span>Play Trailer</Span>
-                      </HeroTrailer>
-                    </a>
-                  )}
-                  <SocialMediaLinks
-                    links={socialIds}
-                    homepage={movieDetails.homepage}
-                  />
-                </HeroImgWrapper>
-                <Gradient />
-                <HeroInfo className="d-flex">
-                  <MovieDetails
-                    movieDetailsData={movieDetails}
-                    date={getyear}
-                    runtime={runtime}
-                    crew={crew}
-                  />
-                </HeroInfo>
-              </DetailsHeroWrap>
-            </HeroDetailsContainer>
-            <MovieFacts
-              facts={movieFacts}
-              languages={languages}
-              country={country}
-            />
-            <MovieTab
-              id={movieDetails.id}
-              cast={cast}
-              reviews={reviewDetails.results}
-              backdrops={backdrops}
-              posters={posters}
-            />
-          </>
-        )}
-      </motion.div>
+                {videos.length !== 0 && (
+                  <a
+                    href={`https://www.youtube.com/watch?v=${videos[0].key}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="trailer"
+                  >
+                    <HeroTrailer>
+                      <FaYoutube size="1.5rem" />
+                      <Span>Play Trailer</Span>
+                    </HeroTrailer>
+                  </a>
+                )}
+                <SocialMediaLinks
+                  links={socialIds}
+                  homepage={movieDetails.homepage}
+                />
+              </HeroImgWrapper>
+              <Gradient />
+              <HeroInfo className="d-flex">
+                <MovieDetails
+                  movieDetailsData={movieDetails}
+                  date={getyear}
+                  runtime={runtime}
+                  crew={crew}
+                />
+              </HeroInfo>
+            </DetailsHeroWrap>
+          </HeroDetailsContainer>
+          <MovieFacts
+            facts={movieFacts}
+            languages={languages}
+            country={country}
+          />
+          <MovieTab
+            id={movieDetails.id}
+            cast={cast}
+            reviews={reviewDetails.results}
+            backdrops={backdrops}
+            posters={posters}
+          />
+        </>
+      )}
     </>
   );
 };

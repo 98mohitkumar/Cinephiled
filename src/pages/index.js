@@ -42,20 +42,13 @@ export default function Home({ moviesData, TVData }) {
       <Head>
         <title>Home - Cinephiled</title>
       </Head>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <Hero />
-        <IndexTab
-          moviesData={moviesData}
-          TVData={TVData}
-          trendingMovies={trendingMovies}
-          trendingTv={trendingTv}
-        />
-      </motion.div>
+      <Hero />
+      <IndexTab
+        moviesData={moviesData}
+        TVData={TVData}
+        trendingMovies={trendingMovies}
+        trendingTv={trendingTv}
+      />
     </>
   );
 }

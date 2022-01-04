@@ -54,6 +54,17 @@ export const Error404 = styled.h1`
 
 export const DetailsWrapper = styled.div`
   min-height: 100vh;
+
+  .keywordResults {
+    padding: 2rem 6rem;
+    @media only ${(props) => props.theme.breakpoints.ip} {
+      padding: 1rem 3rem;
+    }
+
+    @media only ${(props) => props.theme.breakpoints.sm} {
+      padding: 1rem;
+    }
+  }
 `;
 
 export const HeroDetailsContainer = styled.div`

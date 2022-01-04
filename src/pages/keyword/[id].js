@@ -38,27 +38,22 @@ const Keyword = ({ error, results, name }) => {
           {error === false ? `"${name}" - Movies` : "Not Found - Cinephiled"}
         </title>
       </Head>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        {error ? (
-          <Error404>404</Error404>
-        ) : (
-          <>
-            <SearchContainer>
-              <SearchResultsContainer>
-                {results.length === 0 ? (
-                  <EmptySearch className="display-5 text-center">
-                    No movie results for this keyword.
-                  </EmptySearch>
-                ) : (
-                  <>
-                    <p className="fs-4">Results Matching : {name}</p>
-                    {results.map((item, i) => (
-                      <Link key={item.id} href={"/movies/" + item.id} passHref>
+      {error ? (
+        <Error404>404</Error404>
+      ) : (
+        <>
+          <SearchContainer className="keywordResults">
+            <SearchResultsContainer>
+              {results.length === 0 ? (
+                <EmptySearch className="display-5 text-center">
+                  No movie results for this keyword.
+                </EmptySearch>
+              ) : (
+                <>
+                  <p className="fs-4">Results Matching : {name}</p>
+                  {results.map((item, i) => (
+                    <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
+                      <Link href={"/movies/" + item.id} passHref>
                         <QueryContainer>
                           <QueryImg poster={item.poster_path} />
                           <QueryInfoWrapper>
@@ -72,14 +67,14 @@ const Keyword = ({ error, results, name }) => {
                           </QueryInfoWrapper>
                         </QueryContainer>
                       </Link>
-                    ))}
-                  </>
-                )}
-              </SearchResultsContainer>
-            </SearchContainer>
-          </>
-        )}
-      </motion.div>
+                    </motion.div>
+                  ))}
+                </>
+              )}
+            </SearchResultsContainer>
+          </SearchContainer>
+        </>
+      )}
     </>
   );
 };

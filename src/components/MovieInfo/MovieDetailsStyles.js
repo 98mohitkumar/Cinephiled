@@ -199,7 +199,7 @@ export const FactsFieldSet = styled.fieldset`
   max-width: max-content;
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    max-width: 100%;
+    min-width: 100%;
     border: none;
   }
 
