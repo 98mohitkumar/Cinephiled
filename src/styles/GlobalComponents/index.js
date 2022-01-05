@@ -557,8 +557,12 @@ export const SeasonEpisodesWrapper = styled.div`
   }
 
   .airDate {
-    @media only ${(props) => props.theme.breakpoints.sm} {
-      font-size: 1.1rem;
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    @media only ${(props) => props.theme.breakpoints.xs} {
+      font-size: 1.5rem;
     }
   }
 
@@ -608,34 +612,21 @@ export const EpisodeImg = styled.div`
 export const TrWrapper = styled.div`
   width: max-content;
   display: flex;
-  flex-wrap: wrap;
-  max-width: 100%;
   align-items: center;
-  margin-bottom: 1rem;
+  margin: 0.75rem 0rem;
   gap: 1rem 1.5rem;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
-
-  h3 {
-    margin: 0px;
-
-    @media only ${(props) => props.theme.breakpoints.xs} {
-      font-size: 1.5rem;
-    }
+    gap: 1rem 1.25rem;
   }
 `;
 
 export const Rating = styled.div`
-  width: 55px;
-  height: 30px;
+  width: 50px;
+  height: 27px;
   border-radius: 20px;
   background-color: rgb(221 221 221);
   color: #121212;
-  text-align: center;
   font-weight: 500;
   font-family: "Satoshi", sans-serif;
   font-size: 1.1rem;
@@ -645,16 +636,14 @@ export const Rating = styled.div`
 
   p {
     margin: 0rem;
+
+    @media only ${(props) => props.theme.breakpoints.xs} {
+      font-size: 0.9rem;
+    }
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     width: 45px;
     height: 25px;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    width: 45px;
-    height: 25px;
-    font-size: 1rem;
   }
 `;

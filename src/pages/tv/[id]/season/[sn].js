@@ -64,18 +64,18 @@ const seasons = ({ error, data }) => {
                 <EpisodeImg img={item.still_path} />
                 <SeasonInfoWrapper className="ipRes">
                   <SeasonInfoMain>
+                    <SeasonTitle className="text">
+                      {!item.episode_number ? i : item.episode_number}.{" "}
+                      {item.name}
+                    </SeasonTitle>
                     <TrWrapper>
-                      <SeasonTitle className="text">
-                        {!item.episode_number ? i : item.episode_number}.{" "}
-                        {item.name}
-                      </SeasonTitle>
+                      <SeasonsRelease className="text airDate">
+                        {getReleaseDate(item.air_date)}
+                      </SeasonsRelease>
                       <Rating>
                         <p>{getRating(item.vote_average)}</p>
                       </Rating>
                     </TrWrapper>
-                    <SeasonsRelease className="text airDate">
-                      {getReleaseDate(item.air_date)}
-                    </SeasonsRelease>
                     {item.overview && (
                       <SeasonCommonOverview>
                         {item.overview}
