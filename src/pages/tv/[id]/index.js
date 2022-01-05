@@ -186,38 +186,42 @@ const tvShow = ({ tvData, error, languages, socialIds }) => {
 };
 
 tvShow.getInitialProps = async (ctx) => {
-  const api_key = process.env.NEXT_PUBLIC_API_KEY;
-  const tv_id = ctx.query.id;
+  try {
+    const api_key = process.env.NEXT_PUBLIC_API_KEY;
+    const tv_id = ctx.query.id;
 
-  const tvResponse = await fetch(
-    `https://api.themoviedb.org/3/tv/${tv_id}?api_key=${api_key}&language=en-US&append_to_response=images,videos,credits,reviews&include_image_language=en,null`
-  );
+    const tvResponse = await fetch(
+      `https://api.themoviedb.org/3/tv/${tv_id}?api_key=${api_key}&language=en-US&append_to_response=images,videos,credits,reviews&include_image_language=en,null`
+    );
 
-  const languagesResponse = await fetch(
-    `https://api.themoviedb.org/3/configuration/languages?api_key=${api_key}`
-  );
+    const languagesResponse = await fetch(
+      `https://api.themoviedb.org/3/configuration/languages?api_key=${api_key}`
+    );
 
-  const socialLinks = await fetch(
-    `https://api.themoviedb.org/3/tv/${tv_id}/external_ids?api_key=${api_key}&language=en-US`
-  );
+    const socialLinks = await fetch(
+      `https://api.themoviedb.org/3/tv/${tv_id}/external_ids?api_key=${api_key}&language=en-US`
+    );
 
-  const error = tvResponse.ok ? false : true;
+    const error = tvResponse.ok ? false : true;
 
-  if (error === true) {
-    return { error };
-  } else {
-    const tvData = await tvResponse.json();
+    if (error === true) {
+      return { error };
+    } else {
+      const tvData = await tvResponse.json();
 
-    const languages = await languagesResponse.json();
+      const languages = await languagesResponse.json();
 
-    const socialIds = await socialLinks.json();
+      const socialIds = await socialLinks.json();
 
-    return {
-      tvData,
-      error,
-      languages,
-      socialIds,
-    };
+      return {
+        tvData,
+        error,
+        languages,
+        socialIds,
+      };
+    }
+  } catch (err) {
+    return { error: true };
   }
 };
 

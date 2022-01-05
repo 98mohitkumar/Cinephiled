@@ -80,25 +80,29 @@ const Keyword = ({ error, results, name }) => {
 };
 
 Keyword.getInitialProps = async (ctx) => {
-  const api_key = process.env.NEXT_PUBLIC_API_KEY;
-  const keyword_id = ctx.query.id;
+  try {
+    const api_key = process.env.NEXT_PUBLIC_API_KEY;
+    const keyword_id = ctx.query.id;
 
-  const response = await fetch(
-    `https://api.themoviedb.org/3/keyword/${keyword_id}/movies?api_key=${api_key}&language=en-US&include_adult=false`
-  );
+    const response = await fetch(
+      `https://api.themoviedb.org/3/keyword/${keyword_id}/movies?api_key=${api_key}&language=en-US&include_adult=false`
+    );
 
-  const keywordName = await fetch(
-    `https://api.themoviedb.org/3/keyword/${keyword_id}?api_key=${api_key}`
-  );
+    const keywordName = await fetch(
+      `https://api.themoviedb.org/3/keyword/${keyword_id}?api_key=${api_key}`
+    );
 
-  const error = response.ok ? false : true;
+    const error = response.ok ? false : true;
 
-  if (error === true) {
-    return { error };
-  } else {
-    const res = await response.json();
-    const keywordRes = await keywordName.json();
-    return { error, results: res.results, name: keywordRes.name };
+    if (error) {
+      return { error };
+    } else {
+      const res = await response.json();
+      const keywordRes = await keywordName.json();
+      return { error, results: res.results, name: keywordRes.name };
+    }
+  } catch (err) {
+    return { error: true };
   }
 };
 export default Keyword;

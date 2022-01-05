@@ -176,37 +176,41 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
 };
 
 movie.getInitialProps = async (ctx) => {
-  const api_key = process.env.NEXT_PUBLIC_API_KEY;
-  const movie_id = ctx.query.id;
-  const movieResponse = await fetch(
-    `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${api_key}&language=en-US&append_to_response=images,videos,credits,reviews&include_image_language=en,null`
-  );
+  try {
+    const api_key = process.env.NEXT_PUBLIC_API_KEY;
+    const movie_id = ctx.query.id;
+    const movieResponse = await fetch(
+      `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${api_key}&language=en-US&append_to_response=images,videos,credits,reviews&include_image_language=en,null`
+    );
 
-  const languagesResponse = await fetch(
-    `https://api.themoviedb.org/3/configuration/languages?api_key=${api_key}`
-  );
+    const languagesResponse = await fetch(
+      `https://api.themoviedb.org/3/configuration/languages?api_key=${api_key}`
+    );
 
-  const socialLinks = await fetch(
-    `https://api.themoviedb.org/3/movie/${movie_id}/external_ids?api_key=${api_key}&language=en-US`
-  );
+    const socialLinks = await fetch(
+      `https://api.themoviedb.org/3/movie/${movie_id}/external_ids?api_key=${api_key}&language=en-US`
+    );
 
-  const error = movieResponse.ok ? false : true;
+    const error = movieResponse.ok ? false : true;
 
-  if (error === true) {
-    return { error };
-  } else {
-    const movieDetails = await movieResponse.json();
+    if (error) {
+      return { error };
+    } else {
+      const movieDetails = await movieResponse.json();
 
-    const languages = await languagesResponse.json();
+      const languages = await languagesResponse.json();
 
-    const socialIds = await socialLinks.json();
+      const socialIds = await socialLinks.json();
 
-    return {
-      movieDetails,
-      error,
-      languages,
-      socialIds,
-    };
+      return {
+        movieDetails,
+        error,
+        languages,
+        socialIds,
+      };
+    }
+  } catch (err) {
+    return { error: true };
   }
 };
 

@@ -93,19 +93,23 @@ const seasons = ({ error, data }) => {
 };
 
 seasons.getInitialProps = async (ctx) => {
-  const api_key = process.env.NEXT_PUBLIC_API_KEY;
-  const seasonNumber = ctx.query.sn;
-  const tv_id = ctx.query.id;
+  try {
+    const api_key = process.env.NEXT_PUBLIC_API_KEY;
+    const seasonNumber = ctx.query.sn;
+    const tv_id = ctx.query.id;
 
-  const response = await fetch(
-    `https://api.themoviedb.org/3/tv/${tv_id}/season/${seasonNumber}?api_key=${api_key}&language=en-US`
-  );
+    const response = await fetch(
+      `https://api.themoviedb.org/3/tv/${tv_id}/season/${seasonNumber}?api_key=${api_key}&language=en-US`
+    );
 
-  const error = response.ok ? false : true;
+    const error = response.ok ? false : true;
 
-  const res = await response.json();
+    const res = await response.json();
 
-  return { error, data: res };
+    return { error, data: res };
+  } catch (err) {
+    return { error: true };
+  }
 };
 
 export default seasons;
