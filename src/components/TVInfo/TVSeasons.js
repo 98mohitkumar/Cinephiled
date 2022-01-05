@@ -47,7 +47,7 @@ const TVSeasons = ({ seasons }) => {
                   <SeasonImg poster={item.poster_path} />
                   <SeasonInfoWrapper>
                     <SeasonInfoMain>
-                      <SeasonTitle>
+                      <SeasonTitle className="xsRes">
                         {item.name}
                         {Today < new Date(seasonReleaseDates[i]) &&
                         Today !== new Date(seasonReleaseDates[i])

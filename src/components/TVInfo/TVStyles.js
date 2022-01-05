@@ -17,6 +17,10 @@ export const SeasonsContainer = styled.div`
   @media only ${(props) => props.theme.breakpoints.sm} {
     padding: 3rem 0rem;
   }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 2rem 0rem;
+  }
 `;
 
 export const SeasonWrapper = styled.div`
@@ -56,6 +60,12 @@ export const SeasonInfoWrapper = styled.div`
 
 export const SeasonInfoMain = styled.div`
   width: 100%;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    .xsRes {
+      margin-bottom: 4px !important;
+    }
+  }
 `;
 
 export const SeasonTitle = styled.h3`
@@ -64,7 +74,7 @@ export const SeasonTitle = styled.h3`
   color: #121212;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
 `;
 
@@ -90,6 +100,16 @@ export const SeaonDetailsWrapper = styled.div`
   display: flex;
   align-items: center;
   width: max-content;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    & > div {
+      display: none;
+    }
+
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
 `;
 
 export const SeaonsOverview = styled.p`
