@@ -19,14 +19,14 @@ export const SeasonsContainer = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 2rem 0rem;
+    padding: 1rem 0rem;
   }
 `;
 
 export const SeasonWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 180px;
+  min-height: 180px;
   border-radius: 10px;
   overflow: hidden;
   background: white;
@@ -54,7 +54,7 @@ export const SeasonInfoWrapper = styled.div`
   align-items: center;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0.5rem 1rem;
+    padding: 1rem;
   }
 `;
 
@@ -74,7 +74,7 @@ export const SeasonTitle = styled.h3`
   color: #121212;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
   }
 `;
 

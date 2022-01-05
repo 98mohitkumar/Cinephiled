@@ -231,7 +231,7 @@ export const CastContainer = styled.div`
   padding: 2rem;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 2rem 1rem;
+    padding: 1rem;
   }
 `;
 
@@ -307,6 +307,10 @@ export const ReviewsContainer = styled.div`
   @media only ${(props) => props.theme.breakpoints.lg} {
     padding: 1rem;
   }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 0rem 1rem;
+  }
 `;
 
 export const ReviewsWrap = styled.div`
@@ -380,7 +384,7 @@ export const BackdropsContainer = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 2rem 1rem;
+    padding: 1rem;
   }
 `;
 
@@ -456,7 +460,7 @@ export const PostersContainer = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 2rem 1rem;
+    padding: 1rem;
   }
 `;
 
