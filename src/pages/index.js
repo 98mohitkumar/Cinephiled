@@ -37,7 +37,7 @@ export default function Home({ moviesData, TVData, error }) {
         setTrendingMovies(data.trendingMoviesArr);
       });
     }
-  }, []);
+  }, [error]);
 
   if (error) {
     return (
