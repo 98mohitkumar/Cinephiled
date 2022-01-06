@@ -4,6 +4,7 @@ export const FooterWrapper = styled.footer`
   width: 100%;
   height: auto;
   padding: 1rem 5rem;
+  background-color: rgb(18 18 18 /0.95);
 
   &::after {
     content: "";

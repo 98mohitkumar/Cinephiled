@@ -1,5 +1,6 @@
 import Head from "next/head";
 import {
+  AboutBackground,
   AboutContainer,
   AboutCreditsWrapper,
 } from "../styles/GlobalComponents";
@@ -17,6 +18,8 @@ const About = () => {
         <title>About - Cinephiled</title>
       </Head>
       <AboutContainer className="text-center">
+        <AboutBackground />
+
         <h1 className="fw-bold display-3">About the Project</h1>
         <p className="fs-5">
           On my journey of learning front end web development, i have now

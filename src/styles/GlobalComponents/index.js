@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   max-width: 1600px;
   margin: auto;
+  position: relative;
+  overflow: hidden;
 `;
 
 export const Container = styled.div`
@@ -15,17 +17,29 @@ export const Container = styled.div`
   }
 `;
 
-export const AboutWrapper = styled.div`
-  min-height: 100vh;
+export const AboutBackground = styled.div`
+  position: absolute;
+  inset: 0;
+  background: Url(/Images/ShowCase.webp) no-repeat center center / cover;
+  filter: brightness(60%);
+  z-index: -1;
+
+  animation: scale 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+
+  @keyframes scale {
+    from {
+      transform: scale(1.6);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
 `;
 
 export const AboutContainer = styled.div`
-  margin: 0rem 4rem auto;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    margin: 0rem 2rem;
-    margin-bottom: auto;
-  }
+  padding: 0rem 5vw;
+  background-color: rgb(18 18 18 /0.95);
+  flex: 2 1 0;
 `;
 
 export const Error404 = styled.h1`

@@ -8,7 +8,7 @@ export const NavBar = styled.nav`
   padding: 0rem 5rem;
   justify-content: space-evenly;
   align-items: center;
-  background: #121212;
+  background-color: rgb(18 18 18 /0.95);
 
   &::after {
     content: "";
