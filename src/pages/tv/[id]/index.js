@@ -21,7 +21,7 @@ import { FaYoutube } from "react-icons/fa";
 import { Span } from "../../../components/MovieInfo/MovieDetailsStyles";
 import SocialMediaLinks from "../../../components/SocialMediaLinks/SocialMediaLinks";
 
-const tvShow = ({ tvData, error, languages, socialIds }) => {
+const TvShow = ({ tvData, error, languages, socialIds }) => {
   let creators = [];
   let characters = [];
   let cast = [];
@@ -185,7 +185,7 @@ const tvShow = ({ tvData, error, languages, socialIds }) => {
   );
 };
 
-tvShow.getInitialProps = async (ctx) => {
+TvShow.getInitialProps = async (ctx) => {
   try {
     const api_key = process.env.NEXT_PUBLIC_API_KEY;
     const tv_id = ctx.query.id;
@@ -225,4 +225,4 @@ tvShow.getInitialProps = async (ctx) => {
   }
 };
 
-export default tvShow;
+export default TvShow;

@@ -6,7 +6,7 @@ import {
   SearchContainer,
 } from "../../styles/GlobalComponents";
 
-const search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
+const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
   let movieReleaseDates = [];
   let tvReleaseDates = [];
 
@@ -60,7 +60,7 @@ const search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
   );
 };
 
-search.getInitialProps = async (ctx) => {
+Search.getInitialProps = async (ctx) => {
   try {
     const api_key = process.env.NEXT_PUBLIC_API_KEY;
     let searchQuery = ctx.query.search;
@@ -139,4 +139,4 @@ search.getInitialProps = async (ctx) => {
   }
 };
 
-export default search;
+export default Search;

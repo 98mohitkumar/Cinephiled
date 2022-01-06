@@ -17,7 +17,7 @@ import {
   Rating,
 } from "../../../../styles/GlobalComponents";
 
-const seasons = ({ error, data }) => {
+const Seasons = ({ error, data }) => {
   const getYear = (date) => {
     const year = !date ? "TBA" : new Date(date).getFullYear();
     return year;
@@ -92,7 +92,7 @@ const seasons = ({ error, data }) => {
   );
 };
 
-seasons.getInitialProps = async (ctx) => {
+Seasons.getInitialProps = async (ctx) => {
   try {
     const api_key = process.env.NEXT_PUBLIC_API_KEY;
     const seasonNumber = ctx.query.sn;
@@ -112,4 +112,4 @@ seasons.getInitialProps = async (ctx) => {
   }
 };
 
-export default seasons;
+export default Seasons;
