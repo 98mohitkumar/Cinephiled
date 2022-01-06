@@ -24,9 +24,9 @@ export const AboutBackground = styled.div`
   filter: brightness(60%);
   z-index: -1;
 
-  animation: scale 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  animation: about 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
 
-  @keyframes scale {
+  @keyframes about {
     from {
       transform: scale(1.6);
     }
