@@ -13,9 +13,17 @@ import {
   Tagline,
   ReleaseDateWrapper,
   Overview,
+  Light,
 } from "./MovieDetailsStyles";
 
-const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
+const MovieDetails = ({
+  movieDetailsData,
+  date,
+  runtime,
+  crew,
+  easter,
+  showEaster,
+}) => {
   const releaseDate =
     movieDetailsData.release_date === ""
       ? "TBA"
@@ -33,6 +41,7 @@ const MovieDetails = ({ movieDetailsData, date, runtime, crew }) => {
         <HeroInfoTitle className="mb-2">
           {movieDetailsData.title} ({date})
         </HeroInfoTitle>
+        {easter && <Light onClick={showEaster} />}
         <RtoR className="my-3">
           <ReleaseDateWrapper>
             <Span>{releaseDate}</Span>

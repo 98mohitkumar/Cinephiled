@@ -661,3 +661,94 @@ export const Rating = styled.div`
     height: 25px;
   }
 `;
+
+export const MovieEaster = styled.div`
+  position: absolute;
+  inset: 0;
+  background-color: rgb(18 18 18 /1);
+  z-index: 10;
+
+  ${(props) =>
+    !props.show
+      ? ` animation: hideEaster 1s ease-in-out forwards;
+
+@keyframes hideEaster{
+  from {
+    background-color: rgb(18 18 18 /1);
+    z-index: 10;
+  }
+
+  to {
+    background-color: rgb(18 18 18 /0);
+    z-index: -1;
+  }
+}`
+      : ` animation: showEaster 0.5s ease-in-out forwards;
+
+@keyframes showEaster{
+  from {
+    background-color: rgb(18 18 18 /0);
+    z-index: -1;
+  }
+
+  to {
+    background-color: rgb(18 18 18 /1);
+    z-index: 10;
+  }
+}`};
+`;
+
+export const LightsInOut = styled.div`
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  border-radius: 50px;
+  background: url(/Images/lightsIn.png) no-repeat center center / 50%;
+  background-color: #313131;
+  ${(props) =>
+    props.show
+      ? `box-shadow: 0px 0px 25px rgb(255 255 255 /0.8);  
+      opacity: 0;
+      animation: hideLight 0s 0.5s ease-in-out forwards;
+
+@keyframes hideLight{
+  from {
+    z-index: -1;
+  }
+
+  to {
+    opacity: 1;
+    z-index: 11;
+  }
+}`
+      : "display: none"};
+  inset: 22rem 0 0 0;
+`;
+
+export const EasterText = styled.span`
+  position: absolute;
+  color: white;
+  z-index: 11;
+  inset: 17rem 0 0 0;
+  height: max-content;
+  text-align: center;
+  font-weight: 500;
+  display: ${(props) => (props.show ? "inline" : "none")};
+
+  ${(props) =>
+    props.show &&
+    ` animation: showText 0s 0.5s ease-in-out forwards;
+    opacity: 0;
+
+@keyframes showText{
+  from {
+    z-index: -1;
+  }
+
+  to {
+    opacity: 1;
+    z-index: 11;
+  }
+}`};
+`;

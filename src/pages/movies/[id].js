@@ -9,6 +9,9 @@ import {
   HeroInfo,
   HeroImgWrapper,
   HeroTrailer,
+  MovieEaster,
+  LightsInOut,
+  EasterText,
 } from "../../styles/GlobalComponents";
 import DominantColor from "../../components/DominantColor/DominantColor";
 import MovieDetails from "../../components/MovieInfo/MovieDetails";
@@ -18,8 +21,37 @@ import { Gradient } from "../../styles/GlobalComponents";
 import { Span } from "../../components/MovieInfo/MovieDetailsStyles";
 import { FaYoutube } from "react-icons/fa";
 import SocialMediaLinks from "../../components/SocialMediaLinks/SocialMediaLinks";
+import { useState, useRef, useEffect } from "react";
 
-const movie = ({ movieDetails, error, languages, socialIds }) => {
+const Movie = ({ movieDetails, error, languages, socialIds }) => {
+  let easter = useRef(false);
+  const [showEaster, setShowEaster] = useState(false);
+  const [hasSeen, setHasSeen] = useState(false);
+  let easterSeen = "";
+
+  if (movieDetails.id === 345911) {
+    easter.current = true;
+  }
+
+  useEffect(() => {
+    easterSeen = localStorage.getItem("easterSeen");
+    if (easter.current && easterSeen !== "seen") {
+      setShowEaster(true);
+    }
+
+    if (easterSeen === "seen") {
+      setHasSeen(true);
+    } else {
+      setHasSeen(false);
+    }
+  }, []);
+
+  const easterHandler = () => {
+    setShowEaster(!showEaster);
+    setHasSeen(true);
+    localStorage.setItem("easterSeen", "seen");
+  };
+
   let directors = [];
   let writers = [];
   let characters = [];
@@ -115,6 +147,21 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
         <Error404>404</Error404>
       ) : (
         <>
+          {easter.current && (
+            <>
+              {!hasSeen ? (
+                <EasterText className="fs-4" show={showEaster}>
+                  Congratulations, you have found the easter egg.
+                </EasterText>
+              ) : (
+                <EasterText className="fs-4" show={showEaster}>
+                  Aren&apos;t you scared?
+                </EasterText>
+              )}
+              <LightsInOut show={showEaster} onClick={easterHandler} />
+              <MovieEaster show={showEaster} />
+            </>
+          )}
           <HeroDetailsContainer className="position-relative mb-auto">
             <HeroBgContainer className="position-absolute">
               <HeroBg
@@ -153,6 +200,8 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
                   date={getyear}
                   runtime={runtime}
                   crew={crew}
+                  easter={easter.current}
+                  showEaster={easterHandler}
                 />
               </HeroInfo>
             </DetailsHeroWrap>
@@ -175,7 +224,7 @@ const movie = ({ movieDetails, error, languages, socialIds }) => {
   );
 };
 
-movie.getInitialProps = async (ctx) => {
+Movie.getInitialProps = async (ctx) => {
   try {
     const api_key = process.env.NEXT_PUBLIC_API_KEY;
     const movie_id = ctx.query.id;
@@ -214,4 +263,4 @@ movie.getInitialProps = async (ctx) => {
   }
 };
 
-export default movie;
+export default Movie;

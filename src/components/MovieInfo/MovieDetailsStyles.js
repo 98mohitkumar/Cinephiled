@@ -514,3 +514,12 @@ export const Tagline = styled.span`
     font-size: 18px;
   }
 `;
+
+export const Light = styled.div`
+  width: 40px;
+  height: 40px;
+  background: url(/Images/lightsOut.png) no-repeat center center / 40%;
+  background-color: white;
+  border-radius: 20px;
+  margin-top: 1rem;
+`;
