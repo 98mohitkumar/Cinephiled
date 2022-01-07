@@ -106,6 +106,18 @@ export const HeroBg = styled.div`
       ? "#121212"
       : `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover`};
   inset: 0;
+
+  animation: backdrop 1s ease-in-out forwards;
+
+  @keyframes backdrop {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 export const HeroImg = styled.div`
