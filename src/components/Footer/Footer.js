@@ -25,14 +25,14 @@ const Footer = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <BsInstagram size="2.25rem" />
+          <BsInstagram size="2rem" />
         </SocialIcons>
         <SocialIcons
           href="https://t.me/mohitkek"
           target="_blank"
           rel="noreferrer"
         >
-          <FaTelegramPlane size="2.25rem" />
+          <FaTelegramPlane size="2rem" />
         </SocialIcons>
       </SocialIconsContainer>
     </FooterWrapper>

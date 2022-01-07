@@ -38,7 +38,7 @@ export const FooterWrapper = styled.footer`
 
 export const FooterBranding = styled.span`
   font-weight: 600;
-  font-size: calc(1.3rem + 0.6vw);
+  font-size: calc(1.1rem + 0.6vw);
   margin: 0rem 1rem;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
@@ -46,19 +46,19 @@ export const FooterBranding = styled.span`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
   }
 `;
 
 export const FooterAttribute = styled.div`
-  width: 6rem;
-  height: 3rem;
+  width: 4.25rem;
+  height: 2.15rem;
   background: url("https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg")
     no-repeat center center / contain;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    width: 4.25rem;
-    height: 2.5rem;
+    width: 4rem;
+    height: 2rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
@@ -103,8 +103,8 @@ export const SocialIcons = styled.a`
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     & > svg {
-      width: 2rem;
-      height: 2rem;
+      width: 1.75rem;
+      height: 1.75rem;
     }
   }
 
