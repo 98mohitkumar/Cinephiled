@@ -48,6 +48,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
 
   const easterHandler = () => {
     setShowEaster(!showEaster);
+    window.scrollTo(0, 0);
     setHasSeen(true);
     localStorage.setItem("easterSeen", "seen");
   };
