@@ -69,6 +69,8 @@ export const Form = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
+  gap: 1rem;
   margin: auto;
 
   .border-animated {
@@ -111,20 +113,6 @@ export const Form = styled.form`
 
   @media only ${(props) => props.theme.breakpoints.lg} {
     width: 65%;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    display: block;
-
-    & > div {
-      width: 100% !important;
-      margin: auto !important;
-    }
-
-    & > div > button {
-      margin-top: 1rem;
-      margin-inline: auto;
-    }
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {

@@ -48,7 +48,7 @@ const Hero = () => {
       <Banner />
       <HeroDiv>
         <Form>
-          <div className="m-2 w-75 border-animated">
+          <div className="m-2 w-100 border-animated">
             <UserInput
               type="text"
               className="form-control"
