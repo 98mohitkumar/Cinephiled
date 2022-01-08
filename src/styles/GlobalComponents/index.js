@@ -40,6 +40,10 @@ export const AboutContainer = styled.div`
   padding: 0rem 5vw;
   background-color: rgb(18 18 18 /0.95);
   flex: 2 1 0;
+
+  h1 {
+    margin: 28px 0px;
+  }
 `;
 
 export const Error404 = styled.h1`

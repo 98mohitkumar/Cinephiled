@@ -32,7 +32,10 @@ const About = () => {
           <br />
           <br />
           Any feedback or suggestions are welcomed, feel free to contact me
-          using the social media linked at the bottom.
+          using the social media linked at the bottom. <br />
+          <br />
+          Also there is an easter egg somewhere in one of the horror movies from
+          2016, try and find it.
         </p>
 
         <h2 className="my-4 fw-bold display-3">Credits</h2>
