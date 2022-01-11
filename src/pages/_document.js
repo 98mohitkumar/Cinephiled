@@ -32,6 +32,11 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `history.scrollRestoration = "manual"`,
+            }}
+          />
           <link
             href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
             rel="stylesheet"
