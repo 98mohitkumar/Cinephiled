@@ -9,7 +9,7 @@ const DominantColor = ({ image }) => {
     setSrc(
       !image ? "/images/Hex.png" : `https://image.tmdb.org/t/p/w500${image}`
     );
-  }, []);
+  }, [image]);
 
   const pallete = useImageColor(src, {
     cors: true,

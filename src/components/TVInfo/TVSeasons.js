@@ -24,7 +24,7 @@ const TVSeasons = ({ seasons }) => {
 
   useEffect(() => {
     setRoute(router.asPath);
-  }, []);
+  }, [router.asPath]);
 
   seasons.forEach(
     (item) =>

@@ -27,14 +27,13 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
   let easter = useRef(false);
   const [showEaster, setShowEaster] = useState(false);
   const [hasSeen, setHasSeen] = useState(false);
-  let easterSeen = "";
 
   if (movieDetails.id === 345911) {
     easter.current = true;
   }
 
   useEffect(() => {
-    easterSeen = localStorage.getItem("easterSeen");
+    let easterSeen = localStorage.getItem("easterSeen");
     if (easter.current && easterSeen !== "seen") {
       setShowEaster(true);
     }
