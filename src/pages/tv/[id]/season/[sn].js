@@ -107,7 +107,7 @@ Seasons.getInitialProps = async (ctx) => {
     const res = await response.json();
 
     return { error, data: res };
-  } catch (err) {
+  } catch {
     return { error: true };
   }
 };

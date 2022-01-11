@@ -134,7 +134,7 @@ Search.getInitialProps = async (ctx) => {
         };
       }
     }
-  } catch (err) {
+  } catch {
     return { error: true };
   }
 };

@@ -28,7 +28,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
   const [showEaster, setShowEaster] = useState(false);
   const [hasSeen, setHasSeen] = useState(false);
 
-  if (movieDetails.id === 345911) {
+  if (!error && movieDetails.id === 345911) {
     easter.current = true;
   }
 
@@ -258,7 +258,7 @@ Movie.getInitialProps = async (ctx) => {
         socialIds,
       };
     }
-  } catch (err) {
+  } catch {
     return { error: true };
   }
 };

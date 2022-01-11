@@ -101,7 +101,7 @@ Keyword.getInitialProps = async (ctx) => {
       const keywordRes = await keywordName.json();
       return { error, results: res.results, name: keywordRes.name };
     }
-  } catch (err) {
+  } catch {
     return { error: true };
   }
 };

@@ -220,7 +220,7 @@ TvShow.getInitialProps = async (ctx) => {
         socialIds,
       };
     }
-  } catch (err) {
+  } catch {
     return { error: true };
   }
 };
