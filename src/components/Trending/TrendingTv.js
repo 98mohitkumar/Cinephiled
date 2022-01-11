@@ -39,7 +39,7 @@ const TrendingTv = ({ Tv }) => {
                 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Link href={"/tv/" + TV.id} passHref>
+                <Link href={"/tv/" + TV.id} passHref scroll={false}>
                   <CardImg
                     data={TV.poster_path}
                     className="d-flex justify-content-end"

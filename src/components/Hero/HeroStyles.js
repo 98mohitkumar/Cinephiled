@@ -38,7 +38,7 @@ export const Banner = styled.div`
   background: Url(/Images/poster.webp) repeat center / 70%;
   filter: brightness(70%);
   z-index: 1;
-  animation: banner 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  transform: scale(1.7) rotate(10deg);
 
   @media only ${(props) => props.theme.breakpoints.lg} {
     background: Url(/Images/poster.webp) repeat center / 90%;
@@ -50,17 +50,6 @@ export const Banner = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     background: Url(/Images/poster.webp) repeat center / 140%;
-  }
-
-  @keyframes banner {
-    from {
-      transform: scale(2.2);
-      opacity: 0.5;
-    }
-    to {
-      transform: scale(1.7) rotate(10deg);
-      opacity: 1;
-    }
   }
 `;
 

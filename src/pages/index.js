@@ -9,17 +9,20 @@ export default function Home({ moviesData, TVData, error }) {
   const [trendingMovies, setTrendingMovies] = useState([]);
 
   useEffect(() => {
+    const abortCtrl = new AbortController();
     if (!error) {
       localStorage.setItem("SearchTabPosition", "");
       const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
       async function getTrending() {
         const trendingResMovies = await fetch(
-          `https://api.themoviedb.org/3/trending/movie/day?api_key=${api_key}`
+          `https://api.themoviedb.org/3/trending/movie/day?api_key=${api_key}`,
+          { signal: abortCtrl.signal }
         );
 
         const trendingResTv = await fetch(
-          `https://api.themoviedb.org/3/trending/tv/day?api_key=${api_key}`
+          `https://api.themoviedb.org/3/trending/tv/day?api_key=${api_key}`,
+          { signal: abortCtrl.signal }
         );
 
         const trendingMoviesResults = await trendingResMovies.json();
@@ -32,11 +35,17 @@ export default function Home({ moviesData, TVData, error }) {
         };
       }
 
-      getTrending().then((data) => {
-        setTrendingTv(data.trendingTvArr);
-        setTrendingMovies(data.trendingMoviesArr);
-      });
+      getTrending()
+        .then((data) => {
+          setTrendingTv(data.trendingTvArr);
+          setTrendingMovies(data.trendingMoviesArr);
+        })
+        .catch((err) => console.log(err));
     }
+
+    return () => {
+      abortCtrl.abort();
+    };
   }, [error]);
 
   if (error) {

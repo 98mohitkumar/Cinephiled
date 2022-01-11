@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     const handleStart = (url) => {
-      url !== router.pathname ? setIsLoading(true) : setIsLoading(false);
+      url !== router.asPath ? setIsLoading(true) : setIsLoading(false);
     };
 
     const handleComplete = (url) => {
@@ -22,20 +22,18 @@ function MyApp({ Component, pageProps }) {
     router.events.on("routeChangeStart", handleStart);
     router.events.on("routeChangeComplete", handleComplete);
     router.events.on("routeChangeError", handleComplete);
-  }, [router]);
+  }, [router.asPath]);
 
   return (
     <Theme>
       <AnimatePresence exitBeforeEnter>
-        <>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          )}
-        </>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Layout router={router} key={router.asPath}>
+            <Component {...pageProps} />
+          </Layout>
+        )}
       </AnimatePresence>
     </Theme>
   );

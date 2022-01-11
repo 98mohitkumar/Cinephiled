@@ -15,7 +15,12 @@ const KeywordSearch = ({ keywords }) => {
       ) : (
         <SearchResultsContainer>
           {keywords.map((item) => (
-            <Link key={item.id} href={`/keyword/${item.id}`} passHref>
+            <Link
+              key={item.id}
+              href={`/keyword/${item.id}`}
+              passHref
+              scroll={false}
+            >
               <Keyword>{item.name}</Keyword>
             </Link>
           ))}

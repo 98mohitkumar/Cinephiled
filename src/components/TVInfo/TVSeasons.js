@@ -15,12 +15,16 @@ import { NoDataText } from "../../styles/GlobalComponents";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const TVSeasons = ({ seasons }) => {
   let seasonReleaseDates = [];
-
   const router = useRouter();
-  const route = router.asPath;
+  const [route, setRoute] = useState("");
+
+  useEffect(() => {
+    setRoute(router.asPath);
+  }, []);
 
   seasons.forEach(
     (item) =>
@@ -42,7 +46,11 @@ const TVSeasons = ({ seasons }) => {
         ) : (
           seasons.map((item, i) => (
             <motion.div key={item.id} whileTap={{ scale: 0.9 }}>
-              <Link href={`${route}/season/${item.season_number}`} passHref>
+              <Link
+                href={`${route}/season/${item.season_number}`}
+                passHref
+                scroll={false}
+              >
                 <SeasonWrapper className="mb-4">
                   <SeasonImg poster={item.poster_path} />
                   <SeasonInfoWrapper>

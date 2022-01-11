@@ -10,7 +10,7 @@ import TVSearch from "./TVSearch";
 import { Span } from "../MovieInfo/MovieDetailsStyles";
 import { useEffect } from "react";
 import KeywordSearch from "./KeywordSearch";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const SearchTab = ({
   movies,
@@ -59,13 +59,14 @@ const SearchTab = ({
         </SearchTabSelectionTitle>
       </SearchTabWrapper>
 
-      {tabState === "movies" && (
-        <>
+      <AnimatePresence exitBeforeEnter>
+        {tabState === "movies" && (
           <motion.div
+            key="movies"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.4 }}
           >
             {movies.length !== 0 && (
               <Span className="d-block display-6 text-center">
@@ -81,15 +82,15 @@ const SearchTab = ({
               movieReleaseDates={movieReleaseDates}
             />
           </motion.div>
-        </>
-      )}
-      {tabState === "tv" && (
-        <>
+        )}
+
+        {tabState === "tv" && (
           <motion.div
+            key="tv"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.4 }}
           >
             {tv.length !== 0 && (
               <Span className="d-block display-6 text-center">
@@ -102,20 +103,25 @@ const SearchTab = ({
             </p>
             <TVSearch tvRes={tv} tvReleaseDates={tvReleaseDates} />
           </motion.div>
-        </>
-      )}
-      {tabState === "keywords" && (
-        <>
+        )}
+
+        {tabState === "keywords" && (
           <motion.div
+            key="keywords"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.4 }}
           >
+            {keywords.length !== 0 && (
+              <Span className="d-block display-6 text-center">
+                Keywords matching : {search}
+              </Span>
+            )}
             <KeywordSearch keywords={keywords} />
           </motion.div>
-        </>
-      )}
+        )}
+      </AnimatePresence>
     </>
   );
 };

@@ -53,7 +53,7 @@ const Keyword = ({ error, results, name }) => {
                   <p className="fs-4">Results Matching : {name}</p>
                   {results.map((item, i) => (
                     <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
-                      <Link href={"/movies/" + item.id} passHref>
+                      <Link href={"/movies/" + item.id} passHref scroll={false}>
                         <QueryContainer>
                           <QueryImg poster={item.poster_path} />
                           <QueryInfoWrapper>

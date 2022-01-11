@@ -22,7 +22,7 @@ const TVSearch = ({ tvRes, tvReleaseDates }) => {
         ) : (
           tvRes.map((item, i) => (
             <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
-              <Link href={"/tv/" + item.id} passHref>
+              <Link href={"/tv/" + item.id} passHref scroll={false}>
                 <QueryContainer>
                   <QueryImg poster={item.poster_path} />
                   <QueryInfoWrapper>

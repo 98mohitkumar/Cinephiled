@@ -36,11 +36,14 @@ const MovieTab = (props) => {
   };
 
   useEffect(() => {
+    const abortCtrl = new AbortController();
+
     const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
     async function getRecommended() {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${props.id}/recommendations?api_key=${api_key}&language=en-US&page=1`
+        `https://api.themoviedb.org/3/movie/${props.id}/recommendations?api_key=${api_key}&language=en-US&page=1`,
+        { signal: abortCtrl.signal }
       );
 
       const res = await response.json();
@@ -48,7 +51,13 @@ const MovieTab = (props) => {
       return res;
     }
 
-    getRecommended().then((data) => setMoviesRecommended(data.results));
+    getRecommended()
+      .then((data) => setMoviesRecommended(data.results))
+      .catch((err) => console.log(err));
+
+    return () => {
+      abortCtrl.abort();
+    };
   }, [props.id]);
 
   return (

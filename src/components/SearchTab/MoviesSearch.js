@@ -22,7 +22,7 @@ const MoviesSearch = ({ movieRes, movieReleaseDates }) => {
         ) : (
           movieRes.map((item, i) => (
             <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
-              <Link href={"/movies/" + item.id} passHref>
+              <Link href={"/movies/" + item.id} passHref scroll={false}>
                 <QueryContainer>
                   <QueryImg poster={item.poster_path} />
                   <QueryInfoWrapper>

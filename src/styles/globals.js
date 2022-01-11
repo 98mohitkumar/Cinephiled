@@ -30,9 +30,6 @@ const GlobalStyles = createGlobalStyle`
 }
 
   html {
-    scroll-behavior: auto !important;
-
-
     @media ${(props) => props.theme.breakpoints.sm}{
       -webkit-tap-highlight-color: transparent; 
     }

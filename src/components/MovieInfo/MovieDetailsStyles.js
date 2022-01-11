@@ -89,7 +89,6 @@ export const Divider = styled.div`
 
 export const RtoR = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   width: fit-content;

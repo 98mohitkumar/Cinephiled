@@ -44,7 +44,7 @@ const TrendingMovies = ({ movies }) => {
                 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Link href={"/movies/" + movies.id} passHref>
+                <Link href={"/movies/" + movies.id} passHref scroll={false}>
                   <CardImg
                     data={movies.poster_path}
                     className="d-flex justify-content-end"

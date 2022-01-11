@@ -94,6 +94,7 @@ export const HeroDetailsContainer = styled.div`
 export const HeroBgContainer = styled.div`
   inset: 0;
   z-index: -1;
+  overflow: hidden;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     bottom: 20rem;
@@ -111,15 +112,17 @@ export const HeroBg = styled.div`
       : `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover`};
   inset: 0;
 
-  animation: backdrop 1s ease-in-out forwards;
+  animation: backdrop 4s cubic-bezier(0.77, 0, 0.18, 1) forwards;
 
   @keyframes backdrop {
     from {
       opacity: 0;
+      transform: scale(1.1);
     }
 
     to {
       opacity: 1;
+      transform: scale(1);
     }
   }
 `;
@@ -130,9 +133,21 @@ export const HeroImg = styled.div`
   background: ${(props) =>
     !props.data
       ? `Url(/Images/DefaultImage.png) no-repeat center center /cover`
-      : `Url(https://image.tmdb.org/t/p/w780${props.data}) no-repeat center center /cover`};
+      : `Url(https://image.tmdb.org/t/p/w500${props.data}) no-repeat center center /cover`};
   border-radius: 12px;
   box-shadow: 0 0 2rem rgb(12 12 12 /0.4);
+
+  animation: heroImg 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+
+  @keyframes heroImg {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
 
   @media only ${(props) => props.theme.breakpoints.lg} {
     margin: 0rem !important;
@@ -553,7 +568,7 @@ export const SeasonShowcaseImg = styled.div`
   background: ${(props) =>
     !props.poster
       ? `Url(/Images/DefaultImage.png) no-repeat center center /cover`
-      : `Url(https://image.tmdb.org/t/p/w780/${props.poster}) no-repeat center center /cover`};
+      : `Url(https://image.tmdb.org/t/p/w500/${props.poster}) no-repeat center center /cover`};
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     margin: 0.5rem 0rem;
