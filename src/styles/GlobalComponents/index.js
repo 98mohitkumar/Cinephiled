@@ -376,7 +376,7 @@ export const RecommendationsContainer = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
   }
 `;
 
@@ -433,6 +433,10 @@ export const RecommendedImg = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     height: 200px;
+    background: ${(props) =>
+      !props.backdrop
+        ? `Url(/Images/DefaultBackdrop.png) no-repeat center center /cover`
+        : `Url(https://image.tmdb.org/t/p/w780${props.backdrop}) no-repeat center center /cover`};
   }
 `;
 
