@@ -29,15 +29,22 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
               {tvData.genres.map((item) => (
                 <Rounded key={item.id}>{item.name}</Rounded>
               ))}
-              <Divider />
             </GenreWrap>
           )}
-          <Span>
-            {runtime.getH === 1 && runtime.getM === 0
-              ? "60m"
-              : runtime.getH > 0 && runtime.getH + "h "}
-            {runtime.getM > 0 && runtime.getM + "m"}
-          </Span>
+          {!isNaN(runtime.getH) ? (
+            <Span>
+              <Divider className="tvSpan" />
+              {runtime.getH === 1 && runtime.getM === 0
+                ? "60m"
+                : runtime.getH > 0 && runtime.getH + "h "}
+              {runtime.getM > 0 && runtime.getM + "m"}
+            </Span>
+          ) : (
+            <Span>
+              <Divider className="tvSpan" />
+              TBA
+            </Span>
+          )}
         </RtoR>
         {tvData.tagline !== "" && (
           <i>

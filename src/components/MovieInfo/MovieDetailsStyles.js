@@ -38,7 +38,7 @@ export const GenreWrap = styled.div`
   align-items: center;
   max-width: 88vw;
   width: fit-content;
-  gap: 0rem 1rem;
+  gap: 1rem;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     order: 3;
@@ -93,6 +93,10 @@ export const RtoR = styled.div`
   flex-wrap: wrap;
   width: fit-content;
   gap: 1rem;
+
+  .tvSpan {
+    margin-right: 1rem;
+  }
 
   @media only ${(props) => props.theme.breakpoints.lg} {
     & > span,
