@@ -45,7 +45,7 @@ const TVSeasons = ({ seasons }) => {
           <NoDataText className="fw-bold text-center my-5">TBA</NoDataText>
         ) : (
           seasons.map((item, i) => (
-            <motion.div key={item.id} whileTap={{ scale: 0.9 }}>
+            <motion.div key={item.id} whileTap={{ scale: 0.98 }}>
               <Link
                 href={`${route}/season/${item.season_number}`}
                 passHref
