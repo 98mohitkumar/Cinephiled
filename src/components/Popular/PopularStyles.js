@@ -3,26 +3,26 @@ import styled from "styled-components";
 export const MoviesSection = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 280px));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 240px));
   place-items: center;
   justify-content: center;
-  gap: 2rem 0rem;
+  gap: 2rem;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    grid-template-columns: repeat(auto-fit, minmax(190px, 235px));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 225px));
     padding: 1.75rem !important;
-    gap: 1.25rem 0rem;
+    gap: 1.25rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    gap: 1rem 0rem;
+    gap: 1rem;
     padding: 1rem !important;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0.5rem !important;
-    gap: 0.35rem 0.25rem;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 175px));
+    gap: 0.35rem 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 165px));
   }
 `;
 
@@ -106,27 +106,27 @@ export const Rating = styled.div`
 export const TVSection = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 280px));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 240px));
   place-items: center;
   justify-content: center;
-  gap: 2rem 0rem;
+  gap: 2rem;
   margin: auto;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    grid-template-columns: repeat(auto-fit, minmax(190px, 235px));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 225px));
     padding: 1.75rem !important;
-    gap: 1.25rem 0rem;
+    gap: 1.25rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    gap: 1rem 0rem;
+    gap: 1rem;
     padding: 1rem !important;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0.5rem !important;
-    gap: 0.35rem 0.25rem;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 175px));
+    gap: 0.35rem 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 165px));
   }
 `;
 

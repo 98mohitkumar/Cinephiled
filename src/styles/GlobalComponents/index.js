@@ -386,7 +386,7 @@ export const RecommendationsGrid = styled.div`
   place-items: center;
   grid-template-columns: repeat(5, 1fr);
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
+  @media only ${(props) => props.theme.breakpoints.xl} {
     grid-template-columns: repeat(4, 1fr);
     padding: 0rem 1rem;
   }
@@ -416,7 +416,7 @@ export const RecommendedWrapper = styled.div`
 `;
 
 export const RecommendedImg = styled.div`
-  height: 150px;
+  aspect-ratio: 1.6 / 1;
   background: ${(props) =>
     !props.backdrop
       ? `Url(/Images/DefaultBackdrop.png) no-repeat center center /cover`
@@ -432,7 +432,6 @@ export const RecommendedImg = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    height: 200px;
     background: ${(props) =>
       !props.backdrop
         ? `Url(/Images/DefaultBackdrop.png) no-repeat center center /cover`

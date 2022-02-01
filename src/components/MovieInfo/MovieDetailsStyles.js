@@ -240,32 +240,32 @@ export const CastContainer = styled.div`
 
 export const CastGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 250px));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 210px));
   place-items: center;
   justify-content: center;
-  gap: 2rem 0rem;
+  gap: 2rem;
   padding: 1rem 4rem;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
-    grid-template-columns: repeat(auto-fit, minmax(190px, 220px));
-    gap: 1.25rem 0rem;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
+    gap: 1.25rem;
     padding: 1rem 2rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    gap: 1rem 0rem;
-    padding: 1rem;
+    gap: 1rem;
+    padding: 1rem 0.5rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     padding: 1rem 0rem;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 192px));
+    grid-template-columns: repeat(auto-fit, minmax(170px, 180px));
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    gap: 0.35rem 0rem;
+    gap: 0.35rem 1.25rem;
     padding: 0rem;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 170px);
   }
 `;
 
@@ -481,7 +481,7 @@ export const PostersWrapper = styled.div`
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
@@ -489,25 +489,13 @@ export const PostersWrapper = styled.div`
 
 export const PostersImg = styled.div`
   width: 100%;
-  height: 370px;
+  aspect-ratio: 1 / 1.54;
   border-radius: 12px;
   box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
     0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   background: ${(props) =>
     `Url(https://image.tmdb.org/t/p/w780${props.poster}) no-repeat center center /cover;`};
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    height: 320px;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    height: 250px;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    height: 260px;
-  }
 `;
 
 export const Tagline = styled.span`

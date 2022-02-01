@@ -42,7 +42,7 @@ const TrendingMovies = ({ movies }) => {
                   scale: 1.05,
                   transition: { duration: 0.1 },
                 }}
-                whileTap={{ scale: 0.9 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <Link href={"/movies/" + movies.id} passHref scroll={false}>
                   <CardImg
