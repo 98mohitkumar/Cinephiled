@@ -49,7 +49,7 @@ export default class MyDocument extends Document {
           <link rel="manifest" href="/manifest.json" />
           <meta name="theme-color" content="#121212" />
           <meta name="keywords" content="Cinema, Tv, Movies"></meta>
-          <meta name="title" content="Cinephiled" />
+          <title>Cinephiled</title>
           <meta property="og:title" content="Cinephiled"></meta>
           <meta
             name="description"
