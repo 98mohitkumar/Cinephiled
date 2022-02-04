@@ -513,4 +513,5 @@ export const Light = styled.div`
   background-color: white;
   border-radius: 20px;
   margin-top: 1rem;
+  cursor: pointer;
 `;

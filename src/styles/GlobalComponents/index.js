@@ -758,6 +758,7 @@ export const LightsInOut = styled.div`
 }`
       : "display: none"};
   inset: 22rem 0 0 0;
+  cursor: pointer;
 `;
 
 export const EasterText = styled.span`
