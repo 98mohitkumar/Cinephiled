@@ -458,14 +458,15 @@ export const HeroImgWrapper = styled.div`
 
     & > div:first-child {
       grid-column: 1 / span 2;
+
+      @media only ${(props) => props.theme.breakpoints.sm} {
+        grid-column: 1 / 2;
+      }
     }
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     gap: 1.75rem;
-    & > div:first-child {
-      grid-column: 1 / span 1;
-    }
   }
 `;
 
