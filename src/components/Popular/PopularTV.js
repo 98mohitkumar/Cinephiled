@@ -22,7 +22,11 @@ const PopularTV = (props) => {
 
   function releaseDates() {
     TVData.forEach((item) =>
-      arr.push(new Date(item.first_air_date.toString()).toDateString().slice(4))
+      arr.push(
+        new Date(item.first_air_date.toString()).toDateString().slice(4, -5) +
+          ", " +
+          new Date(item.first_air_date.toString()).getFullYear()
+      )
     );
   }
   releaseDates();
