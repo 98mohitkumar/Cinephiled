@@ -24,14 +24,13 @@ const MovieDetails = ({
   easter,
   showEaster,
 }) => {
-  const releaseDate =
-    movieDetailsData.release_date === ""
-      ? "TBA"
-      : new Date(movieDetailsData.release_date.toString())
-          .toDateString()
-          .slice(4, -5) +
-        ", " +
-        new Date(movieDetailsData.release_date.toString()).getFullYear();
+  const releaseDate = !movieDetailsData.release_date
+    ? "TBA"
+    : new Date(movieDetailsData.release_date.toString())
+        .toDateString()
+        .slice(4, -5) +
+      ", " +
+      new Date(movieDetailsData.release_date.toString()).getFullYear();
 
   movieDetailsData.genres.length > 3 && movieDetailsData.genres.splice(3);
 
@@ -74,7 +73,7 @@ const MovieDetails = ({
           </i>
         )}
         <Overview className="fw-normal">
-          {movieDetailsData.overview === "" ? "-" : movieDetailsData.overview}
+          {!movieDetailsData.overview ? "-" : movieDetailsData.overview}
         </Overview>
         <RatingWrapper>
           {movieDetailsData.vote_average !== 0 ? (

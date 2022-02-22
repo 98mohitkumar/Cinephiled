@@ -1,3 +1,4 @@
+import Head from "next/head";
 import {
   SeasonInfoMain,
   SeasonInfoWrapper,
@@ -40,6 +41,9 @@ const Seasons = ({ error, data }) => {
   };
   return (
     <>
+      <Head>
+        <title>{!error ? `${data.name}` : "Not Found - Cinephiled"}</title>
+      </Head>
       {error ? (
         <Error404>404</Error404>
       ) : (

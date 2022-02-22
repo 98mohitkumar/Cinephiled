@@ -24,9 +24,7 @@ const SearchTab = ({
 
   useEffect(() => {
     let tabPosition = localStorage.getItem("SearchTabPosition");
-    tabPosition === null || tabPosition === ""
-      ? setTabState("movies")
-      : setTabState(tabPosition);
+    !tabPosition ? setTabState("movies") : setTabState(tabPosition);
   }, []);
 
   const moviesTabHandler = () => {

@@ -70,7 +70,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
 
   let country = "";
 
-  if (error === false) {
+  if (!error) {
     creditsDetails = movieDetails.credits;
 
     creditsDetails.crew.forEach((item) => {
@@ -96,21 +96,15 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
         ? "US"
         : movieDetails.production_countries[0].iso_3166_1;
 
-    getyear =
-      movieDetails.release_date === ""
-        ? "TBA"
-        : new Date(movieDetails.release_date).getFullYear();
+    getyear = !movieDetails.release_date
+      ? "TBA"
+      : new Date(movieDetails.release_date).getFullYear();
 
     const getH = Math.floor(movieDetails.runtime / 60);
     const getM = Math.ceil((movieDetails.runtime / 60 - getH) * 60);
     runtime = { getH, getM };
 
-    status =
-      movieDetails.status === null ||
-      movieDetails.status === "" ||
-      movieDetails.status === undefined
-        ? "TBA"
-        : movieDetails.status;
+    status = !movieDetails.status ? "TBA" : movieDetails.status;
 
     movieFacts = {
       status,
@@ -138,7 +132,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
     <>
       <Head>
         <title>
-          {error === false
+          {!error
             ? `${movieDetails.title} (${getyear}) - Cinephiled`
             : "Not Found - Cinephiled"}
         </title>

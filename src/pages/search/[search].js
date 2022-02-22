@@ -10,9 +10,9 @@ const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
   let movieReleaseDates = [];
   let tvReleaseDates = [];
 
-  if (error === false) {
+  if (!error) {
     movieRes.forEach((item) =>
-      item.release_date === "" || item.release_date === undefined
+      !item.release_date
         ? movieReleaseDates.push("TBA")
         : movieReleaseDates.push(
             new Date(item.release_date.toString()).toDateString().slice(4, -5) +
@@ -22,7 +22,7 @@ const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
     );
 
     tvRes.forEach((item) =>
-      item.first_air_date === "" || item.first_air_date === undefined
+      !item.first_air_date
         ? tvReleaseDates.push("TBA")
         : tvReleaseDates.push(
             new Date(item.first_air_date.toString())

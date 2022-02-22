@@ -40,7 +40,7 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
   let netwrok = "";
   let type = "";
 
-  if (error === false) {
+  if (!error) {
     creditsDetails = tvData.credits;
     creditsDetails.crew.forEach((item) => {
       if (item.job === "Characters") characters.push(item);
@@ -70,31 +70,13 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
     const getM = Math.ceil((tvData.episode_run_time[0] / 60 - getH) * 60);
     epRuntime = { getH, getM };
 
-    tvStatus =
-      tvData.status === null ||
-      tvData.status === "" ||
-      tvData.status === undefined
-        ? "TBA"
-        : tvData.status;
+    tvStatus = !tvData.status ? "TBA" : tvData.status;
 
-    ogLanguage =
-      tvData.original_language === null ||
-      tvData.original_language === "" ||
-      tvData.original_language === undefined
-        ? "TBA"
-        : tvData.original_language;
+    ogLanguage = !tvData.original_language ? "TBA" : tvData.original_language;
 
-    netwrok =
-      tvData.networks[0] === null ||
-      tvData.networks[0] === "" ||
-      tvData.networks[0] === undefined
-        ? "TBA"
-        : tvData.networks[0].name;
+    netwrok = !tvData.networks[0] ? "TBA" : tvData.networks[0].name;
 
-    type =
-      tvData.type === null || tvData.type === "" || tvData.type === undefined
-        ? "TBA"
-        : tvData.type;
+    type = !tvData.type ? "TBA" : tvData.type;
 
     tvFacts = {
       status: tvStatus,
@@ -118,7 +100,7 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
     <>
       <Head>
         <title>
-          {error === false
+          {!error
             ? `${tvData.name} (TV Series ${getyear}
           ${endyear}) - Cinephiled`
             : "Not Found - Cinephiled"}
@@ -204,7 +186,7 @@ TvShow.getInitialProps = async (ctx) => {
 
     const error = tvResponse.ok ? false : true;
 
-    if (error === true) {
+    if (error) {
       return { error };
     } else {
       const tvData = await tvResponse.json();

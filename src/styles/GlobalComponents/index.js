@@ -107,7 +107,7 @@ export const HeroBgContainer = styled.div`
 
 export const HeroBg = styled.div`
   background: ${(props) =>
-    props.backdrop === null
+    !props.backdrop
       ? "#121212"
       : `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover`};
   inset: 0;

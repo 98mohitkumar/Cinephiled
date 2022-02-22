@@ -20,9 +20,9 @@ import {
 const Keyword = ({ error, results, name }) => {
   let movieReleaseDates = [];
 
-  if (error === false) {
+  if (!error) {
     results.forEach((item) =>
-      item.release_date === "" || item.release_date === undefined
+      !item.release_date
         ? movieReleaseDates.push("TBA")
         : movieReleaseDates.push(
             new Date(item.release_date.toString()).toDateString().slice(4, -5) +
@@ -35,7 +35,7 @@ const Keyword = ({ error, results, name }) => {
     <>
       <Head>
         <title>
-          {error === false ? `"${name}" - Movies` : "Not Found - Cinephiled"}
+          {!error ? `"${name}" - Movies` : "Not Found - Cinephiled"}
         </title>
       </Head>
       {error ? (

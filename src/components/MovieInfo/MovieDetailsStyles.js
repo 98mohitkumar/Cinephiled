@@ -271,7 +271,7 @@ export const CastGrid = styled.div`
 
 export const CastImg = styled.div`
   background: ${(props) =>
-    props.data === null
+    !props.data
       ? `Url(/Images/DefaultAvatar.png) no-repeat center center /cover`
       : `Url(https://image.tmdb.org/t/p/w500${props.data}) no-repeat center 5% /cover`};
   width: 100%;

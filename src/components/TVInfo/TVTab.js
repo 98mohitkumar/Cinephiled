@@ -23,9 +23,7 @@ const TVTab = (props) => {
 
   useEffect(() => {
     let tabPosition = localStorage.getItem("TvTabState");
-    tabPosition === null || tabPosition === ""
-      ? setTabState("cast")
-      : setTabState(tabPosition);
+    !tabPosition ? setTabState("cast") : setTabState(tabPosition);
   }, []);
 
   const castSelectionHandler = () => {

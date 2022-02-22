@@ -45,11 +45,17 @@ export default class MyDocument extends Document {
             href="https://api.fontshare.com/css?f[]=satoshi@500,700&display=swap"
             rel="stylesheet"
           />
+
+          {/* Preloads */}
+
+          <link rel="preload" href="/Images/poster.webp" as="image"></link>
+
+          <link rel="preload" href="/Images/ShowCase.webp" as="image"></link>
+
           <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
           <link rel="manifest" href="/manifest.json" />
           <meta name="theme-color" content="#121212" />
           <meta name="keywords" content="Cinema, Tv, Movies"></meta>
-          <title>Cinephiled</title>
           <meta property="og:title" content="Cinephiled"></meta>
           <meta
             name="description"

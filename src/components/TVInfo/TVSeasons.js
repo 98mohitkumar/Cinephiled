@@ -26,15 +26,14 @@ const TVSeasons = ({ seasons }) => {
     setRoute(router.asPath);
   }, [seasons]);
 
-  seasons.forEach(
-    (item) =>
-      item.air_date !== null &&
-      item.air_date !== undefined &&
-      seasonReleaseDates.push(
-        new Date(item.air_date.toString()).toDateString().slice(4, -5) +
-          ", " +
-          new Date(item.air_date.toString()).getFullYear()
-      )
+  seasons.forEach((item) =>
+    item.air_date
+      ? seasonReleaseDates.push(
+          new Date(item.air_date.toString()).toDateString().slice(4, -5) +
+            ", " +
+            new Date(item.air_date.toString()).getFullYear()
+        )
+      : seasonReleaseDates.push("TBA")
   );
 
   const Today = new Date();
@@ -63,15 +62,8 @@ const TVSeasons = ({ seasons }) => {
                           : ""}
                       </SeasonTitle>
                       <SeaonDetailsWrapper>
-                        {seasonReleaseDates[i] !== null &&
-                          seasonReleaseDates[i] !== undefined && (
-                            <>
-                              <SeasonsRelease>
-                                {seasonReleaseDates[i]}
-                              </SeasonsRelease>
-                              <SeasonDetailsDivider />
-                            </>
-                          )}
+                        <SeasonsRelease>{seasonReleaseDates[i]}</SeasonsRelease>
+                        <SeasonDetailsDivider />
                         <SeasonsRelease>
                           {item.episode_count} Episodes
                         </SeasonsRelease>
