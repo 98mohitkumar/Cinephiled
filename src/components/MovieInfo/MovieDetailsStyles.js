@@ -22,6 +22,23 @@ export const HeroInfoTitle = styled.h1`
 
 export const Span = styled.span`
   font-weight: 500;
+
+  &.movieCastHead {
+    font-size: 20px;
+
+    @media only ${(props) => props.theme.breakpoints.xs} {
+      font-size: 16px;
+    }
+  }
+
+  &.movieCastName {
+    font-size: 1rem;
+    font-weight: 400;
+
+    @media only ${(props) => props.theme.breakpoints.xs} {
+      font-size: 14px;
+    }
+  }
 `;
 
 export const ReleaseDateWrapper = styled.div`
@@ -248,17 +265,17 @@ export const CastGrid = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.lg} {
     grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
-    gap: 1.25rem;
     padding: 1rem 2rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    gap: 1rem;
+    gap: 2rem;
     padding: 1rem 0.5rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     padding: 1rem 0rem;
+    gap: 1.5rem;
     grid-template-columns: repeat(auto-fit, minmax(170px, 180px));
   }
 
@@ -443,13 +460,9 @@ export const BackdropsImg = styled.div`
     `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover;`};
   transition: transform 0.25s cubic-bezier(0.79, 0.14, 0.15, 0.86);
 
-  &:hover {
-    transform: scale(1.2);
-  }
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
+  @media ${(props) => props.theme.breakpoints.hover} {
     &:hover {
-      transform: scale(1.4);
+      transform: scale(1.2);
     }
   }
 `;

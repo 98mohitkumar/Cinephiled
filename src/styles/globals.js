@@ -2,9 +2,8 @@ import { createGlobalStyle } from "styled-components";
 import { normalize } from "styled-normalize";
 
 const GlobalStyles = createGlobalStyle`
-  ${normalize};
 
-  
+  ${normalize};
 
   * {
     box-sizing: border-box;
@@ -30,11 +29,11 @@ const GlobalStyles = createGlobalStyle`
 }
 
   html {
-    @media ${(props) => props.theme.breakpoints.sm}{
+    @media screen and (hover: none) and (pointer: coarse) {
       -webkit-tap-highlight-color: transparent; 
     }
-
   }
+
   body {
     font-family: ${(props) => props.theme.fonts.main};
     font-size: 1.25rem;
@@ -49,16 +48,12 @@ const GlobalStyles = createGlobalStyle`
   p{
     font-size: 1rem;
   }
+
   a {
     text-decoration: none;
     color: #ddd;
-
-    @media ${(props) => props.theme.breakpoints.lg}{
-      &:hover {
-        color: #ddd;
-      }
-    }
   }
+
   li{
     list-style: none;
   }

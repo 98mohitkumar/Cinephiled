@@ -32,8 +32,10 @@ export const NavBar = styled.nav`
     padding: 1rem 2rem;
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
-    &:hover {
-      color: ${(props) => props.theme.colors.accent2};
+    @media ${(props) => props.theme.breakpoints.hover} {
+      &:hover {
+        color: ${(props) => props.theme.colors.accent2};
+      }
     }
   }
 

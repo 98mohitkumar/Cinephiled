@@ -195,12 +195,6 @@ export const FlexWrapper = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: column;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    & span {
-      font-size: 14px;
-    }
-  }
 `;
 
 export const FactsFlexWrapper = styled.div`
@@ -423,12 +417,14 @@ export const RecommendedImg = styled.div`
       : `Url(https://image.tmdb.org/t/p/w500${props.backdrop}) no-repeat center center /cover`};
   border-radius: 12px;
   transition: box-shadow 0.25s ease-in;
+  cursor: pointer;
 
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
-      0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
-      0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
+  @media ${(props) => props.theme.breakpoints.hover} {
+    &:hover {
+      box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
+        0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
+        0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
+    }
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {

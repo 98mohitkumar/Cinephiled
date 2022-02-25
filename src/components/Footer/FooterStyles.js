@@ -90,14 +90,11 @@ export const SocialIcons = styled.a`
   place-items: center;
   transition: 0.3s ease-in-out;
   color: #ddd;
-  &:hover {
-    color: #01b4e4;
-    cursor: pointer;
-  }
+  cursor: pointer;
 
-  @media ${(props) => props.theme.breakpoints.lg} {
+  @media ${(props) => props.theme.breakpoints.hover} {
     &:hover {
-      color: #ddd;
+      color: #01b4e4;
     }
   }
 

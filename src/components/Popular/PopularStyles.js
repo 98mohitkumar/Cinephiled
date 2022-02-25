@@ -50,11 +50,13 @@ export const CardImg = styled.div`
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   transition: box-shadow 0.25s ease-in;
 
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
-      0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
-      0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
+  @media ${(props) => props.theme.breakpoints.hover} {
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
+        0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
+        0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
+    }
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
@@ -65,14 +67,15 @@ export const CardImg = styled.div`
 `;
 
 export const MoviesInfo = styled.div`
-  padding: 1.75rem 0.35rem;
+  padding: 1.75rem 0rem;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1rem 0.35rem;
+    padding: 1rem 0rem;
   }
 `;
 
 export const MoviesInfoTitle = styled.h2`
+  margin-top: 0.25rem;
   font-size: 1.1rem;
   font-weight: 600;
 `;
@@ -131,16 +134,17 @@ export const TVSection = styled.div`
 `;
 
 export const TVInfo = styled.div`
-  padding: 1.75rem 1rem;
+  padding: 1.75rem 0rem;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1rem 0.35rem;
+    padding: 1rem 0rem;
   }
 `;
 
 export const TVInfoTitle = styled.h2`
-  font-size: 1.25rem;
-  font-weight: 500;
+  margin-top: 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
 `;
 
 export const Tab = styled.div`

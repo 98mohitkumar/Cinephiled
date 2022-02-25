@@ -86,10 +86,10 @@ export const Keyword = styled.h2`
   font-size: 4rem;
   font-weight: 500;
   transition: color 0.3s ease-in;
+  cursor: pointer;
 
   &:hover {
     color: white;
-    cursor: pointer;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {

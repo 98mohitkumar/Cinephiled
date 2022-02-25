@@ -19,8 +19,8 @@ const MovieCast = ({ cast }) => {
             <CastWrapper key={item.credit_id}>
               <CastImg data={item.profile_path} gender={item.gender} />
               <FlexWrapper className="my-3">
-                <Span className="fw-bold">{item.character}</Span>
-                <Span className="fw-normal">{item.name}</Span>
+                <Span className="fw-bold movieCastHead">{item.character}</Span>
+                <Span className="movieCastName">{item.name}</Span>
               </FlexWrapper>
             </CastWrapper>
           ))}
