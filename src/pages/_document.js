@@ -56,7 +56,6 @@ export default class MyDocument extends Document {
           <link rel="manifest" href="/manifest.json" />
           <meta name="theme-color" content="#121212" />
           <meta name="keywords" content="Cinema, Tv, Movies"></meta>
-          <meta property="og:title" content="Cinephiled"></meta>
           <meta
             name="description"
             content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters."
@@ -67,7 +66,6 @@ export default class MyDocument extends Document {
             content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters."
           />
 
-          <meta property="og:image" content="https://i.imgur.com/Jtl3tJG.png" />
           <meta property="twitter:card" content="summary_large_image" />
           <meta property="twitter:title" content="Cinephiled" />
           <meta

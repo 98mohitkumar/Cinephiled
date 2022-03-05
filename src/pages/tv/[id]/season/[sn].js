@@ -42,7 +42,12 @@ const Seasons = ({ error, data }) => {
   return (
     <>
       <Head>
-        <title>{!error ? `${data.name}` : "Not Found - Cinephiled"}</title>
+        <title>{!error ? data.name : "Not Found - Cinephiled"}</title>
+        <meta
+          property="og:image"
+          content={`https://image.tmdb.org/t/p/original/${data.poster_path}`}
+        />
+        <meta property="og:title" content={data.name}></meta>
       </Head>
       {error ? (
         <Error404>404</Error404>

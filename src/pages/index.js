@@ -62,6 +62,8 @@ export default function Home({ moviesData, TVData, error }) {
       <>
         <Head>
           <title>Cinephiled</title>
+          <meta property="og:image" content="https://i.imgur.com/Jtl3tJG.png" />
+          <meta property="og:title" content="Cinephiled"></meta>
         </Head>
         <Hero />
         <IndexTab

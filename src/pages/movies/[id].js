@@ -136,6 +136,14 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
             ? `${movieDetails.title} (${getyear}) - Cinephiled`
             : "Not Found - Cinephiled"}
         </title>
+        <meta
+          property="og:image"
+          content={`https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`}
+        />
+        <meta
+          property="og:title"
+          content={`${movieDetails.title} (${getyear}) - Cinephiled`}
+        ></meta>
       </Head>
       {error ? (
         <Error404>404</Error404>

@@ -16,6 +16,8 @@ const About = () => {
     <>
       <Head>
         <title>About - Cinephiled</title>
+        <meta property="og:image" content="https://i.imgur.com/Jtl3tJG.png" />
+        <meta property="og:title" content="About - Cinephiled"></meta>
       </Head>
       <AboutContainer className="text-center">
         <AboutBackground />

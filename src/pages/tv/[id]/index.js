@@ -101,10 +101,19 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
       <Head>
         <title>
           {!error
-            ? `${tvData.name} (TV Series ${getyear}
+            ? `${tvData.name} (${getyear}
           ${endyear}) - Cinephiled`
             : "Not Found - Cinephiled"}
         </title>
+        <meta
+          property="og:image"
+          content={`https://image.tmdb.org/t/p/w1280${tvData.backdrop_path}`}
+        />
+        <meta
+          property="og:title"
+          content={`${tvData.name} (${getyear}
+          ${endyear}) - Cinephiled`}
+        ></meta>
       </Head>
       {error ? (
         <Error404>404</Error404>

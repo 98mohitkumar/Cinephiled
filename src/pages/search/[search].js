@@ -39,6 +39,8 @@ const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
         <title>
           {error ? "Not Found - Cinephiled" : `${searchQuery} - Search`}
         </title>
+        <meta property="og:image" content="https://i.imgur.com/Jtl3tJG.png" />
+        <meta property="og:title" content={searchQuery}></meta>
       </Head>
       {error ? (
         <Error404>404</Error404>
