@@ -170,8 +170,7 @@ export const CreditsWrapper = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0rem 0.5rem;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     font-size: 18px;
   }
 `;
@@ -205,7 +204,7 @@ export const FactsWrapper = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     gap: 2rem 3rem;
-    padding: 0rem 0rem 0rem 0.5rem;
+    padding: 0rem;
     justify-items: flex-start;
     grid-template-columns: repeat(2, 1fr);
   }
@@ -231,12 +230,9 @@ export const FactsFieldSet = styled.fieldset`
 export const FactsLegend = styled.legend`
   width: max-content;
   padding: 0rem 1rem;
-  margin: 0;
-  margin-left: 1rem;
   float: none;
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    margin: 0;
     padding: 0rem 1rem;
     font-size: 2.5rem;
   }
