@@ -26,8 +26,13 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
         <RtoR className="my-3">
           {tvData.genres.length > 0 && (
             <GenreWrap className="fw-bold">
-              {tvData.genres.map((item) => (
-                <Rounded key={item.id}>{item.name}</Rounded>
+              {tvData.genres.map((item, i) => (
+                <Rounded
+                  key={item.id}
+                  className={tvData.genres.length == i + 1 && "sep"}
+                >
+                  {item.name}
+                </Rounded>
               ))}
             </GenreWrap>
           )}

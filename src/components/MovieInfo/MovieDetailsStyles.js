@@ -59,11 +59,11 @@ export const GenreWrap = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     order: 3;
+    gap: 0.5rem 1rem;
   }
 
-  & div:nth-last-child(2)::after {
-    content: "";
-    right: -6px;
+  & .sep::after {
+    display: none;
   }
 `;
 

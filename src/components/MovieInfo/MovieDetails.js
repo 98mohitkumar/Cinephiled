@@ -48,8 +48,13 @@ const MovieDetails = ({
           {movieDetailsData.genres.length > 0 && (
             <GenreWrap className="fw-bold">
               <Divider />
-              {movieDetailsData.genres.map((item) => (
-                <Rounded key={item.id}>{item.name}</Rounded>
+              {movieDetailsData.genres.map((item, i) => (
+                <Rounded
+                  key={item.id}
+                  className={movieDetailsData.genres.length == i + 1 && "sep"}
+                >
+                  {item.name}
+                </Rounded>
               ))}
               <Divider />
             </GenreWrap>
