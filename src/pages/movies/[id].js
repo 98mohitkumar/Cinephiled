@@ -28,6 +28,8 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
   const [showEaster, setShowEaster] = useState(false);
   const [hasSeen, setHasSeen] = useState(false);
 
+  console.log(error);
+
   if (!error && movieDetails.id === 345911) {
     easter.current = true;
   }
@@ -136,14 +138,18 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
             ? `${movieDetails.title} (${getyear}) - Cinephiled`
             : "Not Found - Cinephiled"}
         </title>
-        <meta
-          property="og:image"
-          content={`https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`}
-        />
-        <meta
-          property="og:title"
-          content={`${movieDetails.title} (${getyear}) - Cinephiled`}
-        ></meta>
+        {!error && (
+          <>
+            <meta
+              property="og:image"
+              content={`https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`}
+            />
+            <meta
+              property="og:title"
+              content={`${movieDetails.title} (${getyear}) - Cinephiled`}
+            ></meta>
+          </>
+        )}
       </Head>
       {error ? (
         <Error404>404</Error404>
@@ -245,7 +251,7 @@ Movie.getInitialProps = async (ctx) => {
     const error = movieResponse.ok ? false : true;
 
     if (error) {
-      return { error };
+      throw new Error();
     } else {
       const movieDetails = await movieResponse.json();
 

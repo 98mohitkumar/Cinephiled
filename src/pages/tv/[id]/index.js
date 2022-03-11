@@ -105,15 +105,19 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
           ${endyear}) - Cinephiled`
             : "Not Found - Cinephiled"}
         </title>
-        <meta
-          property="og:image"
-          content={`https://image.tmdb.org/t/p/w1280${tvData.backdrop_path}`}
-        />
-        <meta
-          property="og:title"
-          content={`${tvData.name} (${getyear}
+        {!error && (
+          <>
+            <meta
+              property="og:image"
+              content={`https://image.tmdb.org/t/p/w1280${tvData.backdrop_path}`}
+            />
+            <meta
+              property="og:title"
+              content={`${tvData.name} (${getyear}
           ${endyear}) - Cinephiled`}
-        ></meta>
+            ></meta>
+          </>
+        )}
       </Head>
       {error ? (
         <Error404>404</Error404>
@@ -196,7 +200,7 @@ TvShow.getInitialProps = async (ctx) => {
     const error = tvResponse.ok ? false : true;
 
     if (error) {
-      return { error };
+      throw new Error();
     } else {
       const tvData = await tvResponse.json();
 

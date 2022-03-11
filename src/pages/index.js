@@ -90,7 +90,7 @@ export async function getStaticProps() {
     const error = responseMovies.ok && responseTV.ok ? false : true;
 
     if (error) {
-      return { error };
+      throw new Error();
     } else {
       const resMovies = await responseMovies.json();
       const resTV = await responseTV.json();

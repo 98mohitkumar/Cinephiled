@@ -97,7 +97,7 @@ Keyword.getInitialProps = async (ctx) => {
     const error = response.ok ? false : true;
 
     if (error) {
-      return { error };
+      throw new Error();
     } else {
       const res = await response.json();
       const keywordRes = await keywordName.json();
