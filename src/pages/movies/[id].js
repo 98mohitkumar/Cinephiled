@@ -28,8 +28,6 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
   const [showEaster, setShowEaster] = useState(false);
   const [hasSeen, setHasSeen] = useState(false);
 
-  console.log(error);
-
   if (!error && movieDetails.id === 345911) {
     easter.current = true;
   }

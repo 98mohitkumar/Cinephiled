@@ -21,13 +21,17 @@ const PopularTV = (props) => {
   let arr = [];
 
   function releaseDates() {
-    TVData.forEach((item) =>
-      arr.push(
-        new Date(item.first_air_date.toString()).toDateString().slice(4, -5) +
-          ", " +
-          new Date(item.first_air_date.toString()).getFullYear()
-      )
-    );
+    TVData.forEach((item) => {
+      if (item.first_air_date) {
+        arr.push(
+          new Date(item.first_air_date.toString()).toDateString().slice(4, -5) +
+            ", " +
+            new Date(item.first_air_date.toString()).getFullYear()
+        );
+      } else {
+        arr.push("TBA");
+      }
+    });
   }
   releaseDates();
 

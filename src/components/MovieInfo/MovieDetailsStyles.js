@@ -254,7 +254,8 @@ export const CastContainer = styled.div`
 export const CastGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 210px));
-  place-items: center;
+  justify-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 2rem;
   padding: 1rem 4rem;
@@ -306,6 +307,7 @@ export const CastImg = styled.div`
 export const CastWrapper = styled.div`
   width: 185px;
   align-self: flex-start;
+  cursor: pointer;
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     width: 170px;

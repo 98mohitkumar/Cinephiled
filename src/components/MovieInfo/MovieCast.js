@@ -6,7 +6,9 @@ import {
   CastWrapper,
   Span,
 } from "./MovieDetailsStyles";
+import Link from "next/link";
 import { NoDataText } from "../../styles/GlobalComponents";
+import { motion } from "framer-motion";
 
 const MovieCast = ({ cast }) => {
   return (
@@ -16,13 +18,25 @@ const MovieCast = ({ cast }) => {
       ) : (
         <CastGrid>
           {cast.map((item) => (
-            <CastWrapper key={item.credit_id}>
-              <CastImg data={item.profile_path} gender={item.gender} />
-              <FlexWrapper className="my-3">
-                <Span className="fw-bold movieCastHead">{item.character}</Span>
-                <Span className="movieCastName">{item.name}</Span>
-              </FlexWrapper>
-            </CastWrapper>
+            <Link key={item.credit_id} href={`/person/${item.id}`} passHref>
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.1 },
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <CastWrapper role="button">
+                  <CastImg data={item.profile_path} gender={item.gender} />
+                  <FlexWrapper className="my-3">
+                    <Span className="fw-bold movieCastHead">
+                      {item.character}
+                    </Span>
+                    <Span className="movieCastName">{item.name}</Span>
+                  </FlexWrapper>
+                </CastWrapper>
+              </motion.div>
+            </Link>
           ))}
         </CastGrid>
       )}

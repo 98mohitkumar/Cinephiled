@@ -139,6 +139,9 @@ export const HeroImg = styled.div`
 
   animation: heroImg 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
 
+  &.no-shadow {
+    box-shadow: none;
+  }
   @keyframes heroImg {
     from {
       opacity: 0;
@@ -167,6 +170,12 @@ export const DetailsHeroWrap = styled.div`
   justify-items: center;
   min-height: 40rem;
   gap: 0rem 2rem;
+
+  &.no-grid {
+    display: block;
+    padding: 0 5.5vw;
+    min-height: auto;
+  }
 
   @media only ${(props) => props.theme.breakpoints.lg} {
     grid-template-columns: 280px 1fr;
@@ -280,7 +289,7 @@ export const QueryContainer = styled.div`
   width: 100%;
   background: white;
   border-radius: 10px;
-  margin: 1.75rem 0rem;
+  margin: 1.5rem 0rem;
   display: flex;
   overflow: hidden;
   cursor: pointer;
