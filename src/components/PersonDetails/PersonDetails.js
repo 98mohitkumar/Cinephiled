@@ -66,7 +66,7 @@ const PersonDetails = ({ details }) => {
         </HeroImgWrapper>
 
         <HeroInfo className="d-flex">
-          <HeroInfoWrapper className="w-100">
+          <HeroInfoWrapper className="w-100" style={{ maxWidth: "700px" }}>
             <HeroInfoTitle>{details.name}</HeroInfoTitle>
 
             <Details className="py-4">
@@ -123,19 +123,6 @@ const PersonDetails = ({ details }) => {
                 </Span>
               </div>
             </Details>
-
-            {details.also_known_as.length !== 0 && (
-              <div className="pt-5">
-                <Span className="d-block fw-bold">Also Known as :</Span>
-                <Details className="py-3">
-                  {details.also_known_as.map((k, i) => (
-                    <Span className="d-block fw-normal" key={i}>
-                      {k}
-                    </Span>
-                  ))}
-                </Details>
-              </div>
-            )}
           </HeroInfoWrapper>
         </HeroInfo>
       </DetailsHeroWrap>

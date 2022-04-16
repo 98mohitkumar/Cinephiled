@@ -18,25 +18,23 @@ const TVCast = ({ cast }) => {
       ) : (
         <CastGrid>
           {cast.map((item) => (
-            <Link key={item.credit_id} href={`/person/${item.id}`} passHref>
-              <motion.div
-                whileHover={{
-                  scale: 1.05,
-                  transition: { duration: 0.1 },
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <CastWrapper role="button">
+            <CastWrapper key={item.credit_id}>
+              <Link href={`/person/${item.id}`} passHref>
+                <motion.div
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.1 },
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <CastImg data={item.profile_path} gender={item.gender} />
-                  <FlexWrapper className="my-3">
-                    <Span className="fw-bold movieCastHead">
-                      {item.character}
-                    </Span>
-                    <Span className="movieCastName">{item.name}</Span>
-                  </FlexWrapper>
-                </CastWrapper>
-              </motion.div>
-            </Link>
+                </motion.div>
+              </Link>
+              <FlexWrapper className="my-3">
+                <Span className="fw-bold movieCastHead">{item.character}</Span>
+                <Span className="movieCastName">{item.name}</Span>
+              </FlexWrapper>
+            </CastWrapper>
           ))}
         </CastGrid>
       )}

@@ -9,5 +9,5 @@ export const Details = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   align-items: center;
-  gap: 1.5rem 3.75rem;
+  gap: 1.5rem 4vw;
 `;
