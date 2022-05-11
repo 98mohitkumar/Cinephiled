@@ -32,9 +32,9 @@ const PersonDetails = ({ details }) => {
     }
   };
 
-  const works = [...details.combined_credits.cast];
-  works.sort((a, z) => z.vote_count - a.vote_count);
-  works.length > 100 && works.splice(100);
+  const works = [...details.combined_credits.cast]; // copy the works array
+  works.sort((a, z) => z.vote_count - a.vote_count); // sort works array
+  works.length > 100 && works.splice(100); // splice if bigger than 100 for sorting
 
   const cleaned = works.filter((w, i) => {
     if (i !== works.length - 1) {
@@ -42,7 +42,7 @@ const PersonDetails = ({ details }) => {
     }
   });
 
-  cleaned.length > 80 && cleaned.splice(80);
+  cleaned.length > 80 && cleaned.splice(80); // cleaned for mapping
 
   const getAge = (b, alive) => {
     if (alive) {
@@ -190,3 +190,4 @@ const PersonDetails = ({ details }) => {
 };
 
 export default PersonDetails;
+
