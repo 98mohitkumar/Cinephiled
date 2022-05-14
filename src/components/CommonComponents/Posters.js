@@ -1,16 +1,16 @@
-import { NoDataText } from "../../styles/GlobalComponents";
 import {
+  NoDataText,
   PostersContainer,
   PostersImg,
-  PostersWrapper,
-} from "./MovieDetailsStyles";
+  PostersWrapper
+} from '../../styles/GlobalComponents';
 
-const MoviePosters = ({ posters }) => {
+const Posters = ({ posters }) => {
   return (
     <>
       <PostersContainer>
         {posters.length === 0 ? (
-          <NoDataText className="fw-bold text-center my-5">
+          <NoDataText className='fw-bold text-center my-5'>
             No Posters Yet
           </NoDataText>
         ) : (
@@ -25,4 +25,4 @@ const MoviePosters = ({ posters }) => {
   );
 };
 
-export default MoviePosters;
+export default Posters;

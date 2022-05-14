@@ -1,17 +1,17 @@
-import { NoDataText } from "../../styles/GlobalComponents";
 import {
+  NoDataText,
   BackdropsContainer,
   BackdropsImg,
   BackdropsImgContainer,
-  BackdropsWrapper,
-} from "./MovieDetailsStyles";
+  BackdropsWrapper
+} from '../../styles/GlobalComponents';
 
-const MovieBackdrops = ({ backdrops }) => {
+const Backdrops = ({ backdrops }) => {
   return (
     <>
       <BackdropsContainer>
         {backdrops.length === 0 ? (
-          <NoDataText className="fw-bold text-center my-5">
+          <NoDataText className='fw-bold text-center my-5'>
             No Backdrops Yet
           </NoDataText>
         ) : (
@@ -28,4 +28,4 @@ const MovieBackdrops = ({ backdrops }) => {
   );
 };
 
-export default MovieBackdrops;
+export default Backdrops;

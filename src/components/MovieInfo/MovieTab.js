@@ -1,38 +1,38 @@
-import { useState, useEffect } from "react";
-import BackdropsSvg from "../Svg/backdrops";
-import CastSvg from "../Svg/cast";
-import PostersSvg from "../Svg/posters";
-import ReviewsSvg from "../Svg/reviews";
-import MovieBackdrops from "./MovieBackdrops";
-import MovieCast from "./MovieCast";
-import MoviePosters from "./MoviePosters";
-import MovieRecommendations from "./MovieRecommendations";
-import MovieReviews from "./MovieReviews";
+import { useState, useEffect } from 'react';
+import Backdrops from '../CommonComponents/Backdrops';
+import Cast from '../CommonComponents/Cast';
+import Posters from '../CommonComponents/Posters';
+import Reviews from '../CommonComponents/Reviews';
+import BackdropsSvg from '../Svg/backdrops';
+import CastSvg from '../Svg/cast';
+import PostersSvg from '../Svg/posters';
+import ReviewsSvg from '../Svg/reviews';
+import MovieRecommendations from './MovieRecommendations';
 import {
   TabIcon,
   TabSelectionTitle,
   TabSlider,
-  TabWrapper,
-} from "./MovieTabStyles";
+  TabWrapper
+} from './MovieTabStyles';
 
 const MovieTab = (props) => {
-  const [tabState, setTabState] = useState("cast");
+  const [tabState, setTabState] = useState('cast');
   const [moviesRecommended, setMoviesRecommended] = useState([]);
 
   const castSelectionHandler = () => {
-    setTabState("cast");
+    setTabState('cast');
   };
 
   const reviewSelectionHandler = () => {
-    setTabState("reviews");
+    setTabState('reviews');
   };
 
   const backdropSelectionHandler = () => {
-    setTabState("backdrops");
+    setTabState('backdrops');
   };
 
   const posterSelectionHandler = () => {
-    setTabState("posters");
+    setTabState('posters');
   };
 
   useEffect(() => {
@@ -62,42 +62,40 @@ const MovieTab = (props) => {
 
   return (
     <>
-      <TabWrapper className="my-5" tabCheck={tabState}>
+      <TabWrapper className='my-5' tabCheck={tabState}>
         <TabSlider tabCheck={tabState} />
         <TabSelectionTitle onClick={castSelectionHandler}>
           <TabIcon>
-            <CastSvg color={tabState === "cast" ? "white" : "black"} />
+            <CastSvg color={tabState === 'cast' ? 'white' : 'black'} />
           </TabIcon>
           Cast
         </TabSelectionTitle>
         <TabSelectionTitle onClick={reviewSelectionHandler}>
           <TabIcon>
-            <ReviewsSvg color={tabState === "reviews" ? "white" : "black"} />
+            <ReviewsSvg color={tabState === 'reviews' ? 'white' : 'black'} />
           </TabIcon>
           Reviews
         </TabSelectionTitle>
         <TabSelectionTitle onClick={backdropSelectionHandler}>
           <TabIcon>
             <BackdropsSvg
-              color={tabState === "backdrops" ? "white" : "black"}
+              color={tabState === 'backdrops' ? 'white' : 'black'}
             />
           </TabIcon>
           Backdrops
         </TabSelectionTitle>
         <TabSelectionTitle onClick={posterSelectionHandler}>
           <TabIcon>
-            <PostersSvg color={tabState === "posters" ? "white" : "black"} />
+            <PostersSvg color={tabState === 'posters' ? 'white' : 'black'} />
           </TabIcon>
           Posters
         </TabSelectionTitle>
       </TabWrapper>
-      {tabState === "cast" && <MovieCast cast={props.cast} />}
-      {tabState === "reviews" && <MovieReviews reviews={props.reviews} />}
-      {tabState === "backdrops" && (
-        <MovieBackdrops backdrops={props.backdrops} />
-      )}
-      {tabState === "posters" && <MoviePosters posters={props.posters} />}
-      <h1 className="display-6 fw-bold text-white text-center">
+      {tabState === 'cast' && <Cast cast={props.cast} />}
+      {tabState === 'reviews' && <Reviews reviews={props.reviews} />}
+      {tabState === 'backdrops' && <Backdrops backdrops={props.backdrops} />}
+      {tabState === 'posters' && <Posters posters={props.posters} />}
+      <h1 className='display-6 fw-bold text-white text-center'>
         Recommendations
       </h1>
       <MovieRecommendations movies={moviesRecommended} />

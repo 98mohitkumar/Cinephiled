@@ -1,13 +1,13 @@
-import { Tab, Slider, MovieSelection, TVSelection } from "./PopularStyles";
+import { Tab, Slider, MovieSelection, TVSelection } from './PopularStyles';
 
-const TabSelector = (props) => {
+const TabSelector = ({ isMovies, ClickMovies, ClickTV }) => {
   return (
     <Tab>
-      <Slider isMovies={props.isMovies} />
-      <MovieSelection isMovies={props.isMovies} onClick={props.ClickMovies}>
+      <Slider isMovies={isMovies} />
+      <MovieSelection isMovies={isMovies} onClick={ClickMovies}>
         Movies
       </MovieSelection>
-      <TVSelection isMovies={props.isMovies} onClick={props.ClickTV}>
+      <TVSelection isMovies={isMovies} onClick={ClickTV}>
         TV Shows
       </TVSelection>
     </Tab>

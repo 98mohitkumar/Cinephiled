@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   max-width: 1600px;
@@ -108,7 +108,7 @@ export const HeroBgContainer = styled.div`
 export const HeroBg = styled.div`
   background: ${(props) =>
     !props.backdrop
-      ? "#121212"
+      ? '#121212'
       : `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover`};
   inset: 0;
 
@@ -339,7 +339,7 @@ export const QueryInfoWrapper = styled.div`
 export const QueryRealeaseDate = styled.p`
   color: #818181;
   font-size: 1rem;
-  font-family: "Satoshi", sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-weight: 400;
   margin-bottom: 0rem;
 
@@ -406,6 +406,272 @@ export const RecommendationsGrid = styled.div`
     grid-template-columns: 1fr;
     padding: 0px;
   }
+`;
+
+export const CastContainer = styled.div`
+  width: 100%;
+  padding: 2rem;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 1rem;
+  }
+`;
+
+export const CastGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 210px));
+  justify-items: center;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 4rem;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
+    padding: 1rem 2rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    gap: 2rem;
+    padding: 1rem 0.5rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    padding: 1rem 0rem;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 180px));
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    gap: 0.35rem 1.25rem;
+    padding: 0rem;
+    grid-template-columns: repeat(2, 170px);
+  }
+`;
+
+export const CastImg = styled.div`
+  background: ${(props) =>
+    !props.data
+      ? `Url(/Images/DefaultAvatar.png) no-repeat center center /cover`
+      : `Url(https://image.tmdb.org/t/p/w500${props.data}) no-repeat center 5% /cover`};
+  width: 100%;
+  height: 230px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    height: 210px;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    height: 180px;
+  }
+`;
+
+export const CastWrapper = styled.div`
+  width: 185px;
+  align-self: flex-start;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    width: 170px;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    width: 150px;
+  }
+`;
+
+export const ReviewsContainer = styled.div`
+  width: 100%;
+  padding: 2rem;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    padding: 1rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 0rem 1rem;
+  }
+`;
+
+export const ReviewsWrap = styled.div`
+  width: 100%;
+  padding: 1rem 8rem;
+  overflow: hidden;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    padding: 1rem 3rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    padding: 1rem 2.25rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    padding: 1rem 1.5rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 1rem 0.5rem;
+  }
+`;
+
+export const Review = styled.p`
+  padding: 1.25rem 6rem;
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    padding-right: 2rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 1.25rem 0.5rem;
+  }
+`;
+
+export const ReviewAuthorWrap = styled.div`
+  max-width: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+
+  & span {
+    font-weight: bold;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+
+    & span {
+      font-size: 16px;
+    }
+  }
+`;
+
+export const ReviewAuthorImg = styled.div`
+  width: 50px;
+  height: 50px;
+  background: ${(props) =>
+    `Url(https://avatars.dicebear.com/api/bottts/${props.id}.svg) no-repeat center center / cover`};
+`;
+
+export const BackdropsContainer = styled.div`
+  width: 100%;
+  padding: 3rem 5rem;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    padding: 3rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 1rem;
+  }
+`;
+
+export const BackdropsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  gap: 2.5rem;
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    gap: 2rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    gap: 1rem;
+  }
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+`;
+
+export const BackdropsImgContainer = styled.div`
+  width: 100%;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    height: 245px;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    height: 200px;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    height: 150px;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    height: 220px;
+  }
+`;
+
+export const BackdropsImg = styled.div`
+  width: 100%;
+  height: 100%;
+  background: ${(props) =>
+    `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover;`};
+  transition: transform 0.25s cubic-bezier(0.79, 0.14, 0.15, 0.86);
+
+  @media ${(props) => props.theme.breakpoints.hover} {
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+`;
+
+export const PostersContainer = styled.div`
+  width: 100%;
+  padding: 3rem 5rem;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    padding: 3rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 1rem;
+  }
+`;
+
+export const PostersWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  place-items: center;
+  gap: 2rem;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+`;
+
+export const PostersImg = styled.div`
+  width: 100%;
+  aspect-ratio: 1 / 1.54;
+  border-radius: 12px;
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
+  background: ${(props) =>
+    `Url(https://image.tmdb.org/t/p/w780${props.poster}) no-repeat center center /cover;`};
 `;
 
 export const RecommendedWrapper = styled.div`
@@ -503,7 +769,7 @@ export const SocialMediaLinksWrapper = styled.div`
   width: 17rem;
   height: 45px;
   color: #ebebeb;
-  display: ${(props) => (props.notShow ? "none;" : "flex;")};
+  display: ${(props) => (props.notShow ? 'none;' : 'flex;')};
   justify-content: space-around;
   align-items: center;
   padding: 0.25rem;
@@ -682,7 +948,7 @@ export const Rating = styled.div`
   background-color: rgb(221 221 221);
   color: #121212;
   font-weight: 500;
-  font-family: "Satoshi", sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-size: 1.1rem;
   display: flex;
   justify-content: center;
@@ -762,7 +1028,7 @@ export const LightsInOut = styled.div`
     z-index: 11;
   }
 }`
-      : "display: none"};
+      : 'display: none'};
   inset: 22rem 0 0 0;
   cursor: pointer;
 `;
@@ -775,7 +1041,7 @@ export const EasterText = styled.span`
   height: max-content;
   text-align: center;
   font-weight: 500;
-  display: ${(props) => (props.show ? "inline" : "none")};
+  display: ${(props) => (props.show ? 'inline' : 'none')};
 
   ${(props) =>
     props.show &&

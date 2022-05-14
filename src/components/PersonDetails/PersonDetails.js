@@ -1,8 +1,8 @@
 import {
   HeroInfoTitle,
   HeroInfoWrapper,
-  Span,
-} from "../../components/MovieInfo/MovieDetailsStyles";
+  Span
+} from '../../components/MovieInfo/MovieDetailsStyles';
 import {
   DetailsHeroWrap,
   HeroImg,
@@ -11,30 +11,30 @@ import {
   RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
-  RecommendedWrapper,
-} from "../../styles/GlobalComponents";
-import { Bio, Details } from "./PersonDetails.styles";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { MoviesInfoTitle } from "../Popular/PopularStyles";
+  RecommendedWrapper
+} from '../../styles/GlobalComponents';
+import { Bio, Details } from './PersonDetails.styles';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { MoviesInfoTitle } from '../Popular/PopularStyles';
 
 const PersonDetails = ({ details }) => {
   const getGender = (g) => {
     switch (g) {
       case 0:
-        return "-";
+        return '-';
       case 1:
-        return "Female";
+        return 'Female';
       case 2:
-        return "Male";
+        return 'Male';
       case 3:
-        return "Non Binary";
+        return 'Non Binary';
     }
   };
 
   const works = [...details.combined_credits.cast]; // copy the works array
   works.sort((a, z) => z.vote_count - a.vote_count); // sort works array
-  works.length > 100 && works.splice(100); // splice if bigger than 100 for sorting
+  works.length > 100 && works.splice(100); // splice if bigger than 100 for filtering
 
   const cleaned = works.filter((w, i) => {
     if (i !== works.length - 1) {
@@ -58,29 +58,30 @@ const PersonDetails = ({ details }) => {
       return diedAt;
     }
   };
+
   return (
-    <div style={{ marginBottom: "auto" }}>
-      <DetailsHeroWrap style={{ minHeight: "auto" }} className="pb-0">
+    <div style={{ marginBottom: 'auto' }}>
+      <DetailsHeroWrap style={{ minHeight: 'auto' }} className='pb-0'>
         <HeroImgWrapper>
-          <HeroImg className="no-shadow" data={details.profile_path} />
+          <HeroImg className='no-shadow' data={details.profile_path} />
         </HeroImgWrapper>
 
-        <HeroInfo className="d-flex">
-          <HeroInfoWrapper className="w-100" style={{ maxWidth: "700px" }}>
+        <HeroInfo className='d-flex'>
+          <HeroInfoWrapper className='w-100' style={{ maxWidth: '700px' }}>
             <HeroInfoTitle>{details.name}</HeroInfoTitle>
 
-            <Details className="py-4">
+            <Details className='py-4'>
               <div>
-                <Span className="d-block fw-bold">Gender</Span>
-                <Span className="d-block fw-normal">
+                <Span className='d-block fw-bold'>Gender</Span>
+                <Span className='d-block fw-normal'>
                   {getGender(details.gender)}
                 </Span>
               </div>
 
               {!details.deathday && details.birthday && (
                 <div>
-                  <Span className="d-block fw-bold">Age</Span>
-                  <Span className="d-block fw-normal">
+                  <Span className='d-block fw-bold'>Age</Span>
+                  <Span className='d-block fw-normal'>
                     {getAge(details.birthday, true)} years old
                   </Span>
                 </div>
@@ -88,37 +89,37 @@ const PersonDetails = ({ details }) => {
 
               {details.birthday && (
                 <div>
-                  <Span className="d-block fw-bold">Birthday</Span>
-                  <Span className="d-block fw-normal">{details.birthday}</Span>
+                  <Span className='d-block fw-bold'>Birthday</Span>
+                  <Span className='d-block fw-normal'>{details.birthday}</Span>
                 </div>
               )}
 
               {details.deathday && (
                 <div>
-                  <Span className="d-block fw-bold">Death Day</Span>
-                  <Span className="d-block fw-normal">{details.deathday}</Span>
+                  <Span className='d-block fw-bold'>Death Day</Span>
+                  <Span className='d-block fw-normal'>{details.deathday}</Span>
                 </div>
               )}
 
               {details.deathday && (
                 <div>
-                  <Span className="d-block fw-bold">Died at</Span>
-                  <Span className="d-block fw-normal">
+                  <Span className='d-block fw-bold'>Died at</Span>
+                  <Span className='d-block fw-normal'>
                     {getAge(details.deathday, false)} years old
                   </Span>
                 </div>
               )}
 
               <div>
-                <Span className="d-block fw-bold">Known For</Span>
-                <Span className="d-block fw-normal">
+                <Span className='d-block fw-bold'>Known For</Span>
+                <Span className='d-block fw-normal'>
                   {details.known_for_department}
                 </Span>
               </div>
 
               <div>
-                <Span className="d-block fw-bold">Known Credits</Span>
-                <Span className="d-block fw-normal">
+                <Span className='d-block fw-bold'>Known Credits</Span>
+                <Span className='d-block fw-normal'>
                   {details.combined_credits.cast.length}
                 </Span>
               </div>
@@ -128,10 +129,10 @@ const PersonDetails = ({ details }) => {
       </DetailsHeroWrap>
 
       {details.biography && (
-        <DetailsHeroWrap className="no-grid pt-5">
+        <DetailsHeroWrap className='no-grid pt-5'>
           {details.biography && (
             <div>
-              <Span className="d-block fw-bold">Biography</Span>
+              <Span className='d-block fw-bold'>Biography</Span>
               <Bio>{details.biography}</Bio>
             </div>
           )}
@@ -139,27 +140,27 @@ const PersonDetails = ({ details }) => {
       )}
 
       {cleaned.length !== 0 && (
-        <RecommendationsContainer className="py-4">
-          <h1 className="display-6 fw-bold text-white text-center">
+        <RecommendationsContainer className='py-4'>
+          <h1 className='display-6 fw-bold text-white text-center'>
             Filmography
           </h1>
 
           <RecommendationsGrid>
             {cleaned.map((item, i) =>
-              item.media_type === "movie" ? (
+              item.media_type === 'movie' ? (
                 <RecommendedWrapper key={i}>
                   <motion.div
                     whileHover={{
                       scale: 1.05,
-                      transition: { duration: 0.1 },
+                      transition: { duration: 0.1 }
                     }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Link href={"/movies/" + item.id} passHref scroll={false}>
+                    <Link href={'/movies/' + item.id} passHref scroll={false}>
                       <RecommendedImg backdrop={item.backdrop_path} />
                     </Link>
                   </motion.div>
-                  <MoviesInfoTitle className="my-3 text-center">
+                  <MoviesInfoTitle className='my-3 text-center'>
                     {item.title}
                   </MoviesInfoTitle>
                 </RecommendedWrapper>
@@ -168,15 +169,15 @@ const PersonDetails = ({ details }) => {
                   <motion.div
                     whileHover={{
                       scale: 1.05,
-                      transition: { duration: 0.1 },
+                      transition: { duration: 0.1 }
                     }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Link href={"/tv/" + item.id} passHref scroll={false}>
+                    <Link href={'/tv/' + item.id} passHref scroll={false}>
                       <RecommendedImg backdrop={item.backdrop_path} />
                     </Link>
                   </motion.div>
-                  <MoviesInfoTitle className="my-3 text-center">
+                  <MoviesInfoTitle className='my-3 text-center'>
                     {item.name}
                   </MoviesInfoTitle>
                 </RecommendedWrapper>
@@ -190,4 +191,3 @@ const PersonDetails = ({ details }) => {
 };
 
 export default PersonDetails;
-

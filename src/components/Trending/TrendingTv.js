@@ -5,17 +5,17 @@ import {
   Rating,
   TVInfo,
   TVInfoTitle,
-  ReleaseDate,
-} from "../Popular/PopularStyles";
+  ReleaseDate
+} from '../Popular/PopularStyles';
 
-import Link from "next/link";
+import Link from 'next/link';
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 const TrendingTv = ({ Tv }) => {
   Tv.splice(15);
   Tv.forEach((item) => {
-    if (item.vote_average === 0) item.vote_average = "NR";
+    if (item.vote_average === 0) item.vote_average = 'NR';
   });
 
   let arr = [];
@@ -24,31 +24,33 @@ const TrendingTv = ({ Tv }) => {
     Tv.forEach((item) =>
       arr.push(
         new Date(item.first_air_date.toString()).toDateString().slice(4, -5) +
-          ", " +
+          ', ' +
           new Date(item.first_air_date.toString()).getFullYear()
       )
     );
   }
   releaseDates();
+
+  console.info(Tv);
   return (
     <>
-      <TVSection className="p-5">
+      <TVSection className='p-5'>
         {Tv.length > 0 &&
           Tv.map((TV, i) => (
             <Cards key={TV.id}>
               <motion.div
                 whileHover={{
                   scale: 1.05,
-                  transition: { duration: 0.1 },
+                  transition: { duration: 0.1 }
                 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link href={"/tv/" + TV.id} passHref scroll={false}>
+                <Link href={'/tv/' + TV.id} passHref scroll={false}>
                   <CardImg
                     data={TV.poster_path}
-                    className="d-flex justify-content-end"
+                    className='d-flex justify-content-end'
                   >
-                    <Rating className="d-flex justify-content-center align-items-center me-3">
+                    <Rating className='d-flex justify-content-center align-items-center me-3'>
                       {TV.vote_average}
                     </Rating>
                   </CardImg>
