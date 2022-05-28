@@ -1,5 +1,5 @@
-import Document, { Head, Html, Main, NextScript } from "next/document";
-import { ServerStyleSheet } from "styled-components";
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -10,7 +10,7 @@ export default class MyDocument extends Document {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />),
+            sheet.collectStyles(<App {...props} />)
         });
 
       const initialProps = await Document.getInitialProps(ctx);
@@ -21,7 +21,7 @@ export default class MyDocument extends Document {
             {initialProps.styles}
             {sheet.getStyleElement()}
           </>
-        ),
+        )
       };
     } finally {
       sheet.seal();
@@ -34,47 +34,47 @@ export default class MyDocument extends Document {
         <Head>
           <script
             dangerouslySetInnerHTML={{
-              __html: `history.scrollRestoration = "manual"`,
+              __html: `history.scrollRestoration = "manual"`
             }}
           />
           <link
-            href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
+            href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap'
+            rel='stylesheet'
           />
           <link
-            href="https://api.fontshare.com/css?f[]=satoshi@500,700&display=swap"
-            rel="stylesheet"
+            href='https://api.fontshare.com/css?f[]=satoshi@500,700&display=swap'
+            rel='stylesheet'
           />
 
           {/* Preloads */}
 
-          <link rel="preload" href="/Images/poster.webp" as="image"></link>
+          <link rel='preload' href='/Images/poster.webp' as='image'></link>
 
-          <link rel="preload" href="/Images/ShowCase.webp" as="image"></link>
+          <link rel='preload' href='/Images/ShowCase.webp' as='image'></link>
 
-          <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
-          <link rel="manifest" href="/manifest.json" />
-          <meta name="theme-color" content="#121212" />
-          <meta name="keywords" content="Cinema, Tv, Movies"></meta>
+          <link rel='apple-touch-icon' href='/apple-touch-icon.png'></link>
+          <link rel='manifest' href='/manifest.json' />
+          <meta name='theme-color' content='#121212' />
+          <meta name='keywords' content='Cinema, Tv, Movies'></meta>
           <meta
-            name="description"
-            content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters."
+            name='description'
+            content='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters.'
           />
 
           <meta
-            property="og:description"
-            content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters."
+            property='og:description'
+            content='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters.'
           />
 
-          <meta property="twitter:card" content="summary_large_image" />
-          <meta property="twitter:title" content="Cinephiled" />
+          <meta property='twitter:card' content='summary_large_image' />
+          <meta property='twitter:title' content='Cinephiled' />
           <meta
-            property="twitter:description"
-            content="Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, discription and posters."
+            property='twitter:description'
+            content='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, discription and posters.'
           />
           <meta
-            property="twitter:image"
-            content="https://i.imgur.com/Jtl3tJG.png"
+            property='twitter:image'
+            content='https://i.imgur.com/Jtl3tJG.png'
           />
         </Head>
         <body>

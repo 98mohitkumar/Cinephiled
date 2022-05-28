@@ -39,6 +39,12 @@ export const Span = styled.span`
       font-size: 14px;
     }
   }
+
+  &.genre {
+    font-weight: bold;
+    padding-top: clamp(1.5rem, 4vw, 2rem);
+    padding-bottom: clamp(1.5rem, 4vw, 2rem);
+  }
 `;
 
 export const ReleaseDateWrapper = styled.div`
@@ -72,6 +78,16 @@ export const Rounded = styled.div`
   border-radius: 20px;
   padding: 0.05rem 0.75rem;
 
+  @media only ${(props) => props.theme.breakpoints.hover} {
+    &:hover {
+      color: #121212;
+      background-color: white;
+      cursor: pointer;
+      transition: 0.3s ease-out;
+      user-select: none;
+    }
+  }
+
   @media only ${(props) => props.theme.breakpoints.lg} {
     font-size: 1rem;
   }
@@ -82,6 +98,7 @@ export const Rounded = styled.div`
     border: none;
     padding: 0;
     position: relative;
+    text-decoration: underline;
 
     &::after {
       content: ',';
