@@ -26,8 +26,6 @@ const MovieDetails = ({
   easter,
   showEaster
 }) => {
-  console.info(movieDetailsData);
-
   const releaseDate = !movieDetailsData.release_date
     ? 'TBA'
     : new Date(movieDetailsData.release_date.toString())

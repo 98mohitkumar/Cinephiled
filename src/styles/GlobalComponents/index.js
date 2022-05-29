@@ -519,14 +519,14 @@ export const ReviewsWrap = styled.div`
 `;
 
 export const Review = styled.p`
-  padding: 1.25rem 6rem;
+  padding: 0rem 6rem;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     padding-right: 2rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1.25rem 0.5rem;
+    padding: 0.75rem 0.5rem;
   }
 `;
 
@@ -543,7 +543,6 @@ export const ReviewAuthorWrap = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     gap: 1rem;
-    margin-bottom: 0.75rem;
 
     & span {
       font-size: 16px;

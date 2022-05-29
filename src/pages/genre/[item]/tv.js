@@ -12,8 +12,63 @@ import Link from 'next/link';
 import { MoviesInfoTitle } from '../../../components/Popular/PopularStyles';
 import { motion } from 'framer-motion';
 import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
+import { useEffect, useState } from 'react';
 
-const TvShows = ({ renderList, genreName, error }) => {
+const TvShows = ({ renderList, genreName, error, genreId }) => {
+  const [pageQuery, setPageQuery] = useState(3);
+  const [extendedList, setExtendedList] = useState({
+    list: [],
+    page: pageQuery
+  });
+
+  useEffect(() => {
+    function detectBottom() {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 100
+      ) {
+        setPageQuery((prev) => (prev === extendedList.page ? prev + 1 : prev));
+      }
+    }
+
+    window.addEventListener('scroll', detectBottom);
+    return () => {
+      window.removeEventListener('scroll', detectBottom);
+    };
+  }, [pageQuery, extendedList.page]);
+
+  useEffect(() => {
+    const api_key = process.env.NEXT_PUBLIC_API_KEY;
+    const abortCtrl = new AbortController();
+
+    const fetchGenreList = async () => {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/discover/tv?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
+        { signal: abortCtrl.signal }
+      );
+
+      if (res.ok) {
+        const tvList = await res.json();
+        return tvList;
+      } else {
+        return null;
+      }
+    };
+
+    fetchGenreList()
+      .then((data) =>
+        setExtendedList((prev) => ({
+          list: prev.list.concat(data.results),
+          page: pageQuery
+        }))
+      )
+      .catch((err) => console.error(err.message));
+
+    return () => {
+      abortCtrl.abort();
+    };
+  }, [pageQuery, genreId]);
+
   return (
     <>
       <Head>
@@ -57,6 +112,25 @@ const TvShows = ({ renderList, genreName, error }) => {
                       </MoviesInfoTitle>
                     </RecommendedWrapper>
                   ))}
+
+                  {extendedList.list.map((item) => (
+                    <RecommendedWrapper key={item.id}>
+                      <motion.div
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.1 }
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Link href={'/tv/' + item.id} passHref scroll={false}>
+                          <RecommendedImg backdrop={item.backdrop_path} />
+                        </Link>
+                      </motion.div>
+                      <MoviesInfoTitle className='my-3 text-center'>
+                        {item.name}
+                      </MoviesInfoTitle>
+                    </RecommendedWrapper>
+                  ))}
                 </RecommendationsGrid>
               </>
             )}
@@ -71,8 +145,13 @@ export default TvShows;
 
 TvShows.getInitialProps = async (ctx) => {
   try {
-    const genreId = ctx.query.item.split('-')[0];
-    const genreName = ctx.query.item.split('-')[1];
+    const param = ctx.query.item.split('-');
+
+    const genreId = param[0];
+    const genreName = param
+      .slice(1, param.length)
+      .join('-')
+      .replace('&', ' & ');
     const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
     const response = await fetch(
@@ -96,6 +175,7 @@ TvShows.getInitialProps = async (ctx) => {
       return {
         renderList,
         genreName,
+        genreId,
         error
       };
     }

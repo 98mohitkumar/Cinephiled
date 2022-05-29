@@ -31,7 +31,6 @@ const TrendingTv = ({ Tv }) => {
   }
   releaseDates();
 
-  console.info(Tv);
   return (
     <>
       <TVSection className='p-5'>

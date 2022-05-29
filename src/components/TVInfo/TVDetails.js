@@ -30,7 +30,9 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
               {tvData.genres.map((item, i) => (
                 <Link
                   key={item.id}
-                  href={`/genre/${item.id.toString() + '-' + item.name}/tv`}
+                  href={`/genre/${
+                    item.id.toString() + '-' + item.name.split(' ').join('')
+                  }/tv`}
                   passHref
                   scroll={false}
                 >
