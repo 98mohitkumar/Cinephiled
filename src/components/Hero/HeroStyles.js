@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const HeroDiv = styled.div`
   position: absolute;
@@ -56,16 +56,15 @@ export const Banner = styled.div`
 export const Form = styled.form`
   width: 50%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-direction: column;
   gap: 1rem;
   margin: auto;
 
   .border-animated {
     position: relative;
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 0;
       right: 0;
@@ -100,6 +99,34 @@ export const Form = styled.form`
     }
   }
 
+  .wrapper {
+    margin-bottom: 60px;
+  }
+
+  .suggestions {
+    position: absolute;
+    width: 100%;
+    background-color: rgb(221, 221, 221);
+    max-height: 240px;
+    overflow-y: scroll;
+    border-radius: 4px;
+    box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+      0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+      0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    & > a:last-child > div:last-child {
+      border: none;
+    }
+
+    @media only ${(props) => props.theme.breakpoints.sm} {
+      max-height: 200px;
+    }
+  }
+
   @media only ${(props) => props.theme.breakpoints.lg} {
     width: 65%;
   }
@@ -128,14 +155,14 @@ export const Button = styled.button`
   font-weight: 600;
   padding: 0.65rem 2rem;
   cursor: ${(props) =>
-    props.show ? "pointer !important" : "default !important"};
+    props.show ? 'pointer !important' : 'default !important'};
   visibility: ${(props) =>
-    props.show ? "visible !important" : "none !important"};
-  opacity: ${(props) => (props.show ? "1 !important" : "0 !important")};
+    props.show ? 'visible !important' : 'none !important'};
+  opacity: ${(props) => (props.show ? '1 !important' : '0 !important')};
   transition: all 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 0.45rem 2rem;
+    padding: 0.35rem 1rem;
   }
 `;
 
@@ -144,18 +171,19 @@ export const UserInput = styled.input`
   box-shadow: none;
   position: relative;
   border-radius: 0;
-  height: 3rem;
+  height: 45px;
+  padding: 15px 0px 0px 5px;
   background-color: transparent;
   font-size: x-large;
   margin: auto;
   font-weight: 400;
   color: white;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
 
   &::placeholder {
     color: #fff;
     font-weight: 400;
-    font-family: "Manrope", sans-serif;
+    font-family: 'Manrope', sans-serif;
   }
 
   &:focus {
@@ -166,7 +194,42 @@ export const UserInput = styled.input`
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    font-size: 1.2rem;
-    padding: 0.2rem;
+    font-size: 1.05rem;
+  }
+`;
+
+export const SearchSlice = styled.div`
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #121212;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  transition: background-color 0.1s ease-in-out;
+
+  .suggestion-title,
+  .tag {
+    color: black;
+    margin: 0px;
+  }
+
+  .suggestion-title {
+    font-size: 1.1rem;
+
+    @media only ${(props) => props.theme.breakpoints.xs} {
+      font-size: 1rem;
+    }
+  }
+
+  .tag {
+    border: 1px solid #121212;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.hover} {
+    &:hover {
+      background-color: rgb(0 0 0 / 0.1);
+    }
   }
 `;
