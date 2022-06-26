@@ -3,12 +3,12 @@ import {
   RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
-  RecommendedWrapper,
-} from "../../styles/GlobalComponents";
+  RecommendedWrapper
+} from '../../styles/GlobalComponents';
 
-import Link from "next/link";
-import { MoviesInfoTitle } from "../Popular/PopularStyles";
-import { motion } from "framer-motion";
+import Link from 'next/link';
+import { MoviesInfoTitle } from '../Popular/PopularStyles';
+import { motion } from 'framer-motion';
 
 const MovieRecommendations = ({ movies }) => {
   movies.splice(15);
@@ -17,7 +17,7 @@ const MovieRecommendations = ({ movies }) => {
     <>
       <RecommendationsContainer>
         {movies.length === 0 ? (
-          <NoDataText className="fw-bold text-center my-5">
+          <NoDataText className='fw-bold text-center my-5'>
             No Recommendations For Now
           </NoDataText>
         ) : (
@@ -27,15 +27,15 @@ const MovieRecommendations = ({ movies }) => {
                 <motion.div
                   whileHover={{
                     scale: 1.05,
-                    transition: { duration: 0.1 },
+                    transition: { duration: 0.1 }
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Link href={"/movies/" + item.id} passHref scroll={false}>
+                  <Link href={'/movies/' + item.id} passHref scroll={false}>
                     <RecommendedImg backdrop={item.backdrop_path} />
                   </Link>
                 </motion.div>
-                <MoviesInfoTitle className="my-3 text-center">
+                <MoviesInfoTitle className='my-3 text-center'>
                   {item.title}
                 </MoviesInfoTitle>
               </RecommendedWrapper>

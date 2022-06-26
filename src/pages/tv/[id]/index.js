@@ -1,11 +1,11 @@
-import Head from "next/head";
-import DominantColor from "../../../components/DominantColor/DominantColor";
+import Head from 'next/head';
+import DominantColor from '../../../components/DominantColor/DominantColor';
 import {
   Gradient,
   HeroImgWrapper,
-  HeroTrailer,
-} from "../../../styles/GlobalComponents";
-import TVDetails from "../../../components/TVInfo/TVDetails";
+  HeroTrailer
+} from '../../../styles/GlobalComponents';
+import TVDetails from '../../../components/TVInfo/TVDetails';
 import {
   DetailsHeroWrap,
   Error404,
@@ -13,13 +13,13 @@ import {
   HeroBgContainer,
   HeroDetailsContainer,
   HeroImg,
-  HeroInfo,
-} from "../../../styles/GlobalComponents";
-import TVTab from "../../../components/TVInfo/TVTab";
-import TVFacts from "../../../components/TVInfo/TVFacts";
-import { FaYoutube } from "react-icons/fa";
-import { Span } from "../../../components/MovieInfo/MovieDetailsStyles";
-import SocialMediaLinks from "../../../components/SocialMediaLinks/SocialMediaLinks";
+  HeroInfo
+} from '../../../styles/GlobalComponents';
+import TVTab from '../../../components/TVInfo/TVTab';
+import TVFacts from '../../../components/TVInfo/TVFacts';
+import { FaYoutube } from 'react-icons/fa';
+import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
+import SocialMediaLinks from '../../../components/SocialMediaLinks/SocialMediaLinks';
 
 const TvShow = ({ tvData, error, languages, socialIds }) => {
   let creators = [];
@@ -31,26 +31,26 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
   let posters = [];
   let videos = [];
 
-  let getyear = "";
-  let endyear = "";
+  let getyear = '';
+  let endyear = '';
   let epRuntime = {};
   let tvFacts = {};
-  let tvStatus = "";
-  let ogLanguage = "";
-  let netwrok = "";
-  let type = "";
+  let tvStatus = '';
+  let ogLanguage = '';
+  let netwrok = '';
+  let type = '';
 
   if (!error) {
     creditsDetails = tvData.credits;
     creditsDetails.crew.forEach((item) => {
-      if (item.job === "Characters") characters.push(item);
+      if (item.job === 'Characters') characters.push(item);
     });
     tvData.created_by.length > 0 &&
       tvData.created_by.forEach((item) => creators.push(item));
 
     tvData.videos.results.forEach(
       (item) =>
-        item.site === "YouTube" && item.type === "Trailer" && videos.push(item)
+        item.site === 'YouTube' && item.type === 'Trailer' && videos.push(item)
     );
     cast = creditsDetails.cast;
 
@@ -60,29 +60,31 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
     backdrops = tvData.images.backdrops;
     posters = tvData.images.posters;
 
-    getyear = new Date(tvData.first_air_date).getFullYear();
+    getyear = tvData.first_air_date
+      ? new Date(tvData.first_air_date).getFullYear()
+      : 'TBA';
     endyear =
-      tvData.status === "Ended" || tvData.status === "Canceled"
-        ? "- " + new Date(tvData.last_air_date).getFullYear()
-        : "- ";
+      tvData.status === 'Ended' || tvData.status === 'Canceled'
+        ? '- ' + new Date(tvData.last_air_date).getFullYear()
+        : '- ';
 
     const getH = Math.floor(tvData.episode_run_time[0] / 60);
     const getM = Math.ceil((tvData.episode_run_time[0] / 60 - getH) * 60);
     epRuntime = { getH, getM };
 
-    tvStatus = !tvData.status ? "TBA" : tvData.status;
+    tvStatus = !tvData.status ? 'TBA' : tvData.status;
 
-    ogLanguage = !tvData.original_language ? "TBA" : tvData.original_language;
+    ogLanguage = !tvData.original_language ? 'TBA' : tvData.original_language;
 
-    netwrok = !tvData.networks[0] ? "TBA" : tvData.networks[0].name;
+    netwrok = !tvData.networks[0] ? 'TBA' : tvData.networks[0].name;
 
-    type = !tvData.type ? "TBA" : tvData.type;
+    type = !tvData.type ? 'TBA' : tvData.type;
 
     tvFacts = {
       status: tvStatus,
       language: ogLanguage,
       network: netwrok,
-      type: type,
+      type: type
     };
   }
 
@@ -103,16 +105,16 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
           {!error
             ? `${tvData.name} (${getyear}
           ${endyear}) - Cinephiled`
-            : "Not Found - Cinephiled"}
+            : 'Not Found - Cinephiled'}
         </title>
         {!error && (
           <>
             <meta
-              property="og:image"
+              property='og:image'
               content={`https://image.tmdb.org/t/p/w1280${tvData.backdrop_path}`}
             />
             <meta
-              property="og:title"
+              property='og:title'
               content={`${tvData.name} (${getyear}
           ${endyear}) - Cinephiled`}
             ></meta>
@@ -123,11 +125,11 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
         <Error404>404</Error404>
       ) : (
         <>
-          <HeroDetailsContainer className="position-relative mb-auto">
-            <HeroBgContainer className="position-absolute">
+          <HeroDetailsContainer className='position-relative mb-auto'>
+            <HeroBgContainer className='position-absolute'>
               <HeroBg
                 backdrop={tvData.backdrop_path}
-                className="position-absolute"
+                className='position-absolute'
               ></HeroBg>
               <DominantColor image={tvData.poster_path} />
             </HeroBgContainer>
@@ -138,12 +140,12 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
                 {videos.length !== 0 && (
                   <a
                     href={`https://www.youtube.com/watch?v=${videos[0].key}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="trailer"
+                    target='_blank'
+                    rel='noreferrer'
+                    aria-label='trailer'
                   >
                     <HeroTrailer>
-                      <FaYoutube size="1.5rem" />
+                      <FaYoutube size='1.5rem' />
                       <Span>Play Trailer</Span>
                     </HeroTrailer>
                   </a>
@@ -155,7 +157,7 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
               </HeroImgWrapper>
 
               <Gradient />
-              <HeroInfo className="d-flex">
+              <HeroInfo className='d-flex'>
                 <TVDetails
                   tvData={tvData}
                   date={getyear}
@@ -212,7 +214,7 @@ TvShow.getInitialProps = async (ctx) => {
         tvData,
         error,
         languages,
-        socialIds,
+        socialIds
       };
     }
   } catch {

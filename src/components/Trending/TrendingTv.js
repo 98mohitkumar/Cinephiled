@@ -50,7 +50,9 @@ const TrendingTv = ({ Tv }) => {
                     className='d-flex justify-content-end'
                   >
                     <Rating className='d-flex justify-content-center align-items-center me-3'>
-                      {TV.vote_average}
+                      {TV.vote_average === 'NR'
+                        ? TV.vote_average
+                        : TV.vote_average.toFixed(1)}
                     </Rating>
                   </CardImg>
                 </Link>

@@ -67,7 +67,9 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
         <RatingWrapper>
           {tvData.vote_average !== 0 ? (
             <>
-              <Span className='display-3 fw-bolder'>{tvData.vote_average}</Span>
+              <Span className='display-3 fw-bolder'>
+                {tvData.vote_average.toFixed(1)}
+              </Span>
               <span> / 10</span>
             </>
           ) : (
