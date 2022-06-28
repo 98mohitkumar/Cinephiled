@@ -45,8 +45,8 @@ const TrendingMovies = ({ movies }) => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  href={`/movies/${movie.id}-${movie.title.replaceAll(
-                    ' ',
+                  href={`/movies/${movie.id}-${movie.title.replace(
+                    /[' ']/g,
                     '-'
                   )}`}
                   passHref

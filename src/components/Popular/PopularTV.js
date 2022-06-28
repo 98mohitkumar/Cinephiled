@@ -48,7 +48,7 @@ const PopularTV = (props) => {
               whileTap={{ scale: 0.95 }}
             >
               <Link
-                href={`/tv/${TV.id}-${TV.name.replaceAll(' ', '-')}`}
+                href={`/tv/${TV.id}-${TV.name.replace(/[' ']/g, '-')}`}
                 passHref
                 scroll={false}
               >

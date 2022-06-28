@@ -102,7 +102,7 @@ Search.getInitialProps = async (ctx) => {
           movieRes: movieRes.results,
           tvRes: tvRes.results,
           error,
-          searchQuery: searchQuery.replaceAll('+', ' '),
+          searchQuery: searchQuery.replace(/['+']/g, ' '),
           keywordsRes: keywordsRes.results
         };
       }
@@ -131,7 +131,7 @@ Search.getInitialProps = async (ctx) => {
           movieRes: movieRes.results,
           tvRes: tvRes.results,
           error,
-          searchQuery: searchQuery.replaceAll('+', ' '),
+          searchQuery: searchQuery.replace(/['+']/g, ' '),
           keywordsRes: keywordsRes.results
         };
       }

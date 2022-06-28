@@ -31,7 +31,7 @@ const TVRecommendations = ({ Tv }) => {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    href={`/tv/${item.id}-${item.name.replaceAll(' ', '-')}`}
+                    href={`/tv/${item.id}-${item.name.replace(/[' ']/g, '-')}`}
                     passHref
                     scroll={false}
                   >

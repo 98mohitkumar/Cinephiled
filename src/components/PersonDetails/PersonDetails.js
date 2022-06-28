@@ -157,8 +157,8 @@ const PersonDetails = ({ details }) => {
                     whileTap={{ scale: 0.95 }}
                   >
                     <Link
-                      href={`/movies/${item.id}-${item.title.replaceAll(
-                        ' ',
+                      href={`/movies/${item.id}-${item.title.replace(
+                        /[' ']/g,
                         '-'
                       )}`}
                       passHref
@@ -183,7 +183,10 @@ const PersonDetails = ({ details }) => {
                     whileTap={{ scale: 0.95 }}
                   >
                     <Link
-                      href={`/tv/${item.id}-${item.name.replaceAll(' ', '-')}`}
+                      href={`/tv/${item.id}-${item.name.replace(
+                        /[' ']/g,
+                        '-'
+                      )}`}
                       passHref
                       scroll={false}
                     >

@@ -17,7 +17,7 @@ const KeywordSearch = ({ keywords }) => {
           {keywords.map((item) => (
             <Link
               key={item.id}
-              href={`/keywords/${item.id}-${item.name.replaceAll(' ', '-')}`}
+              href={`/keywords/${item.id}-${item.name.replace(/[' ']/g, '-')}`}
               passHref
               scroll={false}
             >

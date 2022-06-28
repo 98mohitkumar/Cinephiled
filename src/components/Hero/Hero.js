@@ -117,7 +117,7 @@ const Hero = () => {
     ) {
       return;
     } else {
-      Router.push(`/search/${searchQuery.replaceAll(' ', '+')}`);
+      Router.push(`/search/${searchQuery.replace(/[' ']/g, '+')}`);
       name.current.value = '';
       event.target.blur();
     }

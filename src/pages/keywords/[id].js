@@ -54,8 +54,8 @@ const Keyword = ({ error, results, name }) => {
                   {results.map((item, i) => (
                     <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
                       <Link
-                        href={`/movies/${item.id}-${item.title.replaceAll(
-                          ' ',
+                        href={`/movies/${item.id}-${item.title.replace(
+                          /[' ']/g,
                           '-'
                         )}`}
                         passHref

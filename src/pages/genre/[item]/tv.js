@@ -52,8 +52,8 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                         whileTap={{ scale: 0.95 }}
                       >
                         <Link
-                          href={`/tv/${item.id}-${item.name.replaceAll(
-                            ' ',
+                          href={`/tv/${item.id}-${item.name.replace(
+                            /[' ']/g,
                             '-'
                           )}`}
                           passHref
@@ -80,8 +80,8 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                         whileTap={{ scale: 0.95 }}
                       >
                         <Link
-                          href={`/tv/${item.id}-${item.name.replaceAll(
-                            ' ',
+                          href={`/tv/${item.id}-${item.name.replace(
+                            /[' ']/g,
                             '-'
                           )}`}
                           passHref
