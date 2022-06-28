@@ -4,7 +4,10 @@ import { SearchSlice } from './HeroStyles';
 const SearchSuggestion = ({ data, type }) => (
   <>
     {type === 'movie' && (
-      <Link href={`/movies/${data.id}`} passHref>
+      <Link
+        href={`/movies/${data.id}-${data.title.replaceAll(' ', '-')}`}
+        passHref
+      >
         <a>
           <SearchSlice>
             <h5 className='suggestion-title'>
@@ -20,7 +23,7 @@ const SearchSuggestion = ({ data, type }) => (
     )}
 
     {type === 'tv' && (
-      <Link href={`/tv/${data.id}`} passHref>
+      <Link href={`/tv/${data.id}-${data.name.replaceAll(' ', '-')}`} passHref>
         <a>
           <SearchSlice>
             <h5 className='suggestion-title'>

@@ -1,11 +1,15 @@
-import { NavBar } from "./NavigationStyles";
-import Link from "next/link";
+import { NavBar } from './NavigationStyles';
+import Link from 'next/link';
 
 const Navigation = () => {
   return (
     <NavBar>
-      <Link href="/">Home</Link>
-      <Link href="/about">About</Link>
+      <Link href='/'>
+        <a>Home</a>
+      </Link>
+      <Link href='/about'>
+        <a>About</a>
+      </Link>
     </NavBar>
   );
 };

@@ -31,8 +31,17 @@ const MovieRecommendations = ({ movies }) => {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Link href={'/movies/' + item.id} passHref scroll={false}>
-                    <RecommendedImg backdrop={item.backdrop_path} />
+                  <Link
+                    href={`/movies/${item.id}-${item.title.replaceAll(
+                      ' ',
+                      '-'
+                    )}`}
+                    passHref
+                    scroll={false}
+                  >
+                    <a>
+                      <RecommendedImg backdrop={item.backdrop_path} />
+                    </a>
                   </Link>
                 </motion.div>
                 <MoviesInfoTitle className='my-3 text-center'>

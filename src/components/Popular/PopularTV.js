@@ -47,17 +47,23 @@ const PopularTV = (props) => {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link href={'/tv/' + TV.id} passHref scroll={false}>
-                <CardImg
-                  data={TV.poster_path}
-                  className='d-flex justify-content-end'
-                >
-                  <Rating className='d-flex justify-content-center align-items-center me-3'>
-                    {TV.vote_average === 'NR'
-                      ? TV.vote_average
-                      : TV.vote_average.toFixed(1)}
-                  </Rating>
-                </CardImg>
+              <Link
+                href={`/tv/${TV.id}-${TV.name.replaceAll(' ', '-')}`}
+                passHref
+                scroll={false}
+              >
+                <a>
+                  <CardImg
+                    data={TV.poster_path}
+                    className='d-flex justify-content-end'
+                  >
+                    <Rating className='d-flex justify-content-center align-items-center me-3'>
+                      {TV.vote_average === 'NR'
+                        ? TV.vote_average
+                        : TV.vote_average.toFixed(1)}
+                    </Rating>
+                  </CardImg>
+                </a>
               </Link>
             </motion.div>
             <TVInfo>

@@ -52,11 +52,16 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                         whileTap={{ scale: 0.95 }}
                       >
                         <Link
-                          href={'/movies/' + item.id}
+                          href={`/movies/${item.id}-${item.title.replaceAll(
+                            ' ',
+                            '-'
+                          )}`}
                           passHref
                           scroll={false}
                         >
-                          <RecommendedImg backdrop={item.backdrop_path} />
+                          <a>
+                            <RecommendedImg backdrop={item.backdrop_path} />
+                          </a>
                         </Link>
                       </motion.div>
                       <MoviesInfoTitle className='my-3 text-center'>
@@ -75,11 +80,16 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                         whileTap={{ scale: 0.95 }}
                       >
                         <Link
-                          href={'/movies/' + item.id}
+                          href={`/movies/${item.id}-${item.title.replaceAll(
+                            ' ',
+                            '-'
+                          )}`}
                           passHref
                           scroll={false}
                         >
-                          <RecommendedImg backdrop={item.backdrop_path} />
+                          <a>
+                            <RecommendedImg backdrop={item.backdrop_path} />
+                          </a>
                         </Link>
                       </motion.div>
                       <MoviesInfoTitle className='my-3 text-center'>

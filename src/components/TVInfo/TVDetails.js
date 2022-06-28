@@ -36,9 +36,11 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
                   passHref
                   scroll={false}
                 >
-                  <Rounded className={tvData.genres.length == i + 1 && 'sep'}>
-                    {item.name}
-                  </Rounded>
+                  <a>
+                    <Rounded className={tvData.genres.length == i + 1 && 'sep'}>
+                      {item.name}
+                    </Rounded>
+                  </a>
                 </Link>
               ))}
             </GenreWrap>

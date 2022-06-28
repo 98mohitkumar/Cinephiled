@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Head from 'next/head';
 import {
   HeroBg,
   Error404,
@@ -11,17 +11,17 @@ import {
   HeroTrailer,
   MovieEaster,
   LightsInOut,
-  EasterText,
-} from "../../styles/GlobalComponents";
-import DominantColor from "../../components/DominantColor/DominantColor";
-import MovieDetails from "../../components/MovieInfo/MovieDetails";
-import MovieTab from "../../components/MovieInfo/MovieTab";
-import MovieFacts from "../../components/MovieInfo/MovieFacts";
-import { Gradient } from "../../styles/GlobalComponents";
-import { Span } from "../../components/MovieInfo/MovieDetailsStyles";
-import { FaYoutube } from "react-icons/fa";
-import SocialMediaLinks from "../../components/SocialMediaLinks/SocialMediaLinks";
-import { useState, useRef, useEffect } from "react";
+  EasterText
+} from '../../styles/GlobalComponents';
+import DominantColor from '../../components/DominantColor/DominantColor';
+import MovieDetails from '../../components/MovieInfo/MovieDetails';
+import MovieTab from '../../components/MovieInfo/MovieTab';
+import MovieFacts from '../../components/MovieInfo/MovieFacts';
+import { Gradient } from '../../styles/GlobalComponents';
+import { Span } from '../../components/MovieInfo/MovieDetailsStyles';
+import { FaYoutube } from 'react-icons/fa';
+import SocialMediaLinks from '../../components/SocialMediaLinks/SocialMediaLinks';
+import { useState, useRef, useEffect } from 'react';
 
 const Movie = ({ movieDetails, error, languages, socialIds }) => {
   let easter = useRef(false);
@@ -33,12 +33,12 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
   }
 
   useEffect(() => {
-    let easterSeen = localStorage.getItem("easterSeen");
-    if (easter.current && easterSeen !== "seen") {
+    let easterSeen = localStorage.getItem('easterSeen');
+    if (easter.current && easterSeen !== 'seen') {
       setShowEaster(true);
     }
 
-    if (easterSeen === "seen") {
+    if (easterSeen === 'seen') {
       setHasSeen(true);
     } else {
       setHasSeen(false);
@@ -49,7 +49,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
     setShowEaster(!showEaster);
     window.scrollTo(0, 0);
     setHasSeen(true);
-    localStorage.setItem("easterSeen", "seen");
+    localStorage.setItem('easterSeen', 'seen');
   };
 
   let directors = [];
@@ -57,8 +57,8 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
   let characters = [];
   let cast = [];
   let videos = [];
-  let runtime = "";
-  let getyear = "";
+  let runtime = '';
+  let getyear = '';
 
   let reviewDetails = [];
   let backdrops = [];
@@ -66,22 +66,22 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
   let creditsDetails = [];
   let movieFacts = {};
 
-  let status = "";
+  let status = '';
 
-  let country = "";
+  let country = '';
 
   if (!error) {
     creditsDetails = movieDetails.credits;
 
     creditsDetails.crew.forEach((item) => {
-      if (item.job === "Director") directors.push(item);
-      if (item.job === "Writer") writers.push(item);
-      if (item.job === "Characters") characters.push(item);
+      if (item.job === 'Director') directors.push(item);
+      if (item.job === 'Writer') writers.push(item);
+      if (item.job === 'Characters') characters.push(item);
     });
 
     movieDetails.videos.results.forEach(
       (item) =>
-        item.site === "YouTube" && item.type === "Trailer" && videos.push(item)
+        item.site === 'YouTube' && item.type === 'Trailer' && videos.push(item)
     );
 
     reviewDetails = movieDetails.reviews;
@@ -93,24 +93,24 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
 
     country =
       movieDetails.production_countries[0] === undefined
-        ? "US"
+        ? 'US'
         : movieDetails.production_countries[0].iso_3166_1;
 
     getyear = !movieDetails.release_date
-      ? "TBA"
+      ? 'TBA'
       : new Date(movieDetails.release_date).getFullYear();
 
     const getH = Math.floor(movieDetails.runtime / 60);
     const getM = Math.ceil((movieDetails.runtime / 60 - getH) * 60);
     runtime = { getH, getM };
 
-    status = !movieDetails.status ? "TBA" : movieDetails.status;
+    status = !movieDetails.status ? 'TBA' : movieDetails.status;
 
     movieFacts = {
       status,
       language: movieDetails.original_language,
       budget: movieDetails.budget,
-      revenue: movieDetails.revenue,
+      revenue: movieDetails.revenue
     };
   }
 
@@ -134,16 +134,16 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
         <title>
           {!error
             ? `${movieDetails.title} (${getyear}) - Cinephiled`
-            : "Not Found - Cinephiled"}
+            : 'Not Found - Cinephiled'}
         </title>
         {!error && (
           <>
             <meta
-              property="og:image"
+              property='og:image'
               content={`https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`}
             />
             <meta
-              property="og:title"
+              property='og:title'
               content={`${movieDetails.title} (${getyear}) - Cinephiled`}
             ></meta>
           </>
@@ -156,11 +156,11 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
           {easter.current && (
             <>
               {!hasSeen ? (
-                <EasterText className="fs-4" show={showEaster}>
+                <EasterText className='fs-4' show={showEaster}>
                   Congratulations, you have found the easter egg.
                 </EasterText>
               ) : (
-                <EasterText className="fs-4" show={showEaster}>
+                <EasterText className='fs-4' show={showEaster}>
                   Aren&apos;t you scared?
                 </EasterText>
               )}
@@ -168,11 +168,11 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
               <MovieEaster show={showEaster} />
             </>
           )}
-          <HeroDetailsContainer className="position-relative mb-auto">
-            <HeroBgContainer className="position-absolute">
+          <HeroDetailsContainer className='position-relative mb-auto'>
+            <HeroBgContainer className='position-absolute'>
               <HeroBg
                 backdrop={movieDetails.backdrop_path}
-                className="position-absolute"
+                className='position-absolute'
               ></HeroBg>
               <DominantColor image={movieDetails.poster_path} />
             </HeroBgContainer>
@@ -184,12 +184,12 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
                 {videos.length !== 0 && (
                   <a
                     href={`https://www.youtube.com/watch?v=${videos[0].key}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="trailer"
+                    target='_blank'
+                    rel='noreferrer'
+                    aria-label='trailer'
                   >
                     <HeroTrailer>
-                      <FaYoutube size="1.5rem" />
+                      <FaYoutube size='1.5rem' />
                       <Span>Play Trailer</Span>
                     </HeroTrailer>
                   </a>
@@ -200,7 +200,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
                 />
               </HeroImgWrapper>
               <Gradient />
-              <HeroInfo className="d-flex">
+              <HeroInfo className='d-flex'>
                 <MovieDetails
                   movieDetailsData={movieDetails}
                   date={getyear}
@@ -261,7 +261,7 @@ Movie.getInitialProps = async (ctx) => {
         movieDetails,
         error,
         languages,
-        socialIds,
+        socialIds
       };
     }
   } catch {

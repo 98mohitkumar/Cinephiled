@@ -1,15 +1,15 @@
 import {
   EmptySearch,
-  SearchResultsContainer,
-} from "../../styles/GlobalComponents";
-import { Keyword } from "./SearchTabStyles";
-import Link from "next/link";
+  SearchResultsContainer
+} from '../../styles/GlobalComponents';
+import { Keyword } from './SearchTabStyles';
+import Link from 'next/link';
 
 const KeywordSearch = ({ keywords }) => {
   return (
     <>
       {keywords.length === 0 ? (
-        <EmptySearch className="display-5 text-center">
+        <EmptySearch className='display-5 text-center'>
           No Keywords for this query.
         </EmptySearch>
       ) : (
@@ -17,11 +17,13 @@ const KeywordSearch = ({ keywords }) => {
           {keywords.map((item) => (
             <Link
               key={item.id}
-              href={`/keyword/${item.id}`}
+              href={`/keywords/${item.id}-${item.name.replaceAll(' ', '-')}`}
               passHref
               scroll={false}
             >
-              <Keyword>{item.name}</Keyword>
+              <a>
+                <Keyword>{item.name}</Keyword>
+              </a>
             </Link>
           ))}
         </SearchResultsContainer>

@@ -35,8 +35,8 @@ const TrendingMovies = ({ movies }) => {
     <>
       <MoviesSection className='p-5'>
         {movies.length > 0 &&
-          movies.map((movies, i) => (
-            <Cards key={movies.id}>
+          movies.map((movie, i) => (
+            <Cards key={movie.id}>
               <motion.div
                 whileHover={{
                   scale: 1.05,
@@ -44,21 +44,30 @@ const TrendingMovies = ({ movies }) => {
                 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link href={'/movies/' + movies.id} passHref scroll={false}>
-                  <CardImg
-                    data={movies.poster_path}
-                    className='d-flex justify-content-end'
-                  >
-                    <Rating className='d-flex justify-content-center align-items-center me-3'>
-                      {movies.vote_average === 'NR'
-                        ? movies.vote_average
-                        : movies.vote_average.toFixed(1)}
-                    </Rating>
-                  </CardImg>
+                <Link
+                  href={`/movies/${movie.id}-${movie.title.replaceAll(
+                    ' ',
+                    '-'
+                  )}`}
+                  passHref
+                  scroll={false}
+                >
+                  <a>
+                    <CardImg
+                      data={movie.poster_path}
+                      className='d-flex justify-content-end'
+                    >
+                      <Rating className='d-flex justify-content-center align-items-center me-3'>
+                        {movie.vote_average === 'NR'
+                          ? movie.vote_average
+                          : movie.vote_average.toFixed(1)}
+                      </Rating>
+                    </CardImg>
+                  </a>
                 </Link>
               </motion.div>
               <MoviesInfo>
-                <MoviesInfoTitle>{movies.title}</MoviesInfoTitle>
+                <MoviesInfoTitle>{movie.title}</MoviesInfoTitle>
                 <ReleaseDate>{arr[i]}</ReleaseDate>
               </MoviesInfo>
             </Cards>

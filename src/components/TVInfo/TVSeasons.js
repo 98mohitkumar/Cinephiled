@@ -50,30 +50,34 @@ const TVSeasons = ({ seasons }) => {
                 passHref
                 scroll={false}
               >
-                <SeasonWrapper className='mb-4'>
-                  <SeasonImg poster={item.poster_path} />
-                  <SeasonInfoWrapper>
-                    <SeasonInfoMain>
-                      <SeasonTitle className='xsRes'>
-                        {item.name}
-                        {Today < new Date(seasonReleaseDates[i]) &&
-                        Today !== new Date(seasonReleaseDates[i])
-                          ? ' (Upcoming)'
-                          : ''}
-                      </SeasonTitle>
-                      <SeaonDetailsWrapper>
-                        <SeasonsRelease>{seasonReleaseDates[i]}</SeasonsRelease>
-                        <SeasonDetailsDivider />
-                        <SeasonsRelease>
-                          {item.episode_count} Episodes
-                        </SeasonsRelease>
-                      </SeaonDetailsWrapper>
-                      {item.overview !== '' && (
-                        <SeaonsOverview>{item.overview}</SeaonsOverview>
-                      )}
-                    </SeasonInfoMain>
-                  </SeasonInfoWrapper>
-                </SeasonWrapper>
+                <a>
+                  <SeasonWrapper className='mb-4'>
+                    <SeasonImg poster={item.poster_path} />
+                    <SeasonInfoWrapper>
+                      <SeasonInfoMain>
+                        <SeasonTitle className='xsRes'>
+                          {item.name}
+                          {Today < new Date(seasonReleaseDates[i]) &&
+                          Today !== new Date(seasonReleaseDates[i])
+                            ? ' (Upcoming)'
+                            : ''}
+                        </SeasonTitle>
+                        <SeaonDetailsWrapper>
+                          <SeasonsRelease>
+                            {seasonReleaseDates[i]}
+                          </SeasonsRelease>
+                          <SeasonDetailsDivider />
+                          <SeasonsRelease>
+                            {item.episode_count} Episodes
+                          </SeasonsRelease>
+                        </SeaonDetailsWrapper>
+                        {item.overview !== '' && (
+                          <SeaonsOverview>{item.overview}</SeaonsOverview>
+                        )}
+                      </SeasonInfoMain>
+                    </SeasonInfoWrapper>
+                  </SeasonWrapper>
+                </a>
               </Link>
             </motion.div>
           ))

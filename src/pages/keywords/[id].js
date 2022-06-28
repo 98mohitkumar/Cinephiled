@@ -1,21 +1,21 @@
-import Head from "next/head";
+import Head from 'next/head';
 import {
   Error404,
   SearchContainer,
-  SearchResultsContainer,
-} from "../../styles/GlobalComponents";
-import { EmptySearch } from "../../styles/GlobalComponents";
-import { motion } from "framer-motion";
+  SearchResultsContainer
+} from '../../styles/GlobalComponents';
+import { EmptySearch } from '../../styles/GlobalComponents';
+import { motion } from 'framer-motion';
 
-import Link from "next/link";
+import Link from 'next/link';
 import {
   QueryContainer,
   QueryImg,
   QueryInfoWrapper,
   QueryTitle,
   QueryRealeaseDate,
-  QueryDescription,
-} from "../../styles/GlobalComponents";
+  QueryDescription
+} from '../../styles/GlobalComponents';
 
 const Keyword = ({ error, results, name }) => {
   let movieReleaseDates = [];
@@ -23,10 +23,10 @@ const Keyword = ({ error, results, name }) => {
   if (!error) {
     results.forEach((item) =>
       !item.release_date
-        ? movieReleaseDates.push("TBA")
+        ? movieReleaseDates.push('TBA')
         : movieReleaseDates.push(
             new Date(item.release_date.toString()).toDateString().slice(4, -5) +
-              ", " +
+              ', ' +
               new Date(item.release_date.toString()).getFullYear()
           )
     );
@@ -34,40 +34,49 @@ const Keyword = ({ error, results, name }) => {
   return (
     <>
       <Head>
-        <title>
-          {!error ? `"${name}" - Movies` : "Not Found - Cinephiled"}
-        </title>
-        <meta property="og:image" content="https://i.imgur.com/Jtl3tJG.png" />
-        <meta property="og:title" content={name}></meta>
+        <title>{!error ? `${name} - Movies` : 'Not Found - Cinephiled'}</title>
+        <meta property='og:image' content='https://i.imgur.com/Jtl3tJG.png' />
+        <meta property='og:title' content={name}></meta>
       </Head>
       {error ? (
         <Error404>404</Error404>
       ) : (
         <>
-          <SearchContainer className="keywordResults">
+          <SearchContainer className='keywordResults'>
             <SearchResultsContainer>
               {results.length === 0 ? (
-                <EmptySearch className="display-5 text-center">
+                <EmptySearch className='display-5 text-center'>
                   No movie results for this keyword.
                 </EmptySearch>
               ) : (
                 <>
-                  <p className="fs-4">Results Matching : {name}</p>
+                  <p className='fs-4'>Results Matching : {name}</p>
                   {results.map((item, i) => (
                     <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
-                      <Link href={"/movies/" + item.id} passHref scroll={false}>
-                        <QueryContainer>
-                          <QueryImg poster={item.poster_path} />
-                          <QueryInfoWrapper>
-                            <div>
-                              <QueryTitle>{item.title}</QueryTitle>
-                              <QueryRealeaseDate>
-                                {movieReleaseDates[i]}
-                              </QueryRealeaseDate>
-                            </div>
-                            <QueryDescription>{item.overview}</QueryDescription>
-                          </QueryInfoWrapper>
-                        </QueryContainer>
+                      <Link
+                        href={`/movies/${item.id}-${item.title.replaceAll(
+                          ' ',
+                          '-'
+                        )}`}
+                        passHref
+                        scroll={false}
+                      >
+                        <a>
+                          <QueryContainer>
+                            <QueryImg poster={item.poster_path} />
+                            <QueryInfoWrapper>
+                              <div>
+                                <QueryTitle>{item.title}</QueryTitle>
+                                <QueryRealeaseDate>
+                                  {movieReleaseDates[i]}
+                                </QueryRealeaseDate>
+                              </div>
+                              <QueryDescription>
+                                {item.overview}
+                              </QueryDescription>
+                            </QueryInfoWrapper>
+                          </QueryContainer>
+                        </a>
                       </Link>
                     </motion.div>
                   ))}

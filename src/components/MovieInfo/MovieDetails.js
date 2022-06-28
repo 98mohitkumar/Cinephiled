@@ -57,11 +57,15 @@ const MovieDetails = ({
                   passHref
                   scroll={false}
                 >
-                  <Rounded
-                    className={movieDetailsData.genres.length == i + 1 && 'sep'}
-                  >
-                    {item.name}
-                  </Rounded>
+                  <a>
+                    <Rounded
+                      className={
+                        movieDetailsData.genres.length == i + 1 && 'sep'
+                      }
+                    >
+                      {item.name}
+                    </Rounded>
+                  </a>
                 </Link>
               ))}
               <Divider />

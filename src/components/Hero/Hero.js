@@ -115,12 +115,11 @@ const Hero = () => {
       searchQuery.length === 0 ||
       searchQuery.trim().length === 0
     ) {
-      name.current.value = '';
       return;
     } else {
+      Router.push(`/search/${searchQuery.replaceAll(' ', '+')}`);
       name.current.value = '';
       event.target.blur();
-      Router.push(`/search/${searchQuery}`);
     }
   };
 

@@ -19,7 +19,10 @@ const Cast = ({ cast }) => {
         <CastGrid>
           {cast.map((item) => (
             <CastWrapper key={item.credit_id}>
-              <Link href={`/person/${item.id}`} passHref>
+              <Link
+                href={`/person/${item.id}-${item.name.replaceAll(' ', '-')}`}
+                passHref
+              >
                 <a>
                   <motion.div
                     whileHover={{
