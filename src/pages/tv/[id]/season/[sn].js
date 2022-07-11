@@ -1,10 +1,10 @@
-import Head from "next/head";
+import Head from 'next/head';
 import {
   SeasonInfoMain,
   SeasonInfoWrapper,
   SeasonsRelease,
-  SeasonTitle,
-} from "../../../../components/TVInfo/TVStyles";
+  SeasonTitle
+} from '../../../../components/TVInfo/TVStyles';
 import {
   EpisodeImg,
   Error404,
@@ -15,39 +15,40 @@ import {
   SeasonShowcaseTitle,
   SeasonShowcaseWrapper,
   TrWrapper,
-  Rating,
-} from "../../../../styles/GlobalComponents";
+  Rating
+} from '../../../../styles/GlobalComponents';
 
 const Seasons = ({ error, data }) => {
   const getYear = (date) => {
-    const year = !date ? "TBA" : new Date(date).getFullYear();
+    const year = !date ? 'TBA' : new Date(date).getFullYear();
     return year;
   };
 
   const getReleaseDate = (date) => {
     const releaseDate = !date
-      ? "TBA"
+      ? 'TBA'
       : new Date(date.toString()).toDateString().slice(4, -5) +
-        ", " +
+        ', ' +
         new Date(date.toString()).getFullYear();
 
     return releaseDate;
   };
 
   const getRating = (rating) => {
-    const vote = !rating ? "NR" : Number.parseFloat(rating).toFixed(1);
+    const vote = !rating ? 'NR' : Number.parseFloat(rating).toFixed(1);
 
     return vote;
   };
   return (
     <>
       <Head>
-        <title>{!error ? data.name : "Not Found - Cinephiled"}</title>
+        <title>{!error ? data.name : 'Not Found - Cinephiled'}</title>
         <meta
-          property="og:image"
+          property='og:image'
           content={`https://image.tmdb.org/t/p/original/${data.poster_path}`}
+          key='og_image'
         />
-        <meta property="og:title" content={data.name}></meta>
+        <meta property='og:title' content={data.name}></meta>
       </Head>
       {error ? (
         <Error404>404</Error404>
@@ -65,20 +66,20 @@ const Seasons = ({ error, data }) => {
             </div>
           </SeasonShowcaseWrapper>
           <SeasonEpisodesWrapper>
-            <span className="episodesTitle">
+            <span className='episodesTitle'>
               Episodes ({data.episodes.length})
             </span>
             {data.episodes.map((item, i) => (
-              <SeasonShowcaseWrapper className="my-5 episodesBox" key={item.id}>
+              <SeasonShowcaseWrapper className='my-5 episodesBox' key={item.id}>
                 <EpisodeImg img={item.still_path} />
-                <SeasonInfoWrapper className="ipRes">
+                <SeasonInfoWrapper className='ipRes'>
                   <SeasonInfoMain>
-                    <SeasonTitle className="text">
-                      {!item.episode_number ? i : item.episode_number}.{" "}
+                    <SeasonTitle className='text'>
+                      {!item.episode_number ? i : item.episode_number}.{' '}
                       {item.name}
                     </SeasonTitle>
                     <TrWrapper>
-                      <SeasonsRelease className="text airDate">
+                      <SeasonsRelease className='text airDate'>
                         {getReleaseDate(item.air_date)}
                       </SeasonsRelease>
                       <Rating>

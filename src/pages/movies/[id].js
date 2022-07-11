@@ -141,6 +141,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
             <meta
               property='og:image'
               content={`https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`}
+              key='og_image'
             />
             <meta
               property='og:title'

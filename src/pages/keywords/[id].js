@@ -35,8 +35,7 @@ const Keyword = ({ error, results, name }) => {
     <>
       <Head>
         <title>{!error ? `${name} - Movies` : 'Not Found - Cinephiled'}</title>
-        <meta property='og:image' content='https://i.imgur.com/Jtl3tJG.png' />
-        <meta property='og:title' content={name}></meta>
+        <meta property='og:title' content={name} />
       </Head>
       {error ? (
         <Error404>404</Error404>

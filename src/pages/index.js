@@ -1,8 +1,8 @@
-import Head from "next/head";
-import { useEffect, useState } from "react";
-import Hero from "../components/Hero/Hero";
-import IndexTab from "../components/Popular/IndexTab";
-import { Error404 } from "../styles/GlobalComponents";
+import Head from 'next/head';
+import { useEffect, useState } from 'react';
+import Hero from '../components/Hero/Hero';
+import IndexTab from '../components/Popular/IndexTab';
+import { Error404 } from '../styles/GlobalComponents';
 
 export default function Home({ moviesData, TVData, error }) {
   const [trendingTv, setTrendingTv] = useState([]);
@@ -11,7 +11,7 @@ export default function Home({ moviesData, TVData, error }) {
   useEffect(() => {
     const abortCtrl = new AbortController();
     if (!error) {
-      localStorage.setItem("SearchTabPosition", "");
+      localStorage.setItem('SearchTabPosition', '');
       const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
       async function getTrending() {
@@ -31,7 +31,7 @@ export default function Home({ moviesData, TVData, error }) {
 
         return {
           trendingMoviesArr: trendingMoviesResults.results,
-          trendingTvArr: trendingTvResults.results,
+          trendingTvArr: trendingTvResults.results
         };
       }
 
@@ -52,7 +52,7 @@ export default function Home({ moviesData, TVData, error }) {
     return (
       <div>
         <Error404>404</Error404>
-        <p className="fs-4 text-center">
+        <p className='fs-4 text-center'>
           Please check your internet connection.
         </p>
       </div>
@@ -62,8 +62,7 @@ export default function Home({ moviesData, TVData, error }) {
       <>
         <Head>
           <title>Cinephiled</title>
-          <meta property="og:image" content="https://i.imgur.com/Jtl3tJG.png" />
-          <meta property="og:title" content="Cinephiled"></meta>
+          <meta property='og:title' content='Cinephiled' />
         </Head>
         <Hero />
         <IndexTab
@@ -101,14 +100,14 @@ export async function getStaticProps() {
         props: {
           moviesData,
           TVData,
-          error,
+          error
         },
-        revalidate: 3600,
+        revalidate: 3600
       };
     }
   } catch {
     return {
-      props: { error: true },
+      props: { error: true }
     };
   }
 }

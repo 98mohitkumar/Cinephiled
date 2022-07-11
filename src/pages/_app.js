@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Loader } from '../styles/GlobalComponents';
 import Layout from '../components/Layout/Layout';
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,17 +26,26 @@ function MyApp({ Component, pageProps }) {
   }, [router]);
 
   return (
-    <Theme>
-      <AnimatePresence exitBeforeEnter>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <Layout router={router} key={router.asPath}>
-            <Component {...pageProps} />
-          </Layout>
-        )}
-      </AnimatePresence>
-    </Theme>
+    <>
+      <Head>
+        <meta
+          property='og:image'
+          content='https://i.imgur.com/Jtl3tJG.png'
+          key='og_image'
+        />
+      </Head>
+      <Theme>
+        <AnimatePresence exitBeforeEnter>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <Layout router={router} key={router.asPath}>
+              <Component {...pageProps} />
+            </Layout>
+          )}
+        </AnimatePresence>
+      </Theme>
+    </>
   );
 }
 

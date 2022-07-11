@@ -1,6 +1,6 @@
-import Head from "next/head";
-import PersonDetails from "../../components/PersonDetails/PersonDetails";
-import { Error404 } from "../../styles/GlobalComponents";
+import Head from 'next/head';
+import PersonDetails from '../../components/PersonDetails/PersonDetails';
+import { Error404 } from '../../styles/GlobalComponents';
 
 const Person = ({ error, personDetails }) => {
   return (
@@ -9,16 +9,17 @@ const Person = ({ error, personDetails }) => {
         <title>
           {!error
             ? `${personDetails.name} - Cinephiled`
-            : "Not Found - Cinephiled"}
+            : 'Not Found - Cinephiled'}
         </title>
         {!error && (
           <>
             <meta
-              property="og:image"
+              property='og:image'
               content={`https://image.tmdb.org/t/p/w1280${personDetails.profile_path}`}
+              key='og_image'
             />
             <meta
-              property="og:title"
+              property='og:title'
               content={`${personDetails.name} - Cinephiled`}
             ></meta>
           </>
@@ -51,7 +52,7 @@ Person.getInitialProps = async (ctx) => {
 
       return {
         personDetails,
-        error,
+        error
       };
     }
   } catch {
