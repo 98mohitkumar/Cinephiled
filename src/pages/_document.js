@@ -37,6 +37,13 @@ export default class MyDocument extends Document {
               __html: `history.scrollRestoration = "manual"`
             }}
           />
+
+          <link rel='preconnect' href='https://fonts.googleapis.com' />
+          <link
+            rel='preconnect'
+            href='https://fonts.gstatic.com'
+            crossOrigin={+true}
+          />
           <link
             href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap'
             rel='stylesheet'
@@ -45,12 +52,6 @@ export default class MyDocument extends Document {
             href='https://api.fontshare.com/css?f[]=satoshi@500,700&display=swap'
             rel='stylesheet'
           />
-
-          {/* Preloads */}
-
-          <link rel='preload' href='/Images/poster.webp' as='image'></link>
-
-          <link rel='preload' href='/Images/ShowCase.webp' as='image'></link>
 
           <link rel='apple-touch-icon' href='/apple-touch-icon.png'></link>
           <link rel='manifest' href='/manifest.json' />

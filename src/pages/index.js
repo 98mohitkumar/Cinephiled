@@ -63,6 +63,10 @@ export default function Home({ moviesData, TVData, error }) {
         <Head>
           <title>Cinephiled</title>
           <meta property='og:title' content='Cinephiled' />
+
+          {/* Preloads */}
+          <link rel='preload' href='/Images/poster.webp' as='image'></link>
+          <link rel='preload' href='/Images/ShowCase.webp' as='image'></link>
         </Head>
         <Hero />
         <IndexTab
