@@ -3,7 +3,7 @@ import { Colorful } from './DominantColorStyles';
 
 const DominantColor = ({ image }) => {
   const pallete = useImageColor(
-    !image ? '/images/Hex.png' : `https://image.tmdb.org/t/p/w500${image}`,
+    !image ? '/images/Hex.png' : `https://image.tmdb.org/t/p/original${image}`,
     {
       cors: true,
       colors: 4
