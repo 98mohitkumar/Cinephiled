@@ -6,24 +6,27 @@ import {
   QueryTitle,
   QueryInfoWrapper,
   QueryRealeaseDate,
-  QueryDescription
-} from '../../styles/GlobalComponents';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
+  QueryDescription,
+} from "../../styles/GlobalComponents";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 const MoviesSearch = ({ movieRes, movieReleaseDates }) => {
   return (
     <>
       <SearchResultsContainer>
         {movieRes.length === 0 ? (
-          <EmptySearch className='display-5 text-center'>
+          <EmptySearch className="display-5 text-center">
             No movie results for this query.
           </EmptySearch>
         ) : (
           movieRes.map((item, i) => (
             <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
               <Link
-                href={`/movies/${item.id}-${item.title.replace(/[' ']/g, '-')}`}
+                href={`/movies/${item.id}-${item.title.replace(
+                  /[' ', '/']/g,
+                  "-"
+                )}`}
                 passHref
                 scroll={false}
               >

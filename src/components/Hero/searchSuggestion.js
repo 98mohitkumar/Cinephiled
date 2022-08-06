@@ -5,7 +5,7 @@ const SearchSuggestion = ({ data, type }) => (
   <>
     {type === 'movie' && (
       <Link
-        href={`/movies/${data.id}-${data.title.replace(/[' ']/g, '-')}`}
+        href={`/movies/${data.id}-${data.title.replace(/[' ', '/']/g, '-')}`}
         passHref
       >
         <a>
@@ -24,7 +24,7 @@ const SearchSuggestion = ({ data, type }) => (
 
     {type === 'tv' && (
       <Link
-        href={`/tv/${data.id}-${data.name.replace(/[' ']/g, '-')}`}
+        href={`/tv/${data.id}-${data.name.replace(/[' ', '/']/g, '-')}`}
         passHref
       >
         <a>

@@ -65,7 +65,7 @@ const Hero = () => {
             const tvRes = await tvResponse.json();
             return {
               movieRes: movieResponse.ok ? movieRes.results.splice(0, 10) : [],
-              tvRes: tvResponse.ok ? tvRes.results.splice(0, 10) : []
+              tvRes: tvResponse.ok ? tvRes.results.splice(0, 10) : [],
             };
           }
         } else {
@@ -86,7 +86,7 @@ const Hero = () => {
             const tvRes = await tvResponse.json();
             return {
               movieRes: movieResponse.ok ? movieRes.results.splice(0, 10) : [],
-              tvRes: tvResponse.ok ? tvRes.results.splice(0, 10) : []
+              tvRes: tvResponse.ok ? tvRes.results.splice(0, 10) : [],
             };
           }
         }
@@ -117,7 +117,7 @@ const Hero = () => {
     ) {
       return;
     } else {
-      Router.push(`/search/${searchQuery.replace(/[' ']/g, '+')}`);
+      Router.push(`/search/${searchQuery.replace(/[' ', '/']/g, '+')}`);
       name.current.value = '';
       event.target.blur();
     }
@@ -149,7 +149,7 @@ const Hero = () => {
               {showButton && (
                 <motion.div
                   whileHover={{
-                    scale: 1.05
+                    scale: 1.05,
                   }}
                   whileTap={{ scale: 0.9 }}
                 >
