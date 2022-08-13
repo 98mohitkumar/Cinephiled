@@ -2,7 +2,7 @@ import Head from 'next/head';
 import {
   AboutBackground,
   AboutContainer,
-  AboutCreditsWrapper
+  AboutCreditsWrapper,
 } from '../styles/GlobalComponents';
 import { FooterAttribute } from '../components/Footer/FooterStyles';
 import { useEffect } from 'react';
@@ -17,6 +17,7 @@ const About = () => {
       <Head>
         <title>About - Cinephiled</title>
         <meta property='og:title' content='About - Cinephiled' />
+        <link rel='preload' href='/Images/ShowCase.webp' as='image' />
       </Head>
       <AboutContainer className='text-center'>
         <AboutBackground />

@@ -31,7 +31,7 @@ export default function Home({ moviesData, TVData, error }) {
 
         return {
           trendingMoviesArr: trendingMoviesResults.results,
-          trendingTvArr: trendingTvResults.results
+          trendingTvArr: trendingTvResults.results,
         };
       }
 
@@ -66,7 +66,6 @@ export default function Home({ moviesData, TVData, error }) {
 
           {/* Preloads */}
           <link rel='preload' href='/Images/poster.webp' as='image'></link>
-          <link rel='preload' href='/Images/ShowCase.webp' as='image'></link>
         </Head>
         <Hero />
         <IndexTab
@@ -104,14 +103,14 @@ export async function getStaticProps() {
         props: {
           moviesData,
           TVData,
-          error
+          error,
         },
-        revalidate: 3600
+        revalidate: 3600,
       };
     }
   } catch {
     return {
-      props: { error: true }
+      props: { error: true },
     };
   }
 }

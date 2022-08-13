@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SeasonsContainer = styled.div`
   width: 80%;
@@ -96,7 +96,7 @@ export const SeasonDetailsDivider = styled.div`
   margin: 0rem 1rem;
 `;
 
-export const SeaonDetailsWrapper = styled.div`
+export const SeasonDetailsWrapper = styled.div`
   display: flex;
   align-items: center;
   width: max-content;
@@ -112,7 +112,7 @@ export const SeaonDetailsWrapper = styled.div`
   }
 `;
 
-export const SeaonsOverview = styled.p`
+export const SeasonsOverview = styled.p`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;

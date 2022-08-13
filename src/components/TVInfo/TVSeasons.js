@@ -1,6 +1,6 @@
 import {
-  SeaonDetailsWrapper,
-  SeaonsOverview,
+  SeasonDetailsWrapper,
+  SeasonsOverview,
   SeasonDetailsDivider,
   SeasonImg,
   SeasonInfoMain,
@@ -8,7 +8,7 @@ import {
   SeasonsContainer,
   SeasonsRelease,
   SeasonTitle,
-  SeasonWrapper
+  SeasonWrapper,
 } from './TVStyles';
 
 import { NoDataText } from '../../styles/GlobalComponents';
@@ -58,7 +58,7 @@ const TVSeasons = ({ seasons }) => {
                             ? ' (Upcoming)'
                             : ''}
                         </SeasonTitle>
-                        <SeaonDetailsWrapper>
+                        <SeasonDetailsWrapper>
                           <SeasonsRelease>
                             {seasonReleaseDates[i]}
                           </SeasonsRelease>
@@ -66,9 +66,9 @@ const TVSeasons = ({ seasons }) => {
                           <SeasonsRelease>
                             {item.episode_count} Episodes
                           </SeasonsRelease>
-                        </SeaonDetailsWrapper>
+                        </SeasonDetailsWrapper>
                         {item.overview !== '' && (
-                          <SeaonsOverview>{item.overview}</SeaonsOverview>
+                          <SeasonsOverview>{item.overview}</SeasonsOverview>
                         )}
                       </SeasonInfoMain>
                     </SeasonInfoWrapper>
