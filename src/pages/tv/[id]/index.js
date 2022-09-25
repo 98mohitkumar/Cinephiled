@@ -133,7 +133,7 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
                   src={
                     tvData.backdrop_path
                       ? `https://image.tmdb.org/t/p/w1280${tvData.backdrop_path}`
-                      : '/images/Hex.png'
+                      : '/Images/Hex.png'
                   }
                   alt='movie-backdrop'
                   layout='fill'
@@ -158,7 +158,7 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
                     blurDataURL={
                       tvData.poster_path
                         ? `/_next/image?url=https://image.tmdb.org/t/p/w500${tvData.poster_path}&w=16&q=1`
-                        : '/images/Hex.png'
+                        : '/Images/Hex.png'
                     }
                   />
                 </HeroImg>

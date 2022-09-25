@@ -177,7 +177,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
                   src={
                     movieDetails.backdrop_path
                       ? `https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`
-                      : '/images/Hex.png'
+                      : '/Images/Hex.png'
                   }
                   alt='movie-backdrop'
                   layout='fill'
@@ -203,7 +203,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
                     blurDataURL={
                       movieDetails.poster_path
                         ? `/_next/image?url=https://image.tmdb.org/t/p/w500${movieDetails.poster_path}&w=16&q=1`
-                        : '/images/Hex.png'
+                        : '/Images/Hex.png'
                     }
                   />
                 </HeroImg>
