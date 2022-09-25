@@ -7,14 +7,11 @@ import {
   TVInfoTitle,
   ReleaseDate,
 } from '../Popular/PopularStyles';
-
 import Link from 'next/link';
-
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const TrendingTv = ({ Tv }) => {
-  Tv.splice(15);
   Tv.forEach((item) => {
     if (item.vote_average === 0) item.vote_average = 'NR';
   });

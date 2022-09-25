@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useState, useEffect } from 'react';
 import Backdrops from '../CommonComponents/Backdrops';
 import Cast from '../CommonComponents/Cast';
@@ -7,7 +8,7 @@ import {
   TabSelectionTitle,
   TabSlider,
   TabWrapper,
-  TabIcon
+  TabIcon,
 } from '../MovieInfo/MovieTabStyles';
 import BackdropsSvg from '../Svg/backdrops';
 import CastSvg from '../Svg/cast';
@@ -26,30 +27,10 @@ const TVTab = (props) => {
     !tabPosition ? setTabState('cast') : setTabState(tabPosition);
   }, []);
 
-  const castSelectionHandler = () => {
-    setTabState('cast');
-    localStorage.setItem('TvTabState', 'cast');
-  };
-
-  const seasonsSelectionHandler = () => {
-    setTabState('seasons');
-    localStorage.setItem('TvTabState', 'seasons');
-  };
-
-  const reviewSelectionHandler = () => {
-    setTabState('reviews');
-    localStorage.setItem('TvTabState', 'reviews');
-  };
-
-  const backdropSelectionHandler = () => {
-    setTabState('backdrops');
-    localStorage.setItem('TvTabState', 'backdrops');
-  };
-
-  const posterSelectionHandler = () => {
-    setTabState('posters');
-    localStorage.setItem('TvTabState', 'posters');
-  };
+  const tabStateHandler = useCallback((tab) => {
+    setTabState(tab);
+    localStorage.setItem('TvTabState', tab);
+  }, []);
 
   useEffect(() => {
     const abortCtrl = new AbortController();
@@ -79,25 +60,28 @@ const TVTab = (props) => {
     <>
       <TabWrapper className='my-5' tabCheck={tabState} tv={true}>
         <TabSlider tabCheck={tabState} tv={true} />
-        <TabSelectionTitle tv={true} onClick={castSelectionHandler}>
+        <TabSelectionTitle tv={true} onClick={() => tabStateHandler('cast')}>
           <TabIcon>
             <CastSvg color={tabState === 'cast' ? 'white' : 'black'} />
           </TabIcon>
           Cast
         </TabSelectionTitle>
-        <TabSelectionTitle tv={true} onClick={seasonsSelectionHandler}>
+        <TabSelectionTitle tv={true} onClick={() => tabStateHandler('seasons')}>
           <TabIcon>
             <SeasonsSvg color={tabState === 'seasons' ? 'white' : 'black'} />
           </TabIcon>
           Seasons
         </TabSelectionTitle>
-        <TabSelectionTitle tv={true} onClick={reviewSelectionHandler}>
+        <TabSelectionTitle tv={true} onClick={() => tabStateHandler('reviews')}>
           <TabIcon>
             <ReviewsSvg color={tabState === 'reviews' ? 'white' : 'black'} />
           </TabIcon>
           Reviews
         </TabSelectionTitle>
-        <TabSelectionTitle tv={true} onClick={backdropSelectionHandler}>
+        <TabSelectionTitle
+          tv={true}
+          onClick={() => tabStateHandler('backdrops')}
+        >
           <TabIcon>
             <BackdropsSvg
               color={tabState === 'backdrops' ? 'white' : 'black'}
@@ -105,7 +89,7 @@ const TVTab = (props) => {
           </TabIcon>
           Backdrops
         </TabSelectionTitle>
-        <TabSelectionTitle tv={true} onClick={posterSelectionHandler}>
+        <TabSelectionTitle tv={true} onClick={() => tabStateHandler('posters')}>
           <TabIcon>
             <PostersSvg color={tabState === 'posters' ? 'white' : 'black'} />
           </TabIcon>

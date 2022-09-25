@@ -8,13 +8,10 @@ import {
   MoviesInfoTitle,
   ReleaseDate,
 } from '../Popular/PopularStyles';
-
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const TrendingMovies = ({ movies }) => {
-  movies.splice(15);
-
   movies.forEach((item) => {
     if (item.vote_average === 0) item.vote_average = 'NR';
   });

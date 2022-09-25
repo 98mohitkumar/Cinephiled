@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Backdrops from '../CommonComponents/Backdrops';
 import Cast from '../CommonComponents/Cast';
 import Posters from '../CommonComponents/Posters';
@@ -12,28 +12,22 @@ import {
   TabIcon,
   TabSelectionTitle,
   TabSlider,
-  TabWrapper
+  TabWrapper,
 } from './MovieTabStyles';
 
 const MovieTab = (props) => {
   const [tabState, setTabState] = useState('cast');
   const [moviesRecommended, setMoviesRecommended] = useState([]);
 
-  const castSelectionHandler = () => {
-    setTabState('cast');
-  };
+  useEffect(() => {
+    let tabPosition = localStorage.getItem('MovieTabState');
+    !tabPosition ? setTabState('cast') : setTabState(tabPosition);
+  }, []);
 
-  const reviewSelectionHandler = () => {
-    setTabState('reviews');
-  };
-
-  const backdropSelectionHandler = () => {
-    setTabState('backdrops');
-  };
-
-  const posterSelectionHandler = () => {
-    setTabState('posters');
-  };
+  const tabStateHandler = useCallback((tab) => {
+    setTabState(tab);
+    localStorage.setItem('MovieTabState', tab);
+  }, []);
 
   useEffect(() => {
     const abortCtrl = new AbortController();
@@ -64,19 +58,19 @@ const MovieTab = (props) => {
     <>
       <TabWrapper className='my-5' tabCheck={tabState}>
         <TabSlider tabCheck={tabState} />
-        <TabSelectionTitle onClick={castSelectionHandler}>
+        <TabSelectionTitle onClick={() => tabStateHandler('cast')}>
           <TabIcon>
             <CastSvg color={tabState === 'cast' ? 'white' : 'black'} />
           </TabIcon>
           Cast
         </TabSelectionTitle>
-        <TabSelectionTitle onClick={reviewSelectionHandler}>
+        <TabSelectionTitle onClick={() => tabStateHandler('reviews')}>
           <TabIcon>
             <ReviewsSvg color={tabState === 'reviews' ? 'white' : 'black'} />
           </TabIcon>
           Reviews
         </TabSelectionTitle>
-        <TabSelectionTitle onClick={backdropSelectionHandler}>
+        <TabSelectionTitle onClick={() => tabStateHandler('backdrops')}>
           <TabIcon>
             <BackdropsSvg
               color={tabState === 'backdrops' ? 'white' : 'black'}
@@ -84,7 +78,7 @@ const MovieTab = (props) => {
           </TabIcon>
           Backdrops
         </TabSelectionTitle>
-        <TabSelectionTitle onClick={posterSelectionHandler}>
+        <TabSelectionTitle onClick={() => tabStateHandler('posters')}>
           <TabIcon>
             <PostersSvg color={tabState === 'posters' ? 'white' : 'black'} />
           </TabIcon>
