@@ -30,7 +30,7 @@ const TVSearch = ({ tvRes, tvReleaseDates }) => {
               >
                 <a>
                   <QueryContainer>
-                    <QueryImg className='position-relative'>
+                    <QueryImg className='position-relative text-center'>
                       <Image
                         src={
                           item.poster_path

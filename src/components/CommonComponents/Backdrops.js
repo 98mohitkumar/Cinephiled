@@ -19,7 +19,7 @@ const Backdrops = ({ backdrops }) => {
           <BackdropsWrapper>
             {backdrops.map((item, i) => (
               <BackdropsImgContainer key={i}>
-                <BackdropsImg className='position-relative'>
+                <BackdropsImg className='position-relative text-center'>
                   <Image
                     src={`https://image.tmdb.org/t/p/w1280${item.file_path}`}
                     alt='backdrop'

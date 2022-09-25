@@ -64,7 +64,7 @@ const PersonDetails = ({ details }) => {
     <div style={{ marginBottom: 'auto' }}>
       <DetailsHeroWrap style={{ minHeight: 'auto' }} className='pb-0'>
         <HeroImgWrapper>
-          <HeroImg className='no-shadow position-relative'>
+          <HeroImg className='no-shadow position-relative text-center'>
             <Image
               src={
                 details.profile_path
@@ -177,7 +177,7 @@ const PersonDetails = ({ details }) => {
                       scroll={false}
                     >
                       <a>
-                        <RecommendedImg className='position-relative'>
+                        <RecommendedImg className='position-relative text-center'>
                           <Image
                             src={
                               item.backdrop_path
@@ -214,7 +214,7 @@ const PersonDetails = ({ details }) => {
                       scroll={false}
                     >
                       <a>
-                        <RecommendedImg className='position-relative'>
+                        <RecommendedImg className='position-relative text-center'>
                           <Image
                             src={
                               item.backdrop_path

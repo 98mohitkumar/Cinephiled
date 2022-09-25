@@ -172,7 +172,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
           )}
           <HeroDetailsContainer className='position-relative mb-auto'>
             <HeroBgContainer className='position-absolute'>
-              <HeroBg className='position-absolute'>
+              <HeroBg className='position-absolute text-center'>
                 <Image
                   src={
                     movieDetails.backdrop_path
@@ -189,7 +189,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
 
             <DetailsHeroWrap>
               <HeroImgWrapper>
-                <HeroImg className='position-relative'>
+                <HeroImg className='position-relative text-center'>
                   <Image
                     src={
                       movieDetails.poster_path

@@ -128,7 +128,7 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
         <>
           <HeroDetailsContainer className='position-relative mb-auto'>
             <HeroBgContainer className='position-absolute'>
-              <HeroBg className='position-absolute'>
+              <HeroBg className='position-absolute text-center'>
                 <Image
                   src={
                     tvData.backdrop_path
@@ -144,7 +144,7 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
             </HeroBgContainer>
             <DetailsHeroWrap>
               <HeroImgWrapper>
-                <HeroImg className='position-relative'>
+                <HeroImg className='position-relative text-center'>
                   <Image
                     src={
                       tvData.poster_path

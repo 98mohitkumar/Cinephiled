@@ -40,6 +40,7 @@ export const SeasonWrapper = styled.div`
 export const SeasonImg = styled.div`
   position: relative;
   min-width: 7.5rem;
+  text-align: center;
 `;
 
 export const SeasonInfoWrapper = styled.div`

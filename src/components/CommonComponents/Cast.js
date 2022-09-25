@@ -32,11 +32,11 @@ const Cast = ({ cast }) => {
                     }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <CastImg className='position-relative'>
+                    <CastImg className='position-relative text-center'>
                       <Image
                         src={
                           item.profile_path
-                            ? `https://image.tmdb.org/t/p/w500${item.profile_path}`
+                            ? `https://image.tmdb.org/t/p/w780${item.profile_path}`
                             : '/Images/DefaultAvatar.png'
                         }
                         alt='cast-image'

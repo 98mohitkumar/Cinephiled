@@ -63,7 +63,7 @@ const Keyword = ({ error, results, name }) => {
                       >
                         <a>
                           <QueryContainer>
-                            <QueryImg className='position-relative'>
+                            <QueryImg className='position-relative text-center'>
                               <Image
                                 src={
                                   item.poster_path

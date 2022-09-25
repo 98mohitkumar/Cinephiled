@@ -37,7 +37,7 @@ const TVRecommendations = ({ Tv }) => {
                     scroll={false}
                   >
                     <a>
-                      <RecommendedImg className='position-relative'>
+                      <RecommendedImg className='position-relative text-center'>
                         <Image
                           src={
                             item.backdrop_path

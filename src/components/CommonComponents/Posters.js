@@ -17,7 +17,7 @@ const Posters = ({ posters }) => {
         ) : (
           <PostersWrapper>
             {posters.map((item, i) => (
-              <PostersImg key={i} className='position-relative'>
+              <PostersImg key={i} className='position-relative text-center'>
                 <Image
                   src={`https://image.tmdb.org/t/p/w500${item.file_path}`}
                   alt='poster'

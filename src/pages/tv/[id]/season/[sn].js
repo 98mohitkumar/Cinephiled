@@ -56,7 +56,7 @@ const Seasons = ({ error, data }) => {
       ) : (
         <SeasonExpandedContainer>
           <SeasonShowcaseWrapper>
-            <SeasonShowcaseImg className='position-relative'>
+            <SeasonShowcaseImg className='position-relative text-center'>
               <Image
                 src={
                   data.poster_path
@@ -84,7 +84,7 @@ const Seasons = ({ error, data }) => {
             </span>
             {data.episodes.map((item, i) => (
               <SeasonShowcaseWrapper className='my-5 episodesBox' key={item.id}>
-                <EpisodeImg className='position-relative'>
+                <EpisodeImg className='position-relative text-center'>
                   <Image
                     src={
                       item.still_path
