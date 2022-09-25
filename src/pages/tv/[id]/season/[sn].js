@@ -1,9 +1,10 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import {
   SeasonInfoMain,
   SeasonInfoWrapper,
   SeasonsRelease,
-  SeasonTitle
+  SeasonTitle,
 } from '../../../../components/TVInfo/TVStyles';
 import {
   EpisodeImg,
@@ -15,7 +16,7 @@ import {
   SeasonShowcaseTitle,
   SeasonShowcaseWrapper,
   TrWrapper,
-  Rating
+  Rating,
 } from '../../../../styles/GlobalComponents';
 
 const Seasons = ({ error, data }) => {
@@ -55,7 +56,19 @@ const Seasons = ({ error, data }) => {
       ) : (
         <SeasonExpandedContainer>
           <SeasonShowcaseWrapper>
-            <SeasonShowcaseImg poster={data.poster_path} />
+            <SeasonShowcaseImg className='position-relative'>
+              <Image
+                src={
+                  data.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
+                    : '/Images/DefaultImage.png'
+                }
+                alt='TV-season-poster'
+                layout='fill'
+                objectFit='cover'
+              />
+            </SeasonShowcaseImg>
+
             <div>
               <SeasonShowcaseTitle>
                 {data.name} ({getYear(data.air_date)})
@@ -71,7 +84,18 @@ const Seasons = ({ error, data }) => {
             </span>
             {data.episodes.map((item, i) => (
               <SeasonShowcaseWrapper className='my-5 episodesBox' key={item.id}>
-                <EpisodeImg img={item.still_path} />
+                <EpisodeImg className='position-relative'>
+                  <Image
+                    src={
+                      item.still_path
+                        ? `https://image.tmdb.org/t/p/w500${item.still_path}`
+                        : '/Images/DefaultImage.png'
+                    }
+                    alt='TV-season-episode-poster'
+                    layout='fill'
+                    objectFit='cover'
+                  />
+                </EpisodeImg>
                 <SeasonInfoWrapper className='ipRes'>
                   <SeasonInfoMain>
                     <SeasonTitle className='text'>

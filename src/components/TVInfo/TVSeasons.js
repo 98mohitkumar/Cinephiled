@@ -15,6 +15,7 @@ import { NoDataText } from '../../styles/GlobalComponents';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const TVSeasons = ({ seasons }) => {
   let seasonReleaseDates = [];
@@ -48,7 +49,18 @@ const TVSeasons = ({ seasons }) => {
               >
                 <a>
                   <SeasonWrapper className='mb-4'>
-                    <SeasonImg poster={item.poster_path} />
+                    <SeasonImg>
+                      <Image
+                        src={
+                          item.poster_path
+                            ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                            : '/Images/DefaultImage.png'
+                        }
+                        alt='TV-season-poster'
+                        layout='fill'
+                        objectFit='cover'
+                      />
+                    </SeasonImg>
                     <SeasonInfoWrapper>
                       <SeasonInfoMain>
                         <SeasonTitle className='xsRes'>

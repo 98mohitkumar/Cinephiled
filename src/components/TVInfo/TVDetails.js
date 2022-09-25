@@ -10,7 +10,7 @@ import {
   Rounded,
   RtoR,
   Span,
-  Tagline
+  Tagline,
 } from '../MovieInfo/MovieDetailsStyles';
 import Link from 'next/link';
 
@@ -82,10 +82,10 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
           {crew.length > 0 &&
             crew.map((item) => (
               <Credits key={item.credit_id}>
-                <Span className='d-block fw-bold'>{item.name}</Span>
                 <Span className='d-block fw-normal'>
-                  {item.job ? item.job : 'Creator'}
+                  {item.job ?? 'Creator'}
                 </Span>
+                <Span className='d-block fw-bold'>{item.name}</Span>
               </Credits>
             ))}
         </CreditsWrapper>

@@ -13,7 +13,7 @@ import {
   Tagline,
   ReleaseDateWrapper,
   Overview,
-  Light
+  Light,
 } from './MovieDetailsStyles';
 
 import Link from 'next/link';
@@ -24,7 +24,7 @@ const MovieDetails = ({
   runtime,
   crew,
   easter,
-  showEaster
+  showEaster,
 }) => {
   const releaseDate = !movieDetailsData.release_date
     ? 'TBA'
@@ -107,8 +107,8 @@ const MovieDetails = ({
         <CreditsWrapper>
           {crew.map((item) => (
             <Credits key={item.credit_id}>
-              <Span className='d-block fw-bold'>{item.name}</Span>
               <Span className='d-block fw-normal'>{item.job}</Span>
+              <Span className='d-block fw-bold'>{item.name}</Span>
             </Credits>
           ))}
         </CreditsWrapper>

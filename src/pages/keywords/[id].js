@@ -2,7 +2,7 @@ import Head from 'next/head';
 import {
   Error404,
   SearchContainer,
-  SearchResultsContainer
+  SearchResultsContainer,
 } from '../../styles/GlobalComponents';
 import { EmptySearch } from '../../styles/GlobalComponents';
 import { motion } from 'framer-motion';
@@ -13,9 +13,10 @@ import {
   QueryImg,
   QueryInfoWrapper,
   QueryTitle,
-  QueryRealeaseDate,
-  QueryDescription
+  QueryReleaseDate,
+  QueryDescription,
 } from '../../styles/GlobalComponents';
+import Image from 'next/image';
 
 const Keyword = ({ error, results, name }) => {
   let movieReleaseDates = [];
@@ -62,13 +63,24 @@ const Keyword = ({ error, results, name }) => {
                       >
                         <a>
                           <QueryContainer>
-                            <QueryImg poster={item.poster_path} />
+                            <QueryImg className='position-relative'>
+                              <Image
+                                src={
+                                  item.poster_path
+                                    ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                                    : '/Images/DefaultImage.png'
+                                }
+                                alt='movie-poster'
+                                layout='fill'
+                                objectFit='cover'
+                              />
+                            </QueryImg>
                             <QueryInfoWrapper>
                               <div>
                                 <QueryTitle>{item.title}</QueryTitle>
-                                <QueryRealeaseDate>
+                                <QueryReleaseDate>
                                   {movieReleaseDates[i]}
-                                </QueryRealeaseDate>
+                                </QueryReleaseDate>
                               </div>
                               <QueryDescription>
                                 {item.overview}

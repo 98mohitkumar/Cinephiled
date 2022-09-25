@@ -1,6 +1,6 @@
 import {
   EmptySearch,
-  SearchResultsContainer
+  SearchResultsContainer,
 } from '../../styles/GlobalComponents';
 import { Keyword } from './SearchTabStyles';
 import Link from 'next/link';

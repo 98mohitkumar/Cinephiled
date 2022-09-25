@@ -6,6 +6,8 @@ import {
 } from '../styles/GlobalComponents';
 import { FooterAttribute } from '../components/Footer/FooterStyles';
 import { useEffect } from 'react';
+import Image from 'next/image';
+import aboutBackground from '/public/Images/ShowCase.webp';
 
 const About = () => {
   useEffect(() => {
@@ -17,10 +19,17 @@ const About = () => {
       <Head>
         <title>About - Cinephiled</title>
         <meta property='og:title' content='About - Cinephiled' />
-        <link rel='preload' href='/Images/ShowCase.webp' as='image' />
       </Head>
       <AboutContainer className='text-center'>
-        <AboutBackground />
+        <AboutBackground>
+          <Image
+            src={aboutBackground}
+            layout='fill'
+            alt='about-cinephiled-background'
+            objectFit='cover'
+            loading='eager'
+          />
+        </AboutBackground>
 
         <h1 className='fw-bold display-3'>About the Project</h1>
         <p className='fs-5'>

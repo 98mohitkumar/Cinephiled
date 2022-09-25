@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const TabWrapper = styled.div`
   width: ${(props) => (props.tv ? `50%;` : `40%;`)};
@@ -16,64 +16,59 @@ export const TabWrapper = styled.div`
   ${(props) =>
     props.tv
       ? `& div:nth-child(2) {
-    ${props.tabCheck === "cast" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === 'cast' ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(3) {
-    ${props.tabCheck === "seasons" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === 'seasons' ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(4) {
-    ${props.tabCheck === "reviews" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === 'reviews' ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(5) {
-    ${props.tabCheck === "backdrops" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === 'backdrops' ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(6) {
-    ${props.tabCheck === "posters" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === 'posters' ? `color: white;` : `color: black;`}
   }`
       : `& div:nth-child(2) {
-    ${props.tabCheck === "cast" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === 'cast' ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(3) {
-    ${props.tabCheck === "reviews" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === 'reviews' ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(4) {
-    ${props.tabCheck === "backdrops" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === 'backdrops' ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(5) {
-    ${props.tabCheck === "posters" ? `color: white;` : `color: black;`}
+    ${props.tabCheck === 'posters' ? `color: white;` : `color: black;`}
   }`}
 
   @media only ${(props) => props.theme.breakpoints.xl} {
-    width: ${(props) => (props.tv ? `55%;` : `50%;`)};
+    width: ${(props) => (props.tv ? `65%;` : `50%;`)};
   }
 
   @media only ${(props) => props.theme.breakpoints.lg} {
-    width: ${(props) => (props.tv ? `70%;` : `60%;`)};
+    width: ${(props) => (props.tv ? `80%;` : `65%;`)};
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    width: ${(props) => (props.tv ? `80%;` : `75%;`)};
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    font-size: 1.1rem;
-    width: ${(props) => (props.tv ? `90%;` : `85%;`)};
+    width: ${(props) => (props.tv ? `90%;` : `75%;`)};
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     font-size: 1.1rem;
     width: ${(props) => (props.tv ? `95%;` : `95%;`)};
   }
+
   @media only ${(props) => props.theme.breakpoints.xs} {
     font-size: 0.95rem;
-    width: ${(props) => (props.tv ? `95%;` : `90%;`)};
   }
 `;
 
@@ -90,29 +85,29 @@ export const TabIcon = styled.div`
 
 export const TabSlider = styled.div`
   position: absolute;
-  width: ${(props) => (props.tv ? "20%;" : "25%;")};
+  width: ${(props) => (props.tv ? '20%;' : '25%;')};
   height: 100%;
   background: black;
   ${(props) =>
     props.tv
-      ? props.tabCheck === "cast"
+      ? props.tabCheck === 'cast'
         ? `transform: translateX(0%);`
-        : props.tabCheck === "seasons"
+        : props.tabCheck === 'seasons'
         ? `transform: translateX(100%);`
-        : props.tabCheck === "reviews"
+        : props.tabCheck === 'reviews'
         ? `transform: translateX(200%);`
-        : props.tabCheck === "backdrops"
+        : props.tabCheck === 'backdrops'
         ? `transform: translateX(300%);`
-        : props.tabCheck === "posters"
+        : props.tabCheck === 'posters'
         ? `transform: translateX(400%);`
         : null
-      : props.tabCheck === "cast"
+      : props.tabCheck === 'cast'
       ? `transform: translateX(0%);`
-      : props.tabCheck === "reviews"
+      : props.tabCheck === 'reviews'
       ? `transform: translateX(100%);`
-      : props.tabCheck === "backdrops"
+      : props.tabCheck === 'backdrops'
       ? `transform: translateX(200%);`
-      : props.tabCheck === "posters"
+      : props.tabCheck === 'posters'
       ? `transform: translateX(300%);`
       : null}
   border-radius: 12px;
@@ -135,9 +130,9 @@ export const TabSelectionTitle = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: ${(props) => (props.tv ? "0.6rem" : "0.7rem")};
+    font-size: ${(props) => (props.tv ? '0.6rem' : '0.7rem')};
     font-weight: 500;
-    padding: ${(props) => (props.tv ? "0.6rem 0.7rem" : "0.5rem")};
+    padding: ${(props) => (props.tv ? '0.6rem 0.7rem' : '0.5rem')};
 
     & > div svg path {
       transition: fill 0.325s cubic-bezier(0.77, 0, 0.18, 1);

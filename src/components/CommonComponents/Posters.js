@@ -1,8 +1,9 @@
+import Image from 'next/image';
 import {
   NoDataText,
   PostersContainer,
   PostersImg,
-  PostersWrapper
+  PostersWrapper,
 } from '../../styles/GlobalComponents';
 
 const Posters = ({ posters }) => {
@@ -16,7 +17,15 @@ const Posters = ({ posters }) => {
         ) : (
           <PostersWrapper>
             {posters.map((item, i) => (
-              <PostersImg key={i} poster={item.file_path} />
+              <PostersImg key={i} className='position-relative'>
+                <Image
+                  src={`https://image.tmdb.org/t/p/w500${item.file_path}`}
+                  alt='poster'
+                  layout='fill'
+                  objectFit='cover'
+                  quality='100'
+                />
+              </PostersImg>
             ))}
           </PostersWrapper>
         )}

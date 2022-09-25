@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SearchTabWrapper = styled.div`
   width: 60%;
@@ -16,15 +16,15 @@ export const SearchTabWrapper = styled.div`
 
   ${(props) =>
     `& div:nth-child(2) {
-    ${props.tabState === "movies" ? `color: white;` : `color: black;`}
+    ${props.tabState === 'movies' ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(3) {
-    ${props.tabState === "tv" ? `color: white;` : `color: black;`}
+    ${props.tabState === 'tv' ? `color: white;` : `color: black;`}
   }
 
   & div:nth-child(4) {
-    ${props.tabState === "keywords" ? `color: white;` : `color: black;`}
+    ${props.tabState === 'keywords' ? `color: white;` : `color: black;`}
   }
 
 `}
@@ -55,11 +55,11 @@ export const SearchTabSlider = styled.div`
   height: 100%;
   background: black;
   ${(props) =>
-    props.tabState === "movies"
+    props.tabState === 'movies'
       ? `transform: translateX(0%);`
-      : props.tabState === "tv"
+      : props.tabState === 'tv'
       ? `transform: translateX(100%);`
-      : props.tabState === "keywords"
+      : props.tabState === 'keywords'
       ? `transform: translateX(200%);`
       : null}
   border-radius: 12px;

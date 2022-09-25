@@ -20,7 +20,6 @@ export const Container = styled.div`
 export const AboutBackground = styled.div`
   position: absolute;
   inset: 0;
-  background: Url(/Images/ShowCase.webp) no-repeat center center / cover;
   filter: brightness(60%);
   z-index: -1;
 
@@ -106,10 +105,6 @@ export const HeroBgContainer = styled.div`
 `;
 
 export const HeroBg = styled.div`
-  background: ${(props) =>
-    !props.backdrop
-      ? '#121212'
-      : `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover`};
   inset: 0;
 
   animation: backdrop 4s cubic-bezier(0.77, 0, 0.18, 1) forwards;
@@ -130,12 +125,9 @@ export const HeroBg = styled.div`
 export const HeroImg = styled.div`
   height: 25rem;
   width: 17rem;
-  background: ${(props) =>
-    !props.data
-      ? `Url(/Images/DefaultImage.png) no-repeat center center /cover`
-      : `Url(https://image.tmdb.org/t/p/w500${props.data}) no-repeat center center /cover`};
   border-radius: 12px;
   box-shadow: 0 0 2rem rgb(12 12 12 /0.4);
+  overflow: hidden;
 
   animation: heroImg 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
 
@@ -306,10 +298,6 @@ export const QueryContainer = styled.div`
 export const QueryImg = styled.div`
   min-width: 6rem;
   height: 142px;
-  background: ${(props) =>
-    !props.poster
-      ? `Url(/Images/DefaultImage.png) no-repeat center center /cover`
-      : `Url(https://image.tmdb.org/t/p/w500${props.poster}) no-repeat center center /cover`};
 `;
 
 export const QueryTitle = styled.span`
@@ -340,7 +328,7 @@ export const QueryInfoWrapper = styled.div`
   }
 `;
 
-export const QueryRealeaseDate = styled.p`
+export const QueryReleaseDate = styled.p`
   color: #818181;
   font-size: 1rem;
   font-family: 'Satoshi', sans-serif;
@@ -454,16 +442,13 @@ export const CastGrid = styled.div`
 `;
 
 export const CastImg = styled.div`
-  background: ${(props) =>
-    !props.data
-      ? `Url(/Images/DefaultAvatar.png) no-repeat center center /cover`
-      : `Url(https://image.tmdb.org/t/p/w500${props.data}) no-repeat center 5% /cover`};
   width: 100%;
   height: 230px;
   border-radius: 12px;
   box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
     0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
+  overflow: hidden;
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     height: 210px;
@@ -504,6 +489,7 @@ export const ReviewsWrap = styled.div`
   width: 100%;
   padding: 1rem 8rem;
   overflow: hidden;
+  text-align: justify;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
     padding: 1rem 3rem;
@@ -538,7 +524,7 @@ export const ReviewAuthorWrap = styled.div`
   max-width: max-content;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 3rem;
 
   & span {
@@ -555,7 +541,7 @@ export const ReviewAuthorWrap = styled.div`
 `;
 
 export const ReviewAuthorImg = styled.div`
-  width: 50px;
+  min-width: 50px;
   height: 50px;
   background: ${(props) =>
     `Url(https://avatars.dicebear.com/api/bottts/${props.id}.svg) no-repeat center center / cover`};
@@ -622,8 +608,6 @@ export const BackdropsImgContainer = styled.div`
 export const BackdropsImg = styled.div`
   width: 100%;
   height: 100%;
-  background: ${(props) =>
-    `Url(https://image.tmdb.org/t/p/w1280${props.backdrop}) no-repeat center center /cover;`};
   transition: transform 0.25s cubic-bezier(0.79, 0.14, 0.15, 0.86);
 
   @media ${(props) => props.theme.breakpoints.hover} {
@@ -673,8 +657,7 @@ export const PostersImg = styled.div`
   box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
     0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
-  background: ${(props) =>
-    `Url(https://image.tmdb.org/t/p/w780${props.poster}) no-repeat center center /cover;`};
+  overflow: hidden;
 `;
 
 export const RecommendedWrapper = styled.div`
@@ -689,13 +672,10 @@ export const RecommendedWrapper = styled.div`
 
 export const RecommendedImg = styled.div`
   aspect-ratio: 1.6 / 1;
-  background: ${(props) =>
-    !props.backdrop
-      ? `Url(/Images/DefaultBackdrop.png) no-repeat center center /cover`
-      : `Url(https://image.tmdb.org/t/p/w500${props.backdrop}) no-repeat center center /cover`};
   border-radius: 12px;
   transition: box-shadow 0.25s ease-in;
   cursor: pointer;
+  overflow: hidden;
 
   @media ${(props) => props.theme.breakpoints.hover} {
     &:hover {
@@ -843,10 +823,7 @@ export const SeasonShowcaseImg = styled.div`
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
     rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
-  background: ${(props) =>
-    !props.poster
-      ? `Url(/Images/DefaultImage.png) no-repeat center center /cover`
-      : `Url(https://image.tmdb.org/t/p/w500/${props.poster}) no-repeat center center /cover`};
+  overflow: hidden;
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     margin: 0.5rem 0rem;
@@ -919,10 +896,7 @@ export const EpisodeImg = styled.div`
   height: 140px;
   border-radius: 12px;
   margin: 1.25rem 0rem;
-  background: ${(props) =>
-    !props.img
-      ? `Url(/Images/DefaultBackdrop.png) no-repeat center center /cover`
-      : `Url(https://image.tmdb.org/t/p/w500/${props.img}) no-repeat center center /cover`};
+  overflow: hidden;
   align-self: flex-start;
   box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
     rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;

@@ -3,7 +3,7 @@ import DominantColor from '../../../components/DominantColor/DominantColor';
 import {
   Gradient,
   HeroImgWrapper,
-  HeroTrailer
+  HeroTrailer,
 } from '../../../styles/GlobalComponents';
 import TVDetails from '../../../components/TVInfo/TVDetails';
 import {
@@ -13,13 +13,14 @@ import {
   HeroBgContainer,
   HeroDetailsContainer,
   HeroImg,
-  HeroInfo
+  HeroInfo,
 } from '../../../styles/GlobalComponents';
 import TVTab from '../../../components/TVInfo/TVTab';
 import TVFacts from '../../../components/TVInfo/TVFacts';
 import { FaYoutube } from 'react-icons/fa';
 import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
 import SocialMediaLinks from '../../../components/SocialMediaLinks/SocialMediaLinks';
+import Image from 'next/image';
 
 const TvShow = ({ tvData, error, languages, socialIds }) => {
   let creators = [];
@@ -37,7 +38,7 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
   let tvFacts = {};
   let tvStatus = '';
   let ogLanguage = '';
-  let netwrok = '';
+  let network = '';
   let type = '';
 
   if (!error) {
@@ -76,15 +77,15 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
 
     ogLanguage = !tvData.original_language ? 'TBA' : tvData.original_language;
 
-    netwrok = !tvData.networks[0] ? 'TBA' : tvData.networks[0].name;
+    network = !tvData.networks[0] ? 'TBA' : tvData.networks[0].name;
 
     type = !tvData.type ? 'TBA' : tvData.type;
 
     tvFacts = {
       status: tvStatus,
       language: ogLanguage,
-      network: netwrok,
-      type: type
+      network: network,
+      type: type,
     };
   }
 
@@ -127,15 +128,40 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
         <>
           <HeroDetailsContainer className='position-relative mb-auto'>
             <HeroBgContainer className='position-absolute'>
-              <HeroBg
-                backdrop={tvData.backdrop_path}
-                className='position-absolute'
-              ></HeroBg>
+              <HeroBg className='position-absolute'>
+                <Image
+                  src={
+                    tvData.backdrop_path
+                      ? `https://image.tmdb.org/t/p/w1280${tvData.backdrop_path}`
+                      : '/images/Hex.png'
+                  }
+                  alt='movie-backdrop'
+                  layout='fill'
+                  objectFit='cover'
+                />
+              </HeroBg>
               <DominantColor image={tvData.poster_path} />
             </HeroBgContainer>
             <DetailsHeroWrap>
               <HeroImgWrapper>
-                <HeroImg data={tvData.poster_path} />
+                <HeroImg className='position-relative'>
+                  <Image
+                    src={
+                      tvData.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${tvData.poster_path}`
+                        : '/Images/DefaultImage.png'
+                    }
+                    alt='movie-poster'
+                    layout='fill'
+                    objectFit='cover'
+                    placeholder='blur'
+                    blurDataURL={
+                      tvData.poster_path
+                        ? `/_next/image?url=https://image.tmdb.org/t/p/w500${tvData.poster_path}&w=16&q=1`
+                        : '/images/Hex.png'
+                    }
+                  />
+                </HeroImg>
 
                 {videos.length !== 0 && (
                   <a
@@ -214,7 +240,7 @@ TvShow.getInitialProps = async (ctx) => {
         tvData,
         error,
         languages,
-        socialIds
+        socialIds,
       };
     }
   } catch {

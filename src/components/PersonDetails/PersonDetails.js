@@ -1,7 +1,7 @@
 import {
   HeroInfoTitle,
   HeroInfoWrapper,
-  Span
+  Span,
 } from '../../components/MovieInfo/MovieDetailsStyles';
 import {
   DetailsHeroWrap,
@@ -11,12 +11,13 @@ import {
   RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
-  RecommendedWrapper
+  RecommendedWrapper,
 } from '../../styles/GlobalComponents';
 import { Bio, Details } from './PersonDetails.styles';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { MoviesInfoTitle } from '../Popular/PopularStyles';
+import Image from 'next/image';
 
 const PersonDetails = ({ details }) => {
   const getGender = (g) => {
@@ -63,7 +64,18 @@ const PersonDetails = ({ details }) => {
     <div style={{ marginBottom: 'auto' }}>
       <DetailsHeroWrap style={{ minHeight: 'auto' }} className='pb-0'>
         <HeroImgWrapper>
-          <HeroImg className='no-shadow' data={details.profile_path} />
+          <HeroImg className='no-shadow position-relative'>
+            <Image
+              src={
+                details.profile_path
+                  ? `https://image.tmdb.org/t/p/w500${details.profile_path}`
+                  : '/Images/DefaultImage.png'
+              }
+              alt='cast-image'
+              layout='fill'
+              objectFit='cover'
+            />
+          </HeroImg>
         </HeroImgWrapper>
 
         <HeroInfo className='d-flex'>
@@ -152,7 +164,7 @@ const PersonDetails = ({ details }) => {
                   <motion.div
                     whileHover={{
                       scale: 1.05,
-                      transition: { duration: 0.1 }
+                      transition: { duration: 0.1 },
                     }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -165,7 +177,18 @@ const PersonDetails = ({ details }) => {
                       scroll={false}
                     >
                       <a>
-                        <RecommendedImg backdrop={item.backdrop_path} />
+                        <RecommendedImg className='position-relative'>
+                          <Image
+                            src={
+                              item.backdrop_path
+                                ? `https://image.tmdb.org/t/p/w500${item.backdrop_path}`
+                                : '/Images/DefaultBackdrop.png'
+                            }
+                            alt='movie-backdrop'
+                            layout='fill'
+                            objectFit='cover'
+                          />
+                        </RecommendedImg>
                       </a>
                     </Link>
                   </motion.div>
@@ -178,7 +201,7 @@ const PersonDetails = ({ details }) => {
                   <motion.div
                     whileHover={{
                       scale: 1.05,
-                      transition: { duration: 0.1 }
+                      transition: { duration: 0.1 },
                     }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -191,7 +214,18 @@ const PersonDetails = ({ details }) => {
                       scroll={false}
                     >
                       <a>
-                        <RecommendedImg backdrop={item.backdrop_path} />
+                        <RecommendedImg className='position-relative'>
+                          <Image
+                            src={
+                              item.backdrop_path
+                                ? `https://image.tmdb.org/t/p/w500${item.backdrop_path}`
+                                : '/Images/DefaultBackdrop.png'
+                            }
+                            alt='TV-backdrop'
+                            layout='fill'
+                            objectFit='cover'
+                          />
+                        </RecommendedImg>
                       </a>
                     </Link>
                   </motion.div>

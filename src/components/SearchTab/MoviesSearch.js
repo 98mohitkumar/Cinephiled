@@ -5,18 +5,19 @@ import {
   QueryImg,
   QueryTitle,
   QueryInfoWrapper,
-  QueryRealeaseDate,
+  QueryReleaseDate,
   QueryDescription,
-} from "../../styles/GlobalComponents";
-import Link from "next/link";
-import { motion } from "framer-motion";
+} from '../../styles/GlobalComponents';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const MoviesSearch = ({ movieRes, movieReleaseDates }) => {
   return (
     <>
       <SearchResultsContainer>
         {movieRes.length === 0 ? (
-          <EmptySearch className="display-5 text-center">
+          <EmptySearch className='display-5 text-center'>
             No movie results for this query.
           </EmptySearch>
         ) : (
@@ -25,20 +26,31 @@ const MoviesSearch = ({ movieRes, movieReleaseDates }) => {
               <Link
                 href={`/movies/${item.id}-${item.title.replace(
                   /[' ', '/']/g,
-                  "-"
+                  '-'
                 )}`}
                 passHref
                 scroll={false}
               >
                 <a>
                   <QueryContainer>
-                    <QueryImg poster={item.poster_path} />
+                    <QueryImg className='position-relative'>
+                      <Image
+                        src={
+                          item.poster_path
+                            ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                            : '/Images/DefaultImage.png'
+                        }
+                        alt='movie-poster'
+                        layout='fill'
+                        objectFit='cover'
+                      />
+                    </QueryImg>
                     <QueryInfoWrapper>
                       <div>
                         <QueryTitle>{item.title}</QueryTitle>
-                        <QueryRealeaseDate>
+                        <QueryReleaseDate>
                           {movieReleaseDates[i]}
-                        </QueryRealeaseDate>
+                        </QueryReleaseDate>
                       </div>
                       <QueryDescription>{item.overview}</QueryDescription>
                     </QueryInfoWrapper>

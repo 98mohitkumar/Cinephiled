@@ -4,11 +4,12 @@ import {
   CastGrid,
   CastImg,
   CastWrapper,
-  NoDataText
+  NoDataText,
 } from '../../styles/GlobalComponents';
 import { Span } from '../MovieInfo/MovieDetailsStyles';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const Cast = ({ cast }) => {
   return (
@@ -27,11 +28,23 @@ const Cast = ({ cast }) => {
                   <motion.div
                     whileHover={{
                       scale: 1.05,
-                      transition: { duration: 0.1 }
+                      transition: { duration: 0.1 },
                     }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <CastImg data={item.profile_path} gender={item.gender} />
+                    <CastImg className='position-relative'>
+                      <Image
+                        src={
+                          item.profile_path
+                            ? `https://image.tmdb.org/t/p/w500${item.profile_path}`
+                            : '/Images/DefaultAvatar.png'
+                        }
+                        alt='cast-image'
+                        layout='fill'
+                        objectFit='cover'
+                        className='poster'
+                      />
+                    </CastImg>
                   </motion.div>
                 </a>
               </Link>

@@ -1,9 +1,10 @@
+import Image from 'next/image';
 import {
   NoDataText,
   BackdropsContainer,
   BackdropsImg,
   BackdropsImgContainer,
-  BackdropsWrapper
+  BackdropsWrapper,
 } from '../../styles/GlobalComponents';
 
 const Backdrops = ({ backdrops }) => {
@@ -18,7 +19,15 @@ const Backdrops = ({ backdrops }) => {
           <BackdropsWrapper>
             {backdrops.map((item, i) => (
               <BackdropsImgContainer key={i}>
-                <BackdropsImg backdrop={item.file_path} />
+                <BackdropsImg className='position-relative'>
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w1280${item.file_path}`}
+                    alt='backdrop'
+                    layout='fill'
+                    objectFit='cover'
+                    quality='100'
+                  />
+                </BackdropsImg>
               </BackdropsImgContainer>
             ))}
           </BackdropsWrapper>

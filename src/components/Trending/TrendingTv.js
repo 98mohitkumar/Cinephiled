@@ -5,12 +5,13 @@ import {
   Rating,
   TVInfo,
   TVInfoTitle,
-  ReleaseDate
+  ReleaseDate,
 } from '../Popular/PopularStyles';
 
 import Link from 'next/link';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const TrendingTv = ({ Tv }) => {
   Tv.splice(15);
@@ -40,7 +41,7 @@ const TrendingTv = ({ Tv }) => {
               <motion.div
                 whileHover={{
                   scale: 1.05,
-                  transition: { duration: 0.1 }
+                  transition: { duration: 0.1 },
                 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -50,10 +51,14 @@ const TrendingTv = ({ Tv }) => {
                   scroll={false}
                 >
                   <a>
-                    <CardImg
-                      data={TV.poster_path}
-                      className='d-flex justify-content-end'
-                    >
+                    <CardImg className='d-flex justify-content-end'>
+                      <Image
+                        src={`https://image.tmdb.org/t/p/w500${TV.poster_path}`}
+                        alt='TV-poster'
+                        layout='fill'
+                        objectFit='cover'
+                        className='poster'
+                      />
                       <Rating className='d-flex justify-content-center align-items-center me-3'>
                         {TV.vote_average === 'NR'
                           ? TV.vote_average

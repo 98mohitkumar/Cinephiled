@@ -6,9 +6,10 @@ import {
   Rating,
   MoviesInfo,
   MoviesInfoTitle,
-  ReleaseDate
+  ReleaseDate,
 } from './PopularStyles';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const PopularMovies = (props) => {
   let arr = [];
@@ -36,7 +37,7 @@ const PopularMovies = (props) => {
             <motion.div
               whileHover={{
                 scale: 1.05,
-                transition: { duration: 0.1 }
+                transition: { duration: 0.1 },
               }}
               whileTap={{ scale: 0.95 }}
             >
@@ -49,10 +50,14 @@ const PopularMovies = (props) => {
                 scroll={false}
               >
                 <a>
-                  <CardImg
-                    data={movie.poster_path}
-                    className='d-flex justify-content-end'
-                  >
+                  <CardImg>
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                      alt='movie-poster'
+                      layout='fill'
+                      objectFit='cover'
+                      className='poster'
+                    />
                     <Rating className='d-flex justify-content-center align-items-center me-3'>
                       {movie.vote_average.toFixed(1)}
                     </Rating>

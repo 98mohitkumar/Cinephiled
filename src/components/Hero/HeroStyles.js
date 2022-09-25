@@ -153,6 +153,7 @@ export const Button = styled.button`
   );`}
   border: none;
   font-weight: 600;
+  color: #121212 !important;
   padding: 0.65rem 2rem;
   cursor: ${(props) =>
     props.show ? 'pointer !important' : 'default !important'};

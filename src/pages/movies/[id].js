@@ -11,7 +11,7 @@ import {
   HeroTrailer,
   MovieEaster,
   LightsInOut,
-  EasterText
+  EasterText,
 } from '../../styles/GlobalComponents';
 import DominantColor from '../../components/DominantColor/DominantColor';
 import MovieDetails from '../../components/MovieInfo/MovieDetails';
@@ -22,6 +22,7 @@ import { Span } from '../../components/MovieInfo/MovieDetailsStyles';
 import { FaYoutube } from 'react-icons/fa';
 import SocialMediaLinks from '../../components/SocialMediaLinks/SocialMediaLinks';
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 
 const Movie = ({ movieDetails, error, languages, socialIds }) => {
   let easter = useRef(false);
@@ -110,7 +111,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
       status,
       language: movieDetails.original_language,
       budget: movieDetails.budget,
-      revenue: movieDetails.revenue
+      revenue: movieDetails.revenue,
     };
   }
 
@@ -171,16 +172,41 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
           )}
           <HeroDetailsContainer className='position-relative mb-auto'>
             <HeroBgContainer className='position-absolute'>
-              <HeroBg
-                backdrop={movieDetails.backdrop_path}
-                className='position-absolute'
-              ></HeroBg>
+              <HeroBg className='position-absolute'>
+                <Image
+                  src={
+                    movieDetails.backdrop_path
+                      ? `https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`
+                      : '/images/Hex.png'
+                  }
+                  alt='movie-backdrop'
+                  layout='fill'
+                  objectFit='cover'
+                />
+              </HeroBg>
               <DominantColor image={movieDetails.poster_path} />
             </HeroBgContainer>
 
             <DetailsHeroWrap>
               <HeroImgWrapper>
-                <HeroImg data={movieDetails.poster_path} />
+                <HeroImg className='position-relative'>
+                  <Image
+                    src={
+                      movieDetails.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
+                        : '/Images/DefaultImage.png'
+                    }
+                    alt='movie-poster'
+                    layout='fill'
+                    objectFit='cover'
+                    placeholder='blur'
+                    blurDataURL={
+                      movieDetails.poster_path
+                        ? `/_next/image?url=https://image.tmdb.org/t/p/w500${movieDetails.poster_path}&w=16&q=1`
+                        : '/images/Hex.png'
+                    }
+                  />
+                </HeroImg>
 
                 {videos.length !== 0 && (
                   <a
@@ -262,7 +288,7 @@ Movie.getInitialProps = async (ctx) => {
         movieDetails,
         error,
         languages,
-        socialIds
+        socialIds,
       };
     }
   } catch {

@@ -5,11 +5,12 @@ import {
   QueryImg,
   QueryTitle,
   QueryInfoWrapper,
-  QueryRealeaseDate,
-  QueryDescription
+  QueryReleaseDate,
+  QueryDescription,
 } from '../../styles/GlobalComponents';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const TVSearch = ({ tvRes, tvReleaseDates }) => {
   return (
@@ -29,13 +30,22 @@ const TVSearch = ({ tvRes, tvReleaseDates }) => {
               >
                 <a>
                   <QueryContainer>
-                    <QueryImg poster={item.poster_path} />
+                    <QueryImg className='position-relative'>
+                      <Image
+                        src={
+                          item.poster_path
+                            ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                            : '/Images/DefaultImage.png'
+                        }
+                        alt='TV-poster'
+                        layout='fill'
+                        objectFit='cover'
+                      />
+                    </QueryImg>
                     <QueryInfoWrapper>
                       <div>
                         <QueryTitle>{item.name}</QueryTitle>
-                        <QueryRealeaseDate>
-                          {tvReleaseDates[i]}
-                        </QueryRealeaseDate>
+                        <QueryReleaseDate>{tvReleaseDates[i]}</QueryReleaseDate>
                       </div>
                       <QueryDescription>{item.overview}</QueryDescription>
                     </QueryInfoWrapper>

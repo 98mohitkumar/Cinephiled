@@ -38,11 +38,8 @@ export const SeasonWrapper = styled.div`
 `;
 
 export const SeasonImg = styled.div`
+  position: relative;
   min-width: 7.5rem;
-  background: ${(props) =>
-    !props.poster
-      ? `Url(/Images/DefaultImage.png) no-repeat center center /cover`
-      : `Url(https://image.tmdb.org/t/p/w500${props.poster}) no-repeat center center /cover`};
 `;
 
 export const SeasonInfoWrapper = styled.div`

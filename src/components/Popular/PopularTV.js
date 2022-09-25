@@ -5,11 +5,12 @@ import {
   Rating,
   TVInfo,
   TVInfoTitle,
-  ReleaseDate
+  ReleaseDate,
 } from './PopularStyles';
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const PopularTV = (props) => {
   const TVData = props.TV;
@@ -43,7 +44,7 @@ const PopularTV = (props) => {
             <motion.div
               whileHover={{
                 scale: 1.05,
-                transition: { duration: 0.1 }
+                transition: { duration: 0.1 },
               }}
               whileTap={{ scale: 0.95 }}
             >
@@ -53,10 +54,14 @@ const PopularTV = (props) => {
                 scroll={false}
               >
                 <a>
-                  <CardImg
-                    data={TV.poster_path}
-                    className='d-flex justify-content-end'
-                  >
+                  <CardImg className='d-flex justify-content-end'>
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w500${TV.poster_path}`}
+                      alt='movie-poster'
+                      layout='fill'
+                      objectFit='cover'
+                      className='poster'
+                    />
                     <Rating className='d-flex justify-content-center align-items-center me-3'>
                       {TV.vote_average === 'NR'
                         ? TV.vote_average

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const MoviesSection = styled.div`
   width: 100%;
@@ -28,7 +28,6 @@ export const MoviesSection = styled.div`
 
 export const Cards = styled.div`
   width: 14rem;
-  max-height: auto;
   align-self: flex-start;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
@@ -41,10 +40,8 @@ export const Cards = styled.div`
 `;
 
 export const CardImg = styled.div`
+  position: relative;
   height: 20rem;
-  background: ${(props) => `url(https://image.tmdb.org/t/p/w780${props.data})
-    no-repeat center center / cover`};
-  border-radius: 12px;
   box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
     0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
@@ -61,8 +58,11 @@ export const CardImg = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     height: 15rem;
-    background: ${(props) => `url(https://image.tmdb.org/t/p/w500${props.data})
-    no-repeat center center / cover`};
+  }
+
+  .poster {
+    border-radius: 12px;
+    overflow: hidden;
   }
 `;
 
@@ -81,7 +81,7 @@ export const MoviesInfoTitle = styled.h2`
 `;
 
 export const ReleaseDate = styled.p`
-  font-family: "Satoshi", sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-weight: 500;
 `;
 
@@ -91,11 +91,13 @@ export const Rating = styled.div`
   width: 3rem;
   background-color: #ddd;
   color: #212121;
-  font-family: "Satoshi", sans-serif;
+  font-family: 'Satoshi', sans-serif;
   font-weight: 700;
   font-size: 0.9rem;
   margin-top: 18.5rem;
   border: 5px solid #121212;
+  position: absolute;
+  right: 0;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     height: 2.5rem;
@@ -182,7 +184,7 @@ export const MovieSelection = styled.div`
   padding: 1rem;
   display: grid;
   place-items: center;
-  color: ${(props) => (props.isMovies ? "white" : "black")};
+  color: ${(props) => (props.isMovies ? 'white' : 'black')};
   font-weight: bold;
   cursor: pointer;
   z-index: 5;
@@ -221,7 +223,7 @@ export const TVSelection = styled.div`
   padding: 1rem;
   display: grid;
   place-items: center;
-  color: ${(props) => (props.isMovies ? "black" : "white")};
+  color: ${(props) => (props.isMovies ? 'black' : 'white')};
   font-weight: bold;
   cursor: pointer;
   z-index: 5;
