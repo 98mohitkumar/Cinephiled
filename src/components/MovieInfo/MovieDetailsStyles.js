@@ -178,8 +178,8 @@ export const Overview = styled.p`
 export const CreditsWrapper = styled.div`
   display: grid;
   place-items: start;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
+  gap: 3rem;
   margin-top: 2rem;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
@@ -187,7 +187,8 @@ export const CreditsWrapper = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
@@ -202,7 +203,7 @@ export const FactsWrapper = styled.div`
   width: 100%;
   padding: 1rem;
   display: grid;
-  place-items: center;
+  place-items: start;
   grid-template-columns: repeat(4, max-content);
   gap: 2rem 5rem;
 
@@ -215,13 +216,11 @@ export const FactsWrapper = styled.div`
     gap: 2rem 6rem;
     padding: 1rem;
     grid-template-columns: repeat(2, max-content);
-    justify-items: flex-start;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    gap: 2rem 3rem;
+    gap: 2rem;
     padding: 0rem;
-    justify-items: flex-start;
     grid-template-columns: repeat(2, 1fr);
   }
 `;
