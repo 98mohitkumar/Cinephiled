@@ -1,21 +1,21 @@
-import { FactsFlexWrapper } from "../../styles/GlobalComponents";
+import { FactsFlexWrapper } from '../../styles/GlobalComponents';
 import {
   FactsFieldSet,
   FactsLegend,
   FactsWrapper,
   Span,
-} from "./MovieDetailsStyles";
+} from './MovieDetailsStyles';
 
-import countryToCurrency from "country-to-currency";
+import countryToCurrency from 'country-to-currency';
 
-import getSymbolFromCurrency from "currency-symbol-map";
+import getSymbolFromCurrency from 'currency-symbol-map';
 
 const MovieFacts = ({ facts, languages, country }) => {
   const currencyCode = countryToCurrency[country];
   const currency = getSymbolFromCurrency(currencyCode);
   const ogLanguage = facts.language;
 
-  let FactsLanguage = "";
+  let FactsLanguage = '';
 
   languages.forEach((item) => {
     if (item.iso_639_1 === ogLanguage) {
@@ -25,37 +25,33 @@ const MovieFacts = ({ facts, languages, country }) => {
 
   return (
     <FactsFieldSet>
-      <FactsLegend className="fw-bold">Facts</FactsLegend>
+      <FactsLegend className='fw-bold'>Facts</FactsLegend>
       <FactsWrapper>
         <FactsFlexWrapper>
-          <Span className="fw-bold">Status</Span>
-          <Span className="fw-normal">{facts.status}</Span>
+          <Span>Status</Span>
+          <Span>{facts.status}</Span>
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
-          <Span className="fw-bold">Language</Span>
-          <Span className="fw-normal">{FactsLanguage}</Span>
+          <Span>Language</Span>
+          <Span>{FactsLanguage}</Span>
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
-          <Span className="fw-bold">Budget</Span>
+          <Span>Budget</Span>
           {facts.budget === 0 ? (
-            <Span className="fw-normal">-</Span>
+            <Span>-</Span>
           ) : (
-            <Span className="fw-normal">
-              {currency + " " + facts.budget.toLocaleString()}
-            </Span>
+            <Span>{currency + ' ' + facts.budget.toLocaleString()}</Span>
           )}
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
-          <Span className="fw-bold">Revenue</Span>
+          <Span>Revenue</Span>
           {facts.revenue === 0 ? (
-            <Span className="fw-normal">-</Span>
+            <Span>-</Span>
           ) : (
-            <Span className="fw-normal">
-              {currency + " " + facts.revenue.toLocaleString()}
-            </Span>
+            <Span>{currency + ' ' + facts.revenue.toLocaleString()}</Span>
           )}
         </FactsFlexWrapper>
       </FactsWrapper>

@@ -177,7 +177,7 @@ export const Overview = styled.p`
 
 export const CreditsWrapper = styled.div`
   display: grid;
-  place-items: center start;
+  place-items: start;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   margin-top: 2rem;
@@ -188,7 +188,6 @@ export const CreditsWrapper = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    font-size: 18px;
   }
 `;
 

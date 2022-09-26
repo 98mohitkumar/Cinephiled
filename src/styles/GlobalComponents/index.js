@@ -204,14 +204,16 @@ export const FactsFlexWrapper = styled.div`
   align-items: flex-start;
   flex-direction: column;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    & > :nth-child(1) {
-      font-size: 20px;
-    }
+  & > :nth-child(1) {
+    font-weight: normal;
+  }
 
-    & > :nth-child(2) {
-      font-size: 16px;
-    }
+  & > :nth-child(2) {
+    font-weight: bold;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    font-size: 18px;
   }
 `;
 
