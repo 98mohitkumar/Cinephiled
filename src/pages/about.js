@@ -27,7 +27,7 @@ const About = () => {
             layout='fill'
             alt='about-cinephiled-background'
             objectFit='cover'
-            loading='eager'
+            priority
           />
         </AboutBackground>
 
