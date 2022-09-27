@@ -686,13 +686,6 @@ export const RecommendedImg = styled.div`
         0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
     }
   }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    background: ${(props) =>
-      !props.backdrop
-        ? `Url(/Images/DefaultBackdrop.png) no-repeat center center /cover`
-        : `Url(https://image.tmdb.org/t/p/w780${props.backdrop}) no-repeat center center /cover`};
-  }
 `;
 
 export const HeroImgWrapper = styled.div`

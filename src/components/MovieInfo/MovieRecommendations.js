@@ -45,7 +45,7 @@ const MovieRecommendations = ({ movies }) => {
                         <Image
                           src={
                             item.backdrop_path
-                              ? `https://image.tmdb.org/t/p/w500${item.backdrop_path}`
+                              ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
                               : '/Images/DefaultBackdrop.png'
                           }
                           alt='movie-poster'
