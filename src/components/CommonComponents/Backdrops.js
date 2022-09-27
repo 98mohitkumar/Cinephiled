@@ -6,6 +6,7 @@ import {
   BackdropsImgContainer,
   BackdropsWrapper,
 } from '../../styles/GlobalComponents';
+import DownloadButton from './DownloadButton';
 
 const Backdrops = ({ backdrops }) => {
   return (
@@ -26,7 +27,10 @@ const Backdrops = ({ backdrops }) => {
                     layout='fill'
                     objectFit='cover'
                     quality='100'
+                    className='media'
                   />
+
+                  <DownloadButton item={item.file_path} />
                 </BackdropsImg>
               </BackdropsImgContainer>
             ))}

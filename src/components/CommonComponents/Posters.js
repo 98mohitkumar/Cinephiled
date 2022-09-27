@@ -5,6 +5,7 @@ import {
   PostersImg,
   PostersWrapper,
 } from '../../styles/GlobalComponents';
+import DownloadButton from './DownloadButton';
 
 const Posters = ({ posters }) => {
   return (
@@ -25,6 +26,8 @@ const Posters = ({ posters }) => {
                   objectFit='cover'
                   quality='100'
                 />
+
+                <DownloadButton item={item.file_path} />
               </PostersImg>
             ))}
           </PostersWrapper>

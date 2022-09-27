@@ -551,13 +551,13 @@ export const ReviewAuthorImg = styled.div`
 
 export const BackdropsContainer = styled.div`
   width: 100%;
-  padding: 3rem 5rem;
+  padding: 3rem 4.5vw;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
-    padding: 3rem;
+    padding: 3rem 2rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     padding: 1rem;
   }
 `;
@@ -573,61 +573,48 @@ export const BackdropsWrapper = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
   @media only ${(props) => props.theme.breakpoints.xs} {
-    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 `;
 
 export const BackdropsImgContainer = styled.div`
   width: 100%;
-  height: 400px;
+  aspect-ratio: 1.68;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
     0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    height: 245px;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    height: 200px;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    height: 150px;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    height: 220px;
-  }
 `;
 
 export const BackdropsImg = styled.div`
   width: 100%;
   height: 100%;
-  transition: transform 0.25s cubic-bezier(0.79, 0.14, 0.15, 0.86);
 
-  @media ${(props) => props.theme.breakpoints.hover} {
-    &:hover {
-      transform: scale(1.2);
+  .media {
+    transition: transform 0.25s cubic-bezier(0.79, 0.14, 0.15, 0.86);
+
+    @media ${(props) => props.theme.breakpoints.hover} {
+      &:hover {
+        transform: scale(1.05);
+      }
     }
   }
 `;
 
 export const PostersContainer = styled.div`
   width: 100%;
-  padding: 3rem 5rem;
+  padding: 3rem 4.5vw;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
-    padding: 3rem;
+    padding: 3rem 2rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     padding: 1rem;
   }
 `;
@@ -1030,4 +1017,31 @@ export const EasterText = styled.span`
     z-index: 11;
   }
 }`};
+`;
+
+export const MediaDownloadButton = styled.div`
+  width: 40px;
+  height: 40px;
+  background: ${(props) => props.theme.colors.primary1};
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  border-radius: 10px;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 2rem rgb(12 12 12 /0.4);
+  opacity: 0.75;
+  transition: all 0.25s ease-in-out;
+
+  svg {
+    pointer-events: none;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.hover} {
+    &:hover {
+      opacity: 0.6;
+      transform: scale(1.1);
+    }
+  }
 `;
