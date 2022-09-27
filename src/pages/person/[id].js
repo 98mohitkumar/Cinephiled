@@ -15,7 +15,7 @@ const Person = ({ error, personDetails }) => {
           <>
             <meta
               property='og:image'
-              content={`https://image.tmdb.org/t/p/w1280${personDetails.profile_path}`}
+              content={`https://image.tmdb.org/t/p/w780${personDetails.profile_path}`}
               key='og_image'
             />
             <meta
@@ -52,7 +52,7 @@ Person.getInitialProps = async (ctx) => {
 
       return {
         personDetails,
-        error
+        error,
       };
     }
   } catch {

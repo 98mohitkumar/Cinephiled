@@ -112,7 +112,8 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
           <>
             <meta
               property='og:image'
-              content={`https://image.tmdb.org/t/p/w1280${tvData.backdrop_path}`}
+              content={`https://image.tmdb.org/t/p/w780${tvData.backdrop_path}`}
+              key='og_image'
             />
             <meta
               property='og:title'
