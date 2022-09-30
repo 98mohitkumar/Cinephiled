@@ -141,7 +141,7 @@ const PersonDetails = ({ details }) => {
       </DetailsHeroWrap>
 
       {details.biography && (
-        <DetailsHeroWrap className='no-grid pt-5'>
+        <DetailsHeroWrap className='no-grid bio'>
           {details.biography && (
             <div>
               <Span className='d-block fw-bold'>Biography</Span>

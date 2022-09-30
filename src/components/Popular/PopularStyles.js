@@ -15,11 +15,6 @@ export const MoviesSection = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    gap: 1rem;
-    padding: 1rem !important;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0.5rem !important;
     gap: 0.35rem 1.25rem;
     grid-template-columns: repeat(auto-fit, minmax(160px, 165px));
@@ -34,7 +29,7 @@ export const Cards = styled.div`
     width: 13.2rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     width: 10rem;
   }
 `;
@@ -57,7 +52,7 @@ export const CardImg = styled.div`
     }
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     height: 15rem;
   }
 
@@ -125,11 +120,6 @@ export const TVSection = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    gap: 1rem;
-    padding: 1rem !important;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0.5rem !important;
     gap: 0.35rem 1.25rem;
     grid-template-columns: repeat(auto-fit, minmax(160px, 165px));
@@ -151,7 +141,7 @@ export const TVInfoTitle = styled.h2`
 `;
 
 export const Tab = styled.div`
-  width: 40%;
+  width: clamp(360px, 75vw, 630px);
   height: 4.5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -164,18 +154,12 @@ export const Tab = styled.div`
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   position: relative;
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    width: 50%;
-  }
-
   @media only ${(props) => props.theme.breakpoints.ip} {
-    width: 75%;
     height: 4rem;
     margin: 2rem auto;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    width: 85%;
     height: 3.25rem;
     border-radius: 10px;
   }

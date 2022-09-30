@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const TabWrapper = styled.div`
-  width: ${(props) => (props.tv ? `50%;` : `40%;`)};
+  width: ${(props) =>
+    props.tv ? `clamp(380px, 95vw, 730px)` : `clamp(380px, 90vw, 630px)`};
   height: 4.5rem;
   display: grid;
   grid-template-columns: ${(props) =>
@@ -50,21 +51,8 @@ export const TabWrapper = styled.div`
     ${props.tabCheck === 'posters' ? `color: white;` : `color: black;`}
   }`}
 
-  @media only ${(props) => props.theme.breakpoints.xl} {
-    width: ${(props) => (props.tv ? `65%;` : `50%;`)};
-  }
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    width: ${(props) => (props.tv ? `80%;` : `65%;`)};
-  }
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    width: ${(props) => (props.tv ? `90%;` : `75%;`)};
-  }
-
   @media only ${(props) => props.theme.breakpoints.sm} {
     font-size: 1.1rem;
-    width: ${(props) => (props.tv ? `95%;` : `95%;`)};
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {

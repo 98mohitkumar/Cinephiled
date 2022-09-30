@@ -165,8 +165,21 @@ export const DetailsHeroWrap = styled.div`
 
   &.no-grid {
     display: block;
-    padding: 0 5.5vw;
+    padding: 0 6vw;
     min-height: auto;
+    margin-top: 2rem;
+
+    @media only ${(props) => props.theme.breakpoints.lg} {
+      padding: 0rem 2rem;
+    }
+
+    @media only ${(props) => props.theme.breakpoints.ip} {
+      margin-top: 0px;
+    }
+
+    @media only ${(props) => props.theme.breakpoints.xs} {
+      padding: 0rem 1.1rem;
+    }
   }
 
   @media only ${(props) => props.theme.breakpoints.lg} {
@@ -366,26 +379,24 @@ export const NoDataText = styled.p`
 
 export const RecommendationsContainer = styled.div`
   width: 100%;
-  padding: 1rem 3rem;
+  padding: 1rem 4.2vw;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
-    padding: 1rem 2rem;
+    padding: 1rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.1rem;
   }
 `;
 
 export const RecommendationsGrid = styled.div`
-  padding: 0rem 3rem;
   display: grid;
   place-items: center;
   grid-template-columns: repeat(5, 1fr);
 
   @media only ${(props) => props.theme.breakpoints.xl} {
     grid-template-columns: repeat(4, 1fr);
-    padding: 0rem 1rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
@@ -398,7 +409,6 @@ export const RecommendationsGrid = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     grid-template-columns: 1fr;
-    padding: 0px;
   }
 `;
 
@@ -489,53 +499,32 @@ export const ReviewsContainer = styled.div`
 
 export const ReviewsWrap = styled.div`
   width: 100%;
-  padding: 1rem 8rem;
+  max-width: 1000px;
+  padding: 1rem 0rem;
+  margin: 0rem auto 2rem auto;
   overflow: hidden;
-  text-align: justify;
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    padding: 1rem 3rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    padding: 1rem 2.25rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 1rem 1.5rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1rem 0.5rem;
+  &:not(:last-of-type) {
+    border-bottom: 1px solid grey;
   }
 `;
 
 export const Review = styled.p`
-  padding: 0rem 6rem;
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    padding-right: 2rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0.75rem 0.5rem;
-  }
+  padding: 1rem 0rem 0rem 0rem;
 `;
 
 export const ReviewAuthorWrap = styled.div`
   max-width: max-content;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  gap: 3rem;
+  align-items: center;
+  gap: 1rem;
 
   & span {
     font-weight: bold;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    gap: 1rem;
-
     & span {
       font-size: 16px;
     }
