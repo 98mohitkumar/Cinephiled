@@ -17,6 +17,7 @@ import ReviewsSvg from '../Svg/reviews';
 import SeasonsSvg from '../Svg/seasons';
 import TVRecommendations from './TVRecommendations';
 import TVSeasons from './TVSeasons';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const TVTab = (props) => {
   const [tabState, setTabState] = useState('cast');
@@ -96,11 +97,67 @@ const TVTab = (props) => {
           Posters
         </TabSelectionTitle>
       </TabWrapper>
-      {tabState === 'cast' && <Cast cast={props.cast} />}
-      {tabState === 'seasons' && <TVSeasons seasons={props.seasons} />}
-      {tabState === 'reviews' && <Reviews reviews={props.reviews} />}
-      {tabState === 'backdrops' && <Backdrops backdrops={props.backdrops} />}
-      {tabState === 'posters' && <Posters posters={props.posters} />}
+      <AnimatePresence exitBeforeEnter initial={false}>
+        {tabState === 'cast' && (
+          <motion.div
+            key='cast'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Cast cast={props.cast} />
+          </motion.div>
+        )}
+
+        {tabState === 'seasons' && (
+          <motion.div
+            key='seasons'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <TVSeasons seasons={props.seasons} />
+          </motion.div>
+        )}
+
+        {tabState === 'reviews' && (
+          <motion.div
+            key='cast'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Reviews reviews={props.reviews} />
+          </motion.div>
+        )}
+
+        {tabState === 'backdrops' && (
+          <motion.div
+            key='backdrops'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Backdrops backdrops={props.backdrops} />
+          </motion.div>
+        )}
+
+        {tabState === 'posters' && (
+          <motion.div
+            key='posters'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Posters posters={props.posters} />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <h1 className='display-6 fw-bold text-white text-center'>
         Recommendations
       </h1>
