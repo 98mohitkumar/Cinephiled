@@ -36,7 +36,7 @@ const Cast = ({ cast }) => {
                       <Image
                         src={
                           item.profile_path
-                            ? `https://image.tmdb.org/t/p/w780${item.profile_path}`
+                            ? `https://image.tmdb.org/t/p/w500${item.profile_path}`
                             : '/Images/DefaultAvatar.png'
                         }
                         alt='cast-image'

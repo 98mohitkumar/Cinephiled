@@ -136,9 +136,10 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
                       ? `https://image.tmdb.org/t/p/w1280${tvData.backdrop_path}`
                       : '/Images/Hex.png'
                   }
-                  alt='movie-backdrop'
+                  alt='tv-backdrop'
                   layout='fill'
                   objectFit='cover'
+                  priority
                 />
               </HeroBg>
               <DominantColor image={tvData.poster_path} />
@@ -152,15 +153,10 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
                         ? `https://image.tmdb.org/t/p/w500${tvData.poster_path}`
                         : '/Images/DefaultImage.png'
                     }
-                    alt='movie-poster'
+                    alt='tv-poster'
                     layout='fill'
                     objectFit='cover'
-                    placeholder='blur'
-                    blurDataURL={
-                      tvData.poster_path
-                        ? `/_next/image?url=https://image.tmdb.org/t/p/w500${tvData.poster_path}&w=16&q=1`
-                        : '/Images/Hex.png'
-                    }
+                    priority
                   />
                 </HeroImg>
 

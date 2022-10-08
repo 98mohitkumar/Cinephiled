@@ -182,6 +182,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
                   alt='movie-backdrop'
                   layout='fill'
                   objectFit='cover'
+                  priority
                 />
               </HeroBg>
               <DominantColor image={movieDetails.poster_path} />
@@ -199,12 +200,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
                     alt='movie-poster'
                     layout='fill'
                     objectFit='cover'
-                    placeholder='blur'
-                    blurDataURL={
-                      movieDetails.poster_path
-                        ? `/_next/image?url=https://image.tmdb.org/t/p/w500${movieDetails.poster_path}&w=16&q=1`
-                        : '/Images/Hex.png'
-                    }
+                    priority
                   />
                 </HeroImg>
 
