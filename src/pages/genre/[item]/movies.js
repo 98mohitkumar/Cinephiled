@@ -5,7 +5,7 @@ import {
   RecommendationsGrid,
   RecommendedImg,
   RecommendedWrapper,
-  Error404
+  Error404,
 } from '../../../styles/GlobalComponents/index';
 
 import Link from 'next/link';
@@ -13,6 +13,7 @@ import { MoviesInfoTitle } from '../../../components/Popular/PopularStyles';
 import { motion } from 'framer-motion';
 import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
 import useInfiniteQuery from '../../../hooks/useInfiniteQuery';
+import Image from 'next/image';
 
 const Movies = ({ renderList, genreName, error, genreId }) => {
   const extendedList = useInfiniteQuery(3, 'movie', genreId);
@@ -47,7 +48,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                       <motion.div
                         whileHover={{
                           scale: 1.05,
-                          transition: { duration: 0.1 }
+                          transition: { duration: 0.1 },
                         }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -60,7 +61,18 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                           scroll={false}
                         >
                           <a>
-                            <RecommendedImg backdrop={item.backdrop_path} />
+                            <RecommendedImg className='position-relative text-center'>
+                              <Image
+                                src={
+                                  item.backdrop_path
+                                    ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
+                                    : '/Images/DefaultBackdrop.png'
+                                }
+                                alt='movie-poster'
+                                layout='fill'
+                                objectFit='cover'
+                              />
+                            </RecommendedImg>
                           </a>
                         </Link>
                       </motion.div>
@@ -75,7 +87,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                       <motion.div
                         whileHover={{
                           scale: 1.05,
-                          transition: { duration: 0.1 }
+                          transition: { duration: 0.1 },
                         }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -88,7 +100,18 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                           scroll={false}
                         >
                           <a>
-                            <RecommendedImg backdrop={item.backdrop_path} />
+                            <RecommendedImg className='position-relative text-center'>
+                              <Image
+                                src={
+                                  item.backdrop_path
+                                    ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
+                                    : '/Images/DefaultBackdrop.png'
+                                }
+                                alt='movie-poster'
+                                layout='fill'
+                                objectFit='cover'
+                              />
+                            </RecommendedImg>
                           </a>
                         </Link>
                       </motion.div>
@@ -137,12 +160,12 @@ Movies.getInitialProps = async (ctx) => {
         renderList,
         genreName,
         genreId,
-        error
+        error,
       };
     }
   } catch {
     return {
-      error: true
+      error: true,
     };
   }
 };
