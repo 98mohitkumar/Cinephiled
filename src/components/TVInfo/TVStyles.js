@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const SeasonsContainer = styled.div`
-  width: 80%;
-  margin: auto;
   padding: 3rem 5rem;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
@@ -10,22 +8,23 @@ export const SeasonsContainer = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    width: 90%;
     padding: 3rem 2rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 3rem 0rem;
+    padding: 3rem 1rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1rem 0rem;
+    padding: 1rem;
   }
 `;
 
 export const SeasonWrapper = styled.div`
   display: flex;
   width: 100%;
+  max-width: 1000px;
+  margin: auto;
   min-height: 180px;
   border-radius: 10px;
   overflow: hidden;

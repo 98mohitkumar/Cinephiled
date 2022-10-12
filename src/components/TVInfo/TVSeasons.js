@@ -48,7 +48,7 @@ const TVSeasons = ({ seasons }) => {
                 scroll={false}
               >
                 <a>
-                  <SeasonWrapper className='mb-4'>
+                  <SeasonWrapper className={seasons.length > 1 && 'mb-4'}>
                     <SeasonImg>
                       <Image
                         src={
