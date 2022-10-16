@@ -56,7 +56,11 @@ const PopularTV = (props) => {
                 <a>
                   <CardImg className='d-flex justify-content-end'>
                     <Image
-                      src={`https://image.tmdb.org/t/p/w500${TV.poster_path}`}
+                      src={
+                        TV.poster_path
+                          ? `https://image.tmdb.org/t/p/w500${TV.poster_path}`
+                          : '/Images/DefaultImage.png'
+                      }
                       alt='movie-poster'
                       layout='fill'
                       objectFit='cover'
