@@ -1,7 +1,7 @@
-import { MediaDownloadButton } from '../../styles/GlobalComponents';
+import { MediaDownloadButton } from './DownloadMediaButtonStyles';
 import { AiOutlineDownload } from 'react-icons/ai';
 
-export const DownloadButton = ({ item }) => {
+export const DownloadMediaButton = ({ item }) => {
   const download = (e, id) => {
     fetch(e.target.attributes.href.value, {
       method: 'GET',
@@ -33,4 +33,4 @@ export const DownloadButton = ({ item }) => {
   );
 };
 
-export default DownloadButton;
+export default DownloadMediaButton;

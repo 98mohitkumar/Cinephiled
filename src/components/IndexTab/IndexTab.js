@@ -1,42 +1,33 @@
 import { useEffect, useState } from 'react';
-import PopularMovies from './PopularMovies';
+import PopularMovies from '../Popular/PopularMovies';
 import TabSelector from './Tab';
-import PopularTV from './PopularTV';
+import PopularTV from '../Popular/PopularTV';
 import TrendingMovies from '../Trending/TrendingMovies';
 import TrendingTv from '../Trending/TrendingTv';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback } from 'react';
 
 const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
-  const [isMovies, setIsMovies] = useState(true);
+  const [indexTabState, setIndexTabState] = useState('movies');
 
   useEffect(() => {
-    const tabState = localStorage.getItem('movieTab');
-    tabState === 'false' && setIsMovies(false);
+    const tabState = localStorage.getItem('indexTabState');
+    tabState && setIndexTabState(tabState);
   }, []);
 
-  const tabSelectionHandlerMovies = useCallback(() => {
-    localStorage.setItem('movieTab', true);
-    setIsMovies(true);
-  }, []);
-
-  const tabSelectionHandlerTV = useCallback(() => {
-    localStorage.setItem('movieTab', false);
-    setIsMovies(false);
+  const tabSelectionHandler = useCallback((tab) => {
+    localStorage.setItem('indexTabState', tab);
+    setIndexTabState(tab);
   }, []);
 
   return (
     <>
-      <TabSelector
-        isMovies={isMovies}
-        ClickMovies={tabSelectionHandlerMovies}
-        ClickTV={tabSelectionHandlerTV}
-      />
+      <TabSelector tabState={indexTabState} tabHandler={tabSelectionHandler} />
       <h1 className='display-5 fw-bold text-white text-center my-4'>
         What&#39;s Popular
       </h1>
       <AnimatePresence exitBeforeEnter initial={false}>
-        {isMovies && (
+        {indexTabState === 'movies' && (
           <motion.div
             key='movies'
             initial={{ opacity: 0 }}
@@ -45,6 +36,8 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
             transition={{ duration: 0.4 }}
           >
             <PopularMovies movies={moviesData} />
+
+            {/* Trending Movies */}
             <h1 className='display-5 fw-bold text-white text-center my-4'>
               Trending Today
             </h1>
@@ -52,7 +45,7 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
           </motion.div>
         )}
 
-        {!isMovies && (
+        {indexTabState === 'TV' && (
           <motion.div
             key='tv'
             initial={{ opacity: 0 }}
@@ -61,6 +54,8 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
             transition={{ duration: 0.4 }}
           >
             <PopularTV TV={TVData} />
+
+            {/* Trending TV */}
             <h1 className='display-5 fw-bold text-white text-center my-4'>
               Trending Today
             </h1>

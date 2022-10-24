@@ -3,26 +3,25 @@ import {
   RecommendationsGrid,
   RecommendedImg,
   RecommendedWrapper,
-} from '../../styles/GlobalComponents';
+  InfoTitle,
+} from './RecommendationsStyles';
 import { NoDataText } from '../../styles/GlobalComponents';
-
 import Link from 'next/link';
-import { MoviesInfoTitle } from '../Popular/PopularStyles';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-const TVRecommendations = ({ Tv }) => {
-  Tv.splice(15);
+const Recommendations = ({ data, type }) => {
+  data.splice(20);
   return (
     <>
       <RecommendationsContainer>
-        {Tv.length === 0 ? (
+        {data.length === 0 ? (
           <NoDataText className='fw-bold text-center my-5'>
             No Recommendations For Now
           </NoDataText>
         ) : (
           <RecommendationsGrid>
-            {Tv.map((item) => (
+            {data.map((item) => (
               <RecommendedWrapper key={item.id}>
                 <motion.div
                   whileHover={{
@@ -32,7 +31,9 @@ const TVRecommendations = ({ Tv }) => {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    href={`/tv/${item.id}-${item.name.replace(/[' ']/g, '-')}`}
+                    href={`/${type}/${item.id}-${(
+                      item?.title || item?.name
+                    ).replace(/[' ']/g, '-')}`}
                     passHref
                     scroll={false}
                   >
@@ -44,7 +45,7 @@ const TVRecommendations = ({ Tv }) => {
                               ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
                               : '/Images/DefaultBackdrop.png'
                           }
-                          alt='movie-poster'
+                          alt={`${type}-poster`}
                           layout='fill'
                           objectFit='cover'
                         />
@@ -52,9 +53,9 @@ const TVRecommendations = ({ Tv }) => {
                     </a>
                   </Link>
                 </motion.div>
-                <MoviesInfoTitle className='my-3 text-center'>
-                  {item.name}
-                </MoviesInfoTitle>
+                <InfoTitle className='my-3 text-center'>
+                  {item?.title || item?.name}
+                </InfoTitle>
               </RecommendedWrapper>
             ))}
           </RecommendationsGrid>
@@ -64,4 +65,4 @@ const TVRecommendations = ({ Tv }) => {
   );
 };
 
-export default TVRecommendations;
+export default Recommendations;

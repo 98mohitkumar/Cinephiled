@@ -1,12 +1,12 @@
 import Image from 'next/image';
+import { NoDataText } from '../../styles/GlobalComponents';
 import {
-  NoDataText,
   BackdropsContainer,
   BackdropsImg,
   BackdropsImgContainer,
   BackdropsWrapper,
-} from '../../styles/GlobalComponents';
-import DownloadButton from './DownloadButton';
+} from './BackdropsStyles';
+import DownloadButton from '../DownloadMediaButton/DownloadMediaButton';
 
 const Backdrops = ({ backdrops }) => {
   return (

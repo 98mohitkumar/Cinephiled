@@ -1,11 +1,7 @@
 import Image from 'next/image';
-import {
-  NoDataText,
-  PostersContainer,
-  PostersImg,
-  PostersWrapper,
-} from '../../styles/GlobalComponents';
-import DownloadButton from './DownloadButton';
+import { NoDataText } from '../../styles/GlobalComponents';
+import { PostersContainer, PostersImg, PostersWrapper } from './PostersStyles';
+import DownloadButton from '../DownloadMediaButton/DownloadMediaButton';
 
 const Posters = ({ posters }) => {
   return (

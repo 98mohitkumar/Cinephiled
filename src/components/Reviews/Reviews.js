@@ -1,25 +1,29 @@
+import { NoDataText } from '../../styles/GlobalComponents';
 import {
-  NoDataText,
   Review,
   ReviewAuthorImg,
   ReviewAuthorWrap,
   ReviewsContainer,
-  ReviewsWrap,
-} from '../../styles/GlobalComponents';
+  ReviewsWrap
+} from './ReviewsStyles';
 import { Span } from '../MovieInfo/MovieDetailsStyles';
+import { useMemo } from 'react';
 
 const Reviews = ({ reviews }) => {
-  const tvReviews = reviews;
-  const filtered = tvReviews.map((item) => ({
-    ...item,
-    content: item.content
-      .replace(/\n|\r\n|\r/g, '<br/>')
-      .replace(/(?:\*)(?:(?!\s))((?:(?!\*|\n).)+)(?:\*)/g, '<b>$1</b>')
-      .replace(/(?:_)(?:(?!\s))((?:(?!\n|_).)+)(?:_)/g, '<i>$1</i>')
-      .replace(/(?:~)(?:(?!\s))((?:(?!\n|~).)+)(?:~)/g, '<s>$1</s>')
-      .replace(/(?:--)(?:(?!\s))((?:(?!\n|--).)+)(?:--)/g, '<u>$1</u>')
-      .replace(/(?:```)(?:(?!\s))((?:(?!\n|```).)+)(?:```)/g, '<tt>$1</tt>'),
-  }));
+  const filtered = useMemo(
+    () =>
+      reviews.map((item) => ({
+        ...item,
+        content: item.content
+          .replace(/\n|\r\n|\r/g, '<br/>')
+          .replace(/(?:\*)(?:(?!\s))((?:(?!\*|\n).)+)(?:\*)/g, '<b>$1</b>')
+          .replace(/(?:_)(?:(?!\s))((?:(?!\n|_).)+)(?:_)/g, '<i>$1</i>')
+          .replace(/(?:~)(?:(?!\s))((?:(?!\n|~).)+)(?:~)/g, '<s>$1</s>')
+          .replace(/(?:--)(?:(?!\s))((?:(?!\n|--).)+)(?:--)/g, '<u>$1</u>')
+          .replace(/(?:```)(?:(?!\s))((?:(?!\n|```).)+)(?:```)/g, '<tt>$1</tt>')
+      })),
+    [reviews]
+  );
 
   return (
     <>
