@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import { useCallback } from 'react';
 import {
   SeasonInfoMain,
   SeasonInfoWrapper,
   SeasonsRelease,
-  SeasonTitle,
+  SeasonTitle
 } from '../../../../components/TVInfo/TVStyles';
 import {
   EpisodeImg,
@@ -16,16 +17,16 @@ import {
   SeasonShowcaseTitle,
   SeasonShowcaseWrapper,
   TrWrapper,
-  Rating,
+  Rating
 } from '../../../../styles/GlobalComponents';
 
 const Seasons = ({ error, data }) => {
-  const getYear = (date) => {
+  const getYear = useCallback((date) => {
     const year = !date ? 'TBA' : new Date(date).getFullYear();
     return year;
-  };
+  }, []);
 
-  const getReleaseDate = (date) => {
+  const getReleaseDate = useCallback((date) => {
     const releaseDate = !date
       ? 'TBA'
       : new Date(date.toString()).toDateString().slice(4, -5) +
@@ -33,13 +34,14 @@ const Seasons = ({ error, data }) => {
         new Date(date.toString()).getFullYear();
 
     return releaseDate;
-  };
+  }, []);
 
-  const getRating = (rating) => {
+  const getRating = useCallback((rating) => {
     const vote = !rating ? 'NR' : Number.parseFloat(rating).toFixed(1);
 
     return vote;
-  };
+  }, []);
+
   return (
     <>
       <Head>

@@ -11,7 +11,7 @@ import {
   HeroTrailer,
   MovieEaster,
   LightsInOut,
-  EasterText,
+  EasterText
 } from '../../styles/GlobalComponents';
 import DominantColor from '../../components/DominantColor/DominantColor';
 import MovieDetails from '../../components/MovieInfo/MovieDetails';
@@ -23,6 +23,8 @@ import { FaYoutube } from 'react-icons/fa';
 import SocialMediaLinks from '../../components/SocialMediaLinks/SocialMediaLinks';
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { useMemo } from 'react';
+import { useCallback } from 'react';
 
 const Movie = ({ movieDetails, error, languages, socialIds }) => {
   let easter = useRef(false);
@@ -37,117 +39,150 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
     let easterSeen = localStorage.getItem('easterSeen');
     if (easter.current && easterSeen !== 'seen') {
       setShowEaster(true);
+      document.body.style.overflow = 'hidden';
     }
 
     if (easterSeen === 'seen') {
       setHasSeen(true);
-    } else {
-      setHasSeen(false);
     }
   }, []);
 
-  const easterHandler = () => {
+  const easterHandler = useCallback(() => {
     setShowEaster(!showEaster);
     window.scrollTo(0, 0);
     setHasSeen(true);
     localStorage.setItem('easterSeen', 'seen');
-  };
 
-  let directors = [];
-  let writers = [];
-  let characters = [];
-  let cast = [];
-  let videos = [];
-  let runtime = '';
-  let getyear = '';
+    if (showEaster) {
+      document.body.style.overflow = 'auto';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+  }, [showEaster]);
 
-  let reviewDetails = [];
-  let backdrops = [];
-  let posters = [];
-  let creditsDetails = [];
-  let movieFacts = {};
+  const crew = useMemo(
+    () => (!error ? movieDetails?.credits?.crew : []),
+    [error, movieDetails?.credits?.crew]
+  );
 
-  let status = '';
+  const crewData = useMemo(
+    () =>
+      !error
+        ? [
+            ...crew?.filter((credit) => credit?.job === 'Director').slice(0, 2),
+            ...crew?.filter((credit) => credit?.job === 'Writer').slice(0, 3),
+            ...crew
+              ?.filter((credit) => credit?.job === 'Characters')
+              .slice(0, 2)
+          ]
+        : [],
+    [error, crew]
+  );
 
-  let country = '';
+  const cast = useMemo(
+    () => (!error ? movieDetails?.credits?.cast.slice(0, 15) : []),
+    [error, movieDetails?.credits?.cast]
+  );
 
-  if (!error) {
-    creditsDetails = movieDetails.credits;
+  const videos = useMemo(
+    () =>
+      !error
+        ? movieDetails?.videos?.results?.filter(
+            (item) => item?.site === 'YouTube' && item?.type === 'Trailer'
+          )
+        : [],
+    [error, movieDetails?.videos?.results]
+  );
 
-    creditsDetails.crew.forEach((item) => {
-      if (item.job === 'Director') directors.push(item);
-      if (item.job === 'Writer') writers.push(item);
-      if (item.job === 'Characters') characters.push(item);
-    });
+  const country = useMemo(
+    () =>
+      !error
+        ? movieDetails?.production_countries[0] === undefined
+          ? 'US'
+          : movieDetails?.production_countries[0].iso_3166_1
+        : '',
+    [error, movieDetails?.production_countries]
+  );
 
-    movieDetails.videos.results.forEach(
-      (item) =>
-        item.site === 'YouTube' && item.type === 'Trailer' && videos.push(item)
-    );
+  const getYear = useMemo(
+    () =>
+      !error
+        ? !movieDetails?.release_date
+          ? 'TBA'
+          : new Date(movieDetails?.release_date).getFullYear()
+        : '',
+    [error, movieDetails?.release_date]
+  );
 
-    reviewDetails = movieDetails.reviews;
-    backdrops = movieDetails.images.backdrops;
-    posters = movieDetails.images.posters;
-    cast = creditsDetails.cast;
+  const runtime = useMemo(() => {
+    const getH = Math.floor(movieDetails?.runtime / 60);
+    const getM = Math.ceil((movieDetails?.runtime / 60 - getH) * 60);
+    return { getH, getM };
+  }, [movieDetails?.runtime]);
 
-    cast.splice(15);
+  const status = useMemo(
+    () =>
+      !error ? (!movieDetails?.status ? 'TBA' : movieDetails?.status) : '',
+    [error, movieDetails?.status]
+  );
 
-    country =
-      movieDetails.production_countries[0] === undefined
-        ? 'US'
-        : movieDetails.production_countries[0].iso_3166_1;
+  const movieFacts = useMemo(
+    () =>
+      !error
+        ? {
+            status,
+            language: movieDetails?.original_language,
+            budget: movieDetails?.budget,
+            revenue: movieDetails?.revenue
+          }
+        : {},
+    [
+      error,
+      movieDetails?.budget,
+      movieDetails?.original_language,
+      movieDetails?.revenue,
+      status
+    ]
+  );
 
-    getyear = !movieDetails.release_date
-      ? 'TBA'
-      : new Date(movieDetails.release_date).getFullYear();
-
-    const getH = Math.floor(movieDetails.runtime / 60);
-    const getM = Math.ceil((movieDetails.runtime / 60 - getH) * 60);
-    runtime = { getH, getM };
-
-    status = !movieDetails.status ? 'TBA' : movieDetails.status;
-
-    movieFacts = {
-      status,
-      language: movieDetails.original_language,
-      budget: movieDetails.budget,
-      revenue: movieDetails.revenue,
-    };
-  }
-
-  if (directors.length > 2) {
-    directors.splice(2);
-  }
-
-  if (writers.length > 3) {
-    writers.splice(3);
-  }
-
-  if (characters.length > 2) {
-    characters.splice(2);
-  }
-
-  let crew = [...directors, ...writers, ...characters];
+  console.log(movieDetails);
 
   return (
     <>
       <Head>
         <title>
           {!error
-            ? `${movieDetails.title} (${getyear}) - Cinephiled`
+            ? `${movieDetails?.title} (${getYear}) - Cinephiled`
             : 'Not Found - Cinephiled'}
         </title>
         {!error && (
           <>
             <meta
               property='og:image'
-              content={`https://image.tmdb.org/t/p/w780${movieDetails.backdrop_path}`}
+              content={`https://image.tmdb.org/t/p/w780${movieDetails?.backdrop_path}`}
               key='og_image'
             />
             <meta
               property='og:title'
-              content={`${movieDetails.title} (${getyear}) - Cinephiled`}
-            ></meta>
+              content={`${movieDetails?.title} (${getYear}) - Cinephiled`}
+              key='description'
+            />
+            <meta
+              property='og:description'
+              content={movieDetails?.overview}
+              key='og_description'
+            />
+
+            <meta
+              property='twitter:description'
+              content={movieDetails?.overview}
+              key='twitter_description'
+            />
+            <meta
+              property='twitter:image'
+              content={`https://image.tmdb.org/t/p/w780${movieDetails?.backdrop_path}`}
+              key='twitter_image'
+            />
           </>
         )}
       </Head>
@@ -157,6 +192,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
         <>
           {easter.current && (
             <>
+              {/* easter egg */}
               {!hasSeen ? (
                 <EasterText className='fs-4' show={showEaster}>
                   Congratulations, you have found the easter egg.
@@ -170,13 +206,15 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
               <MovieEaster show={showEaster} />
             </>
           )}
+
+          {/* movie info hero section */}
           <HeroDetailsContainer className='position-relative mb-auto'>
             <HeroBgContainer className='position-absolute'>
               <HeroBg className='position-absolute text-center'>
                 <Image
                   src={
-                    movieDetails.backdrop_path
-                      ? `https://image.tmdb.org/t/p/w1280${movieDetails.backdrop_path}`
+                    movieDetails?.backdrop_path
+                      ? `https://image.tmdb.org/t/p/w1280${movieDetails?.backdrop_path}`
                       : '/Images/Hex.png'
                   }
                   alt='movie-backdrop'
@@ -185,7 +223,7 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
                   priority
                 />
               </HeroBg>
-              <DominantColor image={movieDetails.poster_path} />
+              <DominantColor image={movieDetails?.poster_path} />
             </HeroBgContainer>
 
             <DetailsHeroWrap>
@@ -193,8 +231,8 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
                 <HeroImg className='position-relative text-center'>
                   <Image
                     src={
-                      movieDetails.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
+                      movieDetails?.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movieDetails?.poster_path}`
                         : '/Images/DefaultImage.png'
                     }
                     alt='movie-poster'
@@ -219,33 +257,37 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
                 )}
                 <SocialMediaLinks
                   links={socialIds}
-                  homepage={movieDetails.homepage}
+                  homepage={movieDetails?.homepage}
                 />
               </HeroImgWrapper>
               <Gradient />
               <HeroInfo className='d-flex'>
                 <MovieDetails
                   movieDetailsData={movieDetails}
-                  date={getyear}
+                  date={getYear}
                   runtime={runtime}
-                  crew={crew}
+                  crew={crewData}
                   easter={easter.current}
                   showEaster={easterHandler}
                 />
               </HeroInfo>
             </DetailsHeroWrap>
           </HeroDetailsContainer>
+
+          {/* movie facts */}
           <MovieFacts
             facts={movieFacts}
             languages={languages}
             country={country}
           />
+
+          {/* movie tabs */}
           <MovieTab
             id={movieDetails.id}
             cast={cast}
-            reviews={reviewDetails.results}
-            backdrops={backdrops}
-            posters={posters}
+            reviews={movieDetails?.reviews?.results ?? []}
+            backdrops={movieDetails?.images?.backdrops ?? []}
+            posters={movieDetails?.images?.posters ?? []}
           />
         </>
       )}
@@ -284,7 +326,7 @@ Movie.getInitialProps = async (ctx) => {
         movieDetails,
         error,
         languages,
-        socialIds,
+        socialIds
       };
     }
   } catch {

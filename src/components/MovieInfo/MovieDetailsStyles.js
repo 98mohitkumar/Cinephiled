@@ -238,7 +238,7 @@ export const FactsFieldSet = styled.fieldset`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1rem 21px;
+    padding: 1rem 1.25rem;
   }
 `;
 

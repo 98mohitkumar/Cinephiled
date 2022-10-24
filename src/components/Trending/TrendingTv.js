@@ -1,44 +1,34 @@
 import {
-  TVSection,
+  CardsContainerGrid,
   Cards,
   CardImg,
   Rating,
-  TVInfo,
-  TVInfoTitle,
-  ReleaseDate,
+  CardInfo,
+  InfoTitle,
+  ReleaseDate
 } from '../Popular/PopularStyles';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import useGetReleaseDates from '../../hooks/useGetReleaseDates';
 
 const TrendingTv = ({ Tv }) => {
   Tv.forEach((item) => {
     if (item.vote_average === 0) item.vote_average = 'NR';
   });
 
-  let arr = [];
-
-  function releaseDates() {
-    Tv.forEach((item) =>
-      arr.push(
-        new Date(item.first_air_date.toString()).toDateString().slice(4, -5) +
-          ', ' +
-          new Date(item.first_air_date.toString()).getFullYear()
-      )
-    );
-  }
-  releaseDates();
+  const releaseDates = useGetReleaseDates(Tv);
 
   return (
     <>
-      <TVSection className='p-5'>
+      <CardsContainerGrid>
         {Tv.length > 0 &&
           Tv.map((TV, i) => (
             <Cards key={TV.id}>
               <motion.div
                 whileHover={{
                   scale: 1.05,
-                  transition: { duration: 0.1 },
+                  transition: { duration: 0.1 }
                 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -56,7 +46,7 @@ const TrendingTv = ({ Tv }) => {
                         objectFit='cover'
                         className='poster'
                       />
-                      <Rating className='d-flex justify-content-center align-items-center me-3'>
+                      <Rating className='d-flex justify-content-center align-items-center'>
                         {TV.vote_average === 'NR'
                           ? TV.vote_average
                           : TV.vote_average.toFixed(1)}
@@ -65,13 +55,13 @@ const TrendingTv = ({ Tv }) => {
                   </a>
                 </Link>
               </motion.div>
-              <TVInfo>
-                <TVInfoTitle>{TV.name}</TVInfoTitle>
-                <ReleaseDate>{arr[i]}</ReleaseDate>
-              </TVInfo>
+              <CardInfo>
+                <InfoTitle>{TV.name}</InfoTitle>
+                <ReleaseDate>{releaseDates[i]}</ReleaseDate>
+              </CardInfo>
             </Cards>
           ))}
-      </TVSection>
+      </CardsContainerGrid>
     </>
   );
 };

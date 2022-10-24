@@ -1,12 +1,12 @@
 import Head from 'next/head';
+import { useMemo } from 'react';
 import {
   Error404,
   SearchContainer,
-  SearchResultsContainer,
+  SearchResultsContainer
 } from '../../styles/GlobalComponents';
 import { EmptySearch } from '../../styles/GlobalComponents';
 import { motion } from 'framer-motion';
-
 import Link from 'next/link';
 import {
   QueryContainer,
@@ -14,24 +14,28 @@ import {
   QueryInfoWrapper,
   QueryTitle,
   QueryReleaseDate,
-  QueryDescription,
+  QueryDescription
 } from '../../styles/GlobalComponents';
 import Image from 'next/image';
 
 const Keyword = ({ error, results, name }) => {
-  let movieReleaseDates = [];
-
-  if (!error) {
-    results.forEach((item) =>
-      !item.release_date
-        ? movieReleaseDates.push('TBA')
-        : movieReleaseDates.push(
-            new Date(item.release_date.toString()).toDateString().slice(4, -5) +
-              ', ' +
-              new Date(item.release_date.toString()).getFullYear()
+  const movieReleaseDates = useMemo(
+    () =>
+      !error
+        ? results.map((item) =>
+            item.release_date
+              ? new Date(item.release_date.toString())
+                  .toDateString()
+                  .slice(4, -5) +
+                ', ' +
+                new Date(item.release_date.toString()).getFullYear()
+              : 'TBA'
           )
-    );
-  }
+        : '',
+
+    [error, results]
+  );
+
   return (
     <>
       <Head>
@@ -42,7 +46,7 @@ const Keyword = ({ error, results, name }) => {
         <Error404>404</Error404>
       ) : (
         <>
-          <SearchContainer className='keywordResults'>
+          <SearchContainer>
             <SearchResultsContainer>
               {results.length === 0 ? (
                 <EmptySearch className='display-5 text-center'>

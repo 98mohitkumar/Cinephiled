@@ -1,22 +1,20 @@
 import Head from 'next/head';
+import { NoDataText, Error404 } from '../../../styles/GlobalComponents/index';
 import {
-  NoDataText,
   RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
   RecommendedWrapper,
-  Error404,
-} from '../../../styles/GlobalComponents/index';
-
+  InfoTitle,
+} from '../../../components/Recommendations/RecommendationsStyles';
 import Link from 'next/link';
-import { MoviesInfoTitle } from '../../../components/Popular/PopularStyles';
 import { motion } from 'framer-motion';
 import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
 import useInfiniteQuery from '../../../hooks/useInfiniteQuery';
 import Image from 'next/image';
 
 const TvShows = ({ renderList, genreName, error, genreId }) => {
-  const extendedList = useInfiniteQuery(3, 'tv', genreId);
+  const { list } = useInfiniteQuery(3, 'tv', genreId);
 
   return (
     <>
@@ -43,7 +41,7 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                   {genreName}
                 </Span>
                 <RecommendationsGrid>
-                  {renderList.map((item) => (
+                  {renderList.concat(list).map((item) => (
                     <RecommendedWrapper key={item.id}>
                       <motion.div
                         whileHover={{
@@ -76,48 +74,9 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                           </a>
                         </Link>
                       </motion.div>
-                      <MoviesInfoTitle className='my-3 text-center'>
+                      <InfoTitle className='my-3 text-center'>
                         {item.name}
-                      </MoviesInfoTitle>
-                    </RecommendedWrapper>
-                  ))}
-
-                  {extendedList.list.map((item) => (
-                    <RecommendedWrapper key={item.id}>
-                      <motion.div
-                        whileHover={{
-                          scale: 1.05,
-                          transition: { duration: 0.1 },
-                        }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Link
-                          href={`/tv/${item.id}-${item.name.replace(
-                            /[' ']/g,
-                            '-'
-                          )}`}
-                          passHref
-                          scroll={false}
-                        >
-                          <a>
-                            <RecommendedImg className='position-relative text-center'>
-                              <Image
-                                src={
-                                  item.backdrop_path
-                                    ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
-                                    : '/Images/DefaultBackdrop.png'
-                                }
-                                alt='movie-poster'
-                                layout='fill'
-                                objectFit='cover'
-                              />
-                            </RecommendedImg>
-                          </a>
-                        </Link>
-                      </motion.div>
-                      <MoviesInfoTitle className='my-3 text-center'>
-                        {item.name}
-                      </MoviesInfoTitle>
+                      </InfoTitle>
                     </RecommendedWrapper>
                   ))}
                 </RecommendationsGrid>

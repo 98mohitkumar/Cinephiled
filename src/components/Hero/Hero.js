@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { Container } from '../../styles/GlobalComponents';
@@ -16,15 +16,15 @@ const Hero = () => {
   const [movieSuggestions, setMovieSuggestions] = useState([]);
   const [tvSuggestions, setTvSuggestions] = useState([]);
 
-  let searchInputUpdate;
+  const searchInputUpdate = useRef(null);
 
-  const inputChangeHandler = (e) => {
+  const inputChangeHandler = useCallback((e) => {
     clearTimeout(searchInputUpdate);
 
-    searchInputUpdate = setTimeout(() => {
+    searchInputUpdate.current = setTimeout(() => {
       setUserInput(e.target.value);
     }, 500);
-  };
+  }, []);
 
   useEffect(() => {
     if (userInput.length === 0 || userInput.trim().length === 0) {
@@ -65,7 +65,7 @@ const Hero = () => {
             const tvRes = await tvResponse.json();
             return {
               movieRes: movieResponse.ok ? movieRes.results.splice(0, 10) : [],
-              tvRes: tvResponse.ok ? tvRes.results.splice(0, 10) : [],
+              tvRes: tvResponse.ok ? tvRes.results.splice(0, 10) : []
             };
           }
         } else {
@@ -86,7 +86,7 @@ const Hero = () => {
             const tvRes = await tvResponse.json();
             return {
               movieRes: movieResponse.ok ? movieRes.results.splice(0, 10) : [],
-              tvRes: tvResponse.ok ? tvRes.results.splice(0, 10) : [],
+              tvRes: tvResponse.ok ? tvRes.results.splice(0, 10) : []
             };
           }
         }
@@ -125,9 +125,13 @@ const Hero = () => {
 
   tvSuggestions.forEach((item) => (item.type = 'tv'));
 
-  const sortedSuggestion = movieSuggestions
-    .concat(tvSuggestions)
-    ?.sort((item, nextItem) => nextItem?.popularity - item?.popularity);
+  const sortedSuggestion = useMemo(
+    () =>
+      movieSuggestions
+        .concat(tvSuggestions)
+        ?.sort((item, nextItem) => nextItem?.popularity - item?.popularity),
+    [movieSuggestions, tvSuggestions]
+  );
 
   return (
     <Container className='d-flex justify-content-center align-items-center position-relative'>
@@ -149,7 +153,7 @@ const Hero = () => {
               {showButton && (
                 <motion.div
                   whileHover={{
-                    scale: 1.05,
+                    scale: 1.05
                   }}
                   whileTap={{ scale: 0.9 }}
                 >

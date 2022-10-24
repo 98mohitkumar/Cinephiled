@@ -1,43 +1,29 @@
 import Link from 'next/link';
 import {
-  MoviesSection,
+  CardsContainerGrid,
   Cards,
   CardImg,
   Rating,
-  MoviesInfo,
-  MoviesInfoTitle,
-  ReleaseDate,
+  CardInfo,
+  InfoTitle,
+  ReleaseDate
 } from './PopularStyles';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import useGetReleaseDates from '../../hooks/useGetReleaseDates';
 
-const PopularMovies = (props) => {
-  let arr = [];
-
-  function releaseDates() {
-    props.movies.forEach((item) => {
-      if (item.release_date) {
-        arr.push(
-          new Date(item.release_date.toString()).toDateString().slice(4, -5) +
-            ', ' +
-            new Date(item.release_date.toString()).getFullYear()
-        );
-      } else {
-        arr.push('TBA');
-      }
-    });
-  }
-  releaseDates();
+const PopularMovies = ({ movies }) => {
+  const releaseDates = useGetReleaseDates(movies);
 
   return (
-    <MoviesSection className='p-5'>
-      {props.movies.length > 0 &&
-        props.movies.map((movie, i) => (
+    <CardsContainerGrid>
+      {movies.length > 0 &&
+        movies.map((movie, i) => (
           <Cards key={movie.id}>
             <motion.div
               whileHover={{
                 scale: 1.05,
-                transition: { duration: 0.1 },
+                transition: { duration: 0.1 }
               }}
               whileTap={{ scale: 0.95 }}
             >
@@ -62,20 +48,20 @@ const PopularMovies = (props) => {
                       objectFit='cover'
                       className='poster'
                     />
-                    <Rating className='d-flex justify-content-center align-items-center me-3'>
+                    <Rating className='d-flex justify-content-center align-items-center'>
                       {movie.vote_average.toFixed(1)}
                     </Rating>
                   </CardImg>
                 </a>
               </Link>
             </motion.div>
-            <MoviesInfo>
-              <MoviesInfoTitle>{movie.title}</MoviesInfoTitle>
-              <ReleaseDate>{arr[i]}</ReleaseDate>
-            </MoviesInfo>
+            <CardInfo>
+              <InfoTitle>{movie.title}</InfoTitle>
+              <ReleaseDate>{releaseDates[i]}</ReleaseDate>
+            </CardInfo>
           </Cards>
         ))}
-    </MoviesSection>
+    </CardsContainerGrid>
   );
 };
 

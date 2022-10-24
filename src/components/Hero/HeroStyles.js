@@ -54,7 +54,7 @@ export const Banner = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 50%;
+  width: clamp(360px, 75vw, 800px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,18 +125,6 @@ export const Form = styled.form`
     @media only ${(props) => props.theme.breakpoints.sm} {
       max-height: 200px;
     }
-  }
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    width: 65%;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    width: 80%;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    width: 85%;
   }
 `;
 

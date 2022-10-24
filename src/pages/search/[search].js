@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useMemo } from 'react';
 import SearchTab from '../../components/SearchTab/SearchTab';
 import {
   BadQuery,
@@ -7,32 +8,40 @@ import {
 } from '../../styles/GlobalComponents';
 
 const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
-  let movieReleaseDates = [];
-  let tvReleaseDates = [];
-
-  if (!error) {
-    movieRes.forEach((item) =>
-      !item.release_date
-        ? movieReleaseDates.push('TBA')
-        : movieReleaseDates.push(
-            new Date(item.release_date.toString()).toDateString().slice(4, -5) +
-              ', ' +
-              new Date(item.release_date.toString()).getFullYear()
+  const movieReleaseDates = useMemo(
+    () =>
+      !error
+        ? movieRes.map((item) =>
+            item.release_date
+              ? new Date(item.release_date.toString())
+                  .toDateString()
+                  .slice(4, -5) +
+                ', ' +
+                new Date(item.release_date.toString()).getFullYear()
+              : 'TBA'
           )
-    );
+        : '',
 
-    tvRes.forEach((item) =>
-      !item.first_air_date
-        ? tvReleaseDates.push('TBA')
-        : tvReleaseDates.push(
-            new Date(item.first_air_date.toString())
-              .toDateString()
-              .slice(4, -5) +
-              ', ' +
-              new Date(item.first_air_date.toString()).getFullYear()
+    [error, movieRes]
+  );
+
+  const tvReleaseDates = useMemo(
+    () =>
+      !error
+        ? tvRes.map((item) =>
+            item.first_air_date
+              ? new Date(item.first_air_date.toString())
+                  .toDateString()
+                  .slice(4, -5) +
+                ', ' +
+                new Date(item.first_air_date.toString()).getFullYear()
+              : 'TBA'
           )
-    );
-  }
+        : '',
+
+    [error, tvRes]
+  );
+
   return (
     <>
       <Head>
@@ -44,7 +53,7 @@ const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
       {error ? (
         <Error404>404</Error404>
       ) : movieRes.length === 0 && tvRes.length === 0 ? (
-        <BadQuery>Bad Query :(</BadQuery>
+        <BadQuery>{'Bad Query :('}</BadQuery>
       ) : (
         <SearchContainer>
           <SearchTab

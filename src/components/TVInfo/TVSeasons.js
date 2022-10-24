@@ -8,7 +8,7 @@ import {
   SeasonsContainer,
   SeasonsRelease,
   SeasonTitle,
-  SeasonWrapper,
+  SeasonWrapper
 } from './TVStyles';
 
 import { NoDataText } from '../../styles/GlobalComponents';
@@ -16,22 +16,24 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useMemo } from 'react';
 
 const TVSeasons = ({ seasons }) => {
-  let seasonReleaseDates = [];
   const router = useRouter();
+  const Today = new Date();
 
-  seasons.forEach((item) =>
-    item.air_date
-      ? seasonReleaseDates.push(
-          new Date(item.air_date.toString()).toDateString().slice(4, -5) +
+  const seasonReleaseDates = useMemo(
+    () =>
+      seasons.map((item) =>
+        item.air_date
+          ? new Date(item.air_date.toString()).toDateString().slice(4, -5) +
             ', ' +
             new Date(item.air_date.toString()).getFullYear()
-        )
-      : seasonReleaseDates.push('TBA')
+          : 'TBA'
+      ),
+    [seasons]
   );
 
-  const Today = new Date();
   return (
     <>
       <SeasonsContainer>

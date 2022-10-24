@@ -3,7 +3,7 @@ import DominantColor from '../../../components/DominantColor/DominantColor';
 import {
   Gradient,
   HeroImgWrapper,
-  HeroTrailer,
+  HeroTrailer
 } from '../../../styles/GlobalComponents';
 import TVDetails from '../../../components/TVInfo/TVDetails';
 import {
@@ -13,7 +13,7 @@ import {
   HeroBgContainer,
   HeroDetailsContainer,
   HeroImg,
-  HeroInfo,
+  HeroInfo
 } from '../../../styles/GlobalComponents';
 import TVTab from '../../../components/TVInfo/TVTab';
 import TVFacts from '../../../components/TVInfo/TVFacts';
@@ -21,104 +21,118 @@ import { FaYoutube } from 'react-icons/fa';
 import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
 import SocialMediaLinks from '../../../components/SocialMediaLinks/SocialMediaLinks';
 import Image from 'next/image';
+import { useMemo } from 'react';
 
 const TvShow = ({ tvData, error, languages, socialIds }) => {
-  let creators = [];
-  let characters = [];
-  let cast = [];
-  let creditsDetails = [];
-  let reviewDetails = [];
-  let backdrops = [];
-  let posters = [];
-  let videos = [];
+  const crew = useMemo(
+    () => (!error ? tvData?.credits?.crew : []),
+    [error, tvData?.credits?.crew]
+  );
 
-  let getyear = '';
-  let endyear = '';
-  let epRuntime = {};
-  let tvFacts = {};
-  let tvStatus = '';
-  let ogLanguage = '';
-  let network = '';
-  let type = '';
+  const crewData = useMemo(
+    () =>
+      !error
+        ? [
+            ...tvData?.created_by?.slice(0, 2),
+            ...crew?.filter((credit) => credit.job === 'Characters').slice(0, 2)
+          ]
+        : [],
+    [crew, error, tvData?.created_by]
+  );
 
-  if (!error) {
-    creditsDetails = tvData.credits;
-    creditsDetails.crew.forEach((item) => {
-      if (item.job === 'Characters') characters.push(item);
-    });
-    tvData.created_by.length > 0 &&
-      tvData.created_by.forEach((item) => creators.push(item));
+  const cast = useMemo(
+    () => (!error ? tvData?.credits?.cast.slice(0, 15) : []),
+    [error, tvData?.credits?.cast]
+  );
 
-    tvData.videos.results.forEach(
-      (item) =>
-        item.site === 'YouTube' && item.type === 'Trailer' && videos.push(item)
-    );
-    cast = creditsDetails.cast;
+  const videos = useMemo(
+    () =>
+      !error
+        ? tvData?.videos?.results?.filter(
+            (item) => item?.site === 'YouTube' && item?.type === 'Trailer'
+          )
+        : [],
+    [error, tvData?.videos?.results]
+  );
 
-    cast.splice(15);
+  const epRuntime = useMemo(() => {
+    const getH = Math.floor(tvData?.episode_run_time[0] / 60);
+    const getM = Math.ceil((tvData?.episode_run_time[0] / 60 - getH) * 60);
+    return { getH, getM };
+  }, [tvData?.episode_run_time]);
 
-    reviewDetails = tvData.reviews;
-    backdrops = tvData.images.backdrops;
-    posters = tvData.images.posters;
+  const tvStatus = useMemo(
+    () => (!error ? (!tvData.status ? 'TBA' : tvData?.status) : ''),
+    [error, tvData?.status]
+  );
 
-    getyear = tvData.first_air_date
-      ? new Date(tvData.first_air_date).getFullYear()
-      : 'TBA';
-    endyear =
-      tvData.status === 'Ended' || tvData.status === 'Canceled'
-        ? '- ' + new Date(tvData.last_air_date).getFullYear()
-        : '- ';
+  const ogLanguage = useMemo(
+    () =>
+      !error
+        ? !tvData.original_language
+          ? 'TBA'
+          : tvData?.original_language
+        : '',
+    [error, tvData?.original_language]
+  );
 
-    const getH = Math.floor(tvData.episode_run_time[0] / 60);
-    const getM = Math.ceil((tvData.episode_run_time[0] / 60 - getH) * 60);
-    epRuntime = { getH, getM };
+  const network = useMemo(
+    () =>
+      !error ? (!tvData.networks[0] ? 'TBA' : tvData?.networks[0]?.name) : '',
+    [error, tvData?.networks]
+  );
 
-    tvStatus = !tvData.status ? 'TBA' : tvData.status;
+  const type = useMemo(
+    () => (!error ? (!tvData.type ? 'TBA' : tvData?.type) : ''),
+    [error, tvData?.type]
+  );
 
-    ogLanguage = !tvData.original_language ? 'TBA' : tvData.original_language;
+  const tvFacts = useMemo(
+    () =>
+      !error ? { status: tvStatus, language: ogLanguage, network, type } : {},
+    [error, network, ogLanguage, tvStatus, type]
+  );
 
-    network = !tvData.networks[0] ? 'TBA' : tvData.networks[0].name;
+  const getYear = useMemo(
+    () =>
+      !error
+        ? tvData?.first_air_date
+          ? new Date(tvData?.first_air_date).getFullYear()
+          : 'TBA'
+        : '',
+    [error, tvData?.first_air_date]
+  );
 
-    type = !tvData.type ? 'TBA' : tvData.type;
-
-    tvFacts = {
-      status: tvStatus,
-      language: ogLanguage,
-      network: network,
-      type: type,
-    };
-  }
-
-  if (characters.length > 2) {
-    characters.splice(2);
-  }
-
-  if (creators.length > 3) {
-    creators.splice(3);
-  }
-
-  let crew = [...creators, ...characters];
+  const endYear = useMemo(
+    () =>
+      !error
+        ? tvData?.status === 'Ended' || tvData.status === 'Canceled'
+          ? '- ' + new Date(tvData?.last_air_date).getFullYear()
+          : '- '
+        : '',
+    [error, tvData?.last_air_date, tvData?.status]
+  );
 
   return (
     <>
       <Head>
         <title>
           {!error
-            ? `${tvData.name} (${getyear}
-          ${endyear}) - Cinephiled`
+            ? `${tvData.name} (${getYear}
+          ${endYear}) - Cinephiled`
             : 'Not Found - Cinephiled'}
         </title>
         {!error && (
           <>
             <meta
               property='og:image'
-              content={`https://image.tmdb.org/t/p/w780${tvData.backdrop_path}`}
+              content={`https://image.tmdb.org/t/p/w780${tvData?.backdrop_path}`}
               key='og_image'
             />
             <meta
               property='og:title'
-              content={`${tvData.name} (${getyear}
-          ${endyear}) - Cinephiled`}
+              content={`${tvData?.name} (${getYear}
+          ${endYear}) - Cinephiled`}
             ></meta>
           </>
         )}
@@ -127,13 +141,14 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
         <Error404>404</Error404>
       ) : (
         <>
+          {/* tv info hero section */}
           <HeroDetailsContainer className='position-relative mb-auto'>
             <HeroBgContainer className='position-absolute'>
               <HeroBg className='position-absolute text-center'>
                 <Image
                   src={
                     tvData.backdrop_path
-                      ? `https://image.tmdb.org/t/p/w1280${tvData.backdrop_path}`
+                      ? `https://image.tmdb.org/t/p/w1280${tvData?.backdrop_path}`
                       : '/Images/Hex.png'
                   }
                   alt='tv-backdrop'
@@ -142,7 +157,7 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
                   priority
                 />
               </HeroBg>
-              <DominantColor image={tvData.poster_path} />
+              <DominantColor image={tvData?.poster_path} />
             </HeroBgContainer>
             <DetailsHeroWrap>
               <HeroImgWrapper>
@@ -150,7 +165,7 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
                   <Image
                     src={
                       tvData.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${tvData.poster_path}`
+                        ? `https://image.tmdb.org/t/p/w500${tvData?.poster_path}`
                         : '/Images/DefaultImage.png'
                     }
                     alt='tv-poster'
@@ -183,21 +198,25 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
               <HeroInfo className='d-flex'>
                 <TVDetails
                   tvData={tvData}
-                  date={getyear}
+                  date={getYear}
                   runtime={epRuntime}
-                  crew={crew}
+                  crew={crewData}
                 />
               </HeroInfo>
             </DetailsHeroWrap>
           </HeroDetailsContainer>
+
+          {/* tv facts */}
           <TVFacts facts={tvFacts} languages={languages} />
+
+          {/* tv tabs */}
           <TVTab
             id={tvData.id}
             cast={cast}
-            seasons={tvData.seasons}
-            reviews={reviewDetails.results}
-            backdrops={backdrops}
-            posters={posters}
+            seasons={tvData?.seasons}
+            reviews={tvData?.reviews?.results ?? []}
+            backdrops={tvData?.images?.backdrops ?? []}
+            posters={tvData?.images?.posters ?? []}
           />
         </>
       )}
@@ -237,7 +256,7 @@ TvShow.getInitialProps = async (ctx) => {
         tvData,
         error,
         languages,
-        socialIds,
+        socialIds
       };
     }
   } catch {

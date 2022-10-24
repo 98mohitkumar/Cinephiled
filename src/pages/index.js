@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Hero from '../components/Hero/Hero';
-import IndexTab from '../components/Popular/IndexTab';
+import IndexTab from '../components/IndexTab/IndexTab';
 import { Error404 } from '../styles/GlobalComponents';
 
 export default function Home({ moviesData, TVData, error }) {
@@ -31,7 +31,7 @@ export default function Home({ moviesData, TVData, error }) {
 
         return {
           trendingMoviesArr: trendingMoviesResults.results,
-          trendingTvArr: trendingTvResults.results,
+          trendingTvArr: trendingTvResults.results
         };
       }
 
@@ -53,7 +53,7 @@ export default function Home({ moviesData, TVData, error }) {
       <div>
         <Error404>404</Error404>
         <p className='fs-4 text-center'>
-          Please check your internet connection.
+          Please check your internet connection or try again later.
         </p>
       </div>
     );
@@ -67,7 +67,11 @@ export default function Home({ moviesData, TVData, error }) {
           {/* Preloads */}
           <link rel='preload' href='/Images/poster.webp' as='image' />
         </Head>
+
+        {/* hero section */}
         <Hero />
+
+        {/* index tabs */}
         <IndexTab
           moviesData={moviesData}
           TVData={TVData}
@@ -103,14 +107,14 @@ export async function getStaticProps() {
         props: {
           moviesData,
           TVData,
-          error,
+          error
         },
-        revalidate: 3600,
+        revalidate: 3600
       };
     }
   } catch {
     return {
-      props: { error: true },
+      props: { error: true }
     };
   }
 }

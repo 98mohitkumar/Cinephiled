@@ -71,23 +71,28 @@ export const Error404 = styled.h1`
 
 export const DetailsWrapper = styled.div`
   min-height: 100vh;
-
-  .keywordResults {
-    padding: 2rem 6rem;
-    @media only ${(props) => props.theme.breakpoints.ip} {
-      padding: 1rem 3rem;
-    }
-
-    @media only ${(props) => props.theme.breakpoints.sm} {
-      padding: 1rem;
-    }
-  }
 `;
 
 export const HeroDetailsContainer = styled.div`
   width: 100%;
-  min-height: 40rem;
   overflow: hidden;
+  padding: 4rem 4.2vw;
+
+  @media only ${(props) => props.theme.breakpoints.lg} {
+    padding: 2.5rem 2rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    padding: 2rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 2rem 1.25rem;
+  }
+
+  &.person-details {
+    min-height: auto;
+  }
 `;
 
 export const HeroBgContainer = styled.div`
@@ -155,60 +160,32 @@ export const HeroImg = styled.div`
 `;
 
 export const DetailsHeroWrap = styled.div`
-  padding: 3.5rem 4.2vw;
   display: grid;
-  grid-template-columns: 315px 1fr;
+  grid-template-columns: 17rem 1fr;
   align-items: center;
   justify-items: center;
-  min-height: 40rem;
-  gap: 0rem 2rem;
+  min-height: 35rem;
+  gap: 0rem 3rem;
 
   &.no-grid {
     display: block;
-    padding: 0 6vw;
     min-height: auto;
     margin-top: 2rem;
-
-    @media only ${(props) => props.theme.breakpoints.lg} {
-      padding: 0rem 2rem;
-    }
-
-    @media only ${(props) => props.theme.breakpoints.ip} {
-      margin-top: 0px;
-    }
-
-    @media only ${(props) => props.theme.breakpoints.xs} {
-      padding: 0rem 1.1rem;
-    }
   }
 
   @media only ${(props) => props.theme.breakpoints.lg} {
     grid-template-columns: 280px 1fr;
-    padding: 3rem 2rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 3rem 1rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 2rem 5px;
+    gap: 2rem;
   }
 `;
 
 export const HeroInfo = styled.div`
-  padding: 1rem;
   width: 100%;
   height: 100%;
-`;
-
-export const FlexWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-direction: column;
 `;
 
 export const FactsFlexWrapper = styled.div`
@@ -252,19 +229,11 @@ export const SearchHeading = styled.h1`
 export const SearchContainer = styled.div`
   width: 100%;
   height: auto;
-  padding: 3rem 6rem;
   margin-bottom: auto;
+  padding: 3rem 4.2vw;
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    padding: 3rem 4.5rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    padding: 3rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 3rem 1rem;
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 3rem 1.25rem;
   }
 `;
 
@@ -275,15 +244,8 @@ export const BadQuery = styled.h1`
 `;
 
 export const SearchResultsContainer = styled.div`
-  padding: 2rem 3rem;
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    padding: 2rem 1rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1rem 0rem;
-  }
+  width: clamp(350px, 85vw, 1400px);
+  margin: auto;
 `;
 
 export const EmptySearch = styled.h3`
@@ -377,293 +339,6 @@ export const NoDataText = styled.p`
   font-size: 2rem;
 `;
 
-export const RecommendationsContainer = styled.div`
-  width: 100%;
-  padding: 1rem 4.2vw;
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    padding: 1rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0.5rem 1.1rem;
-  }
-`;
-
-export const RecommendationsGrid = styled.div`
-  display: grid;
-  place-items: center;
-  grid-template-columns: repeat(5, 1fr);
-
-  @media only ${(props) => props.theme.breakpoints.xl} {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    grid-template-columns: 1fr;
-  }
-`;
-
-export const CastContainer = styled.div`
-  width: 100%;
-  padding: 2rem;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1rem;
-  }
-`;
-
-export const CastGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 210px));
-  justify-items: center;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 2rem;
-  padding: 1rem 4rem;
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
-    padding: 1rem 2rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    gap: 2rem;
-    padding: 1rem 0.5rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 1rem 0rem;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 180px));
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    gap: 0.35rem 1.25rem;
-    padding: 0rem;
-    grid-template-columns: repeat(2, 170px);
-  }
-`;
-
-export const CastImg = styled.div`
-  width: 100%;
-  height: 230px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
-    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
-    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
-  overflow: hidden;
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    height: 210px;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    height: 180px;
-  }
-`;
-
-export const CastWrapper = styled.div`
-  width: 185px;
-  align-self: flex-start;
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    width: 170px;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    width: 150px;
-  }
-`;
-
-export const ReviewsContainer = styled.div`
-  width: 100%;
-  padding: 2rem;
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    padding: 1rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0rem 1rem;
-  }
-`;
-
-export const ReviewsWrap = styled.div`
-  width: 100%;
-  max-width: 1000px;
-  padding: 1rem 0rem;
-  margin: 0rem auto 2rem auto;
-  overflow: hidden;
-
-  &:not(:last-of-type) {
-    border-bottom: 1px solid grey;
-  }
-`;
-
-export const Review = styled.p`
-  padding: 1rem 0rem 0rem 0rem;
-`;
-
-export const ReviewAuthorWrap = styled.div`
-  max-width: max-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-
-  & span {
-    font-weight: bold;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    & span {
-      font-size: 16px;
-    }
-  }
-`;
-
-export const ReviewAuthorImg = styled.div`
-  min-width: 50px;
-  height: 50px;
-  background: ${(props) =>
-    `Url(https://avatars.dicebear.com/api/bottts/${props.id}.svg) no-repeat center center / cover`};
-`;
-
-export const BackdropsContainer = styled.div`
-  width: 100%;
-  padding: 3rem 4.5vw;
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    padding: 3rem 2rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 1rem;
-  }
-`;
-
-export const BackdropsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  place-items: center;
-  gap: 2.5rem;
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    gap: 2rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    gap: 1.5rem;
-  }
-`;
-
-export const BackdropsImgContainer = styled.div`
-  width: 100%;
-  aspect-ratio: 1.68;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
-    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
-    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
-`;
-
-export const BackdropsImg = styled.div`
-  width: 100%;
-  height: 100%;
-
-  .media {
-    transition: transform 0.25s cubic-bezier(0.79, 0.14, 0.15, 0.86);
-
-    @media ${(props) => props.theme.breakpoints.hover} {
-      &:hover {
-        transform: scale(1.05);
-      }
-    }
-  }
-`;
-
-export const PostersContainer = styled.div`
-  width: 100%;
-  padding: 3rem 4.5vw;
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    padding: 3rem 2rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 1rem;
-  }
-`;
-
-export const PostersWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  place-items: center;
-  gap: 2rem;
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-`;
-
-export const PostersImg = styled.div`
-  width: 100%;
-  aspect-ratio: 1 / 1.54;
-  border-radius: 12px;
-  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
-    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
-    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
-  overflow: hidden;
-`;
-
-export const RecommendedWrapper = styled.div`
-  width: 100%;
-  padding: 1rem;
-  align-self: flex-start;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0.5rem 0rem;
-  }
-`;
-
-export const RecommendedImg = styled.div`
-  aspect-ratio: 1.6 / 1;
-  border-radius: 12px;
-  transition: box-shadow 0.25s ease-in;
-  cursor: pointer;
-  overflow: hidden;
-
-  @media ${(props) => props.theme.breakpoints.hover} {
-    &:hover {
-      box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
-        0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
-        0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
-    }
-  }
-`;
-
 export const HeroImgWrapper = styled.div`
   width: 100%;
   height: max-content;
@@ -672,13 +347,11 @@ export const HeroImgWrapper = styled.div`
   place-items: center;
   gap: 2rem 0rem;
   align-self: flex-start;
-  padding-top: 1rem;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     padding: 0rem;
     grid-template-columns: 192px;
     justify-items: flex-start;
-    padding: 0rem 1rem;
     gap: 2rem;
 
     & > div:first-child {
@@ -764,9 +437,13 @@ export const Loader = styled.div`
 `;
 
 export const SeasonExpandedContainer = styled.div`
-  width: 100%;
-  padding: 3rem 6vw;
+  width: clamp(350px, 90vw, 1200px);
+  padding: 3rem 4.2vw;
   margin-bottom: auto;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 1.25rem;
+  }
 `;
 
 export const SeasonShowcaseWrapper = styled.div`
@@ -979,6 +656,10 @@ export const LightsInOut = styled.div`
       : 'display: none'};
   inset: 22rem 0 0 0;
   cursor: pointer;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    inset: 24rem 0 0 0;
+  }
 `;
 
 export const EasterText = styled.span`
@@ -1006,31 +687,4 @@ export const EasterText = styled.span`
     z-index: 11;
   }
 }`};
-`;
-
-export const MediaDownloadButton = styled.div`
-  width: 40px;
-  height: 40px;
-  background: ${(props) => props.theme.colors.primary1};
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  border-radius: 10px;
-  z-index: 10;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 0 2rem rgb(12 12 12 /0.4);
-  opacity: 0.75;
-  transition: all 0.25s ease-in-out;
-
-  svg {
-    pointer-events: none;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.hover} {
-    &:hover {
-      opacity: 0.6;
-      transform: scale(1.1);
-    }
-  }
 `;

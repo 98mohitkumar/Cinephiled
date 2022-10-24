@@ -1,44 +1,34 @@
 import Link from 'next/link';
 import {
-  MoviesSection,
+  CardsContainerGrid,
   Cards,
   CardImg,
   Rating,
-  MoviesInfo,
-  MoviesInfoTitle,
-  ReleaseDate,
+  CardInfo,
+  InfoTitle,
+  ReleaseDate
 } from '../Popular/PopularStyles';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import useGetReleaseDates from '../../hooks/useGetReleaseDates';
 
 const TrendingMovies = ({ movies }) => {
   movies.forEach((item) => {
     if (item.vote_average === 0) item.vote_average = 'NR';
   });
 
-  let arr = [];
-
-  function releaseDates() {
-    movies.forEach((item) =>
-      arr.push(
-        new Date(item.release_date.toString()).toDateString().slice(4, -5) +
-          ', ' +
-          new Date(item.release_date.toString()).getFullYear()
-      )
-    );
-  }
-  releaseDates();
+  const releaseDates = useGetReleaseDates(movies);
 
   return (
     <>
-      <MoviesSection className='p-5'>
+      <CardsContainerGrid>
         {movies.length > 0 &&
           movies.map((movie, i) => (
             <Cards key={movie.id}>
               <motion.div
                 whileHover={{
                   scale: 1.05,
-                  transition: { duration: 0.1 },
+                  transition: { duration: 0.1 }
                 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -59,7 +49,7 @@ const TrendingMovies = ({ movies }) => {
                         objectFit='cover'
                         className='poster'
                       />
-                      <Rating className='d-flex justify-content-center align-items-center me-3'>
+                      <Rating className='d-flex justify-content-center align-items-center'>
                         {movie.vote_average === 'NR'
                           ? movie.vote_average
                           : movie.vote_average.toFixed(1)}
@@ -68,13 +58,13 @@ const TrendingMovies = ({ movies }) => {
                   </a>
                 </Link>
               </motion.div>
-              <MoviesInfo>
-                <MoviesInfoTitle>{movie.title}</MoviesInfoTitle>
-                <ReleaseDate>{arr[i]}</ReleaseDate>
-              </MoviesInfo>
+              <CardInfo>
+                <InfoTitle>{movie.title}</InfoTitle>
+                <ReleaseDate>{releaseDates[i]}</ReleaseDate>
+              </CardInfo>
             </Cards>
           ))}
-      </MoviesSection>
+      </CardsContainerGrid>
     </>
   );
 };

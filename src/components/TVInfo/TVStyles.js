@@ -1,22 +1,10 @@
 import styled from 'styled-components';
 
 export const SeasonsContainer = styled.div`
-  padding: 3rem 5rem;
-
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    padding: 3rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    padding: 3rem 2rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 3rem 1rem;
-  }
+  padding: 1rem 4.2vw;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1rem;
+    padding: 1.25rem;
   }
 `;
 

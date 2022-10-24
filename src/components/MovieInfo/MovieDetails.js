@@ -13,7 +13,7 @@ import {
   Tagline,
   ReleaseDateWrapper,
   Overview,
-  Light,
+  Light
 } from './MovieDetailsStyles';
 
 import Link from 'next/link';
@@ -24,7 +24,7 @@ const MovieDetails = ({
   runtime,
   crew,
   easter,
-  showEaster,
+  showEaster
 }) => {
   const releaseDate = !movieDetailsData.release_date
     ? 'TBA'
@@ -32,7 +32,7 @@ const MovieDetails = ({
         .toDateString()
         .slice(4, -5) +
       ', ' +
-      new Date(movieDetailsData.release_date.toString()).getFullYear();
+      date;
 
   movieDetailsData.genres.length > 3 && movieDetailsData.genres.splice(3);
 

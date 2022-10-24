@@ -1,22 +1,22 @@
 import { useState, useEffect, useCallback } from 'react';
-import Backdrops from '../CommonComponents/Backdrops';
-import Cast from '../CommonComponents/Cast';
-import Posters from '../CommonComponents/Posters';
-import Reviews from '../CommonComponents/Reviews';
+import Backdrops from '../Backdrops/Backdrops';
+import Cast from '../Cast/Cast';
+import Posters from '../Posters/Posters';
+import Reviews from '../Reviews/Reviews';
 import BackdropsSvg from '../Svg/backdrops';
 import CastSvg from '../Svg/cast';
 import PostersSvg from '../Svg/posters';
 import ReviewsSvg from '../Svg/reviews';
 import { AnimatePresence, motion } from 'framer-motion';
-import MovieRecommendations from './MovieRecommendations';
 import {
   TabIcon,
   TabSelectionTitle,
   TabSlider,
-  TabWrapper,
+  TabWrapper
 } from './MovieTabStyles';
+import Recommendations from '../Recommendations/Recommendations';
 
-const MovieTab = (props) => {
+const MovieTab = ({ id, cast, reviews, posters, backdrops }) => {
   const [tabState, setTabState] = useState('cast');
   const [moviesRecommended, setMoviesRecommended] = useState([]);
 
@@ -37,7 +37,7 @@ const MovieTab = (props) => {
 
     async function getRecommended() {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${props.id}/recommendations?api_key=${api_key}&language=en-US&page=1`,
+        `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${api_key}&language=en-US&page=1`,
         { signal: abortCtrl.signal }
       );
 
@@ -53,7 +53,7 @@ const MovieTab = (props) => {
     return () => {
       abortCtrl.abort();
     };
-  }, [props.id]);
+  }, [id]);
 
   return (
     <>
@@ -95,7 +95,7 @@ const MovieTab = (props) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <Cast cast={props.cast} />
+            <Cast cast={cast} />
           </motion.div>
         )}
 
@@ -107,7 +107,7 @@ const MovieTab = (props) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <Reviews reviews={props.reviews} />
+            <Reviews reviews={reviews} />
           </motion.div>
         )}
 
@@ -119,7 +119,7 @@ const MovieTab = (props) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <Backdrops backdrops={props.backdrops} />
+            <Backdrops backdrops={backdrops} />
           </motion.div>
         )}
 
@@ -131,14 +131,14 @@ const MovieTab = (props) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <Posters posters={props.posters} />
+            <Posters posters={posters} />
           </motion.div>
         )}
       </AnimatePresence>
       <h1 className='display-6 fw-bold text-white text-center'>
         Recommendations
       </h1>
-      <MovieRecommendations movies={moviesRecommended} />
+      <Recommendations data={moviesRecommended} type='movies' />
     </>
   );
 };

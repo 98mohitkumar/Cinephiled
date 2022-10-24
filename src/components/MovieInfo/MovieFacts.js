@@ -3,11 +3,10 @@ import {
   FactsFieldSet,
   FactsLegend,
   FactsWrapper,
-  Span,
+  Span
 } from './MovieDetailsStyles';
 
 import countryToCurrency from 'country-to-currency';
-
 import getSymbolFromCurrency from 'currency-symbol-map';
 
 const MovieFacts = ({ facts, languages, country }) => {

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SearchTabWrapper = styled.div`
-  width: 60%;
+  width: clamp(350px, 90vw, 850px);
   height: 4.5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -14,33 +14,14 @@ export const SearchTabWrapper = styled.div`
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   position: relative;
 
-  ${(props) =>
-    `& div:nth-child(2) {
-    ${props.tabState === 'movies' ? `color: white;` : `color: black;`}
-  }
-
-  & div:nth-child(3) {
-    ${props.tabState === 'tv' ? `color: white;` : `color: black;`}
-  }
-
-  & div:nth-child(4) {
-    ${props.tabState === 'keywords' ? `color: white;` : `color: black;`}
-  }
-
-`}
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    width: 80%;
-  }
-
   @media only ${(props) => props.theme.breakpoints.ip} {
     height: 4rem;
-    width: 90%;
     font-size: 18px;
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
+    font-size: 14px;
     width: 100%;
-    font-size: 0.92rem;
     margin: 0rem auto 1.75rem;
   }
 
@@ -76,6 +57,7 @@ export const SearchTabSelectionTitle = styled.div`
   cursor: pointer;
   z-index: 5;
   transition: color 0.325s cubic-bezier(0.77, 0, 0.18, 1);
+  color: ${({ isActive }) => (isActive ? 'white' : 'black')};
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0rem;
@@ -87,6 +69,7 @@ export const Keyword = styled.h2`
   font-weight: 500;
   transition: color 0.3s ease-in;
   cursor: pointer;
+  margin: 1rem 0rem;
 
   &:hover {
     color: white;
