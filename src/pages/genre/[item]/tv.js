@@ -1,30 +1,32 @@
-import Head from 'next/head';
 import { NoDataText, Error404 } from '../../../styles/GlobalComponents/index';
 import {
   RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
   RecommendedWrapper,
-  InfoTitle,
+  InfoTitle
 } from '../../../components/Recommendations/RecommendationsStyles';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
 import useInfiniteQuery from '../../../hooks/useInfiniteQuery';
 import Image from 'next/image';
+import MetaWrapper from '../../../components/MetaWrapper';
 
 const TvShows = ({ renderList, genreName, error, genreId }) => {
   const { list } = useInfiniteQuery(3, 'tv', genreId);
 
   return (
     <>
-      <Head>
-        <title>
-          {!error
+      <MetaWrapper
+        title={
+          !error
             ? `${genreName} TV Shows - Cinephiled`
-            : 'Not Found - Cinephiled'}
-        </title>
-      </Head>
+            : 'Not Found - Cinephiled'
+        }
+        description={!error ? `${genreName} TV Shows` : 'Not Found'}
+        url={`https://cinephiled.vercel.app/genre/${genreId}-${genreName}/tv`}
+      />
 
       {error ? (
         <Error404>404</Error404>
@@ -46,7 +48,7 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                       <motion.div
                         whileHover={{
                           scale: 1.05,
-                          transition: { duration: 0.1 },
+                          transition: { duration: 0.1 }
                         }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -124,12 +126,12 @@ TvShows.getInitialProps = async (ctx) => {
         renderList,
         genreName,
         genreId,
-        error,
+        error
       };
     }
   } catch {
     return {
-      error: true,
+      error: true
     };
   }
 };

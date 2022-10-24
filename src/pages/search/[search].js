@@ -1,5 +1,5 @@
-import Head from 'next/head';
 import { useMemo } from 'react';
+import MetaWrapper from '../../components/MetaWrapper';
 import SearchTab from '../../components/SearchTab/SearchTab';
 import {
   BadQuery,
@@ -44,12 +44,12 @@ const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
 
   return (
     <>
-      <Head>
-        <title>
-          {error ? 'Not Found - Cinephiled' : `${searchQuery} - Search`}
-        </title>
-        <meta property='og:title' content={searchQuery} />
-      </Head>
+      <MetaWrapper
+        title={error ? 'Not Found - Cinephiled' : `${searchQuery} - Search`}
+        description={`Search results matching : ${searchQuery}`}
+        url={`https://cinephiled.vercel.app/search/${searchQuery}`}
+      />
+
       {error ? (
         <Error404>404</Error404>
       ) : movieRes.length === 0 && tvRes.length === 0 ? (

@@ -1,13 +1,13 @@
-import Head from 'next/head';
 import {
   AboutBackground,
   AboutContainer,
-  AboutCreditsWrapper,
+  AboutCreditsWrapper
 } from '../styles/GlobalComponents';
 import { FooterAttribute } from '../components/Footer/FooterStyles';
 import { useEffect } from 'react';
 import Image from 'next/image';
 import aboutBackground from '/public/Images/ShowCase.webp';
+import MetaWrapper from '../components/MetaWrapper';
 
 const About = () => {
   useEffect(() => {
@@ -16,10 +16,13 @@ const About = () => {
 
   return (
     <>
-      <Head>
-        <title>About - Cinephiled</title>
-        <meta property='og:title' content='About - Cinephiled' />
-      </Head>
+      <MetaWrapper
+        title='About - Cinephiled'
+        description='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters.'
+        url='https://cinephiled.vercel.app'
+        image='https://i.imgur.com/Jtl3tJG.png'
+      />
+
       <AboutContainer className='text-center'>
         <AboutBackground>
           <Image

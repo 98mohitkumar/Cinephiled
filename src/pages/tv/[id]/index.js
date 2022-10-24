@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import DominantColor from '../../../components/DominantColor/DominantColor';
 import {
   Gradient,
@@ -22,6 +21,7 @@ import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
 import SocialMediaLinks from '../../../components/SocialMediaLinks/SocialMediaLinks';
 import Image from 'next/image';
 import { useMemo } from 'react';
+import MetaWrapper from '../../../components/MetaWrapper';
 
 const TvShow = ({ tvData, error, languages, socialIds }) => {
   const crew = useMemo(
@@ -107,36 +107,25 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
     () =>
       !error
         ? tvData?.status === 'Ended' || tvData.status === 'Canceled'
-          ? '- ' + new Date(tvData?.last_air_date).getFullYear()
-          : '- '
+          ? new Date(tvData?.last_air_date).getFullYear()
+          : ''
         : '',
     [error, tvData?.last_air_date, tvData?.status]
   );
 
   return (
     <>
-      <Head>
-        <title>
-          {!error
-            ? `${tvData.name} (${getYear}
-          ${endYear}) - Cinephiled`
-            : 'Not Found - Cinephiled'}
-        </title>
-        {!error && (
-          <>
-            <meta
-              property='og:image'
-              content={`https://image.tmdb.org/t/p/w780${tvData?.backdrop_path}`}
-              key='og_image'
-            />
-            <meta
-              property='og:title'
-              content={`${tvData?.name} (${getYear}
-          ${endYear}) - Cinephiled`}
-            ></meta>
-          </>
-        )}
-      </Head>
+      <MetaWrapper
+        title={
+          !error
+            ? `${tvData?.name} (${getYear} - ${endYear}) - Cinephiled`
+            : 'Not Found - Cinephiled'
+        }
+        description={tvData?.overview}
+        image={`https://image.tmdb.org/t/p/w780${tvData?.backdrop_path}`}
+        url={`https://cinephiled.vercel.app/tv/${tvData?.id}`}
+      />
+
       {error ? (
         <Error404>404</Error404>
       ) : (

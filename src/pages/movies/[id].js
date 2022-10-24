@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import {
   HeroBg,
   Error404,
@@ -25,6 +24,7 @@ import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useMemo } from 'react';
 import { useCallback } from 'react';
+import MetaWrapper from '../../components/MetaWrapper';
 
 const Movie = ({ movieDetails, error, languages, socialIds }) => {
   let easter = useRef(false);
@@ -145,47 +145,19 @@ const Movie = ({ movieDetails, error, languages, socialIds }) => {
     ]
   );
 
-  console.log(movieDetails);
-
   return (
     <>
-      <Head>
-        <title>
-          {!error
+      <MetaWrapper
+        title={
+          !error
             ? `${movieDetails?.title} (${getYear}) - Cinephiled`
-            : 'Not Found - Cinephiled'}
-        </title>
-        {!error && (
-          <>
-            <meta
-              property='og:image'
-              content={`https://image.tmdb.org/t/p/w780${movieDetails?.backdrop_path}`}
-              key='og_image'
-            />
-            <meta
-              property='og:title'
-              content={`${movieDetails?.title} (${getYear}) - Cinephiled`}
-              key='description'
-            />
-            <meta
-              property='og:description'
-              content={movieDetails?.overview}
-              key='og_description'
-            />
+            : 'Not Found - Cinephiled'
+        }
+        image={`https://image.tmdb.org/t/p/w780${movieDetails?.backdrop_path}`}
+        description={movieDetails?.overview}
+        url={`https://cinephiled.vercel.app/movies/${movieDetails?.id}`}
+      />
 
-            <meta
-              property='twitter:description'
-              content={movieDetails?.overview}
-              key='twitter_description'
-            />
-            <meta
-              property='twitter:image'
-              content={`https://image.tmdb.org/t/p/w780${movieDetails?.backdrop_path}`}
-              key='twitter_image'
-            />
-          </>
-        )}
-      </Head>
       {error ? (
         <Error404>404</Error404>
       ) : (

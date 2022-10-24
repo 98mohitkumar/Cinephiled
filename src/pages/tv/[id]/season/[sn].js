@@ -1,6 +1,6 @@
-import Head from 'next/head';
 import Image from 'next/image';
 import { useCallback } from 'react';
+import MetaWrapper from '../../../../components/MetaWrapper';
 import {
   SeasonInfoMain,
   SeasonInfoWrapper,
@@ -20,7 +20,7 @@ import {
   Rating
 } from '../../../../styles/GlobalComponents';
 
-const Seasons = ({ error, data }) => {
+const Seasons = ({ error, data, tvId, seasonNumber }) => {
   const getYear = useCallback((date) => {
     const year = !date ? 'TBA' : new Date(date).getFullYear();
     return year;
@@ -44,15 +44,13 @@ const Seasons = ({ error, data }) => {
 
   return (
     <>
-      <Head>
-        <title>{!error ? data.name : 'Not Found - Cinephiled'}</title>
-        <meta
-          property='og:image'
-          content={`https://image.tmdb.org/t/p/w780${data.poster_path}`}
-          key='og_image'
-        />
-        <meta property='og:title' content={data.name}></meta>
-      </Head>
+      <MetaWrapper
+        title={!error ? data.name : 'Not Found - Cinephiled'}
+        description={data?.overview}
+        image={`https://image.tmdb.org/t/p/w780${data?.poster_path}`}
+        url={`https://cinephiled.vercel.app/tv/${tvId}/season/${seasonNumber}`}
+      />
+
       {error ? (
         <Error404>404</Error404>
       ) : (
@@ -142,7 +140,7 @@ Seasons.getInitialProps = async (ctx) => {
 
     const res = await response.json();
 
-    return { error, data: res };
+    return { error, data: res, tvId: tv_id, seasonNumber };
   } catch {
     return { error: true };
   }

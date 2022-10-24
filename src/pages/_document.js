@@ -73,8 +73,8 @@ export default class MyDocument extends Document {
           <link rel='manifest' href='/manifest.json' />
           <meta name='theme-color' content='#121212' />
           <meta name='keywords' content='Cinema, Tv, Movies'></meta>
+          <meta property='og:type' content='website' />
           <meta property='twitter:card' content='summary_large_image' />
-          <meta property='twitter:title' content='Cinephiled' />
         </Head>
         <body>
           <Main />

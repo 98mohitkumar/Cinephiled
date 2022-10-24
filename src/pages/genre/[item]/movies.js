@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { NoDataText, Error404 } from '../../../styles/GlobalComponents/index';
 import {
   RecommendationsContainer,
@@ -12,19 +11,20 @@ import { motion } from 'framer-motion';
 import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
 import useInfiniteQuery from '../../../hooks/useInfiniteQuery';
 import Image from 'next/image';
+import MetaWrapper from '../../../components/MetaWrapper';
 
 const Movies = ({ renderList, genreName, error, genreId }) => {
   const { list } = useInfiniteQuery(3, 'movie', genreId);
 
   return (
     <>
-      <Head>
-        <title>
-          {!error
-            ? `${genreName} Movies - Cinephiled`
-            : 'Not Found - Cinephiled'}
-        </title>
-      </Head>
+      <MetaWrapper
+        title={
+          !error ? `${genreName} Movies - Cinephiled` : 'Not Found - Cinephiled'
+        }
+        description={!error ? `${genreName} Movies` : 'Not Found'}
+        url={`https://cinephiled.vercel.app/genre/${genreId}-${genreName}/movies`}
+      />
 
       {error ? (
         <Error404>404</Error404>

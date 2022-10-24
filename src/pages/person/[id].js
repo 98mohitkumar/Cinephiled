@@ -1,30 +1,20 @@
-import Head from 'next/head';
+import MetaWrapper from '../../components/MetaWrapper';
 import PersonDetails from '../../components/PersonDetails/PersonDetails';
 import { Error404 } from '../../styles/GlobalComponents';
 
 const Person = ({ error, personDetails }) => {
   return (
     <>
-      <Head>
-        <title>
-          {!error
+      <MetaWrapper
+        title={
+          !error
             ? `${personDetails.name} - Cinephiled`
-            : 'Not Found - Cinephiled'}
-        </title>
-        {!error && (
-          <>
-            <meta
-              property='og:image'
-              content={`https://image.tmdb.org/t/p/w780${personDetails.profile_path}`}
-              key='og_image'
-            />
-            <meta
-              property='og:title'
-              content={`${personDetails.name} - Cinephiled`}
-            ></meta>
-          </>
-        )}
-      </Head>
+            : 'Not Found - Cinephiled'
+        }
+        image={`https://image.tmdb.org/t/p/w780${personDetails?.profile_path}`}
+        description={personDetails?.biography}
+        url={`https://cinephiled.vercel.app/person/${personDetails?.id}`}
+      />
 
       {error ? (
         <Error404>404</Error404>
@@ -52,7 +42,7 @@ Person.getInitialProps = async (ctx) => {
 
       return {
         personDetails,
-        error,
+        error
       };
     }
   } catch {

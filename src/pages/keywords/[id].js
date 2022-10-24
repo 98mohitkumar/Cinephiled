@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { useMemo } from 'react';
 import {
   Error404,
@@ -17,8 +16,9 @@ import {
   QueryDescription
 } from '../../styles/GlobalComponents';
 import Image from 'next/image';
+import MetaWrapper from '../../components/MetaWrapper';
 
-const Keyword = ({ error, results, name }) => {
+const Keyword = ({ error, results, name, id }) => {
   const movieReleaseDates = useMemo(
     () =>
       !error
@@ -38,10 +38,12 @@ const Keyword = ({ error, results, name }) => {
 
   return (
     <>
-      <Head>
-        <title>{!error ? `${name} - Movies` : 'Not Found - Cinephiled'}</title>
-        <meta property='og:title' content={name} />
-      </Head>
+      <MetaWrapper
+        title={!error ? `${name} - Movies` : 'Not Found - Cinephiled'}
+        description={`Movies matching the keyword : ${name}`}
+        url={`https://cinephiled.vercel.app/keywords/${id}-${name}`}
+      />
+
       {error ? (
         <Error404>404</Error404>
       ) : (
@@ -125,7 +127,12 @@ Keyword.getInitialProps = async (ctx) => {
     } else {
       const res = await response.json();
       const keywordRes = await keywordName.json();
-      return { error, results: res.results, name: keywordRes.name };
+      return {
+        error,
+        results: res.results,
+        name: keywordRes.name,
+        id: keyword_id
+      };
     }
   } catch {
     return { error: true };

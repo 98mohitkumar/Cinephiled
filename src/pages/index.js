@@ -1,7 +1,7 @@
-import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Hero from '../components/Hero/Hero';
 import IndexTab from '../components/IndexTab/IndexTab';
+import MetaWrapper from '../components/MetaWrapper';
 import { Error404 } from '../styles/GlobalComponents';
 
 export default function Home({ moviesData, TVData, error }) {
@@ -60,13 +60,15 @@ export default function Home({ moviesData, TVData, error }) {
   } else {
     return (
       <>
-        <Head>
-          <title>Cinephiled</title>
-          <meta property='og:title' content='Cinephiled' />
-
+        <MetaWrapper
+          title='Cinephiled'
+          description='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters.'
+          url='https://cinephiled.vercel.app'
+          image='https://i.imgur.com/Jtl3tJG.png'
+        >
           {/* Preloads */}
           <link rel='preload' href='/Images/poster.webp' as='image' />
-        </Head>
+        </MetaWrapper>
 
         {/* hero section */}
         <Hero />
