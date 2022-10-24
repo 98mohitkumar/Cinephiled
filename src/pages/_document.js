@@ -53,30 +53,28 @@ export default class MyDocument extends Document {
             rel='stylesheet'
           />
 
-          <link rel='apple-touch-icon' href='/apple-touch-icon.png'></link>
+          <link
+            rel='apple-touch-icon'
+            sizes='180x180'
+            href='/apple-touch-icon.png'
+          ></link>
+          <link
+            rel='icon'
+            type='image/png'
+            sizes='32x32'
+            href='/favicon-32x32.png'
+          ></link>
+          <link
+            rel='icon'
+            type='image/png'
+            sizes='16x16'
+            href='/favicon-16x16.png'
+          ></link>
           <link rel='manifest' href='/manifest.json' />
           <meta name='theme-color' content='#121212' />
           <meta name='keywords' content='Cinema, Tv, Movies'></meta>
-          <meta
-            name='description'
-            content='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters.'
-          />
-
-          <meta
-            property='og:description'
-            content='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters.'
-          />
-
           <meta property='twitter:card' content='summary_large_image' />
           <meta property='twitter:title' content='Cinephiled' />
-          <meta
-            property='twitter:description'
-            content='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, discription and posters.'
-          />
-          <meta
-            property='twitter:image'
-            content='https://i.imgur.com/Jtl3tJG.png'
-          />
         </Head>
         <body>
           <Main />

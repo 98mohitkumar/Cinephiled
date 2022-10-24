@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Loader } from '../styles/GlobalComponents';
 import Layout from '../components/Layout/Layout';
 import Head from 'next/head';
+import { Fragment } from 'react';
 
 function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,11 +29,38 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <meta
-          property='og:image'
-          content='https://i.imgur.com/Jtl3tJG.png'
-          key='og_image'
-        />
+        {router.asPath === '/' && (
+          <Fragment>
+            <meta
+              property='og:image'
+              content='https://i.imgur.com/Jtl3tJG.png'
+              key='og_image'
+            />
+
+            <meta
+              name='description'
+              content='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters.'
+              key='description'
+            />
+
+            <meta
+              property='og:description'
+              content='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters.'
+              key='og_description'
+            />
+
+            <meta
+              property='twitter:description'
+              content='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, discription and posters.'
+              key='twitter_description'
+            />
+            <meta
+              property='twitter:image'
+              content='https://i.imgur.com/Jtl3tJG.png'
+              key='twitter_image'
+            />
+          </Fragment>
+        )}
       </Head>
       <Theme>
         <AnimatePresence exitBeforeEnter>
