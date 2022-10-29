@@ -43,16 +43,18 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', navHandler);
   }, []);
 
-  const searchHandler = useCallback(() => {
-    if (router.asPath === '/') {
-      document.querySelector('.heroSearchInput').focus();
-    }
-  }, [router.asPath]);
-
   const hamburgerHandler = useCallback(() => {
     document.body.style.overflow = showHamburgerMenu ? 'auto' : 'hidden';
     setShowHamburgerMenu((prev) => !prev);
   }, [showHamburgerMenu]);
+
+  const searchHandler = useCallback(() => {
+    if (router.asPath === '/') {
+      document.body.style.overflow = 'auto';
+      setShowHamburgerMenu(false);
+      document.querySelector('.heroSearchInput').focus();
+    }
+  }, [router.asPath]);
 
   return (
     <Header>

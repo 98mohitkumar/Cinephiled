@@ -6,32 +6,32 @@ import TrendingMovies from '../Trending/TrendingMovies';
 import TrendingTv from '../Trending/TrendingTv';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback } from 'react';
-import useIntersection from '../../hooks/useIntersection';
-import { FloatingTab } from './IndexTabStyles';
+// import useIntersection from '../../hooks/useIntersection';
+// import { FloatingTab } from './IndexTabStyles';
 
 const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
   const [indexTabState, setIndexTabState] = useState('movies');
   const tabRef = useRef(null);
-  const { isVisible } = useIntersection(tabRef, '100px');
-  const [showTab, setShowTab] = useState(false);
+  // const { isVisible } = useIntersection(tabRef, '100px');
+  // const [showTab, setShowTab] = useState(false);
 
   useEffect(() => {
     const tabState = localStorage.getItem('indexTabState');
     tabState && setIndexTabState(tabState);
 
-    const scrollHandler = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 500
-      ) {
-        setShowTab(false);
-      } else {
-        setShowTab(true);
-      }
-    };
+    // const scrollHandler = () => {
+    //   if (
+    //     window.innerHeight + window.scrollY >=
+    //     document.body.offsetHeight - 500
+    //   ) {
+    //     setShowTab(false);
+    //   } else {
+    //     setShowTab(true);
+    //   }
+    // };
 
-    window.addEventListener('scroll', scrollHandler);
-    return () => window.removeEventListener('scroll', scrollHandler);
+    // window.addEventListener('scroll', scrollHandler);
+    // return () => window.removeEventListener('scroll', scrollHandler);
   }, []);
 
   const tabSelectionHandler = useCallback((tab) => {
@@ -86,25 +86,25 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
           </motion.div>
         )}
 
-        {!isVisible && tabRef.current && showTab && (
-          <FloatingTab
-            className='floating-tab'
-            as={motion.div}
-            key='floating-tab'
-            initial={{ opacity: 0.5 }}
-            animate={{
-              opacity: 1,
-              zIndex: 100
-            }}
-            exit={{ opacity: 0, zIndex: 100 }}
-          >
+        {/* <FloatingTab
+          className='floating-tab'
+          as={motion.div}
+          key='floating-tab'
+          initial={{ opacity: 0.5 }}
+          animate={{
+            opacity: 1,
+            zIndex: 100
+          }}
+          exit={{ opacity: 0, zIndex: 100 }}
+        >
+          {!isVisible && tabRef.current && showTab && (
             <TabSelector
               tabState={indexTabState}
               tabHandler={tabSelectionHandler}
               className='float'
             />
-          </FloatingTab>
-        )}
+          )}
+        </FloatingTab> */}
       </AnimatePresence>
     </>
   );
