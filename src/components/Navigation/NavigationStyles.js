@@ -15,8 +15,6 @@ export const NavBar = styled.nav`
   align-items: center;
   background-color: rgb(18 18 18 /0.95);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
   z-index: 20;
 
   &.show-nav {
@@ -160,14 +158,19 @@ export const HamburgerMenu = styled.div`
   left: 0;
   margin: auto;
   background-color: rgb(18 18 18 /0.95);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
   z-index: -1;
 
   .menu-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
     .navlink {
       display: block;
-      padding: 0.75rem 1.25rem;
+      padding: 1rem 1.25rem;
       font-size: 2rem;
       font-weight: 600;
     }

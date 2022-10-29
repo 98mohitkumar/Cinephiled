@@ -87,7 +87,9 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
         )}
 
         {!isVisible && tabRef.current && showTab && (
-          <motion.div
+          <FloatingTab
+            className='floating-tab'
+            as={motion.div}
             key='floating-tab'
             initial={{ opacity: 0.5 }}
             animate={{
@@ -96,14 +98,12 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
             }}
             exit={{ opacity: 0, zIndex: 100 }}
           >
-            <FloatingTab className='floating-tab'>
-              <TabSelector
-                tabState={indexTabState}
-                tabHandler={tabSelectionHandler}
-                className='float'
-              />
-            </FloatingTab>
-          </motion.div>
+            <TabSelector
+              tabState={indexTabState}
+              tabHandler={tabSelectionHandler}
+              className='float'
+            />
+          </FloatingTab>
         )}
       </AnimatePresence>
     </>
