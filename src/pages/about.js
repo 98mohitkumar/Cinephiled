@@ -24,15 +24,17 @@ const About = () => {
       />
 
       <AboutContainer className='text-center'>
-        <AboutBackground>
-          <Image
-            src={aboutBackground}
-            layout='fill'
-            alt='about-cinephiled-background'
-            objectFit='cover'
-            priority
-          />
-        </AboutBackground>
+        <div className='bg-wrapper'>
+          <AboutBackground>
+            <Image
+              src={aboutBackground}
+              layout='fill'
+              alt='about-cinephiled-background'
+              objectFit='cover'
+              priority
+            />
+          </AboutBackground>
+        </div>
 
         <h1 className='fw-bold display-3'>About the Project</h1>
         <p className='fs-5'>

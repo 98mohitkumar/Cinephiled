@@ -1,8 +1,8 @@
 import { Tab, Slider, Selection } from './IndexTabStyles';
 
-const TabSelector = ({ tabState, tabHandler }) => {
+const TabSelector = ({ tabState, tabHandler, tabRef, ...props }) => {
   return (
-    <Tab>
+    <Tab ref={tabRef} {...props}>
       <Slider state={tabState} />
       <Selection
         isActive={tabState === 'movies'}

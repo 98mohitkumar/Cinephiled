@@ -142,7 +142,7 @@ const Hero = () => {
             <div className='pb-2 d-flex justify-content-center align-items-end border-animated'>
               <UserInput
                 type='text'
-                className='form-control pb-1'
+                className='form-control pb-1 heroSearchInput'
                 placeholder='Search for a movie or tv show'
                 id='inputData'
                 ref={name}

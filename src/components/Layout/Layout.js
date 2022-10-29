@@ -1,7 +1,7 @@
-import { DetailsWrapper, Wrapper } from "../../styles/GlobalComponents";
-import Footer from "../Footer/Footer";
-import Navigation from "../Navigation/Navigation";
-import { motion } from "framer-motion";
+import { DetailsWrapper, Wrapper } from '../../styles/GlobalComponents';
+import Footer from '../Footer/Footer';
+import Navigation from '../Navigation/Navigation';
+import { motion } from 'framer-motion';
 
 const Layout = ({ children }) => {
   return (
@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
       transition={{ duration: 0.5 }}
     >
       <Wrapper>
-        <DetailsWrapper className="d-flex flex-column justify-content-between">
+        <DetailsWrapper className='d-flex flex-column justify-content-between'>
           <Navigation />
           {children}
           <Footer />

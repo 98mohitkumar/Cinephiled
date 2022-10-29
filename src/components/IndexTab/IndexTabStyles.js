@@ -13,6 +13,7 @@ export const Tab = styled.div`
     0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   position: relative;
+  pointer-events: all;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     height: 4rem;
@@ -22,6 +23,10 @@ export const Tab = styled.div`
   @media only ${(props) => props.theme.breakpoints.xs} {
     height: 3.25rem;
     border-radius: 10px;
+  }
+
+  &.float {
+    margin: 0rem auto 3rem auto;
   }
 `;
 
@@ -61,5 +66,26 @@ export const Selection = styled.div`
     padding: 0.2rem;
     font-size: 1rem;
     margin-top: 0px;
+  }
+`;
+
+export const FloatingTab = styled.div`
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  pointer-events: none;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(0deg, #121212 70%, transparent);
+    opacity: 0.5;
+    z-index: -1;
   }
 `;

@@ -4,7 +4,6 @@ export const Wrapper = styled.div`
   max-width: 2000px;
   margin: auto;
   position: relative;
-  overflow: hidden;
 `;
 
 export const Container = styled.div`
@@ -39,9 +38,19 @@ export const AboutContainer = styled.div`
   padding: 0rem 5vw;
   background-color: rgb(18 18 18 /0.95);
   flex: 2 1 0;
+  position: relative;
 
   h1 {
     margin: 28px 0px;
+  }
+
+  .bg-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    margin: auto;
+    overflow: hidden;
   }
 `;
 
