@@ -16,7 +16,7 @@ const useInfiniteQuery = (
 
   const endpoint = useMemo(
     () => ({
-      movieGenre: `https://api.themoviedb.org/3/discover/movies?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
+      movieGenre: `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
 
       tvGenre: `https://api.themoviedb.org/3/discover/tv?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
 

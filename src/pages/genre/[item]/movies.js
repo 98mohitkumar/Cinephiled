@@ -14,7 +14,7 @@ import Image from 'next/image';
 import MetaWrapper from '../../../components/MetaWrapper';
 
 const Movies = ({ renderList, genreName, error, genreId }) => {
-  const { list } = useInfiniteQuery(3, 'movie', genreId);
+  const { list } = useInfiniteQuery(3, 'movieGenre', genreId);
 
   return (
     <>
