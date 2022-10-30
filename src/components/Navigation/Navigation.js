@@ -3,7 +3,10 @@ import {
   HamburgerMenu,
   Header,
   Logo,
-  NavBar
+  MobileNav,
+  NavBar,
+  NavLinks,
+  Search
 } from './NavigationStyles';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -66,43 +69,42 @@ const Navigation = () => {
             </div>
           </a>
         </Link>
-        <div className='nav-links'>
+
+        <NavLinks>
           {navLinks.map(({ text, link }) => (
             <Link href={link} key={text}>
-              <a
-                className={`navlink ${router.asPath === link ? 'active' : ''}`}
-              >
+              <a className={`link ${router.asPath === link ? 'active' : ''}`}>
                 {text}
               </a>
             </Link>
           ))}
 
           {router.asPath === '/' && (
-            <div className='search' onClick={searchHandler}>
+            <Search onClick={searchHandler}>
               <BsSearch size='1.25rem' />
-            </div>
+            </Search>
           )}
-        </div>
+        </NavLinks>
 
-        <div className='mobile-nav'>
+        <MobileNav>
           {router.asPath === '/' && (
-            <div
-              className='search search-sm d-flex align-items-center'
+            <Search
+              className='search-sm'
               onClick={searchHandler}
+              key='search-icon'
             >
               <BsSearch size='1.5rem' />
-            </div>
+            </Search>
           )}
 
-          {/* hamburger icon */}
           <HamburgerIcon
             onClick={hamburgerHandler}
             active={showHamburgerMenu}
+            key='hamburger-menu'
           />
-        </div>
+        </MobileNav>
       </NavBar>
 
-      {/* hamburger menu */}
       <AnimatePresence>
         {showHamburgerMenu && (
           <HamburgerMenu

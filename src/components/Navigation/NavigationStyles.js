@@ -42,18 +42,25 @@ export const NavBar = styled.nav`
   )`};
   }
 
-  .nav-links {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: 1rem;
-
-    @media only ${(props) => props.theme.breakpoints.sm} {
-      display: none;
-    }
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    font-size: 1.25rem;
+    padding: 0rem 1.25rem;
   }
+`;
 
-  .navlink {
+export const Logo = styled.div`
+  min-width: 50px;
+  min-height: 30px;
+  background: url('/navLogo.png') no-repeat center center / contain;
+`;
+
+export const NavLinks = styled.div`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+
+  .link {
     color: white;
     padding: 1rem 2rem;
     transition: all 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55);
@@ -69,41 +76,37 @@ export const NavBar = styled.nav`
     color: ${(props) => props.theme.colors.accent2};
   }
 
-  .search {
-    padding: 1rem;
-    cursor: pointer;
-
-    @media ${(props) => props.theme.breakpoints.hover} {
-      &:hover {
-        color: ${(props) => props.theme.colors.accent2};
-      }
-    }
-  }
-
-  .search-sm {
-    padding: 0.5rem 1rem;
-  }
-
-  .mobile-nav {
-    gap: 1rem;
-    display: none;
-
-    @media only ${(props) => props.theme.breakpoints.sm} {
-      display: flex;
-      align-items: center;
-    }
-  }
-
   @media only ${(props) => props.theme.breakpoints.sm} {
-    font-size: 1.25rem;
-    padding: 0rem 1.25rem;
+    display: none;
   }
 `;
 
-export const Logo = styled.div`
-  min-width: 50px;
-  min-height: 30px;
-  background: url('/navLogo.png') no-repeat center center / contain;
+export const MobileNav = styled.div`
+  gap: 1rem;
+  display: none;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+export const Search = styled.div`
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &.search-sm {
+    padding: 0.5rem 1rem;
+  }
+
+  @media ${(props) => props.theme.breakpoints.hover} {
+    &:hover {
+      color: ${(props) => props.theme.colors.accent2};
+    }
+  }
 `;
 
 export const HamburgerIcon = styled.div`
