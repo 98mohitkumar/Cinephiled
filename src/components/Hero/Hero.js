@@ -134,10 +134,7 @@ const Hero = ({ searchModal }) => {
   );
 
   return (
-    <Container
-      className='d-flex justify-content-center align-items-center position-relative'
-      searchModal={searchModal}
-    >
+    <Container className='d-flex justify-content-center align-items-center position-relative'>
       {!searchModal && <Banner />}
       <HeroDiv searchModal={searchModal}>
         <Form onSubmit={dbSearchHandler}>

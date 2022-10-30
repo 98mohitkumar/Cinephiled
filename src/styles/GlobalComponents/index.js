@@ -10,11 +10,9 @@ export const Container = styled.div`
   width: 100%;
   height: 32rem;
   overflow: hidden;
-  height: ${({ searchModal }) => searchModal && '50vh'};
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     height: 28rem;
-    height: ${({ searchModal }) => searchModal && '50vh'};
   }
 `;
 
