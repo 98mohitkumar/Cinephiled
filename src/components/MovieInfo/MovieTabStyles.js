@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const TabWrapper = styled.div`
-  width: ${(props) =>
-    props.tv ? `clamp(380px, 95vw, 730px)` : `clamp(380px, 90vw, 630px)`};
+  width: clamp(380px, 95vw, 730px);
   height: 4.5rem;
   display: grid;
   grid-template-columns: ${(props) =>
@@ -64,8 +63,9 @@ export const TabIcon = styled.div`
   display: none;
   width: 40px;
   height: 24px;
+  margin-bottom: 5px;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     display: grid;
     place-items: center;
   }
@@ -117,7 +117,7 @@ export const TabSelectionTitle = styled.div`
     padding: 0.25rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     font-size: ${(props) => (props.tv ? '0.6rem' : '0.7rem')};
     font-weight: 500;
     padding: ${(props) => (props.tv ? '0.6rem 0.7rem' : '0.5rem')};
