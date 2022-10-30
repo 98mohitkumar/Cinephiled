@@ -6,7 +6,8 @@ import {
   MobileNav,
   NavBar,
   NavLinks,
-  Search
+  Search,
+  SearchModal
 } from './NavigationStyles';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -16,6 +17,7 @@ import { BsSearch } from 'react-icons/bs';
 import { useCallback } from 'react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Hero from '../Hero/Hero';
 
 const navLinks = [
   { text: 'Home', link: '/' },
@@ -28,6 +30,7 @@ const Navigation = () => {
   const navRef = useRef(null);
   const lastScroll = useRef();
   const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
+  const [showSearchModal, setShowSearchModal] = useState(false);
 
   useEffect(() => {
     const navHandler = () => {
@@ -55,9 +58,22 @@ const Navigation = () => {
     if (router.asPath === '/') {
       document.body.style.overflow = 'auto';
       setShowHamburgerMenu(false);
-      document.querySelector('.heroSearchInput').focus();
+    } else {
+      setShowSearchModal(true);
+      document.body.style.overflow = 'hidden';
     }
+
+    setTimeout(() => {
+      document.querySelector('.heroSearchInput').focus();
+    }, 100);
   }, [router.asPath]);
+
+  const closeSearchModalHandler = useCallback((e) => {
+    if (!e.target.classList.contains('form-control')) {
+      setShowSearchModal(false);
+      document.body.style.overflow = 'auto';
+    }
+  }, []);
 
   return (
     <Header>
@@ -79,23 +95,19 @@ const Navigation = () => {
             </Link>
           ))}
 
-          {router.asPath === '/' && (
-            <Search onClick={searchHandler}>
-              <BsSearch size='1.25rem' />
-            </Search>
-          )}
+          <Search onClick={searchHandler}>
+            <BsSearch size='1.25rem' />
+          </Search>
         </NavLinks>
 
         <MobileNav>
-          {router.asPath === '/' && (
-            <Search
-              className='search-sm'
-              onClick={searchHandler}
-              key='search-icon'
-            >
-              <BsSearch size='1.5rem' />
-            </Search>
-          )}
+          <Search
+            className='search-sm'
+            onClick={searchHandler}
+            key='search-icon'
+          >
+            <BsSearch size='1.5rem' />
+          </Search>
 
           <HamburgerIcon
             onClick={hamburgerHandler}
@@ -142,6 +154,24 @@ const Navigation = () => {
               ))}
             </div>
           </HamburgerMenu>
+        )}
+
+        {showSearchModal && (
+          <SearchModal
+            as={motion.div}
+            key='search-modal'
+            className='search-modal'
+            initial={{ opacity: 0.5 }}
+            animate={{
+              opacity: 1,
+              zIndex: 500
+            }}
+            exit={{ opacity: 0, zIndex: 500 }}
+            transition={{ duration: 0.4 }}
+            onClick={closeSearchModalHandler}
+          >
+            <Hero searchModal />
+          </SearchModal>
         )}
       </AnimatePresence>
     </Header>

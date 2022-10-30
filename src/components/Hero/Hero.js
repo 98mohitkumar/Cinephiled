@@ -7,7 +7,7 @@ import { Banner, Button, Form, HeroDiv, UserInput } from './HeroStyles';
 import { AnimatePresence, motion } from 'framer-motion';
 import SearchSuggestion from './searchSuggestion';
 
-const Hero = () => {
+const Hero = ({ searchModal }) => {
   const name = useRef('');
   const Router = useRouter();
   const [userInput, setUserInput] = useState('');
@@ -134,9 +134,12 @@ const Hero = () => {
   );
 
   return (
-    <Container className='d-flex justify-content-center align-items-center position-relative'>
-      <Banner />
-      <HeroDiv>
+    <Container
+      className='d-flex justify-content-center align-items-center position-relative'
+      searchModal={searchModal}
+    >
+      {!searchModal && <Banner />}
+      <HeroDiv searchModal={searchModal}>
         <Form onSubmit={dbSearchHandler}>
           <div className='wrapper w-100 position-relative'>
             <div className='pb-2 d-flex justify-content-center align-items-end border-animated'>

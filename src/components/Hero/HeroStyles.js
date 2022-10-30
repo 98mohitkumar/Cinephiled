@@ -25,6 +25,8 @@ export const HeroDiv = styled.div`
     rgba(31, 31, 31, 0.5) 0%,
     rgba(18, 18, 18, 1) 95%
   );
+
+  background: ${({ searchModal }) => searchModal && 'transparent'};
 `;
 
 export const HeroTitle = styled.h1`

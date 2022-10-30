@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }) {
 
     const handleComplete = () => {
       setIsLoading(false);
+      document.body.style.overflow = 'auto';
     };
 
     router.events.on('routeChangeStart', handleStart);
