@@ -50,6 +50,7 @@ const Navigation = () => {
   }, []);
 
   const hamburgerHandler = useCallback(() => {
+    setShowSearchModal(false);
     document.body.style.overflow = showHamburgerMenu ? 'auto' : 'hidden';
     setShowHamburgerMenu((prev) => !prev);
   }, [showHamburgerMenu]);
@@ -57,13 +58,13 @@ const Navigation = () => {
   const searchHandler = useCallback(() => {
     if (router.asPath === '/') {
       document.body.style.overflow = 'auto';
-      setShowHamburgerMenu(false);
     } else {
       setShowSearchModal(true);
       document.body.style.overflow = 'hidden';
     }
 
     setTimeout(() => {
+      setShowHamburgerMenu(false);
       document.querySelector('.heroSearchInput').focus();
     }, 100);
   }, [router.asPath]);
