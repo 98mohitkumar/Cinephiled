@@ -13,14 +13,9 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import useInfiniteQuery from '../../hooks/useInfiniteQuery';
 import { useEffect } from 'react';
+import { useMemo } from 'react';
 
-const TVSearch = ({
-  searchQuery,
-  tvRes,
-  tvReleaseDates,
-  searchLength,
-  setLength
-}) => {
+const TVSearch = ({ searchQuery, tvRes, searchLength, setLength }) => {
   const { list } = useInfiniteQuery(2, 'tvSearch', null, searchQuery);
 
   useEffect(() => {
@@ -28,6 +23,23 @@ const TVSearch = ({
       setLength((prev) => ({ ...prev, tv: tvRes.concat(list).length }));
     }
   }, [list, searchLength.tv, setLength, tvRes]);
+
+  const tvReleaseDates = useMemo(
+    () =>
+      tvRes
+        .concat(list)
+        .map((item) =>
+          item.first_air_date
+            ? new Date(item.first_air_date.toString())
+                .toDateString()
+                .slice(4, -5) +
+              ', ' +
+              new Date(item.first_air_date.toString()).getFullYear()
+            : 'TBA'
+        ),
+
+    [list, tvRes]
+  );
 
   return (
     <>

@@ -253,7 +253,7 @@ export const BadQuery = styled.h1`
 `;
 
 export const SearchResultsContainer = styled.div`
-  width: clamp(350px, 85vw, 1400px);
+  width: clamp(350px, 90vw, 1400px);
   margin: auto;
 `;
 

@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import MetaWrapper from '../../components/MetaWrapper';
 import SearchTab from '../../components/SearchTab/SearchTab';
 import {
@@ -8,40 +7,6 @@ import {
 } from '../../styles/GlobalComponents';
 
 const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
-  const movieReleaseDates = useMemo(
-    () =>
-      !error
-        ? movieRes.map((item) =>
-            item.release_date
-              ? new Date(item.release_date.toString())
-                  .toDateString()
-                  .slice(4, -5) +
-                ', ' +
-                new Date(item.release_date.toString()).getFullYear()
-              : 'TBA'
-          )
-        : '',
-
-    [error, movieRes]
-  );
-
-  const tvReleaseDates = useMemo(
-    () =>
-      !error
-        ? tvRes.map((item) =>
-            item.first_air_date
-              ? new Date(item.first_air_date.toString())
-                  .toDateString()
-                  .slice(4, -5) +
-                ', ' +
-                new Date(item.first_air_date.toString()).getFullYear()
-              : 'TBA'
-          )
-        : '',
-
-    [error, tvRes]
-  );
-
   return (
     <>
       <MetaWrapper
@@ -60,8 +25,6 @@ const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
             search={searchQuery}
             movies={movieRes}
             tv={tvRes}
-            movieReleaseDates={movieReleaseDates}
-            tvReleaseDates={tvReleaseDates}
             keywords={keywordsRes}
           />
         </SearchContainer>

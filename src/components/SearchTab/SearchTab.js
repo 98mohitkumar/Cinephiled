@@ -12,14 +12,7 @@ import { useEffect } from 'react';
 import KeywordSearch from './KeywordSearch';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const SearchTab = ({
-  movies,
-  tv,
-  movieReleaseDates,
-  tvReleaseDates,
-  search,
-  keywords
-}) => {
+const SearchTab = ({ movies, tv, search, keywords }) => {
   const [tabState, setTabState] = useState('movies');
   const [searchLength, setSearchLength] = useState({
     movies: movies.length,
@@ -82,7 +75,6 @@ const SearchTab = ({
             <MoviesSearch
               searchQuery={search}
               movieRes={movies}
-              movieReleaseDates={movieReleaseDates}
               searchLength={searchLength}
               setLength={setSearchLength}
             />
@@ -109,7 +101,6 @@ const SearchTab = ({
             <TVSearch
               searchQuery={search}
               tvRes={tv}
-              tvReleaseDates={tvReleaseDates}
               searchLength={searchLength}
               setLength={setSearchLength}
             />

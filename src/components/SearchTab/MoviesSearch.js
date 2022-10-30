@@ -13,14 +13,9 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import useInfiniteQuery from '../../hooks/useInfiniteQuery';
 import { useEffect } from 'react';
+import { useMemo } from 'react';
 
-const MoviesSearch = ({
-  searchQuery,
-  movieRes,
-  movieReleaseDates,
-  searchLength,
-  setLength
-}) => {
+const MoviesSearch = ({ searchQuery, movieRes, searchLength, setLength }) => {
   const { list } = useInfiniteQuery(2, 'movieSearch', null, searchQuery);
 
   useEffect(() => {
@@ -28,6 +23,23 @@ const MoviesSearch = ({
       setLength((prev) => ({ ...prev, movies: movieRes.concat(list).length }));
     }
   }, [list, movieRes, searchLength.movies, setLength]);
+
+  const movieReleaseDates = useMemo(
+    () =>
+      movieRes
+        .concat(list)
+        .map((item) =>
+          item.release_date
+            ? new Date(item.release_date.toString())
+                .toDateString()
+                .slice(4, -5) +
+              ', ' +
+              new Date(item.release_date.toString()).getFullYear()
+            : 'TBA'
+        ),
+
+    [list, movieRes]
+  );
 
   return (
     <>
