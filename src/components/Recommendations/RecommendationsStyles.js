@@ -25,11 +25,7 @@ export const RecommendationsGrid = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    grid-template-columns: 1fr;
+    gap: 1rem 1.5rem;
   }
 `;
 
