@@ -4,8 +4,21 @@ import {
 } from '../../styles/GlobalComponents';
 import { Keyword } from './SearchTabStyles';
 import Link from 'next/link';
+import useInfiniteQuery from '../../hooks/useInfiniteQuery';
+import { useEffect } from 'react';
 
-const KeywordSearch = ({ keywords }) => {
+const KeywordSearch = ({ searchQuery, keywords, searchLength, setLength }) => {
+  const { list } = useInfiniteQuery(2, 'keywordSearch', null, searchQuery);
+
+  useEffect(() => {
+    if (searchLength.keywords < keywords.concat(list).length) {
+      setLength((prev) => ({
+        ...prev,
+        keywords: keywords.concat(list).length
+      }));
+    }
+  }, [keywords, list, searchLength.keywords, setLength]);
+
   return (
     <>
       {keywords.length === 0 ? (
@@ -14,7 +27,7 @@ const KeywordSearch = ({ keywords }) => {
         </EmptySearch>
       ) : (
         <SearchResultsContainer>
-          {keywords.map((item) => (
+          {keywords.concat(list).map((item) => (
             <Link
               key={item.id}
               href={`/keywords/${item.id}-${item.name.replace(/[' ']/g, '-')}`}

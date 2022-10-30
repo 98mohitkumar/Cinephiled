@@ -21,6 +21,11 @@ const SearchTab = ({
   keywords
 }) => {
   const [tabState, setTabState] = useState('movies');
+  const [searchLength, setSearchLength] = useState({
+    movies: movies.length,
+    tv: tv.length,
+    keywords: keywords.length
+  });
 
   useEffect(() => {
     let tabPosition = localStorage.getItem('SearchTabPosition');
@@ -40,19 +45,19 @@ const SearchTab = ({
           onClick={() => tabSelectionHandler('movies')}
           isActive={tabState === 'movies'}
         >
-          Movies ({movies.length})
+          Movies ({searchLength.movies})
         </SearchTabSelectionTitle>
         <SearchTabSelectionTitle
           onClick={() => tabSelectionHandler('tv')}
           isActive={tabState === 'tv'}
         >
-          TV ({tv.length})
+          TV ({searchLength.tv})
         </SearchTabSelectionTitle>
         <SearchTabSelectionTitle
           onClick={() => tabSelectionHandler('keywords')}
           isActive={tabState === 'keywords'}
         >
-          keywords ({keywords.length})
+          keywords ({searchLength.keywords})
         </SearchTabSelectionTitle>
       </SearchTabWrapper>
 
@@ -75,8 +80,11 @@ const SearchTab = ({
               results by year. Example: <b>&#39;Avatar y:2009&#39;.</b>
             </p>
             <MoviesSearch
+              searchQuery={search}
               movieRes={movies}
               movieReleaseDates={movieReleaseDates}
+              searchLength={searchLength}
+              setLength={setSearchLength}
             />
           </motion.div>
         )}
@@ -98,7 +106,13 @@ const SearchTab = ({
               <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your
               results by year. Example: <b>&#39;Sherlock y:2010&#39;</b>.
             </p>
-            <TVSearch tvRes={tv} tvReleaseDates={tvReleaseDates} />
+            <TVSearch
+              searchQuery={search}
+              tvRes={tv}
+              tvReleaseDates={tvReleaseDates}
+              searchLength={searchLength}
+              setLength={setSearchLength}
+            />
           </motion.div>
         )}
 
@@ -115,7 +129,12 @@ const SearchTab = ({
                 Keywords matching : {search}
               </Span>
             )}
-            <KeywordSearch keywords={keywords} />
+            <KeywordSearch
+              searchQuery={search}
+              keywords={keywords}
+              searchLength={searchLength}
+              setLength={setSearchLength}
+            />
           </motion.div>
         )}
       </AnimatePresence>

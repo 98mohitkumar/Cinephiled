@@ -6,13 +6,29 @@ import {
   QueryTitle,
   QueryInfoWrapper,
   QueryReleaseDate,
-  QueryDescription,
+  QueryDescription
 } from '../../styles/GlobalComponents';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import useInfiniteQuery from '../../hooks/useInfiniteQuery';
+import { useEffect } from 'react';
 
-const TVSearch = ({ tvRes, tvReleaseDates }) => {
+const TVSearch = ({
+  searchQuery,
+  tvRes,
+  tvReleaseDates,
+  searchLength,
+  setLength
+}) => {
+  const { list } = useInfiniteQuery(2, 'tvSearch', null, searchQuery);
+
+  useEffect(() => {
+    if (searchLength.tv < tvRes.concat(list).length) {
+      setLength((prev) => ({ ...prev, tv: tvRes.concat(list).length }));
+    }
+  }, [list, searchLength.tv, setLength, tvRes]);
+
   return (
     <>
       <SearchResultsContainer>
@@ -21,7 +37,7 @@ const TVSearch = ({ tvRes, tvReleaseDates }) => {
             No TV show results for this query.
           </EmptySearch>
         ) : (
-          tvRes.map((item, i) => (
+          tvRes.concat(list).map((item, i) => (
             <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
               <Link
                 href={`/tv/${item.id}-${item.name.replace(/[' ']/g, '-')}`}

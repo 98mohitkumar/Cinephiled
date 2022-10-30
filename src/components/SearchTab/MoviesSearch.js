@@ -6,13 +6,29 @@ import {
   QueryTitle,
   QueryInfoWrapper,
   QueryReleaseDate,
-  QueryDescription,
+  QueryDescription
 } from '../../styles/GlobalComponents';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import useInfiniteQuery from '../../hooks/useInfiniteQuery';
+import { useEffect } from 'react';
 
-const MoviesSearch = ({ movieRes, movieReleaseDates }) => {
+const MoviesSearch = ({
+  searchQuery,
+  movieRes,
+  movieReleaseDates,
+  searchLength,
+  setLength
+}) => {
+  const { list } = useInfiniteQuery(2, 'movieSearch', null, searchQuery);
+
+  useEffect(() => {
+    if (searchLength.movies < movieRes.concat(list).length) {
+      setLength((prev) => ({ ...prev, movies: movieRes.concat(list).length }));
+    }
+  }, [list, movieRes, searchLength.movies, setLength]);
+
   return (
     <>
       <SearchResultsContainer>
@@ -21,7 +37,7 @@ const MoviesSearch = ({ movieRes, movieReleaseDates }) => {
             No movie results for this query.
           </EmptySearch>
         ) : (
-          movieRes.map((item, i) => (
+          movieRes.concat(list).map((item, i) => (
             <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
               <Link
                 href={`/movies/${item.id}-${item.title.replace(
