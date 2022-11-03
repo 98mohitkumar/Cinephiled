@@ -5,6 +5,15 @@ export const Header = styled.header`
   position: sticky;
   top: 0;
   z-index: 500;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.show-nav {
+    transform: translateY(0%);
+  }
+
+  &.hide-nav {
+    transform: translateY(-100%);
+  }
 `;
 
 export const NavBar = styled.nav`
@@ -14,16 +23,7 @@ export const NavBar = styled.nav`
   justify-content: space-between;
   align-items: center;
   background-color: rgb(18 18 18 /0.95);
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 20;
-
-  &.show-nav {
-    transform: translateY(0%);
-  }
-
-  &.hide-nav {
-    transform: translateY(-100%);
-  }
 
   &::after {
     content: '';

@@ -77,8 +77,8 @@ const Navigation = () => {
   }, []);
 
   return (
-    <Header>
-      <NavBar ref={navRef}>
+    <Header ref={navRef}>
+      <NavBar>
         <Link href='/'>
           <a>
             <div className='py-3'>
