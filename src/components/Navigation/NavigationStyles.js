@@ -126,7 +126,7 @@ export const HamburgerIcon = styled.div`
     position: absolute;
     margin: auto;
     background: rgb(221, 221, 221);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.2s;
   }
 
   &::after {
@@ -141,12 +141,12 @@ export const HamburgerIcon = styled.div`
     active &&
     `
       &::after {
-        transform: rotate(-225deg);
+        transform: rotate(-45deg);
         top: 19px;
       }
 
       &::before {
-        transform: rotate(-135deg);
+        transform: rotate(45deg);
         bottom: 19px;
       }
     `}
