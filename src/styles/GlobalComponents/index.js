@@ -51,6 +51,7 @@ export const AboutContainer = styled.div`
     inset: 0;
     margin: auto;
     overflow: hidden;
+    z-index: -1;
   }
 `;
 
