@@ -280,7 +280,7 @@ Movie.getInitialProps = async (ctx) => {
     );
 
     const socialLinks = await fetch(
-      `https://api.themoviedb.org/3/movie/${movie_id}/external_ids?api_key=${api_key}&language=en-US`
+      `https://api.themoviedb.org/3/movie/${movie_id}/external_ids?api_key=${api_key}`
     );
 
     const error = movieResponse.ok ? false : true;
@@ -302,7 +302,9 @@ Movie.getInitialProps = async (ctx) => {
       };
     }
   } catch {
-    return { error: true };
+    return {
+      error: true
+    };
   }
 };
 

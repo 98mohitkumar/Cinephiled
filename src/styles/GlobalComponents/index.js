@@ -406,18 +406,19 @@ export const SocialMediaLinksWrapper = styled.div`
   height: 45px;
   color: #ebebeb;
   display: ${(props) => (props.notShow ? 'none;' : 'flex;')};
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   padding: 0.25rem;
+  gap: 3rem;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     justify-content: flex-start;
     width: fit-content;
-    gap: 4rem;
+    gap: 3rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    gap: 3rem;
+    gap: 2.5rem;
   }
 `;
 

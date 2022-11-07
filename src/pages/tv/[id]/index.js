@@ -227,7 +227,7 @@ TvShow.getInitialProps = async (ctx) => {
     );
 
     const socialLinks = await fetch(
-      `https://api.themoviedb.org/3/tv/${tv_id}/external_ids?api_key=${api_key}&language=en-US`
+      `https://api.themoviedb.org/3/tv/${tv_id}/external_ids?api_key=${api_key}`
     );
 
     const error = tvResponse.ok ? false : true;
