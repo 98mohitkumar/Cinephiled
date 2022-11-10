@@ -162,9 +162,9 @@ const PersonDetails = ({ details }) => {
 
       {cleaned.length !== 0 && (
         <RecommendationsContainer className='py-4'>
-          <h1 className='display-6 fw-bold text-white text-center'>
+          <Span className='d-block display-5 text-center genre'>
             Filmography
-          </h1>
+          </Span>
 
           <RecommendationsGrid>
             {cleaned.map((item, i) =>

@@ -38,7 +38,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
             ) : (
               <>
                 <Span className='d-block display-5 text-center genre'>
-                  {genreName}
+                  {genreName} Movies
                 </Span>
                 <RecommendationsGrid>
                   {renderList.concat(list).map((item) => (

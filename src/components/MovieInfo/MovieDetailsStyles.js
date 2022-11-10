@@ -43,7 +43,7 @@ export const Span = styled.span`
   &.genre {
     font-weight: bold;
     padding-top: clamp(1.5rem, 4vw, 2rem);
-    padding-bottom: clamp(1.5rem, 4vw, 2rem);
+    padding-bottom: clamp(2rem, 4.25vw, 2.5rem);
   }
 `;
 
