@@ -10,7 +10,7 @@ import {
   Rounded,
   RtoR,
   Span,
-  Tagline,
+  Tagline
 } from '../MovieInfo/MovieDetailsStyles';
 import Link from 'next/link';
 
@@ -78,17 +78,27 @@ const TVDetails = ({ tvData, date, runtime, crew }) => {
             <Span className='display-3 fw-bolder'>NR</Span>
           )}
         </RatingWrapper>
-        <CreditsWrapper>
-          {crew.length > 0 &&
-            crew.map((item) => (
+        {crew.length > 0 && (
+          <CreditsWrapper>
+            {crew.map((item) => (
               <Credits key={item.credit_id}>
                 <Span className='d-block fw-normal'>
                   {item.job ?? 'Creator'}
                 </Span>
-                <Span className='d-block fw-bold'>{item.name}</Span>
+                <Link
+                  href={`/person/${item.id}-${item.name.replace(
+                    /[' ']/g,
+                    '-'
+                  )}`}
+                >
+                  <a>
+                    <Span className='d-block fw-bold credit'>{item.name}</Span>
+                  </a>
+                </Link>
               </Credits>
             ))}
-        </CreditsWrapper>
+          </CreditsWrapper>
+        )}
       </HeroInfoWrapper>
     </>
   );

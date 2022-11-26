@@ -21,6 +21,7 @@ import {
   InfoTitle
 } from '../Recommendations/RecommendationsStyles';
 import Image from 'next/image';
+import { useMemo } from 'react';
 
 const PersonDetails = ({ details }) => {
   const getGender = (g) => {
@@ -36,13 +37,24 @@ const PersonDetails = ({ details }) => {
     }
   };
 
-  const works = [...details.combined_credits.cast]; // copy the works array
+  const works = useMemo(
+    () =>
+      details.known_for_department === 'Acting'
+        ? details.combined_credits.cast
+        : details.combined_credits.crew,
+    [
+      details.combined_credits.cast,
+      details.combined_credits.crew,
+      details.known_for_department
+    ]
+  );
+
   works.sort((a, z) => z.vote_count - a.vote_count); // sort works array
   works.length > 100 && works.splice(100); // splice if bigger than 100 for filtering
 
   const cleaned = works.filter((w, i) => {
     if (i !== works.length - 1) {
-      return w.backdrop_path !== works[i + 1].backdrop_path;
+      return w.id !== works[i + 1].id;
     }
   });
 
@@ -51,14 +63,17 @@ const PersonDetails = ({ details }) => {
   const getAge = (b, alive) => {
     if (alive) {
       const today = new Date();
-      const birthYear = b.slice(0, 4);
-      const age = today.getFullYear() - birthYear;
+      const age = Math.floor(
+        (today - new Date(details.birthday)) / (1000 * 3600 * 24 * 30.4375 * 12)
+      );
+
       return age;
     } else {
-      const deathYear = b.slice(0, 4);
-      const birthYear = details.birthday.slice(0, 4);
+      const diedAt = Math.floor(
+        (new Date(b) - new Date(details.birthday)) /
+          (1000 * 3600 * 24 * 30.4375 * 12)
+      );
 
-      const diedAt = deathYear - birthYear;
       return diedAt;
     }
   };
@@ -139,9 +154,7 @@ const PersonDetails = ({ details }) => {
 
                 <div>
                   <Span className='d-block fw-bold'>Known Credits</Span>
-                  <Span className='d-block fw-normal'>
-                    {details.combined_credits.cast.length}
-                  </Span>
+                  <Span className='d-block fw-normal'>{cleaned.length}</Span>
                 </div>
               </Details>
             </HeroInfoWrapper>

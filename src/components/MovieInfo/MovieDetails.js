@@ -104,14 +104,25 @@ const MovieDetails = ({
             <Span className='display-3 fw-bolder'>NR</Span>
           )}
         </RatingWrapper>
-        <CreditsWrapper>
-          {crew.map((item) => (
-            <Credits key={item.credit_id}>
-              <Span className='d-block fw-normal'>{item.job}</Span>
-              <Span className='d-block fw-bold'>{item.name}</Span>
-            </Credits>
-          ))}
-        </CreditsWrapper>
+        {crew.length > 0 && (
+          <CreditsWrapper>
+            {crew.map((item) => (
+              <Credits key={item.credit_id}>
+                <Span className='d-block fw-normal'>{item.job}</Span>
+                <Link
+                  href={`/person/${item.id}-${item.name.replace(
+                    /[' ']/g,
+                    '-'
+                  )}`}
+                >
+                  <a>
+                    <Span className='d-block fw-bold credit'>{item.name}</Span>
+                  </a>
+                </Link>
+              </Credits>
+            ))}
+          </CreditsWrapper>
+        )}
       </HeroInfoWrapper>
     </Fragment>
   );

@@ -52,6 +52,10 @@ const GlobalStyles = createGlobalStyle`
   a {
     text-decoration: none;
     color: #ddd;
+
+    &:hover {
+      color: #ddd
+    }
   }
 
   li{

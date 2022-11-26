@@ -45,6 +45,16 @@ export const Span = styled.span`
     padding-top: clamp(1.5rem, 4vw, 2rem);
     padding-bottom: clamp(2rem, 4.25vw, 2.5rem);
   }
+
+  &.credit {
+    color: white;
+    text-decoration: underline;
+
+    &:hover {
+      opacity: 0.8;
+      transition: 0.2s ease-in-out;
+    }
+  }
 `;
 
 export const ReleaseDateWrapper = styled.div`
