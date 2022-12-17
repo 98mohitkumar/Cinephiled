@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useCallback } from 'react';
+import { Fragment, useCallback } from 'react';
 import MetaWrapper from '../../../../components/MetaWrapper';
 import {
   SeasonInfoMain,
@@ -7,6 +7,7 @@ import {
   SeasonsRelease,
   SeasonTitle
 } from '../../../../components/TVInfo/TVStyles';
+import { apiEndpoints } from '../../../../constants';
 import {
   EpisodeImg,
   Error404,
@@ -43,7 +44,7 @@ const Seasons = ({ error, data, tvId, seasonNumber }) => {
   }, []);
 
   return (
-    <>
+    <Fragment>
       <MetaWrapper
         title={!error ? data.name : 'Not Found - Cinephiled'}
         description={data?.overview}
@@ -122,25 +123,30 @@ const Seasons = ({ error, data, tvId, seasonNumber }) => {
           </SeasonEpisodesWrapper>
         </SeasonExpandedContainer>
       )}
-    </>
+    </Fragment>
   );
 };
 
 Seasons.getInitialProps = async (ctx) => {
   try {
-    const api_key = process.env.NEXT_PUBLIC_API_KEY;
-    const seasonNumber = ctx.query.sn;
-    const tv_id = ctx.query.id;
-
     const response = await fetch(
-      `https://api.themoviedb.org/3/tv/${tv_id}/season/${seasonNumber}?api_key=${api_key}&language=en-US`
+      apiEndpoints.tv.tvSeasonDetails(ctx.query.id, ctx.query.sn)
     );
 
     const error = response.ok ? false : true;
 
-    const res = await response.json();
+    if (error) {
+      throw Error('cannot fetch data');
+    } else {
+      const res = await response.json();
 
-    return { error, data: res, tvId: tv_id, seasonNumber };
+      return {
+        error,
+        data: res,
+        tvId: ctx.query.id,
+        seasonNumber: ctx.query.sn
+      };
+    }
   } catch {
     return { error: true };
   }
