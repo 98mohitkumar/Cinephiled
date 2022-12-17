@@ -52,13 +52,17 @@ export const Logo = styled.div`
   min-width: 50px;
   min-height: 30px;
   background: url('/navLogo.png') no-repeat center center / contain;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    min-height: 24px;
+  }
 `;
 
 export const NavLinks = styled.div`
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
-  gap: 1rem;
+  margin-right: -25px;
 
   .link {
     color: white;
@@ -92,14 +96,14 @@ export const MobileNav = styled.div`
 `;
 
 export const Search = styled.div`
-  padding: 1rem;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 
   &.search-sm {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
   }
 
   @media ${(props) => props.theme.breakpoints.hover} {
@@ -110,13 +114,14 @@ export const Search = styled.div`
 `;
 
 export const HamburgerIcon = styled.div`
-  min-width: 35px;
+  min-width: 32px;
   min-height: 40px;
   position: relative;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 0.5rem;
 
   &::after,
   &::before {
@@ -130,11 +135,11 @@ export const HamburgerIcon = styled.div`
   }
 
   &::after {
-    top: 12px;
+    top: 13px;
   }
 
   &::before {
-    bottom: 12px;
+    bottom: 13px;
   }
 
   ${({ active }) =>
@@ -157,7 +162,7 @@ export const HamburgerMenu = styled.div`
   height: 100vh;
   position: fixed;
   display: none;
-  top: 62px;
+  top: 56px;
   left: 0;
   margin: auto;
   background-color: rgb(18 18 18 /0.95);
@@ -194,7 +199,6 @@ export const SearchModal = styled.div`
   position: fixed;
   margin: auto;
   top: 70px;
-
   background: rgb(0 0 0 /0.9);
 
   @media only ${(props) => props.theme.breakpoints.sm} {

@@ -1,3 +1,10 @@
+import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useCallback, useState } from 'react';
+import { BsSearch } from 'react-icons/bs';
+import Hero from '../Hero/Hero';
+import UserAvatar from '../UserAvatar/UserAvatar';
 import {
   HamburgerIcon,
   HamburgerMenu,
@@ -9,19 +16,9 @@ import {
   Search,
   SearchModal
 } from './NavigationStyles';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useRef } from 'react';
-import { BsSearch } from 'react-icons/bs';
-import { useCallback } from 'react';
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Hero from '../Hero/Hero';
 
 const navLinks = [
   { text: 'Home', link: '/' },
-  // { text: 'Profile', link: '/profile' },
   { text: 'About', link: '/about' }
 ];
 
@@ -96,8 +93,10 @@ const Navigation = () => {
             </Link>
           ))}
 
+          <UserAvatar />
+
           <Search onClick={searchHandler}>
-            <BsSearch size='1.25rem' />
+            <BsSearch size='24px' />
           </Search>
         </NavLinks>
 
@@ -107,8 +106,11 @@ const Navigation = () => {
             onClick={searchHandler}
             key='search-icon'
           >
-            <BsSearch size='1.5rem' />
+            <BsSearch size='24px' />
           </Search>
+
+          {/* avatar - mobile*/}
+          <UserAvatar />
 
           <HamburgerIcon
             onClick={hamburgerHandler}
@@ -168,7 +170,7 @@ const Navigation = () => {
               zIndex: 500
             }}
             exit={{ opacity: 0, zIndex: 500 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
             onClick={closeSearchModalHandler}
           >
             <Hero searchModal />
