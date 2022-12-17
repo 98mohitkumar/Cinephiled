@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import useImageColor from 'use-image-color';
 import { Colorful } from './DominantColorStyles';
 
@@ -8,16 +9,16 @@ const DominantColor = ({ image }) => {
       : `/_next/image?url=https://image.tmdb.org/t/p/w500${image}&w=1920&q=75`,
     {
       cors: true,
-      colors: 4,
+      colors: 4
     }
   );
 
   return (
-    <>
+    <Fragment>
       {pallete.colors && (
         <Colorful className='position-absolute' color={pallete.colors} />
       )}
-    </>
+    </Fragment>
   );
 };
 

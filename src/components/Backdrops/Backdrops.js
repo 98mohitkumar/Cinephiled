@@ -1,16 +1,17 @@
 import Image from 'next/image';
+import { Fragment } from 'react';
 import { NoDataText } from '../../styles/GlobalComponents';
+import DownloadButton from '../DownloadMediaButton/DownloadMediaButton';
 import {
   BackdropsContainer,
   BackdropsImg,
   BackdropsImgContainer,
-  BackdropsWrapper,
+  BackdropsWrapper
 } from './BackdropsStyles';
-import DownloadButton from '../DownloadMediaButton/DownloadMediaButton';
 
 const Backdrops = ({ backdrops }) => {
   return (
-    <>
+    <Fragment>
       <BackdropsContainer>
         {backdrops.length === 0 ? (
           <NoDataText className='fw-bold text-center my-5'>
@@ -37,7 +38,7 @@ const Backdrops = ({ backdrops }) => {
           </BackdropsWrapper>
         )}
       </BackdropsContainer>
-    </>
+    </Fragment>
   );
 };
 

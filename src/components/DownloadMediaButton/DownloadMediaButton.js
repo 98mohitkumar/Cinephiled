@@ -1,11 +1,11 @@
-import { MediaDownloadButton } from './DownloadMediaButtonStyles';
 import { AiOutlineDownload } from 'react-icons/ai';
+import { MediaDownloadButton } from './DownloadMediaButtonStyles';
 
 export const DownloadMediaButton = ({ item }) => {
   const download = (e, id) => {
     fetch(e.target.attributes.href.value, {
       method: 'GET',
-      headers: {},
+      headers: {}
     })
       .then((response) => {
         response.arrayBuffer().then(function (buffer) {

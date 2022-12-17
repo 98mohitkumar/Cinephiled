@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import { Fragment } from 'react';
 import { SearchSlice } from './HeroStyles';
 
 const SearchSuggestion = ({ data, type }) => (
-  <>
+  <Fragment>
     {type === 'movie' && (
       <Link
         href={`/movies/${data.id}-${data.title.replace(/[' ', '/']/g, '-')}`}
@@ -40,7 +41,7 @@ const SearchSuggestion = ({ data, type }) => (
         </a>
       </Link>
     )}
-  </>
+  </Fragment>
 );
 
 export default SearchSuggestion;
