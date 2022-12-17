@@ -1,6 +1,18 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "no-unused-vars": "error"
+    "no-unused-vars": "error",
+    "no-undef": "error",
+    "no-duplicate-imports": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "parent", "sibling", "index"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
   }
 }
