@@ -1,102 +1,90 @@
-import { useCallback } from 'react';
-import { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Fragment, useCallback, useState, useEffect, useMemo } from 'react';
 import Backdrops from '../Backdrops/Backdrops';
 import Cast from '../Cast/Cast';
-import Posters from '../Posters/Posters';
-import Reviews from '../Reviews/Reviews';
 import {
   TabSelectionTitle,
-  TabSlider,
-  TabWrapper,
+  tabStyling,
   TabIcon
 } from '../MovieInfo/MovieTabStyles';
+import Posters from '../Posters/Posters';
+import Reviews from '../Reviews/Reviews';
 import BackdropsSvg from '../Svg/backdrops';
 import CastSvg from '../Svg/cast';
 import PostersSvg from '../Svg/posters';
 import ReviewsSvg from '../Svg/reviews';
 import SeasonsSvg from '../Svg/seasons';
+import Tabs from '../Tabs/Tabs';
 import TVSeasons from './TVSeasons';
-import { AnimatePresence, motion } from 'framer-motion';
-import Recommendations from '../Recommendations/Recommendations';
 
-const TVTab = ({ id, cast, seasons, reviews, posters, backdrops }) => {
+const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
   const [tabState, setTabState] = useState('cast');
-  const [tvRecommended, setTvRecommended] = useState([]);
 
   useEffect(() => {
     let tabPosition = localStorage.getItem('TvTabState');
     !tabPosition ? setTabState('cast') : setTabState(tabPosition);
   }, []);
 
-  const tabStateHandler = useCallback((tab) => {
+  const tabSelectionHandler = useCallback((tab) => {
     setTabState(tab);
     localStorage.setItem('TvTabState', tab);
   }, []);
 
-  useEffect(() => {
-    const abortCtrl = new AbortController();
-    const api_key = process.env.NEXT_PUBLIC_API_KEY;
-
-    async function getRecommended() {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${api_key}&language=en-US&page=1`,
-        { signal: abortCtrl.signal }
-      );
-
-      const res = await response.json();
-
-      return res;
-    }
-
-    getRecommended()
-      .then((data) => setTvRecommended(data.results))
-      .catch((err) => console.log(err));
-
-    return () => {
-      abortCtrl.abort();
-    };
-  }, [id]);
+  const tabList = useMemo(
+    () => [
+      {
+        key: 'cast',
+        name: 'Cast',
+        svg: (tab) => <CastSvg color={tabState === tab ? 'white' : 'black'} />
+      },
+      {
+        key: 'seasons',
+        name: 'Seasons',
+        svg: (tab) => (
+          <SeasonsSvg color={tabState === tab ? 'white' : 'black'} />
+        )
+      },
+      {
+        key: 'reviews',
+        name: 'Reviews',
+        svg: (tab) => (
+          <ReviewsSvg color={tabState === tab ? 'white' : 'black'} />
+        )
+      },
+      {
+        key: 'backdrops',
+        name: 'Backdrops',
+        svg: (tab) => (
+          <BackdropsSvg color={tabState === tab ? 'white' : 'black'} />
+        )
+      },
+      {
+        key: 'posters',
+        name: 'Posters',
+        svg: (tab) => (
+          <PostersSvg color={tabState === tab ? 'white' : 'black'} />
+        )
+      }
+    ],
+    [tabState]
+  );
 
   return (
-    <>
-      <TabWrapper className='my-5' tabCheck={tabState} tv={true}>
-        <TabSlider tabCheck={tabState} tv={true} />
-        <TabSelectionTitle tv={true} onClick={() => tabStateHandler('cast')}>
-          <TabIcon>
-            <CastSvg color={tabState === 'cast' ? 'white' : 'black'} />
-          </TabIcon>
-          Cast
-        </TabSelectionTitle>
-        <TabSelectionTitle tv={true} onClick={() => tabStateHandler('seasons')}>
-          <TabIcon>
-            <SeasonsSvg color={tabState === 'seasons' ? 'white' : 'black'} />
-          </TabIcon>
-          Seasons
-        </TabSelectionTitle>
-        <TabSelectionTitle tv={true} onClick={() => tabStateHandler('reviews')}>
-          <TabIcon>
-            <ReviewsSvg color={tabState === 'reviews' ? 'white' : 'black'} />
-          </TabIcon>
-          Reviews
-        </TabSelectionTitle>
-        <TabSelectionTitle
-          tv={true}
-          onClick={() => tabStateHandler('backdrops')}
-        >
-          <TabIcon>
-            <BackdropsSvg
-              color={tabState === 'backdrops' ? 'white' : 'black'}
-            />
-          </TabIcon>
-          Backdrops
-        </TabSelectionTitle>
-        <TabSelectionTitle tv={true} onClick={() => tabStateHandler('posters')}>
-          <TabIcon>
-            <PostersSvg color={tabState === 'posters' ? 'white' : 'black'} />
-          </TabIcon>
-          Posters
-        </TabSelectionTitle>
-      </TabWrapper>
+    <Fragment>
+      <Tabs tabList={tabList} currentTab={tabState} styling={{ tabStyling }}>
+        {tabList.map(({ key, name, svg }) => (
+          <TabSelectionTitle
+            key={key}
+            onClick={() => tabSelectionHandler(key)}
+            active={tabState === key}
+            tv={true}
+          >
+            <TabIcon>{svg(key)}</TabIcon>
+            {name}
+          </TabSelectionTitle>
+        ))}
+      </Tabs>
+
       <AnimatePresence exitBeforeEnter initial={false}>
         {tabState === 'cast' && (
           <motion.div
@@ -104,7 +92,7 @@ const TVTab = ({ id, cast, seasons, reviews, posters, backdrops }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             <Cast cast={cast} />
           </motion.div>
@@ -116,7 +104,7 @@ const TVTab = ({ id, cast, seasons, reviews, posters, backdrops }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             <TVSeasons seasons={seasons} />
           </motion.div>
@@ -128,7 +116,7 @@ const TVTab = ({ id, cast, seasons, reviews, posters, backdrops }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             <Reviews reviews={reviews} />
           </motion.div>
@@ -140,7 +128,7 @@ const TVTab = ({ id, cast, seasons, reviews, posters, backdrops }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             <Backdrops backdrops={backdrops} />
           </motion.div>
@@ -152,17 +140,13 @@ const TVTab = ({ id, cast, seasons, reviews, posters, backdrops }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             <Posters posters={posters} />
           </motion.div>
         )}
       </AnimatePresence>
-      <h1 className='display-6 fw-bold text-white text-center'>
-        Recommendations
-      </h1>
-      <Recommendations data={tvRecommended} type='tv' />
-    </>
+    </Fragment>
   );
 };
 

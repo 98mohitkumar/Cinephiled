@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState, useEffect, useCallback, Fragment, useMemo } from 'react';
 import Backdrops from '../Backdrops/Backdrops';
 import Cast from '../Cast/Cast';
 import Posters from '../Posters/Posters';
@@ -7,85 +8,69 @@ import BackdropsSvg from '../Svg/backdrops';
 import CastSvg from '../Svg/cast';
 import PostersSvg from '../Svg/posters';
 import ReviewsSvg from '../Svg/reviews';
-import { AnimatePresence, motion } from 'framer-motion';
-import {
-  TabIcon,
-  TabSelectionTitle,
-  TabSlider,
-  TabWrapper
-} from './MovieTabStyles';
-import Recommendations from '../Recommendations/Recommendations';
+import Tabs from '../Tabs/Tabs';
+import { TabIcon, TabSelectionTitle, tabStyling } from './MovieTabStyles';
 
-const MovieTab = ({ id, cast, reviews, posters, backdrops }) => {
+const MovieTab = ({ cast, reviews, posters, backdrops }) => {
   const [tabState, setTabState] = useState('cast');
-  const [moviesRecommended, setMoviesRecommended] = useState([]);
 
   useEffect(() => {
     let tabPosition = localStorage.getItem('MovieTabState');
     !tabPosition ? setTabState('cast') : setTabState(tabPosition);
   }, []);
 
-  const tabStateHandler = useCallback((tab) => {
+  const tabSelectionHandler = useCallback((tab) => {
     setTabState(tab);
     localStorage.setItem('MovieTabState', tab);
   }, []);
 
-  useEffect(() => {
-    const abortCtrl = new AbortController();
-
-    const api_key = process.env.NEXT_PUBLIC_API_KEY;
-
-    async function getRecommended() {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${api_key}&language=en-US&page=1`,
-        { signal: abortCtrl.signal }
-      );
-
-      const res = await response.json();
-
-      return res;
-    }
-
-    getRecommended()
-      .then((data) => setMoviesRecommended(data.results))
-      .catch((err) => console.log(err));
-
-    return () => {
-      abortCtrl.abort();
-    };
-  }, [id]);
+  const tabList = useMemo(
+    () => [
+      {
+        key: 'cast',
+        name: 'Cast',
+        svg: (tab) => <CastSvg color={tabState === tab ? 'white' : 'black'} />
+      },
+      {
+        key: 'reviews',
+        name: 'Reviews',
+        svg: (tab) => (
+          <ReviewsSvg color={tabState === tab ? 'white' : 'black'} />
+        )
+      },
+      {
+        key: 'backdrops',
+        name: 'Backdrops',
+        svg: (tab) => (
+          <BackdropsSvg color={tabState === tab ? 'white' : 'black'} />
+        )
+      },
+      {
+        key: 'posters',
+        name: 'Posters',
+        svg: (tab) => (
+          <PostersSvg color={tabState === tab ? 'white' : 'black'} />
+        )
+      }
+    ],
+    [tabState]
+  );
 
   return (
-    <>
-      <TabWrapper className='my-5' tabCheck={tabState}>
-        <TabSlider tabCheck={tabState} />
-        <TabSelectionTitle onClick={() => tabStateHandler('cast')}>
-          <TabIcon>
-            <CastSvg color={tabState === 'cast' ? 'white' : 'black'} />
-          </TabIcon>
-          Cast
-        </TabSelectionTitle>
-        <TabSelectionTitle onClick={() => tabStateHandler('reviews')}>
-          <TabIcon>
-            <ReviewsSvg color={tabState === 'reviews' ? 'white' : 'black'} />
-          </TabIcon>
-          Reviews
-        </TabSelectionTitle>
-        <TabSelectionTitle onClick={() => tabStateHandler('backdrops')}>
-          <TabIcon>
-            <BackdropsSvg
-              color={tabState === 'backdrops' ? 'white' : 'black'}
-            />
-          </TabIcon>
-          Backdrops
-        </TabSelectionTitle>
-        <TabSelectionTitle onClick={() => tabStateHandler('posters')}>
-          <TabIcon>
-            <PostersSvg color={tabState === 'posters' ? 'white' : 'black'} />
-          </TabIcon>
-          Posters
-        </TabSelectionTitle>
-      </TabWrapper>
+    <Fragment>
+      <Tabs tabList={tabList} currentTab={tabState} styling={{ tabStyling }}>
+        {tabList.map(({ key, name, svg }) => (
+          <TabSelectionTitle
+            key={key}
+            onClick={() => tabSelectionHandler(key)}
+            active={tabState === key}
+          >
+            <TabIcon>{svg(key)}</TabIcon>
+            {name}
+          </TabSelectionTitle>
+        ))}
+      </Tabs>
+
       <AnimatePresence exitBeforeEnter initial={false}>
         {tabState === 'cast' && (
           <motion.div
@@ -93,7 +78,7 @@ const MovieTab = ({ id, cast, reviews, posters, backdrops }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             <Cast cast={cast} />
           </motion.div>
@@ -105,7 +90,7 @@ const MovieTab = ({ id, cast, reviews, posters, backdrops }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             <Reviews reviews={reviews} />
           </motion.div>
@@ -117,7 +102,7 @@ const MovieTab = ({ id, cast, reviews, posters, backdrops }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             <Backdrops backdrops={backdrops} />
           </motion.div>
@@ -129,17 +114,13 @@ const MovieTab = ({ id, cast, reviews, posters, backdrops }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             <Posters posters={posters} />
           </motion.div>
         )}
       </AnimatePresence>
-      <h1 className='display-6 fw-bold text-white text-center'>
-        Recommendations
-      </h1>
-      <Recommendations data={moviesRecommended} type='movies' />
-    </>
+    </Fragment>
   );
 };
 
