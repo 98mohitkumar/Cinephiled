@@ -299,7 +299,11 @@ const MediaContextProvider = ({ children }) => {
   }, [data?.user?.sessionId, ratedTvShows, userInfo?.id]);
 
   useEffect(() => {
-    if (userInfo?.id && data?.user?.sessionId) {
+    if (
+      userInfo?.id &&
+      data?.user?.sessionId &&
+      movieRecommendations.length < 40
+    ) {
       getRecommendations(
         'movie',
         userInfo?.id,
@@ -321,7 +325,11 @@ const MediaContextProvider = ({ children }) => {
   }, [userInfo?.id, movieRecommendations, data?.user?.sessionId]);
 
   useEffect(() => {
-    if (userInfo?.id && data?.user?.sessionId) {
+    if (
+      userInfo?.id &&
+      data?.user?.sessionId &&
+      tvRecommendations?.length < 40
+    ) {
       getRecommendations(
         'tv',
         userInfo?.id,
@@ -340,7 +348,7 @@ const MediaContextProvider = ({ children }) => {
         }
       });
     }
-  }, [userInfo?.id, movieRecommendations, data?.user?.sessionId]);
+  }, [userInfo?.id, tvRecommendations, data?.user?.sessionId]);
 
   return (
     <MediaContext.Provider

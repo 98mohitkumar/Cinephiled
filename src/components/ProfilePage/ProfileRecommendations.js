@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useMemo, Fragment, useContext } from 'react';
 import { MediaContext } from '../../Store/MediaContext';
+import { NoDataText } from '../../styles/GlobalComponents';
 import { CardsContainerGrid } from '../Popular/PopularStyles';
 import Tabs from '../Tabs/Tabs';
 import MediaCard from './MediaCard';
@@ -59,9 +60,9 @@ const ProfileRecommendations = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <CardsContainerGrid>
-              {cleanMovieList.length > 0 &&
-                cleanMovieList.map(
+            {cleanMovieList.length > 0 ? (
+              <CardsContainerGrid>
+                {cleanMovieList.map(
                   (movie) =>
                     !movie?.duplicate && (
                       <MediaCard
@@ -72,7 +73,12 @@ const ProfileRecommendations = () => {
                       />
                     )
                 )}
-            </CardsContainerGrid>
+              </CardsContainerGrid>
+            ) : (
+              <NoDataText className='fw-bold text-center my-5'>
+                No recommendations for now
+              </NoDataText>
+            )}
           </motion.div>
         )}
 
@@ -84,9 +90,9 @@ const ProfileRecommendations = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <CardsContainerGrid>
-              {cleanTvList.length > 0 &&
-                cleanTvList.map(
+            {cleanTvList.length > 0 ? (
+              <CardsContainerGrid>
+                {cleanTvList.map(
                   (tv) =>
                     !tv?.duplicate && (
                       <MediaCard
@@ -97,7 +103,12 @@ const ProfileRecommendations = () => {
                       />
                     )
                 )}
-            </CardsContainerGrid>
+              </CardsContainerGrid>
+            ) : (
+              <NoDataText className='fw-bold text-center my-5'>
+                No recommendations for now
+              </NoDataText>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
