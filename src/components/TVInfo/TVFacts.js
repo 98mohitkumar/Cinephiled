@@ -3,20 +3,10 @@ import {
   FactsFieldSet,
   FactsLegend,
   FactsWrapper,
-  Span,
+  Span
 } from '../MovieInfo/MovieDetailsStyles';
 
-const TVFacts = ({ facts, languages }) => {
-  const ogLanguage = facts.language;
-
-  let FactsLanguage = '';
-
-  languages.forEach((item) => {
-    if (item.iso_639_1 === ogLanguage) {
-      FactsLanguage = item.english_name;
-    }
-  });
-
+const TVFacts = ({ facts }) => {
   return (
     <FactsFieldSet>
       <FactsLegend className='fw-bold'>Facts</FactsLegend>
@@ -28,7 +18,7 @@ const TVFacts = ({ facts, languages }) => {
 
         <FactsFlexWrapper>
           <Span>Language</Span>
-          <Span>{FactsLanguage}</Span>
+          <Span>{facts.language}</Span>
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
