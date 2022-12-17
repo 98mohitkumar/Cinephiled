@@ -1,21 +1,18 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo } from 'react';
-import { useState } from 'react';
-import { useRef } from 'react';
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
+import { apiEndpoints } from '../../constants';
 import { Container } from '../../styles/GlobalComponents';
 import { Banner, Button, Form, HeroDiv, UserInput } from './HeroStyles';
-import { AnimatePresence, motion } from 'framer-motion';
 import SearchSuggestion from './searchSuggestion';
 
 const Hero = ({ searchModal }) => {
-  const name = useRef('');
-  const Router = useRouter();
+  const userInputRef = useRef('');
+  const router = useRouter();
   const [userInput, setUserInput] = useState('');
   const [showButton, setShowButton] = useState(false);
-
   const [movieSuggestions, setMovieSuggestions] = useState([]);
   const [tvSuggestions, setTvSuggestions] = useState([]);
-
   const searchInputUpdate = useRef(null);
 
   const inputChangeHandler = useCallback((e) => {
@@ -23,7 +20,7 @@ const Hero = ({ searchModal }) => {
 
     searchInputUpdate.current = setTimeout(() => {
       setUserInput(e.target.value);
-    }, 500);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -34,13 +31,8 @@ const Hero = ({ searchModal }) => {
     } else {
       // fetch for suggestions
       const fetchSuggestions = async () => {
-        const api_key = process.env.NEXT_PUBLIC_API_KEY;
         let searchQuery = userInput;
-
         let year = '';
-        if (searchQuery.includes('"') || searchQuery.includes("'")) {
-          searchQuery = searchQuery.replace(/(^['"]|['"]$)/g, '');
-        }
 
         if (searchQuery.includes('y:')) {
           year = searchQuery.slice(-4);
@@ -49,11 +41,11 @@ const Hero = ({ searchModal }) => {
 
         if (year !== '') {
           const movieResponse = await fetch(
-            `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&language=en-US&query=${searchQuery}&page=1&include_adult=false&year=${year}`
+            apiEndpoints.search.movieSearchWithYear(searchQuery, year)
           );
 
           const tvResponse = await fetch(
-            `https://api.themoviedb.org/3/search/tv?api_key=${api_key}&language=en-US&query=${searchQuery}&page=1&include_adult=false&first_air_date_year=${year}`
+            apiEndpoints.search.tvSearchWithYear(searchQuery, year)
           );
 
           const error = movieResponse.ok && tvResponse.ok ? false : true;
@@ -70,11 +62,11 @@ const Hero = ({ searchModal }) => {
           }
         } else {
           const movieResponse = await fetch(
-            `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
+            apiEndpoints.search.movieSearch(searchQuery)
           );
 
           const tvResponse = await fetch(
-            `https://api.themoviedb.org/3/search/tv?api_key=${api_key}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
+            apiEndpoints.search.tvSearch(searchQuery)
           );
 
           const error = movieResponse.ok && tvResponse.ok ? false : true;
@@ -106,22 +98,22 @@ const Hero = ({ searchModal }) => {
     }
   }, [userInput]);
 
-  const dbSearchHandler = async (event) => {
-    event.preventDefault();
-    const searchQuery = userInput;
+  const searchHandler = useCallback(
+    async (event) => {
+      event.preventDefault();
 
-    if (
-      searchQuery === undefined ||
-      searchQuery.length === 0 ||
-      searchQuery.trim().length === 0
-    ) {
-      return;
-    } else {
-      Router.push(`/search/${searchQuery.replace(/[' ', '/']/g, '+')}`);
-      name.current.value = '';
-      event.target.blur();
-    }
-  };
+      if (userInput.length === 0 || userInput.trim().length === 0) {
+        return;
+      } else {
+        router.push({
+          pathname: '/search/[query]',
+          query: { query: userInput }
+        });
+        userInputRef.current.value = '';
+      }
+    },
+    [router, userInput]
+  );
 
   tvSuggestions.forEach((item) => (item.type = 'tv'));
 
@@ -137,7 +129,7 @@ const Hero = ({ searchModal }) => {
     <Container className='d-flex justify-content-center align-items-center position-relative'>
       {!searchModal && <Banner />}
       <HeroDiv searchModal={searchModal}>
-        <Form onSubmit={dbSearchHandler}>
+        <Form onSubmit={searchHandler}>
           <div className='wrapper w-100 position-relative'>
             <div className='pb-2 d-flex justify-content-center align-items-end border-animated'>
               <UserInput
@@ -145,7 +137,7 @@ const Hero = ({ searchModal }) => {
                 className='form-control pb-1 heroSearchInput'
                 placeholder='Search for a movie or tv show'
                 id='inputData'
-                ref={name}
+                ref={userInputRef}
                 autoComplete='off'
                 onChange={inputChangeHandler}
               />
@@ -175,7 +167,7 @@ const Hero = ({ searchModal }) => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: 0.5 }}
                 >
                   <div className='mt-2 suggestions'>
                     {sortedSuggestion.map((item) => (
