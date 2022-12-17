@@ -1,4 +1,7 @@
+import { motion } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
+import useGetReleaseDates from '../../hooks/useGetReleaseDates';
 import {
   CardsContainerGrid,
   Cards,
@@ -8,9 +11,6 @@ import {
   InfoTitle,
   ReleaseDate
 } from './PopularStyles';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import useGetReleaseDates from '../../hooks/useGetReleaseDates';
 
 const PopularMovies = ({ movies }) => {
   const releaseDates = useGetReleaseDates(movies);
@@ -51,7 +51,9 @@ const PopularMovies = ({ movies }) => {
                           className='poster'
                         />
                         <Rating className='d-flex justify-content-center align-items-center'>
-                          {movie.vote_average.toFixed(1)}
+                          {!movie.vote_average
+                            ? 'NR'
+                            : movie.vote_average.toFixed(1)}
                         </Rating>
                       </CardImg>
                     </a>
