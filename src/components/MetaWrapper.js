@@ -8,7 +8,7 @@ const MetaWrapper = ({ title, description, image, url, children }) => {
       <meta property='og:title' content={title} key='og_title' />
       <meta
         property='og:image'
-        content={image ?? 'https://i.imgur.com/Jtl3tJG.png'}
+        content={image ?? 'https://i.imgur.com/1tH4WvQ.jpg'}
         key='og_image'
       />
       <meta name='description' content={description ?? ''} key='description' />
@@ -26,7 +26,7 @@ const MetaWrapper = ({ title, description, image, url, children }) => {
       />
       <meta
         property='twitter:image'
-        content={image ?? 'https://i.imgur.com/Jtl3tJG.png'}
+        content={image ?? 'https://i.imgur.com/1tH4WvQ.jpg'}
         key='twitter_image'
       />
 
