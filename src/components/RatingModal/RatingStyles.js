@@ -11,7 +11,7 @@ export const RatingModalContainer = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     place-items: flex-end center;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
   }
 `;
 

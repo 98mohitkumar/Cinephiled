@@ -126,7 +126,7 @@ export const ConfirmationModal = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     place-items: flex-end center;
-    padding-bottom: 4rem;
+    padding-bottom: 2rem;
   }
 `;
 

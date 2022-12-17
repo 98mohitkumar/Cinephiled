@@ -25,7 +25,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
   const { name, releaseDate } = mediaData;
 
   const year = useMemo(
-    () => new Date(releaseDate).getFullYear(),
+    () => (releaseDate ? new Date(releaseDate).getFullYear() : 'TBA'),
     [releaseDate]
   );
 

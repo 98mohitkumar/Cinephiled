@@ -66,7 +66,7 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
           </ReleaseDate>
         </CardInfo>
       ) : (
-        <div style={{ paddingTop: '20px' }}>{children}</div>
+        <div className='pt-3'>{children}</div>
       )}
     </Cards>
   );

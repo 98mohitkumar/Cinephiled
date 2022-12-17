@@ -14,7 +14,7 @@ const RatingCTA = ({ mediaData }) => {
   const { id, name, releaseDate, type } = mediaData;
 
   const year = useMemo(
-    () => new Date(releaseDate).getFullYear(),
+    () => (releaseDate ? new Date(releaseDate).getFullYear() : 'TBA'),
     [releaseDate]
   );
 
