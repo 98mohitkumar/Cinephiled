@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { useEffect, useState } from 'react';
+import { useMemo, useEffect, useState } from 'react';
+import { apiEndpoints } from '../constants';
 
 const useInfiniteQuery = (
   initialPage,
@@ -7,7 +7,6 @@ const useInfiniteQuery = (
   genreId = null,
   searchQuery = null
 ) => {
-  const api_key = process.env.NEXT_PUBLIC_API_KEY;
   const [pageQuery, setPageQuery] = useState(initialPage);
   const [extendedList, setExtendedList] = useState({
     list: [],
@@ -16,17 +15,13 @@ const useInfiniteQuery = (
 
   const endpoint = useMemo(
     () => ({
-      movieGenre: `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
-
-      tvGenre: `https://api.themoviedb.org/3/discover/tv?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
-
-      movieSearch: `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&language=en-US&query=${searchQuery}&page=${pageQuery}&include_adult=false`,
-
-      tvSearch: `https://api.themoviedb.org/3/search/tv?api_key=${api_key}&language=en-US&query=${searchQuery}&page=${pageQuery}&include_adult=false`,
-
-      keywordSearch: `https://api.themoviedb.org/3/search/keyword?api_key=${api_key}&query=${searchQuery}&page=${pageQuery}`
+      movieGenre: apiEndpoints.movie.movieGenre(genreId, pageQuery),
+      tvGenre: apiEndpoints.tv.tvGenre(genreId, pageQuery),
+      movieSearch: apiEndpoints.search.movieSearch(searchQuery, pageQuery),
+      tvSearch: apiEndpoints.search.tvSearch(searchQuery, pageQuery),
+      keywordSearch: apiEndpoints.search.keywordSearch(searchQuery, pageQuery)
     }),
-    [api_key, genreId, pageQuery, searchQuery]
+    [genreId, pageQuery, searchQuery]
   );
 
   useEffect(() => {
@@ -55,7 +50,7 @@ const useInfiniteQuery = (
         const data = await res.json();
         return data;
       } else {
-        return null;
+        throw Error('cannot fetch data');
       }
     };
 
