@@ -44,12 +44,6 @@ export const SearchHeading = styled.h1`
   font-weight: bold;
 `;
 
-export const BadQuery = styled.h1`
-  font-weight: bold;
-  font-size: calc(2rem + 4vw);
-  text-align: center;
-`;
-
 export const SearchResultsContainer = styled.div`
   width: clamp(350px, 90vw, 1400px);
   margin: auto;

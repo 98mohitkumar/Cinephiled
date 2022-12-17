@@ -232,6 +232,12 @@ export const NoDataText = styled.p`
   font-size: 2rem;
 `;
 
+export const BadQuery = styled.h1`
+  font-weight: bold;
+  font-size: calc(2rem + 4vw);
+  text-align: center;
+`;
+
 export const HeroImgWrapper = styled.div`
   width: 100%;
   height: max-content;

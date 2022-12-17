@@ -10,15 +10,12 @@ import {
   QueryTitle,
   QueryReleaseDate,
   QueryDescription,
-  SearchResultsContainer
+  SearchResultsContainer,
+  EmptySearch
 } from '../../components/SearchTab/SearchTabStyles';
 import { apiEndpoints } from '../../constants';
 import useGetReleaseDates from '../../hooks/useGetReleaseDates';
-import {
-  Error404,
-  SearchContainer,
-  EmptySearch
-} from '../../styles/GlobalComponents';
+import { Error404, SearchContainer } from '../../styles/GlobalComponents';
 
 const Keyword = ({ error, results, name, id }) => {
   const releaseDates = useGetReleaseDates(error ? [] : results);
