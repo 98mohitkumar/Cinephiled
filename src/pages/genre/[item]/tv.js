@@ -1,4 +1,9 @@
-import { NoDataText, Error404 } from '../../../styles/GlobalComponents/index';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Fragment } from 'react';
+import MetaWrapper from '../../../components/MetaWrapper';
+import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
 import {
   RecommendationsContainer,
   RecommendationsGrid,
@@ -6,18 +11,15 @@ import {
   RecommendedWrapper,
   InfoTitle
 } from '../../../components/Recommendations/RecommendationsStyles';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
+import { apiEndpoints } from '../../../constants';
 import useInfiniteQuery from '../../../hooks/useInfiniteQuery';
-import Image from 'next/image';
-import MetaWrapper from '../../../components/MetaWrapper';
+import { NoDataText, Error404 } from '../../../styles/GlobalComponents/index';
 
 const TvShows = ({ renderList, genreName, error, genreId }) => {
   const { list } = useInfiniteQuery(3, 'tvGenre', genreId);
 
   return (
-    <>
+    <Fragment>
       <MetaWrapper
         title={
           !error
@@ -31,63 +33,61 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
       {error ? (
         <Error404>404</Error404>
       ) : (
-        <>
-          <RecommendationsContainer>
-            {renderList.length === 0 ? (
-              <NoDataText className='fw-bold text-center my-5'>
-                No Tv Shows For Now
-              </NoDataText>
-            ) : (
-              <>
-                <Span className='d-block display-5 text-center genre'>
-                  {genreName} TV Shows
-                </Span>
-                <RecommendationsGrid>
-                  {renderList.concat(list).map((item) => (
-                    <RecommendedWrapper key={item.id}>
-                      <motion.div
-                        whileHover={{
-                          scale: 1.05,
-                          transition: { duration: 0.1 }
-                        }}
-                        whileTap={{ scale: 0.95 }}
+        <RecommendationsContainer>
+          {renderList.length === 0 ? (
+            <NoDataText className='fw-bold text-center my-5'>
+              No Tv Shows For Now
+            </NoDataText>
+          ) : (
+            <Fragment>
+              <Span className='d-block display-5 text-center genre'>
+                {genreName} TV Shows
+              </Span>
+              <RecommendationsGrid>
+                {renderList.concat(list).map((item) => (
+                  <RecommendedWrapper key={item.id}>
+                    <motion.div
+                      whileHover={{
+                        scale: 1.05,
+                        transition: { duration: 0.1 }
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Link
+                        href={`/tv/${item.id}-${item.name.replace(
+                          /[' ']/g,
+                          '-'
+                        )}`}
+                        passHref
+                        scroll={false}
                       >
-                        <Link
-                          href={`/tv/${item.id}-${item.name.replace(
-                            /[' ']/g,
-                            '-'
-                          )}`}
-                          passHref
-                          scroll={false}
-                        >
-                          <a>
-                            <RecommendedImg className='position-relative text-center'>
-                              <Image
-                                src={
-                                  item.backdrop_path
-                                    ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
-                                    : '/Images/DefaultBackdrop.png'
-                                }
-                                alt='movie-poster'
-                                layout='fill'
-                                objectFit='cover'
-                              />
-                            </RecommendedImg>
-                          </a>
-                        </Link>
-                      </motion.div>
-                      <InfoTitle className='my-3 text-center'>
-                        {item.name}
-                      </InfoTitle>
-                    </RecommendedWrapper>
-                  ))}
-                </RecommendationsGrid>
-              </>
-            )}
-          </RecommendationsContainer>
-        </>
+                        <a>
+                          <RecommendedImg className='position-relative text-center'>
+                            <Image
+                              src={
+                                item.backdrop_path
+                                  ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
+                                  : '/Images/DefaultBackdrop.png'
+                              }
+                              alt='movie-poster'
+                              layout='fill'
+                              objectFit='cover'
+                            />
+                          </RecommendedImg>
+                        </a>
+                      </Link>
+                    </motion.div>
+                    <InfoTitle className='my-3 text-center'>
+                      {item.name}
+                    </InfoTitle>
+                  </RecommendedWrapper>
+                ))}
+              </RecommendationsGrid>
+            </Fragment>
+          )}
+        </RecommendationsContainer>
       )}
-    </>
+    </Fragment>
   );
 };
 
@@ -102,15 +102,9 @@ TvShows.getInitialProps = async (ctx) => {
       .slice(1, param.length)
       .join('-')
       .replace('&', ' & ');
-    const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
-    const response = await fetch(
-      `https://api.themoviedb.org/3/discover/tv?api_key=${api_key}&language=en-US&include_adult=false&page=1&with_genres=${genreId}`
-    );
-
-    const nextPage = await fetch(
-      `https://api.themoviedb.org/3/discover/tv?api_key=${api_key}&language=en-US&include_adult=false&page=2&with_genres=${genreId}`
-    );
+    const response = await fetch(apiEndpoints.tv.tvGenre(genreId, 1));
+    const nextPage = await fetch(apiEndpoints.tv.tvGenre(genreId, 2));
 
     const error = response.ok ? false : true;
 
