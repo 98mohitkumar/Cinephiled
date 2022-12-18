@@ -30,7 +30,6 @@ const MovieRecommendations = () => {
 
   return (
     <motion.div
-      key={`${movieRecommendations?.length}-movies`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -82,7 +81,6 @@ const TvRecommendations = () => {
 
   return (
     <motion.div
-      key={`${tvRecommendations?.length}-tv`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -127,9 +125,9 @@ const ProfileRecommendations = () => {
       />
 
       <AnimatePresence exitBeforeEnter initial={false}>
-        {tabState === 'movies' && <MovieRecommendations />}
+        {tabState === 'movies' && <MovieRecommendations key='movies' />}
 
-        {tabState === 'tv' && <TvRecommendations />}
+        {tabState === 'tv' && <TvRecommendations key='tv' />}
       </AnimatePresence>
     </Fragment>
   );
