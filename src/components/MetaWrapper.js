@@ -17,7 +17,11 @@ const MetaWrapper = ({ title, description, image, url, children }) => {
         content={description ?? ''}
         key='og_description'
       />
-      <meta property='og:url' content={url} key='og_url'></meta>
+      <meta
+        property='og:url'
+        content={url ?? 'https://cinephiled.vercel.app'}
+        key='og_url'
+      />
       <meta property='twitter:title' content={title} key='twitter_title' />
       <meta
         property='twitter:description'

@@ -128,24 +128,20 @@ export const credentialsAuth = async ({
 
 // tmdbAuth next auth handler
 export const tmdbAuth = async (requestToken) => {
-  const sessionIdHandler = async (token) => {
-    const session = await fetch(apiEndpoints.auth.generateSession, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify({ request_token: token })
-    });
+  const session = await fetch(apiEndpoints.auth.generateSession, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify({ request_token: requestToken })
+  });
 
-    const sessionRes = await session.json();
-    const { session_id, success } = sessionRes;
+  const sessionRes = await session.json();
+  const { session_id, success } = sessionRes;
 
-    if (session_id && success) {
-      return sessionRes;
-    } else {
-      throw Error('Server Error, Try again later');
-    }
-  };
-
-  return await sessionIdHandler(requestToken);
+  if (session_id && success) {
+    return sessionRes;
+  } else {
+    throw Error('Server Error, Try again later');
+  }
 };
