@@ -7,6 +7,7 @@ import posters from '../../../public/Images/posters.webp';
 import logo from '../../../public/logo512.png';
 import { useLogin } from '../../apiEndpoints/auth';
 import { AboutBackground } from '../../styles/GlobalComponents';
+import MetaWrapper from '../MetaWrapper';
 import {
   Integration,
   LoginButton,
@@ -71,6 +72,11 @@ const LoginPage = () => {
 
   return (
     <Fragment>
+      <MetaWrapper
+        title='Login - Cinephiled'
+        description='Cinephiled login page'
+        url='https://cinephiled.vercel.app/login'
+      />
       <LoginContainer className='mb-auto'>
         <div className='bg-wrapper'>
           <AboutBackground className='loginPage'>

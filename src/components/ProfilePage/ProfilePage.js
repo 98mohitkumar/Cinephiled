@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { MediaContext } from '../../Store/MediaContext';
 import { UserContext } from '../../Store/UserContext';
+import MetaWrapper from '../MetaWrapper';
 import { LinearTabs } from '../Tabs/Tabs';
 import Favorites from './Favorites';
 import { Banner, ProfileAvatar, ProfileStats } from './ProfilePageStyles';
@@ -86,6 +87,10 @@ const Profile = () => {
 
   return (
     <Fragment>
+      <MetaWrapper
+        title={`${userInfo?.name ?? userInfo?.username} - Cinephiled`}
+      />
+
       {userInfo?.id && (
         <div className='h-100 w-100 flex-grow-1'>
           {/* Banner  */}
