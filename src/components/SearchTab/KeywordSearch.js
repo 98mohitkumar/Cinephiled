@@ -8,7 +8,11 @@ import {
 } from './SearchTabStyles';
 
 const KeywordSearch = ({ searchQuery, keywords, searchLength, setLength }) => {
-  const { list } = useInfiniteQuery(2, 'keywordSearch', null, searchQuery);
+  const { list } = useInfiniteQuery({
+    initialPage: 2,
+    type: 'keywordSearch',
+    searchQuery
+  });
 
   const renderList = useMemo(() => {
     let filtered = [];

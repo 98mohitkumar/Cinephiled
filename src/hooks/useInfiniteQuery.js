@@ -1,72 +1,108 @@
-import { useMemo, useEffect, useState } from 'react';
+import { useContext, useMemo, useEffect, useState, useRef } from 'react';
+import { getRecommendations } from '../apiEndpoints/user';
 import { apiEndpoints } from '../constants';
+import { UserContext } from '../Store/UserContext';
 
-const useInfiniteQuery = (
+const useInfiniteQuery = ({
   initialPage,
   type,
+  mediaType,
   genreId = null,
-  searchQuery = null
-) => {
-  const [pageQuery, setPageQuery] = useState(initialPage);
+  searchQuery = null,
+  isProfileRecommendations
+}) => {
+  const [pageToFetch, setPageToFetch] = useState(initialPage);
   const [extendedList, setExtendedList] = useState({
     list: [],
-    page: pageQuery
+    currentPage: initialPage - 1
   });
+  const [isEmptyPage, setIsEmptyPage] = useState(false);
+
+  const fetchTimeOut = useRef(null);
+  const { userInfo } = useContext(UserContext);
 
   const endpoint = useMemo(
     () => ({
-      movieGenre: apiEndpoints.movie.movieGenre(genreId, pageQuery),
-      tvGenre: apiEndpoints.tv.tvGenre(genreId, pageQuery),
-      movieSearch: apiEndpoints.search.movieSearch(searchQuery, pageQuery),
-      tvSearch: apiEndpoints.search.tvSearch(searchQuery, pageQuery),
-      keywordSearch: apiEndpoints.search.keywordSearch(searchQuery, pageQuery)
+      movieGenre: apiEndpoints.movie.movieGenre(genreId, pageToFetch),
+      tvGenre: apiEndpoints.tv.tvGenre(genreId, pageToFetch),
+      movieSearch: apiEndpoints.search.movieSearch(searchQuery, pageToFetch),
+      tvSearch: apiEndpoints.search.tvSearch(searchQuery, pageToFetch),
+      keywordSearch: apiEndpoints.search.keywordSearch(searchQuery, pageToFetch)
     }),
-    [genreId, pageQuery, searchQuery]
+    [genreId, pageToFetch, searchQuery]
   );
-
-  useEffect(() => {
-    function detectBottom() {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 100
-      ) {
-        setPageQuery((prev) => (prev === extendedList.page ? prev + 1 : prev));
-      }
-    }
-
-    window.addEventListener('scroll', detectBottom);
-    return () => {
-      window.removeEventListener('scroll', detectBottom);
-    };
-  }, [extendedList.page]);
 
   useEffect(() => {
     const abortCtrl = new AbortController();
 
-    const fetchGenreList = async () => {
-      const res = await fetch(endpoint[type], { signal: abortCtrl.signal });
+    const fetchQuery = async () => {
+      if (isProfileRecommendations) {
+        const response = await getRecommendations(
+          mediaType,
+          userInfo?.id,
+          pageToFetch
+        );
 
-      if (res.ok) {
-        const data = await res.json();
-        return data;
+        return response;
       } else {
-        throw Error('cannot fetch data');
+        const res = await fetch(endpoint[type], {
+          signal: abortCtrl.signal
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          return data;
+        } else {
+          throw Error('cannot fetch data');
+        }
       }
     };
 
-    fetchGenreList()
-      .then((data) =>
-        setExtendedList((prev) => ({
-          list: prev.list.concat(data.results),
-          page: pageQuery
-        }))
-      )
-      .catch((err) => console.error(err.message));
+    function detectBottom() {
+      if (
+        window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 100 &&
+        !isEmptyPage
+      ) {
+        clearTimeout(fetchTimeOut.current);
+
+        fetchTimeOut.current = setTimeout(() => {
+          fetchQuery()
+            .then((data) => {
+              if (data?.results?.length > 0) {
+                setExtendedList((prev) => ({
+                  list: prev.list.concat(data.results),
+                  currentPage: data?.page
+                }));
+
+                setPageToFetch((prev) => {
+                  console.info('ran');
+                  return prev + 1;
+                });
+              } else {
+                setIsEmptyPage(true);
+              }
+            })
+            .catch((err) => console.error(err.message));
+        }, 100);
+      }
+    }
+
+    window.addEventListener('scroll', detectBottom);
 
     return () => {
       abortCtrl.abort();
+      window.removeEventListener('scroll', detectBottom);
     };
-  }, [pageQuery, type, genreId, endpoint]);
+  }, [
+    endpoint,
+    isEmptyPage,
+    isProfileRecommendations,
+    mediaType,
+    pageToFetch,
+    type,
+    userInfo?.id
+  ]);
 
   return extendedList;
 };

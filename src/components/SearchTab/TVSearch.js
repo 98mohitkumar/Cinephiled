@@ -16,7 +16,11 @@ import {
 } from './SearchTabStyles';
 
 const TVSearch = ({ searchQuery, tvRes, searchLength, setLength }) => {
-  const { list } = useInfiniteQuery(2, 'tvSearch', null, searchQuery);
+  const { list } = useInfiniteQuery({
+    initialPage: 2,
+    type: 'tvSearch',
+    searchQuery
+  });
 
   const renderList = useMemo(() => {
     let filtered = [];

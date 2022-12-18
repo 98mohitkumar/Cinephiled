@@ -35,9 +35,7 @@ const MediaContextProvider = ({ children }) => {
     moviesWatchlistCurrentPage: 1,
     tvShowsWatchlistCurrentPage: 1,
     ratedMoviesCurrentPage: 1,
-    ratedTvShowsCurrentPage: 1,
-    movieRecommendationsCurrentPage: 1,
-    tvRecommendationsCurrentPage: 1
+    ratedTvShowsCurrentPage: 1
   });
 
   const logoutHelper = useCallback(() => {
@@ -59,9 +57,7 @@ const MediaContextProvider = ({ children }) => {
       moviesWatchlistCurrentPage: 1,
       tvShowsWatchlistCurrentPage: 1,
       ratedMoviesCurrentPage: 1,
-      ratedTvShowsCurrentPage: 1,
-      movieRecommendationsCurrentPage: 1,
-      tvRecommendationsCurrentPage: 1
+      ratedTvShowsCurrentPage: 1
     };
   }, []);
 
@@ -311,60 +307,28 @@ const MediaContextProvider = ({ children }) => {
   }, [data?.user?.sessionId, ratedTvShows, userInfo?.id]);
 
   useEffect(() => {
-    if (
-      userInfo?.id &&
-      data?.user?.sessionId &&
-      movieRecommendations.length < 40
-    ) {
-      getRecommendations(
-        'movie',
-        userInfo?.id,
-        pagesRef.current.movieRecommendationsCurrentPage
-      )
+    if (userInfo?.id && data?.user?.sessionId) {
+      getRecommendations('movie', userInfo?.id)
         .then((data) => {
-          if (
-            data?.results?.length > 0 &&
-            pagesRef.current.movieRecommendationsCurrentPage === data?.page
-          ) {
-            pagesRef.current = {
-              ...pagesRef.current,
-              movieRecommendationsCurrentPage: data.page + 1
-            };
-
+          if (data?.results?.length > 0) {
             setMovieRecommendations((prev) => prev.concat(data?.results ?? []));
           }
         })
         .catch(() => setMovieRecommendations((prev) => prev));
     }
-  }, [userInfo?.id, movieRecommendations, data?.user?.sessionId]);
+  }, [data?.user?.sessionId, userInfo?.id]);
 
   useEffect(() => {
-    if (
-      userInfo?.id &&
-      data?.user?.sessionId &&
-      tvRecommendations?.length < 40
-    ) {
-      getRecommendations(
-        'tv',
-        userInfo?.id,
-        pagesRef.current.tvRecommendationsCurrentPage
-      )
+    if (userInfo?.id && data?.user?.sessionId) {
+      getRecommendations('tv', userInfo?.id)
         .then((data) => {
-          if (
-            data?.results?.length > 0 &&
-            pagesRef.current.tvRecommendationsCurrentPage === data?.page
-          ) {
-            pagesRef.current = {
-              ...pagesRef.current,
-              tvRecommendationsCurrentPage: data.page + 1
-            };
-
+          if (data?.results?.length > 0) {
             setTvRecommendations((prev) => prev.concat(data?.results ?? []));
           }
         })
         .catch(() => setTvRecommendations((prev) => prev));
     }
-  }, [userInfo?.id, tvRecommendations, data?.user?.sessionId]);
+  }, [data?.user?.sessionId, userInfo?.id]);
 
   return (
     <MediaContext.Provider

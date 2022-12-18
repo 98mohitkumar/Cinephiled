@@ -16,7 +16,11 @@ import useInfiniteQuery from '../../../hooks/useInfiniteQuery';
 import { NoDataText, Error404 } from '../../../styles/GlobalComponents/index';
 
 const TvShows = ({ renderList, genreName, error, genreId }) => {
-  const { list } = useInfiniteQuery(3, 'tvGenre', genreId);
+  const { list } = useInfiniteQuery({
+    initialPage: 3,
+    type: 'tvGenre',
+    genreId
+  });
 
   return (
     <Fragment>

@@ -16,7 +16,11 @@ import {
 } from './SearchTabStyles';
 
 const MoviesSearch = ({ searchQuery, movieRes, searchLength, setLength }) => {
-  const { list } = useInfiniteQuery(2, 'movieSearch', null, searchQuery);
+  const { list } = useInfiniteQuery({
+    initialPage: 2,
+    type: 'movieSearch',
+    searchQuery
+  });
 
   const renderList = useMemo(() => {
     let filtered = [];
