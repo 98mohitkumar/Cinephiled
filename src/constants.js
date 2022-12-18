@@ -27,7 +27,7 @@ export const apiEndpoints = {
     deleteRating: (mediaType, mediaId, sessionId) =>
       `${baseUrl}/${mediaType}/${mediaId}/rating?api_key=${api_key}&session_id=${sessionId}`,
     getRecommendations: (mediaType, accountId, pageQuery = 1) =>
-      `https://api.themoviedb.org/4/account/${accountId}/${mediaType}/recommendations?page=${pageQuery}`
+      `https://api.themoviedb.org/4/account/${accountId}/${mediaType}/recommendations?api_key=${api_key}&page=${pageQuery}`
   },
   search: {
     movieSearchWithYear: (query, year) =>
