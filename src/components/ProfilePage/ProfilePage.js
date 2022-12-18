@@ -88,7 +88,7 @@ const Profile = () => {
   return (
     <Fragment>
       <MetaWrapper
-        title={`${userInfo?.name ?? userInfo?.username} - Cinephiled`}
+        title={`${(userInfo?.name ?? userInfo?.username) || ''} - Cinephiled`}
       />
 
       {userInfo?.id && (

@@ -70,6 +70,9 @@ export const TabContainer = styled.div`
     display: none;
   }
 
+  /* for firefox */
+  scrollbar-width: none;
+
   @media only ${(props) => props.theme.breakpoints.sm} {
     font-size: 1rem;
   }
