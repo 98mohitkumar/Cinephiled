@@ -21,7 +21,7 @@ export default NextAuth({
   ],
   session: {
     jwt: true,
-    maxAge: 30 * 24 * 60 * 60
+    maxAge: 365 * 24 * 60 * 60
   },
   callbacks: {
     session: async ({ session, token }) => {
