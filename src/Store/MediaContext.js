@@ -108,19 +108,21 @@ const MediaContextProvider = ({ children }) => {
         userInfo?.id,
         data?.user?.sessionId,
         pagesRef.current.favoriteMoviesCurrentPage
-      ).then((data) => {
-        if (
-          data?.results?.length > 0 &&
-          pagesRef.current.favoriteMoviesCurrentPage === data?.page
-        ) {
-          pagesRef.current = {
-            ...pagesRef.current,
-            favoriteMoviesCurrentPage: data.page + 1
-          };
+      )
+        .then((data) => {
+          if (
+            data?.results?.length > 0 &&
+            pagesRef.current.favoriteMoviesCurrentPage === data?.page
+          ) {
+            pagesRef.current = {
+              ...pagesRef.current,
+              favoriteMoviesCurrentPage: data.page + 1
+            };
 
-          setFavoriteMovies((prev) => prev.concat(data?.results ?? []));
-        }
-      });
+            setFavoriteMovies((prev) => prev.concat(data?.results ?? []));
+          }
+        })
+        .catch(() => setFavoriteMovies((prev) => prev));
     }
   }, [data?.user?.sessionId, favoriteMovies, userInfo?.id]);
 
@@ -143,19 +145,21 @@ const MediaContextProvider = ({ children }) => {
         userInfo?.id,
         data?.user?.sessionId,
         pagesRef.current.favoriteTvShowsCurrentPage
-      ).then((data) => {
-        if (
-          data?.results?.length > 0 &&
-          pagesRef.current.favoriteTvShowsCurrentPage === data?.page
-        ) {
-          pagesRef.current = {
-            ...pagesRef.current,
-            favoriteTvShowsCurrentPage: data.page + 1
-          };
+      )
+        .then((data) => {
+          if (
+            data?.results?.length > 0 &&
+            pagesRef.current.favoriteTvShowsCurrentPage === data?.page
+          ) {
+            pagesRef.current = {
+              ...pagesRef.current,
+              favoriteTvShowsCurrentPage: data.page + 1
+            };
 
-          setFavoriteTvShows((prev) => prev.concat(data?.results ?? []));
-        }
-      });
+            setFavoriteTvShows((prev) => prev.concat(data?.results ?? []));
+          }
+        })
+        .catch(() => setFavoriteTvShows((prev) => prev));
     }
   }, [data?.user?.sessionId, favoriteTvShows, userInfo?.id]);
 
@@ -178,19 +182,21 @@ const MediaContextProvider = ({ children }) => {
         userInfo?.id,
         data?.user?.sessionId,
         pagesRef.current.moviesWatchlistCurrentPage
-      ).then((data) => {
-        if (
-          data?.results?.length > 0 &&
-          pagesRef.current.moviesWatchlistCurrentPage === data?.page
-        ) {
-          pagesRef.current = {
-            ...pagesRef.current,
-            moviesWatchlistCurrentPage: data.page + 1
-          };
+      )
+        .then((data) => {
+          if (
+            data?.results?.length > 0 &&
+            pagesRef.current.moviesWatchlistCurrentPage === data?.page
+          ) {
+            pagesRef.current = {
+              ...pagesRef.current,
+              moviesWatchlistCurrentPage: data.page + 1
+            };
 
-          setMoviesWatchlist((prev) => prev.concat(data?.results ?? []));
-        }
-      });
+            setMoviesWatchlist((prev) => prev.concat(data?.results ?? []));
+          }
+        })
+        .catch(() => setMoviesWatchlist((prev) => prev));
     }
   }, [data?.user?.sessionId, moviesWatchlist, userInfo?.id]);
 
@@ -213,19 +219,21 @@ const MediaContextProvider = ({ children }) => {
         userInfo?.id,
         data?.user?.sessionId,
         pagesRef.current.tvShowsWatchlistCurrentPage
-      ).then((data) => {
-        if (
-          data?.results?.length > 0 &&
-          pagesRef.current.tvShowsWatchlistCurrentPage === data?.page
-        ) {
-          pagesRef.current = {
-            ...pagesRef.current,
-            tvShowsWatchlistCurrentPage: data.page + 1
-          };
+      )
+        .then((data) => {
+          if (
+            data?.results?.length > 0 &&
+            pagesRef.current.tvShowsWatchlistCurrentPage === data?.page
+          ) {
+            pagesRef.current = {
+              ...pagesRef.current,
+              tvShowsWatchlistCurrentPage: data.page + 1
+            };
 
-          setTvShowsWatchlist((prev) => prev.concat(data?.results ?? []));
-        }
-      });
+            setTvShowsWatchlist((prev) => prev.concat(data?.results ?? []));
+          }
+        })
+        .catch(() => setTvShowsWatchlist((prev) => prev));
     }
   }, [data?.user?.sessionId, tvShowsWatchlist, userInfo?.id]);
 
@@ -247,19 +255,21 @@ const MediaContextProvider = ({ children }) => {
         userInfo?.id,
         data?.user?.sessionId,
         pagesRef.current.ratedMoviesCurrentPage
-      ).then((data) => {
-        if (
-          data?.results?.length > 0 &&
-          pagesRef.current.ratedMoviesCurrentPage === data?.page
-        ) {
-          pagesRef.current = {
-            ...pagesRef.current,
-            ratedMoviesCurrentPage: data.page + 1
-          };
+      )
+        .then((data) => {
+          if (
+            data?.results?.length > 0 &&
+            pagesRef.current.ratedMoviesCurrentPage === data?.page
+          ) {
+            pagesRef.current = {
+              ...pagesRef.current,
+              ratedMoviesCurrentPage: data.page + 1
+            };
 
-          setRatedMovies((prev) => prev.concat(data?.results ?? []));
-        }
-      });
+            setRatedMovies((prev) => prev.concat(data?.results ?? []));
+          }
+        })
+        .catch(() => setRatedMovies((prev) => prev));
     }
   }, [data?.user?.sessionId, ratedMovies, userInfo?.id]);
 
@@ -282,19 +292,21 @@ const MediaContextProvider = ({ children }) => {
         userInfo?.id,
         data?.user?.sessionId,
         pagesRef.current.ratedTvShowsCurrentPage
-      ).then((data) => {
-        if (
-          data?.results?.length > 0 &&
-          pagesRef.current.ratedTvShowsCurrentPage === data?.page
-        ) {
-          pagesRef.current = {
-            ...pagesRef.current,
-            ratedTvShowsCurrentPage: data.page + 1
-          };
+      )
+        .then((data) => {
+          if (
+            data?.results?.length > 0 &&
+            pagesRef.current.ratedTvShowsCurrentPage === data?.page
+          ) {
+            pagesRef.current = {
+              ...pagesRef.current,
+              ratedTvShowsCurrentPage: data.page + 1
+            };
 
-          setRatedTvShows((prev) => prev.concat(data?.results ?? []));
-        }
-      });
+            setRatedTvShows((prev) => prev.concat(data?.results ?? []));
+          }
+        })
+        .catch(() => setRatedTvShows((prev) => prev));
     }
   }, [data?.user?.sessionId, ratedTvShows, userInfo?.id]);
 
@@ -308,19 +320,21 @@ const MediaContextProvider = ({ children }) => {
         'movie',
         userInfo?.id,
         pagesRef.current.movieRecommendationsCurrentPage
-      ).then((data) => {
-        if (
-          data?.results?.length > 0 &&
-          pagesRef.current.movieRecommendationsCurrentPage === data?.page
-        ) {
-          pagesRef.current = {
-            ...pagesRef.current,
-            movieRecommendationsCurrentPage: data.page + 1
-          };
+      )
+        .then((data) => {
+          if (
+            data?.results?.length > 0 &&
+            pagesRef.current.movieRecommendationsCurrentPage === data?.page
+          ) {
+            pagesRef.current = {
+              ...pagesRef.current,
+              movieRecommendationsCurrentPage: data.page + 1
+            };
 
-          setMovieRecommendations((prev) => prev.concat(data?.results ?? []));
-        }
-      });
+            setMovieRecommendations((prev) => prev.concat(data?.results ?? []));
+          }
+        })
+        .catch(() => setMovieRecommendations((prev) => prev));
     }
   }, [userInfo?.id, movieRecommendations, data?.user?.sessionId]);
 
@@ -334,19 +348,21 @@ const MediaContextProvider = ({ children }) => {
         'tv',
         userInfo?.id,
         pagesRef.current.tvRecommendationsCurrentPage
-      ).then((data) => {
-        if (
-          data?.results?.length > 0 &&
-          pagesRef.current.tvRecommendationsCurrentPage === data?.page
-        ) {
-          pagesRef.current = {
-            ...pagesRef.current,
-            tvRecommendationsCurrentPage: data.page + 1
-          };
+      )
+        .then((data) => {
+          if (
+            data?.results?.length > 0 &&
+            pagesRef.current.tvRecommendationsCurrentPage === data?.page
+          ) {
+            pagesRef.current = {
+              ...pagesRef.current,
+              tvRecommendationsCurrentPage: data.page + 1
+            };
 
-          setTvRecommendations((prev) => prev.concat(data?.results ?? []));
-        }
-      });
+            setTvRecommendations((prev) => prev.concat(data?.results ?? []));
+          }
+        })
+        .catch(() => setTvRecommendations((prev) => prev));
     }
   }, [userInfo?.id, tvRecommendations, data?.user?.sessionId]);
 

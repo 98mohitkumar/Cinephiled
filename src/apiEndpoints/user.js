@@ -75,8 +75,12 @@ export const getFavorites = async (
     apiEndpoints.user.getFavorites(type, accountId, sessionId, pageQuery)
   );
 
-  const favoritesList = await favoritesRes.json();
-  return favoritesList;
+  if (favoritesRes?.ok) {
+    const favoritesList = await favoritesRes.json();
+    return favoritesList;
+  } else {
+    throw Error('cannot fetch data');
+  }
 };
 
 export const getWatchlist = async (
@@ -89,8 +93,12 @@ export const getWatchlist = async (
     apiEndpoints.user.getWatchlist(type, accountId, sessionId, pageQuery)
   );
 
-  const watchlist = await watchlistRes.json();
-  return watchlist;
+  if (watchlistRes?.ok) {
+    const watchlist = await watchlistRes.json();
+    return watchlist;
+  } else {
+    throw Error('cannot fetch data');
+  }
 };
 
 export const useSetRating = () => {
@@ -126,8 +134,12 @@ export const getRated = async (type, accountId, sessionId, pageQuery = 1) => {
     apiEndpoints.user.getRated(type, accountId, sessionId, pageQuery)
   );
 
-  const rated = await ratedRes.json();
-  return rated;
+  if (ratedRes?.ok) {
+    const rated = await ratedRes.json();
+    return rated;
+  } else {
+    throw Error('cannot fetch data');
+  }
 };
 
 export const useDeleteRating = () => {
@@ -168,7 +180,7 @@ export const revalidationWrapper = (revalidate, delay = 1000) => {
 export const getRecommendations = async (type, accountId, pageQuery = 1) => {
   const read_access_token = process.env.NEXT_PUBLIC_READ_ACCESS_TOKEN;
 
-  const res = await fetch(
+  const recommendationsRes = await fetch(
     apiEndpoints.user.getRecommendations(type, accountId, pageQuery),
     {
       method: 'GET',
@@ -176,7 +188,12 @@ export const getRecommendations = async (type, accountId, pageQuery = 1) => {
         authorization: `Bearer ${read_access_token}`
       }
     }
-  ).then((data) => data.json());
+  );
 
-  return res;
+  if (recommendationsRes?.ok) {
+    const recommendations = await recommendationsRes.json();
+    return recommendations;
+  } else {
+    throw Error('cannot fetch data');
+  }
 };
