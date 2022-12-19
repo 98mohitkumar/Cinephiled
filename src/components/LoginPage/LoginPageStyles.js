@@ -125,6 +125,8 @@ export const LoginButton = styled.button`
   font-weight: 500;
   background: rgb(221, 221, 221);
 
+  ${({ isWaiting }) => isWaiting && 'pointer-events: none'};
+
   &.secondary {
     background-color: transparent;
     color: white;

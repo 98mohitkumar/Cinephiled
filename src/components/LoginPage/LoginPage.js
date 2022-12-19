@@ -31,7 +31,6 @@ const LoginPage = () => {
       });
 
       if (apiRes?.ok && apiRes?.status === 200) {
-        setIsWaiting(false);
         router.replace('/profile');
       } else {
         setError({ error: true, message: apiRes?.error });
@@ -64,7 +63,6 @@ const LoginPage = () => {
         payload?.password.trim().length > 0
       ) {
         await login({ withCredentials: true, payload });
-        setIsWaiting(false);
       } else {
         e.target.reset();
       }
@@ -154,6 +152,7 @@ const LoginPage = () => {
                     <LoginButton
                       onClick={() => login({ withCredentials: false })}
                       className='secondary'
+                      isWaiting={isWaiting}
                     >
                       {isWaiting ? 'Authenticating...' : 'Login with TMDB'}
                     </LoginButton>
@@ -222,6 +221,7 @@ const LoginPage = () => {
                     <LoginButton
                       type='submit'
                       className='login-with-cred-Button mb-2'
+                      isWaiting={isWaiting}
                     >
                       {isWaiting ? 'Authenticating...' : 'Login'}
                     </LoginButton>
