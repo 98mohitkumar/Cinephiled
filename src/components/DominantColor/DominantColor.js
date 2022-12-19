@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 import useImageColor from 'use-image-color';
 import { Colorful } from './DominantColorStyles';
 
@@ -22,4 +22,4 @@ const DominantColor = ({ image }) => {
   );
 };
 
-export default DominantColor;
+export default memo(DominantColor);
