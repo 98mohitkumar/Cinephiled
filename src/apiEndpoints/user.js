@@ -185,6 +185,7 @@ export const getRecommendations = async (type, accountId, pageQuery = 1) => {
     {
       method: 'GET',
       headers: {
+        'content-type': 'application/json;charset=utf-8',
         authorization: `Bearer ${read_access_token}`
       }
     }
