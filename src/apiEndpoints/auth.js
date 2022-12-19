@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useContext, useState } from 'react';
 import { apiEndpoints } from '../constants';
 import { MediaContext } from '../Store/MediaContext';
+import { UserContext } from '../Store/UserContext';
 
 // login hook
 export const useLogin = () => {
@@ -62,6 +63,7 @@ export const useLogout = () => {
   const router = useRouter();
   const { data } = useSession();
   const { logoutHelper } = useContext(MediaContext);
+  const { setUserInfo } = useContext(UserContext);
 
   const logout = useCallback(async () => {
     const res = await fetch(apiEndpoints.auth.logout, {
@@ -76,9 +78,10 @@ export const useLogout = () => {
 
     if (res.ok && res.status === 200) {
       logoutHelper();
+      setUserInfo({});
       router.push('/login');
     }
-  }, [data?.user?.sessionId, logoutHelper, router]);
+  }, [data?.user?.sessionId, logoutHelper, router, setUserInfo]);
 
   return { logout };
 };
