@@ -31,6 +31,7 @@ const LoginPage = () => {
       });
 
       if (apiRes?.ok && apiRes?.status === 200) {
+        setIsWaiting(false);
         router.replace('/profile');
       } else {
         setError({ error: true, message: apiRes?.error });
@@ -41,6 +42,7 @@ const LoginPage = () => {
     const { approved, request_token } = query;
 
     if (approved === 'true' && request_token) {
+      setIsWaiting(true);
       generateSession();
     }
   }, [router, setError]);
@@ -153,7 +155,7 @@ const LoginPage = () => {
                       onClick={() => login({ withCredentials: false })}
                       className='secondary'
                     >
-                      Login with TMDB
+                      {isWaiting ? 'Authenticating...' : 'Login with TMDB'}
                     </LoginButton>
 
                     {error && (
