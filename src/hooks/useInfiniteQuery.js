@@ -75,10 +75,7 @@ const useInfiniteQuery = ({
                   currentPage: data?.page
                 }));
 
-                setPageToFetch((prev) => {
-                  console.info('ran');
-                  return prev + 1;
-                });
+                setPageToFetch((prev) => prev + 1);
               } else {
                 setIsEmptyPage(true);
               }
