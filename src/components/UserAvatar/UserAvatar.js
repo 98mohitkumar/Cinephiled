@@ -16,11 +16,15 @@ const UserAvatar = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   const userAvatar = useMemo(
-    () => ({
-      type: userInfo?.avatar?.tmdb?.avatar_path ? 'tmdb' : 'hash',
-      avatar:
-        userInfo?.avatar?.tmdb?.avatar_path ?? userInfo?.avatar?.gravatar?.hash
-    }),
+    () =>
+      userInfo?.avatar
+        ? {
+            type: userInfo?.avatar?.tmdb?.avatar_path ? 'tmdb' : 'hash',
+            avatar:
+              userInfo?.avatar?.tmdb?.avatar_path ??
+              userInfo?.avatar?.gravatar?.hash
+          }
+        : { type: 'hash', avatar: 'icon' },
     [userInfo?.avatar]
   );
 
@@ -44,70 +48,76 @@ const UserAvatar = () => {
 
   return (
     <Fragment>
-      {status === 'authenticated' && userAvatar?.avatar ? (
-        <Avatar avatar={userAvatar}>
-          <div
-            className='avatar'
-            onClick={() => setShowPopup((prev) => !prev)}
-          />
+      {status !== 'loading' && (
+        <Fragment>
+          {status === 'authenticated' ? (
+            <Avatar avatar={userAvatar}>
+              <div
+                className='avatar'
+                onClick={() => setShowPopup((prev) => !prev)}
+              />
 
-          <AnimatePresence exitBeforeEnter>
-            {showPopup && (
-              <Popup
-                as={motion.div}
-                initial={{ opacity: 0, translateY: '10px' }}
-                animate={{
-                  opacity: 1,
-                  translateY: '0px',
-                  transition: {
-                    type: 'tween',
-                    duration: 0.45,
-                    ease: [0.77, 0, 0.175, 1]
-                  }
-                }}
-                exit={{
-                  opacity: 0,
-                  translateY: '10px',
-                  transition: {
-                    type: 'tween',
-                    duration: 0.45,
-                    ease: [0.77, 0, 0.175, 1]
-                  }
-                }}
-              >
-                <Link href='/profile' passHref>
-                  <PopupOption className='fw-semibold' role='button'>
-                    {userInfo?.username}
-                    <p className='sub-text'>view profile</p>
-                  </PopupOption>
+              <AnimatePresence exitBeforeEnter>
+                {showPopup && (
+                  <Popup
+                    as={motion.div}
+                    initial={{ opacity: 0, translateY: '10px' }}
+                    animate={{
+                      opacity: 1,
+                      translateY: '0px',
+                      transition: {
+                        type: 'tween',
+                        duration: 0.45,
+                        ease: [0.77, 0, 0.175, 1]
+                      }
+                    }}
+                    exit={{
+                      opacity: 0,
+                      translateY: '10px',
+                      transition: {
+                        type: 'tween',
+                        duration: 0.45,
+                        ease: [0.77, 0, 0.175, 1]
+                      }
+                    }}
+                  >
+                    <Link href='/profile' passHref>
+                      <PopupOption className='fw-semibold' role='button'>
+                        {userInfo?.username}
+                        <p className='sub-text'>view profile</p>
+                      </PopupOption>
+                    </Link>
+                    <PopupOption onClick={logout} role='button'>
+                      Logout
+                    </PopupOption>
+                  </Popup>
+                )}
+              </AnimatePresence>
+            </Avatar>
+          ) : (
+            <DefaultAvatar>
+              <div className='desktop-login'>
+                <Link href='/login'>
+                  <a
+                    className={`link ${
+                      router.asPath === '/login' ? 'active' : ''
+                    }`}
+                  >
+                    Login
+                  </a>
                 </Link>
-                <PopupOption onClick={logout} role='button'>
-                  Logout
-                </PopupOption>
-              </Popup>
-            )}
-          </AnimatePresence>
-        </Avatar>
-      ) : (
-        <DefaultAvatar>
-          <div className='desktop-login'>
-            <Link href='/login'>
-              <a
-                className={`link ${router.asPath === '/login' ? 'active' : ''}`}
-              >
-                Login
-              </a>
-            </Link>
-          </div>
+              </div>
 
-          <div className='mobile-login'>
-            <Link href='/login'>
-              <a className='link'>
-                <FaRegUser size='24px' />
-              </a>
-            </Link>
-          </div>
-        </DefaultAvatar>
+              <div className='mobile-login'>
+                <Link href='/login'>
+                  <a className='link'>
+                    <FaRegUser size='24px' />
+                  </a>
+                </Link>
+              </div>
+            </DefaultAvatar>
+          )}
+        </Fragment>
       )}
     </Fragment>
   );
