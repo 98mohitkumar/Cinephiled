@@ -1,6 +1,6 @@
+import ProfilePage from 'components/ProfilePage/ProfilePage';
 import { getSession } from 'next-auth/react';
 import Router from 'next/router';
-import ProfilePage from '../components/ProfilePage/ProfilePage';
 
 const Profile = () => {
   return <ProfilePage />;

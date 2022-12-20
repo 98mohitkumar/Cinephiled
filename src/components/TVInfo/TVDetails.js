@@ -1,33 +1,9 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import Link from 'next/link';
-import {
-  Fragment,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
-import { BiListPlus, BiListCheck } from 'react-icons/bi';
-import { BsStarHalf } from 'react-icons/bs';
-import { FaYoutube, FaHeart, FaRegHeart } from 'react-icons/fa';
 import {
   revalidationWrapper,
   useAddToWatchlist,
   useSetFavorite
-} from '../../apiEndpoints/user';
-import { MediaContext } from '../../Store/MediaContext';
-import {
-  DetailsHeroWrap,
-  HeroBg,
-  HeroBgContainer,
-  HeroDetailsContainer,
-  HeroImg,
-  HeroImgWrapper
-} from '../../styles/GlobalComponents';
-import DominantColor from '../DominantColor/DominantColor';
+} from 'api/user';
+import DominantColor from 'components/DominantColor/DominantColor';
 import {
   Credits,
   CreditsWrapper,
@@ -43,10 +19,34 @@ import {
   RtoR,
   Span,
   Tagline
-} from '../MovieInfo/MovieDetailsStyles';
-import RatingModal, { useModal } from '../RatingModal/RatingModal';
-import SocialMediaLinks from '../SocialMediaLinks/SocialMediaLinks';
-import Toast, { useToast } from '../Toast/Toast';
+} from 'components/MovieInfo/MovieDetailsStyles';
+import RatingModal, { useModal } from 'components/RatingModal/RatingModal';
+import SocialMediaLinks from 'components/SocialMediaLinks/SocialMediaLinks';
+import Toast, { useToast } from 'components/Toast/Toast';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import {
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
+import { BiListPlus, BiListCheck } from 'react-icons/bi';
+import { BsStarHalf } from 'react-icons/bs';
+import { FaYoutube, FaHeart, FaRegHeart } from 'react-icons/fa';
+import { MediaContext } from 'Store/MediaContext';
+import {
+  DetailsHeroWrap,
+  HeroBg,
+  HeroBgContainer,
+  HeroDetailsContainer,
+  HeroImg,
+  HeroImgWrapper
+} from 'styles/GlobalComponents';
 
 const TVDetails = ({ tvData, year }) => {
   tvData.genres.length > 3 && tvData.genres.splice(3);

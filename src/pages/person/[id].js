@@ -1,8 +1,8 @@
+import MetaWrapper from 'components/MetaWrapper';
+import PersonDetails from 'components/PersonDetails/PersonDetails';
+import { apiEndpoints } from 'globals/constants';
 import { Fragment } from 'react';
-import MetaWrapper from '../../components/MetaWrapper';
-import PersonDetails from '../../components/PersonDetails/PersonDetails';
-import { apiEndpoints } from '../../constants';
-import { Error404 } from '../../styles/GlobalComponents';
+import { Error404 } from 'styles/GlobalComponents';
 
 const Person = ({ error, personDetails }) => {
   return (

@@ -1,7 +1,7 @@
+import { apiEndpoints } from 'globals/constants';
 import { useSession } from 'next-auth/react';
 import { useCallback, useContext } from 'react';
-import { apiEndpoints } from '../constants';
-import { UserContext } from '../Store/UserContext';
+import { UserContext } from 'Store/UserContext';
 
 export const useSetFavorite = () => {
   const { status, data } = useSession();

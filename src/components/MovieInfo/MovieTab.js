@@ -1,14 +1,14 @@
+import Backdrops from 'components/Backdrops/Backdrops';
+import Cast from 'components/Cast/Cast';
+import Posters from 'components/Posters/Posters';
+import Reviews from 'components/Reviews/Reviews';
+import BackdropsSvg from 'components/Svg/backdrops';
+import CastSvg from 'components/Svg/cast';
+import PostersSvg from 'components/Svg/posters';
+import ReviewsSvg from 'components/Svg/reviews';
+import Tabs from 'components/Tabs/Tabs';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState, useEffect, useCallback, Fragment, useMemo } from 'react';
-import Backdrops from '../Backdrops/Backdrops';
-import Cast from '../Cast/Cast';
-import Posters from '../Posters/Posters';
-import Reviews from '../Reviews/Reviews';
-import BackdropsSvg from '../Svg/backdrops';
-import CastSvg from '../Svg/cast';
-import PostersSvg from '../Svg/posters';
-import ReviewsSvg from '../Svg/reviews';
-import Tabs from '../Tabs/Tabs';
 import { TabIcon, TabSelectionTitle, tabStyling } from './MovieTabStyles';
 
 const MovieTab = ({ cast, reviews, posters, backdrops }) => {

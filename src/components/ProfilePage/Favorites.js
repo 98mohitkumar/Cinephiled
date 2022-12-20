@@ -1,3 +1,7 @@
+import { revalidationWrapper, useSetFavorite } from 'api/user';
+import { CardsContainerGrid } from 'components/Popular/PopularStyles';
+import { useModal } from 'components/RatingModal/RatingModal';
+import Tabs from 'components/Tabs/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   useEffect,
@@ -7,12 +11,8 @@ import {
   useContext,
   useCallback
 } from 'react';
-import { revalidationWrapper, useSetFavorite } from '../../apiEndpoints/user';
-import { MediaContext } from '../../Store/MediaContext';
-import { NoDataText } from '../../styles/GlobalComponents';
-import { CardsContainerGrid } from '../Popular/PopularStyles';
-import { useModal } from '../RatingModal/RatingModal';
-import Tabs from '../Tabs/Tabs';
+import { MediaContext } from 'Store/MediaContext';
+import { NoDataText } from 'styles/GlobalComponents';
 import MediaCard from './MediaCard';
 import { ConfirmationModal, CTAButton, ModalCard } from './ProfilePageStyles';
 

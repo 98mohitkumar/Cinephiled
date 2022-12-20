@@ -1,7 +1,3 @@
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
-import useGetReleaseDates from '../../hooks/useGetReleaseDates';
 import {
   CardsContainerGrid,
   Cards,
@@ -10,7 +6,11 @@ import {
   CardInfo,
   InfoTitle,
   ReleaseDate
-} from '../Popular/PopularStyles';
+} from 'components/Popular/PopularStyles';
+import { motion } from 'framer-motion';
+import useGetReleaseDates from 'hooks/useGetReleaseDates';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const TrendingMovies = ({ movies }) => {
   const releaseDates = useGetReleaseDates(movies);

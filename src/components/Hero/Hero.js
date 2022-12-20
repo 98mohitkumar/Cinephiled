@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { apiEndpoints } from 'globals/constants';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
-import { apiEndpoints } from '../../constants';
-import { Container } from '../../styles/GlobalComponents';
+import { Container } from 'styles/GlobalComponents';
 import { Banner, Button, Form, HeroDiv, UserInput } from './HeroStyles';
 import SearchSuggestion from './searchSuggestion';
 

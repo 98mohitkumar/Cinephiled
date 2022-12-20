@@ -1,6 +1,6 @@
+import DownloadMediaButton from 'components/DownloadMediaButton/DownloadMediaButton';
 import Image from 'next/image';
-import { NoDataText } from '../../styles/GlobalComponents';
-import DownloadButton from '../DownloadMediaButton/DownloadMediaButton';
+import { NoDataText } from 'styles/GlobalComponents';
 import { PostersContainer, PostersImg, PostersWrapper } from './PostersStyles';
 
 const Posters = ({ posters }) => {
@@ -22,7 +22,7 @@ const Posters = ({ posters }) => {
                 quality='100'
               />
 
-              <DownloadButton item={item.file_path} />
+              <DownloadMediaButton item={item.file_path} />
             </PostersImg>
           ))}
         </PostersWrapper>

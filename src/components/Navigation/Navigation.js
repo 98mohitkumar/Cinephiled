@@ -1,10 +1,10 @@
+import Hero from 'components/Hero/Hero';
+import UserAvatar from 'components/UserAvatar/UserAvatar';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
-import Hero from '../Hero/Hero';
-import UserAvatar from '../UserAvatar/UserAvatar';
 import {
   HamburgerIcon,
   HamburgerMenu,

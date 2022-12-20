@@ -1,3 +1,12 @@
+import {
+  revalidationWrapper,
+  useAddToWatchlist,
+  useSetFavorite
+} from 'api/user';
+import DominantColor from 'components/DominantColor/DominantColor';
+import RatingModal, { useModal } from 'components/RatingModal/RatingModal';
+import SocialMediaLinks from 'components/SocialMediaLinks/SocialMediaLinks';
+import Toast, { useToast } from 'components/Toast/Toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -13,12 +22,7 @@ import {
 import { BiListPlus, BiListCheck } from 'react-icons/bi';
 import { BsStarHalf } from 'react-icons/bs';
 import { FaYoutube, FaHeart, FaRegHeart } from 'react-icons/fa';
-import {
-  revalidationWrapper,
-  useAddToWatchlist,
-  useSetFavorite
-} from '../../apiEndpoints/user';
-import { MediaContext } from '../../Store/MediaContext';
+import { MediaContext } from 'Store/MediaContext';
 import {
   DetailsHeroWrap,
   HeroBg,
@@ -26,11 +30,7 @@ import {
   HeroDetailsContainer,
   HeroImg,
   HeroImgWrapper
-} from '../../styles/GlobalComponents';
-import DominantColor from '../DominantColor/DominantColor';
-import RatingModal, { useModal } from '../RatingModal/RatingModal';
-import SocialMediaLinks from '../SocialMediaLinks/SocialMediaLinks';
-import Toast, { useToast } from '../Toast/Toast';
+} from 'styles/GlobalComponents';
 import {
   Divider,
   Rounded,

@@ -1,10 +1,10 @@
+import { CardsContainerGrid } from 'components/Popular/PopularStyles';
+import RatingModal, { useModal } from 'components/RatingModal/RatingModal';
+import Tabs from 'components/Tabs/Tabs';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Fragment, useContext, useMemo, useState } from 'react';
-import { MediaContext } from '../../Store/MediaContext';
-import { NoDataText } from '../../styles/GlobalComponents';
-import { CardsContainerGrid } from '../Popular/PopularStyles';
-import RatingModal, { useModal } from '../RatingModal/RatingModal';
-import Tabs from '../Tabs/Tabs';
+import { MediaContext } from 'Store/MediaContext';
+import { NoDataText } from 'styles/GlobalComponents';
 import MediaCard from './MediaCard';
 import { CTAButton } from './ProfilePageStyles';
 

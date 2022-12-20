@@ -1,13 +1,13 @@
+import { useLogin } from 'api/auth';
+import MetaWrapper from 'components/MetaWrapper';
 import { AnimatePresence, motion } from 'framer-motion';
+import posters from 'images/posters.webp';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Fragment, useState, useCallback, useEffect } from 'react';
-import posters from '../../../public/Images/posters.webp';
+import { AboutBackground } from 'styles/GlobalComponents';
 import logo from '../../../public/logo512.png';
-import { useLogin } from '../../apiEndpoints/auth';
-import { AboutBackground } from '../../styles/GlobalComponents';
-import MetaWrapper from '../MetaWrapper';
 import {
   Integration,
   LoginButton,

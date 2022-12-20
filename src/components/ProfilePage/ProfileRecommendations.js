@@ -1,10 +1,10 @@
+import { CardsContainerGrid } from 'components/Popular/PopularStyles';
+import Tabs from 'components/Tabs/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
+import useInfiniteQuery from 'hooks/useInfiniteQuery';
 import { useState, useMemo, Fragment, useContext } from 'react';
-import useInfiniteQuery from '../../hooks/useInfiniteQuery';
-import { MediaContext } from '../../Store/MediaContext';
-import { NoDataText } from '../../styles/GlobalComponents';
-import { CardsContainerGrid } from '../Popular/PopularStyles';
-import Tabs from '../Tabs/Tabs';
+import { MediaContext } from 'Store/MediaContext';
+import { NoDataText } from 'styles/GlobalComponents';
 import MediaCard from './MediaCard';
 
 const MovieRecommendations = () => {

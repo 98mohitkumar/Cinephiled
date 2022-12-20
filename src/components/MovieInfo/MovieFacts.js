@@ -1,6 +1,6 @@
 import countryToCurrency from 'country-to-currency';
 import getSymbolFromCurrency from 'currency-symbol-map';
-import { FactsFlexWrapper } from '../../styles/GlobalComponents';
+import { FactsFlexWrapper } from 'styles/GlobalComponents';
 import {
   FactsFieldSet,
   FactsLegend,

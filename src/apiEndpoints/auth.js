@@ -1,9 +1,9 @@
+import { apiEndpoints } from 'globals/constants';
 import { useSession, signOut, signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useCallback, useContext, useState } from 'react';
-import { apiEndpoints } from '../constants';
-import { MediaContext } from '../Store/MediaContext';
-import { UserContext } from '../Store/UserContext';
+import { MediaContext } from 'Store/MediaContext';
+import { UserContext } from 'Store/UserContext';
 
 // login hook
 export const useLogin = () => {

@@ -1,25 +1,25 @@
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Fragment, useMemo } from 'react';
 import {
   HeroInfoTitle,
   HeroInfoWrapper,
   Span
-} from '../../components/MovieInfo/MovieDetailsStyles';
-import {
-  DetailsHeroWrap,
-  HeroDetailsContainer,
-  HeroImg,
-  HeroImgWrapper
-} from '../../styles/GlobalComponents';
+} from 'components/MovieInfo/MovieDetailsStyles';
 import {
   RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
   RecommendedWrapper,
   InfoTitle
-} from '../Recommendations/RecommendationsStyles';
+} from 'components/Recommendations/RecommendationsStyles';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Fragment, useMemo } from 'react';
+import {
+  DetailsHeroWrap,
+  HeroDetailsContainer,
+  HeroImg,
+  HeroImgWrapper
+} from 'styles/GlobalComponents';
 import { Bio, Details } from './PersonDetails.styles';
 
 const PersonDetails = ({ details }) => {

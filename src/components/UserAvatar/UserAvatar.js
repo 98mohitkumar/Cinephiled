@@ -1,11 +1,11 @@
+import { useLogout } from 'api/auth';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, useContext, useMemo, useEffect, useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
-import { useLogout } from '../../apiEndpoints/auth';
-import { UserContext } from '../../Store/UserContext';
+import { UserContext } from 'Store/UserContext';
 import { Avatar, DefaultAvatar, Popup, PopupOption } from './UserAvatarStyles';
 
 const UserAvatar = () => {

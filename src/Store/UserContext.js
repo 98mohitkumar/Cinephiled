@@ -1,7 +1,6 @@
+import { apiEndpoints } from 'globals/constants';
 import { useSession } from 'next-auth/react';
 import { useState, createContext, useEffect } from 'react';
-
-import { apiEndpoints } from '../constants';
 
 export const UserContext = createContext();
 

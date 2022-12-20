@@ -1,8 +1,4 @@
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Fragment } from 'react';
-import MetaWrapper from '../../components/MetaWrapper';
+import MetaWrapper from 'components/MetaWrapper';
 import {
   QueryContainer,
   QueryImg,
@@ -12,10 +8,14 @@ import {
   QueryDescription,
   SearchResultsContainer,
   EmptySearch
-} from '../../components/SearchTab/SearchTabStyles';
-import { apiEndpoints } from '../../constants';
-import useGetReleaseDates from '../../hooks/useGetReleaseDates';
-import { Error404, SearchContainer } from '../../styles/GlobalComponents';
+} from 'components/SearchTab/SearchTabStyles';
+import { motion } from 'framer-motion';
+import { apiEndpoints } from 'globals/constants';
+import useGetReleaseDates from 'hooks/useGetReleaseDates';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Fragment } from 'react';
+import { Error404, SearchContainer } from 'styles/GlobalComponents';
 
 const Keyword = ({ error, results, name, id }) => {
   const releaseDates = useGetReleaseDates(error ? [] : results);

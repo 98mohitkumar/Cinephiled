@@ -1,6 +1,6 @@
+import useInfiniteQuery from 'hooks/useInfiniteQuery';
 import Link from 'next/link';
 import { Fragment, useEffect, useMemo } from 'react';
-import useInfiniteQuery from '../../hooks/useInfiniteQuery';
 import {
   EmptySearch,
   SearchResultsContainer,

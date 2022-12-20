@@ -1,6 +1,6 @@
+import LoginPage from 'components/LoginPage/LoginPage';
 import { getSession } from 'next-auth/react';
 import Router from 'next/router';
-import LoginPage from '../components/LoginPage/LoginPage';
 
 const Login = () => {
   return <LoginPage />;

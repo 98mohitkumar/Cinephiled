@@ -1,11 +1,11 @@
+import MetaWrapper from 'components/MetaWrapper';
+import Recommendations from 'components/Recommendations/Recommendations';
+import TVDetails from 'components/TVInfo/TVDetails';
+import TVFacts from 'components/TVInfo/TVFacts';
+import TVTab from 'components/TVInfo/TVTab';
+import { apiEndpoints } from 'globals/constants';
 import { Fragment, useMemo } from 'react';
-import MetaWrapper from '../../../components/MetaWrapper';
-import Recommendations from '../../../components/Recommendations/Recommendations';
-import TVDetails from '../../../components/TVInfo/TVDetails';
-import TVFacts from '../../../components/TVInfo/TVFacts';
-import TVTab from '../../../components/TVInfo/TVTab';
-import { apiEndpoints } from '../../../constants';
-import { Error404 } from '../../../styles/GlobalComponents';
+import { Error404 } from 'styles/GlobalComponents';
 
 const TvShow = ({ tvData, error, language }) => {
   const cast = useMemo(

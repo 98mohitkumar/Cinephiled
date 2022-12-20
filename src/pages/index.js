@@ -1,9 +1,9 @@
+import Hero from 'components/Hero/Hero';
+import IndexTab from 'components/IndexTab/IndexTab';
+import MetaWrapper from 'components/MetaWrapper';
+import { apiEndpoints } from 'globals/constants';
 import { Fragment } from 'react';
-import Hero from '../components/Hero/Hero';
-import IndexTab from '../components/IndexTab/IndexTab';
-import MetaWrapper from '../components/MetaWrapper';
-import { apiEndpoints } from '../constants';
-import { Error404 } from '../styles/GlobalComponents';
+import { Error404 } from 'styles/GlobalComponents';
 
 export default function Home({
   popularMovies,

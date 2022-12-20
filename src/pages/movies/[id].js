@@ -1,3 +1,9 @@
+import MetaWrapper from 'components/MetaWrapper';
+import MovieDetails from 'components/MovieInfo/MovieDetails';
+import MovieFacts from 'components/MovieInfo/MovieFacts';
+import MovieTab from 'components/MovieInfo/MovieTab';
+import Recommendations from 'components/Recommendations/Recommendations';
+import { apiEndpoints } from 'globals/constants';
 import {
   Fragment,
   useCallback,
@@ -6,13 +12,7 @@ import {
   useRef,
   useState
 } from 'react';
-import MetaWrapper from '../../components/MetaWrapper';
-import MovieDetails from '../../components/MovieInfo/MovieDetails';
-import MovieFacts from '../../components/MovieInfo/MovieFacts';
-import MovieTab from '../../components/MovieInfo/MovieTab';
-import Recommendations from '../../components/Recommendations/Recommendations';
-import { apiEndpoints } from '../../constants';
-import { Error404 } from '../../styles/GlobalComponents';
+import { Error404 } from 'styles/GlobalComponents';
 
 const Movie = ({ movieDetails, error, language, favorites }) => {
   let easter = useRef(false);

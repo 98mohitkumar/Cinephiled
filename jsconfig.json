@@ -10,7 +10,7 @@
       "globals/*": ["src/globals/*"],
       "hooks/*": ["src/hooks/*"],
       "api/*": ["src/apiEndpoints/*"],
-      "store/*": ["src/store/*"]
+      "Store/*": ["src/Store/*"]
     }
   },
   "exclude": ["node_modules"]

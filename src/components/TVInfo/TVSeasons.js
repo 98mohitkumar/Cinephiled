@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
+import useGetReleaseDates from 'hooks/useGetReleaseDates';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
-import useGetReleaseDates from '../../hooks/useGetReleaseDates';
-import { NoDataText } from '../../styles/GlobalComponents';
+import { NoDataText } from 'styles/GlobalComponents';
 import {
   SeasonDetailsWrapper,
   SeasonsOverview,

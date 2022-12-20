@@ -1,7 +1,7 @@
+import { Span } from 'components/MovieInfo/MovieDetailsStyles';
+import Tabs from 'components/Tabs/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Fragment, useCallback, useState, useEffect, useMemo } from 'react';
-import { Span } from '../MovieInfo/MovieDetailsStyles';
-import Tabs from '../Tabs/Tabs';
 import KeywordSearch from './KeywordSearch';
 import MoviesSearch from './MoviesSearch';
 import { tabStyling, tabTitleStyling } from './SearchTabStyles';

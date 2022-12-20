@@ -1,13 +1,9 @@
+import { revalidationWrapper, useDeleteRating, useSetRating } from 'api/user';
+import { Span } from 'components/MovieInfo/MovieDetailsStyles';
 import { motion } from 'framer-motion';
 import { useCallback, useState, useContext, useMemo, Fragment } from 'react';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
-import {
-  revalidationWrapper,
-  useDeleteRating,
-  useSetRating
-} from '../../apiEndpoints/user';
-import { MediaContext } from '../../Store/MediaContext';
-import { Span } from '../MovieInfo/MovieDetailsStyles';
+import { MediaContext } from 'Store/MediaContext';
 import {
   RatingButton,
   RatingCard,

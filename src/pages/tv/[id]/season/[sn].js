@@ -1,13 +1,13 @@
-import Image from 'next/image';
-import { Fragment, useCallback } from 'react';
-import MetaWrapper from '../../../../components/MetaWrapper';
+import MetaWrapper from 'components/MetaWrapper';
 import {
   SeasonInfoMain,
   SeasonInfoWrapper,
   SeasonsRelease,
   SeasonTitle
-} from '../../../../components/TVInfo/TVStyles';
-import { apiEndpoints } from '../../../../constants';
+} from 'components/TVInfo/TVStyles';
+import { apiEndpoints } from 'globals/constants';
+import Image from 'next/image';
+import { Fragment, useCallback } from 'react';
 import {
   EpisodeImg,
   Error404,
@@ -19,7 +19,7 @@ import {
   SeasonShowcaseWrapper,
   TrWrapper,
   Rating
-} from '../../../../styles/GlobalComponents';
+} from 'styles/GlobalComponents';
 
 const Seasons = ({ error, data, tvId, seasonNumber }) => {
   const getYear = useCallback((date) => {

@@ -1,6 +1,6 @@
+import { Span } from 'components/MovieInfo/MovieDetailsStyles';
 import ReactMarkdown from 'react-markdown';
-import { NoDataText } from '../../styles/GlobalComponents';
-import { Span } from '../MovieInfo/MovieDetailsStyles';
+import { NoDataText } from 'styles/GlobalComponents';
 import {
   Review,
   ReviewAuthorImg,

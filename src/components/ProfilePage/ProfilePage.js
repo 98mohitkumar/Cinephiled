@@ -1,3 +1,5 @@
+import MetaWrapper from 'components/MetaWrapper';
+import { LinearTabs } from 'components/Tabs/Tabs';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Fragment,
@@ -8,10 +10,8 @@ import {
   useLayoutEffect,
   useRef
 } from 'react';
-import { MediaContext } from '../../Store/MediaContext';
-import { UserContext } from '../../Store/UserContext';
-import MetaWrapper from '../MetaWrapper';
-import { LinearTabs } from '../Tabs/Tabs';
+import { MediaContext } from 'Store/MediaContext';
+import { UserContext } from 'Store/UserContext';
 import Favorites from './Favorites';
 import { Banner, ProfileAvatar, ProfileStats } from './ProfilePageStyles';
 import ProfileRecommendations from './ProfileRecommendations';

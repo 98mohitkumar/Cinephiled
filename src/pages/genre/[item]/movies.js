@@ -1,19 +1,19 @@
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Fragment } from 'react';
-import MetaWrapper from '../../../components/MetaWrapper';
-import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
+import MetaWrapper from 'components/MetaWrapper';
+import { Span } from 'components/MovieInfo/MovieDetailsStyles';
 import {
   RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
   RecommendedWrapper,
   InfoTitle
-} from '../../../components/Recommendations/RecommendationsStyles';
-import { apiEndpoints } from '../../../constants';
-import useInfiniteQuery from '../../../hooks/useInfiniteQuery';
-import { NoDataText, Error404 } from '../../../styles/GlobalComponents/index';
+} from 'components/Recommendations/RecommendationsStyles';
+import { motion } from 'framer-motion';
+import { apiEndpoints } from 'globals/constants';
+import useInfiniteQuery from 'hooks/useInfiniteQuery';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Fragment } from 'react';
+import { NoDataText, Error404 } from 'styles/GlobalComponents/index';
 
 const Movies = ({ renderList, genreName, error, genreId }) => {
   const { list } = useInfiniteQuery({

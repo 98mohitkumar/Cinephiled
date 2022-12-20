@@ -1,6 +1,6 @@
 import { BiLink } from 'react-icons/bi';
 import { FiFacebook, FiTwitter, FiInstagram } from 'react-icons/fi';
-import { SocialMediaLinksWrapper } from '../../styles/GlobalComponents';
+import { SocialMediaLinksWrapper } from 'styles/GlobalComponents';
 
 const SocialMediaLinks = ({ links, homepage }) => {
   const display =

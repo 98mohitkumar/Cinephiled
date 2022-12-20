@@ -1,3 +1,9 @@
+import {
+  getWatchlist,
+  getFavorites,
+  getRated,
+  getRecommendations
+} from 'api/user';
 import { useSession } from 'next-auth/react';
 import {
   createContext,
@@ -7,12 +13,6 @@ import {
   useContext,
   useCallback
 } from 'react';
-import {
-  getWatchlist,
-  getFavorites,
-  getRated,
-  getRecommendations
-} from '../apiEndpoints/user';
 import { UserContext } from './UserContext';
 
 export const MediaContext = createContext();

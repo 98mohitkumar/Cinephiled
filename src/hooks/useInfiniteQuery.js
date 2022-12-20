@@ -1,7 +1,7 @@
+import { getRecommendations } from 'api/user';
+import { apiEndpoints } from 'globals/constants';
 import { useContext, useMemo, useEffect, useState, useRef } from 'react';
-import { getRecommendations } from '../apiEndpoints/user';
-import { apiEndpoints } from '../constants';
-import { UserContext } from '../Store/UserContext';
+import { UserContext } from 'Store/UserContext';
 
 const useInfiniteQuery = ({
   initialPage,

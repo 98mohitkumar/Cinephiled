@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
+import useGetReleaseDates from 'hooks/useGetReleaseDates';
+import useInfiniteQuery from 'hooks/useInfiniteQuery';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo } from 'react';
-import useGetReleaseDates from '../../hooks/useGetReleaseDates';
-import useInfiniteQuery from '../../hooks/useInfiniteQuery';
 import {
   SearchResultsContainer,
   EmptySearch,

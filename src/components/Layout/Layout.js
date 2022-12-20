@@ -1,6 +1,6 @@
+import Footer from 'components/Footer/Footer';
+import Navigation from 'components/Navigation/Navigation';
 import { motion } from 'framer-motion';
-import Footer from '../Footer/Footer';
-import Navigation from '../Navigation/Navigation';
 import { DetailsWrapper, Wrapper } from './LayoutStyles';
 
 const Layout = ({ children }) => {

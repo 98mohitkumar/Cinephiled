@@ -1,13 +1,13 @@
+import { FooterAttribute } from 'components/Footer/FooterStyles';
+import MetaWrapper from 'components/MetaWrapper';
+import aboutBackground from 'images/ShowCase.webp';
 import Image from 'next/image';
 import { Fragment, useEffect } from 'react';
-import { FooterAttribute } from '../components/Footer/FooterStyles';
-import aboutBackground from '/public/Images/ShowCase.webp';
-import MetaWrapper from '../components/MetaWrapper';
 import {
   AboutBackground,
   AboutContainer,
   AboutCreditsWrapper
-} from '../styles/GlobalComponents';
+} from 'styles/GlobalComponents';
 
 const About = () => {
   useEffect(() => {

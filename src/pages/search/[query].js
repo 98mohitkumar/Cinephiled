@@ -1,12 +1,8 @@
+import MetaWrapper from 'components/MetaWrapper';
+import SearchTab from 'components/SearchTab/SearchTab';
+import { apiEndpoints } from 'globals/constants';
 import { Fragment } from 'react';
-import MetaWrapper from '../../components/MetaWrapper';
-import SearchTab from '../../components/SearchTab/SearchTab';
-import { apiEndpoints } from '../../constants';
-import {
-  BadQuery,
-  Error404,
-  SearchContainer
-} from '../../styles/GlobalComponents';
+import { BadQuery, Error404, SearchContainer } from 'styles/GlobalComponents';
 
 const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
   return (

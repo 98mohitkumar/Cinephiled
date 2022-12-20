@@ -1,20 +1,20 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { Fragment, useCallback, useState, useEffect, useMemo } from 'react';
-import Backdrops from '../Backdrops/Backdrops';
-import Cast from '../Cast/Cast';
+import Backdrops from 'components/Backdrops/Backdrops';
+import Cast from 'components/Cast/Cast';
 import {
   TabSelectionTitle,
   tabStyling,
   TabIcon
-} from '../MovieInfo/MovieTabStyles';
-import Posters from '../Posters/Posters';
-import Reviews from '../Reviews/Reviews';
-import BackdropsSvg from '../Svg/backdrops';
-import CastSvg from '../Svg/cast';
-import PostersSvg from '../Svg/posters';
-import ReviewsSvg from '../Svg/reviews';
-import SeasonsSvg from '../Svg/seasons';
-import Tabs from '../Tabs/Tabs';
+} from 'components/MovieInfo/MovieTabStyles';
+import Posters from 'components/Posters/Posters';
+import Reviews from 'components/Reviews/Reviews';
+import BackdropsSvg from 'components/Svg/backdrops';
+import CastSvg from 'components/Svg/cast';
+import PostersSvg from 'components/Svg/posters';
+import ReviewsSvg from 'components/Svg/reviews';
+import SeasonsSvg from 'components/Svg/seasons';
+import Tabs from 'components/Tabs/Tabs';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Fragment, useCallback, useState, useEffect, useMemo } from 'react';
 import TVSeasons from './TVSeasons';
 
 const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {

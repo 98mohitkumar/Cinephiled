@@ -1,8 +1,3 @@
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useMemo } from 'react';
-import { AiFillStar } from 'react-icons/ai';
 import {
   CardImg,
   CardInfo,
@@ -10,7 +5,12 @@ import {
   InfoTitle,
   Rating,
   ReleaseDate
-} from '../Popular/PopularStyles';
+} from 'components/Popular/PopularStyles';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useMemo } from 'react';
+import { AiFillStar } from 'react-icons/ai';
 import { RatingOverlay } from './ProfilePageStyles';
 
 const MediaCard = ({ data, link, children, rating, recommendation }) => {

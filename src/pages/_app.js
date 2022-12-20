@@ -1,13 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Layout from 'components/Layout/Layout';
 import { AnimatePresence } from 'framer-motion';
 import { SessionProvider } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Layout from '../components/Layout/Layout';
-import MediaContextProvider from '../Store/MediaContext';
-import UserContextProvider from '../Store/UserContext';
-import { Loader } from '../styles/GlobalComponents';
-import Theme from '../styles/theme';
+import MediaContextProvider from 'Store/MediaContext';
+import UserContextProvider from 'Store/UserContext';
+import { Loader } from 'styles/GlobalComponents';
+import Theme from 'styles/theme';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [isLoading, setIsLoading] = useState(false);

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
+import useGetReleaseDates from 'hooks/useGetReleaseDates';
 import Image from 'next/image';
 import Link from 'next/link';
-import useGetReleaseDates from '../../hooks/useGetReleaseDates';
 import {
   CardsContainerGrid,
   Cards,

@@ -1,7 +1,7 @@
+import DownloadMediaButton from 'components/DownloadMediaButton/DownloadMediaButton';
 import Image from 'next/image';
 import { Fragment } from 'react';
-import { NoDataText } from '../../styles/GlobalComponents';
-import DownloadButton from '../DownloadMediaButton/DownloadMediaButton';
+import { NoDataText } from 'styles/GlobalComponents';
 import {
   BackdropsContainer,
   BackdropsImg,
@@ -31,7 +31,7 @@ const Backdrops = ({ backdrops }) => {
                     className='media'
                   />
 
-                  <DownloadButton item={item.file_path} />
+                  <DownloadMediaButton item={item.file_path} />
                 </BackdropsImg>
               </BackdropsImgContainer>
             ))}

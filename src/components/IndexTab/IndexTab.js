@@ -1,10 +1,10 @@
+import PopularMovies from 'components/Popular/PopularMovies';
+import PopularTV from 'components/Popular/PopularTV';
+import Tabs from 'components/Tabs/Tabs';
+import TrendingMovies from 'components/Trending/TrendingMovies';
+import TrendingTv from 'components/Trending/TrendingTv';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Fragment, useEffect, useState, useCallback, useMemo } from 'react';
-import PopularMovies from '../Popular/PopularMovies';
-import PopularTV from '../Popular/PopularTV';
-import Tabs from '../Tabs/Tabs';
-import TrendingMovies from '../Trending/TrendingMovies';
-import TrendingTv from '../Trending/TrendingTv';
 
 const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
   const [tabState, setTabState] = useState('movies');

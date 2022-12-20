@@ -1,10 +1,10 @@
-import { FactsFlexWrapper } from '../../styles/GlobalComponents';
 import {
   FactsFieldSet,
   FactsLegend,
   FactsWrapper,
   Span
-} from '../MovieInfo/MovieDetailsStyles';
+} from 'components/MovieInfo/MovieDetailsStyles';
+import { FactsFlexWrapper } from 'styles/GlobalComponents';
 
 const TVFacts = ({ facts }) => {
   return (
