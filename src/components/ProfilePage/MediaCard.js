@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useMemo } from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import {
   CardImg,
@@ -13,6 +14,22 @@ import {
 import { RatingOverlay } from './ProfilePageStyles';
 
 const MediaCard = ({ data, link, children, rating, recommendation }) => {
+  const releaseDate = useMemo(
+    () =>
+      !(data?.release_date || data?.first_air_date)
+        ? 'TBA'
+        : new Date(
+            data?.release_date?.toString() || data?.first_air_date?.toString()
+          )
+            .toDateString()
+            .slice(4, -5) +
+          ', ' +
+          new Date(
+            data?.release_date?.toString() || data?.first_air_date?.toString()
+          ).getFullYear(),
+    [data.first_air_date, data.release_date]
+  );
+
   return (
     <Cards>
       <motion.div
@@ -61,9 +78,7 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
       {recommendation ? (
         <CardInfo>
           <InfoTitle>{data?.title || data?.name}</InfoTitle>
-          <ReleaseDate>
-            {data?.release_date || data?.first_air_date}
-          </ReleaseDate>
+          <ReleaseDate>{releaseDate}</ReleaseDate>
         </CardInfo>
       ) : (
         <div className='pt-3'>{children}</div>
