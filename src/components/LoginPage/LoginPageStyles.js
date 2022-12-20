@@ -37,7 +37,7 @@ export const LoginCard = styled.div`
   align-items: center;
   flex-direction: column;
   max-width: 500px;
-  min-width: clamp(370px, 50vw, 500px);
+  min-width: clamp(370px, 90vw, 500px);
   padding: 1.75rem 2rem;
   min-height: 375px;
   gap: 2rem;
