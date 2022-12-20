@@ -5,7 +5,7 @@ import {
   useMemo,
   useState,
   useCallback,
-  useEffect,
+  useLayoutEffect,
   useRef
 } from 'react';
 import { MediaContext } from '../../Store/MediaContext';
@@ -72,7 +72,7 @@ const Profile = () => {
 
   const tabContainerRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const tabPosition = localStorage.getItem('profileTab');
     setCurrentTab((prev) => tabPosition ?? prev);
 
