@@ -11,7 +11,10 @@ export const useSetFavorite = () => {
     async ({ mediaType, mediaId, favoriteState }) => {
       if (status === 'authenticated' && userInfo?.id && data?.user?.sessionId) {
         const favorite = await fetch(
-          apiEndpoints.user.setFavorite(userInfo.id, data.user.sessionId),
+          apiEndpoints.user.setFavorite({
+            accountId: userInfo.id,
+            sessionId: data.user.sessionId
+          }),
           {
             method: 'POST',
             headers: {
@@ -42,7 +45,10 @@ export const useAddToWatchlist = () => {
     async ({ mediaType, mediaId, watchlistState }) => {
       if (status === 'authenticated' && userInfo?.id && data?.user?.sessionId) {
         const watchlist = await fetch(
-          apiEndpoints.user.addToWatchlist(userInfo.id, data.user.sessionId),
+          apiEndpoints.user.addToWatchlist({
+            accountId: userInfo.id,
+            sessionId: data.user.sessionId
+          }),
           {
             method: 'POST',
             headers: {
@@ -65,14 +71,19 @@ export const useAddToWatchlist = () => {
   return { addToWatchlist };
 };
 
-export const getFavorites = async (
-  type,
+export const getFavorites = async ({
+  mediaType,
   accountId,
   sessionId,
-  pageQuery = 1
-) => {
+  pageQuery
+}) => {
   const favoritesRes = await fetch(
-    apiEndpoints.user.getFavorites(type, accountId, sessionId, pageQuery)
+    apiEndpoints.user.getFavorites({
+      mediaType,
+      accountId,
+      sessionId,
+      pageQuery
+    })
   );
 
   if (favoritesRes?.ok) {
@@ -83,14 +94,19 @@ export const getFavorites = async (
   }
 };
 
-export const getWatchlist = async (
-  type,
+export const getWatchlist = async ({
+  mediaType,
   accountId,
   sessionId,
-  pageQuery = 1
-) => {
+  pageQuery
+}) => {
   const watchlistRes = await fetch(
-    apiEndpoints.user.getWatchlist(type, accountId, sessionId, pageQuery)
+    apiEndpoints.user.getWatchlist({
+      mediaType,
+      accountId,
+      sessionId,
+      pageQuery
+    })
   );
 
   if (watchlistRes?.ok) {
@@ -108,7 +124,11 @@ export const useSetRating = () => {
     async ({ mediaType, mediaId, rating }) => {
       if (status === 'authenticated' && data?.user?.sessionId) {
         const favorite = await fetch(
-          apiEndpoints.user.setRating(mediaType, mediaId, data.user.sessionId),
+          apiEndpoints.user.setRating({
+            mediaType,
+            mediaId,
+            sessionId: data.user.sessionId
+          }),
           {
             method: 'POST',
             headers: {
@@ -129,9 +149,14 @@ export const useSetRating = () => {
   return { setRating };
 };
 
-export const getRated = async (type, accountId, sessionId, pageQuery = 1) => {
+export const getRated = async ({
+  mediaType,
+  accountId,
+  sessionId,
+  pageQuery
+}) => {
   const ratedRes = await fetch(
-    apiEndpoints.user.getRated(type, accountId, sessionId, pageQuery)
+    apiEndpoints.user.getRated({ mediaType, accountId, sessionId, pageQuery })
   );
 
   if (ratedRes?.ok) {
@@ -149,11 +174,11 @@ export const useDeleteRating = () => {
     async ({ mediaType, mediaId }) => {
       if (status === 'authenticated' && data?.user?.sessionId) {
         const favorite = await fetch(
-          apiEndpoints.user.deleteRating(
+          apiEndpoints.user.deleteRating({
             mediaType,
             mediaId,
-            data.user.sessionId
-          ),
+            sessionId: data.user.sessionId
+          }),
           {
             method: 'DELETE',
             headers: {
@@ -177,11 +202,15 @@ export const revalidationWrapper = (revalidate, delay = 1000) => {
   }, delay);
 };
 
-export const getRecommendations = async (type, accountId, pageQuery = 1) => {
+export const getRecommendations = async ({
+  mediaType,
+  accountId,
+  pageQuery
+}) => {
   const read_access_token = process.env.NEXT_PUBLIC_READ_ACCESS_TOKEN;
 
   const recommendationsRes = await fetch(
-    apiEndpoints.user.getRecommendations(type, accountId, pageQuery),
+    apiEndpoints.user.getRecommendations({ mediaType, accountId, pageQuery }),
     {
       method: 'GET',
       headers: {

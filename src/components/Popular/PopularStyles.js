@@ -77,14 +77,23 @@ export const CardInfo = styled.div`
 `;
 
 export const InfoTitle = styled.h2`
-  font-size: 1.1rem;
+  font-size: 18px;
   font-weight: 600;
+  margin-bottom: 5px;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    font-size: 16px;
+  }
 `;
 
 export const ReleaseDate = styled.p`
   font-family: 'Satoshi', sans-serif;
   font-weight: 500;
   margin: 0;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    font-size: 14px;
+  }
 `;
 
 export const Rating = styled.div`

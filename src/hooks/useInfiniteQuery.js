@@ -9,7 +9,7 @@ const useInfiniteQuery = ({
   mediaType,
   genreId = null,
   searchQuery = null,
-  isProfileRecommendations
+  isProfileRecommendations = false
 }) => {
   const [pageToFetch, setPageToFetch] = useState(initialPage);
   const [extendedList, setExtendedList] = useState({
@@ -23,11 +23,23 @@ const useInfiniteQuery = ({
 
   const endpoint = useMemo(
     () => ({
-      movieGenre: apiEndpoints.movie.movieGenre(genreId, pageToFetch),
-      tvGenre: apiEndpoints.tv.tvGenre(genreId, pageToFetch),
-      movieSearch: apiEndpoints.search.movieSearch(searchQuery, pageToFetch),
-      tvSearch: apiEndpoints.search.tvSearch(searchQuery, pageToFetch),
-      keywordSearch: apiEndpoints.search.keywordSearch(searchQuery, pageToFetch)
+      movieGenre: apiEndpoints.movie.movieGenre({
+        genreId,
+        pageQuery: pageToFetch
+      }),
+      tvGenre: apiEndpoints.tv.tvGenre({ genreId, pageQuery: pageToFetch }),
+      movieSearch: apiEndpoints.search.movieSearch({
+        query: searchQuery,
+        pageQuery: pageToFetch
+      }),
+      tvSearch: apiEndpoints.search.tvSearch({
+        query: searchQuery,
+        pageQuery: pageToFetch
+      }),
+      keywordSearch: apiEndpoints.search.keywordSearch({
+        query: searchQuery,
+        pageQuery: pageToFetch
+      })
     }),
     [genreId, pageToFetch, searchQuery]
   );
@@ -37,11 +49,11 @@ const useInfiniteQuery = ({
 
     const fetchQuery = async () => {
       if (isProfileRecommendations) {
-        const response = await getRecommendations(
+        const response = await getRecommendations({
           mediaType,
-          userInfo?.id,
-          pageToFetch
-        );
+          accountId: userInfo?.id,
+          pageQuery: pageToFetch
+        });
 
         return response;
       } else {

@@ -43,16 +43,16 @@ Search.getInitialProps = async (ctx) => {
 
     //common in both
     const keywordsResponse = await fetch(
-      apiEndpoints.search.keywordSearch(searchQuery)
+      apiEndpoints.search.keywordSearch({ query: searchQuery })
     );
 
     if (year !== '') {
       const movieResponse = await fetch(
-        apiEndpoints.search.movieSearchWithYear(searchQuery, year)
+        apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year })
       );
 
       const tvResponse = await fetch(
-        apiEndpoints.search.tvSearchWithYear(searchQuery, year)
+        apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year })
       );
 
       const error = movieResponse.ok && tvResponse.ok ? false : true;
@@ -73,10 +73,12 @@ Search.getInitialProps = async (ctx) => {
       }
     } else {
       const movieResponse = await fetch(
-        apiEndpoints.search.movieSearch(searchQuery)
+        apiEndpoints.search.movieSearch({ query: searchQuery })
       );
 
-      const tvResponse = await fetch(apiEndpoints.search.tvSearch(searchQuery));
+      const tvResponse = await fetch(
+        apiEndpoints.search.tvSearch({ query: searchQuery })
+      );
 
       const error = movieResponse.ok || tvResponse.ok ? false : true;
 

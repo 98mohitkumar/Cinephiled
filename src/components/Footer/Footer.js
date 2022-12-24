@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { FiLinkedin, FiInstagram } from 'react-icons/fi';
 import {
   FooterAttribute,
@@ -38,4 +39,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

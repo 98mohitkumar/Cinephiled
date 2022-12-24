@@ -100,8 +100,12 @@ Movies.getInitialProps = async (ctx) => {
     const genreId = ctx.query.item.split('-')[0];
     const genreName = ctx.query.item.split('-')[1];
 
-    const response = await fetch(apiEndpoints.movie.movieGenre(genreId, 1));
-    const nextPage = await fetch(apiEndpoints.movie.movieGenre(genreId, 2));
+    const response = await fetch(
+      apiEndpoints.movie.movieGenre({ genreId, pageQuery: 1 })
+    );
+    const nextPage = await fetch(
+      apiEndpoints.movie.movieGenre({ genreId, pageQuery: 2 })
+    );
 
     const error = response.ok ? false : true;
 

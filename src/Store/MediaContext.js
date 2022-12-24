@@ -99,12 +99,12 @@ const MediaContextProvider = ({ children }) => {
       favoriteMovies?.length ===
         (pagesRef.current.favoriteMoviesCurrentPage - 1) * 20
     ) {
-      getFavorites(
-        'movies',
-        userInfo?.id,
-        data?.user?.sessionId,
-        pagesRef.current.favoriteMoviesCurrentPage
-      )
+      getFavorites({
+        mediaType: 'movies',
+        accountId: userInfo?.id,
+        sessionId: data?.user?.sessionId,
+        pageQuery: pagesRef.current.favoriteMoviesCurrentPage
+      })
         .then((data) => {
           if (
             data?.results?.length > 0 &&
@@ -136,12 +136,12 @@ const MediaContextProvider = ({ children }) => {
       favoriteTvShows?.length ===
         (pagesRef.current.favoriteTvShowsCurrentPage - 1) * 20
     ) {
-      getFavorites(
-        'tv',
-        userInfo?.id,
-        data?.user?.sessionId,
-        pagesRef.current.favoriteTvShowsCurrentPage
-      )
+      getFavorites({
+        mediaType: 'tv',
+        accountId: userInfo?.id,
+        sessionId: data?.user?.sessionId,
+        pageQuery: pagesRef.current.favoriteTvShowsCurrentPage
+      })
         .then((data) => {
           if (
             data?.results?.length > 0 &&
@@ -173,12 +173,12 @@ const MediaContextProvider = ({ children }) => {
       moviesWatchlist?.length ===
         (pagesRef.current.moviesWatchlistCurrentPage - 1) * 20
     ) {
-      getWatchlist(
-        'movies',
-        userInfo?.id,
-        data?.user?.sessionId,
-        pagesRef.current.moviesWatchlistCurrentPage
-      )
+      getWatchlist({
+        mediaType: 'movies',
+        accountId: userInfo?.id,
+        sessionId: data?.user?.sessionId,
+        pageQuery: pagesRef.current.moviesWatchlistCurrentPage
+      })
         .then((data) => {
           if (
             data?.results?.length > 0 &&
@@ -210,12 +210,12 @@ const MediaContextProvider = ({ children }) => {
       tvShowsWatchlist?.length ===
         (pagesRef.current.tvShowsWatchlistCurrentPage - 1) * 20
     ) {
-      getWatchlist(
-        'tv',
-        userInfo?.id,
-        data?.user?.sessionId,
-        pagesRef.current.tvShowsWatchlistCurrentPage
-      )
+      getWatchlist({
+        mediaType: 'tv',
+        accountId: userInfo?.id,
+        sessionId: data?.user?.sessionId,
+        pageQuery: pagesRef.current.tvShowsWatchlistCurrentPage
+      })
         .then((data) => {
           if (
             data?.results?.length > 0 &&
@@ -246,12 +246,12 @@ const MediaContextProvider = ({ children }) => {
       data?.user?.sessionId &&
       ratedMovies?.length === (pagesRef.current.ratedMoviesCurrentPage - 1) * 20
     ) {
-      getRated(
-        'movies',
-        userInfo?.id,
-        data?.user?.sessionId,
-        pagesRef.current.ratedMoviesCurrentPage
-      )
+      getRated({
+        mediaType: 'movies',
+        accountId: userInfo?.id,
+        sessionId: data?.user?.sessionId,
+        pageQuery: pagesRef.current.ratedMoviesCurrentPage
+      })
         .then((data) => {
           if (
             data?.results?.length > 0 &&
@@ -283,12 +283,12 @@ const MediaContextProvider = ({ children }) => {
       ratedTvShows?.length ===
         (pagesRef.current.ratedTvShowsCurrentPage - 1) * 20
     ) {
-      getRated(
-        'tv',
-        userInfo?.id,
-        data?.user?.sessionId,
-        pagesRef.current.ratedTvShowsCurrentPage
-      )
+      getRated({
+        mediaType: 'tv',
+        accountId: userInfo?.id,
+        sessionId: data?.user?.sessionId,
+        pageQuery: pagesRef.current.ratedTvShowsCurrentPage
+      })
         .then((data) => {
           if (
             data?.results?.length > 0 &&
@@ -308,7 +308,11 @@ const MediaContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (userInfo?.id && data?.user?.sessionId) {
-      getRecommendations('movie', userInfo?.id)
+      getRecommendations({
+        mediaType: 'movie',
+        accountId: userInfo?.id,
+        pageQuery: 1
+      })
         .then((data) => {
           if (data?.results?.length > 0) {
             setMovieRecommendations((prev) => prev.concat(data?.results ?? []));
@@ -320,7 +324,11 @@ const MediaContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (userInfo?.id && data?.user?.sessionId) {
-      getRecommendations('tv', userInfo?.id)
+      getRecommendations({
+        mediaType: 'tv',
+        accountId: userInfo?.id,
+        pageQuery: 1
+      })
         .then((data) => {
           if (data?.results?.length > 0) {
             setTvRecommendations((prev) => prev.concat(data?.results ?? []));

@@ -12,7 +12,7 @@ export default function UserContextProvider({ children }) {
     if (status === 'authenticated' && !userInfo?.id) {
       const getUserInfo = async () => {
         const profileRes = await fetch(
-          apiEndpoints.user.userInfo(data?.user?.sessionId)
+          apiEndpoints.user.userInfo({ sessionId: data?.user?.sessionId })
         );
 
         if (profileRes.ok) {

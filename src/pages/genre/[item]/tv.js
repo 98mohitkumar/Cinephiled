@@ -107,8 +107,12 @@ TvShows.getInitialProps = async (ctx) => {
       .join('-')
       .replace('&', ' & ');
 
-    const response = await fetch(apiEndpoints.tv.tvGenre(genreId, 1));
-    const nextPage = await fetch(apiEndpoints.tv.tvGenre(genreId, 2));
+    const response = await fetch(
+      apiEndpoints.tv.tvGenre({ genreId, pageQuery: 1 })
+    );
+    const nextPage = await fetch(
+      apiEndpoints.tv.tvGenre({ genreId, pageQuery: 2 })
+    );
 
     const error = response.ok ? false : true;
 

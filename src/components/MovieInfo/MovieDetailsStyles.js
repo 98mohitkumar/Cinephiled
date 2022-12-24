@@ -26,9 +26,9 @@ export const Span = styled.span`
 
   &.movieCastHead,
   &.toast-message {
-    font-size: 20px;
+    font-size: 18px;
 
-    @media only ${(props) => props.theme.breakpoints.xs} {
+    @media only ${(props) => props.theme.breakpoints.sm} {
       font-size: 16px;
     }
   }
@@ -37,7 +37,7 @@ export const Span = styled.span`
     font-size: 1rem;
     font-weight: 400;
 
-    @media only ${(props) => props.theme.breakpoints.xs} {
+    @media only ${(props) => props.theme.breakpoints.sm} {
       font-size: 14px;
     }
   }

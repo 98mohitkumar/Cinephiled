@@ -51,7 +51,10 @@ export const RecommendedImg = styled.div`
 `;
 
 export const InfoTitle = styled.h2`
-  margin-top: 0.25rem;
-  font-size: 1.1rem;
+  font-size: 18px;
   font-weight: 600;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    font-size: 16px;
+  }
 `;

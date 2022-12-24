@@ -53,7 +53,7 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             transition={{ duration: 0.5 }}
           >
             {movies.length !== 0 && (
-              <Span className='d-block display-6 text-center'>
+              <Span className='d-block fs-2 text-center'>
                 Movies matching : {search}
               </Span>
             )}
@@ -79,7 +79,7 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             transition={{ duration: 0.5 }}
           >
             {tv.length !== 0 && (
-              <Span className='d-block display-6 text-center'>
+              <Span className='d-block fs-2 text-center'>
                 TV shows matching : {search}
               </Span>
             )}
@@ -105,7 +105,7 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             transition={{ duration: 0.5 }}
           >
             {keywords.length !== 0 && (
-              <Span className='d-block display-6 text-center'>
+              <Span className='d-block fs-2 text-center'>
                 Keywords matching : {search}
               </Span>
             )}

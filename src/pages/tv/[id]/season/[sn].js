@@ -130,7 +130,10 @@ const Seasons = ({ error, data, tvId, seasonNumber }) => {
 Seasons.getInitialProps = async (ctx) => {
   try {
     const response = await fetch(
-      apiEndpoints.tv.tvSeasonDetails(ctx.query.id, ctx.query.sn)
+      apiEndpoints.tv.tvSeasonDetails({
+        id: ctx.query.id,
+        seasonNumber: ctx.query.sn
+      })
     );
 
     const error = response.ok ? false : true;
