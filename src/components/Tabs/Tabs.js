@@ -1,4 +1,4 @@
-import { Fragment, useCallback } from 'react';
+import { Fragment } from 'react';
 import {
   ActiveTabIndicator,
   Selection,
@@ -9,14 +9,12 @@ import {
 } from './TabsStyles';
 
 const Tabs = ({ tabList, currentTab, setTab, styling, children, ...props }) => {
-  const findIndex = useCallback(
-    (item) => item.key === currentTab,
-    [currentTab]
-  );
-
   return (
     <Tab count={tabList.length} styling={styling?.tabStyling} {...props}>
-      <Slider state={tabList.findIndex(findIndex)} count={tabList.length} />
+      <Slider
+        state={tabList.findIndex((item) => item.key === currentTab)}
+        count={tabList.length}
+      />
 
       {children ?? (
         <Fragment>
@@ -39,11 +37,6 @@ const Tabs = ({ tabList, currentTab, setTab, styling, children, ...props }) => {
 export default Tabs;
 
 export const LinearTabs = ({ tabList, currentTab, setTab, scrollRef }) => {
-  const findIndex = useCallback(
-    (item) => item.key === currentTab,
-    [currentTab]
-  );
-
   return (
     <TabContainer ref={scrollRef}>
       <Fragment>
@@ -58,7 +51,7 @@ export const LinearTabs = ({ tabList, currentTab, setTab, scrollRef }) => {
             {name}
             {key === currentTab && (
               <ActiveTabIndicator
-                state={tabList.findIndex(findIndex)}
+                state={tabList.findIndex((item) => item.key === currentTab)}
                 count={tabList.length}
               />
             )}
