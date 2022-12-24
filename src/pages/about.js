@@ -18,12 +18,12 @@ const About = () => {
     <Fragment>
       <MetaWrapper
         title='Cinephiled - About'
-        description='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters.'
+        description='Cinephiled - A progressive web app (PWA) to preview any movie or tv show with reviews, ratings, description and posters. Acting as a TMDB client, Cinephiled gives you access to login into your TMDB account and add movies or tv shows to your watchlist, set as favorites, rate and get personalized recommendations.'
         url='https://cinephiled.vercel.app'
         image='https://i.imgur.com/1tH4WvQ.jpg'
       />
 
-      <AboutContainer className='text-center'>
+      <AboutContainer className='text-center d-flex align-items-center justify-content-center'>
         <div className='bg-wrapper'>
           <AboutBackground>
             <Image
@@ -36,13 +36,19 @@ const About = () => {
           </AboutBackground>
         </div>
 
-        <div>
+        <div style={{ maxWidth: '1100px' }}>
           <h1 className='fw-bold display-3'>About the Project</h1>
           <p className='fs-5'>
-            On my journey of learning front end web development, i have now
-            learned React js and a framework called next.js. <br />
-            <b>Cinephiled</b> is made using Next.js and data is fetched from The
-            Movie database aka <b>TMDB</b> using REST Api.
+            <b>Cinephiled </b>- A progressive web app (PWA) to preview any movie
+            or tv show with reviews, ratings, description and posters. Acting as
+            a TMDB client,
+            <b> Cinephiled</b> gives you access to login into your TMDB account
+            and add movies or tv shows to your watchlist, set as favorites, rate
+            and get personalized recommendations.
+            <br />
+            <br />
+            <b>Cinephiled</b> is made using Next.js, styled components and Next
+            Auth.
             <br />
             <br />
             Banner Image is made by Amr Khalid, big thanks to him.
