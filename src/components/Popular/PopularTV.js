@@ -1,3 +1,7 @@
+import { motion } from 'framer-motion';
+import useGetReleaseDates from 'hooks/useGetReleaseDates';
+import Image from 'next/image';
+import Link from 'next/link';
 import {
   CardsContainerGrid,
   Cards,
@@ -8,16 +12,7 @@ import {
   ReleaseDate
 } from './PopularStyles';
 
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import useGetReleaseDates from '../../hooks/useGetReleaseDates';
-
 const PopularTV = ({ TV }) => {
-  TV.forEach((item) => {
-    if (item.vote_average === 0) item.vote_average = 'NR';
-  });
-
   const releaseDates = useGetReleaseDates(TV);
 
   return (
@@ -53,9 +48,7 @@ const PopularTV = ({ TV }) => {
                           className='poster'
                         />
                         <Rating className='d-flex justify-content-center align-items-center'>
-                          {TV.vote_average === 'NR'
-                            ? TV.vote_average
-                            : TV.vote_average.toFixed(1)}
+                          {!TV.vote_average ? 'NR' : TV.vote_average.toFixed(1)}
                         </Rating>
                       </CardImg>
                     </a>

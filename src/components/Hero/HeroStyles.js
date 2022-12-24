@@ -40,18 +40,25 @@ export const Banner = styled.div`
   background: Url(/Images/poster.webp) repeat center / 70%;
   filter: brightness(70%);
   z-index: 1;
-  transform: scale(1.7) rotate(10deg);
+  transform: scale(2) rotate(5deg);
+  animation: hero-banner 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
     background: Url(/Images/poster.webp) repeat center / 90%;
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    background: Url(/Images/poster.webp) repeat center / 110%;
+    background: Url(/Images/poster.webp) repeat center / 140%;
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    background: Url(/Images/poster.webp) repeat center / 140%;
+    background: Url(/Images/poster.webp) repeat center / 200%;
+  }
+
+  @keyframes hero-banner {
+    to {
+      transform: scale(1.7) rotate(10deg);
+    }
   }
 `;
 

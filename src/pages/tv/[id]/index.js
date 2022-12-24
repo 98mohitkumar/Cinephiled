@@ -1,79 +1,21 @@
-import DominantColor from '../../../components/DominantColor/DominantColor';
-import {
-  Gradient,
-  HeroImgWrapper,
-  HeroTrailer
-} from '../../../styles/GlobalComponents';
-import TVDetails from '../../../components/TVInfo/TVDetails';
-import {
-  DetailsHeroWrap,
-  Error404,
-  HeroBg,
-  HeroBgContainer,
-  HeroDetailsContainer,
-  HeroImg,
-  HeroInfo
-} from '../../../styles/GlobalComponents';
-import TVTab from '../../../components/TVInfo/TVTab';
-import TVFacts from '../../../components/TVInfo/TVFacts';
-import { FaYoutube } from 'react-icons/fa';
-import { Span } from '../../../components/MovieInfo/MovieDetailsStyles';
-import SocialMediaLinks from '../../../components/SocialMediaLinks/SocialMediaLinks';
-import Image from 'next/image';
-import { useMemo } from 'react';
-import MetaWrapper from '../../../components/MetaWrapper';
+import MetaWrapper from 'components/MetaWrapper';
+import Recommendations from 'components/Recommendations/Recommendations';
+import TVDetails from 'components/TVInfo/TVDetails';
+import TVFacts from 'components/TVInfo/TVFacts';
+import TVTab from 'components/TVInfo/TVTab';
+import { apiEndpoints } from 'globals/constants';
+import { Fragment, useMemo } from 'react';
+import { Error404 } from 'styles/GlobalComponents';
 
-const TvShow = ({ tvData, error, languages, socialIds }) => {
-  const crew = useMemo(
-    () => (!error ? tvData?.credits?.crew : []),
-    [error, tvData?.credits?.crew]
-  );
-
-  const crewData = useMemo(
-    () =>
-      !error
-        ? [
-            ...tvData?.created_by?.slice(0, 2),
-            ...crew?.filter((credit) => credit.job === 'Characters').slice(0, 2)
-          ]
-        : [],
-    [crew, error, tvData?.created_by]
-  );
-
+const TvShow = ({ tvData, error, language }) => {
   const cast = useMemo(
     () => (!error ? tvData?.credits?.cast.slice(0, 15) : []),
     [error, tvData?.credits?.cast]
   );
 
-  const videos = useMemo(
-    () =>
-      !error
-        ? tvData?.videos?.results?.filter(
-            (item) => item?.site === 'YouTube' && item?.type === 'Trailer'
-          )
-        : [],
-    [error, tvData?.videos?.results]
-  );
-
-  const epRuntime = useMemo(() => {
-    const getH = Math.floor(tvData?.episode_run_time[0] / 60);
-    const getM = Math.ceil((tvData?.episode_run_time[0] / 60 - getH) * 60);
-    return { getH, getM };
-  }, [tvData?.episode_run_time]);
-
   const tvStatus = useMemo(
     () => (!error ? (!tvData.status ? 'TBA' : tvData?.status) : ''),
     [error, tvData?.status]
-  );
-
-  const ogLanguage = useMemo(
-    () =>
-      !error
-        ? !tvData.original_language
-          ? 'TBA'
-          : tvData?.original_language
-        : '',
-    [error, tvData?.original_language]
   );
 
   const network = useMemo(
@@ -88,9 +30,8 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
   );
 
   const tvFacts = useMemo(
-    () =>
-      !error ? { status: tvStatus, language: ogLanguage, network, type } : {},
-    [error, network, ogLanguage, tvStatus, type]
+    () => (!error ? { status: tvStatus, network, type, language } : {}),
+    [error, language, network, tvStatus, type]
   );
 
   const getYear = useMemo(
@@ -114,7 +55,7 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
   );
 
   return (
-    <>
+    <Fragment>
       <MetaWrapper
         title={
           !error
@@ -123,80 +64,20 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
         }
         description={tvData?.overview}
         image={`https://image.tmdb.org/t/p/w780${tvData?.backdrop_path}`}
-        url={`https://cinephiled.vercel.app/tv/${tvData?.id}`}
+        url={`https://cinephiled.vercel.app/tv/${
+          tvData?.id
+        }-${tvData.name.replace(/[' ']/g, '-')}`}
       />
 
       {error ? (
         <Error404>404</Error404>
       ) : (
-        <>
+        <div className='pb-5'>
           {/* tv info hero section */}
-          <HeroDetailsContainer className='position-relative mb-auto'>
-            <HeroBgContainer className='position-absolute'>
-              <HeroBg className='position-absolute text-center'>
-                <Image
-                  src={
-                    tvData.backdrop_path
-                      ? `https://image.tmdb.org/t/p/w1280${tvData?.backdrop_path}`
-                      : '/Images/Hex.png'
-                  }
-                  alt='tv-backdrop'
-                  layout='fill'
-                  objectFit='cover'
-                  priority
-                />
-              </HeroBg>
-              <DominantColor image={tvData?.poster_path} />
-            </HeroBgContainer>
-            <DetailsHeroWrap>
-              <HeroImgWrapper>
-                <HeroImg className='position-relative text-center'>
-                  <Image
-                    src={
-                      tvData.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${tvData?.poster_path}`
-                        : '/Images/DefaultImage.png'
-                    }
-                    alt='tv-poster'
-                    layout='fill'
-                    objectFit='cover'
-                    priority
-                  />
-                </HeroImg>
-
-                {videos.length !== 0 && (
-                  <a
-                    href={`https://www.youtube.com/watch?v=${videos[0].key}`}
-                    target='_blank'
-                    rel='noreferrer'
-                    aria-label='trailer'
-                  >
-                    <HeroTrailer>
-                      <FaYoutube size='1.5rem' />
-                      <Span>Play Trailer</Span>
-                    </HeroTrailer>
-                  </a>
-                )}
-                <SocialMediaLinks
-                  links={socialIds}
-                  homepage={tvData.homepage}
-                />
-              </HeroImgWrapper>
-
-              <Gradient />
-              <HeroInfo className='d-flex'>
-                <TVDetails
-                  tvData={tvData}
-                  date={getYear}
-                  runtime={epRuntime}
-                  crew={crewData}
-                />
-              </HeroInfo>
-            </DetailsHeroWrap>
-          </HeroDetailsContainer>
+          <TVDetails tvData={tvData} year={getYear} />
 
           {/* tv facts */}
-          <TVFacts facts={tvFacts} languages={languages} />
+          <TVFacts facts={tvFacts} />
 
           {/* tv tabs */}
           <TVTab
@@ -207,28 +88,24 @@ const TvShow = ({ tvData, error, languages, socialIds }) => {
             backdrops={tvData?.images?.backdrops ?? []}
             posters={tvData?.images?.posters ?? []}
           />
-        </>
+
+          {/* recommendations */}
+          {tvData?.recommendations?.results?.length > 0 && (
+            <Recommendations
+              data={tvData?.recommendations?.results}
+              type='tv'
+            />
+          )}
+        </div>
       )}
-    </>
+    </Fragment>
   );
 };
 
 TvShow.getInitialProps = async (ctx) => {
   try {
-    const api_key = process.env.NEXT_PUBLIC_API_KEY;
-    const tv_id = ctx.query.id;
-
-    const tvResponse = await fetch(
-      `https://api.themoviedb.org/3/tv/${tv_id}?api_key=${api_key}&language=en-US&append_to_response=images,videos,credits,reviews&include_image_language=en,null`
-    );
-
-    const languagesResponse = await fetch(
-      `https://api.themoviedb.org/3/configuration/languages?api_key=${api_key}`
-    );
-
-    const socialLinks = await fetch(
-      `https://api.themoviedb.org/3/tv/${tv_id}/external_ids?api_key=${api_key}`
-    );
+    const tvResponse = await fetch(apiEndpoints.tv.tvDetails(ctx.query.id));
+    const languagesResponse = await fetch(apiEndpoints.language);
 
     const error = tvResponse.ok ? false : true;
 
@@ -236,16 +113,16 @@ TvShow.getInitialProps = async (ctx) => {
       throw new Error();
     } else {
       const tvData = await tvResponse.json();
-
       const languages = await languagesResponse.json();
 
-      const socialIds = await socialLinks.json();
+      const language = languages.filter(
+        (item) => item.iso_639_1 === tvData.original_language
+      );
 
       return {
         tvData,
         error,
-        languages,
-        socialIds
+        language: language?.[0]?.english_name
       };
     }
   } catch {

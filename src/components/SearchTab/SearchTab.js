@@ -1,16 +1,11 @@
-import {
-  SearchTabSelectionTitle,
-  SearchTabSlider,
-  SearchTabWrapper
-} from './SearchTabStyles';
-
-import { useCallback, useState } from 'react';
-import MoviesSearch from './MoviesSearch';
-import TVSearch from './TVSearch';
-import { Span } from '../MovieInfo/MovieDetailsStyles';
-import { useEffect } from 'react';
-import KeywordSearch from './KeywordSearch';
+import { Span } from 'components/MovieInfo/MovieDetailsStyles';
+import Tabs from 'components/Tabs/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Fragment, useCallback, useState, useEffect, useMemo } from 'react';
+import KeywordSearch from './KeywordSearch';
+import MoviesSearch from './MoviesSearch';
+import { tabStyling, tabTitleStyling } from './SearchTabStyles';
+import TVSearch from './TVSearch';
 
 const SearchTab = ({ movies, tv, search, keywords }) => {
   const [tabState, setTabState] = useState('movies');
@@ -30,29 +25,23 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
     setTabState(tab);
   }, []);
 
+  const tabList = useMemo(
+    () => [
+      { key: 'movies', name: `Movies (${searchLength?.movies})` },
+      { key: 'tv', name: `TV (${searchLength?.tv})` },
+      { key: 'keywords', name: `Keywords (${searchLength?.keywords})` }
+    ],
+    [searchLength?.keywords, searchLength?.movies, searchLength?.tv]
+  );
+
   return (
-    <>
-      <SearchTabWrapper>
-        <SearchTabSlider tabState={tabState} />
-        <SearchTabSelectionTitle
-          onClick={() => tabSelectionHandler('movies')}
-          isActive={tabState === 'movies'}
-        >
-          Movies ({searchLength.movies})
-        </SearchTabSelectionTitle>
-        <SearchTabSelectionTitle
-          onClick={() => tabSelectionHandler('tv')}
-          isActive={tabState === 'tv'}
-        >
-          TV ({searchLength.tv})
-        </SearchTabSelectionTitle>
-        <SearchTabSelectionTitle
-          onClick={() => tabSelectionHandler('keywords')}
-          isActive={tabState === 'keywords'}
-        >
-          keywords ({searchLength.keywords})
-        </SearchTabSelectionTitle>
-      </SearchTabWrapper>
+    <Fragment>
+      <Tabs
+        tabList={tabList}
+        currentTab={tabState}
+        setTab={tabSelectionHandler}
+        styling={{ tabStyling, tabTitleStyling }}
+      />
 
       <AnimatePresence exitBeforeEnter>
         {tabState === 'movies' && (
@@ -61,10 +50,10 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             {movies.length !== 0 && (
-              <Span className='d-block display-6 text-center'>
+              <Span className='d-block fs-2 text-center'>
                 Movies matching : {search}
               </Span>
             )}
@@ -87,10 +76,10 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             {tv.length !== 0 && (
-              <Span className='d-block display-6 text-center'>
+              <Span className='d-block fs-2 text-center'>
                 TV shows matching : {search}
               </Span>
             )}
@@ -113,10 +102,10 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             {keywords.length !== 0 && (
-              <Span className='d-block display-6 text-center'>
+              <Span className='d-block fs-2 text-center'>
                 Keywords matching : {search}
               </Span>
             )}
@@ -129,7 +118,7 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </Fragment>
   );
 };
 

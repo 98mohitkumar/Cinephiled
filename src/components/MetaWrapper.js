@@ -8,7 +8,7 @@ const MetaWrapper = ({ title, description, image, url, children }) => {
       <meta property='og:title' content={title} key='og_title' />
       <meta
         property='og:image'
-        content={image ?? 'https://i.imgur.com/Jtl3tJG.png'}
+        content={image ?? 'https://i.imgur.com/1tH4WvQ.jpg'}
         key='og_image'
       />
       <meta name='description' content={description ?? ''} key='description' />
@@ -17,7 +17,11 @@ const MetaWrapper = ({ title, description, image, url, children }) => {
         content={description ?? ''}
         key='og_description'
       />
-      <meta property='og:url' content={url} key='og_url'></meta>
+      <meta
+        property='og:url'
+        content={url ?? 'https://cinephiled.vercel.app'}
+        key='og_url'
+      />
       <meta property='twitter:title' content={title} key='twitter_title' />
       <meta
         property='twitter:description'
@@ -26,7 +30,7 @@ const MetaWrapper = ({ title, description, image, url, children }) => {
       />
       <meta
         property='twitter:image'
-        content={image ?? 'https://i.imgur.com/Jtl3tJG.png'}
+        content={image ?? 'https://i.imgur.com/1tH4WvQ.jpg'}
         key='twitter_image'
       />
 

@@ -1,16 +1,17 @@
+import DownloadMediaButton from 'components/DownloadMediaButton/DownloadMediaButton';
 import Image from 'next/image';
-import { NoDataText } from '../../styles/GlobalComponents';
+import { Fragment } from 'react';
+import { NoDataText } from 'styles/GlobalComponents';
 import {
   BackdropsContainer,
   BackdropsImg,
   BackdropsImgContainer,
-  BackdropsWrapper,
+  BackdropsWrapper
 } from './BackdropsStyles';
-import DownloadButton from '../DownloadMediaButton/DownloadMediaButton';
 
 const Backdrops = ({ backdrops }) => {
   return (
-    <>
+    <Fragment>
       <BackdropsContainer>
         {backdrops.length === 0 ? (
           <NoDataText className='fw-bold text-center my-5'>
@@ -30,14 +31,14 @@ const Backdrops = ({ backdrops }) => {
                     className='media'
                   />
 
-                  <DownloadButton item={item.file_path} />
+                  <DownloadMediaButton item={item.file_path} />
                 </BackdropsImg>
               </BackdropsImgContainer>
             ))}
           </BackdropsWrapper>
         )}
       </BackdropsContainer>
-    </>
+    </Fragment>
   );
 };
 

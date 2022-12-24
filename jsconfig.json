@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "components/*": ["src/components/*"],
+      "images/*": ["public/Images/*"],
+      "styles/*": ["src/styles/*"],
+      "theme/*": ["src/theme/*"],
+      "globals/*": ["src/globals/*"],
+      "hooks/*": ["src/hooks/*"],
+      "api/*": ["src/apiEndpoints/*"],
+      "Store/*": ["src/Store/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

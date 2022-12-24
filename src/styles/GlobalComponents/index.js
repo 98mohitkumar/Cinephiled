@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  max-width: 2000px;
-  margin: auto;
-  position: relative;
-`;
-
 export const Container = styled.div`
   width: 100%;
   height: 32rem;
@@ -24,9 +18,23 @@ export const AboutBackground = styled.div`
 
   animation: about 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
 
+  &.loginPage {
+    filter: unset;
+    animation: loginPage 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  }
+
   @keyframes about {
     from {
       transform: scale(1.6);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes loginPage {
+    from {
+      transform: scale(1.3);
     }
     to {
       transform: scale(1);
@@ -77,10 +85,6 @@ export const Error404 = styled.h1`
       -webkit-filter: hue-rotate(360deg);
     }
   }
-`;
-
-export const DetailsWrapper = styled.div`
-  min-height: 100vh;
 `;
 
 export const HeroDetailsContainer = styled.div`
@@ -193,11 +197,6 @@ export const DetailsHeroWrap = styled.div`
   }
 `;
 
-export const HeroInfo = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
 export const FactsFlexWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -217,25 +216,6 @@ export const FactsFlexWrapper = styled.div`
   }
 `;
 
-export const Gradient = styled.div`
-  position: absolute;
-  background: linear-gradient(0deg, #121212 14%, rgba(21, 21, 21, 0.5) 100%);
-  inset: 0;
-  z-index: -1;
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    bottom: 20rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    bottom: 50%;
-  }
-`;
-
-export const SearchHeading = styled.h1`
-  font-weight: bold;
-`;
-
 export const SearchContainer = styled.div`
   width: 100%;
   height: auto;
@@ -247,106 +227,15 @@ export const SearchContainer = styled.div`
   }
 `;
 
+export const NoDataText = styled.p`
+  padding: 1.25rem;
+  font-size: 2rem;
+`;
+
 export const BadQuery = styled.h1`
   font-weight: bold;
   font-size: calc(2rem + 4vw);
   text-align: center;
-`;
-
-export const SearchResultsContainer = styled.div`
-  width: clamp(350px, 90vw, 1400px);
-  margin: auto;
-`;
-
-export const EmptySearch = styled.h3`
-  padding: 2rem 0rem;
-  font-weight: 500;
-`;
-
-export const QueryContainer = styled.div`
-  height: 142px;
-  width: 100%;
-  background: white;
-  border-radius: 10px;
-  margin: 1.5rem 0rem;
-  display: flex;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
-    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
-    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
-  outline: 1px solid rgba(255, 255, 255, 0.5);
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    margin: 1rem 0rem;
-  }
-`;
-
-export const QueryImg = styled.div`
-  min-width: 6rem;
-  height: 142px;
-`;
-
-export const QueryTitle = styled.span`
-  color: #121212;
-  font-weight: 500;
-  font-size: 1.5rem;
-  display: block;
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    font-size: 20px;
-    line-height: 1.2;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: 16px;
-  }
-`;
-
-export const QueryInfoWrapper = styled.div`
-  padding: 0.65rem 1rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0.5rem;
-  }
-`;
-
-export const QueryReleaseDate = styled.p`
-  color: #818181;
-  font-size: 1rem;
-  font-family: 'Satoshi', sans-serif;
-  font-weight: 400;
-  margin-bottom: 0rem;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: 14px;
-  }
-`;
-
-export const QueryDescription = styled.p`
-  color: #121212;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  -webkit-line-clamp: 2;
-  margin-top: 10px;
-  margin-bottom: 0rem;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: 0.9rem;
-    margin-top: 10px;
-    padding: 0.1rem 0rem;
-    line-height: 1.2;
-  }
-`;
-
-export const NoDataText = styled.p`
-  padding: 1.25rem;
-  font-size: 2rem;
 `;
 
 export const HeroImgWrapper = styled.div`
@@ -361,7 +250,7 @@ export const HeroImgWrapper = styled.div`
   @media only ${(props) => props.theme.breakpoints.ip} {
     padding: 0rem;
     grid-template-columns: 192px;
-    justify-items: flex-start;
+    place-items: flex-end flex-start;
     gap: 2rem;
 
     & > div:first-child {
@@ -377,31 +266,6 @@ export const HeroImgWrapper = styled.div`
     gap: 1.75rem;
   }
 `;
-
-export const HeroTrailer = styled.div`
-  background: #ebebeb;
-  color: #121212;
-  border-radius: 8px;
-  width: 17rem;
-  height: 45px;
-  padding: 0.25rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 1.1rem;
-  cursor: pointer;
-
-  & span {
-    font-weight: bold;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    width: 12rem;
-    font-size: 1rem;
-  }
-`;
-
 export const SocialMediaLinksWrapper = styled.div`
   width: 17rem;
   height: 45px;
@@ -448,7 +312,7 @@ export const Loader = styled.div`
 `;
 
 export const SeasonExpandedContainer = styled.div`
-  width: clamp(350px, 90vw, 1200px);
+  width: clamp(350px, 90vw, 1400px);
   padding: 3rem 4.2vw;
   margin-bottom: auto;
 
@@ -496,7 +360,7 @@ export const SeasonShowcaseTitle = styled.h2`
 
 export const SeasonEpisodesWrapper = styled.div`
   width: 100%;
-  padding: 3rem 0rem;
+  padding-top: 3rem;
 
   & > div:nth-of-type(1) {
     margin-top: 1rem !important;
@@ -602,100 +466,4 @@ export const Rating = styled.div`
     width: 45px;
     height: 25px;
   }
-`;
-
-export const MovieEaster = styled.div`
-  position: absolute;
-  inset: 0;
-  background-color: rgb(18 18 18 /1);
-  z-index: 10;
-
-  ${(props) =>
-    !props.show
-      ? ` animation: hideEaster 1s ease-in-out forwards;
-
-@keyframes hideEaster{
-  from {
-    background-color: rgb(18 18 18 /1);
-    z-index: 10;
-  }
-
-  to {
-    background-color: rgb(18 18 18 /0);
-    z-index: -1;
-  }
-}`
-      : ` animation: showEaster 0.5s ease-in-out forwards;
-
-@keyframes showEaster{
-  from {
-    background-color: rgb(18 18 18 /0);
-    z-index: -1;
-  }
-
-  to {
-    background-color: rgb(18 18 18 /1);
-    z-index: 10;
-  }
-}`};
-`;
-
-export const LightsInOut = styled.div`
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  margin: 0 auto;
-  border-radius: 50px;
-  background: url(/Images/lightsIn.png) no-repeat center center / 50%;
-  background-color: #313131;
-  ${(props) =>
-    props.show
-      ? `box-shadow: 0px 0px 25px rgb(255 255 255 /0.8);  
-      opacity: 0;
-      animation: hideLight 0s 0.5s ease-in-out forwards;
-
-@keyframes hideLight{
-  from {
-    z-index: -1;
-  }
-
-  to {
-    opacity: 1;
-    z-index: 11;
-  }
-}`
-      : 'display: none'};
-  inset: 22rem 0 0 0;
-  cursor: pointer;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    inset: 24rem 0 0 0;
-  }
-`;
-
-export const EasterText = styled.span`
-  position: absolute;
-  color: white;
-  z-index: 11;
-  inset: 17rem 0 0 0;
-  height: max-content;
-  text-align: center;
-  font-weight: 500;
-  display: ${(props) => (props.show ? 'inline' : 'none')};
-
-  ${(props) =>
-    props.show &&
-    ` animation: showText 0s 0.5s ease-in-out forwards;
-    opacity: 0;
-
-@keyframes showText{
-  from {
-    z-index: -1;
-  }
-
-  to {
-    opacity: 1;
-    z-index: 11;
-  }
-}`};
 `;

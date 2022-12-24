@@ -3,24 +3,39 @@ import styled from 'styled-components';
 export const CardsContainerGrid = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 230px));
   place-items: center;
   justify-content: center;
   padding: 3rem 4.2vw;
   gap: 2rem;
 
+  &.xl-row-gap {
+    gap: 2.75rem 2rem;
+  }
+
   @media only ${(props) => props.theme.breakpoints.ip} {
-    gap: 1.25rem;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+
+    &.xl-row-gap {
+      gap: 2.25rem 1.25rem;
+    }
+  }
+
+  @media only ${(props) => props.theme.breakpoints.md} {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 210px));
+
+    &.xl-row-gap {
+      gap: 2rem 1.25rem;
+    }
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    gap: 0.35rem 1.25rem;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 175px));
+    padding: 0.5rem 1.25rem;
+    gap: 1.25rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0.5rem 1.25rem;
     grid-template-columns: repeat(2, 1fr);
   }
 `;
@@ -38,10 +53,10 @@ export const CardImg = styled.div`
     0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   transition: box-shadow 0.25s ease-in;
+  border-radius: 12px;
 
   @media ${(props) => props.theme.breakpoints.hover} {
     &:hover {
-      cursor: pointer;
       box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
         0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
         0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
@@ -50,27 +65,35 @@ export const CardImg = styled.div`
 
   .poster {
     border-radius: 12px;
-    overflow: hidden;
   }
 `;
 
 export const CardInfo = styled.div`
-  padding: 1.75rem 0rem;
+  padding-top: 1.65rem;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1rem 0rem;
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    padding-top: 1.45rem;
   }
 `;
 
 export const InfoTitle = styled.h2`
-  margin-top: 0.25rem;
-  font-size: 1.1rem;
+  font-size: 18px;
   font-weight: 600;
+  margin-bottom: 5px;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    font-size: 16px;
+  }
 `;
 
 export const ReleaseDate = styled.p`
   font-family: 'Satoshi', sans-serif;
   font-weight: 500;
+  margin: 0;
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    font-size: 14px;
+  }
 `;
 
 export const Rating = styled.div`
@@ -87,10 +110,10 @@ export const Rating = styled.div`
   right: 16px;
   bottom: -22px;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     height: 2.5rem;
     width: 2.5rem;
-    right: 8px;
+    right: 12px;
     bottom: -22px;
     font-size: 0.75rem;
   }

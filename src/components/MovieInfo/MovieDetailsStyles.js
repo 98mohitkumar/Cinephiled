@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const HeroInfoWrapper = styled.div`
   color: white;
-  margin: 0rem;
+  height: 100%;
+  width: 100%;
 `;
 
 export const HeroInfoTitle = styled.h1`
@@ -23,10 +24,11 @@ export const HeroInfoTitle = styled.h1`
 export const Span = styled.span`
   font-weight: 500;
 
-  &.movieCastHead {
-    font-size: 20px;
+  &.movieCastHead,
+  &.toast-message {
+    font-size: 18px;
 
-    @media only ${(props) => props.theme.breakpoints.xs} {
+    @media only ${(props) => props.theme.breakpoints.sm} {
       font-size: 16px;
     }
   }
@@ -35,7 +37,7 @@ export const Span = styled.span`
     font-size: 1rem;
     font-weight: 400;
 
-    @media only ${(props) => props.theme.breakpoints.xs} {
+    @media only ${(props) => props.theme.breakpoints.sm} {
       font-size: 14px;
     }
   }
@@ -49,10 +51,20 @@ export const Span = styled.span`
   &.credit {
     color: white;
     text-decoration: underline;
+    transition: 0.2s ease-in-out;
 
     &:hover {
       opacity: 0.8;
-      transition: 0.2s ease-in-out;
+    }
+  }
+
+  &.rating-option {
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 0.9;
+      text-decoration: underline;
     }
   }
 `;
@@ -86,7 +98,7 @@ export const GenreWrap = styled.div`
 export const Rounded = styled.div`
   border: 2px solid white;
   border-radius: 20px;
-  padding: 0.05rem 0.75rem;
+  padding: 0.05rem 0.9rem;
 
   @media only ${(props) => props.theme.breakpoints.hover} {
     &:hover {
@@ -128,6 +140,59 @@ export const Divider = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     display: none;
+  }
+`;
+
+export const FeatureButton = styled.div`
+  background: rgb(221, 221, 221);
+  color: #121212;
+  border-radius: 8px;
+  width: 17rem;
+  height: 45px;
+  padding: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.1rem;
+
+  & span {
+    font-weight: 600;
+  }
+
+  &.fav,
+  &.watchlist {
+    font-size: 0.95rem;
+    width: auto;
+    height: auto;
+    padding: 10px;
+
+    .watchlist-inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4rem;
+    }
+  }
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    width: 12rem;
+    font-size: 1rem;
+  }
+`;
+
+export const Gradient = styled.div`
+  position: absolute;
+  background: linear-gradient(0deg, #121212 14%, rgba(21, 21, 21, 0.5) 100%);
+  inset: 0;
+  z-index: -1;
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    bottom: 20rem;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    bottom: 50%;
   }
 `;
 
@@ -283,4 +348,100 @@ export const Light = styled.div`
   border-radius: 20px;
   margin-top: 1rem;
   cursor: pointer;
+`;
+
+export const MovieEaster = styled.div`
+  position: absolute;
+  inset: 0;
+  background-color: rgb(18 18 18 /1);
+  z-index: 10;
+
+  ${(props) =>
+    !props.show
+      ? ` animation: hideEaster 1s ease-in-out forwards;
+
+@keyframes hideEaster{
+  from {
+    background-color: rgb(18 18 18 /1);
+    z-index: 10;
+  }
+
+  to {
+    background-color: rgb(18 18 18 /0);
+    z-index: -1;
+  }
+}`
+      : ` animation: showEaster 0.5s ease-in-out forwards;
+
+@keyframes showEaster{
+  from {
+    background-color: rgb(18 18 18 /0);
+    z-index: -1;
+  }
+
+  to {
+    background-color: rgb(18 18 18 /1);
+    z-index: 10;
+  }
+}`};
+`;
+
+export const LightsInOut = styled.div`
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  border-radius: 50px;
+  background: url(/Images/lightsIn.png) no-repeat center center / 50%;
+  background-color: #313131;
+  ${(props) =>
+    props.show
+      ? `box-shadow: 0px 0px 25px rgb(255 255 255 /0.8);  
+      opacity: 0;
+      animation: hideLight 0s 0.5s ease-in-out forwards;
+
+@keyframes hideLight{
+  from {
+    z-index: -1;
+  }
+
+  to {
+    opacity: 1;
+    z-index: 11;
+  }
+}`
+      : 'display: none'};
+  inset: 22rem 0 0 0;
+  cursor: pointer;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    inset: 24rem 0 0 0;
+  }
+`;
+
+export const EasterText = styled.span`
+  position: absolute;
+  color: white;
+  z-index: 11;
+  inset: 17rem 0 0 0;
+  height: max-content;
+  text-align: center;
+  font-weight: 500;
+  display: ${(props) => (props.show ? 'inline' : 'none')};
+
+  ${(props) =>
+    props.show &&
+    ` animation: showText 0s 0.5s ease-in-out forwards;
+    opacity: 0;
+
+@keyframes showText{
+  from {
+    z-index: -1;
+  }
+
+  to {
+    opacity: 1;
+    z-index: 11;
+  }
+}`};
 `;

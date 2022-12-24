@@ -64,15 +64,12 @@ export const SocialIconsContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 0rem 5rem;
-  margin: 0 1rem;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    margin: 0rem;
     gap: 0rem 3rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    margin: 0rem;
     gap: 0rem 2.5rem;
   }
 `;

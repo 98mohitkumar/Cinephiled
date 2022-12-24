@@ -1,4 +1,6 @@
-import { FactsFlexWrapper } from '../../styles/GlobalComponents';
+import countryToCurrency from 'country-to-currency';
+import getSymbolFromCurrency from 'currency-symbol-map';
+import { FactsFlexWrapper } from 'styles/GlobalComponents';
 import {
   FactsFieldSet,
   FactsLegend,
@@ -6,21 +8,9 @@ import {
   Span
 } from './MovieDetailsStyles';
 
-import countryToCurrency from 'country-to-currency';
-import getSymbolFromCurrency from 'currency-symbol-map';
-
-const MovieFacts = ({ facts, languages, country }) => {
+const MovieFacts = ({ facts, country }) => {
   const currencyCode = countryToCurrency[country];
   const currency = getSymbolFromCurrency(currencyCode);
-  const ogLanguage = facts.language;
-
-  let FactsLanguage = '';
-
-  languages.forEach((item) => {
-    if (item.iso_639_1 === ogLanguage) {
-      FactsLanguage = item.english_name;
-    }
-  });
 
   return (
     <FactsFieldSet>
@@ -33,7 +23,7 @@ const MovieFacts = ({ facts, languages, country }) => {
 
         <FactsFlexWrapper>
           <Span>Language</Span>
-          <Span>{FactsLanguage}</Span>
+          <Span>{facts.language}</Span>
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>

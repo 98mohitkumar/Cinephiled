@@ -1,77 +1,117 @@
-import { useMemo } from 'react';
-import { useEffect, useState } from 'react';
+import { getRecommendations } from 'api/user';
+import { apiEndpoints } from 'globals/constants';
+import { useContext, useMemo, useEffect, useState, useRef } from 'react';
+import { UserContext } from 'Store/UserContext';
 
-const useInfiniteQuery = (
+const useInfiniteQuery = ({
   initialPage,
   type,
+  mediaType,
   genreId = null,
-  searchQuery = null
-) => {
-  const api_key = process.env.NEXT_PUBLIC_API_KEY;
-  const [pageQuery, setPageQuery] = useState(initialPage);
+  searchQuery = null,
+  isProfileRecommendations = false
+}) => {
+  const [pageToFetch, setPageToFetch] = useState(initialPage);
   const [extendedList, setExtendedList] = useState({
     list: [],
-    page: pageQuery
+    currentPage: initialPage - 1
   });
+  const [isEmptyPage, setIsEmptyPage] = useState(false);
+
+  const fetchTimeOut = useRef(null);
+  const { userInfo } = useContext(UserContext);
 
   const endpoint = useMemo(
     () => ({
-      movieGenre: `https://api.themoviedb.org/3/discover/movie?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
-
-      tvGenre: `https://api.themoviedb.org/3/discover/tv?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
-
-      movieSearch: `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&language=en-US&query=${searchQuery}&page=${pageQuery}&include_adult=false`,
-
-      tvSearch: `https://api.themoviedb.org/3/search/tv?api_key=${api_key}&language=en-US&query=${searchQuery}&page=${pageQuery}&include_adult=false`,
-
-      keywordSearch: `https://api.themoviedb.org/3/search/keyword?api_key=${api_key}&query=${searchQuery}&page=${pageQuery}`
+      movieGenre: apiEndpoints.movie.movieGenre({
+        genreId,
+        pageQuery: pageToFetch
+      }),
+      tvGenre: apiEndpoints.tv.tvGenre({ genreId, pageQuery: pageToFetch }),
+      movieSearch: apiEndpoints.search.movieSearch({
+        query: searchQuery,
+        pageQuery: pageToFetch
+      }),
+      tvSearch: apiEndpoints.search.tvSearch({
+        query: searchQuery,
+        pageQuery: pageToFetch
+      }),
+      keywordSearch: apiEndpoints.search.keywordSearch({
+        query: searchQuery,
+        pageQuery: pageToFetch
+      })
     }),
-    [api_key, genreId, pageQuery, searchQuery]
+    [genreId, pageToFetch, searchQuery]
   );
-
-  useEffect(() => {
-    function detectBottom() {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 100
-      ) {
-        setPageQuery((prev) => (prev === extendedList.page ? prev + 1 : prev));
-      }
-    }
-
-    window.addEventListener('scroll', detectBottom);
-    return () => {
-      window.removeEventListener('scroll', detectBottom);
-    };
-  }, [extendedList.page]);
 
   useEffect(() => {
     const abortCtrl = new AbortController();
 
-    const fetchGenreList = async () => {
-      const res = await fetch(endpoint[type], { signal: abortCtrl.signal });
+    const fetchQuery = async () => {
+      if (isProfileRecommendations) {
+        const response = await getRecommendations({
+          mediaType,
+          accountId: userInfo?.id,
+          pageQuery: pageToFetch
+        });
 
-      if (res.ok) {
-        const data = await res.json();
-        return data;
+        return response;
       } else {
-        return null;
+        const res = await fetch(endpoint[type], {
+          signal: abortCtrl.signal
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          return data;
+        } else {
+          throw Error('cannot fetch data');
+        }
       }
     };
 
-    fetchGenreList()
-      .then((data) =>
-        setExtendedList((prev) => ({
-          list: prev.list.concat(data.results),
-          page: pageQuery
-        }))
-      )
-      .catch((err) => console.error(err.message));
+    function detectBottom() {
+      if (
+        window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 100 &&
+        !isEmptyPage
+      ) {
+        clearTimeout(fetchTimeOut.current);
+
+        fetchTimeOut.current = setTimeout(() => {
+          fetchQuery()
+            .then((data) => {
+              if (data?.results?.length > 0) {
+                setExtendedList((prev) => ({
+                  list: prev.list.concat(data.results),
+                  currentPage: data?.page
+                }));
+
+                setPageToFetch((prev) => prev + 1);
+              } else {
+                setIsEmptyPage(true);
+              }
+            })
+            .catch((err) => console.error(err.message));
+        }, 100);
+      }
+    }
+
+    window.addEventListener('scroll', detectBottom);
 
     return () => {
       abortCtrl.abort();
+      window.removeEventListener('scroll', detectBottom);
     };
-  }, [pageQuery, type, genreId, endpoint]);
+  }, [
+    endpoint,
+    isEmptyPage,
+    isProfileRecommendations,
+    mediaType,
+    pageToFetch,
+    type,
+    userInfo?.id
+  ]);
 
   return extendedList;
 };

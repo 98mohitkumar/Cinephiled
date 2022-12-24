@@ -1,5 +1,6 @@
-import { FaFacebook, FaInstagram, FaLink, FaTwitter } from 'react-icons/fa';
-import { SocialMediaLinksWrapper } from '../../styles/GlobalComponents';
+import { BiLink } from 'react-icons/bi';
+import { FiFacebook, FiTwitter, FiInstagram } from 'react-icons/fi';
+import { SocialMediaLinksWrapper } from 'styles/GlobalComponents';
 
 const SocialMediaLinks = ({ links, homepage }) => {
   const display =
@@ -17,7 +18,7 @@ const SocialMediaLinks = ({ links, homepage }) => {
           rel='noreferrer'
           aria-label='facebook'
         >
-          <FaFacebook size='1.75rem' />
+          <FiFacebook size='1.6rem' />
         </a>
       )}
 
@@ -28,7 +29,7 @@ const SocialMediaLinks = ({ links, homepage }) => {
           rel='noreferrer'
           aria-label='instagram'
         >
-          <FaInstagram size='1.75rem' />
+          <FiInstagram size='1.65rem' />
         </a>
       )}
 
@@ -39,7 +40,7 @@ const SocialMediaLinks = ({ links, homepage }) => {
           rel='noreferrer'
           aria-label='twitter'
         >
-          <FaTwitter size='1.75rem' />
+          <FiTwitter size='1.65rem' />
         </a>
       )}
 
@@ -50,7 +51,7 @@ const SocialMediaLinks = ({ links, homepage }) => {
           rel='noreferrer'
           aria-label='homepage'
         >
-          <FaLink size='1.75rem' />
+          <BiLink size='1.8rem' />
         </a>
       )}
     </SocialMediaLinksWrapper>

@@ -1,10 +1,12 @@
-import MetaWrapper from '../../components/MetaWrapper';
-import PersonDetails from '../../components/PersonDetails/PersonDetails';
-import { Error404 } from '../../styles/GlobalComponents';
+import MetaWrapper from 'components/MetaWrapper';
+import PersonDetails from 'components/PersonDetails/PersonDetails';
+import { apiEndpoints } from 'globals/constants';
+import { Fragment } from 'react';
+import { Error404 } from 'styles/GlobalComponents';
 
 const Person = ({ error, personDetails }) => {
   return (
-    <>
+    <Fragment>
       <MetaWrapper
         title={
           !error
@@ -13,7 +15,9 @@ const Person = ({ error, personDetails }) => {
         }
         image={`https://image.tmdb.org/t/p/w780${personDetails?.profile_path}`}
         description={personDetails?.biography}
-        url={`https://cinephiled.vercel.app/person/${personDetails?.id}`}
+        url={`https://cinephiled.vercel.app/person/${
+          personDetails?.id
+        }-${personDetails.name.replace(/[' ']/g, '-')}`}
       />
 
       {error ? (
@@ -21,16 +25,14 @@ const Person = ({ error, personDetails }) => {
       ) : (
         <PersonDetails details={personDetails} />
       )}
-    </>
+    </Fragment>
   );
 };
 
 Person.getInitialProps = async (ctx) => {
   try {
-    const api_key = process.env.NEXT_PUBLIC_API_KEY;
-    const personId = ctx.query.id;
     const response = await fetch(
-      `https://api.themoviedb.org/3/person/${personId}?api_key=${api_key}&language=en-US&append_to_response=combined_credits`
+      apiEndpoints.person.personDetails(ctx.query.id)
     );
 
     const error = response.ok ? false : true;

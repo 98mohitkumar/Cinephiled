@@ -1,14 +1,12 @@
-import MetaWrapper from '../../components/MetaWrapper';
-import SearchTab from '../../components/SearchTab/SearchTab';
-import {
-  BadQuery,
-  Error404,
-  SearchContainer
-} from '../../styles/GlobalComponents';
+import MetaWrapper from 'components/MetaWrapper';
+import SearchTab from 'components/SearchTab/SearchTab';
+import { apiEndpoints } from 'globals/constants';
+import { Fragment } from 'react';
+import { BadQuery, Error404, SearchContainer } from 'styles/GlobalComponents';
 
 const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
   return (
-    <>
+    <Fragment>
       <MetaWrapper
         title={error ? 'Not Found - Cinephiled' : `${searchQuery} - Search`}
         description={`Search results matching : ${searchQuery}`}
@@ -29,36 +27,32 @@ const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
           />
         </SearchContainer>
       )}
-    </>
+    </Fragment>
   );
 };
 
 Search.getInitialProps = async (ctx) => {
   try {
-    const api_key = process.env.NEXT_PUBLIC_API_KEY;
-    let searchQuery = ctx.query.search;
-
+    let searchQuery = ctx.query.query;
     let year = '';
-    if (searchQuery.includes('"') || searchQuery.includes("'")) {
-      searchQuery = searchQuery.replace(/(^['"]|['"]$)/g, '');
-    }
 
     if (searchQuery.includes('y:')) {
       year = searchQuery.slice(-4);
       searchQuery = searchQuery.slice(0, searchQuery.length - 7);
     }
 
+    //common in both
+    const keywordsResponse = await fetch(
+      apiEndpoints.search.keywordSearch({ query: searchQuery })
+    );
+
     if (year !== '') {
       const movieResponse = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&language=en-US&query=${searchQuery}&page=1&include_adult=false&year=${year}`
+        apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year })
       );
 
       const tvResponse = await fetch(
-        `https://api.themoviedb.org/3/search/tv?api_key=${api_key}&language=en-US&query=${searchQuery}&page=1&include_adult=false&first_air_date_year=${year}`
-      );
-
-      const keywordsResponse = await fetch(
-        `https://api.themoviedb.org/3/search/keyword?api_key=${api_key}&query=${searchQuery}&page=1`
+        apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year })
       );
 
       const error = movieResponse.ok && tvResponse.ok ? false : true;
@@ -73,21 +67,17 @@ Search.getInitialProps = async (ctx) => {
           movieRes: movieRes.results,
           tvRes: tvRes.results,
           error,
-          searchQuery: searchQuery.replace(/['+']/g, ' '),
+          searchQuery: searchQuery,
           keywordsRes: keywordsRes.results
         };
       }
     } else {
       const movieResponse = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
+        apiEndpoints.search.movieSearch({ query: searchQuery })
       );
 
       const tvResponse = await fetch(
-        `https://api.themoviedb.org/3/search/tv?api_key=${api_key}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
-      );
-
-      const keywordsResponse = await fetch(
-        `https://api.themoviedb.org/3/search/keyword?api_key=${api_key}&query=${searchQuery}&page=1`
+        apiEndpoints.search.tvSearch({ query: searchQuery })
       );
 
       const error = movieResponse.ok || tvResponse.ok ? false : true;
@@ -102,7 +92,7 @@ Search.getInitialProps = async (ctx) => {
           movieRes: movieRes.results,
           tvRes: tvRes.results,
           error,
-          searchQuery: searchQuery.replace(/['+']/g, ' '),
+          searchQuery: searchQuery,
           keywordsRes: keywordsRes.results
         };
       }

@@ -1,53 +1,17 @@
-import { useEffect, useState } from 'react';
-import Hero from '../components/Hero/Hero';
-import IndexTab from '../components/IndexTab/IndexTab';
-import MetaWrapper from '../components/MetaWrapper';
-import { Error404 } from '../styles/GlobalComponents';
+import Hero from 'components/Hero/Hero';
+import IndexTab from 'components/IndexTab/IndexTab';
+import MetaWrapper from 'components/MetaWrapper';
+import { apiEndpoints } from 'globals/constants';
+import { Fragment } from 'react';
+import { Error404 } from 'styles/GlobalComponents';
 
-export default function Home({ moviesData, TVData, error }) {
-  const [trendingTv, setTrendingTv] = useState([]);
-  const [trendingMovies, setTrendingMovies] = useState([]);
-
-  useEffect(() => {
-    const abortCtrl = new AbortController();
-    if (!error) {
-      localStorage.setItem('SearchTabPosition', '');
-      const api_key = process.env.NEXT_PUBLIC_API_KEY;
-
-      async function getTrending() {
-        const trendingResMovies = await fetch(
-          `https://api.themoviedb.org/3/trending/movie/day?api_key=${api_key}`,
-          { signal: abortCtrl.signal }
-        );
-
-        const trendingResTv = await fetch(
-          `https://api.themoviedb.org/3/trending/tv/day?api_key=${api_key}`,
-          { signal: abortCtrl.signal }
-        );
-
-        const trendingMoviesResults = await trendingResMovies.json();
-
-        const trendingTvResults = await trendingResTv.json();
-
-        return {
-          trendingMoviesArr: trendingMoviesResults.results,
-          trendingTvArr: trendingTvResults.results
-        };
-      }
-
-      getTrending()
-        .then((data) => {
-          setTrendingTv(data.trendingTvArr);
-          setTrendingMovies(data.trendingMoviesArr);
-        })
-        .catch((err) => console.log(err));
-    }
-
-    return () => {
-      abortCtrl.abort();
-    };
-  }, [error]);
-
+export default function Home({
+  popularMovies,
+  popularTv,
+  trendingMovies,
+  trendingTv,
+  error
+}) {
   if (error) {
     return (
       <div>
@@ -59,12 +23,12 @@ export default function Home({ moviesData, TVData, error }) {
     );
   } else {
     return (
-      <>
+      <Fragment>
         <MetaWrapper
           title='Cinephiled'
-          description='Cinephiled - A one stop website to preview any movie or tv show with reviews, ratings, description and posters.'
+          description='Cinephiled - A progressive web app (PWA) to preview any movie or tv show with reviews, ratings, description and posters. Acting as a TMDB client, Cinephiled gives you access to login into your TMDB account and add movies or tv shows to your watchlist, set as favorites, rate and get personalized recommendations.'
           url='https://cinephiled.vercel.app'
-          image='https://i.imgur.com/Jtl3tJG.png'
+          image='https://i.imgur.com/1tH4WvQ.jpg'
         >
           {/* Preloads */}
           <link rel='preload' href='/Images/poster.webp' as='image' />
@@ -75,40 +39,40 @@ export default function Home({ moviesData, TVData, error }) {
 
         {/* index tabs */}
         <IndexTab
-          moviesData={moviesData}
-          TVData={TVData}
+          moviesData={popularMovies}
+          TVData={popularTv}
           trendingMovies={trendingMovies}
           trendingTv={trendingTv}
         />
-      </>
+      </Fragment>
     );
   }
 }
 export async function getStaticProps() {
   try {
-    const api_key = process.env.NEXT_PUBLIC_API_KEY;
+    const popularMoviesRes = await fetch(apiEndpoints.movie.popularMovies);
+    const popularTvRes = await fetch(apiEndpoints.tv.popularTV);
 
-    const responseMovies = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&language=en-US&page=1`
-    );
+    const trendingMoviesRes = await fetch(apiEndpoints.movie.trendingMovies);
+    const trendingTvRes = await fetch(apiEndpoints.tv.trendingTV);
 
-    const responseTV = await fetch(
-      `https://api.themoviedb.org/3/tv/popular?api_key=${api_key}&language=en-US&page=1`
-    );
-    const error = responseMovies.ok && responseTV.ok ? false : true;
+    const error = popularMoviesRes.ok && popularTvRes.ok ? false : true;
 
     if (error) {
       throw new Error();
     } else {
-      const resMovies = await responseMovies.json();
-      const resTV = await responseTV.json();
-      const moviesData = await resMovies.results;
-      const TVData = await resTV.results;
+      const popularMovies = await popularMoviesRes.json();
+      const popularTv = await popularTvRes.json();
+
+      const trendingMovies = await trendingMoviesRes.json();
+      const trendingTv = await trendingTvRes.json();
 
       return {
         props: {
-          moviesData,
-          TVData,
+          popularMovies: popularMovies.results,
+          popularTv: popularTv.results,
+          trendingMovies: trendingMovies.results,
+          trendingTv: trendingTv.results,
           error
         },
         revalidate: 3600

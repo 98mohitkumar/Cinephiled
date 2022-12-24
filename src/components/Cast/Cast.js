@@ -1,9 +1,9 @@
-import { NoDataText } from '../../styles/GlobalComponents';
-import { CastContainer, CastGrid, CastImg, CastWrapper } from './CastStyles';
-import { Span } from '../MovieInfo/MovieDetailsStyles';
-import Link from 'next/link';
+import { Span } from 'components/MovieInfo/MovieDetailsStyles';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
+import { NoDataText } from 'styles/GlobalComponents';
+import { CastContainer, CastGrid, CastImg, CastWrapper } from './CastStyles';
 
 const Cast = ({ cast }) => {
   return (
@@ -37,7 +37,6 @@ const Cast = ({ cast }) => {
                         layout='fill'
                         objectFit='cover'
                         objectPosition='top'
-                        className='poster'
                       />
                     </CastImg>
                   </motion.div>
