@@ -22,7 +22,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
 
   useEffect(() => {
     let tabPosition = localStorage.getItem('TvTabState');
-    !tabPosition ? setTabState('cast') : setTabState(tabPosition);
+    tabPosition && setTabState(tabPosition);
   }, []);
 
   const tabSelectionHandler = useCallback((tab) => {

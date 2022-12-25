@@ -10,8 +10,8 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
   const [tabState, setTabState] = useState('movies');
 
   useEffect(() => {
-    const tabState = localStorage.getItem('indexTabState');
-    tabState && setTabState(tabState);
+    const savedTabState = localStorage.getItem('indexTabState');
+    savedTabState && setTabState(savedTabState);
   }, []);
 
   const tabSelectionHandler = useCallback((tab) => {

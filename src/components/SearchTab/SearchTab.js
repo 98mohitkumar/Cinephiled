@@ -17,7 +17,7 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
 
   useEffect(() => {
     let tabPosition = localStorage.getItem('SearchTabPosition');
-    !tabPosition ? setTabState('movies') : setTabState(tabPosition);
+    tabPosition && setTabState(tabPosition);
   }, []);
 
   const tabSelectionHandler = useCallback((tab) => {

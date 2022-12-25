@@ -16,7 +16,7 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
 
   useEffect(() => {
     let tabPosition = localStorage.getItem('MovieTabState');
-    !tabPosition ? setTabState('cast') : setTabState(tabPosition);
+    tabPosition && setTabState(tabPosition);
   }, []);
 
   const tabSelectionHandler = useCallback((tab) => {
