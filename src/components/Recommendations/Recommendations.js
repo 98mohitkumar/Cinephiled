@@ -52,7 +52,7 @@ const Recommendations = ({ data, type }) => {
                   </a>
                 </Link>
               </motion.div>
-              <InfoTitle className='my-3 text-center'>
+              <InfoTitle className='mt-3 text-center'>
                 {item?.title || item?.name}
               </InfoTitle>
             </RecommendedWrapper>

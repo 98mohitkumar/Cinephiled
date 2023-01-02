@@ -5,7 +5,7 @@ export const PostersContainer = styled.div`
   padding: 1rem 4.2vw;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0.5rem 1.25rem;
+    padding: 0rem 1.25rem 1.25rem;
   }
 `;
 

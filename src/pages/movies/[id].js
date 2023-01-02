@@ -110,7 +110,7 @@ const Movie = ({ movieDetails, error, language, favorites }) => {
       {error ? (
         <Error404>404</Error404>
       ) : (
-        <div className='pb-5'>
+        <Fragment>
           {/* movie info hero section */}
           <MovieDetails
             easter={{
@@ -143,7 +143,7 @@ const Movie = ({ movieDetails, error, language, favorites }) => {
               type='movies'
             />
           )}
-        </div>
+        </Fragment>
       )}
     </Fragment>
   );

@@ -72,7 +72,7 @@ const TvShow = ({ tvData, error, language }) => {
       {error ? (
         <Error404>404</Error404>
       ) : (
-        <div className='pb-5'>
+        <Fragment>
           {/* tv info hero section */}
           <TVDetails tvData={tvData} year={getYear} />
 
@@ -96,7 +96,7 @@ const TvShow = ({ tvData, error, language }) => {
               type='tv'
             />
           )}
-        </div>
+        </Fragment>
       )}
     </Fragment>
   );
