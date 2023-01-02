@@ -42,7 +42,7 @@ const Cast = ({ cast }) => {
                   </motion.div>
                 </a>
               </Link>
-              <div className='my-3'>
+              <div className='mt-3'>
                 <Span className='fw-bold movieCastHead d-block'>
                   {item.character}
                 </Span>

@@ -19,7 +19,7 @@ export const Tab = styled.div`
     margin: 2rem auto;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     min-height: 3.25rem;
   }
 
@@ -48,7 +48,7 @@ export const Selection = styled.div`
   z-index: 5;
   transition: color 0.4s cubic-bezier(0.77, 0, 0.18, 1);
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     padding: 0.2rem;
     font-size: 1rem;
   }
