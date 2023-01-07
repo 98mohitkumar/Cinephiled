@@ -6,7 +6,7 @@ export const CardsContainerGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(14rem, 230px));
   place-items: center;
   justify-content: center;
-  padding: 3rem 4.2vw;
+  padding: 2rem 4.2vw;
   gap: 2rem;
 
   &.xl-row-gap {

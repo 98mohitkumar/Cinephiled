@@ -161,7 +161,7 @@ const Watchlist = () => {
         tabList={tabList}
         currentTab={tabState}
         setTab={setTabState}
-        className='mb-3'
+        className='mb-4'
       />
 
       <AnimatePresence exitBeforeEnter initial={false}>

@@ -123,7 +123,7 @@ const Profile = () => {
           </Banner>
 
           {/* main content */}
-          <div className='h-100 w-100 mt-3 mb-4'>
+          <div className='h-100 w-100 mt-3'>
             <div className='px-3'>
               <LinearTabs
                 tabList={tabs}

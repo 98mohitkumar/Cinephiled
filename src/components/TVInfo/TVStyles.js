@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export const SeasonsContainer = styled.div`
-  padding: 1rem 4.2vw;
+  padding: 1rem 4.2vw 2rem;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 1.25rem;
+    padding: 0rem 1.25rem 1.25rem;
   }
 `;
 

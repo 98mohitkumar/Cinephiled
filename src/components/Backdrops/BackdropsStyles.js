@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const BackdropsContainer = styled.div`
   width: 100%;
-  padding: 1rem 4.2vw;
+  padding: 1rem 4.2vw 2rem;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0.5rem 1.25rem;
