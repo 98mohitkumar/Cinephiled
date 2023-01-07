@@ -217,7 +217,7 @@ const PersonDetails = ({ details }) => {
                           </a>
                         </Link>
                       </motion.div>
-                      <InfoTitle className='my-3 text-center'>
+                      <InfoTitle className='mt-3 text-center'>
                         {item.title}
                       </InfoTitle>
                     </RecommendedWrapper>
@@ -255,7 +255,7 @@ const PersonDetails = ({ details }) => {
                           </a>
                         </Link>
                       </motion.div>
-                      <InfoTitle className='my-3 text-center'>
+                      <InfoTitle className='mt-3 text-center'>
                         {item.name}
                       </InfoTitle>
                     </RecommendedWrapper>

@@ -31,7 +31,7 @@ export const CardsContainerGrid = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     grid-template-columns: repeat(auto-fit, minmax(10rem, 175px));
-    padding: 0.5rem 1.25rem;
+    padding: 0rem 1.25rem 1.25rem;
     gap: 1.25rem;
   }
 
