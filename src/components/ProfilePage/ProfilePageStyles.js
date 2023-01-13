@@ -133,7 +133,7 @@ export const ConfirmationModal = styled.div`
 export const ModalCard = styled.div`
   width: 100%;
   max-width: clamp(360px, 90vw, 500px);
-  padding: 1.75rem 2rem;
+  padding: 1.75rem;
   border-radius: 12px;
   border: 1px solid rgba(80, 80, 80, 0.75);
   background: rgba(18, 18, 18);

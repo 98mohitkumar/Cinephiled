@@ -59,7 +59,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
               </h5>
 
               <div
-                className='d-flex justify-between align-items-center pt-3'
+                className='d-flex justify-between align-items-center pt-4'
                 style={{ gap: '1rem' }}
               >
                 <CTAButton

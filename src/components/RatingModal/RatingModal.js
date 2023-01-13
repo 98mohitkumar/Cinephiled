@@ -111,7 +111,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
 
           {savedRating && rating === 0 ? (
             <Fragment>
-              <div className='d-flex justify-content-between align-items-center my-3'>
+              <div className='d-flex justify-content-between align-items-center mt-3 my-4'>
                 <div>
                   <Span className='fw-normal'>Your rating : </Span>
                   <Span className='fs-4'>{savedRating}/10</Span>
@@ -145,8 +145,8 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
           ) : (
             <Fragment>
               <div
-                className='d-flex align-items-center'
-                style={{ gap: '8px', margin: '1.25rem 0rem' }}
+                className='d-flex align-items-center mt-3 mb-4'
+                style={{ gap: '8px' }}
               >
                 <Span className='fw-normal'>Rate :</Span>
                 <RatingStarsContainer>
@@ -213,7 +213,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
             }
           }}
         >
-          <h5 className='mb-3'>
+          <h5 className='mb-4'>
             Are you sure you want to delete{' '}
             <span className='d-inline fw-bold'>{mediaName}</span> rating
           </h5>

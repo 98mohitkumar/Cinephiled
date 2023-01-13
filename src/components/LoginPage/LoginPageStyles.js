@@ -38,7 +38,7 @@ export const LoginCard = styled.div`
   flex-direction: column;
   max-width: 500px;
   min-width: clamp(370px, 90vw, 500px);
-  padding: 1.75rem 2rem;
+  padding: 1.75rem;
   min-height: 375px;
   gap: 2rem;
   overflow: hidden;
