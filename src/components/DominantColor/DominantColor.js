@@ -6,7 +6,7 @@ const DominantColor = ({ image }) => {
   const pallete = useImageColor(
     !image
       ? '/Images/Hex.png'
-      : `https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=https://image.tmdb.org/t/p/w500${image}`,
+      : `https://corsanywhere.herokuapp.com/https://image.tmdb.org/t/p/w500${image}`,
     {
       cors: true,
       colors: 2
