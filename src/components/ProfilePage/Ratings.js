@@ -1,11 +1,11 @@
 import { CardsContainerGrid } from 'components/Popular/PopularStyles';
 import RatingModal, { useModal } from 'components/RatingModal/RatingModal';
-import Tabs from 'components/Tabs/Tabs';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Fragment, useContext, useMemo, useState } from 'react';
 import { MediaContext } from 'Store/MediaContext';
 import { NoDataText } from 'styles/GlobalComponents';
 import MediaCard from './MediaCard';
+import { ProfileMediaTab } from './ProfilePage';
 import { CTAButton } from './ProfilePageStyles';
 
 const RatingCTA = ({ mediaData }) => {
@@ -47,22 +47,9 @@ const Ratings = () => {
   const [tabState, setTabState] = useState('movies');
   const { ratedMovies, ratedTvShows } = useContext(MediaContext);
 
-  const tabList = useMemo(
-    () => [
-      { key: 'movies', name: 'Movies' },
-      { key: 'tv', name: 'TV Shows' }
-    ],
-    []
-  );
-
   return (
     <Fragment>
-      <Tabs
-        tabList={tabList}
-        currentTab={tabState}
-        setTab={setTabState}
-        className='mb-4'
-      />
+      <ProfileMediaTab tabState={tabState} setTabState={setTabState} />
 
       <AnimatePresence exitBeforeEnter initial={false}>
         {tabState === 'movies' && (

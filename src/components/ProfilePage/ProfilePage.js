@@ -1,5 +1,5 @@
 import MetaWrapper from 'components/MetaWrapper';
-import { LinearTabs } from 'components/Tabs/Tabs';
+import Tabs, { LinearTabs } from 'components/Tabs/Tabs';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Fragment,
@@ -17,6 +17,38 @@ import { Banner, ProfileAvatar, ProfileStats } from './ProfilePageStyles';
 import ProfileRecommendations from './ProfileRecommendations';
 import Ratings from './Ratings';
 import Watchlist from './Watchlist';
+
+export const ProfileMediaTab = ({ tabState, setTabState }) => {
+  const tabList = useMemo(
+    () => [
+      { key: 'movies', name: 'Movies' },
+      { key: 'tv', name: 'TV Shows' }
+    ],
+    []
+  );
+
+  useLayoutEffect(() => {
+    const tabPosition = localStorage.getItem('profileMediaTabState');
+    setTabState((prev) => tabPosition ?? prev);
+  }, [setTabState]);
+
+  const tabHandler = useCallback(
+    (tab) => {
+      localStorage.setItem('profileMediaTabState', tab);
+      setTabState(tab);
+    },
+    [setTabState]
+  );
+
+  return (
+    <Tabs
+      tabList={tabList}
+      currentTab={tabState}
+      setTab={tabHandler}
+      className='mb-4'
+    />
+  );
+};
 
 const Profile = () => {
   const [currentTab, setCurrentTab] = useState('watchlist');

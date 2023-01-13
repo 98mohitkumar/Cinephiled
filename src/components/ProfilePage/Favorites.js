@@ -1,7 +1,6 @@
 import { revalidationWrapper, useSetFavorite } from 'api/user';
 import { CardsContainerGrid } from 'components/Popular/PopularStyles';
 import { useModal } from 'components/RatingModal/RatingModal';
-import Tabs from 'components/Tabs/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   useEffect,
@@ -14,6 +13,7 @@ import {
 import { MediaContext } from 'Store/MediaContext';
 import { NoDataText } from 'styles/GlobalComponents';
 import MediaCard from './MediaCard';
+import { ProfileMediaTab } from './ProfilePage';
 import { ConfirmationModal, CTAButton, ModalCard } from './ProfilePageStyles';
 
 export const FavoritesCTA = ({ clickHandler, mediaData }) => {
@@ -123,14 +123,6 @@ const Favorites = () => {
     }
   }, [favoriteTvShows]);
 
-  const tabList = useMemo(
-    () => [
-      { key: 'movies', name: 'Movies' },
-      { key: 'tv', name: 'TV Shows' }
-    ],
-    []
-  );
-
   const filterMedia = useCallback(
     async ({ id, type }) => {
       const response = await setFavorite({
@@ -159,12 +151,7 @@ const Favorites = () => {
 
   return (
     <Fragment>
-      <Tabs
-        tabList={tabList}
-        currentTab={tabState}
-        setTab={setTabState}
-        className='mb-4'
-      />
+      <ProfileMediaTab tabState={tabState} setTabState={setTabState} />
 
       <AnimatePresence exitBeforeEnter initial={false}>
         {tabState === 'movies' && (

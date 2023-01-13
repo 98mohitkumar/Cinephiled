@@ -1,11 +1,11 @@
 import { CardsContainerGrid } from 'components/Popular/PopularStyles';
-import Tabs from 'components/Tabs/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import useInfiniteQuery from 'hooks/useInfiniteQuery';
 import { useState, useMemo, Fragment, useContext } from 'react';
 import { MediaContext } from 'Store/MediaContext';
 import { NoDataText } from 'styles/GlobalComponents';
 import MediaCard from './MediaCard';
+import { ProfileMediaTab } from './ProfilePage';
 
 const MovieRecommendations = () => {
   const { movieRecommendations } = useContext(MediaContext);
@@ -107,22 +107,9 @@ const TvRecommendations = () => {
 const ProfileRecommendations = () => {
   const [tabState, setTabState] = useState('movies');
 
-  const tabList = useMemo(
-    () => [
-      { key: 'movies', name: 'Movies' },
-      { key: 'tv', name: 'TV Shows' }
-    ],
-    []
-  );
-
   return (
     <Fragment>
-      <Tabs
-        tabList={tabList}
-        currentTab={tabState}
-        setTab={setTabState}
-        className='mb-4'
-      />
+      <ProfileMediaTab tabState={tabState} setTabState={setTabState} />
 
       <AnimatePresence exitBeforeEnter initial={false}>
         {tabState === 'movies' && <MovieRecommendations key='movies' />}
