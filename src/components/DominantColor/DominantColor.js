@@ -5,7 +5,7 @@ import { Colorful } from './DominantColorStyles';
 const DominantColor = ({ image }) => {
   const pallete = useImageColor(
     !image
-      ? '/Images/Hex.png'
+      ? '/Images/Hex.webp'
       : `https://corsanywhere.herokuapp.com/https://image.tmdb.org/t/p/w500${image}`,
     {
       cors: true,
