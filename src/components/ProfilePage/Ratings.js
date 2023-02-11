@@ -44,7 +44,7 @@ const RatingCTA = ({ mediaData }) => {
 };
 
 const Ratings = () => {
-  const [tabState, setTabState] = useState('movies');
+  const [tabState, setTabState] = useState('');
   const { ratedMovies, ratedTvShows } = useContext(MediaContext);
 
   return (

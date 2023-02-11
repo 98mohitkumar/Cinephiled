@@ -7,11 +7,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Fragment, useEffect, useState, useCallback, useMemo } from 'react';
 
 const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
-  const [tabState, setTabState] = useState('movies');
+  const [tabState, setTabState] = useState('');
 
   useEffect(() => {
     const savedTabState = localStorage.getItem('indexTabState');
-    savedTabState && setTabState(savedTabState);
+    setTabState(savedTabState ?? 'movies');
   }, []);
 
   const tabSelectionHandler = useCallback((tab) => {

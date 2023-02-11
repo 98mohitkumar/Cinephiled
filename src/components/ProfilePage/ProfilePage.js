@@ -29,7 +29,7 @@ export const ProfileMediaTab = ({ tabState, setTabState }) => {
 
   useLayoutEffect(() => {
     const tabPosition = localStorage.getItem('profileMediaTabState');
-    setTabState((prev) => tabPosition ?? prev);
+    setTabState(tabPosition ?? 'movies');
   }, [setTabState]);
 
   const tabHandler = useCallback(

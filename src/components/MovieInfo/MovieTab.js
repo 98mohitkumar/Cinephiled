@@ -12,11 +12,11 @@ import { useState, useEffect, useCallback, Fragment, useMemo } from 'react';
 import { TabIcon, TabSelectionTitle, tabStyling } from './MovieTabStyles';
 
 const MovieTab = ({ cast, reviews, posters, backdrops }) => {
-  const [tabState, setTabState] = useState('cast');
+  const [tabState, setTabState] = useState('');
 
   useEffect(() => {
-    let tabPosition = localStorage.getItem('MovieTabState');
-    tabPosition && setTabState(tabPosition);
+    let savedTabState = localStorage.getItem('MovieTabState');
+    setTabState(savedTabState ?? 'cast');
   }, []);
 
   const tabSelectionHandler = useCallback((tab) => {

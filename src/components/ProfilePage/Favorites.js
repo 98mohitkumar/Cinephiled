@@ -99,7 +99,7 @@ export const FavoritesCTA = ({ clickHandler, mediaData }) => {
 };
 
 const Favorites = () => {
-  const [tabState, setTabState] = useState('movies');
+  const [tabState, setTabState] = useState('');
   const { favoriteMovies, favoriteTvShows, revalidateFavorites } =
     useContext(MediaContext);
 

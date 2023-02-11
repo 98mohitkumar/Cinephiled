@@ -99,7 +99,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
 };
 
 const Watchlist = () => {
-  const [tabState, setTabState] = useState('movies');
+  const [tabState, setTabState] = useState('');
   const { moviesWatchlist, tvShowsWatchlist, revalidateWatchlist } =
     useContext(MediaContext);
   const [moviesWatchlistFromApi, setMoviesWatchlistFromApi] =

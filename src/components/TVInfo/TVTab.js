@@ -18,11 +18,11 @@ import { Fragment, useCallback, useState, useEffect, useMemo } from 'react';
 import TVSeasons from './TVSeasons';
 
 const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
-  const [tabState, setTabState] = useState('cast');
+  const [tabState, setTabState] = useState('');
 
   useEffect(() => {
-    let tabPosition = localStorage.getItem('TvTabState');
-    tabPosition && setTabState(tabPosition);
+    let savedTabState = localStorage.getItem('TvTabState');
+    setTabState(savedTabState ?? 'cast');
   }, []);
 
   const tabSelectionHandler = useCallback((tab) => {
