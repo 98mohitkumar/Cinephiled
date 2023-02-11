@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
 import useGetReleaseDates from 'hooks/useGetReleaseDates';
 import useInfiniteQuery from 'hooks/useInfiniteQuery';
+import useRemoveDuplicates from 'hooks/useRemoveDuplicates';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   SearchResultsContainer,
   EmptySearch,
@@ -15,81 +16,57 @@ import {
   QueryDescription
 } from './SearchTabStyles';
 
-const TVSearch = ({ searchQuery, tvRes, searchLength, setLength }) => {
+const TVSearch = ({ searchQuery, tvRes }) => {
   const { list } = useInfiniteQuery({
     initialPage: 2,
     type: 'tvSearch',
     searchQuery
   });
 
-  const renderList = useMemo(() => {
-    let filtered = [];
-    return tvRes.concat(list).map((item) => {
-      if (filtered.includes(item.id)) {
-        return { duplicate: true };
-      } else {
-        filtered.push(item.id);
-        return item;
-      }
-    });
-  }, [list, tvRes]);
-
-  useEffect(() => {
-    if (searchLength.tv < renderList.length) {
-      setLength((prev) => ({
-        ...prev,
-        tv: renderList.filter((item) => !item?.duplicate).length
-      }));
-    }
-  }, [list, renderList, renderList.length, searchLength.tv, setLength, tvRes]);
-
-  const tvReleaseDates = useGetReleaseDates(renderList);
+  const extendedList = useMemo(() => tvRes.results.concat(list), [list, tvRes]);
+  const { cleanedItems } = useRemoveDuplicates(extendedList);
+  const tvReleaseDates = useGetReleaseDates(cleanedItems);
 
   return (
     <SearchResultsContainer>
-      {tvRes.length === 0 ? (
+      {tvRes.results.length === 0 ? (
         <EmptySearch className='display-5 text-center'>
           No TV show results for this query.
         </EmptySearch>
       ) : (
-        renderList.map(
-          (item, i) =>
-            !item?.duplicate && (
-              <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
-                <Link
-                  href={`/tv/${item.id}-${item.name.replace(/[' ']/g, '-')}`}
-                  passHref
-                  scroll={false}
-                >
-                  <a>
-                    <QueryContainer>
-                      <QueryImg className='position-relative text-center'>
-                        <Image
-                          src={
-                            item.poster_path
-                              ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                              : '/Images/DefaultImage.png'
-                          }
-                          alt='TV-poster'
-                          layout='fill'
-                          objectFit='cover'
-                        />
-                      </QueryImg>
-                      <QueryInfoWrapper>
-                        <div>
-                          <QueryTitle>{item.name}</QueryTitle>
-                          <QueryReleaseDate>
-                            {tvReleaseDates[i]}
-                          </QueryReleaseDate>
-                        </div>
-                        <QueryDescription>{item.overview}</QueryDescription>
-                      </QueryInfoWrapper>
-                    </QueryContainer>
-                  </a>
-                </Link>
-              </motion.div>
-            )
-        )
+        cleanedItems.map((item, i) => (
+          <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
+            <Link
+              href={`/tv/${item.id}-${item.name.replace(/[' ']/g, '-')}`}
+              passHref
+              scroll={false}
+            >
+              <a>
+                <QueryContainer>
+                  <QueryImg className='position-relative text-center'>
+                    <Image
+                      src={
+                        item.poster_path
+                          ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                          : '/Images/DefaultImage.png'
+                      }
+                      alt='TV-poster'
+                      layout='fill'
+                      objectFit='cover'
+                    />
+                  </QueryImg>
+                  <QueryInfoWrapper>
+                    <div>
+                      <QueryTitle>{item.name}</QueryTitle>
+                      <QueryReleaseDate>{tvReleaseDates[i]}</QueryReleaseDate>
+                    </div>
+                    <QueryDescription>{item.overview}</QueryDescription>
+                  </QueryInfoWrapper>
+                </QueryContainer>
+              </a>
+            </Link>
+          </motion.div>
+        ))
       )}
     </SearchResultsContainer>
   );

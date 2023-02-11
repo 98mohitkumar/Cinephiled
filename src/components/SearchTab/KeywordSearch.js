@@ -1,66 +1,47 @@
 import useInfiniteQuery from 'hooks/useInfiniteQuery';
+import useRemoveDuplicates from 'hooks/useRemoveDuplicates';
 import Link from 'next/link';
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import {
   EmptySearch,
   SearchResultsContainer,
   Keyword
 } from './SearchTabStyles';
 
-const KeywordSearch = ({ searchQuery, keywords, searchLength, setLength }) => {
+const KeywordSearch = ({ searchQuery, keywords }) => {
   const { list } = useInfiniteQuery({
     initialPage: 2,
     type: 'keywordSearch',
     searchQuery
   });
 
-  const renderList = useMemo(() => {
-    let filtered = [];
-    return keywords.concat(list).map((item) => {
-      if (filtered.includes(item.id)) {
-        return { duplicate: true };
-      } else {
-        filtered.push(item.id);
-        return item;
-      }
-    });
-  }, [list, keywords]);
+  const extendedList = useMemo(
+    () => keywords.results.concat(list),
+    [list, keywords]
+  );
 
-  useEffect(() => {
-    if (searchLength.keywords < renderList.length) {
-      setLength((prev) => ({
-        ...prev,
-        keywords: renderList.filter((item) => !item?.duplicate).length
-      }));
-    }
-  }, [renderList, searchLength.keywords, setLength]);
+  const { cleanedItems } = useRemoveDuplicates(extendedList);
 
   return (
     <Fragment>
-      {keywords.length === 0 ? (
+      {keywords.results.length === 0 ? (
         <EmptySearch className='display-5 text-center'>
           No Keywords for this query.
         </EmptySearch>
       ) : (
         <SearchResultsContainer>
-          {renderList.map(
-            (item) =>
-              !item?.duplicate && (
-                <Link
-                  key={item.id}
-                  href={`/keywords/${item.id}-${item.name.replace(
-                    /[' ']/g,
-                    '-'
-                  )}`}
-                  passHref
-                  scroll={false}
-                >
-                  <a>
-                    <Keyword>{item.name}</Keyword>
-                  </a>
-                </Link>
-              )
-          )}
+          {cleanedItems.map((item) => (
+            <Link
+              key={item.id}
+              href={`/keywords/${item.id}-${item.name.replace(/[' ']/g, '-')}`}
+              passHref
+              scroll={false}
+            >
+              <a>
+                <Keyword>{item.name}</Keyword>
+              </a>
+            </Link>
+          ))}
         </SearchResultsContainer>
       )}
     </Fragment>

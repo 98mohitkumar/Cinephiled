@@ -12,10 +12,7 @@ const useInfiniteQuery = ({
   isProfileRecommendations = false
 }) => {
   const [pageToFetch, setPageToFetch] = useState(initialPage);
-  const [extendedList, setExtendedList] = useState({
-    list: [],
-    currentPage: initialPage - 1
-  });
+  const [extendedList, setExtendedList] = useState([]);
   const [isEmptyPage, setIsEmptyPage] = useState(false);
 
   const fetchTimeOut = useRef(null);
@@ -82,10 +79,7 @@ const useInfiniteQuery = ({
           fetchQuery()
             .then((data) => {
               if (data?.results?.length > 0) {
-                setExtendedList((prev) => ({
-                  list: prev.list.concat(data.results),
-                  currentPage: data?.page
-                }));
+                setExtendedList((prev) => prev.concat(data.results));
 
                 setPageToFetch((prev) => prev + 1);
               } else {
@@ -113,7 +107,7 @@ const useInfiniteQuery = ({
     userInfo?.id
   ]);
 
-  return extendedList;
+  return { list: extendedList };
 };
 
 export default useInfiniteQuery;

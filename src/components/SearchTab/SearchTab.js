@@ -8,16 +8,11 @@ import { tabStyling, tabTitleStyling } from './SearchTabStyles';
 import TVSearch from './TVSearch';
 
 const SearchTab = ({ movies, tv, search, keywords }) => {
-  const [tabState, setTabState] = useState('movies');
-  const [searchLength, setSearchLength] = useState({
-    movies: movies.length,
-    tv: tv.length,
-    keywords: keywords.length
-  });
+  const [tabState, setTabState] = useState('');
 
   useEffect(() => {
-    let tabPosition = localStorage.getItem('SearchTabPosition');
-    tabPosition && setTabState(tabPosition);
+    let savedTabState = localStorage.getItem('SearchTabPosition');
+    setTabState(savedTabState ?? 'movies');
   }, []);
 
   const tabSelectionHandler = useCallback((tab) => {
@@ -27,11 +22,11 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
 
   const tabList = useMemo(
     () => [
-      { key: 'movies', name: `Movies (${searchLength?.movies})` },
-      { key: 'tv', name: `TV (${searchLength?.tv})` },
-      { key: 'keywords', name: `Keywords (${searchLength?.keywords})` }
+      { key: 'movies', name: `Movies (${movies.count})` },
+      { key: 'tv', name: `TV (${tv.count})` },
+      { key: 'keywords', name: `Keywords (${keywords.count})` }
     ],
-    [searchLength?.keywords, searchLength?.movies, searchLength?.tv]
+    [keywords.count, movies.count, tv.count]
   );
 
   return (
@@ -61,12 +56,7 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
               <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your
               results by year. Example: <b>&#39;Avatar y:2009&#39;.</b>
             </p>
-            <MoviesSearch
-              searchQuery={search}
-              movieRes={movies}
-              searchLength={searchLength}
-              setLength={setSearchLength}
-            />
+            <MoviesSearch searchQuery={search} movieRes={movies} />
           </motion.div>
         )}
 
@@ -87,12 +77,7 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
               <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your
               results by year. Example: <b>&#39;Sherlock y:2010&#39;</b>.
             </p>
-            <TVSearch
-              searchQuery={search}
-              tvRes={tv}
-              searchLength={searchLength}
-              setLength={setSearchLength}
-            />
+            <TVSearch searchQuery={search} tvRes={tv} />
           </motion.div>
         )}
 
@@ -109,12 +94,7 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
                 Keywords matching : {search}
               </Span>
             )}
-            <KeywordSearch
-              searchQuery={search}
-              keywords={keywords}
-              searchLength={searchLength}
-              setLength={setSearchLength}
-            />
+            <KeywordSearch searchQuery={search} keywords={keywords} />
           </motion.div>
         )}
       </AnimatePresence>

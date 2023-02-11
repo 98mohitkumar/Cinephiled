@@ -1,6 +1,7 @@
 import { CardsContainerGrid } from 'components/Popular/PopularStyles';
 import { motion, AnimatePresence } from 'framer-motion';
 import useInfiniteQuery from 'hooks/useInfiniteQuery';
+import useRemoveDuplicates from 'hooks/useRemoveDuplicates';
 import { useState, useMemo, Fragment, useContext } from 'react';
 import { MediaContext } from 'Store/MediaContext';
 import { NoDataText } from 'styles/GlobalComponents';
@@ -16,17 +17,12 @@ const MovieRecommendations = () => {
     isProfileRecommendations: true
   });
 
-  const cleanMovieList = useMemo(() => {
-    let filtered = [];
-    return movieRecommendations.concat(moviesList).map((item) => {
-      if (filtered.includes(item.id)) {
-        return { duplicate: true };
-      } else {
-        filtered.push(item.id);
-        return item;
-      }
-    });
-  }, [moviesList, movieRecommendations]);
+  const extendedList = useMemo(
+    () => movieRecommendations.concat(moviesList),
+    [movieRecommendations, moviesList]
+  );
+
+  const { cleanedItems } = useRemoveDuplicates(extendedList);
 
   return (
     <motion.div
@@ -35,19 +31,16 @@ const MovieRecommendations = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {cleanMovieList.length > 0 ? (
+      {cleanedItems.length > 0 ? (
         <CardsContainerGrid>
-          {cleanMovieList.map(
-            (movie) =>
-              !movie?.duplicate && (
-                <MediaCard
-                  key={movie?.id}
-                  data={movie}
-                  link='movies'
-                  recommendation
-                />
-              )
-          )}
+          {cleanedItems.map((movie) => (
+            <MediaCard
+              key={movie?.id}
+              data={movie}
+              link='movies'
+              recommendation
+            />
+          ))}
         </CardsContainerGrid>
       ) : (
         <NoDataText className='fw-bold text-center my-5'>
@@ -67,17 +60,12 @@ const TvRecommendations = () => {
     isProfileRecommendations: true
   });
 
-  const cleanTvList = useMemo(() => {
-    let filtered = [];
-    return tvRecommendations.concat(tvList).map((item) => {
-      if (filtered.includes(item.id)) {
-        return { duplicate: true };
-      } else {
-        filtered.push(item.id);
-        return item;
-      }
-    });
-  }, [tvList, tvRecommendations]);
+  const extendedList = useMemo(
+    () => tvRecommendations.concat(tvList),
+    [tvList, tvRecommendations]
+  );
+
+  const { cleanedItems } = useRemoveDuplicates(extendedList);
 
   return (
     <motion.div
@@ -86,14 +74,11 @@ const TvRecommendations = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {cleanTvList.length > 0 ? (
+      {cleanedItems.length > 0 ? (
         <CardsContainerGrid>
-          {cleanTvList.map(
-            (tv) =>
-              !tv?.duplicate && (
-                <MediaCard key={tv?.id} data={tv} link='tv' recommendation />
-              )
-          )}
+          {cleanedItems.map((tv) => (
+            <MediaCard key={tv?.id} data={tv} link='tv' recommendation />
+          ))}
         </CardsContainerGrid>
       ) : (
         <NoDataText className='fw-bold text-center my-5'>
@@ -105,7 +90,7 @@ const TvRecommendations = () => {
 };
 
 const ProfileRecommendations = () => {
-  const [tabState, setTabState] = useState('movies');
+  const [tabState, setTabState] = useState('');
 
   return (
     <Fragment>

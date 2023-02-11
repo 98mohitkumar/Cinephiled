@@ -11,6 +11,7 @@ import {
   InfoTitle
 } from 'components/Recommendations/RecommendationsStyles';
 import { motion } from 'framer-motion';
+import useRemoveDuplicates from 'hooks/useRemoveDuplicates';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, useMemo } from 'react';
@@ -51,19 +52,7 @@ const PersonDetails = ({ details }) => {
   works.sort((a, z) => z.vote_count - a.vote_count); // sort works array
   works.length > 100 && works.splice(100); // splice if bigger than 100 for filtering
 
-  const cleaned = useMemo(() => {
-    let filtered = [];
-    return works.map((item) => {
-      if (filtered.includes(item.id)) {
-        return { duplicate: true };
-      } else {
-        filtered.push(item.id);
-        return item;
-      }
-    });
-  }, [works]);
-
-  cleaned.length > 80 && cleaned.splice(80); // cleaned for mapping
+  const { cleanedItems: cleaned } = useRemoveDuplicates(works);
 
   const getAge = (b, alive) => {
     if (alive) {

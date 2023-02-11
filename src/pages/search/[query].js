@@ -64,11 +64,17 @@ Search.getInitialProps = async (ctx) => {
         const tvRes = await tvResponse.json();
         const keywordsRes = await keywordsResponse.json();
         return {
-          movieRes: movieRes.results,
-          tvRes: tvRes.results,
+          movieRes: {
+            results: movieRes.results,
+            count: movieRes.total_results
+          },
+          tvRes: { results: tvRes.results, count: tvRes.total_results },
           error,
           searchQuery: searchQuery,
-          keywordsRes: keywordsRes.results
+          keywordsRes: {
+            results: keywordsRes.results,
+            count: keywordsRes.total_results
+          }
         };
       }
     } else {
@@ -89,11 +95,18 @@ Search.getInitialProps = async (ctx) => {
         const tvRes = await tvResponse.json();
         const keywordsRes = await keywordsResponse.json();
         return {
-          movieRes: movieRes.results,
-          tvRes: tvRes.results,
+          movieRes: {
+            results: movieRes.results,
+            count: movieRes.total_results
+          },
+          tvRes: { results: tvRes.results, count: tvRes.total_results },
           error,
           searchQuery: searchQuery,
-          keywordsRes: keywordsRes.results
+          keywordsRes: {
+            results: keywordsRes.results,
+            count: keywordsRes.total_results
+          },
+          test: movieRes
         };
       }
     }
