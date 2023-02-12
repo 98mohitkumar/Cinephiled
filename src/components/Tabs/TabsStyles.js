@@ -32,7 +32,7 @@ export const Slider = styled.div`
   width: ${({ count }) => `${100 / count}%`};
   height: 100%;
   background: black;
-  transform: ${({ state }) => `translateX(${state * 100}%)`};
+  transform: ${({ state }) => `translateX(${state === -1 ? 0 : state * 100}%)`};
   border-radius: 12px;
   z-index: 4;
   transition: transform 0.325s cubic-bezier(0.77, 0, 0.18, 1);

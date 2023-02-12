@@ -49,12 +49,7 @@ export const LinearTabs = ({ tabList, currentTab, setTab, scrollRef }) => {
             className={key === currentTab && 'position-relative'}
           >
             {name}
-            {key === currentTab && (
-              <ActiveTabIndicator
-                state={tabList.findIndex((item) => item.key === currentTab)}
-                count={tabList.length}
-              />
-            )}
+            {key === currentTab && <ActiveTabIndicator />}
           </TabSelector>
         ))}
       </Fragment>

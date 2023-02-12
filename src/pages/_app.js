@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
               {isLoading ? (
                 <Loader />
               ) : (
-                <Layout router={router} key={router.asPath}>
+                <Layout key={router.asPath}>
                   <Component {...pageProps} />
                 </Layout>
               )}

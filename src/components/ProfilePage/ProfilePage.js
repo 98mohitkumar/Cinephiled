@@ -51,7 +51,7 @@ export const ProfileMediaTab = ({ tabState, setTabState }) => {
 };
 
 const Profile = () => {
-  const [currentTab, setCurrentTab] = useState('watchlist');
+  const [currentTab, setCurrentTab] = useState('');
   const { userInfo } = useContext(UserContext);
   const {
     favoriteMovies,
@@ -106,7 +106,7 @@ const Profile = () => {
 
   useLayoutEffect(() => {
     const tabPosition = localStorage.getItem('profileTab');
-    setCurrentTab((prev) => tabPosition ?? prev);
+    setCurrentTab(tabPosition ?? 'watchlist');
 
     if (
       tabPosition === 'recommendations' &&
