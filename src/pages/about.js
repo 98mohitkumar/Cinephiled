@@ -2,7 +2,7 @@ import { FooterAttribute } from 'components/Footer/FooterStyles';
 import MetaWrapper from 'components/MetaWrapper';
 import aboutBackground from 'images/ShowCase.webp';
 import Image from 'next/image';
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import {
   AboutBackground,
   AboutContainer,
@@ -10,10 +10,6 @@ import {
 } from 'styles/GlobalComponents';
 
 const About = () => {
-  useEffect(() => {
-    localStorage.setItem('SearchTabPosition', '');
-  });
-
   return (
     <Fragment>
       <MetaWrapper
