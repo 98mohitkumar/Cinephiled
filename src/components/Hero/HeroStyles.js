@@ -41,6 +41,7 @@ export const Banner = styled.div`
   filter: brightness(70%);
   z-index: 1;
   transform: scale(2) rotate(5deg);
+  will-change: transform;
   animation: hero-banner 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
 
   @media only ${(props) => props.theme.breakpoints.lg} {

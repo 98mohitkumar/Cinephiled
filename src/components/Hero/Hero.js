@@ -128,9 +128,26 @@ const Hero = ({ searchModal }) => {
     [movieSuggestions, tvSuggestions]
   );
 
+  const bannerRef = useRef(null);
+
+  const scrollListener = () => {
+    const scale = 1.7 + window.scrollY / 200;
+
+    if (scale > 1.7 && scale <= 3.5) {
+      bannerRef.current.style.animation = `none`;
+      bannerRef.current.style.transform = `scale(${scale}) rotate(10deg) translateZ(0px)`;
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', scrollListener);
+
+    return () => window.removeEventListener('scroll', scrollListener);
+  }, []);
+
   return (
     <Container className='d-flex justify-content-center align-items-center position-relative'>
-      {!searchModal && <Banner />}
+      {!searchModal && <Banner ref={bannerRef} />}
       <HeroDiv searchModal={searchModal}>
         <Form onSubmit={searchHandler}>
           <div className='wrapper w-100 position-relative'>
