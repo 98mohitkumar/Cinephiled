@@ -146,8 +146,10 @@ const Hero = ({ searchModal }) => {
   }, []);
 
   return (
-    <Container className='d-flex justify-content-center align-items-center position-relative'>
-      {!searchModal && <Banner ref={bannerRef} />}
+    <Container className='d-flex justify-content-center align-items-center position-relative mb-auto'>
+      <div className='overflow-wrapper'>
+        {!searchModal && <Banner ref={bannerRef} />}
+      </div>
       <HeroDiv searchModal={searchModal}>
         <Form onSubmit={searchHandler}>
           <div className='wrapper w-100 position-relative'>

@@ -3,12 +3,12 @@ import styled from 'styled-components';
 export const HeroDiv = styled.div`
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 102%;
+  inset: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
   z-index: 4;
   background: -moz-linear-gradient(
     270deg,
@@ -35,8 +35,7 @@ export const HeroTitle = styled.h1`
 
 export const Banner = styled.div`
   position: absolute;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: Url(/Images/poster.webp) repeat center / 70%;
   filter: brightness(70%);
   z-index: 1;
