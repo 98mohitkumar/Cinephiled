@@ -4,6 +4,7 @@ import {
   useSetFavorite
 } from 'api/user';
 import DominantColor from 'components/DominantColor/DominantColor';
+import { RatingOverlay } from 'components/ProfilePage/ProfilePageStyles';
 import RatingModal, { useModal } from 'components/RatingModal/RatingModal';
 import SocialMediaLinks from 'components/SocialMediaLinks/SocialMediaLinks';
 import Toast, { useToast } from 'components/Toast/Toast';
@@ -19,6 +20,7 @@ import {
   useMemo,
   useState
 } from 'react';
+import { AiFillStar } from 'react-icons/ai';
 import { BiListPlus, BiListCheck } from 'react-icons/bi';
 import { BsStarHalf } from 'react-icons/bs';
 import { FaYoutube, FaHeart, FaRegHeart } from 'react-icons/fa';
@@ -62,7 +64,8 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
     favoriteMovies,
     moviesWatchlist,
     revalidateFavorites,
-    revalidateWatchlist
+    revalidateWatchlist,
+    ratedMovies
   } = useContext(MediaContext);
   const {
     isToastVisible,
@@ -71,6 +74,14 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
     toastMessage,
     setToastMessage
   } = useToast();
+
+  const savedRating = useMemo(
+    () =>
+      ratedMovies?.find((item) => item?.id === movieDetails?.id)?.rating ??
+      false,
+
+    [movieDetails?.id, ratedMovies]
+  );
 
   const { isModalVisible, openModal, closeModal } = useModal();
   const [addedToWatchlist, setAddedToWatchlist] = useState(false);
@@ -302,7 +313,7 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
                   style={{ gap: '1rem' }}
                 >
                   <FeatureButton
-                    className='watchlist flex-grow-1'
+                    className='watchlist'
                     role='button'
                     as={motion.div}
                     whileTap={{ scale: 0.95 }}
@@ -325,7 +336,6 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
                             duration: 2
                           }
                         }}
-                        className='watchlist-inner'
                       >
                         <BiListCheck size='22px' />
                       </motion.div>
@@ -352,8 +362,9 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
                       </motion.div>
                     )}
                   </FeatureButton>
+
                   <FeatureButton
-                    className='fav flex-grow-1'
+                    className='fav'
                     role='button'
                     onClick={favoriteHandler}
                     as={motion.div}
@@ -405,14 +416,64 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
                       )}
                     </Fragment>
                   </FeatureButton>
+
                   <FeatureButton
-                    className='fav flex-grow-1'
+                    className='fav'
                     role='button'
                     as={motion.div}
                     whileTap={{ scale: 0.95 }}
                     onClick={ratingModalHandler}
                   >
-                    <BsStarHalf size='20px' />
+                    <Fragment>
+                      {savedRating ? (
+                        <motion.div
+                          className='d-flex justify-content-center align-items-center w-100 h-100'
+                          key='saved-rating'
+                          initial={{ opacity: 0 }}
+                          animate={{
+                            opacity: 1,
+                            transition: {
+                              delay: 0.5,
+                              duration: 0.5
+                            }
+                          }}
+                          exit={{
+                            opacity: 0,
+                            transition: {
+                              duration: 0.5
+                            }
+                          }}
+                        >
+                          <RatingOverlay className='media-page'>
+                            <AiFillStar size='16px' />
+                            <p className='m-0 fw-semibold text'>
+                              {savedRating}
+                            </p>
+                          </RatingOverlay>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          className='d-flex justify-content-center align-items-center w-100 h-100'
+                          key='rate'
+                          initial={{ opacity: 0 }}
+                          animate={{
+                            opacity: 1,
+                            transition: {
+                              duration: 0.5,
+                              delay: 0.5
+                            }
+                          }}
+                          exit={{
+                            opacity: 0,
+                            transition: {
+                              duration: 0.5
+                            }
+                          }}
+                        >
+                          <BsStarHalf size='20px' />
+                        </motion.div>
+                      )}
+                    </Fragment>
                   </FeatureButton>
                 </div>
               </AnimatePresence>

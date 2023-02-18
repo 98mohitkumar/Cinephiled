@@ -104,7 +104,7 @@ export const SeasonsOverview = styled.p`
   overflow: hidden;
   color: #121212;
   margin: 0;
-  margin-top: 15px;
+  margin-top: 10px;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     font-size: 14.4px;

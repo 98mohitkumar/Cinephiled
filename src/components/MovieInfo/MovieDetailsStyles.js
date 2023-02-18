@@ -163,16 +163,9 @@ export const FeatureButton = styled.div`
   &.fav,
   &.watchlist {
     font-size: 0.95rem;
-    width: auto;
     height: auto;
     padding: 10px;
-
-    .watchlist-inner {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.4rem;
-    }
+    width: calc(100% - 8px);
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {

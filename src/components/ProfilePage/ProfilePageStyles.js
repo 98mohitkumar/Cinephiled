@@ -167,4 +167,19 @@ export const RatingOverlay = styled.div`
   box-shadow: 0 0 2rem rgb(12 12 12 /0.4);
   transition: all 0.25s ease-in-out;
   color: #121212;
+
+  &.media-page {
+    position: static;
+    padding: 0;
+    height: auto;
+    background: transparent;
+    box-shadow: none;
+    min-width: unset;
+    align-items: center;
+
+    .text {
+      font-size: 16px;
+      line-height: 0.8;
+    }
+  }
 `;
