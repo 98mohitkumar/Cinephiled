@@ -355,7 +355,7 @@ export const SeasonShowcaseImg = styled.div`
 
 export const SeasonShowcaseTitle = styled.h2`
   font-weight: bold;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
 `;
 
 export const SeasonEpisodesWrapper = styled.div`
@@ -407,7 +407,8 @@ export const SeasonEpisodesWrapper = styled.div`
 
 export const SeasonCommonOverview = styled.p`
   font-size: 1.15rem;
-  margin-top: 1rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     font-size: 1rem;
@@ -447,8 +448,8 @@ export const Rating = styled.div`
   border-radius: 20px;
   background-color: rgb(221 221 221);
   color: #121212;
-  font-weight: 500;
-  font-family: 'Satoshi', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
   font-size: 1.1rem;
   display: flex;
   justify-content: center;

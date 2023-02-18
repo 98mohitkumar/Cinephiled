@@ -32,11 +32,11 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <script
+          {/* <script
             dangerouslySetInnerHTML={{
               __html: `history.scrollRestoration = "manual"`
             }}
-          />
+          /> */}
 
           <link rel='preconnect' href='https://fonts.googleapis.com' />
           <link
@@ -49,7 +49,7 @@ export default class MyDocument extends Document {
             rel='stylesheet'
           />
           <link
-            href='https://api.fontshare.com/css?f[]=satoshi@500,700&display=swap'
+            href='https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap'
             rel='stylesheet'
           />
 

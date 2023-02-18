@@ -79,48 +79,53 @@ const Seasons = ({ error, data, tvId, seasonNumber }) => {
               )}
             </div>
           </SeasonShowcaseWrapper>
-          <SeasonEpisodesWrapper>
-            <span className='episodesTitle'>
-              Episodes ({data.episodes.length})
-            </span>
-            {data.episodes.map((item, i) => (
-              <SeasonShowcaseWrapper className='my-5 episodesBox' key={item.id}>
-                <EpisodeImg className='position-relative text-center'>
-                  <Image
-                    src={
-                      item.still_path
-                        ? `https://image.tmdb.org/t/p/w500${item.still_path}`
-                        : '/Images/DefaultImage.png'
-                    }
-                    alt='TV-season-episode-poster'
-                    layout='fill'
-                    objectFit='cover'
-                  />
-                </EpisodeImg>
-                <SeasonInfoWrapper className='ipRes'>
-                  <SeasonInfoMain>
-                    <SeasonTitle className='text'>
-                      {!item.episode_number ? i : item.episode_number}.{' '}
-                      {item.name}
-                    </SeasonTitle>
-                    <TrWrapper>
-                      <SeasonsRelease className='text airDate'>
-                        {getReleaseDate(item.air_date)}
-                      </SeasonsRelease>
-                      <Rating>
-                        <p>{getRating(item.vote_average)}</p>
-                      </Rating>
-                    </TrWrapper>
-                    {item.overview && (
-                      <SeasonCommonOverview>
-                        {item.overview}
-                      </SeasonCommonOverview>
-                    )}
-                  </SeasonInfoMain>
-                </SeasonInfoWrapper>
-              </SeasonShowcaseWrapper>
-            ))}
-          </SeasonEpisodesWrapper>
+          {data.episodes.length > 0 && (
+            <SeasonEpisodesWrapper>
+              <span className='episodesTitle'>
+                Episodes ({data.episodes.length})
+              </span>
+              {data.episodes.map((item, i) => (
+                <SeasonShowcaseWrapper
+                  className='my-5 episodesBox'
+                  key={item.id}
+                >
+                  <EpisodeImg className='position-relative text-center'>
+                    <Image
+                      src={
+                        item.still_path
+                          ? `https://image.tmdb.org/t/p/w500${item.still_path}`
+                          : '/Images/DefaultImage.png'
+                      }
+                      alt='TV-season-episode-poster'
+                      layout='fill'
+                      objectFit='cover'
+                    />
+                  </EpisodeImg>
+                  <SeasonInfoWrapper className='ipRes'>
+                    <SeasonInfoMain>
+                      <SeasonTitle className='text'>
+                        {!item.episode_number ? i : item.episode_number}.{' '}
+                        {item.name}
+                      </SeasonTitle>
+                      <TrWrapper>
+                        <SeasonsRelease className='text airDate'>
+                          {getReleaseDate(item.air_date)}
+                        </SeasonsRelease>
+                        <Rating>
+                          <p>{getRating(item.vote_average)}</p>
+                        </Rating>
+                      </TrWrapper>
+                      {item.overview && (
+                        <SeasonCommonOverview>
+                          {item.overview}
+                        </SeasonCommonOverview>
+                      )}
+                    </SeasonInfoMain>
+                  </SeasonInfoWrapper>
+                </SeasonShowcaseWrapper>
+              ))}
+            </SeasonEpisodesWrapper>
+          )}
         </SeasonExpandedContainer>
       )}
     </Fragment>

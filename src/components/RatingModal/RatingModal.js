@@ -111,7 +111,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
 
           {savedRating && rating === 0 ? (
             <Fragment>
-              <div className='d-flex justify-content-between align-items-center mt-3 my-4'>
+              <div className='d-flex justify-content-between align-items-center my-3'>
                 <div>
                   <Span className='fw-normal'>Your rating : </Span>
                   <Span className='fs-4'>{savedRating}/10</Span>
@@ -145,7 +145,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
           ) : (
             <Fragment>
               <div
-                className='d-flex align-items-center mt-3 mb-4'
+                className='d-flex align-items-center my-3'
                 style={{ gap: '8px' }}
               >
                 <Span className='fw-normal'>Rate :</Span>
