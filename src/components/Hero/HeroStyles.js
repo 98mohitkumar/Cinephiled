@@ -231,3 +231,14 @@ export const SearchSlice = styled.div`
     }
   }
 `;
+
+export const Anchor = styled.a`
+  &:focus-visible {
+    border: none;
+    outline: none;
+  }
+
+  &:focus > div {
+    background-color: rgb(0 0 0 / 0.1);
+  }
+`;

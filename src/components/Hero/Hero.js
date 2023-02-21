@@ -145,6 +145,26 @@ const Hero = ({ searchModal }) => {
     return () => window.removeEventListener('scroll', scrollListener);
   }, []);
 
+  const keyHandler = (e, onSearchInput = false) => {
+    if (onSearchInput && e.code === 'ArrowDown') {
+      const firstSuggestionEl = document.querySelector(
+        '.first-suggestion-item'
+      );
+      e.preventDefault();
+      firstSuggestionEl?.focus();
+    }
+
+    if (e.code === 'ArrowDown' && !onSearchInput) {
+      e.target?.nextElementSibling?.focus();
+    }
+
+    if (e.code === 'ArrowUp' && !onSearchInput) {
+      e.target?.previousElementSibling?.focus();
+    }
+
+    e.stopPropagation();
+  };
+
   return (
     <Container className='d-flex justify-content-center align-items-center position-relative mb-auto'>
       <div className='overflow-wrapper'>
@@ -162,6 +182,7 @@ const Hero = ({ searchModal }) => {
                 ref={userInputRef}
                 autoComplete='off'
                 onChange={inputChangeHandler}
+                onKeyDown={(e) => keyHandler(e, true)}
               />
 
               {showButton && (
@@ -172,6 +193,7 @@ const Hero = ({ searchModal }) => {
                   whileTap={{ scale: 0.9 }}
                 >
                   <Button
+                    tabIndex={-1}
                     show={showButton}
                     className='btn d-block'
                     type='submit'
@@ -183,20 +205,24 @@ const Hero = ({ searchModal }) => {
             </div>
 
             <AnimatePresence exitBeforeEnter>
-              {sortedSuggestion.length !== 0 && (
+              {sortedSuggestion.length > 0 && (
                 <motion.div
                   key='suggestions'
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
+                  onKeyDown={keyHandler}
                 >
                   <div className='mt-2 suggestions'>
-                    {sortedSuggestion.map((item) => (
+                    {sortedSuggestion.map((item, index) => (
                       <SearchSuggestion
                         key={item.id}
                         type={item.type === 'tv' ? 'tv' : 'movie'}
                         data={item}
+                        className={`${
+                          index === 0 ? 'first-suggestion-item' : ''
+                        }`}
                       />
                     ))}
                   </div>
