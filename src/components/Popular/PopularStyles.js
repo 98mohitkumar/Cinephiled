@@ -54,6 +54,7 @@ export const CardImg = styled.div`
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   transition: box-shadow 0.25s ease-in;
   border-radius: 12px;
+  overflow: hidden;
 
   @media ${(props) => props.theme.breakpoints.hover} {
     &:hover {
