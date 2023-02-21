@@ -473,3 +473,19 @@ export const Rating = styled.div`
     height: 25px;
   }
 `;
+
+export const CastPageInfo = styled.div`
+  grid-column: 1/ -1;
+  /* justify-self: flex-start; */
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+
+  .cast-count {
+    font-weight: 500;
+
+    @media only ${(props) => props.theme.breakpoints.sm} {
+      font-size: 20px;
+    }
+  }
+`;

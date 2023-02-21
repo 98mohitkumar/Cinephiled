@@ -65,7 +65,10 @@ export const apiEndpoints = {
       `${baseUrl}/movie/${id}?api_key=${api_key}&language=en-US&append_to_response=images,videos,credits,reviews,recommendations,external_ids&include_image_language=en,null`,
 
     movieGenre: ({ genreId, pageQuery = 1 }) =>
-      `${baseUrl}/discover/movie?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`
+      `${baseUrl}/discover/movie?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
+
+    getMovieCredits: ({ id }) =>
+      `${baseUrl}/movie/${id}?api_key=${api_key}&language=en-US&append_to_response=credits`
   },
   tv: {
     popularTV: `${baseUrl}/tv/popular?api_key=${api_key}&language=en-US&page=1`,
@@ -79,7 +82,10 @@ export const apiEndpoints = {
       `${baseUrl}/tv/${id}/season/${seasonNumber}?api_key=${api_key}&language=en-US`,
 
     tvGenre: ({ genreId, pageQuery }) =>
-      `${baseUrl}/discover/tv?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`
+      `${baseUrl}/discover/tv?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
+
+    getTvCredits: ({ id }) =>
+      `${baseUrl}/tv/${id}?api_key=${api_key}&language=en-US&append_to_response=credits`
   },
   keywords: {
     keywordDetails: (id) =>

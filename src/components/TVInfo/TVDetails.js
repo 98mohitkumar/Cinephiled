@@ -50,8 +50,26 @@ import {
   HeroImgWrapper
 } from 'styles/GlobalComponents';
 
-const TVDetails = ({ tvData, year }) => {
-  tvData.genres.length > 3 && tvData.genres.splice(3);
+const TVDetails = ({
+  tvData: {
+    id,
+    title,
+    overview,
+    backdropPath,
+    posterPath,
+    socialIds,
+    rating,
+    genres,
+    runtime,
+    tagline,
+    trailerLink,
+    homepage,
+    crewData
+  },
+  year
+}) => {
+  genres.length > 3 && genres.splice(3);
+
   const { status } = useSession();
   const { setFavorite } = useSetFavorite();
   const { addToWatchlist } = useAddToWatchlist();
@@ -71,9 +89,9 @@ const TVDetails = ({ tvData, year }) => {
   } = useToast();
 
   const savedRating = useMemo(
-    () => ratedTvShows?.find((item) => item?.id === tvData.id)?.rating ?? false,
+    () => ratedTvShows?.find((item) => item?.id === id)?.rating ?? false,
 
-    [ratedTvShows, tvData.id]
+    [ratedTvShows, id]
   );
 
   const { isModalVisible, openModal, closeModal } = useModal();
@@ -83,54 +101,34 @@ const TVDetails = ({ tvData, year }) => {
   useEffect(() => {
     const isAddedToFavorites = favoriteTvShows
       ?.map((item) => item.id)
-      ?.includes(tvData?.id);
+      ?.includes(id);
 
     if (favoriteTvShows.length > 0) {
       setIsFavorite(isAddedToFavorites);
     }
-  }, [favoriteTvShows, tvData?.id]);
+  }, [favoriteTvShows, id]);
 
   useEffect(() => {
     const isAddedToWatchlist = tvShowsWatchlist
       ?.map((item) => item.id)
-      ?.includes(tvData?.id);
+      ?.includes(id);
 
     if (tvShowsWatchlist.length > 0) {
       setAddedToWatchlist(isAddedToWatchlist);
     }
-  }, [tvData?.id, tvShowsWatchlist]);
+  }, [id, tvShowsWatchlist]);
 
-  const socialIds = useMemo(() => tvData?.external_ids, [tvData?.external_ids]);
-
-  const runtime = useMemo(() => {
-    const getH = Math.floor(tvData?.episode_run_time[0] / 60);
-    const getM = Math.ceil((tvData?.episode_run_time[0] / 60 - getH) * 60);
+  const runtimeFormatted = useMemo(() => {
+    const getH = Math.floor(runtime / 60);
+    const getM = Math.ceil((runtime / 60 - getH) * 60);
     return { getH, getM };
-  }, [tvData?.episode_run_time]);
-
-  const videos = useMemo(
-    () =>
-      tvData?.videos?.results?.filter(
-        (item) => item?.site === 'YouTube' && item?.type === 'Trailer'
-      ),
-    [tvData?.videos?.results]
-  );
-
-  const crew = useMemo(() => tvData?.credits?.crew, [tvData?.credits?.crew]);
-
-  const crewData = useMemo(
-    () => [
-      ...tvData?.created_by?.slice(0, 2),
-      ...crew?.filter((credit) => credit.job === 'Characters').slice(0, 2)
-    ],
-    [crew, tvData?.created_by]
-  );
+  }, [runtime]);
 
   const favoriteHandler = useCallback(async () => {
     if (status === 'authenticated') {
       const response = await setFavorite({
         mediaType: 'tv',
-        mediaId: tvData?.id,
+        mediaId: id,
         favoriteState: !isFavorite
       });
 
@@ -153,14 +151,14 @@ const TVDetails = ({ tvData, year }) => {
     setToastMessage,
     showToast,
     status,
-    tvData?.id
+    id
   ]);
 
   const watchlistHandler = useCallback(async () => {
     if (status === 'authenticated') {
       const response = await addToWatchlist({
         mediaType: 'tv',
-        mediaId: tvData?.id,
+        mediaId: id,
         watchlistState: !addedToWatchlist
       });
 
@@ -183,7 +181,7 @@ const TVDetails = ({ tvData, year }) => {
     setToastMessage,
     showToast,
     status,
-    tvData?.id
+    id
   ]);
 
   const ratingModalHandler = useCallback(() => {
@@ -209,9 +207,9 @@ const TVDetails = ({ tvData, year }) => {
           <RatingModal
             key='rating-modal'
             mediaType='tv'
-            mediaId={tvData?.id}
+            mediaId={id}
             closeModal={closeModal}
-            mediaName={`${tvData?.name} (${year})`}
+            mediaName={`${title} (${year})`}
           />
         )}
       </AnimatePresence>
@@ -221,9 +219,9 @@ const TVDetails = ({ tvData, year }) => {
           <HeroBg className='position-absolute text-center'>
             <Image
               src={
-                tvData.backdrop_path
-                  ? `https://image.tmdb.org/t/p/w1280${tvData?.backdrop_path}`
-                  : '/Images/Hex.png'
+                backdropPath
+                  ? `https://image.tmdb.org/t/p/w1280${backdropPath}`
+                  : '/Images/Hex.webp'
               }
               alt='tv-backdrop'
               layout='fill'
@@ -231,28 +229,30 @@ const TVDetails = ({ tvData, year }) => {
               priority
             />
           </HeroBg>
-          <DominantColor image={tvData?.poster_path} />
+          <DominantColor image={posterPath} />
         </HeroBgContainer>
         <DetailsHeroWrap>
           <HeroImgWrapper>
             <HeroImg className='position-relative text-center'>
               <Image
                 src={
-                  tvData.poster_path
-                    ? `https://image.tmdb.org/t/p/w500${tvData?.poster_path}`
+                  posterPath
+                    ? `https://image.tmdb.org/t/p/w500${posterPath}`
                     : '/Images/DefaultImage.png'
                 }
                 alt='tv-poster'
                 layout='fill'
                 objectFit='cover'
                 priority
+                placeholder='blur'
+                blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
               />
             </HeroImg>
 
             <div className='w-100'>
-              {videos.length !== 0 && (
+              {trailerLink && (
                 <a
-                  href={`https://www.youtube.com/watch?v=${videos[0].key}`}
+                  href={`https://www.youtube.com/watch?v=${trailerLink}`}
                   target='_blank'
                   rel='noreferrer'
                   aria-label='trailer'
@@ -436,20 +436,20 @@ const TVDetails = ({ tvData, year }) => {
                 </div>
               </AnimatePresence>
             </div>
-            <SocialMediaLinks links={socialIds} homepage={tvData.homepage} />
+            <SocialMediaLinks links={socialIds} homepage={homepage} />
           </HeroImgWrapper>
 
           <Gradient />
 
           <HeroInfoWrapper>
             <HeroInfoTitle className='mb-2'>
-              {tvData.name} ({year})
+              {title} ({year})
             </HeroInfoTitle>
 
             <RtoR className='my-3'>
-              {tvData.genres.length > 0 && (
+              {genres.length > 0 && (
                 <GenreWrap className='fw-bold'>
-                  {tvData.genres.map((item, i) => (
+                  {genres.map((item, i) => (
                     <Link
                       key={item.id}
                       href={`/genre/${
@@ -459,9 +459,7 @@ const TVDetails = ({ tvData, year }) => {
                       scroll={false}
                     >
                       <a>
-                        <Rounded
-                          className={tvData.genres.length == i + 1 && 'sep'}
-                        >
+                        <Rounded className={genres.length == i + 1 && 'sep'}>
                           {item.name}
                         </Rounded>
                       </a>
@@ -469,13 +467,13 @@ const TVDetails = ({ tvData, year }) => {
                   ))}
                 </GenreWrap>
               )}
-              {!isNaN(runtime.getH) ? (
+              {!isNaN(runtimeFormatted.getH) ? (
                 <Span>
                   <Divider className='tvSpan' />
-                  {runtime.getH === 1 && runtime.getM === 0
+                  {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
                     ? '60m'
-                    : runtime.getH > 0 && runtime.getH + 'h '}
-                  {runtime.getM > 0 && runtime.getM + 'm'}
+                    : runtimeFormatted.getH > 0 && runtimeFormatted.getH + 'h '}
+                  {runtimeFormatted.getM > 0 && runtimeFormatted.getM + 'm'}
                 </Span>
               ) : (
                 <Span>
@@ -484,17 +482,17 @@ const TVDetails = ({ tvData, year }) => {
                 </Span>
               )}
             </RtoR>
-            {tvData?.tagline.length > 0 && (
+            {tagline && (
               <i>
-                <Tagline className='my-4 d-block'>{tvData.tagline}</Tagline>
+                <Tagline className='my-4 d-block'>{tagline}</Tagline>
               </i>
             )}
-            <Overview className='fw-normal'>{tvData.overview}</Overview>
+            <Overview className='fw-normal'>{overview}</Overview>
             <RatingWrapper>
-              {tvData.vote_average !== 0 ? (
+              {rating !== 0 ? (
                 <Fragment>
                   <Span className='display-3 fw-bolder'>
-                    {tvData.vote_average.toFixed(1)}
+                    {rating.toFixed(1)}
                   </Span>
                   <span> / 10</span>
                 </Fragment>

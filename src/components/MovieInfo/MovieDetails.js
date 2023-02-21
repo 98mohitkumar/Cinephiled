@@ -55,7 +55,26 @@ import {
   FeatureButton
 } from './MovieDetailsStyles';
 
-const MovieDetails = ({ movieDetails, year, easter }) => {
+const MovieDetails = ({
+  movieDetails: {
+    id,
+    title,
+    overview,
+    releaseDate,
+    backdropPath,
+    runtime,
+    trailerLink,
+    genres,
+    tagline,
+    rating,
+    moviePoster,
+    crewData,
+    socialIds,
+    homepage
+  },
+  year,
+  easter
+}) => {
   const { status } = useSession();
   const { setFavorite } = useSetFavorite();
   const { addToWatchlist } = useAddToWatchlist();
@@ -76,11 +95,9 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
   } = useToast();
 
   const savedRating = useMemo(
-    () =>
-      ratedMovies?.find((item) => item?.id === movieDetails?.id)?.rating ??
-      false,
+    () => ratedMovies?.find((item) => item?.id === id)?.rating ?? false,
 
-    [movieDetails?.id, ratedMovies]
+    [id, ratedMovies]
   );
 
   const { isModalVisible, openModal, closeModal } = useModal();
@@ -90,71 +107,42 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
   useEffect(() => {
     const isAddedToFavorites = favoriteMovies
       ?.map((item) => item.id)
-      ?.includes(movieDetails?.id);
+      ?.includes(id);
 
     if (favoriteMovies.length > 0) {
       setIsFavorite(isAddedToFavorites);
     }
-  }, [favoriteMovies, movieDetails?.id]);
+  }, [favoriteMovies, id]);
 
   useEffect(() => {
     const isAddedToWatchlist = moviesWatchlist
       ?.map((item) => item.id)
-      ?.includes(movieDetails?.id);
+      ?.includes(id);
 
     if (moviesWatchlist.length > 0) {
       setAddedToWatchlist(isAddedToWatchlist);
     }
-  }, [movieDetails?.id, moviesWatchlist]);
+  }, [id, moviesWatchlist]);
 
-  const releaseDate = !movieDetails.release_date
+  const releaseDateFormatted = !releaseDate
     ? 'TBA'
-    : new Date(movieDetails.release_date.toString())
-        .toDateString()
-        .slice(4, -5) +
+    : new Date(releaseDate.toString()).toDateString().slice(4, -5) +
       ', ' +
       year;
 
-  const runtime = useMemo(() => {
-    const getH = Math.floor(movieDetails?.runtime / 60);
-    const getM = Math.ceil((movieDetails?.runtime / 60 - getH) * 60);
+  const runtimeFormatted = useMemo(() => {
+    const getH = Math.floor(runtime / 60);
+    const getM = Math.ceil((runtime / 60 - getH) * 60);
     return { getH, getM };
-  }, [movieDetails?.runtime]);
+  }, [runtime]);
 
-  const videos = useMemo(
-    () =>
-      movieDetails?.videos?.results?.filter(
-        (item) => item?.site === 'YouTube' && item?.type === 'Trailer'
-      ),
-    [movieDetails?.videos?.results]
-  );
-
-  const socialIds = useMemo(
-    () => movieDetails?.external_ids,
-    [movieDetails?.external_ids]
-  );
-
-  const crew = useMemo(
-    () => movieDetails?.credits?.crew,
-    [movieDetails?.credits?.crew]
-  );
-
-  const crewData = useMemo(
-    () => [
-      ...crew?.filter((credit) => credit?.job === 'Director').slice(0, 2),
-      ...crew?.filter((credit) => credit?.job === 'Writer').slice(0, 3),
-      ...crew?.filter((credit) => credit?.job === 'Characters').slice(0, 2)
-    ],
-    [crew]
-  );
-
-  movieDetails.genres.length > 3 && movieDetails.genres.splice(3);
+  genres.length > 3 && genres.splice(3);
 
   const favoriteHandler = useCallback(async () => {
     if (status === 'authenticated') {
       const response = await setFavorite({
         mediaType: 'movie',
-        mediaId: movieDetails?.id,
+        mediaId: id,
         favoriteState: !isFavorite
       });
 
@@ -170,7 +158,7 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
   }, [
     isFavorite,
     isToastVisible,
-    movieDetails?.id,
+    id,
     removeToast,
     revalidateFavorites,
     setFavorite,
@@ -183,7 +171,7 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
     if (status === 'authenticated') {
       const response = await addToWatchlist({
         mediaType: 'movie',
-        mediaId: movieDetails?.id,
+        mediaId: id,
         watchlistState: !addedToWatchlist
       });
 
@@ -200,7 +188,7 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
     addToWatchlist,
     addedToWatchlist,
     isToastVisible,
-    movieDetails?.id,
+    id,
     removeToast,
     revalidateWatchlist,
     setToastMessage,
@@ -248,9 +236,9 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
           <RatingModal
             key='rating-modal'
             mediaType='movie'
-            mediaId={movieDetails?.id}
+            mediaId={id}
             closeModal={closeModal}
-            mediaName={`${movieDetails.title} (${year})`}
+            mediaName={`${title} (${year})`}
           />
         )}
       </AnimatePresence>
@@ -260,9 +248,9 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
           <HeroBg className='position-absolute text-center'>
             <Image
               src={
-                movieDetails?.backdrop_path
-                  ? `https://image.tmdb.org/t/p/w1280${movieDetails?.backdrop_path}`
-                  : '/Images/Hex.png'
+                backdropPath
+                  ? `https://image.tmdb.org/t/p/w1280${backdropPath}`
+                  : '/Images/Hex.webp'
               }
               alt='movie-backdrop'
               layout='fill'
@@ -272,7 +260,7 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
           </HeroBg>
 
           {/* color gradient overlay */}
-          <DominantColor image={movieDetails?.poster_path} />
+          <DominantColor image={moviePoster} />
         </HeroBgContainer>
 
         <DetailsHeroWrap>
@@ -280,21 +268,23 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
             <HeroImg className='position-relative text-center'>
               <Image
                 src={
-                  movieDetails?.poster_path
-                    ? `https://image.tmdb.org/t/p/w500${movieDetails?.poster_path}`
+                  moviePoster
+                    ? `https://image.tmdb.org/t/p/w500${moviePoster}`
                     : '/Images/DefaultImage.png'
                 }
                 alt='movie-poster'
                 layout='fill'
                 objectFit='cover'
                 priority
+                placeholder='blur'
+                blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
               />
             </HeroImg>
 
             <div className='w-100'>
-              {videos.length !== 0 && (
+              {trailerLink && (
                 <a
-                  href={`https://www.youtube.com/watch?v=${videos[0].key}`}
+                  href={`https://www.youtube.com/watch?v=${trailerLink}`}
                   target='_blank'
                   rel='noreferrer'
                   aria-label='trailer'
@@ -480,27 +470,24 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
             </div>
 
             {/* social media links */}
-            <SocialMediaLinks
-              links={socialIds}
-              homepage={movieDetails?.homepage}
-            />
+            <SocialMediaLinks links={socialIds} homepage={homepage} />
           </HeroImgWrapper>
           <Gradient />
 
           {/* right side info */}
           <HeroInfoWrapper>
             <HeroInfoTitle className='mb-2'>
-              {movieDetails.title} ({year})
+              {title} ({year})
             </HeroInfoTitle>
             {renderEaster && <Light onClick={easterHandler} />}
             <RtoR className='my-3'>
               <ReleaseDateWrapper>
-                <Span>{releaseDate}</Span>
+                <Span>{releaseDateFormatted}</Span>
               </ReleaseDateWrapper>
-              {movieDetails.genres.length > 0 && (
+              {genres.length > 0 && (
                 <GenreWrap className='fw-bold'>
                   <Divider />
-                  {movieDetails.genres.map((item, i) => (
+                  {genres.map((item, i) => (
                     <Link
                       key={item.id}
                       href={`/genre/${
@@ -510,11 +497,7 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
                       scroll={false}
                     >
                       <a>
-                        <Rounded
-                          className={
-                            movieDetails.genres.length == i + 1 && 'sep'
-                          }
-                        >
+                        <Rounded className={genres.length == i + 1 && 'sep'}>
                           {item.name}
                         </Rounded>
                       </a>
@@ -523,32 +506,30 @@ const MovieDetails = ({ movieDetails, year, easter }) => {
                   <Divider />
                 </GenreWrap>
               )}
-              {runtime.getH === 0 && runtime.getM === 0 ? (
+              {runtimeFormatted.getH === 0 && runtimeFormatted.getM === 0 ? (
                 <Span>TBA</Span>
               ) : (
                 <Span>
-                  {runtime.getH === 1 && runtime.getM === 0
+                  {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
                     ? '60m'
-                    : runtime.getH > 0 && runtime.getH + 'h '}
-                  {runtime.getM > 0 && runtime.getM + 'm'}
+                    : runtimeFormatted.getH > 0 && runtimeFormatted.getH + 'h '}
+                  {runtimeFormatted.getM > 0 && runtimeFormatted.getM + 'm'}
                 </Span>
               )}
             </RtoR>
-            {movieDetails.tagline !== '' && (
+            {tagline !== '' && (
               <i>
-                <Tagline className='my-4 d-block'>
-                  {movieDetails.tagline}
-                </Tagline>
+                <Tagline className='my-4 d-block'>{tagline}</Tagline>
               </i>
             )}
             <Overview className='fw-normal'>
-              {!movieDetails.overview ? '-' : movieDetails.overview}
+              {!overview ? '-' : overview}
             </Overview>
             <RatingWrapper>
-              {movieDetails.vote_average !== 0 ? (
+              {rating !== 0 ? (
                 <Fragment>
                   <Span className='display-3 fw-bolder'>
-                    {movieDetails.vote_average.toFixed(1)}
+                    {rating.toFixed(1)}
                   </Span>
                   <span> / 10</span>
                 </Fragment>
