@@ -37,7 +37,7 @@ const PopularMovies = ({ movies }) => {
                     passHref
                     scroll={false}
                   >
-                    <a className='position-relative'>
+                    <a className='position-relative d-block'>
                       <CardImg>
                         <Image
                           src={

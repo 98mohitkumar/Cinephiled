@@ -37,7 +37,7 @@ const TrendingMovies = ({ movies }) => {
                     passHref
                     scroll={false}
                   >
-                    <a className='position-relative'>
+                    <a className='position-relative d-block'>
                       <CardImg className='d-flex justify-content-end'>
                         <Image
                           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
