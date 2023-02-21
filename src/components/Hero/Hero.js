@@ -145,7 +145,7 @@ const Hero = ({ searchModal }) => {
     return () => window.removeEventListener('scroll', scrollListener);
   }, []);
 
-  const keyHandler = (e, onSearchInput = false) => {
+  const keyHandler = (e, index, onSearchInput = false) => {
     if (onSearchInput && e.code === 'ArrowDown') {
       const firstSuggestionEl = document.querySelector(
         '.first-suggestion-item'
@@ -155,10 +155,28 @@ const Hero = ({ searchModal }) => {
     }
 
     if (e.code === 'ArrowDown' && !onSearchInput) {
+      const lastItem = (index + 1) % 5 === 0;
+      const scrollContainer = document.querySelector('.suggestions');
+
+      if (!lastItem) {
+        e.preventDefault();
+      } else {
+        scrollContainer.scrollTop = (index - 1) * 46;
+      }
+
       e.target?.nextElementSibling?.focus();
     }
 
     if (e.code === 'ArrowUp' && !onSearchInput) {
+      const lastItem = (index + 1) % 5 === 0;
+      const scrollContainer = document.querySelector('.suggestions');
+
+      if (!lastItem) {
+        e.preventDefault();
+      } else {
+        scrollContainer.scrollTop = (index - 1) * 46;
+      }
+
       e.target?.previousElementSibling?.focus();
     }
 
@@ -182,7 +200,7 @@ const Hero = ({ searchModal }) => {
                 ref={userInputRef}
                 autoComplete='off'
                 onChange={inputChangeHandler}
-                onKeyDown={(e) => keyHandler(e, true)}
+                onKeyDown={(e) => keyHandler(e, null, true)}
               />
 
               {showButton && (
@@ -212,7 +230,6 @@ const Hero = ({ searchModal }) => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
-                  onKeyDown={keyHandler}
                 >
                   <div className='mt-2 suggestions'>
                     {sortedSuggestion.map((item, index) => (
@@ -223,6 +240,7 @@ const Hero = ({ searchModal }) => {
                         className={`${
                           index === 0 ? 'first-suggestion-item' : ''
                         }`}
+                        onKeyDown={(e) => keyHandler(e, index, false)}
                       />
                     ))}
                   </div>
