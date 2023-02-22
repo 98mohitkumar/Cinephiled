@@ -134,7 +134,11 @@ const TVDetails = ({
 
       if (response.success) {
         setIsFavorite((prev) => !prev);
-
+        setToastMessage(
+          isFavorite ? 'Removed from favorites' : 'Added to favorites'
+        );
+        showToast();
+        removeToast();
         revalidationWrapper(() => revalidateFavorites('favoriteTvShows'));
       }
     } else if (!isToastVisible) {
@@ -164,7 +168,11 @@ const TVDetails = ({
 
       if (response.success) {
         setAddedToWatchlist((prev) => !prev);
-
+        setToastMessage(
+          addedToWatchlist ? 'Removed from watchlist' : 'Added to watchlist'
+        );
+        showToast();
+        removeToast();
         revalidationWrapper(() => revalidateWatchlist('tvShowsWatchlist'));
       }
     } else if (!isToastVisible) {

@@ -148,6 +148,11 @@ const MovieDetails = ({
 
       if (response?.success) {
         setIsFavorite((prev) => !prev);
+        setToastMessage(
+          isFavorite ? 'Removed from favorites' : 'Added to favorites'
+        );
+        showToast();
+        removeToast();
         revalidationWrapper(() => revalidateFavorites('favoriteMovies'));
       }
     } else if (!isToastVisible) {
@@ -177,6 +182,11 @@ const MovieDetails = ({
 
       if (response?.success) {
         setAddedToWatchlist((prev) => !prev);
+        setToastMessage(
+          addedToWatchlist ? 'Removed from watchlist' : 'Added to watchlist'
+        );
+        showToast();
+        removeToast();
         revalidationWrapper(() => revalidateWatchlist('moviesWatchlist'));
       }
     } else if (!isToastVisible) {
