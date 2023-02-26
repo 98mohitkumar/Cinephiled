@@ -127,7 +127,7 @@ TvShow.getInitialProps = async (ctx) => {
       const network = !tvData.networks[0] ? 'TBA' : tvData?.networks[0]?.name;
       const crewData = [
         ...tvData?.created_by?.slice(0, 2),
-        ...tvData.credits.crew
+        ...tvData?.aggregate_credits?.crew
           ?.filter((credit) => credit.job === 'Characters')
           .slice(0, 2)
       ];
@@ -142,25 +142,25 @@ TvShow.getInitialProps = async (ctx) => {
         id: tvData?.id,
         title: tvData?.name,
         releaseYear,
-        genres: tvData.genres,
-        runtime: tvData?.episode_run_time[0],
+        genres: tvData?.genres,
+        runtime: tvData?.episode_run_time?.[0],
         tagline: tvData?.tagline,
         overview: tvData?.overview,
-        rating: tvData.vote_average,
+        rating: tvData?.vote_average,
         posterPath: tvData?.poster_path,
         backdropPath: tvData?.backdrop_path,
         crewData,
-        trailerLink: trailers[0]?.key ?? '',
+        trailerLink: trailers?.[0]?.key ?? '',
         socialIds: tvData?.external_ids,
         homepage: tvData?.homepage,
         status,
         language: language?.[0]?.english_name,
         network,
-        type: tvData.type,
+        type: tvData?.type,
         endYear,
         cast: {
-          totalCount: tvData?.credits?.cast.length,
-          data: tvData?.credits?.cast.slice(0, 15)
+          totalCount: tvData?.aggregate_credits?.cast?.length,
+          data: tvData?.aggregate_credits?.cast?.slice(0, 15)
         },
         seasons: tvData?.seasons,
         reviews: tvData?.reviews?.results ?? [],
