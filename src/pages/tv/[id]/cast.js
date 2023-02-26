@@ -4,6 +4,7 @@ import {
   CastImg,
   CastWrapper
 } from 'components/Cast/CastStyles';
+import MetaWrapper from 'components/MetaWrapper';
 import { HeroInfoTitle, Span } from 'components/MovieInfo/MovieDetailsStyles';
 import { motion } from 'framer-motion';
 import { apiEndpoints } from 'globals/constants';
@@ -12,13 +13,24 @@ import Link from 'next/link';
 import { Fragment } from 'react';
 import { CastPageInfo, Error404 } from 'styles/GlobalComponents';
 
-const Cast = ({ tvData: { title, year }, cast, error }) => {
+const Cast = ({ tvData: { id, title, year, backdrop }, cast, error }) => {
   return (
     <Fragment>
+      <MetaWrapper
+        title={
+          !error
+            ? `${title} (${year}) - Cast -- cinephiled`
+            : 'Not Found - Cinephiled'
+        }
+        description={`${title} cast`}
+        image={`https://image.tmdb.org/t/p/w780${backdrop}`}
+        url={`https://cinephiled.vercel.app/tv/${id}/cast`}
+      />
+
       {error ? (
         <Error404>404</Error404>
       ) : (
-        <CastContainer>
+        <CastContainer className='mb-auto'>
           <CastGrid>
             <CastPageInfo>
               <HeroInfoTitle className='mb-4'>
@@ -29,7 +41,7 @@ const Cast = ({ tvData: { title, year }, cast, error }) => {
             </CastPageInfo>
 
             {cast.map((item) => (
-              <CastWrapper key={item.credit_id}>
+              <CastWrapper key={item.id}>
                 <Link
                   href={`/person/${item.id}-${item.name.replace(
                     /[' ']/g,
@@ -66,9 +78,12 @@ const Cast = ({ tvData: { title, year }, cast, error }) => {
 
                 <div className='mt-3'>
                   <Span className='fw-bold movieCastHead d-block'>
-                    {item.character}
+                    {item?.roles[0]?.character}
                   </Span>
                   <Span className='movieCastName d-block'>{item.name}</Span>
+                  <Span className='movieCastName d-block episode-count'>
+                    {item?.roles[0]?.episode_count} episodes
+                  </Span>
                 </div>
               </CastWrapper>
             ))}
@@ -91,8 +106,13 @@ Cast.getInitialProps = async (ctx) => {
       : 'TBA';
 
     return {
-      tvData: { title: data?.name ?? '', year: releaseYear },
-      cast: data?.credits?.cast,
+      tvData: {
+        title: data?.name ?? '',
+        year: releaseYear,
+        backdrop: data?.backdrop_path,
+        id: data?.id
+      },
+      cast: data?.aggregate_credits?.cast,
       error: false
     };
   } catch {

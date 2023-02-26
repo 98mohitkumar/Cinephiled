@@ -4,6 +4,7 @@ import {
   CastImg,
   CastWrapper
 } from 'components/Cast/CastStyles';
+import MetaWrapper from 'components/MetaWrapper';
 import { HeroInfoTitle, Span } from 'components/MovieInfo/MovieDetailsStyles';
 import { motion } from 'framer-motion';
 import { apiEndpoints } from 'globals/constants';
@@ -12,9 +13,20 @@ import Link from 'next/link';
 import { Fragment } from 'react';
 import { CastPageInfo, Error404 } from 'styles/GlobalComponents';
 
-const Cast = ({ movieData: { title, year }, cast, error }) => {
+const Cast = ({ movieData: { id, title, year, backdrop }, cast, error }) => {
   return (
     <Fragment>
+      <MetaWrapper
+        title={
+          !error
+            ? `${title} (${year}) - Cast -- cinephiled`
+            : 'Not Found - Cinephiled'
+        }
+        description={`${title} cast`}
+        image={`https://image.tmdb.org/t/p/w780${backdrop}`}
+        url={`https://cinephiled.vercel.app/movies/${id}/cast`}
+      />
+
       {error ? (
         <Error404>404</Error404>
       ) : (
@@ -91,7 +103,12 @@ Cast.getInitialProps = async (ctx) => {
       : new Date(data?.release_date).getFullYear();
 
     return {
-      movieData: { title: data?.title, year: releaseYear },
+      movieData: {
+        title: data?.title,
+        year: releaseYear,
+        id: data?.id,
+        backdrop: data?.backdrop
+      },
       cast: data?.credits?.cast,
       error: false
     };
