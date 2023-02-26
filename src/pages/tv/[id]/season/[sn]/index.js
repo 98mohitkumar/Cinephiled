@@ -142,7 +142,7 @@ const Seasons = ({
                       {item.name}
                     </h3>
 
-                    <TrWrapper>
+                    <TrWrapper className='flex-wrap'>
                       <SeasonsRelease className='text-light airDate'>
                         {getReleaseDate(item.air_date)}
                       </SeasonsRelease>
@@ -156,7 +156,7 @@ const Seasons = ({
                         >
                           <a>
                             <Pill className='info'>
-                              View epside info
+                              View episode info
                               <BiChevronRight size='22' />
                             </Pill>
                           </a>

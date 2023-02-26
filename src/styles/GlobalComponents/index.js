@@ -322,6 +322,7 @@ export const SeasonExpandedContainer = styled.div`
   margin-bottom: auto;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
+    width: 100%;
     padding: 1.25rem;
   }
 `;
@@ -409,7 +410,7 @@ export const EpisodeImg = styled.div`
 `;
 
 export const TrWrapper = styled.div`
-  width: max-content;
+  max-width: 100%;
   display: flex;
   align-items: center;
   margin: 0.75rem 0rem;
