@@ -16,7 +16,6 @@ import {
 
 const Cast = ({ cast }) => {
   const router = useRouter();
-
   const routeRef = useRef(router.asPath);
 
   return (
@@ -26,7 +25,7 @@ const Cast = ({ cast }) => {
       ) : (
         <CastGrid>
           {cast.data.map((item) => (
-            <CastWrapper key={item.credit_id}>
+            <CastWrapper key={item.id}>
               <Link
                 href={`/person/${item.id}-${item.name.replace(/[' ']/g, '-')}`}
                 passHref
@@ -60,9 +59,14 @@ const Cast = ({ cast }) => {
 
               <div className='mt-3'>
                 <Span className='fw-bold movieCastHead d-block'>
-                  {item.character}
+                  {item?.roles?.[0]?.character ?? item?.character}
                 </Span>
                 <Span className='movieCastName d-block'>{item.name}</Span>
+                {router.asPath.includes('tv') && (
+                  <Span className='movieCastName d-block episode-count'>
+                    {item?.roles?.[0]?.episode_count} episodes
+                  </Span>
+                )}
               </div>
             </CastWrapper>
           ))}

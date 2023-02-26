@@ -10,7 +10,6 @@ import {
   SeasonsOverview,
   SeasonDetailsDivider,
   SeasonImg,
-  SeasonInfoMain,
   SeasonInfoWrapper,
   SeasonsContainer,
   SeasonsRelease,
@@ -55,7 +54,7 @@ const TVSeasons = ({ seasons }) => {
                     />
                   </SeasonImg>
                   <SeasonInfoWrapper>
-                    <SeasonInfoMain>
+                    <div>
                       <SeasonTitle className='xsRes'>
                         {item.name}
                         {Today < new Date(seasonReleaseDates[i]) &&
@@ -73,7 +72,7 @@ const TVSeasons = ({ seasons }) => {
                       {item.overview !== '' && (
                         <SeasonsOverview>{item.overview}</SeasonsOverview>
                       )}
-                    </SeasonInfoMain>
+                    </div>
                   </SeasonInfoWrapper>
                 </SeasonWrapper>
               </a>

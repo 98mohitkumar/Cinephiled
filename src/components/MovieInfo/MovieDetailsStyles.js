@@ -67,6 +67,11 @@ export const Span = styled.span`
       text-decoration: underline;
     }
   }
+
+  &.episode-count {
+    font-size: 14px;
+    opacity: 0.8;
+  }
 `;
 
 export const ReleaseDateWrapper = styled.div`

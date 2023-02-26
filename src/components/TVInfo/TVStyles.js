@@ -35,16 +35,12 @@ export const SeasonInfoWrapper = styled.div`
   width: 100%;
   overflow: hidden;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 1rem;
   }
-`;
-
-export const SeasonInfoMain = styled.div`
-  width: 100%;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     .xsRes {
@@ -70,6 +66,10 @@ export const SeasonsRelease = styled.span`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     font-size: 0.9rem;
+  }
+
+  &.text-light {
+    color: rgb(221 221 221);
   }
 `;
 
