@@ -76,16 +76,22 @@ export const apiEndpoints = {
     trendingTV: `${baseUrl}/trending/tv/day?api_key=${api_key}`,
 
     tvDetails: (id) =>
-      `${baseUrl}/tv/${id}?api_key=${api_key}&language=en-US&append_to_response=images,videos,credits,reviews,recommendations,external_ids&include_image_language=en,null`,
+      `${baseUrl}/tv/${id}?api_key=${api_key}&language=en-US&append_to_response=images,videos,aggregate_credits,reviews,recommendations,external_ids&include_image_language=en,null`,
+
+    tvDetailsNoAppend: (id) =>
+      `${baseUrl}/tv/${id}?api_key=${api_key}&language=en-US`,
 
     tvSeasonDetails: ({ id, seasonNumber }) =>
-      `${baseUrl}/tv/${id}/season/${seasonNumber}?api_key=${api_key}&language=en-US`,
+      `${baseUrl}/tv/${id}/season/${seasonNumber}?api_key=${api_key}&language=en-US&append_to_response=aggregate_credits,images&include_image_language=en,null`,
+
+    episodeDetails: ({ id, seasonNumber, episodeNumber }) =>
+      `${baseUrl}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${api_key}&language=en-US&append_to_response=images,credits`,
 
     tvGenre: ({ genreId, pageQuery }) =>
       `${baseUrl}/discover/tv?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
 
     getTvCredits: ({ id }) =>
-      `${baseUrl}/tv/${id}?api_key=${api_key}&language=en-US&append_to_response=credits`
+      `${baseUrl}/tv/${id}?api_key=${api_key}&language=en-US&append_to_response=aggregate_credits`
   },
   keywords: {
     keywordDetails: (id) =>
