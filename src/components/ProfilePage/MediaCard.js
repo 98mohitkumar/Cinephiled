@@ -47,7 +47,7 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
           passHref
           scroll={false}
         >
-          <a>
+          <a className='position-relative d-block'>
             <CardImg className='d-flex justify-content-end'>
               <Image
                 src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`}
@@ -55,6 +55,8 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
                 layout='fill'
                 objectFit='cover'
                 className='poster'
+                placeholder='blur'
+                blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
               />
 
               {rating && (
@@ -63,15 +65,12 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
                   <p className='m-0 fw-semibold'>{rating}</p>
                 </RatingOverlay>
               )}
-
-              {recommendation && (
-                <Rating className='d-flex justify-content-center align-items-center'>
-                  {data.vote_average === 0
-                    ? 'NR'
-                    : data.vote_average.toFixed(1)}
-                </Rating>
-              )}
             </CardImg>
+            {recommendation && (
+              <Rating className='d-flex justify-content-center align-items-center'>
+                {data.vote_average === 0 ? 'NR' : data.vote_average.toFixed(1)}
+              </Rating>
+            )}
           </a>
         </Link>
       </motion.div>

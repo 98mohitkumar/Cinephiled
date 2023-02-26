@@ -10,7 +10,6 @@ import {
   SeasonsOverview,
   SeasonDetailsDivider,
   SeasonImg,
-  SeasonInfoMain,
   SeasonInfoWrapper,
   SeasonsContainer,
   SeasonsRelease,
@@ -50,10 +49,12 @@ const TVSeasons = ({ seasons }) => {
                       alt='TV-season-poster'
                       layout='fill'
                       objectFit='cover'
+                      placeholder='blur'
+                      blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
                     />
                   </SeasonImg>
                   <SeasonInfoWrapper>
-                    <SeasonInfoMain>
+                    <div>
                       <SeasonTitle className='xsRes'>
                         {item.name}
                         {Today < new Date(seasonReleaseDates[i]) &&
@@ -71,7 +72,7 @@ const TVSeasons = ({ seasons }) => {
                       {item.overview !== '' && (
                         <SeasonsOverview>{item.overview}</SeasonsOverview>
                       )}
-                    </SeasonInfoMain>
+                    </div>
                   </SeasonInfoWrapper>
                 </SeasonWrapper>
               </a>

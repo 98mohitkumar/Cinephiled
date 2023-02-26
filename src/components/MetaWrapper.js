@@ -3,7 +3,7 @@ import Head from 'next/head';
 const MetaWrapper = ({ title, description, image, url, children }) => {
   return (
     <Head>
-      <title>{title}</title>
+      <title>{title ?? 'Cinephiled'}</title>
       <meta name='title' content={title} key='title' />
       <meta property='og:title' content={title} key='og_title' />
       <meta

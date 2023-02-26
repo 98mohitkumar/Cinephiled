@@ -322,6 +322,7 @@ export const SeasonExpandedContainer = styled.div`
   margin-bottom: auto;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
+    width: 100%;
     padding: 1.25rem;
   }
 `;
@@ -330,93 +331,71 @@ export const SeasonShowcaseWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  gap: 4.5rem;
+  gap: 3rem;
   align-items: center;
-  margin-bottom: 2rem;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    gap: 3rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 1.5rem;
+  }
+
+  &.episodesBox:not(:last-of-type) {
+    margin-bottom: 80px;
+
+    @media only ${(props) => props.theme.breakpoints.ip} {
+      margin-bottom: 50px;
+    }
+  }
+
+  .air-date {
+    font-weight: 600;
   }
 `;
 
 export const SeasonShowcaseImg = styled.div`
-  min-width: 10rem;
-  height: 15rem;
+  min-width: 15rem;
+  aspect-ratio: 2/3;
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
     rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
   overflow: hidden;
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    margin: 0.5rem 0rem;
-  }
-`;
-
-export const SeasonShowcaseTitle = styled.h2`
-  font-weight: bold;
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  align-self: flex-start;
 `;
 
 export const SeasonEpisodesWrapper = styled.div`
   width: 100%;
-  padding-top: 3rem;
-
-  & > div:nth-of-type(1) {
-    margin-top: 1rem !important;
-  }
+  padding-top: 4rem;
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 2rem 0rem;
-  }
-
-  .episodesTitle {
-    font-size: 2rem;
-    font-weight: bold;
-  }
-
-  .text {
-    color: rgb(221 221 221);
+    padding-top: 3rem;
   }
 
   .airDate {
     font-size: 1.1rem;
   }
 
-  h3 {
+  h3.text {
     @media only ${(props) => props.theme.breakpoints.xs} {
       font-size: 1.5rem;
-    }
-  }
-
-  .episodesBox {
-    gap: 2.5rem;
-
-    @media only ${(props) => props.theme.breakpoints.ip} {
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .ipRes {
-      @media only ${(props) => props.theme.breakpoints.ip} {
-        padding: 0rem;
-      }
     }
   }
 `;
 
 export const SeasonCommonOverview = styled.p`
   font-size: 1.15rem;
-  margin-top: 0.75rem;
-  margin-bottom: 0.5rem;
+  margin-top: 10px;
+  margin-bottom: 0px;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     font-size: 1rem;
+  }
+
+  &.clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
   }
 `;
 
@@ -424,19 +403,14 @@ export const EpisodeImg = styled.div`
   min-width: 15rem;
   height: 140px;
   border-radius: 12px;
-  margin: 1.25rem 0rem;
   overflow: hidden;
   align-self: flex-start;
   box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
     rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    margin: 0.5rem 0rem;
-  }
 `;
 
 export const TrWrapper = styled.div`
-  width: max-content;
+  max-width: 100%;
   display: flex;
   align-items: center;
   margin: 0.75rem 0rem;
@@ -447,7 +421,7 @@ export const TrWrapper = styled.div`
   }
 `;
 
-export const Rating = styled.div`
+export const Pill = styled.div`
   width: 50px;
   height: 27px;
   border-radius: 20px;
@@ -471,5 +445,62 @@ export const Rating = styled.div`
   @media only ${(props) => props.theme.breakpoints.sm} {
     width: 45px;
     height: 25px;
+  }
+
+  &.info {
+    width: auto;
+    padding-left: 12px;
+    padding-right: 6px;
+    line-height: 0.9;
+    font-family: 'Manrope', sans-serif;
+  }
+`;
+
+export const CastPageInfo = styled.div`
+  grid-column: 1/ -1;
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+
+  .cast-count {
+    font-weight: 500;
+
+    @media only ${(props) => props.theme.breakpoints.sm} {
+      font-size: 20px;
+    }
+  }
+`;
+
+export const EpisodeInfoWrapper = styled.div`
+  padding: 3rem 4.2vw;
+  margin-bottom: auto;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 6.5vw 1.25rem;
+  }
+`;
+
+export const EpisodeShowCaseWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3rem;
+  align-items: flex-start;
+
+  @media only ${(props) => props.theme.breakpoints.ip} {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .image-wrapper {
+    position: relative;
+    min-width: 20rem;
+    aspect-ratio: 1.776 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    align-self: flex-start;
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+      rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
   }
 `;

@@ -47,3 +47,14 @@ export const CastWrapper = styled.div`
   width: 100%;
   align-self: flex-start;
 `;
+
+export const SeeMore = styled.div`
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

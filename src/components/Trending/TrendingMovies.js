@@ -37,7 +37,7 @@ const TrendingMovies = ({ movies }) => {
                     passHref
                     scroll={false}
                   >
-                    <a>
+                    <a className='position-relative d-block'>
                       <CardImg className='d-flex justify-content-end'>
                         <Image
                           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -45,13 +45,16 @@ const TrendingMovies = ({ movies }) => {
                           layout='fill'
                           objectFit='cover'
                           className='poster'
+                          placeholder='blur'
+                          blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
                         />
-                        <Rating className='d-flex justify-content-center align-items-center'>
-                          {!movie.vote_average
-                            ? 'NR'
-                            : movie.vote_average.toFixed(1)}
-                        </Rating>
                       </CardImg>
+
+                      <Rating className='d-flex justify-content-center align-items-center'>
+                        {!movie.vote_average
+                          ? 'NR'
+                          : movie.vote_average.toFixed(1)}
+                      </Rating>
                     </a>
                   </Link>
                 </motion.div>

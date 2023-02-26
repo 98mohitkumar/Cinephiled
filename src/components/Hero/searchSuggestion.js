@@ -1,15 +1,15 @@
 import Link from 'next/link';
 import { Fragment } from 'react';
-import { SearchSlice } from './HeroStyles';
+import { Anchor, SearchSlice } from './HeroStyles';
 
-const SearchSuggestion = ({ data, type }) => (
+const SearchSuggestion = ({ data, type, ...props }) => (
   <Fragment>
     {type === 'movie' && (
       <Link
         href={`/movies/${data.id}-${data.title.replace(/[' ', '/']/g, '-')}`}
         passHref
       >
-        <a>
+        <Anchor {...props}>
           <SearchSlice>
             <h5 className='suggestion-title'>
               {data.title}{' '}
@@ -19,7 +19,7 @@ const SearchSuggestion = ({ data, type }) => (
 
             <h6 className='tag'>Movie</h6>
           </SearchSlice>
-        </a>
+        </Anchor>
       </Link>
     )}
 
@@ -28,7 +28,7 @@ const SearchSuggestion = ({ data, type }) => (
         href={`/tv/${data.id}-${data.name.replace(/[' ', '/']/g, '-')}`}
         passHref
       >
-        <a>
+        <Anchor {...props}>
           <SearchSlice>
             <h5 className='suggestion-title'>
               {data.name}{' '}
@@ -38,7 +38,7 @@ const SearchSuggestion = ({ data, type }) => (
 
             <h6 className='tag'>TV</h6>
           </SearchSlice>
-        </a>
+        </Anchor>
       </Link>
     )}
   </Fragment>

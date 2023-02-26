@@ -4,69 +4,51 @@ import TVDetails from 'components/TVInfo/TVDetails';
 import TVFacts from 'components/TVInfo/TVFacts';
 import TVTab from 'components/TVInfo/TVTab';
 import { apiEndpoints } from 'globals/constants';
-import { Fragment, useMemo } from 'react';
+import { Fragment } from 'react';
 import { Error404 } from 'styles/GlobalComponents';
 
-const TvShow = ({ tvData, error, language }) => {
-  const cast = useMemo(
-    () => (!error ? tvData?.credits?.cast.slice(0, 15) : []),
-    [error, tvData?.credits?.cast]
-  );
-
-  const tvStatus = useMemo(
-    () => (!error ? (!tvData.status ? 'TBA' : tvData?.status) : ''),
-    [error, tvData?.status]
-  );
-
-  const network = useMemo(
-    () =>
-      !error ? (!tvData.networks[0] ? 'TBA' : tvData?.networks[0]?.name) : '',
-    [error, tvData?.networks]
-  );
-
-  const type = useMemo(
-    () => (!error ? (!tvData.type ? 'TBA' : tvData?.type) : ''),
-    [error, tvData?.type]
-  );
-
-  const tvFacts = useMemo(
-    () => (!error ? { status: tvStatus, network, type, language } : {}),
-    [error, language, network, tvStatus, type]
-  );
-
-  const getYear = useMemo(
-    () =>
-      !error
-        ? tvData?.first_air_date
-          ? new Date(tvData?.first_air_date).getFullYear()
-          : 'TBA'
-        : '',
-    [error, tvData?.first_air_date]
-  );
-
-  const endYear = useMemo(
-    () =>
-      !error
-        ? tvData?.status === 'Ended' || tvData.status === 'Canceled'
-          ? new Date(tvData?.last_air_date).getFullYear()
-          : ''
-        : '',
-    [error, tvData?.last_air_date, tvData?.status]
-  );
-
+const TvShow = ({
+  id,
+  title,
+  status,
+  type,
+  overview,
+  backdropPath,
+  posterPath,
+  releaseYear,
+  endYear,
+  cast,
+  seasons,
+  reviews,
+  backdrops,
+  posters,
+  network,
+  socialIds,
+  error,
+  language,
+  crewData,
+  genres,
+  rating,
+  recommendations,
+  runtime,
+  homepage,
+  tagline,
+  trailerLink
+}) => {
   return (
     <Fragment>
       <MetaWrapper
         title={
           !error
-            ? `${tvData?.name} (${getYear} - ${endYear}) - Cinephiled`
+            ? `${title} (${releaseYear} - ${endYear}) - Cinephiled`
             : 'Not Found - Cinephiled'
         }
-        description={tvData?.overview}
-        image={`https://image.tmdb.org/t/p/w780${tvData?.backdrop_path}`}
-        url={`https://cinephiled.vercel.app/tv/${
-          tvData?.id
-        }-${tvData.name.replace(/[' ']/g, '-')}`}
+        description={overview}
+        image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
+        url={`https://cinephiled.vercel.app/tv/${id}-${title?.replace(
+          /[' ']/g,
+          '-'
+        )}`}
       />
 
       {error ? (
@@ -74,27 +56,40 @@ const TvShow = ({ tvData, error, language }) => {
       ) : (
         <Fragment>
           {/* tv info hero section */}
-          <TVDetails tvData={tvData} year={getYear} />
+          <TVDetails
+            tvData={{
+              id,
+              title,
+              runtime,
+              genres,
+              overview,
+              tagline,
+              rating,
+              backdropPath,
+              posterPath,
+              socialIds,
+              crewData,
+              trailerLink,
+              homepage
+            }}
+            year={releaseYear}
+          />
 
           {/* tv facts */}
-          <TVFacts facts={tvFacts} />
+          <TVFacts facts={{ status, network, type, language }} />
 
           {/* tv tabs */}
           <TVTab
-            id={tvData.id}
             cast={cast}
-            seasons={tvData?.seasons}
-            reviews={tvData?.reviews?.results ?? []}
-            backdrops={tvData?.images?.backdrops ?? []}
-            posters={tvData?.images?.posters ?? []}
+            seasons={seasons}
+            reviews={reviews}
+            backdrops={backdrops}
+            posters={posters}
           />
 
           {/* recommendations */}
-          {tvData?.recommendations?.results?.length > 0 && (
-            <Recommendations
-              data={tvData?.recommendations?.results}
-              type='tv'
-            />
+          {recommendations?.length > 0 && (
+            <Recommendations data={recommendations} type='tv' />
           )}
         </Fragment>
       )}
@@ -115,14 +110,64 @@ TvShow.getInitialProps = async (ctx) => {
       const tvData = await tvResponse.json();
       const languages = await languagesResponse.json();
 
+      const releaseYear = tvData?.first_air_date
+        ? new Date(tvData?.first_air_date).getFullYear()
+        : 'TBA';
+
+      const endYear =
+        tvData?.status === 'Ended' || tvData.status === 'Canceled'
+          ? new Date(tvData?.last_air_date).getFullYear()
+          : '';
+
       const language = languages.filter(
         (item) => item.iso_639_1 === tvData.original_language
       );
 
+      const status = !tvData.status ? 'TBA' : tvData?.status;
+      const network = !tvData.networks[0] ? 'TBA' : tvData?.networks[0]?.name;
+      const crewData = [
+        ...tvData?.created_by?.slice(0, 2),
+        ...tvData?.aggregate_credits?.crew
+          ?.filter((credit) => credit.job === 'Characters')
+          .slice(0, 2)
+      ];
+
+      const trailers = tvData?.videos?.results?.filter(
+        (item) =>
+          item?.site === 'YouTube' &&
+          (item?.type === 'Trailer' || item.type === 'Opening Credits')
+      );
+
       return {
-        tvData,
-        error,
-        language: language?.[0]?.english_name
+        id: tvData?.id,
+        title: tvData?.name,
+        releaseYear,
+        genres: tvData?.genres,
+        runtime: tvData?.episode_run_time?.[0],
+        tagline: tvData?.tagline,
+        overview: tvData?.overview,
+        rating: tvData?.vote_average,
+        posterPath: tvData?.poster_path,
+        backdropPath: tvData?.backdrop_path,
+        crewData,
+        trailerLink: trailers?.[0]?.key ?? '',
+        socialIds: tvData?.external_ids,
+        homepage: tvData?.homepage,
+        status,
+        language: language?.[0]?.english_name,
+        network,
+        type: tvData?.type,
+        endYear,
+        cast: {
+          totalCount: tvData?.aggregate_credits?.cast?.length,
+          data: tvData?.aggregate_credits?.cast?.slice(0, 15)
+        },
+        seasons: tvData?.seasons,
+        reviews: tvData?.reviews?.results ?? [],
+        backdrops: tvData?.images?.backdrops ?? [],
+        posters: tvData?.images?.posters ?? [],
+        recommendations: tvData?.recommendations?.results,
+        error
       };
     }
   } catch {
