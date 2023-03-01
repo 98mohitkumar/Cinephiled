@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const BackdropsContainer = styled.div`
   width: 100%;
-  padding: 1rem 4.2vw 2rem;
+  padding: 0px 4.2vw 32px;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0rem 1.25rem 1.25rem;
@@ -13,18 +13,10 @@ export const BackdropsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   place-items: center;
-  gap: 2.5rem;
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    gap: 2rem;
-  }
+  gap: clamp(20px, 3vw, 32px);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    gap: 1.5rem;
   }
 `;
 

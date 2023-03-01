@@ -34,9 +34,7 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
         currentTab={tabState}
         setTab={tabSelectionHandler}
       />
-      <h1 className='display-5 fw-bold text-white text-center my-4'>
-        What&#39;s Popular
-      </h1>
+
       <AnimatePresence initial={false} exitBeforeEnter>
         {tabState === 'movies' && (
           <motion.div
@@ -46,13 +44,21 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <PopularMovies movies={moviesData} />
+            {/* popular movies */}
+            <section>
+              <span className='display-5 fw-bold text-white text-center my-4 d-block'>
+                What&#39;s Popular
+              </span>
+              <PopularMovies movies={moviesData} />
+            </section>
 
             {/* Trending Movies */}
-            <h1 className='display-5 fw-bold text-white text-center my-4'>
-              Trending Today
-            </h1>
-            <TrendingMovies movies={trendingMovies} />
+            <section>
+              <span className='display-5 fw-bold text-white text-center my-4 d-block'>
+                Trending Today
+              </span>
+              <TrendingMovies movies={trendingMovies} />
+            </section>
           </motion.div>
         )}
 
@@ -64,13 +70,21 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <PopularTV TV={TVData} />
+            {/* popular TV */}
+            <section>
+              <span className='display-5 fw-bold text-white text-center my-4 d-block'>
+                What&#39;s Popular
+              </span>
+              <PopularTV TV={TVData} />
+            </section>
 
             {/* Trending TV */}
-            <h1 className='display-5 fw-bold text-white text-center my-4'>
-              Trending Today
-            </h1>
-            <TrendingTv Tv={trendingTv} />
+            <section>
+              <span className='display-5 fw-bold text-white text-center my-4 d-block'>
+                Trending Today
+              </span>
+              <TrendingTv Tv={trendingTv} />
+            </section>
           </motion.div>
         )}
       </AnimatePresence>

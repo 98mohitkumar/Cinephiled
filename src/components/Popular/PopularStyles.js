@@ -3,36 +3,27 @@ import styled from 'styled-components';
 export const CardsContainerGrid = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 230px));
+  grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
   place-items: center;
   justify-content: center;
-  padding: 2rem 4.2vw;
-  gap: 2rem;
+  padding: 32px 4.2vw;
+  gap: clamp(20px, 3vw, 32px);
 
   &.xl-row-gap {
-    gap: 2.75rem 2rem;
+    gap: clamp(16px, 5vw, 44px) clamp(20px, 3vw, 32px);
+  }
+
+  @media only ${(props) => props.theme.breakpoints.xl} {
+    grid-template-columns: repeat(4, 1fr);
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    gap: 1.5rem;
-
-    &.xl-row-gap {
-      gap: 2.25rem 1.25rem;
-    }
-  }
-
-  @media only ${(props) => props.theme.breakpoints.md} {
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 210px));
-
-    &.xl-row-gap {
-      gap: 2rem 1.25rem;
-    }
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 175px));
-    padding: 0rem 1.25rem 1.25rem;
-    gap: 1.25rem;
+    padding-block: 0px;
+    padding-inline: 20px;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
@@ -70,10 +61,10 @@ export const CardImg = styled.div`
 `;
 
 export const CardInfo = styled.div`
-  padding-top: 1.65rem;
+  margin-top: 26px;
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    padding-top: 1.45rem;
+    margin-top: 22px;
   }
 `;
 
@@ -99,8 +90,8 @@ export const ReleaseDate = styled.p`
 
 export const Rating = styled.div`
   position: absolute;
-  height: 3rem;
-  width: 3rem;
+  height: 48px;
+  width: 48px;
   border-radius: 50%;
   background-color: #ddd;
   color: #212121;
@@ -112,8 +103,8 @@ export const Rating = styled.div`
   bottom: -22px;
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 40px;
+    width: 40px;
     right: 12px;
     bottom: -22px;
     font-size: 0.75rem;

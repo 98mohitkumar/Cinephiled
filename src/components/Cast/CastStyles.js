@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CastContainer = styled.div`
   width: 100%;
-  padding: 1rem 4.2vw 2rem;
+  padding: 0px 4.2vw 32px;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0rem 1.25rem 1.25rem;
@@ -11,21 +11,24 @@ export const CastContainer = styled.div`
 
 export const CastGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, 160px);
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   justify-items: center;
   align-items: flex-start;
   justify-content: center;
-  gap: 2rem;
+  gap: clamp(20px, 3vw, 32px);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, 150px);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0rem;
     grid-template-columns: repeat(2, 1fr);
   }
+`;
+
+export const CastWrapper = styled.div`
+  width: 100%;
+  align-self: flex-start;
 `;
 
 export const CastImg = styled.div`
@@ -41,11 +44,6 @@ export const CastImg = styled.div`
         0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
     }
   }
-`;
-
-export const CastWrapper = styled.div`
-  width: 100%;
-  align-self: flex-start;
 `;
 
 export const SeeMore = styled.div`

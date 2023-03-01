@@ -44,7 +44,7 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
             </NoDataText>
           ) : (
             <Fragment>
-              <Span className='d-block display-5 text-center genre'>
+              <Span className='d-block fs-1 text-center genre'>
                 {genreName} TV Shows
               </Span>
               <RecommendationsGrid>
