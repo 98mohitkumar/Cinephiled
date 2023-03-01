@@ -59,6 +59,12 @@ const Seasons = ({
     return vote;
   }, []);
 
+  const runtimeFormatted = useCallback((runtime) => {
+    const getH = Math.floor(runtime / 60);
+    const getM = Math.ceil((runtime / 60 - getH) * 60);
+    return { getH, getM };
+  }, []);
+
   return (
     <Fragment>
       <MetaWrapper
@@ -143,12 +149,26 @@ const Seasons = ({
                     </h3>
 
                     <TrWrapper className='flex-wrap'>
-                      <SeasonsRelease className='text-light airDate'>
+                      <SeasonsRelease className='text-alt'>
                         {getReleaseDate(item.air_date)}
                       </SeasonsRelease>
                       <Pill>
                         <p>{getRating(item.vote_average)}</p>
                       </Pill>
+
+                      {!isNaN(runtimeFormatted(item.runtime).getH) ? (
+                        <Span>
+                          {runtimeFormatted(item.runtime).getH === 1 &&
+                          runtimeFormatted(item.runtime).getM === 0
+                            ? '60m'
+                            : runtimeFormatted(item.runtime).getH > 0 &&
+                              runtimeFormatted(item.runtime).getH + 'h '}
+                          {runtimeFormatted(item.runtime).getM > 0 &&
+                            runtimeFormatted(item.runtime).getM + 'm'}
+                        </Span>
+                      ) : (
+                        <Span>TBA</Span>
+                      )}
 
                       {new Date(getReleaseDate(item.air_date)) < new Date() && (
                         <Link
@@ -239,8 +259,8 @@ const Seasons = ({
 
       {data?.images?.posters?.length > 0 && (
         <Fragment>
-          <CastContainer className='pb-2 pt-5'>
-            <span className='fs-2 fw-bold d-inlin-block'>
+          <CastContainer className='pb-3 pt-5 pb-sm-4'>
+            <span className='fs-2 fw-bold'>
               Posters ({data?.images?.posters?.length})
             </span>
           </CastContainer>
