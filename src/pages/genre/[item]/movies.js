@@ -42,7 +42,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
             </NoDataText>
           ) : (
             <Fragment>
-              <Span className='d-block display-5 text-center genre'>
+              <Span className='d-block fs-1 text-center genre'>
                 {genreName} Movies
               </Span>
               <RecommendationsGrid>
@@ -81,7 +81,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                         </a>
                       </Link>
                     </motion.div>
-                    <InfoTitle className='my-3 text-center'>
+                    <InfoTitle className='mt-3 mb-0 text-center'>
                       {item.title}
                     </InfoTitle>
                   </RecommendedWrapper>

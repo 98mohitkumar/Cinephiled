@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SeasonsContainer = styled.div`
-  padding: 1rem 4.2vw 2rem;
+  padding: 0px 4.2vw 32px;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0rem 1.25rem 1.25rem;
@@ -60,7 +60,7 @@ export const SeasonTitle = styled.h3`
 `;
 
 export const SeasonsRelease = styled.span`
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: #121212;
   font-weight: bold;
 
@@ -68,8 +68,9 @@ export const SeasonsRelease = styled.span`
     font-size: 0.9rem;
   }
 
-  &.text-light {
+  &.text-alt {
     color: rgb(221 221 221);
+    font-size: 1.15rem;
   }
 `;
 

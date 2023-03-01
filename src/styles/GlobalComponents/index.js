@@ -50,7 +50,7 @@ export const AboutBackground = styled.div`
 export const AboutContainer = styled.div`
   padding: 0rem 5vw;
   background-color: rgb(18 18 18 /0.95);
-  flex: 2 1 0;
+  flex-grow: 1;
   position: relative;
 
   h1 {
@@ -95,18 +95,18 @@ export const Error404 = styled.h1`
 export const HeroDetailsContainer = styled.div`
   width: 100%;
   overflow: hidden;
-  padding: 4rem 4.2vw;
+  padding: 64px 4.2vw;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
-    padding: 2.5rem 2rem;
+    padding: 40px 32px;
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    padding: 2rem;
+    padding: 32px;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 2rem 1.25rem;
+    padding: 30px 20px;
   }
 
   &.person-details {
@@ -120,7 +120,7 @@ export const HeroBgContainer = styled.div`
   overflow: hidden;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    bottom: 20rem;
+    bottom: 320px;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
@@ -130,7 +130,6 @@ export const HeroBgContainer = styled.div`
 
 export const HeroBg = styled.div`
   inset: 0;
-
   animation: backdrop 4s cubic-bezier(0.77, 0, 0.18, 1) forwards;
 
   @keyframes backdrop {
@@ -152,12 +151,12 @@ export const HeroImg = styled.div`
   border-radius: 12px;
   box-shadow: 0 0 2rem rgb(12 12 12 /0.4);
   overflow: hidden;
-
   animation: heroImg 1.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
 
   &.no-shadow {
     box-shadow: none;
   }
+
   @keyframes heroImg {
     from {
       opacity: 0;
@@ -369,10 +368,6 @@ export const SeasonEpisodesWrapper = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     padding-top: 3rem;
-  }
-
-  .airDate {
-    font-size: 1.1rem;
   }
 
   h3.text {

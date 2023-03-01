@@ -14,7 +14,7 @@ const Recommendations = ({ data, type }) => {
 
   return (
     <div>
-      <h2 className='display-6 fw-bold text-white text-center mb-4 mt-5'>
+      <h2 className='display-6 fw-bold text-white text-center my-5'>
         Recommendations
       </h2>
 
@@ -54,7 +54,7 @@ const Recommendations = ({ data, type }) => {
                   </a>
                 </Link>
               </motion.div>
-              <InfoTitle className='mt-3 text-center'>
+              <InfoTitle className='mt-3 mb-0 text-center'>
                 {item?.title || item?.name}
               </InfoTitle>
             </RecommendedWrapper>

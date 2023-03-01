@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PostersContainer = styled.div`
   width: 100%;
-  padding: 1rem 4.2vw 2rem;
+  padding: 0px 4.2vw 32px;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 0rem 1.25rem 1.25rem;
@@ -13,7 +13,7 @@ export const PostersWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   place-items: center;
-  gap: 2rem;
+  gap: clamp(20px, 3vw, 32px);
 
   @media only ${(props) => props.theme.breakpoints.lg} {
     grid-template-columns: repeat(4, 1fr);
@@ -25,7 +25,6 @@ export const PostersWrapper = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
   }
 `;
 

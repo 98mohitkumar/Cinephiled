@@ -13,7 +13,7 @@ export const FooterWrapper = styled.footer`
     right: 0;
     left: 0;
     width: 100%;
-    height: 1.5px;
+    height: 1px;
     background: ${(props) => `linear-gradient(
     90deg,
     ${props.theme.colors.accent1},
@@ -31,11 +31,6 @@ export const FooterWrapper = styled.footer`
 export const FooterBranding = styled.span`
   font-weight: 600;
   font-size: calc(1.1rem + 0.6vw);
-  margin: 0rem 1rem 0rem 0rem;
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    margin: 0rem;
-  }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     font-size: 1.35rem;

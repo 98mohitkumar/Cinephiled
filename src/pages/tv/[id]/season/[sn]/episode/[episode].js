@@ -49,6 +49,12 @@ const Episode = ({ error, data, tvData }) => {
     [data?.credits?.cast, data?.credits?.guest_stars]
   );
 
+  const runtimeFormatted = useMemo(() => {
+    const getH = Math.floor(data?.runtime / 60);
+    const getM = Math.ceil((data?.runtime / 60 - getH) * 60);
+    return { getH, getM };
+  }, [data?.runtime]);
+
   return (
     <Fragment>
       <MetaWrapper
@@ -88,13 +94,25 @@ const Episode = ({ error, data, tvData }) => {
               </h3>
 
               <TrWrapper>
-                <SeasonsRelease className='text-light airDate'>
+                <SeasonsRelease className='text-alt'>
                   {getReleaseDate(data.air_date)}
                 </SeasonsRelease>
 
                 <Pill>
                   <p>{getRating(data.vote_average)}</p>
                 </Pill>
+
+                {!isNaN(runtimeFormatted.getH) ? (
+                  <Span>
+                    {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
+                      ? '60m'
+                      : runtimeFormatted.getH > 0 &&
+                        runtimeFormatted.getH + 'h '}
+                    {runtimeFormatted.getM > 0 && runtimeFormatted.getM + 'm'}
+                  </Span>
+                ) : (
+                  <Span>TBA</Span>
+                )}
               </TrWrapper>
 
               {data.overview && (
@@ -104,7 +122,7 @@ const Episode = ({ error, data, tvData }) => {
           </EpisodeShowCaseWrapper>
 
           {cast?.length > 0 && (
-            <CastContainer className='py-5 px-0 pb-0'>
+            <CastContainer className='pt-5 px-0 pb-0'>
               <CastGrid className='justify-content-start'>
                 <CastPageInfo className='p-0 text-start'>
                   <span className='fs-2 fw-bold d-inlin-block'>
@@ -166,8 +184,8 @@ const Episode = ({ error, data, tvData }) => {
 
       {data?.images?.stills?.length > 0 && (
         <Fragment>
-          <EpisodeInfoWrapper className='pb-2'>
-            <span className='fs-2 fw-bold d-inlin-block'>
+          <EpisodeInfoWrapper className='pb-3 pt-5 pb-sm-4'>
+            <span className='fs-2 fw-bold'>
               Backdrops ({data?.images?.stills?.length})
             </span>
           </EpisodeInfoWrapper>
