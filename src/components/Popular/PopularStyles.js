@@ -22,8 +22,7 @@ export const CardsContainerGrid = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    padding-block: 0px;
-    padding-inline: 20px;
+    padding: 0px 20px 20px 20px;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {

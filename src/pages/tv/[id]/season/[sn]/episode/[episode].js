@@ -79,7 +79,11 @@ const Episode = ({ error, data, tvData }) => {
           <EpisodeShowCaseWrapper>
             <div className='image-wrapper'>
               <Image
-                src={`https://image.tmdb.org/t/p/w780${data?.still_path}`}
+                src={
+                  data?.still_path
+                    ? `https://image.tmdb.org/t/p/w780${data?.still_path}`
+                    : '/Images/DefaultBackdrop.png'
+                }
                 alt='episde-backdrop'
                 layout='fill'
                 objectFit='cover'
