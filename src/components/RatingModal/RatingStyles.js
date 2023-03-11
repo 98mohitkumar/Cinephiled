@@ -8,6 +8,7 @@ export const RatingModalContainer = styled.div`
   z-index: 1000;
   display: grid;
   place-items: center;
+  backdrop-filter: blur(2px);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     place-items: flex-end center;

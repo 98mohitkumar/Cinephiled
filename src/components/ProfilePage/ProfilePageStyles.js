@@ -97,7 +97,7 @@ export const CTAButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.25rem;
+  padding: 12px 20px;
   border-radius: 8px;
   font-size: 1.1rem;
   border: none;
