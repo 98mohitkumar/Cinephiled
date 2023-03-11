@@ -132,7 +132,7 @@ const Seasons = ({
                       src={
                         item.still_path
                           ? `https://image.tmdb.org/t/p/w500${item.still_path}`
-                          : '/Images/DefaultImage.png'
+                          : '/Images/DefaultBackdrop.png'
                       }
                       alt='TV-season-episode-poster'
                       layout='fill'

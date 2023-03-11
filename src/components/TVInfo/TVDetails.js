@@ -475,9 +475,10 @@ const TVDetails = ({
                   ))}
                 </GenreWrap>
               )}
+
               {!isNaN(runtimeFormatted.getH) ? (
                 <Span>
-                  <Divider className='tvSpan' />
+                  {genres?.length > 0 && <Divider className='tvSpan' />}
                   {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
                     ? '60m'
                     : runtimeFormatted.getH > 0 && runtimeFormatted.getH + 'h '}
@@ -485,17 +486,20 @@ const TVDetails = ({
                 </Span>
               ) : (
                 <Span>
-                  <Divider className='tvSpan' />
+                  {genres?.length > 0 && <Divider className='tvSpan' />}
                   TBA
                 </Span>
               )}
             </RtoR>
+
             {tagline && (
               <i>
                 <Tagline className='my-4 d-block'>{tagline}</Tagline>
               </i>
             )}
+
             <Overview className='fw-normal'>{overview}</Overview>
+
             <RatingWrapper>
               {rating !== 0 ? (
                 <Fragment>
@@ -508,6 +512,7 @@ const TVDetails = ({
                 <Span className='display-3 fw-bolder'>NR</Span>
               )}
             </RatingWrapper>
+
             {crewData.length > 0 && (
               <CreditsWrapper>
                 {crewData.map((item) => (
