@@ -2,8 +2,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Layout from 'components/Layout/Layout';
 import { AnimatePresence } from 'framer-motion';
 import { SessionProvider } from 'next-auth/react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import MediaContextProvider from 'Store/MediaContext';
 import UserContextProvider from 'Store/UserContext';
 import { Loader } from 'styles/GlobalComponents';
@@ -29,23 +30,29 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   }, [router]);
 
   return (
-    <Theme>
-      <SessionProvider session={session} refetchOnWindowFocus={false}>
-        <UserContextProvider>
-          <MediaContextProvider>
-            <AnimatePresence exitBeforeEnter>
-              {isLoading ? (
-                <Loader />
-              ) : (
-                <Layout key={router.asPath}>
-                  <Component {...pageProps} />
-                </Layout>
-              )}
-            </AnimatePresence>
-          </MediaContextProvider>
-        </UserContextProvider>
-      </SessionProvider>
-    </Theme>
+    <Fragment>
+      <Head>
+        <title>Cinephiled</title>
+      </Head>
+
+      <Theme>
+        <SessionProvider session={session} refetchOnWindowFocus={false}>
+          <UserContextProvider>
+            <MediaContextProvider>
+              <AnimatePresence exitBeforeEnter>
+                {isLoading ? (
+                  <Loader />
+                ) : (
+                  <Layout key={router.asPath}>
+                    <Component {...pageProps} />
+                  </Layout>
+                )}
+              </AnimatePresence>
+            </MediaContextProvider>
+          </UserContextProvider>
+        </SessionProvider>
+      </Theme>
+    </Fragment>
   );
 }
 

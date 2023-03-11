@@ -32,12 +32,6 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          {/* <script
-            dangerouslySetInnerHTML={{
-              __html: `history.scrollRestoration = "manual"`
-            }}
-          /> */}
-
           <link rel='preconnect' href='https://fonts.googleapis.com' />
           <link
             rel='preconnect'
