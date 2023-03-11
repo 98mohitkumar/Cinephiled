@@ -186,7 +186,7 @@ const PersonDetails = ({ details }) => {
                       >
                         <Link
                           href={`/movies/${item.id}-${item.title.replace(
-                            /[' ']/g,
+                            /[' ', '/']/g,
                             '-'
                           )}`}
                           passHref
@@ -226,7 +226,7 @@ const PersonDetails = ({ details }) => {
                       >
                         <Link
                           href={`/tv/${item.id}-${item.name.replace(
-                            /[' ']/g,
+                            /[' ', '/']/g,
                             '-'
                           )}`}
                           passHref

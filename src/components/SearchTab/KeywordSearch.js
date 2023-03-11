@@ -33,7 +33,10 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
           {cleanedItems.map((item) => (
             <Link
               key={item.id}
-              href={`/keywords/${item.id}-${item.name.replace(/[' ']/g, '-')}`}
+              href={`/keywords/${item.id}-${item.name.replace(
+                /[' ', '/']/g,
+                '-'
+              )}`}
               passHref
               scroll={false}
             >

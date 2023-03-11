@@ -57,7 +57,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                     >
                       <Link
                         href={`/movies/${item.id}-${item.title.replace(
-                          /[' ']/g,
+                          /[' ', '/']/g,
                           '-'
                         )}`}
                         passHref

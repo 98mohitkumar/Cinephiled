@@ -27,7 +27,10 @@ const Cast = ({ cast }) => {
           {cast.data.map((item) => (
             <CastWrapper key={item.id}>
               <Link
-                href={`/person/${item.id}-${item.name.replace(/[' ']/g, '-')}`}
+                href={`/person/${item.id}-${item.name.replace(
+                  /[' ', '/']/g,
+                  '-'
+                )}`}
                 passHref
               >
                 <a>

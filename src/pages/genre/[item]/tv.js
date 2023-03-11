@@ -59,7 +59,7 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                     >
                       <Link
                         href={`/tv/${item.id}-${item.name.replace(
-                          /[' ']/g,
+                          /[' ', '/']/g,
                           '-'
                         )}`}
                         passHref

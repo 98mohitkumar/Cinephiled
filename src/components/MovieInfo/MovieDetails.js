@@ -554,7 +554,7 @@ const MovieDetails = ({
                     <Span className='d-block fw-normal'>{item.job}</Span>
                     <Link
                       href={`/person/${item.id}-${item.name.replace(
-                        /[' ']/g,
+                        /[' ', '/']/g,
                         '-'
                       )}`}
                     >
