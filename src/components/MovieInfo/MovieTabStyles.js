@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const tabStyling = css`
-  width: clamp(380px, 95vw, 730px);
+  width: clamp(360px, 92vw, 730px);
   margin: 3rem auto;
 
   @media only ${(props) => props.theme.breakpoints.sm} {

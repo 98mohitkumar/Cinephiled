@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Tab = styled.div`
-  width: clamp(360px, 90vw, 630px);
+  width: clamp(360px, 90vw, 630px); // fallback width, check custom styling
   min-height: 4.5rem;
   display: grid;
   grid-template-columns: ${({ count }) => `repeat(${count}, 1fr)`};
@@ -21,6 +21,11 @@ export const Tab = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     min-height: 3.25rem;
+  }
+
+  svg {
+    max-width: 26px;
+    max-height: 24px;
   }
 
   /* custom styling */
