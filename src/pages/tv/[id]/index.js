@@ -46,7 +46,7 @@ const TvShow = ({
         description={overview}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
         url={`https://cinephiled.vercel.app/tv/${id}-${title?.replace(
-          /[' ']/g,
+          /[' ', '/']/g,
           '-'
         )}`}
       />

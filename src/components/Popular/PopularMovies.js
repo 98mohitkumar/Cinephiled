@@ -31,7 +31,7 @@ const PopularMovies = ({ movies }) => {
                 >
                   <Link
                     href={`/movies/${movie.id}-${movie.title.replace(
-                      /[' ']/g,
+                      /[' ', '/']/g,
                       '-'
                     )}`}
                     passHref

@@ -44,7 +44,7 @@ const Cast = ({ movieData: { id, title, year, backdrop }, cast, error }) => {
               <CastWrapper key={item.credit_id}>
                 <Link
                   href={`/person/${item.id}-${item.name.replace(
-                    /[' ']/g,
+                    /[' ', '/']/g,
                     '-'
                   )}`}
                   passHref

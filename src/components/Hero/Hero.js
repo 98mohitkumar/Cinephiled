@@ -112,7 +112,7 @@ const Hero = ({ searchModal }) => {
           pathname: '/search/[query]',
           query: { query: userInput }
         });
-        userInputRef.current.value = '';
+        userInputRef.current = '';
       }
     },
     [router, userInput]

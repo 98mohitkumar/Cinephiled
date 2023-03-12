@@ -37,7 +37,7 @@ const TVSearch = ({ searchQuery, tvRes }) => {
         cleanedItems.map((item, i) => (
           <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
             <Link
-              href={`/tv/${item.id}-${item.name.replace(/[' ']/g, '-')}`}
+              href={`/tv/${item.id}-${item.name.replace(/[' ', '/']/g, '-')}`}
               passHref
               scroll={false}
             >

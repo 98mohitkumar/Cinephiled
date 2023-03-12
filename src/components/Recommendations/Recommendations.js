@@ -32,7 +32,7 @@ const Recommendations = ({ data, type }) => {
                 <Link
                   href={`/${type}/${item.id}-${(
                     item?.title || item?.name
-                  ).replace(/[' ']/g, '-')}`}
+                  ).replace(/[' ', '/']/g, '-')}`}
                   passHref
                   scroll={false}
                 >

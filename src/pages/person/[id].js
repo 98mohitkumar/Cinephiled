@@ -17,7 +17,7 @@ const Person = ({ error, personDetails }) => {
         description={personDetails?.biography}
         url={`https://cinephiled.vercel.app/person/${
           personDetails?.id
-        }-${personDetails.name.replace(/[' ']/g, '-')}`}
+        }-${personDetails.name.replace(/[' ', '/']/g, '-')}`}
       />
 
       {error ? (

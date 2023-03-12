@@ -522,7 +522,7 @@ const TVDetails = ({
                     </Span>
                     <Link
                       href={`/person/${item.id}-${item.name.replace(
-                        /[' ']/g,
+                        /[' ', '/']/g,
                         '-'
                       )}`}
                     >
