@@ -1,6 +1,7 @@
 const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
 const baseUrl = 'https://api.themoviedb.org/3';
+export const proxy = 'https://api.codetabs.com/v1/proxy?quest=';
 
 export const apiEndpoints = {
   auth: {
@@ -38,7 +39,7 @@ export const apiEndpoints = {
       `${baseUrl}/${mediaType}/${mediaId}/rating?api_key=${api_key}&session_id=${sessionId}`,
 
     getRecommendations: ({ mediaType, accountId, pageQuery = 1 }) =>
-      `https://corsanywhere.herokuapp.com/https://api.themoviedb.org/4/account/${accountId}/${mediaType}/recommendations?api_key=${api_key}&page=${pageQuery}`
+      `https://api.themoviedb.org/4/account/${accountId}/${mediaType}/recommendations?api_key=${api_key}&page=${pageQuery}`
   },
   search: {
     movieSearchWithYear: ({ query, year }) =>
