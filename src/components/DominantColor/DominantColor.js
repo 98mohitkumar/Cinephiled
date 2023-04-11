@@ -1,3 +1,4 @@
+import { proxy } from 'globals/constants';
 import { Fragment, memo } from 'react';
 import useImageColor from 'use-image-color';
 import { Colorful } from './DominantColorStyles';
@@ -6,7 +7,7 @@ const DominantColor = ({ image }) => {
   const pallete = useImageColor(
     !image
       ? '/Images/Hex.webp'
-      : `https://corsanywhere.herokuapp.com/https://image.tmdb.org/t/p/w500${image}`,
+      : `${proxy}https://image.tmdb.org/t/p/w500${image}`,
     {
       cors: true,
       colors: 2
