@@ -1,7 +1,7 @@
 const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
 const baseUrl = 'https://api.themoviedb.org/3';
-export const proxy = 'https://api.codetabs.com/v1/proxy?quest=';
+export const proxy = 'https://corsproxy.scharde.workers.dev/?q=';
 
 export const apiEndpoints = {
   auth: {
