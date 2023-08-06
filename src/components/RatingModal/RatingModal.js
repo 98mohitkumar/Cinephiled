@@ -144,6 +144,11 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
             </Fragment>
           ) : (
             <Fragment>
+              {rating > 0 && (
+                <Span className='fw-normal'>
+                  Your rating : <strong>{rating}/10</strong>
+                </Span>
+              )}
               <div
                 className='d-flex align-items-center my-3'
                 style={{ gap: '8px' }}
@@ -178,7 +183,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
                   as={motion.button}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Close
+                  Cancel
                 </RatingButton>
                 <RatingButton
                   onClick={ratingSubmissionHandler}
