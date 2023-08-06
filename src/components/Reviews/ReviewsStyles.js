@@ -47,5 +47,5 @@ export const ReviewAuthorImg = styled.div`
   min-width: 50px;
   height: 50px;
   background: ${(props) =>
-    `Url(https://avatars.dicebear.com/api/bottts/${props.id}.svg) no-repeat center center / cover`};
+    `Url(https://api.dicebear.com/6.x/bottts/svg?seed=${props.id}) no-repeat center center / cover`};
 `;

@@ -15,11 +15,13 @@ export const Avatar = styled.div`
     background: ${({ avatar }) =>
         avatar.type === 'tmdb'
           ? `url(https://www.themoviedb.org/t/p/w100_and_h100_face${avatar.avatar})`
-          : `url(https://avatars.dicebear.com/api/identicon/${avatar.avatar}.svg)`}
+          : `url(https://api.dicebear.com/6.x/bottts/svg?seed=${avatar.avatar})`}
       center center / contain;
-    box-shadow: 0px 0px 5px 2px hsla(0, 0%, 0%, 0.14),
+    filter: drop-shadow(
+      0px 0px 5px 2px hsla(0, 0%, 0%, 0.14),
       0px 0px 22px 4px hsla(0, 0%, 0%, 0.12),
-      0px 0px 8px -4px hsla(0, 0%, 0%, 0.2);
+      0px 0px 8px -4px hsla(0, 0%, 0%, 0.2)
+    );
 
     @media only ${(props) => props.theme.breakpoints.sm} {
       width: 24px;
