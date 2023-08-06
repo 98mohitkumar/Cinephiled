@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import {
   ActiveTabIndicator,
   Selection,
@@ -36,9 +36,21 @@ const Tabs = ({ tabList, currentTab, setTab, styling, children, ...props }) => {
 
 export default Tabs;
 
-export const LinearTabs = ({ tabList, currentTab, setTab, scrollRef }) => {
+export const LinearTabs = ({ tabList, currentTab, setTab }) => {
+  const tabContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (
+      currentTab === 'recommendations' &&
+      tabContainerRef?.current &&
+      window.innerWidth < 550
+    ) {
+      tabContainerRef.current.scrollLeft = 200;
+    }
+  }, [currentTab]);
+
   return (
-    <TabContainer ref={scrollRef}>
+    <TabContainer ref={tabContainerRef}>
       <Fragment>
         {tabList.map(({ key, name }) => (
           <TabSelector

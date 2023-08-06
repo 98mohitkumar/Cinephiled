@@ -7,8 +7,7 @@ import {
   useMemo,
   useState,
   useCallback,
-  useLayoutEffect,
-  useRef
+  useLayoutEffect
 } from 'react';
 import { MediaContext } from 'Store/MediaContext';
 import { UserContext } from 'Store/UserContext';
@@ -102,20 +101,10 @@ const Profile = () => {
     setCurrentTab(tab);
   }, []);
 
-  const tabContainerRef = useRef(null);
-
   useLayoutEffect(() => {
     const tabPosition = localStorage.getItem('profileTab');
     setCurrentTab(tabPosition ?? 'watchlist');
-
-    if (
-      tabPosition === 'recommendations' &&
-      tabContainerRef?.current &&
-      window.innerWidth < 550
-    ) {
-      tabContainerRef.current.scrollLeft = 200;
-    }
-  }, [tabContainerRef.current]);
+  }, []);
 
   return (
     <Fragment>
@@ -161,7 +150,6 @@ const Profile = () => {
                 tabList={tabs}
                 currentTab={currentTab}
                 setTab={tabHandler}
-                scrollRef={tabContainerRef}
               />
             </div>
             <AnimatePresence exitBeforeEnter initial={false}>
