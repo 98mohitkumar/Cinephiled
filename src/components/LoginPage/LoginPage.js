@@ -1,20 +1,20 @@
-import { useLogin } from 'api/auth';
-import MetaWrapper from 'components/MetaWrapper';
-import { AnimatePresence, motion } from 'framer-motion';
-import posters from 'images/posters.webp';
-import { signIn } from 'next-auth/react';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { Fragment, useState, useCallback, useEffect } from 'react';
-import { AboutBackground } from 'styles/GlobalComponents';
-import logo from '../../../public/logo512.png';
+import { useLogin } from "api/auth";
+import MetaWrapper from "components/MetaWrapper";
+import { AnimatePresence, motion } from "framer-motion";
+import posters from "images/posters.webp";
+import { signIn } from "next-auth/react";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { Fragment, useState, useCallback, useEffect } from "react";
+import { AboutBackground } from "styles/GlobalComponents";
+import logo from "../../../public/logo512.png";
 import {
   Integration,
   LoginButton,
   LoginCard,
   LoginContainer,
   LoginText
-} from './LoginPageStyles';
+} from "./LoginPageStyles";
 
 const LoginPage = () => {
   const [showForm, setShowForm] = useState(false);
@@ -24,23 +24,23 @@ const LoginPage = () => {
 
   // generate session after redirect
   useEffect(() => {
+    const { query } = router;
+    const { approved, request_token } = query;
+
     const generateSession = async () => {
-      const apiRes = await signIn('tmdb', {
+      const apiRes = await signIn("tmdb", {
         redirect: false,
         requestToken: request_token
       });
 
       if (apiRes?.ok && apiRes?.status === 200) {
-        router.replace('/profile');
+        router.replace("/profile");
       } else {
         setError({ error: true, message: apiRes?.error });
       }
     };
 
-    const { query } = router;
-    const { approved, request_token } = query;
-
-    if (approved === 'true' && request_token) {
+    if (approved === "true" && request_token) {
       setIsWaiting(true);
       generateSession();
     }
@@ -54,8 +54,8 @@ const LoginPage = () => {
       const formData = new FormData(e.target);
 
       const payload = {
-        username: formData.get('username'),
-        password: formData.get('password')
+        username: formData.get("username"),
+        password: formData.get("password")
       };
 
       if (
@@ -118,12 +118,12 @@ const LoginPage = () => {
             <AnimatePresence exitBeforeEnter initial={false}>
               {!showForm && (
                 <motion.div
-                  initial={{ display: 'none', opacity: 0 }}
+                  initial={{ display: "none", opacity: 0 }}
                   animate={{
                     opacity: 1,
-                    display: 'block',
+                    display: "block",
                     transition: {
-                      type: 'tween',
+                      type: "tween",
                       delay: 0.6,
                       duration: 0.6,
                       ease: [0.77, 0, 0.175, 1]
@@ -132,12 +132,11 @@ const LoginPage = () => {
                   exit={{
                     opacity: 0,
                     transition: {
-                      type: 'tween',
+                      type: "tween",
                       duration: 0.6,
                       ease: [0.77, 0, 0.175, 1]
                     }
-                  }}
-                >
+                  }}>
                   <LoginText className='d-block mb-4'>
                     In order to use the rating capabilities of Cinephiled, as
                     well as using watchlist feature you will need to login with
@@ -152,9 +151,8 @@ const LoginPage = () => {
                     <LoginButton
                       onClick={() => login({ withCredentials: false })}
                       className='secondary'
-                      isWaiting={isWaiting}
-                    >
-                      {isWaiting ? 'Authenticating...' : 'Login with TMDB'}
+                      isWaiting={isWaiting}>
+                      {isWaiting ? "Authenticating..." : "Login with TMDB"}
                     </LoginButton>
 
                     {error && (
@@ -168,12 +166,12 @@ const LoginPage = () => {
             <AnimatePresence exitBeforeEnter>
               {showForm && (
                 <motion.div
-                  initial={{ display: 'none', opacity: 0 }}
+                  initial={{ display: "none", opacity: 0 }}
                   animate={{
                     opacity: 1,
-                    display: 'block',
+                    display: "block",
                     transition: {
-                      type: 'tween',
+                      type: "tween",
                       delay: 0.6,
                       duration: 0.6,
                       ease: [0.77, 0, 0.175, 1]
@@ -182,13 +180,12 @@ const LoginPage = () => {
                   exit={{
                     opacity: 0,
                     transition: {
-                      type: 'tween',
+                      type: "tween",
                       duration: 0.6,
                       ease: [0.77, 0, 0.175, 1]
                     }
                   }}
-                  className='w-100'
-                >
+                  className='w-100'>
                   <form onSubmit={formHandler}>
                     <div className='mb-3'>
                       <input
@@ -197,7 +194,10 @@ const LoginPage = () => {
                         name='username'
                         id='username'
                         placeholder='Username'
-                        onChange={clearError}
+                        onChange={() => {
+                          clearError();
+                          setIsWaiting(false);
+                        }}
                         required
                       />
                     </div>
@@ -209,7 +209,10 @@ const LoginPage = () => {
                         className='form-control loginInputs'
                         id='password'
                         placeholder='Password'
-                        onChange={clearError}
+                        onChange={() => {
+                          clearError();
+                          setIsWaiting(false);
+                        }}
                         required
                       />
                     </div>
@@ -221,9 +224,8 @@ const LoginPage = () => {
                     <LoginButton
                       type='submit'
                       className='login-with-cred-Button mb-2'
-                      isWaiting={isWaiting}
-                    >
-                      {isWaiting ? 'Authenticating...' : 'Login'}
+                      isWaiting={isWaiting && !error}>
+                      {isWaiting && !error ? "Authenticating..." : "Login"}
                     </LoginButton>
 
                     <LoginButton
@@ -231,8 +233,7 @@ const LoginPage = () => {
                         e.preventDefault();
                         setShowForm(false);
                       }}
-                      className='login-with-cred-Button secondary'
-                    >
+                      className='login-with-cred-Button secondary'>
                       Go Back
                     </LoginButton>
 
@@ -241,8 +242,7 @@ const LoginPage = () => {
                         href='https://www.themoviedb.org/signup'
                         target='_blank'
                         rel='noreferrer'
-                        className='signup'
-                      >
+                        className='signup'>
                         Don&apos;t have a TMDB account?
                       </a>
                     </p>

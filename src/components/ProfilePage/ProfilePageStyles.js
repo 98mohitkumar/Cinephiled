@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Banner = styled.div`
   width: 100%;
@@ -16,7 +16,7 @@ export const Banner = styled.div`
     inset: 0;
     margin: auto;
     z-index: 5;
-    background: url('/Images/profileBG.jpg') no-repeat center 75% / cover;
+    background: url("/Images/profileBG.jpg") no-repeat center 75% / cover;
     filter: brightness(60%);
   }
 
@@ -26,7 +26,7 @@ export const Banner = styled.div`
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     height: 102%;
@@ -61,7 +61,7 @@ export const ProfileAvatar = styled.div`
   height: 80px;
   border-radius: 50%;
   background: ${({ avatar }) =>
-      avatar.type === 'tmdb'
+      avatar.type === "tmdb"
         ? `url(https://www.themoviedb.org/t/p/w100_and_h100_face${avatar.avatar})`
         : `url(https://api.dicebear.com/6.x/bottts/svg?seed=${avatar.avatar})`}
     center center / contain;
@@ -125,6 +125,7 @@ export const ConfirmationModal = styled.div`
   z-index: 1000;
   display: grid;
   place-items: center;
+  backdrop-filter: blur(2px);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     place-items: flex-end center;
