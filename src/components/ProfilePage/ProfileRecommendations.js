@@ -1,7 +1,7 @@
 import { CardsContainerGrid } from "components/Popular/PopularStyles";
 import { motion, AnimatePresence } from "framer-motion";
-import useInfiniteQuery from "hooks/useInfiniteQuery";
 import removeDuplicates from "hooks/removeDuplicates";
+import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { useState, useMemo, Fragment, useContext } from "react";
 import { MediaContext } from "Store/MediaContext";
 import { NoDataText } from "styles/GlobalComponents";

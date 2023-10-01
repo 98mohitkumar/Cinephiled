@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 const useIntersection = (
   ref,
   rootMargin,
-  options = { root: null, rootMargin: rootMargin ?? '0px', threshold: 1.0 }
+  options = { root: null, rootMargin: rootMargin ?? "0px", threshold: 1.0 }
 ) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -13,15 +13,16 @@ const useIntersection = (
   }, []);
 
   useEffect(() => {
+    const refNode = ref.current;
     const observer = new IntersectionObserver(callbackFunc, options);
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (refNode) {
+      observer.observe(refNode);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (refNode) {
+        observer.unobserve(refNode);
       }
     };
   }, [callbackFunc, options, ref]);
