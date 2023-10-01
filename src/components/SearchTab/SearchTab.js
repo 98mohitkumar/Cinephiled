@@ -1,30 +1,43 @@
-import { Span } from 'components/MovieInfo/MovieDetailsStyles';
-import Tabs from 'components/Tabs/Tabs';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Fragment, useCallback, useState, useEffect, useMemo } from 'react';
-import KeywordSearch from './KeywordSearch';
-import MoviesSearch from './MoviesSearch';
-import { tabStyling, tabTitleStyling } from './SearchTabStyles';
-import TVSearch from './TVSearch';
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import Tabs from "components/Tabs/Tabs";
+import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/router";
+import { Fragment, useCallback, useState, useEffect, useMemo } from "react";
+import KeywordSearch from "./KeywordSearch";
+import MoviesSearch from "./MoviesSearch";
+import { tabStyling, tabTitleStyling } from "./SearchTabStyles";
+import TVSearch from "./TVSearch";
 
 const SearchTab = ({ movies, tv, search, keywords }) => {
-  const [tabState, setTabState] = useState('');
+  const [tabState, setTabState] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
-    let savedTabState = localStorage.getItem('SearchTabPosition');
-    setTabState(savedTabState ?? 'movies');
+    let savedTabState = localStorage.getItem("SearchTabPosition");
+    setTabState(savedTabState ?? "movies");
   }, []);
 
-  const tabSelectionHandler = useCallback((tab) => {
-    localStorage.setItem('SearchTabPosition', tab);
-    setTabState(tab);
-  }, []);
+  const tabSelectionHandler = useCallback(
+    (tab) => {
+      localStorage.setItem("SearchTabPosition", tab);
+      setTabState(tab);
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: { query: router.query.query }
+        },
+        undefined,
+        { shallow: true }
+      );
+    },
+    [router]
+  );
 
   const tabList = useMemo(
     () => [
-      { key: 'movies', name: `Movies (${movies.count})` },
-      { key: 'tv', name: `TV (${tv.count})` },
-      { key: 'keywords', name: `Keywords (${keywords.count})` }
+      { key: "movies", name: `Movies (${movies.count})` },
+      { key: "tv", name: `TV (${tv.count})` },
+      { key: "keywords", name: `Keywords (${keywords.count})` }
     ],
     [keywords.count, movies.count, tv.count]
   );
@@ -39,14 +52,13 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
       />
 
       <AnimatePresence exitBeforeEnter>
-        {tabState === 'movies' && (
+        {tabState === "movies" && (
           <motion.div
             key='movies'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+            transition={{ duration: 0.5 }}>
             {movies.length !== 0 && (
               <Span className='d-block fs-2 text-center'>
                 Movies matching : {search}
@@ -60,14 +72,13 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
           </motion.div>
         )}
 
-        {tabState === 'tv' && (
+        {tabState === "tv" && (
           <motion.div
             key='tv'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+            transition={{ duration: 0.5 }}>
             {tv.length !== 0 && (
               <Span className='d-block fs-2 text-center'>
                 TV shows matching : {search}
@@ -81,14 +92,13 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
           </motion.div>
         )}
 
-        {tabState === 'keywords' && (
+        {tabState === "keywords" && (
           <motion.div
             key='keywords'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+            transition={{ duration: 0.5 }}>
             {keywords.length !== 0 && (
               <Span className='d-block fs-2 text-center'>
                 Keywords matching : {search}

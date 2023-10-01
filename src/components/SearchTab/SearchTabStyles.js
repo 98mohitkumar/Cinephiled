@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const tabStyling = css`
   width: clamp(350px, 90vw, 850px);
@@ -109,7 +109,7 @@ export const QueryInfoWrapper = styled.div`
 export const QueryReleaseDate = styled.p`
   color: #818181;
   font-size: 1rem;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-weight: 500;
   margin-bottom: 0rem;
 
@@ -132,5 +132,19 @@ export const QueryDescription = styled.p`
     margin-top: 10px;
     padding: 0.1rem 0rem;
     line-height: 1.2;
+  }
+`;
+
+export const SortPill = styled.span`
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  background: #404040;
+  color: white;
+  font-size: clamp(12px, 2.2vw, 14px);
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+
+  &:hover {
+    background: #303030;
   }
 `;
