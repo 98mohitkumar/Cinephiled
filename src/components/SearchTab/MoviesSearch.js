@@ -4,7 +4,6 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
 import { SortBy, getReleaseDate } from "./helper";
 import {
   SearchResultsContainer,
@@ -27,15 +26,7 @@ const MoviesSearch = ({ searchQuery, movieRes }) => {
   const { query } = useRouter();
   const { sortBy, order } = query;
 
-  const extendedList = useMemo(
-    () => movieRes.results.concat(list),
-    [list, movieRes]
-  );
-
-  const { cleanedItems } = useMemo(
-    () => removeDuplicates(extendedList),
-    [extendedList]
-  );
+  const { cleanedItems } = removeDuplicates(movieRes.results.concat(list));
 
   const getRenderList = (list) => {
     if (sortBy === "name") {
