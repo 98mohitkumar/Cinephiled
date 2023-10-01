@@ -1,13 +1,13 @@
-import { Span } from 'components/MovieInfo/MovieDetailsStyles';
-import ReactMarkdown from 'react-markdown';
-import { NoDataText } from 'styles/GlobalComponents';
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import ReactMarkdown from "react-markdown";
+import { NoDataText } from "styles/GlobalComponents";
 import {
   Review,
   ReviewAuthorImg,
   ReviewAuthorWrap,
   ReviewsContainer,
   ReviewsWrap
-} from './ReviewsStyles';
+} from "./ReviewsStyles";
 
 const Reviews = ({ reviews }) => {
   return (
@@ -21,7 +21,16 @@ const Reviews = ({ reviews }) => {
           <ReviewsWrap key={item.id}>
             <ReviewAuthorWrap>
               <ReviewAuthorImg id={item.id} />
-              <Span>{item.author}</Span>
+              <div>
+                <Span>{item.author}</Span>
+                <Span className='d-block episode-count fw-normal'>
+                  {new Date(item.created_at).toLocaleString("en-US", {
+                    month: "long"
+                  })}{" "}
+                  {new Date(item.updated_at).getDate()},{" "}
+                  {new Date(item.updated_at).getFullYear()}
+                </Span>
+              </div>
             </ReviewAuthorWrap>
 
             <Review>
