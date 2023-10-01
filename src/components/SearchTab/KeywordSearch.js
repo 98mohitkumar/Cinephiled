@@ -1,17 +1,17 @@
-import useInfiniteQuery from 'hooks/useInfiniteQuery';
-import useRemoveDuplicates from 'hooks/useRemoveDuplicates';
-import Link from 'next/link';
-import { Fragment, useMemo } from 'react';
+import removeDuplicates from "hooks/removeDuplicates";
+import useInfiniteQuery from "hooks/useInfiniteQuery";
+import Link from "next/link";
+import { Fragment, useMemo } from "react";
 import {
   EmptySearch,
   SearchResultsContainer,
   Keyword
-} from './SearchTabStyles';
+} from "./SearchTabStyles";
 
 const KeywordSearch = ({ searchQuery, keywords }) => {
   const { list } = useInfiniteQuery({
     initialPage: 2,
-    type: 'keywordSearch',
+    type: "keywordSearch",
     searchQuery
   });
 
@@ -20,7 +20,7 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
     [list, keywords]
   );
 
-  const { cleanedItems } = useRemoveDuplicates(extendedList);
+  const { cleanedItems } = removeDuplicates(extendedList);
 
   return (
     <Fragment>
@@ -35,11 +35,10 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
               key={item.id}
               href={`/keywords/${item.id}-${item.name.replace(
                 /[' ', '/']/g,
-                '-'
+                "-"
               )}`}
               passHref
-              scroll={false}
-            >
+              scroll={false}>
               <a>
                 <Keyword>{item.name}</Keyword>
               </a>

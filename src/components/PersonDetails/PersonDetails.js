@@ -2,44 +2,44 @@ import {
   HeroInfoTitle,
   HeroInfoWrapper,
   Span
-} from 'components/MovieInfo/MovieDetailsStyles';
+} from "components/MovieInfo/MovieDetailsStyles";
 import {
   RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
   RecommendedWrapper,
   InfoTitle
-} from 'components/Recommendations/RecommendationsStyles';
-import { motion } from 'framer-motion';
-import useRemoveDuplicates from 'hooks/useRemoveDuplicates';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Fragment, useMemo } from 'react';
+} from "components/Recommendations/RecommendationsStyles";
+import { motion } from "framer-motion";
+import removeDuplicates from "hooks/removeDuplicates";
+import Image from "next/image";
+import Link from "next/link";
+import { Fragment, useMemo } from "react";
 import {
   DetailsHeroWrap,
   HeroDetailsContainer,
   HeroImg,
   HeroImgWrapper
-} from 'styles/GlobalComponents';
-import { Bio, Details } from './PersonDetails.styles';
+} from "styles/GlobalComponents";
+import { Bio, Details } from "./PersonDetails.styles";
 
 const PersonDetails = ({ details }) => {
   const getGender = (g) => {
     switch (g) {
       case 0:
-        return '-';
+        return "-";
       case 1:
-        return 'Female';
+        return "Female";
       case 2:
-        return 'Male';
+        return "Male";
       case 3:
-        return 'Non Binary';
+        return "Non Binary";
     }
   };
 
   const works = useMemo(
     () =>
-      details.known_for_department === 'Acting'
+      details.known_for_department === "Acting"
         ? details.combined_credits.cast
         : details.combined_credits.crew,
     [
@@ -52,7 +52,7 @@ const PersonDetails = ({ details }) => {
   works.sort((a, z) => z.vote_count - a.vote_count); // sort works array
   works.length > 100 && works.splice(100); // splice if bigger than 100 for filtering
 
-  const { cleanedItems: cleaned } = useRemoveDuplicates(works);
+  const { cleanedItems: cleaned } = removeDuplicates(works);
 
   const getAge = (b, alive) => {
     if (alive) {
@@ -73,16 +73,16 @@ const PersonDetails = ({ details }) => {
   };
 
   return (
-    <div style={{ marginBottom: 'auto' }}>
+    <div style={{ marginBottom: "auto" }}>
       <HeroDetailsContainer className='position-relative mb-auto person-details'>
-        <DetailsHeroWrap style={{ minHeight: 'auto' }} className='pb-0'>
+        <DetailsHeroWrap style={{ minHeight: "auto" }} className='pb-0'>
           <HeroImgWrapper>
             <HeroImg className='no-shadow position-relative text-center'>
               <Image
                 src={
                   details.profile_path
                     ? `https://image.tmdb.org/t/p/w500${details.profile_path}`
-                    : '/Images/DefaultImage.png'
+                    : "/Images/DefaultImage.png"
                 }
                 alt='cast-image'
                 layout='fill'
@@ -95,8 +95,7 @@ const PersonDetails = ({ details }) => {
 
           <HeroInfoWrapper
             className='w-100 me-auto'
-            style={{ maxWidth: '700px' }}
-          >
+            style={{ maxWidth: "700px" }}>
             <HeroInfoTitle>{details.name}</HeroInfoTitle>
 
             <Details className='py-4'>
@@ -174,7 +173,7 @@ const PersonDetails = ({ details }) => {
 
           <RecommendationsGrid>
             {cleaned.map((item, i) =>
-              item.media_type === 'movie'
+              item.media_type === "movie"
                 ? !item?.duplicate && (
                     <RecommendedWrapper key={i}>
                       <motion.div
@@ -182,23 +181,21 @@ const PersonDetails = ({ details }) => {
                           scale: 1.05,
                           transition: { duration: 0.1 }
                         }}
-                        whileTap={{ scale: 0.95 }}
-                      >
+                        whileTap={{ scale: 0.95 }}>
                         <Link
                           href={`/movies/${item.id}-${item.title.replace(
                             /[' ', '/']/g,
-                            '-'
+                            "-"
                           )}`}
                           passHref
-                          scroll={false}
-                        >
+                          scroll={false}>
                           <a>
                             <RecommendedImg className='position-relative text-center'>
                               <Image
                                 src={
                                   item.backdrop_path
                                     ? `https://image.tmdb.org/t/p/w500${item.backdrop_path}`
-                                    : '/Images/DefaultBackdrop.png'
+                                    : "/Images/DefaultBackdrop.png"
                                 }
                                 alt='movie-backdrop'
                                 layout='fill'
@@ -222,23 +219,21 @@ const PersonDetails = ({ details }) => {
                           scale: 1.05,
                           transition: { duration: 0.1 }
                         }}
-                        whileTap={{ scale: 0.95 }}
-                      >
+                        whileTap={{ scale: 0.95 }}>
                         <Link
                           href={`/tv/${item.id}-${item.name.replace(
                             /[' ', '/']/g,
-                            '-'
+                            "-"
                           )}`}
                           passHref
-                          scroll={false}
-                        >
+                          scroll={false}>
                           <a>
                             <RecommendedImg className='position-relative text-center'>
                               <Image
                                 src={
                                   item.backdrop_path
                                     ? `https://image.tmdb.org/t/p/w500${item.backdrop_path}`
-                                    : '/Images/DefaultBackdrop.png'
+                                    : "/Images/DefaultBackdrop.png"
                                 }
                                 alt='TV-backdrop'
                                 layout='fill'

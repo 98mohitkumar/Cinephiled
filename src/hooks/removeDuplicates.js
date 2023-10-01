@@ -1,4 +1,4 @@
-const useRemoveDuplicates = (items) => {
+const removeDuplicates = (items) => {
   let filtered = [];
 
   const cleanedItems = items
@@ -15,4 +15,4 @@ const useRemoveDuplicates = (items) => {
   return { cleanedItems };
 };
 
-export default useRemoveDuplicates;
+export default removeDuplicates;
