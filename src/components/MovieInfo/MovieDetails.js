@@ -2,16 +2,16 @@ import {
   revalidationWrapper,
   useAddToWatchlist,
   useSetFavorite
-} from 'api/user';
-import DominantColor from 'components/DominantColor/DominantColor';
-import { RatingOverlay } from 'components/ProfilePage/ProfilePageStyles';
-import RatingModal, { useModal } from 'components/RatingModal/RatingModal';
-import SocialMediaLinks from 'components/SocialMediaLinks/SocialMediaLinks';
-import Toast, { useToast } from 'components/Toast/Toast';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import Link from 'next/link';
+} from "api/user";
+import DominantColor from "components/DominantColor/DominantColor";
+import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
+import RatingModal, { useModal } from "components/RatingModal/RatingModal";
+import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
+import Toast, { useToast } from "components/Toast/Toast";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   Fragment,
   useCallback,
@@ -19,12 +19,12 @@ import {
   useEffect,
   useMemo,
   useState
-} from 'react';
-import { AiFillStar } from 'react-icons/ai';
-import { BiListPlus, BiListCheck } from 'react-icons/bi';
-import { BsStarHalf } from 'react-icons/bs';
-import { FaYoutube, FaHeart, FaRegHeart } from 'react-icons/fa';
-import { MediaContext } from 'Store/MediaContext';
+} from "react";
+import { AiFillStar } from "react-icons/ai";
+import { BiListPlus, BiListCheck } from "react-icons/bi";
+import { BsStarHalf } from "react-icons/bs";
+import { FaYoutube, FaHeart, FaRegHeart } from "react-icons/fa";
+import { MediaContext } from "Store/MediaContext";
 import {
   DetailsHeroWrap,
   HeroBg,
@@ -32,7 +32,7 @@ import {
   HeroDetailsContainer,
   HeroImg,
   HeroImgWrapper
-} from 'styles/GlobalComponents';
+} from "styles/GlobalComponents";
 import {
   Divider,
   Rounded,
@@ -53,7 +53,7 @@ import {
   Gradient,
   MovieEaster,
   FeatureButton
-} from './MovieDetailsStyles';
+} from "./MovieDetailsStyles";
 
 const MovieDetails = ({
   movieDetails: {
@@ -125,9 +125,9 @@ const MovieDetails = ({
   }, [id, moviesWatchlist]);
 
   const releaseDateFormatted = !releaseDate
-    ? 'TBA'
+    ? "TBA"
     : new Date(releaseDate.toString()).toDateString().slice(4, -5) +
-      ', ' +
+      ", " +
       year;
 
   const runtimeFormatted = useMemo(() => {
@@ -139,9 +139,9 @@ const MovieDetails = ({
   genres.length > 3 && genres.splice(3);
 
   const favoriteHandler = useCallback(async () => {
-    if (status === 'authenticated') {
+    if (status === "authenticated") {
       const response = await setFavorite({
-        mediaType: 'movie',
+        mediaType: "movie",
         mediaId: id,
         favoriteState: !isFavorite
       });
@@ -149,14 +149,14 @@ const MovieDetails = ({
       if (response?.success) {
         setIsFavorite((prev) => !prev);
         setToastMessage(
-          isFavorite ? 'Removed from favorites' : 'Added to favorites'
+          isFavorite ? "Removed from favorites" : "Added to favorites"
         );
         showToast();
         removeToast();
-        revalidationWrapper(() => revalidateFavorites('favoriteMovies'));
+        revalidationWrapper(() => revalidateFavorites("favoriteMovies"));
       }
     } else if (!isToastVisible) {
-      setToastMessage('Login first to use this feature');
+      setToastMessage("Login first to use this feature");
       showToast();
       removeToast();
     }
@@ -173,9 +173,9 @@ const MovieDetails = ({
   ]);
 
   const watchlistHandler = useCallback(async () => {
-    if (status === 'authenticated') {
+    if (status === "authenticated") {
       const response = await addToWatchlist({
-        mediaType: 'movie',
+        mediaType: "movie",
         mediaId: id,
         watchlistState: !addedToWatchlist
       });
@@ -183,14 +183,14 @@ const MovieDetails = ({
       if (response?.success) {
         setAddedToWatchlist((prev) => !prev);
         setToastMessage(
-          addedToWatchlist ? 'Removed from watchlist' : 'Added to watchlist'
+          addedToWatchlist ? "Removed from watchlist" : "Added to watchlist"
         );
         showToast();
         removeToast();
-        revalidationWrapper(() => revalidateWatchlist('moviesWatchlist'));
+        revalidationWrapper(() => revalidateWatchlist("moviesWatchlist"));
       }
     } else if (!isToastVisible) {
-      setToastMessage('Login first to use this feature');
+      setToastMessage("Login first to use this feature");
       showToast();
       removeToast();
     }
@@ -207,10 +207,10 @@ const MovieDetails = ({
   ]);
 
   const ratingModalHandler = useCallback(() => {
-    if (status === 'authenticated') {
+    if (status === "authenticated") {
       openModal();
     } else {
-      setToastMessage('Login first to use this feature');
+      setToastMessage("Login first to use this feature");
       showToast();
       removeToast();
     }
@@ -260,7 +260,7 @@ const MovieDetails = ({
               src={
                 backdropPath
                   ? `https://image.tmdb.org/t/p/w1280${backdropPath}`
-                  : '/Images/Hex.webp'
+                  : "/Images/Hex.webp"
               }
               alt='movie-backdrop'
               layout='fill'
@@ -280,7 +280,7 @@ const MovieDetails = ({
                 src={
                   moviePoster
                     ? `https://image.tmdb.org/t/p/w500${moviePoster}`
-                    : '/Images/DefaultImage.png'
+                    : "/Images/DefaultImage.png"
                 }
                 alt='movie-poster'
                 layout='fill'
@@ -297,9 +297,8 @@ const MovieDetails = ({
                   href={`https://www.youtube.com/watch?v=${trailerLink}`}
                   target='_blank'
                   rel='noreferrer'
-                  aria-label='trailer'
-                  className='mb-3 d-block'
-                >
+                  aria-label='play trailer on youtube'
+                  className='mb-3 d-block'>
                   <FeatureButton role='button'>
                     <FaYoutube size='1.5rem' />
                     <Span>Play Trailer</Span>
@@ -310,15 +309,14 @@ const MovieDetails = ({
               <AnimatePresence exitBeforeEnter initial={false}>
                 <div
                   className='d-flex justify-content-start'
-                  style={{ gap: '1rem' }}
-                >
+                  style={{ gap: "1rem" }}>
                   <FeatureButton
                     className='watchlist'
                     role='button'
+                    aria-label='watchlist button'
                     as={motion.div}
                     whileTap={{ scale: 0.95 }}
-                    onClick={watchlistHandler}
-                  >
+                    onClick={watchlistHandler}>
                     {addedToWatchlist ? (
                       <motion.div
                         key='watchlist'
@@ -335,8 +333,7 @@ const MovieDetails = ({
                           transition: {
                             duration: 2
                           }
-                        }}
-                      >
+                        }}>
                         <BiListCheck size='22px' />
                       </motion.div>
                     ) : (
@@ -356,8 +353,7 @@ const MovieDetails = ({
                             duration: 0.5
                           }
                         }}
-                        className='watchlist-inner'
-                      >
+                        className='watchlist-inner'>
                         <BiListPlus size='22px' />
                       </motion.div>
                     )}
@@ -366,10 +362,10 @@ const MovieDetails = ({
                   <FeatureButton
                     className='fav'
                     role='button'
+                    aria-label='favorite button'
                     onClick={favoriteHandler}
                     as={motion.div}
-                    whileTap={{ scale: 0.95 }}
-                  >
+                    whileTap={{ scale: 0.95 }}>
                     <Fragment>
                       {isFavorite ? (
                         <motion.div
@@ -388,8 +384,7 @@ const MovieDetails = ({
                             transition: {
                               duration: 0.5
                             }
-                          }}
-                        >
+                          }}>
                           <FaHeart size='20px' />
                         </motion.div>
                       ) : (
@@ -409,8 +404,7 @@ const MovieDetails = ({
                             transition: {
                               duration: 0.5
                             }
-                          }}
-                        >
+                          }}>
                           <FaRegHeart size='20px' />
                         </motion.div>
                       )}
@@ -420,10 +414,10 @@ const MovieDetails = ({
                   <FeatureButton
                     className='fav'
                     role='button'
+                    aria-label='rating button'
                     as={motion.div}
                     whileTap={{ scale: 0.95 }}
-                    onClick={ratingModalHandler}
-                  >
+                    onClick={ratingModalHandler}>
                     <Fragment>
                       {savedRating ? (
                         <motion.div
@@ -442,8 +436,7 @@ const MovieDetails = ({
                             transition: {
                               duration: 0.5
                             }
-                          }}
-                        >
+                          }}>
                           <RatingOverlay className='media-page'>
                             <AiFillStar size='16px' />
                             <p className='m-0 fw-semibold text'>
@@ -468,8 +461,7 @@ const MovieDetails = ({
                             transition: {
                               duration: 0.5
                             }
-                          }}
-                        >
+                          }}>
                           <BsStarHalf size='20px' />
                         </motion.div>
                       )}
@@ -501,13 +493,12 @@ const MovieDetails = ({
                     <Link
                       key={item.id}
                       href={`/genre/${
-                        item.id.toString() + '-' + item.name
+                        item.id.toString() + "-" + item.name
                       }/movies`}
                       passHref
-                      scroll={false}
-                    >
+                      scroll={false}>
                       <a>
-                        <Rounded className={genres.length == i + 1 && 'sep'}>
+                        <Rounded className={genres.length == i + 1 && "sep"}>
                           {item.name}
                         </Rounded>
                       </a>
@@ -521,19 +512,19 @@ const MovieDetails = ({
               ) : (
                 <Span>
                   {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
-                    ? '60m'
-                    : runtimeFormatted.getH > 0 && runtimeFormatted.getH + 'h '}
-                  {runtimeFormatted.getM > 0 && runtimeFormatted.getM + 'm'}
+                    ? "60m"
+                    : runtimeFormatted.getH > 0 && runtimeFormatted.getH + "h "}
+                  {runtimeFormatted.getM > 0 && runtimeFormatted.getM + "m"}
                 </Span>
               )}
             </RtoR>
-            {tagline !== '' && (
+            {tagline !== "" && (
               <i>
                 <Tagline className='my-4 d-block'>{tagline}</Tagline>
               </i>
             )}
             <Overview className='fw-normal'>
-              {!overview ? '-' : overview}
+              {!overview ? "-" : overview}
             </Overview>
             <RatingWrapper>
               {rating !== 0 ? (
@@ -555,9 +546,8 @@ const MovieDetails = ({
                     <Link
                       href={`/person/${item.id}-${item.name.replace(
                         /[' ', '/']/g,
-                        '-'
-                      )}`}
-                    >
+                        "-"
+                      )}`}>
                       <a>
                         <Span className='d-block fw-bold credit'>
                           {item.name}

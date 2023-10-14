@@ -29,6 +29,7 @@ export const DownloadMediaButton = ({ item }) => {
   return (
     <MediaDownloadButton
       role='button'
+      aria-label='download media'
       href={`https://image.tmdb.org/t/p/original${item}`}
       onClick={(e) => download(e, item)}>
       <AiOutlineDownload color='#414141' />

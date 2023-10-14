@@ -1,10 +1,10 @@
-import Hero from 'components/Hero/Hero';
-import UserAvatar from 'components/UserAvatar/UserAvatar';
-import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useRef, useCallback, useState } from 'react';
-import { BsSearch } from 'react-icons/bs';
+import Hero from "components/Hero/Hero";
+import UserAvatar from "components/UserAvatar/UserAvatar";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useRef, useCallback, useState } from "react";
+import { BsSearch } from "react-icons/bs";
 import {
   HamburgerIcon,
   HamburgerMenu,
@@ -15,11 +15,11 @@ import {
   NavLinks,
   Search,
   SearchModal
-} from './NavigationStyles';
+} from "./NavigationStyles";
 
 const navLinks = [
-  { text: 'Home', link: '/' },
-  { text: 'About', link: '/about' }
+  { text: "Home", link: "/" },
+  { text: "About", link: "/about" }
 ];
 
 const Navigation = () => {
@@ -32,44 +32,44 @@ const Navigation = () => {
   useEffect(() => {
     const navHandler = () => {
       if (window.scrollY > 100 && window.scrollY > lastScroll.current) {
-        navRef.current.classList.add('hide-nav');
-        navRef.current.classList.remove('show-nav');
+        navRef.current.classList.add("hide-nav");
+        navRef.current.classList.remove("show-nav");
       } else {
-        navRef.current.classList.remove('hide-nav');
-        navRef.current.classList.add('show-nav');
+        navRef.current.classList.remove("hide-nav");
+        navRef.current.classList.add("show-nav");
       }
 
       lastScroll.current = window.scrollY;
     };
 
-    window.addEventListener('scroll', navHandler);
-    return () => window.removeEventListener('scroll', navHandler);
+    window.addEventListener("scroll", navHandler);
+    return () => window.removeEventListener("scroll", navHandler);
   }, []);
 
   const hamburgerHandler = useCallback(() => {
     setShowSearchModal(false);
-    document.body.style.overflow = showHamburgerMenu ? 'auto' : 'hidden';
+    document.body.style.overflow = showHamburgerMenu ? "auto" : "hidden";
     setShowHamburgerMenu((prev) => !prev);
   }, [showHamburgerMenu]);
 
   const searchHandler = useCallback(() => {
-    if (router.asPath === '/') {
-      document.body.style.overflow = 'auto';
+    if (router.asPath === "/") {
+      document.body.style.overflow = "auto";
     } else {
       setShowSearchModal(true);
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     }
 
     setTimeout(() => {
       setShowHamburgerMenu(false);
-      document.querySelector('.heroSearchInput').focus();
+      document.querySelector(".heroSearchInput").focus();
     }, 100);
   }, [router.asPath]);
 
   const closeSearchModalHandler = useCallback((e) => {
-    if (!e.target.classList.contains('form-control')) {
+    if (!e.target.classList.contains("form-control")) {
       setShowSearchModal(false);
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
   }, []);
 
@@ -77,7 +77,7 @@ const Navigation = () => {
     <Header ref={navRef}>
       <NavBar>
         <Link href='/'>
-          <a>
+          <a aria-label='cinephiled logo'>
             <div className='py-3'>
               <Logo />
             </div>
@@ -87,7 +87,7 @@ const Navigation = () => {
         <NavLinks>
           {navLinks.map(({ text, link }) => (
             <Link href={link} key={text}>
-              <a className={`link ${router.asPath === link ? 'active' : ''}`}>
+              <a className={`link ${router.asPath === link ? "active" : ""}`}>
                 {text}
               </a>
             </Link>
@@ -104,8 +104,7 @@ const Navigation = () => {
           <Search
             className='search-sm'
             onClick={searchHandler}
-            key='search-icon'
-          >
+            key='search-icon'>
             <BsSearch size='24px' />
           </Search>
 
@@ -124,33 +123,31 @@ const Navigation = () => {
         {showHamburgerMenu && (
           <HamburgerMenu
             as={motion.div}
-            initial={{ translateY: '-100vh' }}
+            initial={{ translateY: "-100vh" }}
             animate={{
               translateY: 0,
               transition: {
-                type: 'tween',
+                type: "tween",
                 duration: 0.8,
                 ease: [0.77, 0, 0.175, 1]
               }
             }}
             exit={{
-              translateY: '-100vh',
+              translateY: "-100vh",
               transition: {
-                type: 'tween',
+                type: "tween",
                 duration: 1,
                 ease: [0.77, 0, 0.175, 1]
               }
-            }}
-          >
+            }}>
             <div className='menu-wrapper'>
               {navLinks.map(({ text, link }) => (
                 <Link href={link} key={text}>
                   <a
                     className={`navlink ${
-                      router.asPath === link ? 'active' : ''
+                      router.asPath === link ? "active" : ""
                     }`}
-                    onClick={hamburgerHandler}
-                  >
+                    onClick={hamburgerHandler}>
                     {text}
                   </a>
                 </Link>
@@ -171,8 +168,7 @@ const Navigation = () => {
             }}
             exit={{ opacity: 0, zIndex: 500 }}
             transition={{ duration: 0.5 }}
-            onClick={closeSearchModalHandler}
-          >
+            onClick={closeSearchModalHandler}>
             <Hero searchModal />
           </SearchModal>
         )}

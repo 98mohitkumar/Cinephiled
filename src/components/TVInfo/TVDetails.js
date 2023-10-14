@@ -2,8 +2,8 @@ import {
   revalidationWrapper,
   useAddToWatchlist,
   useSetFavorite
-} from 'api/user';
-import DominantColor from 'components/DominantColor/DominantColor';
+} from "api/user";
+import DominantColor from "components/DominantColor/DominantColor";
 import {
   Credits,
   CreditsWrapper,
@@ -19,15 +19,15 @@ import {
   RtoR,
   Span,
   Tagline
-} from 'components/MovieInfo/MovieDetailsStyles';
-import { RatingOverlay } from 'components/ProfilePage/ProfilePageStyles';
-import RatingModal, { useModal } from 'components/RatingModal/RatingModal';
-import SocialMediaLinks from 'components/SocialMediaLinks/SocialMediaLinks';
-import Toast, { useToast } from 'components/Toast/Toast';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import Link from 'next/link';
+} from "components/MovieInfo/MovieDetailsStyles";
+import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
+import RatingModal, { useModal } from "components/RatingModal/RatingModal";
+import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
+import Toast, { useToast } from "components/Toast/Toast";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   Fragment,
   useCallback,
@@ -35,12 +35,12 @@ import {
   useEffect,
   useMemo,
   useState
-} from 'react';
-import { AiFillStar } from 'react-icons/ai';
-import { BiListPlus, BiListCheck } from 'react-icons/bi';
-import { BsStarHalf } from 'react-icons/bs';
-import { FaYoutube, FaHeart, FaRegHeart } from 'react-icons/fa';
-import { MediaContext } from 'Store/MediaContext';
+} from "react";
+import { AiFillStar } from "react-icons/ai";
+import { BiListPlus, BiListCheck } from "react-icons/bi";
+import { BsStarHalf } from "react-icons/bs";
+import { FaYoutube, FaHeart, FaRegHeart } from "react-icons/fa";
+import { MediaContext } from "Store/MediaContext";
 import {
   DetailsHeroWrap,
   HeroBg,
@@ -48,7 +48,7 @@ import {
   HeroDetailsContainer,
   HeroImg,
   HeroImgWrapper
-} from 'styles/GlobalComponents';
+} from "styles/GlobalComponents";
 
 const TVDetails = ({
   tvData: {
@@ -125,9 +125,9 @@ const TVDetails = ({
   }, [runtime]);
 
   const favoriteHandler = useCallback(async () => {
-    if (status === 'authenticated') {
+    if (status === "authenticated") {
       const response = await setFavorite({
-        mediaType: 'tv',
+        mediaType: "tv",
         mediaId: id,
         favoriteState: !isFavorite
       });
@@ -135,14 +135,14 @@ const TVDetails = ({
       if (response.success) {
         setIsFavorite((prev) => !prev);
         setToastMessage(
-          isFavorite ? 'Removed from favorites' : 'Added to favorites'
+          isFavorite ? "Removed from favorites" : "Added to favorites"
         );
         showToast();
         removeToast();
-        revalidationWrapper(() => revalidateFavorites('favoriteTvShows'));
+        revalidationWrapper(() => revalidateFavorites("favoriteTvShows"));
       }
     } else if (!isToastVisible) {
-      setToastMessage('Login first to use this feature');
+      setToastMessage("Login first to use this feature");
       showToast();
       removeToast();
     }
@@ -159,9 +159,9 @@ const TVDetails = ({
   ]);
 
   const watchlistHandler = useCallback(async () => {
-    if (status === 'authenticated') {
+    if (status === "authenticated") {
       const response = await addToWatchlist({
-        mediaType: 'tv',
+        mediaType: "tv",
         mediaId: id,
         watchlistState: !addedToWatchlist
       });
@@ -169,14 +169,14 @@ const TVDetails = ({
       if (response.success) {
         setAddedToWatchlist((prev) => !prev);
         setToastMessage(
-          addedToWatchlist ? 'Removed from watchlist' : 'Added to watchlist'
+          addedToWatchlist ? "Removed from watchlist" : "Added to watchlist"
         );
         showToast();
         removeToast();
-        revalidationWrapper(() => revalidateWatchlist('tvShowsWatchlist'));
+        revalidationWrapper(() => revalidateWatchlist("tvShowsWatchlist"));
       }
     } else if (!isToastVisible) {
-      setToastMessage('Login first to use this feature');
+      setToastMessage("Login first to use this feature");
       showToast();
       removeToast();
     }
@@ -193,10 +193,10 @@ const TVDetails = ({
   ]);
 
   const ratingModalHandler = useCallback(() => {
-    if (status === 'authenticated') {
+    if (status === "authenticated") {
       openModal();
     } else {
-      setToastMessage('Login first to use this feature');
+      setToastMessage("Login first to use this feature");
       showToast();
       removeToast();
     }
@@ -229,7 +229,7 @@ const TVDetails = ({
               src={
                 backdropPath
                   ? `https://image.tmdb.org/t/p/w1280${backdropPath}`
-                  : '/Images/Hex.webp'
+                  : "/Images/Hex.webp"
               }
               alt='tv-backdrop'
               layout='fill'
@@ -246,7 +246,7 @@ const TVDetails = ({
                 src={
                   posterPath
                     ? `https://image.tmdb.org/t/p/w500${posterPath}`
-                    : '/Images/DefaultImage.png'
+                    : "/Images/DefaultImage.png"
                 }
                 alt='tv-poster'
                 layout='fill'
@@ -264,8 +264,7 @@ const TVDetails = ({
                   target='_blank'
                   rel='noreferrer'
                   aria-label='trailer'
-                  className='d-block mb-3'
-                >
+                  className='d-block mb-3'>
                   <FeatureButton>
                     <FaYoutube size='1.5rem' />
                     <Span>Play Trailer</Span>
@@ -276,15 +275,14 @@ const TVDetails = ({
               <AnimatePresence exitBeforeEnter initial={false}>
                 <div
                   className='d-flex justify-content-start'
-                  style={{ gap: '1rem' }}
-                >
+                  style={{ gap: "1rem" }}>
                   <FeatureButton
                     className='watchlist'
                     role='button'
+                    aria-label='watchlist button'
                     as={motion.div}
                     whileTap={{ scale: 0.95 }}
-                    onClick={watchlistHandler}
-                  >
+                    onClick={watchlistHandler}>
                     {addedToWatchlist ? (
                       <motion.div
                         key='watchlist'
@@ -302,8 +300,7 @@ const TVDetails = ({
                             duration: 0.5
                           }
                         }}
-                        className='watchlist-inner'
-                      >
+                        className='watchlist-inner'>
                         <BiListCheck size='22px' />
                       </motion.div>
                     ) : (
@@ -323,8 +320,7 @@ const TVDetails = ({
                             duration: 0.5
                           }
                         }}
-                        className='watchlist-inner'
-                      >
+                        className='watchlist-inner'>
                         <BiListPlus size='22px' />
                       </motion.div>
                     )}
@@ -332,10 +328,10 @@ const TVDetails = ({
                   <FeatureButton
                     className='fav'
                     role='button'
+                    aria-label='favorite button'
                     onClick={favoriteHandler}
                     as={motion.div}
-                    whileTap={{ scale: 0.95 }}
-                  >
+                    whileTap={{ scale: 0.95 }}>
                     <Fragment>
                       {isFavorite ? (
                         <motion.div
@@ -354,8 +350,7 @@ const TVDetails = ({
                             transition: {
                               duration: 0.5
                             }
-                          }}
-                        >
+                          }}>
                           <FaHeart size='20px' />
                         </motion.div>
                       ) : (
@@ -375,8 +370,7 @@ const TVDetails = ({
                             transition: {
                               duration: 0.5
                             }
-                          }}
-                        >
+                          }}>
                           <FaRegHeart size='20px' />
                         </motion.div>
                       )}
@@ -386,10 +380,10 @@ const TVDetails = ({
                   <FeatureButton
                     className='fav'
                     role='button'
+                    aria-label='rating button'
                     as={motion.div}
                     whileTap={{ scale: 0.95 }}
-                    onClick={ratingModalHandler}
-                  >
+                    onClick={ratingModalHandler}>
                     <Fragment>
                       {savedRating ? (
                         <motion.div
@@ -408,8 +402,7 @@ const TVDetails = ({
                             transition: {
                               duration: 0.5
                             }
-                          }}
-                        >
+                          }}>
                           <RatingOverlay className='media-page'>
                             <AiFillStar size='16px' />
                             <p className='m-0 fw-semibold text'>
@@ -434,8 +427,7 @@ const TVDetails = ({
                             transition: {
                               duration: 0.5
                             }
-                          }}
-                        >
+                          }}>
                           <BsStarHalf size='20px' />
                         </motion.div>
                       )}
@@ -461,13 +453,12 @@ const TVDetails = ({
                     <Link
                       key={item.id}
                       href={`/genre/${
-                        item.id.toString() + '-' + item.name.split(' ').join('')
+                        item.id.toString() + "-" + item.name.split(" ").join("")
                       }/tv`}
                       passHref
-                      scroll={false}
-                    >
+                      scroll={false}>
                       <a>
-                        <Rounded className={genres.length == i + 1 && 'sep'}>
+                        <Rounded className={genres.length == i + 1 && "sep"}>
                           {item.name}
                         </Rounded>
                       </a>
@@ -480,9 +471,9 @@ const TVDetails = ({
                 <Span>
                   {genres?.length > 0 && <Divider className='tvSpan' />}
                   {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
-                    ? '60m'
-                    : runtimeFormatted.getH > 0 && runtimeFormatted.getH + 'h '}
-                  {runtimeFormatted.getM > 0 && runtimeFormatted.getM + 'm'}
+                    ? "60m"
+                    : runtimeFormatted.getH > 0 && runtimeFormatted.getH + "h "}
+                  {runtimeFormatted.getM > 0 && runtimeFormatted.getM + "m"}
                 </Span>
               ) : (
                 <Span>
@@ -518,14 +509,13 @@ const TVDetails = ({
                 {crewData.map((item) => (
                   <Credits key={item.credit_id}>
                     <Span className='d-block fw-normal'>
-                      {item.job ?? 'Creator'}
+                      {item.job ?? "Creator"}
                     </Span>
                     <Link
                       href={`/person/${item.id}-${item.name.replace(
                         /[' ', '/']/g,
-                        '-'
-                      )}`}
-                    >
+                        "-"
+                      )}`}>
                       <a>
                         <Span className='d-block fw-bold credit'>
                           {item.name}
