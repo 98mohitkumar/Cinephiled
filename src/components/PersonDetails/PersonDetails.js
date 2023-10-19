@@ -39,20 +39,20 @@ const PersonDetails = ({ details }) => {
 
   const works = useMemo(
     () =>
-      details.known_for_department === "Acting"
-        ? details.combined_credits.cast
-        : details.combined_credits.crew,
+      details?.known_for_department === "Acting"
+        ? details?.combined_credits?.cast
+        : details?.combined_credits?.crew,
     [
-      details.combined_credits.cast,
-      details.combined_credits.crew,
-      details.known_for_department
+      details?.combined_credits?.cast,
+      details?.combined_credits?.crew,
+      details?.known_for_department
     ]
   );
 
-  works.sort((a, z) => z.vote_count - a.vote_count); // sort works array
-  works.length > 100 && works.splice(100); // splice if bigger than 100 for filtering
+  works?.sort((a, z) => z.vote_count - a.vote_count); // sort works array
+  works?.length > 100 && works.splice(100); // splice if bigger than 100 for filtering
 
-  const { cleanedItems: cleaned } = removeDuplicates(works);
+  const { cleanedItems: cleaned } = removeDuplicates(works || []);
 
   const getAge = (b, alive) => {
     if (alive) {
@@ -165,7 +165,7 @@ const PersonDetails = ({ details }) => {
         )}
       </HeroDetailsContainer>
 
-      {cleaned.length !== 0 && (
+      {cleaned?.length > 0 && (
         <RecommendationsContainer className='py-4'>
           <Span className='d-block display-5 text-center genre'>
             Filmography
