@@ -1,11 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const CardsContainerGrid = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
   place-items: center;
-  justify-content: center;
   padding: 32px 4.2vw;
   gap: clamp(20px, 3vw, 32px);
 
@@ -39,8 +38,7 @@ export const CardImg = styled.div`
   position: relative;
   text-align: center;
   aspect-ratio: 0.666;
-  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
-    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14), 0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   transition: box-shadow 0.25s ease-in;
   border-radius: 12px;
@@ -48,8 +46,7 @@ export const CardImg = styled.div`
 
   @media ${(props) => props.theme.breakpoints.hover} {
     &:hover {
-      box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
-        0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
+      box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14), 0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
         0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
     }
   }
@@ -78,7 +75,7 @@ export const InfoTitle = styled.h2`
 `;
 
 export const ReleaseDate = styled.p`
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-weight: 500;
   margin: 0;
 
@@ -94,7 +91,7 @@ export const Rating = styled.div`
   border-radius: 50%;
   background-color: #ddd;
   color: #212121;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 0.9rem;
   border: 5px solid #121212;
