@@ -1,20 +1,13 @@
-import { revalidationWrapper, useAddToWatchlist } from 'api/user';
-import { CardsContainerGrid } from 'components/Popular/PopularStyles';
-import { useModal } from 'components/RatingModal/RatingModal';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  useEffect,
-  useState,
-  useMemo,
-  Fragment,
-  useContext,
-  useCallback
-} from 'react';
-import { MediaContext } from 'Store/MediaContext';
-import { NoDataText } from 'styles/GlobalComponents';
-import MediaCard from './MediaCard';
-import { ProfileMediaTab } from './ProfilePage';
-import { ConfirmationModal, CTAButton, ModalCard } from './ProfilePageStyles';
+import { revalidationWrapper, useAddToWatchlist } from "api/user";
+import { CardsContainerGrid } from "components/Popular/PopularStyles";
+import { useModal } from "components/RatingModal/RatingModal";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useMemo, Fragment, useContext } from "react";
+import { MediaContext } from "Store/MediaContext";
+import { NoDataText } from "styles/GlobalComponents";
+import MediaCard from "./MediaCard";
+import { ProfileMediaTab } from "./ProfilePage";
+import { ConfirmationModal, CTAButton, ModalCard } from "./ProfilePageStyles";
 
 export const WatchlistCTA = ({ clickHandler, mediaData }) => {
   const { isModalVisible, openModal, closeModal } = useModal();
@@ -22,7 +15,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
   const { name, releaseDate } = mediaData;
 
   const year = useMemo(
-    () => (releaseDate ? new Date(releaseDate).getFullYear() : 'TBA'),
+    () => (releaseDate ? new Date(releaseDate).getFullYear() : "TBA"),
     [releaseDate]
   );
 
@@ -37,7 +30,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
             animate={{
               opacity: 1,
               transition: {
-                type: 'tween',
+                type: "tween",
                 duration: 0.6,
                 ease: [0.77, 0, 0.175, 1]
               }
@@ -45,29 +38,25 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
             exit={{
               opacity: 0,
               transition: {
-                type: 'tween',
+                type: "tween",
                 duration: 0.6,
                 ease: [0.77, 0, 0.175, 1]
               }
-            }}
-          >
+            }}>
             <ModalCard>
               <h5 className='m-0'>
-                Are you sure you want to remove{' '}
-                <span className='d-inline fw-bold'>{`${name} (${year})`}</span>{' '}
-                from your watchlist
+                Are you sure you want to remove{" "}
+                <span className='d-inline fw-bold'>{`${name} (${year})`}</span> from your watchlist
               </h5>
 
               <div
                 className='d-flex justify-between align-items-center pt-4'
-                style={{ gap: '1rem' }}
-              >
+                style={{ gap: "1rem" }}>
                 <CTAButton
                   className='secondary'
                   onClick={closeModal}
                   as={motion.button}
-                  whileTap={{ scale: 0.95 }}
-                >
+                  whileTap={{ scale: 0.95 }}>
                   Keep it
                 </CTAButton>
                 <CTAButton
@@ -76,8 +65,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
                     clickHandler();
                   }}
                   as={motion.button}
-                  whileTap={{ scale: 0.95 }}
-                >
+                  whileTap={{ scale: 0.95 }}>
                   Remove it
                 </CTAButton>
               </div>
@@ -90,8 +78,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
         as={motion.button}
         whileTap={{ scale: 0.95 }}
         onClick={openModal}
-        className='secondary text-danger'
-      >
+        className='secondary text-danger'>
         Remove
       </CTAButton>
     </Fragment>
@@ -99,13 +86,10 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
 };
 
 const Watchlist = () => {
-  const [tabState, setTabState] = useState('');
-  const { moviesWatchlist, tvShowsWatchlist, revalidateWatchlist } =
-    useContext(MediaContext);
-  const [moviesWatchlistFromApi, setMoviesWatchlistFromApi] =
-    useState(moviesWatchlist);
-  const [tvShowsWatchlistFromApi, setTvShowsWatchlistFromApi] =
-    useState(tvShowsWatchlist);
+  const [tabState, setTabState] = useState("");
+  const { moviesWatchlist, tvShowsWatchlist, revalidateWatchlist } = useContext(MediaContext);
+  const [moviesWatchlistFromApi, setMoviesWatchlistFromApi] = useState(moviesWatchlist);
+  const [tvShowsWatchlistFromApi, setTvShowsWatchlistFromApi] = useState(tvShowsWatchlist);
 
   const { addToWatchlist } = useAddToWatchlist();
 
@@ -121,53 +105,43 @@ const Watchlist = () => {
     }
   }, [tvShowsWatchlist]);
 
-  const filterMedia = useCallback(
-    async ({ id, type }) => {
-      const response = await addToWatchlist({
-        mediaType: type,
-        mediaId: id,
-        watchlistState: false
-      });
+  const filterMedia = async ({ id, type }) => {
+    const response = await addToWatchlist({
+      mediaType: type,
+      mediaId: id,
+      watchlistState: false
+    });
 
-      if (response?.success) {
-        if (type === 'movie') {
-          setMoviesWatchlistFromApi((prev) =>
-            prev?.filter((item) => item?.id !== id)
-          );
-          revalidationWrapper(() => revalidateWatchlist('moviesWatchlist'));
-        } else {
-          setTvShowsWatchlistFromApi((prev) =>
-            prev?.filter((item) => item?.id !== id)
-          );
+    if (response?.success) {
+      if (type === "movie") {
+        setMoviesWatchlistFromApi((prev) => prev?.filter((item) => item?.id !== id));
+        revalidationWrapper(() => revalidateWatchlist("moviesWatchlist"));
+      } else {
+        setTvShowsWatchlistFromApi((prev) => prev?.filter((item) => item?.id !== id));
 
-          revalidationWrapper(() => revalidateWatchlist('tvShowsWatchlist'));
-        }
+        revalidationWrapper(() => revalidateWatchlist("tvShowsWatchlist"));
       }
-    },
-    [revalidateWatchlist, addToWatchlist]
-  );
+    }
+  };
 
   return (
     <Fragment>
       <ProfileMediaTab tabState={tabState} setTabState={setTabState} />
 
       <AnimatePresence exitBeforeEnter initial={false}>
-        {tabState === 'movies' && (
+        {tabState === "movies" && (
           <motion.div
             key={`${moviesWatchlistFromApi?.length}-movies`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+            transition={{ duration: 0.5 }}>
             {moviesWatchlistFromApi.length > 0 ? (
               <CardsContainerGrid className='xl-row-gap'>
                 {moviesWatchlistFromApi.map((movie) => (
                   <MediaCard key={movie?.id} data={movie} link='movies'>
                     <WatchlistCTA
-                      clickHandler={() =>
-                        filterMedia({ id: movie?.id, type: 'movie' })
-                      }
+                      clickHandler={() => filterMedia({ id: movie?.id, type: "movie" })}
                       mediaData={{
                         name: movie?.title,
                         releaseDate: movie?.release_date
@@ -184,22 +158,19 @@ const Watchlist = () => {
           </motion.div>
         )}
 
-        {tabState === 'tv' && (
+        {tabState === "tv" && (
           <motion.div
             key={`${tvShowsWatchlistFromApi?.length}-tv`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+            transition={{ duration: 0.5 }}>
             {tvShowsWatchlistFromApi.length > 0 ? (
               <CardsContainerGrid className='xl-row-gap'>
                 {tvShowsWatchlistFromApi.map((tv) => (
                   <MediaCard key={tv?.id} data={tv} link='tv'>
                     <WatchlistCTA
-                      clickHandler={() =>
-                        filterMedia({ id: tv?.id, type: 'tv' })
-                      }
+                      clickHandler={() => filterMedia({ id: tv?.id, type: "tv" })}
                       mediaData={{
                         name: tv?.name,
                         releaseDate: tv?.first_air_date

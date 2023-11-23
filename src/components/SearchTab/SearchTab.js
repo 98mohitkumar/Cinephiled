@@ -2,7 +2,7 @@ import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Tabs from "components/Tabs/Tabs";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
-import { Fragment, useCallback, useState, useEffect, useMemo } from "react";
+import { Fragment, useState, useEffect, useMemo } from "react";
 import KeywordSearch from "./KeywordSearch";
 import MoviesSearch from "./MoviesSearch";
 import { tabStyling, tabTitleStyling } from "./SearchTabStyles";
@@ -17,21 +17,18 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
     setTabState(savedTabState ?? "movies");
   }, []);
 
-  const tabSelectionHandler = useCallback(
-    (tab) => {
-      localStorage.setItem("SearchTabPosition", tab);
-      setTabState(tab);
-      router.replace(
-        {
-          pathname: router.pathname,
-          query: { query: router.query.query }
-        },
-        undefined,
-        { shallow: true }
-      );
-    },
-    [router]
-  );
+  const tabSelectionHandler = (tab) => {
+    localStorage.setItem("SearchTabPosition", tab);
+    setTabState(tab);
+    router.replace(
+      {
+        pathname: router.pathname,
+        query: { query: router.query.query }
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
 
   const tabList = useMemo(
     () => [
@@ -60,13 +57,11 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
             {movies.length !== 0 && (
-              <Span className='d-block fs-2 text-center'>
-                Movies matching : {search}
-              </Span>
+              <Span className='d-block fs-2 text-center'>Movies matching : {search}</Span>
             )}
             <p className='text-center mt-2 mb-0'>
-              <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your
-              results by year. Example: <b>&#39;Avatar y:2009&#39;.</b>
+              <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year.
+              Example: <b>&#39;Avatar y:2009&#39;.</b>
             </p>
             <MoviesSearch searchQuery={search} movieRes={movies} />
           </motion.div>
@@ -80,13 +75,11 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
             {tv.length !== 0 && (
-              <Span className='d-block fs-2 text-center'>
-                TV shows matching : {search}
-              </Span>
+              <Span className='d-block fs-2 text-center'>TV shows matching : {search}</Span>
             )}
             <p className='text-center mt-2 mb-0'>
-              <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your
-              results by year. Example: <b>&#39;Sherlock y:2010&#39;</b>.
+              <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year.
+              Example: <b>&#39;Sherlock y:2010&#39;</b>.
             </p>
             <TVSearch searchQuery={search} tvRes={tv} />
           </motion.div>
@@ -100,9 +93,7 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
             {keywords.length !== 0 && (
-              <Span className='d-block fs-2 text-center'>
-                Keywords matching : {search}
-              </Span>
+              <Span className='d-block fs-2 text-center'>Keywords matching : {search}</Span>
             )}
             <KeywordSearch searchQuery={search} keywords={keywords} />
           </motion.div>

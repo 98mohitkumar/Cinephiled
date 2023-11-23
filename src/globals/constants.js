@@ -6,11 +6,14 @@ export const proxy = "https://corsproxy.scharde.workers.dev/?q=";
 
 export const apiEndpoints = {
   auth: {
-    requestToken: `${baseUrlV3}/authentication/token/new?api_key=${api_key}`,
+    // requestToken: `${baseUrlV3}/authentication/token/new?api_key=${api_key}`,
+    requestToken: `${baseUrlV4}/auth/request_token`,
 
-    validateToken: `${baseUrlV3}/authentication/token/validate_with_login?api_key=${api_key}`,
+    // validateToken: `${baseUrlV3}/authentication/token/validate_with_login?api_key=${api_key}`,
+    accessToken: `${baseUrlV4}/auth/access_token`,
 
-    generateSession: `${baseUrlV3}/authentication/session/new?api_key=${api_key}`,
+    // generateSession: `${baseUrlV3}/authentication/session/new?api_key=${api_key}`,
+    generateSession: `${baseUrlV3}/authentication/session/convert/4`,
 
     logout: `${baseUrlV3}/authentication/session?api_key=${api_key}`
   },
@@ -39,7 +42,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/${mediaType}/${mediaId}/rating?api_key=${api_key}&session_id=${sessionId}`,
 
     getRecommendations: ({ mediaType, accountId, pageQuery = 1 }) =>
-      `${baseUrlV4}/account/${accountId}/${mediaType}/recommendations?api_key=${api_key}&page=${pageQuery}`
+      `${baseUrlV4}/account/${accountId}/${mediaType}/recommendations?page=${pageQuery}`
   },
   search: {
     movieSearchWithYear: ({ query, year }) =>

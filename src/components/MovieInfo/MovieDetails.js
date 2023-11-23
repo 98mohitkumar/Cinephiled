@@ -1,8 +1,4 @@
-import {
-  revalidationWrapper,
-  useAddToWatchlist,
-  useSetFavorite
-} from "api/user";
+import { revalidationWrapper, useAddToWatchlist, useSetFavorite } from "api/user";
 import DominantColor from "components/DominantColor/DominantColor";
 import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
 import RatingModal, { useModal } from "components/RatingModal/RatingModal";
@@ -12,14 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Fragment,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from "react";
+import { Fragment, useContext, useEffect, useMemo, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { BiListPlus, BiListCheck } from "react-icons/bi";
 import { BsStarHalf } from "react-icons/bs";
@@ -79,20 +68,9 @@ const MovieDetails = ({
   const { setFavorite } = useSetFavorite();
   const { addToWatchlist } = useAddToWatchlist();
   const { renderEaster, hasSeen, showEaster, easterHandler } = easter;
-  const {
-    favoriteMovies,
-    moviesWatchlist,
-    revalidateFavorites,
-    revalidateWatchlist,
-    ratedMovies
-  } = useContext(MediaContext);
-  const {
-    isToastVisible,
-    showToast,
-    removeToast,
-    toastMessage,
-    setToastMessage
-  } = useToast();
+  const { favoriteMovies, moviesWatchlist, revalidateFavorites, revalidateWatchlist, ratedMovies } =
+    useContext(MediaContext);
+  const { isToastVisible, showToast, removeToast, toastMessage, setToastMessage } = useToast();
 
   const savedRating = useMemo(
     () => ratedMovies?.find((item) => item?.id === id)?.rating ?? false,
@@ -105,9 +83,7 @@ const MovieDetails = ({
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    const isAddedToFavorites = favoriteMovies
-      ?.map((item) => item.id)
-      ?.includes(id);
+    const isAddedToFavorites = favoriteMovies?.map((item) => item.id)?.includes(id);
 
     if (favoriteMovies.length > 0) {
       setIsFavorite(isAddedToFavorites);
@@ -115,9 +91,7 @@ const MovieDetails = ({
   }, [favoriteMovies, id]);
 
   useEffect(() => {
-    const isAddedToWatchlist = moviesWatchlist
-      ?.map((item) => item.id)
-      ?.includes(id);
+    const isAddedToWatchlist = moviesWatchlist?.map((item) => item.id)?.includes(id);
 
     if (moviesWatchlist.length > 0) {
       setAddedToWatchlist(isAddedToWatchlist);
@@ -126,9 +100,7 @@ const MovieDetails = ({
 
   const releaseDateFormatted = !releaseDate
     ? "TBA"
-    : new Date(releaseDate.toString()).toDateString().slice(4, -5) +
-      ", " +
-      year;
+    : new Date(releaseDate.toString()).toDateString().slice(4, -5) + ", " + year;
 
   const runtimeFormatted = useMemo(() => {
     const getH = Math.floor(runtime / 60);
@@ -138,7 +110,7 @@ const MovieDetails = ({
 
   genres.length > 3 && genres.splice(3);
 
-  const favoriteHandler = useCallback(async () => {
+  const favoriteHandler = async () => {
     if (status === "authenticated") {
       const response = await setFavorite({
         mediaType: "movie",
@@ -148,9 +120,7 @@ const MovieDetails = ({
 
       if (response?.success) {
         setIsFavorite((prev) => !prev);
-        setToastMessage(
-          isFavorite ? "Removed from favorites" : "Added to favorites"
-        );
+        setToastMessage(isFavorite ? "Removed from favorites" : "Added to favorites");
         showToast();
         removeToast();
         revalidationWrapper(() => revalidateFavorites("favoriteMovies"));
@@ -160,19 +130,9 @@ const MovieDetails = ({
       showToast();
       removeToast();
     }
-  }, [
-    isFavorite,
-    isToastVisible,
-    id,
-    removeToast,
-    revalidateFavorites,
-    setFavorite,
-    setToastMessage,
-    showToast,
-    status
-  ]);
+  };
 
-  const watchlistHandler = useCallback(async () => {
+  const watchlistHandler = async () => {
     if (status === "authenticated") {
       const response = await addToWatchlist({
         mediaType: "movie",
@@ -182,9 +142,7 @@ const MovieDetails = ({
 
       if (response?.success) {
         setAddedToWatchlist((prev) => !prev);
-        setToastMessage(
-          addedToWatchlist ? "Removed from watchlist" : "Added to watchlist"
-        );
+        setToastMessage(addedToWatchlist ? "Removed from watchlist" : "Added to watchlist");
         showToast();
         removeToast();
         revalidationWrapper(() => revalidateWatchlist("moviesWatchlist"));
@@ -194,19 +152,9 @@ const MovieDetails = ({
       showToast();
       removeToast();
     }
-  }, [
-    addToWatchlist,
-    addedToWatchlist,
-    isToastVisible,
-    id,
-    removeToast,
-    revalidateWatchlist,
-    setToastMessage,
-    showToast,
-    status
-  ]);
+  };
 
-  const ratingModalHandler = useCallback(() => {
+  const ratingModalHandler = () => {
     if (status === "authenticated") {
       openModal();
     } else {
@@ -214,7 +162,7 @@ const MovieDetails = ({
       showToast();
       removeToast();
     }
-  }, [openModal, removeToast, setToastMessage, showToast, status]);
+  };
 
   return (
     <Fragment>
@@ -307,9 +255,7 @@ const MovieDetails = ({
               )}
 
               <AnimatePresence exitBeforeEnter initial={false}>
-                <div
-                  className='d-flex justify-content-start'
-                  style={{ gap: "1rem" }}>
+                <div className='d-flex justify-content-start' style={{ gap: "1rem" }}>
                   <FeatureButton
                     className='watchlist'
                     role='button'
@@ -439,9 +385,7 @@ const MovieDetails = ({
                           }}>
                           <RatingOverlay className='media-page'>
                             <AiFillStar size='16px' />
-                            <p className='m-0 fw-semibold text'>
-                              {savedRating}
-                            </p>
+                            <p className='m-0 fw-semibold text'>{savedRating}</p>
                           </RatingOverlay>
                         </motion.div>
                       ) : (
@@ -492,15 +436,11 @@ const MovieDetails = ({
                   {genres.map((item, i) => (
                     <Link
                       key={item.id}
-                      href={`/genre/${
-                        item.id.toString() + "-" + item.name
-                      }/movies`}
+                      href={`/genre/${item.id.toString() + "-" + item.name}/movies`}
                       passHref
                       scroll={false}>
                       <a>
-                        <Rounded className={genres.length == i + 1 && "sep"}>
-                          {item.name}
-                        </Rounded>
+                        <Rounded className={genres.length == i + 1 && "sep"}>{item.name}</Rounded>
                       </a>
                     </Link>
                   ))}
@@ -523,15 +463,11 @@ const MovieDetails = ({
                 <Tagline className='my-4 d-block'>{tagline}</Tagline>
               </i>
             )}
-            <Overview className='fw-normal'>
-              {!overview ? "-" : overview}
-            </Overview>
+            <Overview className='fw-normal'>{!overview ? "-" : overview}</Overview>
             <RatingWrapper>
               {rating !== 0 ? (
                 <Fragment>
-                  <Span className='display-3 fw-bolder'>
-                    {rating.toFixed(1)}
-                  </Span>
+                  <Span className='display-3 fw-bolder'>{rating.toFixed(1)}</Span>
                   <span> / 10</span>
                 </Fragment>
               ) : (
@@ -543,15 +479,9 @@ const MovieDetails = ({
                 {crewData.map((item) => (
                   <Credits key={item.credit_id}>
                     <Span className='d-block fw-normal'>{item.job}</Span>
-                    <Link
-                      href={`/person/${item.id}-${item.name.replace(
-                        /[' ', '/']/g,
-                        "-"
-                      )}`}>
+                    <Link href={`/person/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}>
                       <a>
-                        <Span className='d-block fw-bold credit'>
-                          {item.name}
-                        </Span>
+                        <Span className='d-block fw-bold credit'>{item.name}</Span>
                       </a>
                     </Link>
                   </Credits>

@@ -1,19 +1,19 @@
-import { credentialsAuth, tmdbAuth } from 'api/auth';
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import { tmdbAuth } from "api/auth";
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
   providers: [
+    // CredentialsProvider({
+    //   id: "credentials",
+    //   name: "credentials",
+    //   authorize: async (payload) => {
+    //     return await credentialsAuth(payload);
+    //   }
+    // }),
     CredentialsProvider({
-      id: 'credentials',
-      name: 'credentials',
-      authorize: async (payload) => {
-        return await credentialsAuth(payload);
-      }
-    }),
-    CredentialsProvider({
-      id: 'tmdb',
-      name: 'tmdb',
+      id: "tmdb",
+      name: "tmdb",
       authorize: async ({ requestToken }) => {
         return await tmdbAuth(requestToken);
       }
@@ -26,6 +26,8 @@ export default NextAuth({
   callbacks: {
     session: async ({ session, token }) => {
       session.user.sessionId = token?.session_id;
+      session.user.accountId = token?.account_id;
+      session.user.accessToken = token?.access_token;
       return session;
     },
     jwt: async ({ user, token }) => {
@@ -36,7 +38,7 @@ export default NextAuth({
     }
   },
   pages: {
-    signIn: '/login'
+    signIn: "/login"
   },
   secret: process.env.NEXTAUTH_SECRET
 });

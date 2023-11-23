@@ -1,11 +1,11 @@
-import MetaWrapper from 'components/MetaWrapper';
-import MovieDetails from 'components/MovieInfo/MovieDetails';
-import MovieFacts from 'components/MovieInfo/MovieFacts';
-import MovieTab from 'components/MovieInfo/MovieTab';
-import Recommendations from 'components/Recommendations/Recommendations';
-import { apiEndpoints } from 'globals/constants';
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
-import { Error404 } from 'styles/GlobalComponents';
+import MetaWrapper from "components/MetaWrapper";
+import MovieDetails from "components/MovieInfo/MovieDetails";
+import MovieFacts from "components/MovieInfo/MovieFacts";
+import MovieTab from "components/MovieInfo/MovieTab";
+import Recommendations from "components/Recommendations/Recommendations";
+import { apiEndpoints } from "globals/constants";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { Error404 } from "styles/GlobalComponents";
 
 const Movie = ({
   id,
@@ -44,44 +44,37 @@ const Movie = ({
   }
 
   useEffect(() => {
-    let easterSeen = localStorage.getItem('easterSeen');
-    if (easter.current && easterSeen !== 'seen') {
+    let easterSeen = localStorage.getItem("easterSeen");
+    if (easter.current && easterSeen !== "seen") {
       setShowEaster(true);
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     }
 
-    if (easterSeen === 'seen') {
+    if (easterSeen === "seen") {
       setHasSeen(true);
     }
   }, []);
 
-  const easterHandler = useCallback(() => {
+  const easterHandler = () => {
     setShowEaster(!showEaster);
     window.scrollTo(0, 0);
     setHasSeen(true);
-    localStorage.setItem('easterSeen', 'seen');
+    localStorage.setItem("easterSeen", "seen");
 
     if (showEaster) {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     } else {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     }
-  }, [showEaster]);
+  };
 
   return (
     <Fragment>
       <MetaWrapper
-        title={
-          !error
-            ? `${title} (${releaseYear}) - Cinephiled`
-            : 'Not Found - Cinephiled'
-        }
+        title={!error ? `${title} (${releaseYear}) - Cinephiled` : "Not Found - Cinephiled"}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
         description={overview}
-        url={`https://cinephiled.vercel.app/movies/${id}-${title?.replace(
-          /[' ', '/']/g,
-          '-'
-        )}`}
+        url={`https://cinephiled.vercel.app/movies/${id}-${title?.replace(/[' ', '/']/g, "-")}`}
       />
 
       {error ? (
@@ -127,17 +120,10 @@ const Movie = ({
           />
 
           {/* movie tabs */}
-          <MovieTab
-            cast={cast}
-            reviews={reviews}
-            backdrops={backdrops}
-            posters={posters}
-          />
+          <MovieTab cast={cast} reviews={reviews} backdrops={backdrops} posters={posters} />
 
           {/* recommendations */}
-          {recommendations?.length > 0 && (
-            <Recommendations data={recommendations} type='movies' />
-          )}
+          {recommendations?.length > 0 && <Recommendations data={recommendations} type='movies' />}
         </Fragment>
       )}
     </Fragment>
@@ -146,9 +132,7 @@ const Movie = ({
 
 Movie.getInitialProps = async (ctx) => {
   try {
-    const movieResponse = await fetch(
-      apiEndpoints.movie.movieDetails(ctx.query.id)
-    );
+    const movieResponse = await fetch(apiEndpoints.movie.movieDetails(ctx.query.id));
 
     const languagesResponse = await fetch(apiEndpoints.language);
     const error = movieResponse.ok ? false : true;
@@ -159,33 +143,27 @@ Movie.getInitialProps = async (ctx) => {
       const movieDetails = await movieResponse.json();
       const languages = await languagesResponse.json();
       const country = !movieDetails?.production_countries[0]
-        ? 'US'
+        ? "US"
         : movieDetails?.production_countries[0].iso_3166_1;
 
       const releaseYear = !movieDetails?.release_date
-        ? 'TBA'
+        ? "TBA"
         : new Date(movieDetails?.release_date).getFullYear();
 
-      const status = !movieDetails?.status ? 'TBA' : movieDetails?.status;
+      const status = !movieDetails?.status ? "TBA" : movieDetails?.status;
 
       const language = languages.filter(
         (item) => item.iso_639_1 === movieDetails.original_language
       );
 
       const trailers = movieDetails?.videos?.results?.filter(
-        (item) => item?.site === 'YouTube' && item?.type === 'Trailer'
+        (item) => item?.site === "YouTube" && item?.type === "Trailer"
       );
 
       const crewData = [
-        ...movieDetails?.credits?.crew
-          ?.filter((credit) => credit?.job === 'Director')
-          .slice(0, 2),
-        ...movieDetails?.credits?.crew
-          ?.filter((credit) => credit?.job === 'Writer')
-          .slice(0, 3),
-        ...movieDetails?.credits?.crew
-          ?.filter((credit) => credit?.job === 'Characters')
-          .slice(0, 2)
+        ...movieDetails?.credits?.crew?.filter((credit) => credit?.job === "Director").slice(0, 2),
+        ...movieDetails?.credits?.crew?.filter((credit) => credit?.job === "Writer").slice(0, 3),
+        ...movieDetails?.credits?.crew?.filter((credit) => credit?.job === "Characters").slice(0, 2)
       ];
 
       return {
@@ -201,7 +179,7 @@ Movie.getInitialProps = async (ctx) => {
         moviePoster: movieDetails?.poster_path,
         backdropPath: movieDetails?.backdrop_path,
         crewData,
-        trailerLink: trailers?.[0]?.key ?? '',
+        trailerLink: trailers?.[0]?.key ?? "",
         socialIds: movieDetails?.external_ids,
         homepage: movieDetails?.homepage,
         status,

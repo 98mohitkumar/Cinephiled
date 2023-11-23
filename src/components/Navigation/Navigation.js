@@ -3,7 +3,7 @@ import UserAvatar from "components/UserAvatar/UserAvatar";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import {
   HamburgerIcon,
@@ -46,13 +46,13 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", navHandler);
   }, []);
 
-  const hamburgerHandler = useCallback(() => {
+  const hamburgerHandler = () => {
     setShowSearchModal(false);
     document.body.style.overflow = showHamburgerMenu ? "auto" : "hidden";
     setShowHamburgerMenu((prev) => !prev);
-  }, [showHamburgerMenu]);
+  };
 
-  const searchHandler = useCallback(() => {
+  const searchHandler = () => {
     if (router.asPath === "/") {
       document.body.style.overflow = "auto";
     } else {
@@ -64,14 +64,14 @@ const Navigation = () => {
       setShowHamburgerMenu(false);
       document.querySelector(".heroSearchInput").focus();
     }, 100);
-  }, [router.asPath]);
+  };
 
-  const closeSearchModalHandler = useCallback((e) => {
+  const closeSearchModalHandler = (e) => {
     if (!e.target.classList.contains("form-control")) {
       setShowSearchModal(false);
       document.body.style.overflow = "auto";
     }
-  }, []);
+  };
 
   return (
     <Header ref={navRef}>
@@ -87,9 +87,7 @@ const Navigation = () => {
         <NavLinks>
           {navLinks.map(({ text, link }) => (
             <Link href={link} key={text}>
-              <a className={`link ${router.asPath === link ? "active" : ""}`}>
-                {text}
-              </a>
+              <a className={`link ${router.asPath === link ? "active" : ""}`}>{text}</a>
             </Link>
           ))}
 
@@ -101,10 +99,7 @@ const Navigation = () => {
         </NavLinks>
 
         <MobileNav>
-          <Search
-            className='search-sm'
-            onClick={searchHandler}
-            key='search-icon'>
+          <Search className='search-sm' onClick={searchHandler} key='search-icon'>
             <BsSearch size='24px' />
           </Search>
 
@@ -144,9 +139,7 @@ const Navigation = () => {
               {navLinks.map(({ text, link }) => (
                 <Link href={link} key={text}>
                   <a
-                    className={`navlink ${
-                      router.asPath === link ? "active" : ""
-                    }`}
+                    className={`navlink ${router.asPath === link ? "active" : ""}`}
                     onClick={hamburgerHandler}>
                     {text}
                   </a>

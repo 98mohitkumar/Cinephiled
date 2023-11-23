@@ -2,14 +2,7 @@ import { revalidationWrapper, useSetFavorite } from "api/user";
 import { CardsContainerGrid } from "components/Popular/PopularStyles";
 import { useModal } from "components/RatingModal/RatingModal";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  useEffect,
-  useState,
-  useMemo,
-  Fragment,
-  useContext,
-  useCallback
-} from "react";
+import { useEffect, useState, useMemo, Fragment, useContext } from "react";
 import { MediaContext } from "Store/MediaContext";
 import { NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
@@ -53,8 +46,7 @@ export const FavoritesCTA = ({ clickHandler, mediaData }) => {
             <ModalCard>
               <h5 className='m-0'>
                 Are you sure you want to remove{" "}
-                <span className='d-inline fw-bold'>{`${name} (${year})`}</span>{" "}
-                from favorites
+                <span className='d-inline fw-bold'>{`${name} (${year})`}</span> from favorites
               </h5>
 
               <div
@@ -95,14 +87,11 @@ export const FavoritesCTA = ({ clickHandler, mediaData }) => {
 
 const Favorites = () => {
   const [tabState, setTabState] = useState("");
-  const { favoriteMovies, favoriteTvShows, revalidateFavorites } =
-    useContext(MediaContext);
+  const { favoriteMovies, favoriteTvShows, revalidateFavorites } = useContext(MediaContext);
 
-  const [favoriteMoviesFromApi, setFavoriteMoviesFromApi] =
-    useState(favoriteMovies);
+  const [favoriteMoviesFromApi, setFavoriteMoviesFromApi] = useState(favoriteMovies);
 
-  const [favoriteTvShowsFromApi, setFavoriteTvShowsFromApi] =
-    useState(favoriteTvShows);
+  const [favoriteTvShowsFromApi, setFavoriteTvShowsFromApi] = useState(favoriteTvShows);
 
   const { setFavorite } = useSetFavorite();
 
@@ -118,31 +107,24 @@ const Favorites = () => {
     }
   }, [favoriteTvShows]);
 
-  const filterMedia = useCallback(
-    async ({ id, type }) => {
-      const response = await setFavorite({
-        mediaType: type,
-        mediaId: id,
-        favoriteState: false
-      });
+  const filterMedia = async ({ id, type }) => {
+    const response = await setFavorite({
+      mediaType: type,
+      mediaId: id,
+      favoriteState: false
+    });
 
-      if (response?.success) {
-        if (type === "movie") {
-          setFavoriteMoviesFromApi((prev) =>
-            prev?.filter((item) => item?.id !== id)
-          );
-          revalidationWrapper(() => revalidateFavorites("favoriteMovies"));
-        } else {
-          setFavoriteTvShowsFromApi((prev) =>
-            prev?.filter((item) => item?.id !== id)
-          );
+    if (response?.success) {
+      if (type === "movie") {
+        setFavoriteMoviesFromApi((prev) => prev?.filter((item) => item?.id !== id));
+        revalidationWrapper(() => revalidateFavorites("favoriteMovies"));
+      } else {
+        setFavoriteTvShowsFromApi((prev) => prev?.filter((item) => item?.id !== id));
 
-          revalidationWrapper(() => revalidateFavorites("favoriteTvShows"));
-        }
+        revalidationWrapper(() => revalidateFavorites("favoriteTvShows"));
       }
-    },
-    [revalidateFavorites, setFavorite]
-  );
+    }
+  };
 
   return (
     <Fragment>
@@ -161,9 +143,7 @@ const Favorites = () => {
                 {favoriteMoviesFromApi.map((movie) => (
                   <MediaCard key={movie?.id} data={movie} link='movies'>
                     <FavoritesCTA
-                      clickHandler={() =>
-                        filterMedia({ id: movie?.id, type: "movie" })
-                      }
+                      clickHandler={() => filterMedia({ id: movie?.id, type: "movie" })}
                       mediaData={{
                         name: movie?.title,
                         releaseDate: movie?.release_date
@@ -192,9 +172,7 @@ const Favorites = () => {
                 {favoriteTvShowsFromApi.map((tv) => (
                   <MediaCard key={tv?.id} data={tv} link='tv'>
                     <FavoritesCTA
-                      clickHandler={() =>
-                        filterMedia({ id: tv?.id, type: "tv" })
-                      }
+                      clickHandler={() => filterMedia({ id: tv?.id, type: "tv" })}
                       mediaData={{
                         name: tv?.name,
                         releaseDate: tv?.first_air_date
