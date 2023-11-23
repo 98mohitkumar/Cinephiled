@@ -1,4 +1,4 @@
-import MetaWrapper from 'components/MetaWrapper';
+import MetaWrapper from "components/MetaWrapper";
 import {
   QueryContainer,
   QueryImg,
@@ -8,14 +8,14 @@ import {
   QueryDescription,
   SearchResultsContainer,
   EmptySearch
-} from 'components/SearchTab/SearchTabStyles';
-import { motion } from 'framer-motion';
-import { apiEndpoints } from 'globals/constants';
-import useGetReleaseDates from 'hooks/useGetReleaseDates';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Fragment } from 'react';
-import { Error404, SearchContainer } from 'styles/GlobalComponents';
+} from "components/SearchTab/SearchTabStyles";
+import { motion } from "framer-motion";
+import { apiEndpoints } from "globals/constants";
+import useGetReleaseDates from "hooks/useGetReleaseDates";
+import Image from "next/image";
+import Link from "next/link";
+import { Fragment } from "react";
+import { Error404, SearchContainer } from "styles/GlobalComponents";
 
 const Keyword = ({ error, results, name, id }) => {
   const releaseDates = useGetReleaseDates(error ? [] : results);
@@ -23,7 +23,7 @@ const Keyword = ({ error, results, name, id }) => {
   return (
     <Fragment>
       <MetaWrapper
-        title={!error ? `${name} - Movies` : 'Not Found - Cinephiled'}
+        title={!error ? `${name} - Movies` : "Not Found - Cinephiled"}
         description={`Movies matching the keyword : ${name}`}
         url={`https://cinephiled.vercel.app/keywords/${id}`}
       />
@@ -43,13 +43,9 @@ const Keyword = ({ error, results, name, id }) => {
                 {results.map((item, i) => (
                   <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
                     <Link
-                      href={`/movies/${item.id}-${item.title.replace(
-                        /[' ', '/']/g,
-                        '-'
-                      )}`}
+                      href={`/movies/${item.id}-${item.title.replace(/[' ', '/']/g, "-")}`}
                       passHref
-                      scroll={false}
-                    >
+                      scroll={false}>
                       <a>
                         <QueryContainer>
                           <QueryImg className='position-relative text-center'>
@@ -57,7 +53,7 @@ const Keyword = ({ error, results, name, id }) => {
                               src={
                                 item.poster_path
                                   ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                                  : '/Images/DefaultImage.png'
+                                  : "/Images/DefaultImage.png"
                               }
                               alt='movie-poster'
                               layout='fill'
@@ -69,9 +65,7 @@ const Keyword = ({ error, results, name, id }) => {
                           <QueryInfoWrapper>
                             <div>
                               <QueryTitle>{item.title}</QueryTitle>
-                              <QueryReleaseDate>
-                                {releaseDates[i]}
-                              </QueryReleaseDate>
+                              <QueryReleaseDate>{releaseDates[i]}</QueryReleaseDate>
                             </div>
                             <QueryDescription>{item.overview}</QueryDescription>
                           </QueryInfoWrapper>
@@ -93,21 +87,19 @@ Keyword.getInitialProps = async (ctx) => {
   try {
     const keyword = ctx.query.id;
 
-    const keywordRes = await fetch(
-      apiEndpoints.keywords.keywordDetails(keyword)
-    );
+    const keywordRes = await fetch(apiEndpoints.keywords.keywordDetails(keyword));
 
     const error = keywordRes.ok ? false : true;
 
     if (error) {
-      throw new Error('cannot fetch data');
+      throw new Error("cannot fetch data");
     } else {
       const keywordData = await keywordRes.json();
 
       return {
         error,
         results: keywordData.results,
-        name: keyword.split('-')[1],
+        name: keyword.split("-").slice(1).join(" "),
         id: keyword
       };
     }
