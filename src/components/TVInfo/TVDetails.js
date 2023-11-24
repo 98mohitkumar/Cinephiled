@@ -1,8 +1,4 @@
-import {
-  revalidationWrapper,
-  useAddToWatchlist,
-  useSetFavorite
-} from "api/user";
+import { revalidationWrapper, useAddToWatchlist, useSetFavorite } from "api/user";
 import DominantColor from "components/DominantColor/DominantColor";
 import {
   Credits,
@@ -28,14 +24,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Fragment,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from "react";
+import { Fragment, useContext, useEffect, useMemo, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { BiListPlus, BiListCheck } from "react-icons/bi";
 import { BsStarHalf } from "react-icons/bs";
@@ -80,13 +69,7 @@ const TVDetails = ({
     revalidateWatchlist,
     ratedTvShows
   } = useContext(MediaContext);
-  const {
-    isToastVisible,
-    showToast,
-    removeToast,
-    toastMessage,
-    setToastMessage
-  } = useToast();
+  const { isToastVisible, showToast, removeToast, toastMessage, setToastMessage } = useToast();
 
   const savedRating = useMemo(
     () => ratedTvShows?.find((item) => item?.id === id)?.rating ?? false,
@@ -99,9 +82,7 @@ const TVDetails = ({
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    const isAddedToFavorites = favoriteTvShows
-      ?.map((item) => item.id)
-      ?.includes(id);
+    const isAddedToFavorites = favoriteTvShows?.map((item) => item.id)?.includes(id);
 
     if (favoriteTvShows.length > 0) {
       setIsFavorite(isAddedToFavorites);
@@ -109,9 +90,7 @@ const TVDetails = ({
   }, [favoriteTvShows, id]);
 
   useEffect(() => {
-    const isAddedToWatchlist = tvShowsWatchlist
-      ?.map((item) => item.id)
-      ?.includes(id);
+    const isAddedToWatchlist = tvShowsWatchlist?.map((item) => item.id)?.includes(id);
 
     if (tvShowsWatchlist.length > 0) {
       setAddedToWatchlist(isAddedToWatchlist);
@@ -124,7 +103,7 @@ const TVDetails = ({
     return { getH, getM };
   }, [runtime]);
 
-  const favoriteHandler = useCallback(async () => {
+  const favoriteHandler = async () => {
     if (status === "authenticated") {
       const response = await setFavorite({
         mediaType: "tv",
@@ -134,9 +113,7 @@ const TVDetails = ({
 
       if (response.success) {
         setIsFavorite((prev) => !prev);
-        setToastMessage(
-          isFavorite ? "Removed from favorites" : "Added to favorites"
-        );
+        setToastMessage(isFavorite ? "Removed from favorites" : "Added to favorites");
         showToast();
         removeToast();
         revalidationWrapper(() => revalidateFavorites("favoriteTvShows"));
@@ -146,19 +123,9 @@ const TVDetails = ({
       showToast();
       removeToast();
     }
-  }, [
-    isFavorite,
-    isToastVisible,
-    removeToast,
-    revalidateFavorites,
-    setFavorite,
-    setToastMessage,
-    showToast,
-    status,
-    id
-  ]);
+  };
 
-  const watchlistHandler = useCallback(async () => {
+  const watchlistHandler = async () => {
     if (status === "authenticated") {
       const response = await addToWatchlist({
         mediaType: "tv",
@@ -168,9 +135,7 @@ const TVDetails = ({
 
       if (response.success) {
         setAddedToWatchlist((prev) => !prev);
-        setToastMessage(
-          addedToWatchlist ? "Removed from watchlist" : "Added to watchlist"
-        );
+        setToastMessage(addedToWatchlist ? "Removed from watchlist" : "Added to watchlist");
         showToast();
         removeToast();
         revalidationWrapper(() => revalidateWatchlist("tvShowsWatchlist"));
@@ -180,19 +145,9 @@ const TVDetails = ({
       showToast();
       removeToast();
     }
-  }, [
-    addToWatchlist,
-    addedToWatchlist,
-    isToastVisible,
-    removeToast,
-    revalidateWatchlist,
-    setToastMessage,
-    showToast,
-    status,
-    id
-  ]);
+  };
 
-  const ratingModalHandler = useCallback(() => {
+  const ratingModalHandler = () => {
     if (status === "authenticated") {
       openModal();
     } else {
@@ -200,7 +155,7 @@ const TVDetails = ({
       showToast();
       removeToast();
     }
-  }, [openModal, removeToast, setToastMessage, showToast, status]);
+  };
 
   return (
     <Fragment>
@@ -273,9 +228,7 @@ const TVDetails = ({
               )}
 
               <AnimatePresence exitBeforeEnter initial={false}>
-                <div
-                  className='d-flex justify-content-start'
-                  style={{ gap: "1rem" }}>
+                <div className='d-flex justify-content-start' style={{ gap: "1rem" }}>
                   <FeatureButton
                     className='watchlist'
                     role='button'
@@ -405,9 +358,7 @@ const TVDetails = ({
                           }}>
                           <RatingOverlay className='media-page'>
                             <AiFillStar size='16px' />
-                            <p className='m-0 fw-semibold text'>
-                              {savedRating}
-                            </p>
+                            <p className='m-0 fw-semibold text'>{savedRating}</p>
                           </RatingOverlay>
                         </motion.div>
                       ) : (
@@ -452,15 +403,11 @@ const TVDetails = ({
                   {genres.map((item, i) => (
                     <Link
                       key={item.id}
-                      href={`/genre/${
-                        item.id.toString() + "-" + item.name.split(" ").join("")
-                      }/tv`}
+                      href={`/genre/${item.id.toString() + "-" + item.name.split(" ").join("")}/tv`}
                       passHref
                       scroll={false}>
                       <a>
-                        <Rounded className={genres.length == i + 1 && "sep"}>
-                          {item.name}
-                        </Rounded>
+                        <Rounded className={genres.length == i + 1 && "sep"}>{item.name}</Rounded>
                       </a>
                     </Link>
                   ))}
@@ -494,9 +441,7 @@ const TVDetails = ({
             <RatingWrapper>
               {rating !== 0 ? (
                 <Fragment>
-                  <Span className='display-3 fw-bolder'>
-                    {rating.toFixed(1)}
-                  </Span>
+                  <Span className='display-3 fw-bolder'>{rating.toFixed(1)}</Span>
                   <span> / 10</span>
                 </Fragment>
               ) : (
@@ -508,18 +453,10 @@ const TVDetails = ({
               <CreditsWrapper>
                 {crewData.map((item) => (
                   <Credits key={item.credit_id}>
-                    <Span className='d-block fw-normal'>
-                      {item.job ?? "Creator"}
-                    </Span>
-                    <Link
-                      href={`/person/${item.id}-${item.name.replace(
-                        /[' ', '/']/g,
-                        "-"
-                      )}`}>
+                    <Span className='d-block fw-normal'>{item.job ?? "Creator"}</Span>
+                    <Link href={`/person/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}>
                       <a>
-                        <Span className='d-block fw-bold credit'>
-                          {item.name}
-                        </Span>
+                        <Span className='d-block fw-bold credit'>{item.name}</Span>
                       </a>
                     </Link>
                   </Credits>

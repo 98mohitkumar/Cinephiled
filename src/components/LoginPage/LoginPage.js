@@ -1,31 +1,24 @@
 import { useLogin } from "api/auth";
 import MetaWrapper from "components/MetaWrapper";
-import { AnimatePresence, motion } from "framer-motion";
 import posters from "images/posters.webp";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Fragment, useState, useCallback, useEffect } from "react";
+import logo from "public/logo512.png";
+import { Fragment, useEffect } from "react";
 import { AboutBackground } from "styles/GlobalComponents";
-import logo from "../../../public/logo512.png";
-import {
-  Integration,
-  LoginButton,
-  LoginCard,
-  LoginContainer,
-  LoginText
-} from "./LoginPageStyles";
+import { Integration, LoginButton, LoginCard, LoginContainer, LoginText } from "./LoginPageStyles";
 
 const LoginPage = () => {
-  const [showForm, setShowForm] = useState(false);
-  const [isWaiting, setIsWaiting] = useState(false);
   const router = useRouter();
-  const { login, error, errorMessage, clearError, setError } = useLogin();
+  const { login, error, errorMessage, setError, isWaiting, setIsWaiting } = useLogin();
 
   // generate session after redirect
   useEffect(() => {
     const { query } = router;
-    const { approved, request_token } = query;
+    const { approved } = query;
+
+    const request_token = sessionStorage.getItem("request_token");
 
     const generateSession = async () => {
       const apiRes = await signIn("tmdb", {
@@ -44,31 +37,25 @@ const LoginPage = () => {
       setIsWaiting(true);
       generateSession();
     }
-  }, [router, setError]);
+  }, [router, setError, setIsWaiting]);
 
   // form submission handler
-  const formHandler = useCallback(
-    async (e) => {
-      e.preventDefault();
-      setIsWaiting(true);
-      const formData = new FormData(e.target);
+  // const formHandler = async (e) => {
+  //   e.preventDefault();
+  //   setIsWaiting(true);
+  //   const formData = new FormData(e.target);
 
-      const payload = {
-        username: formData.get("username"),
-        password: formData.get("password")
-      };
+  //   const payload = {
+  //     username: formData.get("username"),
+  //     password: formData.get("password")
+  //   };
 
-      if (
-        payload?.username.trim().length > 0 &&
-        payload?.password.trim().length > 0
-      ) {
-        await login({ withCredentials: true, payload });
-      } else {
-        e.target.reset();
-      }
-    },
-    [login]
-  );
+  //   if (payload?.username.trim().length > 0 && payload?.password.trim().length > 0) {
+  //     await login({ withCredentials: true, payload });
+  //   } else {
+  //     e.target.reset();
+  //   }
+  // };
 
   return (
     <Fragment>
@@ -115,55 +102,26 @@ const LoginPage = () => {
           </Integration>
 
           <div className='d-flex w-100 justify-content-center'>
-            <AnimatePresence exitBeforeEnter initial={false}>
-              {!showForm && (
-                <motion.div
-                  initial={{ display: "none", opacity: 0 }}
-                  animate={{
-                    opacity: 1,
-                    display: "block",
-                    transition: {
-                      type: "tween",
-                      delay: 0.6,
-                      duration: 0.6,
-                      ease: [0.77, 0, 0.175, 1]
-                    }
-                  }}
-                  exit={{
-                    opacity: 0,
-                    transition: {
-                      type: "tween",
-                      duration: 0.6,
-                      ease: [0.77, 0, 0.175, 1]
-                    }
-                  }}>
-                  <LoginText className='d-block mb-4'>
-                    In order to use the rating capabilities of Cinephiled, as
-                    well as using watchlist feature you will need to login with
-                    your TMDB account.
-                  </LoginText>
+            <div>
+              <LoginText className='d-block mb-4'>
+                In order to use the rating capabilities of Cinephiled, as well as using watchlist
+                feature you will need to login with your TMDB account.
+              </LoginText>
 
-                  <div className='d-flex flex-column align-items-center'>
-                    <LoginButton onClick={() => setShowForm(true)}>
+              <div className='d-flex flex-column align-items-center'>
+                {/* <LoginButton onClick={() => setShowForm(true)}>
                       Login with credentials
-                    </LoginButton>
+                    </LoginButton> */}
 
-                    <LoginButton
-                      onClick={() => login({ withCredentials: false })}
-                      className='secondary'
-                      isWaiting={isWaiting}>
-                      {isWaiting ? "Authenticating..." : "Login with TMDB"}
-                    </LoginButton>
+                <LoginButton onClick={login} className='secondary' isWaiting={isWaiting}>
+                  {isWaiting ? "Authenticating..." : "Login with TMDB"}
+                </LoginButton>
 
-                    {error && (
-                      <p className='text-danger m-0 pt-3'>{errorMessage}</p>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                {error && <p className='text-danger m-0 pt-3'>{errorMessage}</p>}
+              </div>
+            </div>
 
-            <AnimatePresence exitBeforeEnter>
+            {/* <AnimatePresence exitBeforeEnter>
               {showForm && (
                 <motion.div
                   initial={{ display: "none", opacity: 0 }}
@@ -217,9 +175,7 @@ const LoginPage = () => {
                       />
                     </div>
 
-                    {error && (
-                      <p className='text-danger mb-3'>{errorMessage}</p>
-                    )}
+                    {error && <p className='text-danger mb-3'>{errorMessage}</p>}
 
                     <LoginButton
                       type='submit'
@@ -249,7 +205,7 @@ const LoginPage = () => {
                   </form>
                 </motion.div>
               )}
-            </AnimatePresence>
+            </AnimatePresence> */}
           </div>
         </LoginCard>
       </LoginContainer>

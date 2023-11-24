@@ -1,7 +1,7 @@
-import { getRecommendations } from 'api/user';
-import { apiEndpoints } from 'globals/constants';
-import { useContext, useMemo, useEffect, useState, useRef } from 'react';
-import { UserContext } from 'Store/UserContext';
+import { getRecommendations } from "api/user";
+import { apiEndpoints } from "globals/constants";
+import { useContext, useMemo, useEffect, useState, useRef } from "react";
+import { UserContext } from "Store/UserContext";
 
 const useInfiniteQuery = ({
   initialPage,
@@ -48,7 +48,7 @@ const useInfiniteQuery = ({
       if (isProfileRecommendations) {
         const response = await getRecommendations({
           mediaType,
-          accountId: userInfo?.id,
+          accountId: userInfo?.accountId,
           pageQuery: pageToFetch
         });
 
@@ -62,17 +62,13 @@ const useInfiniteQuery = ({
           const data = await res.json();
           return data;
         } else {
-          throw Error('cannot fetch data');
+          throw Error("cannot fetch data");
         }
       }
     };
 
     function detectBottom() {
-      if (
-        window.innerHeight + window.scrollY >=
-          document.body.offsetHeight - 100 &&
-        !isEmptyPage
-      ) {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isEmptyPage) {
         clearTimeout(fetchTimeOut.current);
 
         fetchTimeOut.current = setTimeout(() => {
@@ -91,21 +87,13 @@ const useInfiniteQuery = ({
       }
     }
 
-    window.addEventListener('scroll', detectBottom);
+    window.addEventListener("scroll", detectBottom);
 
     return () => {
       abortCtrl.abort();
-      window.removeEventListener('scroll', detectBottom);
+      window.removeEventListener("scroll", detectBottom);
     };
-  }, [
-    endpoint,
-    isEmptyPage,
-    isProfileRecommendations,
-    mediaType,
-    pageToFetch,
-    type,
-    userInfo?.id
-  ]);
+  }, [endpoint, isEmptyPage, isProfileRecommendations, mediaType, pageToFetch, type, userInfo?.id]);
 
   return { list: extendedList };
 };

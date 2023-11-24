@@ -31,8 +31,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
   const [rating, updateRating] = useState(0);
   const { setRating } = useSetRating();
   const { deleteRating } = useDeleteRating();
-  const { ratedMovies, ratedTvShows, revalidateRated } =
-    useContext(MediaContext);
+  const { ratedMovies, ratedTvShows, revalidateRated } = useContext(MediaContext);
 
   const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -45,7 +44,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
     [mediaId, mediaType, ratedMovies, ratedTvShows]
   );
 
-  const ratingSubmissionHandler = useCallback(async () => {
+  const ratingSubmissionHandler = async () => {
     const res = await setRating({ mediaType, mediaId, rating });
 
     if (res?.success) {
@@ -53,16 +52,16 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
     }
 
     closeModal();
-  }, [closeModal, mediaId, mediaType, rating, revalidateRated, setRating]);
+  };
 
-  const deleteRatingHandler = useCallback(async () => {
+  const deleteRatingHandler = async () => {
     const res = await deleteRating({ mediaType, mediaId });
 
     if (res?.success) {
       revalidationWrapper(() => revalidateRated(mediaType, 1500));
     }
     closeModal();
-  }, [closeModal, deleteRating, mediaId, mediaType, revalidateRated]);
+  };
 
   return (
     <RatingModalContainer
@@ -155,32 +154,20 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
                   Your rating : <strong>{rating}/10</strong>
                 </Span>
               )}
-              <div
-                className='d-flex align-items-center my-3'
-                style={{ gap: "8px" }}>
+              <div className='d-flex align-items-center my-3' style={{ gap: "8px" }}>
                 <Span className='fw-normal'>Rate :</Span>
                 <RatingStarsContainer>
                   {[...Array(10).keys()].map((i) =>
                     rating <= i ? (
-                      <AiOutlineStar
-                        key={i}
-                        className='star'
-                        onClick={() => updateRating(i + 1)}
-                      />
+                      <AiOutlineStar key={i} className='star' onClick={() => updateRating(i + 1)} />
                     ) : (
-                      <AiFillStar
-                        key={i}
-                        className='star'
-                        onClick={() => updateRating(i + 1)}
-                      />
+                      <AiFillStar key={i} className='star' onClick={() => updateRating(i + 1)} />
                     )
                   )}
                 </RatingStarsContainer>
               </div>
 
-              <div
-                className='d-flex justify-between align-items-center'
-                style={{ gap: "1rem" }}>
+              <div className='d-flex justify-between align-items-center' style={{ gap: "1rem" }}>
                 <RatingButton
                   className='secondary'
                   onClick={closeModal}
@@ -220,13 +207,11 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
             }
           }}>
           <h5 className='mb-4'>
-            Are you sure you want to delete{" "}
-            <span className='d-inline fw-bold'>{mediaName}</span> rating
+            Are you sure you want to delete <span className='d-inline fw-bold'>{mediaName}</span>{" "}
+            rating
           </h5>
 
-          <div
-            className='d-flex justify-between align-items-center'
-            style={{ gap: "1rem" }}>
+          <div className='d-flex justify-between align-items-center' style={{ gap: "1rem" }}>
             <RatingButton
               className='secondary'
               onClick={closeModal}

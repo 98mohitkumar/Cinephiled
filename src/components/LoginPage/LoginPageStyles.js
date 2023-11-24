@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const LoginContainer = styled.div`
   width: 100%;
@@ -39,14 +39,12 @@ export const LoginCard = styled.div`
   max-width: 500px;
   min-width: clamp(370px, 90vw, 500px);
   padding: 1.75rem;
-  min-height: 375px;
   gap: 2rem;
   overflow: hidden;
   border-radius: 12px;
-  border: 1px solid rgba(80, 80, 80, 0.75);
+  border: 1px solid rgba(80, 80, 80, 0.45);
   background: rgba(18, 18, 18);
-  box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
-    0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
+  box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14), 0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
     0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
@@ -78,7 +76,7 @@ export const LoginCard = styled.div`
     margin: auto;
     font-weight: 400;
     color: white;
-    font-family: 'Manrope', sans-serif;
+    font-family: "Manrope", sans-serif;
 
     &:-webkit-autofill {
       box-shadow: 0 0 0 30px #121212 inset !important;
@@ -93,7 +91,7 @@ export const LoginCard = styled.div`
     &::placeholder {
       color: grey;
       font-weight: 400;
-      font-family: 'Manrope', sans-serif;
+      font-family: "Manrope", sans-serif;
     }
 
     &:focus {
@@ -119,13 +117,13 @@ export const LoginButton = styled.button`
   justify-content: center;
   padding: 0.75rem 1.25rem;
   border-radius: 8px;
-  max-width: 260px;
+  max-width: 250px;
   font-size: 1.1rem;
   border: none;
   font-weight: 500;
   background: rgb(221, 221, 221);
 
-  ${({ isWaiting }) => isWaiting && 'pointer-events: none'};
+  ${({ isWaiting }) => isWaiting && "pointer-events: none"};
 
   &.secondary {
     background-color: transparent;

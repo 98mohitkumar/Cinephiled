@@ -1,27 +1,27 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { apiEndpoints } from 'globals/constants';
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
-import { Container } from 'styles/GlobalComponents';
-import { Banner, Button, Form, HeroDiv, UserInput } from './HeroStyles';
-import SearchSuggestion from './searchSuggestion';
+import { AnimatePresence, motion } from "framer-motion";
+import { apiEndpoints } from "globals/constants";
+import { useRouter } from "next/router";
+import { useEffect, useMemo, useState, useRef } from "react";
+import { Container } from "styles/GlobalComponents";
+import { Banner, Button, Form, HeroDiv, UserInput } from "./HeroStyles";
+import SearchSuggestion from "./searchSuggestion";
 
 const Hero = ({ searchModal }) => {
-  const userInputRef = useRef('');
+  const userInputRef = useRef("");
   const router = useRouter();
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
   const [showButton, setShowButton] = useState(false);
   const [movieSuggestions, setMovieSuggestions] = useState([]);
   const [tvSuggestions, setTvSuggestions] = useState([]);
   const searchInputUpdate = useRef(null);
 
-  const inputChangeHandler = useCallback((e) => {
+  const inputChangeHandler = (e) => {
     clearTimeout(searchInputUpdate);
 
     searchInputUpdate.current = setTimeout(() => {
       setUserInput(e.target.value);
     }, 1000);
-  }, []);
+  };
 
   useEffect(() => {
     if (userInput.length === 0 || userInput.trim().length === 0) {
@@ -32,14 +32,14 @@ const Hero = ({ searchModal }) => {
       // fetch for suggestions
       const fetchSuggestions = async () => {
         let searchQuery = userInput;
-        let year = '';
+        let year = "";
 
-        if (searchQuery.includes('y:')) {
+        if (searchQuery.includes("y:")) {
           year = searchQuery.slice(-4);
           searchQuery = searchQuery.slice(0, searchQuery.length - 7);
         }
 
-        if (year !== '') {
+        if (year !== "") {
           const movieResponse = await fetch(
             apiEndpoints.search.movieSearchWithYear({
               query: searchQuery,
@@ -68,9 +68,7 @@ const Hero = ({ searchModal }) => {
             apiEndpoints.search.movieSearch({ query: searchQuery })
           );
 
-          const tvResponse = await fetch(
-            apiEndpoints.search.tvSearch({ query: searchQuery })
-          );
+          const tvResponse = await fetch(apiEndpoints.search.tvSearch({ query: searchQuery }));
 
           const error = movieResponse.ok && tvResponse.ok ? false : true;
 
@@ -101,24 +99,21 @@ const Hero = ({ searchModal }) => {
     }
   }, [userInput]);
 
-  const searchHandler = useCallback(
-    async (event) => {
-      event.preventDefault();
+  const searchHandler = async (event) => {
+    event.preventDefault();
 
-      if (userInput.length === 0 || userInput.trim().length === 0) {
-        return;
-      } else {
-        router.push({
-          pathname: '/search/[query]',
-          query: { query: userInput }
-        });
-        userInputRef.current = '';
-      }
-    },
-    [router, userInput]
-  );
+    if (userInput.length === 0 || userInput.trim().length === 0) {
+      return;
+    } else {
+      router.push({
+        pathname: "/search/[query]",
+        query: { query: userInput }
+      });
+      userInputRef.current = "";
+    }
+  };
 
-  tvSuggestions.forEach((item) => (item.type = 'tv'));
+  tvSuggestions.forEach((item) => (item.type = "tv"));
 
   const sortedSuggestion = useMemo(
     () =>
@@ -140,23 +135,21 @@ const Hero = ({ searchModal }) => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', scrollListener);
+    window.addEventListener("scroll", scrollListener);
 
-    return () => window.removeEventListener('scroll', scrollListener);
+    return () => window.removeEventListener("scroll", scrollListener);
   }, []);
 
   const keyHandler = (e, index, onSearchInput = false) => {
-    if (onSearchInput && e.code === 'ArrowDown') {
-      const firstSuggestionEl = document.querySelector(
-        '.first-suggestion-item'
-      );
+    if (onSearchInput && e.code === "ArrowDown") {
+      const firstSuggestionEl = document.querySelector(".first-suggestion-item");
       e.preventDefault();
       firstSuggestionEl?.focus();
     }
 
-    if (e.code === 'ArrowDown' && !onSearchInput) {
+    if (e.code === "ArrowDown" && !onSearchInput) {
       const lastItem = (index + 1) % 5 === 0;
-      const scrollContainer = document.querySelector('.suggestions');
+      const scrollContainer = document.querySelector(".suggestions");
 
       if (!lastItem) {
         e.preventDefault();
@@ -167,9 +160,9 @@ const Hero = ({ searchModal }) => {
       e.target?.nextElementSibling?.focus();
     }
 
-    if (e.code === 'ArrowUp' && !onSearchInput) {
+    if (e.code === "ArrowUp" && !onSearchInput) {
       const lastItem = (index + 1) % 5 === 0;
-      const scrollContainer = document.querySelector('.suggestions');
+      const scrollContainer = document.querySelector(".suggestions");
 
       if (!lastItem) {
         e.preventDefault();
@@ -185,9 +178,7 @@ const Hero = ({ searchModal }) => {
 
   return (
     <Container className='d-flex justify-content-center align-items-center position-relative mb-auto'>
-      <div className='overflow-wrapper'>
-        {!searchModal && <Banner ref={bannerRef} />}
-      </div>
+      <div className='overflow-wrapper'>{!searchModal && <Banner ref={bannerRef} />}</div>
       <HeroDiv searchModal={searchModal}>
         <Form onSubmit={searchHandler}>
           <div className='wrapper w-100 position-relative'>
@@ -208,14 +199,8 @@ const Hero = ({ searchModal }) => {
                   whileHover={{
                     scale: 1.05
                   }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Button
-                    tabIndex={-1}
-                    show={showButton}
-                    className='btn d-block'
-                    type='submit'
-                  >
+                  whileTap={{ scale: 0.95 }}>
+                  <Button tabIndex={-1} show={showButton} className='btn d-block' type='submit'>
                     Search
                   </Button>
                 </motion.div>
@@ -229,17 +214,14 @@ const Hero = ({ searchModal }) => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
+                  transition={{ duration: 0.5 }}>
                   <div className='mt-2 suggestions'>
                     {sortedSuggestion.map((item, index) => (
                       <SearchSuggestion
                         key={item.id}
-                        type={item.type === 'tv' ? 'tv' : 'movie'}
+                        type={item.type === "tv" ? "tv" : "movie"}
                         data={item}
-                        className={`${
-                          index === 0 ? 'first-suggestion-item' : ''
-                        }`}
+                        className={`${index === 0 ? "first-suggestion-item" : ""}`}
                         onKeyDown={(e) => keyHandler(e, index, false)}
                       />
                     ))}
