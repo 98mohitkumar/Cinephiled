@@ -1,11 +1,11 @@
-import MetaWrapper from 'components/MetaWrapper';
-import Recommendations from 'components/Recommendations/Recommendations';
-import TVDetails from 'components/TVInfo/TVDetails';
-import TVFacts from 'components/TVInfo/TVFacts';
-import TVTab from 'components/TVInfo/TVTab';
-import { apiEndpoints } from 'globals/constants';
-import { Fragment } from 'react';
-import { Error404 } from 'styles/GlobalComponents';
+import MetaWrapper from "components/MetaWrapper";
+import Recommendations from "components/Recommendations/Recommendations";
+import TVDetails from "components/TVInfo/TVDetails";
+import TVFacts from "components/TVInfo/TVFacts";
+import TVTab from "components/TVInfo/TVTab";
+import { apiEndpoints } from "globals/constants";
+import { Fragment } from "react";
+import { Error404 } from "styles/GlobalComponents";
 
 const TvShow = ({
   id,
@@ -39,16 +39,11 @@ const TvShow = ({
     <Fragment>
       <MetaWrapper
         title={
-          !error
-            ? `${title} (${releaseYear} - ${endYear}) - Cinephiled`
-            : 'Not Found - Cinephiled'
+          !error ? `${title} (${releaseYear} - ${endYear}) - Cinephiled` : "Not Found - Cinephiled"
         }
         description={overview}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
-        url={`https://cinephiled.vercel.app/tv/${id}-${title?.replace(
-          /[' ', '/']/g,
-          '-'
-        )}`}
+        url={`https://cinephiled.vercel.app/tv/${id}-${title?.replace(/[' ', '/']/g, "-")}`}
       />
 
       {error ? (
@@ -88,9 +83,7 @@ const TvShow = ({
           />
 
           {/* recommendations */}
-          {recommendations?.length > 0 && (
-            <Recommendations data={recommendations} type='tv' />
-          )}
+          {recommendations?.length > 0 && <Recommendations data={recommendations} type='tv' />}
         </Fragment>
       )}
     </Fragment>
@@ -112,30 +105,27 @@ TvShow.getInitialProps = async (ctx) => {
 
       const releaseYear = tvData?.first_air_date
         ? new Date(tvData?.first_air_date).getFullYear()
-        : 'TBA';
+        : "TBA";
 
       const endYear =
-        tvData?.status === 'Ended' || tvData.status === 'Canceled'
+        tvData?.status === "Ended" || tvData.status === "Canceled"
           ? new Date(tvData?.last_air_date).getFullYear()
-          : '';
+          : "";
 
-      const language = languages.filter(
-        (item) => item.iso_639_1 === tvData.original_language
-      );
+      const language = languages.filter((item) => item.iso_639_1 === tvData.original_language);
 
-      const status = !tvData.status ? 'TBA' : tvData?.status;
-      const network = !tvData.networks[0] ? 'TBA' : tvData?.networks[0]?.name;
+      const status = tvData?.status || "TBA";
+      const network = tvData.networks?.[0]?.name || "TBA";
       const crewData = [
         ...tvData?.created_by?.slice(0, 2),
         ...tvData?.aggregate_credits?.crew
-          ?.filter((credit) => credit.job === 'Characters')
+          ?.filter((credit) => credit.job === "Characters")
           .slice(0, 2)
       ];
 
       const trailers = tvData?.videos?.results?.filter(
         (item) =>
-          item?.site === 'YouTube' &&
-          (item?.type === 'Trailer' || item.type === 'Opening Credits')
+          item?.site === "YouTube" && (item?.type === "Trailer" || item.type === "Opening Credits")
       );
 
       return {
@@ -150,7 +140,7 @@ TvShow.getInitialProps = async (ctx) => {
         posterPath: tvData?.poster_path,
         backdropPath: tvData?.backdrop_path,
         crewData,
-        trailerLink: trailers?.[0]?.key ?? '',
+        trailerLink: trailers?.[0]?.key ?? "",
         socialIds: tvData?.external_ids,
         homepage: tvData?.homepage,
         status,

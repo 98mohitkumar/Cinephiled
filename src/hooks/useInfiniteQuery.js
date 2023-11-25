@@ -93,7 +93,16 @@ const useInfiniteQuery = ({
       abortCtrl.abort();
       window.removeEventListener("scroll", detectBottom);
     };
-  }, [endpoint, isEmptyPage, isProfileRecommendations, mediaType, pageToFetch, type, userInfo?.id]);
+  }, [
+    endpoint,
+    isEmptyPage,
+    isProfileRecommendations,
+    mediaType,
+    pageToFetch,
+    type,
+    userInfo?.accountId,
+    userInfo.id
+  ]);
 
   return { list: extendedList };
 };

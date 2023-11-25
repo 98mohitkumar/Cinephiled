@@ -1,34 +1,32 @@
-import MetaWrapper from 'components/MetaWrapper';
-import { Span } from 'components/MovieInfo/MovieDetailsStyles';
+import MetaWrapper from "components/MetaWrapper";
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import {
   RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
   RecommendedWrapper,
   InfoTitle
-} from 'components/Recommendations/RecommendationsStyles';
-import { motion } from 'framer-motion';
-import { apiEndpoints } from 'globals/constants';
-import useInfiniteQuery from 'hooks/useInfiniteQuery';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Fragment } from 'react';
-import { NoDataText, Error404 } from 'styles/GlobalComponents/index';
+} from "components/Recommendations/RecommendationsStyles";
+import { motion } from "framer-motion";
+import { apiEndpoints } from "globals/constants";
+import useInfiniteQuery from "hooks/useInfiniteQuery";
+import Image from "next/image";
+import Link from "next/link";
+import { Fragment } from "react";
+import { NoDataText, Error404 } from "styles/GlobalComponents/index";
 
 const Movies = ({ renderList, genreName, error, genreId }) => {
   const { list } = useInfiniteQuery({
     initialPage: 3,
-    type: 'movieGenre',
+    type: "movieGenre",
     genreId
   });
 
   return (
     <Fragment>
       <MetaWrapper
-        title={
-          !error ? `${genreName} Movies - Cinephiled` : 'Not Found - Cinephiled'
-        }
-        description={!error ? `${genreName} Movies` : 'Not Found'}
+        title={!error ? `${genreName} Movies - Cinephiled` : "Not Found - Cinephiled"}
+        description={!error ? `${genreName} Movies` : "Not Found"}
         url={`https://cinephiled.vercel.app/genre/${genreId}-${genreName}/movies`}
       />
 
@@ -37,14 +35,10 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
       ) : (
         <RecommendationsContainer>
           {renderList.length === 0 ? (
-            <NoDataText className='fw-bold text-center my-5'>
-              No Movies For Now
-            </NoDataText>
+            <NoDataText className='fw-bold text-center my-5'>No Movies For Now</NoDataText>
           ) : (
             <Fragment>
-              <Span className='d-block fs-1 text-center genre'>
-                {genreName} Movies
-              </Span>
+              <Span className='d-block fs-1 text-center genre'>{genreName} Movies</Span>
               <RecommendationsGrid>
                 {renderList.concat(list).map((item) => (
                   <RecommendedWrapper key={item.id}>
@@ -53,23 +47,18 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                         scale: 1.05,
                         transition: { duration: 0.1 }
                       }}
-                      whileTap={{ scale: 0.95 }}
-                    >
+                      whileTap={{ scale: 0.95 }}>
                       <Link
-                        href={`/movies/${item.id}-${item.title.replace(
-                          /[' ', '/']/g,
-                          '-'
-                        )}`}
+                        href={`/movies/${item.id}-${item.title.replace(/[' ', '/']/g, "-")}`}
                         passHref
-                        scroll={false}
-                      >
+                        scroll={false}>
                         <a>
                           <RecommendedImg className='position-relative text-center'>
                             <Image
                               src={
                                 item.backdrop_path
                                   ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
-                                  : '/Images/DefaultBackdrop.png'
+                                  : "/Images/DefaultBackdrop.png"
                               }
                               alt='movie-poster'
                               layout='fill'
@@ -81,9 +70,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                         </a>
                       </Link>
                     </motion.div>
-                    <InfoTitle className='mt-3 mb-0 text-center'>
-                      {item.title}
-                    </InfoTitle>
+                    <InfoTitle className='mt-3 mb-0 text-center'>{item.title}</InfoTitle>
                   </RecommendedWrapper>
                 ))}
               </RecommendationsGrid>
@@ -99,15 +86,11 @@ export default Movies;
 
 Movies.getInitialProps = async (ctx) => {
   try {
-    const genreId = ctx.query.item.split('-')[0];
-    const genreName = ctx.query.item.split('-')[1];
+    const genreId = ctx.query.item.split("-")[0];
+    const genreName = ctx.query.item.split("-").slice(1).join(" ");
 
-    const response = await fetch(
-      apiEndpoints.movie.movieGenre({ genreId, pageQuery: 1 })
-    );
-    const nextPage = await fetch(
-      apiEndpoints.movie.movieGenre({ genreId, pageQuery: 2 })
-    );
+    const response = await fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 1 }));
+    const nextPage = await fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 2 }));
 
     const error = response.ok ? false : true;
 
@@ -117,7 +100,7 @@ Movies.getInitialProps = async (ctx) => {
       const moviesList = await response.json();
       const secondMoviesList = await nextPage.json();
 
-      const renderList = moviesList['results'].concat(secondMoviesList.results);
+      const renderList = moviesList["results"].concat(secondMoviesList.results);
 
       return {
         renderList,

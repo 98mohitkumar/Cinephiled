@@ -72,7 +72,12 @@ export const apiEndpoints = {
       `${baseUrlV3}/discover/movie?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
 
     getMovieCredits: ({ id }) =>
-      `${baseUrlV3}/movie/${id}?api_key=${api_key}&language=en-US&append_to_response=credits`
+      `${baseUrlV3}/movie/${id}?api_key=${api_key}&language=en-US&append_to_response=credits`,
+
+    movieGenreList: `${baseUrlV3}/genre/movie/list?api_key=${api_key}&language=en`,
+
+    nowPlaying: ({ region }) =>
+      `${baseUrlV3}/movie/now_playing?api_key=${api_key}&page=1&region=${region}`
   },
   tv: {
     popularTV: `${baseUrlV3}/tv/popular?api_key=${api_key}&language=en-US&page=1`,
@@ -94,7 +99,9 @@ export const apiEndpoints = {
       `${baseUrlV3}/discover/tv?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
 
     getTvCredits: ({ id }) =>
-      `${baseUrlV3}/tv/${id}?api_key=${api_key}&language=en-US&append_to_response=aggregate_credits`
+      `${baseUrlV3}/tv/${id}?api_key=${api_key}&language=en-US&append_to_response=aggregate_credits`,
+
+    tvGenreList: `${baseUrlV3}/genre/tv/list?api_key=${api_key}&language=en`
   },
   keywords: {
     keywordDetails: (id) =>

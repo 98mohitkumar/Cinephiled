@@ -19,6 +19,7 @@ import {
 
 const navLinks = [
   { text: "Home", link: "/" },
+  { text: "Explore", link: "/explore" },
   { text: "About", link: "/about" }
 ];
 
