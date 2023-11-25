@@ -436,7 +436,9 @@ const MovieDetails = ({
                   {genres.map((item, i) => (
                     <Link
                       key={item.id}
-                      href={`/genre/${item.id.toString() + "-" + item.name}/movies`}
+                      href={`/genre/${
+                        item.id.toString() + "-" + item.name.replaceAll(" ", "-")
+                      }/movies`}
                       passHref
                       scroll={false}>
                       <a>

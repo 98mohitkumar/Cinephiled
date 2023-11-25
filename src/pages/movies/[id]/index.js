@@ -142,15 +142,13 @@ Movie.getInitialProps = async (ctx) => {
     } else {
       const movieDetails = await movieResponse.json();
       const languages = await languagesResponse.json();
-      const country = !movieDetails?.production_countries[0]
-        ? "US"
-        : movieDetails?.production_countries[0].iso_3166_1;
+      const country = movieDetails?.production_companies[0]?.origin_country || "US";
 
       const releaseYear = !movieDetails?.release_date
         ? "TBA"
         : new Date(movieDetails?.release_date).getFullYear();
 
-      const status = !movieDetails?.status ? "TBA" : movieDetails?.status;
+      const status = movieDetails?.status || "TBA";
 
       const language = languages.filter(
         (item) => item.iso_639_1 === movieDetails.original_language
