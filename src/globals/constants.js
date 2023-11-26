@@ -42,7 +42,9 @@ export const apiEndpoints = {
       `${baseUrlV3}/${mediaType}/${mediaId}/rating?api_key=${api_key}&session_id=${sessionId}`,
 
     getRecommendations: ({ mediaType, accountId, pageQuery = 1 }) =>
-      `${baseUrlV4}/account/${accountId}/${mediaType}/recommendations?page=${pageQuery}`
+      `${baseUrlV4}/account/${accountId}/${mediaType}/recommendations?page=${pageQuery}`,
+
+    getCountryCode: `https://ipwho.is?fields=country_code`
   },
   search: {
     movieSearchWithYear: ({ query, year }) =>

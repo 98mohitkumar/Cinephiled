@@ -1,17 +1,18 @@
 import MoviesGrid from "components/Popular/PopularMovies";
 import { motion } from "framer-motion";
 import { apiEndpoints } from "globals/constants";
-import useGetRegion from "hooks/useGetRegion";
 import { Fragment, useEffect, useState } from "react";
+import { getCountryCode } from "src/utils/helper";
 
 const NowPlayingMovies = () => {
   const [nowPlaying, setNowPlaying] = useState([]);
-  const { loading, region } = useGetRegion();
 
   useEffect(() => {
     const AbortCtrl = new AbortController();
 
     const getNowPlaying = async () => {
+      const region = await getCountryCode();
+
       const res = await fetch(apiEndpoints.movie.nowPlaying({ region }), {
         signal: AbortCtrl.signal
       });
@@ -24,18 +25,16 @@ const NowPlayingMovies = () => {
       }
     };
 
-    if (!loading) {
-      getNowPlaying()
-        .then((data) => setNowPlaying(data.results))
-        .catch(() => setNowPlaying([]));
-    }
+    getNowPlaying()
+      .then((data) => setNowPlaying(data.results))
+      .catch(() => setNowPlaying([]));
 
     return () => AbortCtrl.abort();
-  }, [region, loading]);
+  }, []);
 
   return (
     <Fragment>
-      {!loading && nowPlaying?.length > 0 && (
+      {nowPlaying?.length > 0 && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
