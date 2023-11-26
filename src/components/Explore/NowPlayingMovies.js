@@ -44,9 +44,7 @@ const NowPlayingMovies = () => {
           <h2 className='display-6 fw-bold text-white text-center mt-3 mb-4 d-block px-4'>
             Movies playing in theaters
           </h2>
-          <MoviesGrid
-            movies={nowPlaying?.sort((a, b) => Date.parse(b.popularity) - Date.parse(a.popularity))}
-          />
+          <MoviesGrid movies={nowPlaying} />
         </motion.div>
       )}
     </Fragment>
