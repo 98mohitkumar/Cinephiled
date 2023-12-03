@@ -9,7 +9,8 @@ const useInfiniteQuery = ({
   mediaType,
   genreId = null,
   searchQuery = null,
-  isProfileRecommendations = false
+  isProfileRecommendations = false,
+  networkId = null
 }) => {
   const [pageToFetch, setPageToFetch] = useState(initialPage);
   const [extendedList, setExtendedList] = useState([]);
@@ -36,9 +37,10 @@ const useInfiniteQuery = ({
       keywordSearch: apiEndpoints.search.keywordSearch({
         query: searchQuery,
         pageQuery: pageToFetch
-      })
+      }),
+      networkMedia: apiEndpoints.network.networkMedia({ id: networkId, pageQuery: pageToFetch })
     }),
-    [genreId, pageToFetch, searchQuery]
+    [genreId, networkId, pageToFetch, searchQuery]
   );
 
   useEffect(() => {

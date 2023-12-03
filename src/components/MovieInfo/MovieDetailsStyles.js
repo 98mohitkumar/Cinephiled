@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const HeroInfoWrapper = styled.div`
   color: white;
@@ -72,6 +72,16 @@ export const Span = styled.span`
     font-size: 14px;
     opacity: 0.8;
   }
+
+  &.network {
+    text-decoration: underline dotted;
+    text-underline-offset: 0.3rem;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
 `;
 
 export const ReleaseDateWrapper = styled.div`
@@ -128,7 +138,7 @@ export const Rounded = styled.div`
     text-decoration: underline;
 
     &::after {
-      content: ',';
+      content: ",";
       position: absolute;
       right: -6px;
       bottom: 0;
@@ -408,7 +418,7 @@ export const LightsInOut = styled.div`
     z-index: 11;
   }
 }`
-      : 'display: none'};
+      : "display: none"};
   inset: 22rem 0 0 0;
   cursor: pointer;
 
@@ -425,7 +435,7 @@ export const EasterText = styled.span`
   height: max-content;
   text-align: center;
   font-weight: 500;
-  display: ${(props) => (props.show ? 'inline' : 'none')};
+  display: ${(props) => (props.show ? "inline" : "none")};
 
   ${(props) =>
     props.show &&

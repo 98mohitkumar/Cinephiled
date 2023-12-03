@@ -115,7 +115,7 @@ TvShow.getInitialProps = async (ctx) => {
       const language = languages.filter((item) => item.iso_639_1 === tvData.original_language);
 
       const status = tvData?.status || "TBA";
-      const network = tvData.networks?.[0]?.name || "TBA";
+      const network = tvData.networks?.[0] || "TBA";
       const crewData = [
         ...tvData?.created_by?.slice(0, 2),
         ...tvData?.aggregate_credits?.crew

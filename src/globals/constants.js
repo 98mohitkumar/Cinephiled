@@ -113,5 +113,15 @@ export const apiEndpoints = {
     personDetails: (id) =>
       `${baseUrlV3}/person/${id}?api_key=${api_key}&language=en-US&append_to_response=combined_credits`
   },
+  providers: {
+    watchProviders: ({ region }) =>
+      `${baseUrlV3}/watch/providers/movie?language=en-US&watch_region=${region}&api_key=${api_key}`
+  },
+  network: {
+    networkDetails: (id) =>
+      `${baseUrlV3}/network/${id}?api_key=${api_key}&append_to_response=images`,
+    networkMedia: ({ id, pageQuery = 1 }) =>
+      `${baseUrlV3}/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&with_networks=${id}&api_key=${api_key}`
+  },
   language: `${baseUrlV3}/configuration/languages?api_key=${api_key}`
 };

@@ -1,17 +1,16 @@
 /* eslint-disable no-undef */
-import { ExploreContainer } from "components/Explore/ExploreStyles";
 import Genres from "components/Explore/Genres";
 import NowPlayingMovies from "components/Explore/NowPlayingMovies";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
-import { Error404 } from "styles/GlobalComponents";
+import { LayoutContainer, Error404 } from "styles/GlobalComponents";
 
 const Explore = ({ movieGenres, tvGenres, error }) => {
   return (
     <Fragment>
       <MetaWrapper
-        title='Cinephiled - Explore'
+        title={error ? "Not Found - Not Found - Cinephiled" : "Explore - Cinephiled"}
         description="Explore different genres of movies and tv shows. Find out what's playing in theatres near you."
         url='https://cinephiled.vercel.app/explore'
       />
@@ -21,9 +20,9 @@ const Explore = ({ movieGenres, tvGenres, error }) => {
       ) : (
         <Fragment>
           {/* genres for movies and tv shows */}
-          <ExploreContainer className='mb-auto'>
+          <LayoutContainer className='mb-auto'>
             <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
-          </ExploreContainer>
+          </LayoutContainer>
 
           {/* movies that are currently in theatres */}
           <NowPlayingMovies />

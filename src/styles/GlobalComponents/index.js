@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
@@ -274,7 +274,7 @@ export const SocialMediaLinksWrapper = styled.div`
   width: 17rem;
   height: 45px;
   color: #ebebeb;
-  display: ${(props) => (props.notShow ? 'none;' : 'flex;')};
+  display: ${(props) => (props.notShow ? "none;" : "flex;")};
   justify-content: center;
   align-items: center;
   padding: 0.25rem;
@@ -356,8 +356,8 @@ export const SeasonShowcaseImg = styled.div`
   min-width: 15rem;
   aspect-ratio: 2/3;
   border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
-    rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px,
+    rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
   overflow: hidden;
   align-self: flex-start;
 `;
@@ -400,8 +400,8 @@ export const EpisodeImg = styled.div`
   border-radius: 12px;
   overflow: hidden;
   align-self: flex-start;
-  box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
-    rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px,
+    rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
 `;
 
 export const TrWrapper = styled.div`
@@ -422,7 +422,7 @@ export const Pill = styled.div`
   border-radius: 20px;
   background-color: rgb(221 221 221);
   color: #121212;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 1.1rem;
   display: flex;
@@ -447,7 +447,7 @@ export const Pill = styled.div`
     padding-left: 12px;
     padding-right: 6px;
     line-height: 0.9;
-    font-family: 'Manrope', sans-serif;
+    font-family: "Manrope", sans-serif;
   }
 `;
 
@@ -495,7 +495,16 @@ export const EpisodeShowCaseWrapper = styled.div`
     border-radius: 12px;
     overflow: hidden;
     align-self: flex-start;
-    box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
-      rgba(0, 0, 0, 0.12) 0px 1px 10px 0px, rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px,
+      rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
+  }
+`;
+
+export const LayoutContainer = styled.div`
+  width: 100%;
+  padding: 32px 4.2vw;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 1.25rem;
   }
 `;

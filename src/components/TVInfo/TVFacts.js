@@ -3,32 +3,43 @@ import {
   FactsLegend,
   FactsWrapper,
   Span
-} from 'components/MovieInfo/MovieDetailsStyles';
-import { FactsFlexWrapper } from 'styles/GlobalComponents';
+} from "components/MovieInfo/MovieDetailsStyles";
+import Link from "next/link";
+import { FactsFlexWrapper } from "styles/GlobalComponents";
 
 const TVFacts = ({ facts }) => {
+  const { status, language, network, type } = facts;
+
   return (
     <FactsFieldSet>
       <FactsLegend className='fw-bold'>Facts</FactsLegend>
       <FactsWrapper>
         <FactsFlexWrapper>
           <Span>Status</Span>
-          <Span>{facts.status}</Span>
+          <Span>{status}</Span>
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
           <Span>Language</Span>
-          <Span>{facts.language}</Span>
+          <Span>{language}</Span>
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
           <Span>Network</Span>
-          <Span>{facts.network}</Span>
+          {network?.name ? (
+            <Link href={`/network/${network?.id}-${network?.name?.replace(/[' ', '/']/g, "-")}`}>
+              <a>
+                <Span className='network'>{network?.name}</Span>
+              </a>
+            </Link>
+          ) : (
+            <Span>{network?.name}</Span>
+          )}
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
           <Span>Type</Span>
-          <Span>{facts.type}</Span>
+          <Span>{type}</Span>
         </FactsFlexWrapper>
       </FactsWrapper>
     </FactsFieldSet>
