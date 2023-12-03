@@ -1,10 +1,10 @@
-import { motion } from 'framer-motion';
-import useGetReleaseDates from 'hooks/useGetReleaseDates';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useRef } from 'react';
-import { NoDataText } from 'styles/GlobalComponents';
+import { motion } from "framer-motion";
+import useGetReleaseDates from "hooks/useGetReleaseDates";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useRef } from "react";
+import { NoDataText } from "styles/GlobalComponents";
 import {
   SeasonDetailsWrapper,
   SeasonsOverview,
@@ -15,7 +15,7 @@ import {
   SeasonsRelease,
   SeasonTitle,
   SeasonWrapper
-} from './TVStyles';
+} from "./TVStyles";
 
 const TVSeasons = ({ seasons }) => {
   const router = useRouter();
@@ -33,18 +33,17 @@ const TVSeasons = ({ seasons }) => {
         seasons.map((item, i) => (
           <motion.div key={item.id} whileTap={{ scale: 0.98 }}>
             <Link
-              href={`${routeRef.current}/season/${item.season_number}`}
+              href={`${routeRef.current.replaceAll("?", "")}/season/${item.season_number}`}
               passHref
-              scroll={false}
-            >
+              scroll={false}>
               <a>
-                <SeasonWrapper className={seasons.length > 1 && 'mb-4'}>
+                <SeasonWrapper className={seasons.length > 1 && "mb-4"}>
                   <SeasonImg>
                     <Image
                       src={
                         item.poster_path
                           ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                          : '/Images/DefaultImage.png'
+                          : "/Images/DefaultImage.png"
                       }
                       alt='TV-season-poster'
                       layout='fill'
@@ -59,19 +58,15 @@ const TVSeasons = ({ seasons }) => {
                         {item.name}
                         {Today < new Date(seasonReleaseDates[i]) &&
                         Today !== new Date(seasonReleaseDates[i])
-                          ? ' (Upcoming)'
-                          : ''}
+                          ? " (Upcoming)"
+                          : ""}
                       </SeasonTitle>
                       <SeasonDetailsWrapper>
                         <SeasonsRelease>{seasonReleaseDates[i]}</SeasonsRelease>
                         <SeasonDetailsDivider />
-                        <SeasonsRelease>
-                          {item.episode_count} Episodes
-                        </SeasonsRelease>
+                        <SeasonsRelease>{item.episode_count} Episodes</SeasonsRelease>
                       </SeasonDetailsWrapper>
-                      {item.overview !== '' && (
-                        <SeasonsOverview>{item.overview}</SeasonsOverview>
-                      )}
+                      {item.overview !== "" && <SeasonsOverview>{item.overview}</SeasonsOverview>}
                     </div>
                   </SeasonInfoWrapper>
                 </SeasonWrapper>
