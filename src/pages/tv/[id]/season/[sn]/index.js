@@ -60,7 +60,7 @@ const Seasons = ({ error, data, tvData: { id, name, airDate }, seasonNumber }) =
       <MetaWrapper
         title={
           !error
-            ? `${name}: ${data?.name} (${getYear(data.air_date)}) - Details -- cinephiled`
+            ? `${name}: ${data?.name} (${getYear(data.air_date)}) - cinephiled`
             : "Not Found - Cinephiled"
         }
         description={data?.overview}
