@@ -4,7 +4,7 @@ import MovieFacts from "components/MovieInfo/MovieFacts";
 import MovieTab from "components/MovieInfo/MovieTab";
 import Recommendations from "components/Recommendations/Recommendations";
 import { apiEndpoints } from "globals/constants";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Error404 } from "styles/GlobalComponents";
 
 const Movie = ({
@@ -30,22 +30,18 @@ const Movie = ({
   revenue,
   cast,
   reviews,
+  isEasterMovie,
   backdrops,
   posters,
   recommendations,
   error
 }) => {
-  let easter = useRef(false);
   const [showEaster, setShowEaster] = useState(false);
   const [hasSeen, setHasSeen] = useState(false);
 
-  if (!error && id === 345911) {
-    easter.current = true;
-  }
-
   useEffect(() => {
     let easterSeen = localStorage.getItem("easterSeen");
-    if (easter.current && easterSeen !== "seen") {
+    if (isEasterMovie && easterSeen !== "seen") {
       setShowEaster(true);
       document.body.style.overflow = "hidden";
     }
@@ -53,7 +49,7 @@ const Movie = ({
     if (easterSeen === "seen") {
       setHasSeen(true);
     }
-  }, []);
+  }, [isEasterMovie]);
 
   const easterHandler = () => {
     setShowEaster(!showEaster);
@@ -84,7 +80,7 @@ const Movie = ({
           {/* movie info hero section */}
           <MovieDetails
             easter={{
-              renderEaster: easter.current,
+              renderEaster: isEasterMovie,
               hasSeen,
               showEaster,
               easterHandler
@@ -189,6 +185,7 @@ Movie.getInitialProps = async (ctx) => {
           totalCount: movieDetails?.credits?.cast?.length,
           data: movieDetails?.credits?.cast?.slice(0, 15)
         },
+        isEasterMovie: movieDetails?.id === 345911,
         reviews: movieDetails?.reviews?.results ?? [],
         backdrops: movieDetails?.images?.backdrops ?? [],
         posters: movieDetails?.images?.posters ?? [],

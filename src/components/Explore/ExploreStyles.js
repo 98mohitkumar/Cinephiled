@@ -49,37 +49,23 @@ export const GenreBG = styled.a`
   flex-grow: 1;
   border-radius: 8px;
   padding: 24px;
-  position: relative;
   aspect-ratio: 1/0.5;
   display: grid;
   place-items: center;
-  transition: background-size 0.325s cubic-bezier(0.77, 0, 0.175, 1);
-  background: ${({ genrename }) =>
-    `Url(https://api.dicebear.com/7.x/shapes/svg?seed=${genrename}&scale=75) no-repeat center center / 105%`};
+  transition: all 0.325s cubic-bezier(0.77, 0, 0.175, 1);
+  background: ${({ theme }) =>
+    `linear-gradient(200deg,${theme.colors.accent1}, ${theme.colors.accent2}, ${theme.colors.accent3})`};
 
   .title {
     text-align: center;
     z-index: 2;
     font-weight: 600;
+    color: white;
     font-size: clamp(1.25rem, 2vw, 1.75rem);
   }
 
-  &::after {
-    content: "";
-    border-radius: inherit;
-    background-color: rgba(0, 0, 0, 0.6);
-    position: absolute;
-    inset: 0;
-    transition: background-color 0.2s ease-in-out;
-    z-index: 1;
-  }
-
   &:hover {
-    background-size: 140%;
-
-    &::after {
-      background-color: rgba(0, 0, 0, 0.4);
-    }
+    letter-spacing: 3px;
   }
 `;
 

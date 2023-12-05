@@ -15,10 +15,7 @@ const GenreSection = ({ genres, mediaType }) => {
               key={genre.id}
               href={`/genre/${genre.id}-${genre.name}/${mediaType === "movie" ? "movies" : "tv"}`}
               passHref>
-              <GenreBG
-                genrename={genre.name.replaceAll(" ", "-")}
-                as={motion.a}
-                whileTap={{ scale: 0.9 }}>
+              <GenreBG as={motion.a} whileTap={{ scale: 0.9 }}>
                 <span className='title'>{genre.name}</span>
               </GenreBG>
             </Link>
