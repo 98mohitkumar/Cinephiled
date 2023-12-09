@@ -1,9 +1,9 @@
 import { useLogin } from "api/auth";
 import MetaWrapper from "components/MetaWrapper";
 import posters from "images/posters.webp";
-import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 import logo from "public/logo512.png";
 import { Fragment, useEffect } from "react";
 import { AboutBackground } from "styles/GlobalComponents";

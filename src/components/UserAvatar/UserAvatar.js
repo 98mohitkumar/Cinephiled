@@ -1,8 +1,8 @@
 import { useLogout } from "api/auth";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { Fragment, useContext, useMemo, useEffect, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { UserContext } from "Store/UserContext";
