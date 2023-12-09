@@ -346,10 +346,6 @@ export const SeasonShowcaseWrapper = styled.div`
       margin-bottom: 50px;
     }
   }
-
-  .air-date {
-    font-weight: 600;
-  }
 `;
 
 export const SeasonShowcaseImg = styled.div`
@@ -368,12 +364,6 @@ export const SeasonEpisodesWrapper = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     padding-top: 3rem;
-  }
-
-  h3.text {
-    @media only ${(props) => props.theme.breakpoints.xs} {
-      font-size: 1.5rem;
-    }
   }
 `;
 
@@ -451,23 +441,8 @@ export const Pill = styled.div`
   }
 `;
 
-export const CastPageInfo = styled.div`
-  grid-column: 1/ -1;
-  width: 100%;
-  text-align: center;
-  padding-top: 20px;
-
-  .cast-count {
-    font-weight: 500;
-
-    @media only ${(props) => props.theme.breakpoints.sm} {
-      font-size: 20px;
-    }
-  }
-`;
-
 export const EpisodeInfoWrapper = styled.div`
-  padding: 3rem 4.2vw;
+  padding: 2rem 4.2vw;
   margin-bottom: auto;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
@@ -504,7 +479,20 @@ export const LayoutContainer = styled.div`
   width: 100%;
   padding: 32px 4.2vw;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     padding: 1.25rem;
+
+    &.index-page {
+      padding: 0px 20px 20px 20px;
+    }
+  }
+`;
+
+export const ModulesWrapper = styled.div`
+  width: 100%;
+  padding: 0px 4.2vw 32px;
+
+  @media only ${(props) => props.theme.breakpoints.xs} {
+    padding: 0rem 1.25rem 1.25rem;
   }
 `;

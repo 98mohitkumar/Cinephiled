@@ -5,7 +5,7 @@ import TVFacts from "components/TVInfo/TVFacts";
 import TVTab from "components/TVInfo/TVTab";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
-import { Error404 } from "styles/GlobalComponents";
+import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const TvShow = ({
   id,
@@ -83,7 +83,16 @@ const TvShow = ({
           />
 
           {/* recommendations */}
-          {recommendations?.length > 0 && <Recommendations data={recommendations} type='tv' />}
+          {recommendations?.length > 0 && (
+            <ModulesWrapper>
+              <div className='pt-12'>
+                <h2 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-bold text-white text-center mb-4 lg:mb-8'>
+                  Recommendations
+                </h2>
+                <Recommendations data={recommendations} type='tv' />
+              </div>
+            </ModulesWrapper>
+          )}
         </Fragment>
       )}
     </Fragment>

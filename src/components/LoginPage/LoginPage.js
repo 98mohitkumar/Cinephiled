@@ -89,7 +89,7 @@ const LoginPage = () => {
               priority
             />
 
-            <p className='fs-1 m-0'>+</p>
+            <p className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] m-0'>+</p>
 
             <Image
               src='https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg'
@@ -101,14 +101,14 @@ const LoginPage = () => {
             />
           </Integration>
 
-          <div className='d-flex w-100 justify-content-center'>
+          <div className='flex w-full justify-center'>
             <div>
-              <LoginText className='d-block mb-4'>
+              <LoginText className='block mb-4'>
                 In order to use the rating capabilities of Cinephiled, as well as using watchlist
                 feature you will need to login with your TMDB account.
               </LoginText>
 
-              <div className='d-flex flex-column align-items-center'>
+              <div className='flex flex-col items-center'>
                 {/* <LoginButton onClick={() => setShowForm(true)}>
                       Login with credentials
                     </LoginButton> */}
@@ -117,7 +117,7 @@ const LoginPage = () => {
                   {isWaiting ? "Authenticating..." : "Login with TMDB"}
                 </LoginButton>
 
-                {error && <p className='text-danger m-0 pt-3'>{errorMessage}</p>}
+                {error && <p className='text-red-500 m-0 pt-3'>{errorMessage}</p>}
               </div>
             </div>
 
@@ -143,7 +143,7 @@ const LoginPage = () => {
                       ease: [0.77, 0, 0.175, 1]
                     }
                   }}
-                  className='w-100'>
+                  className='w-full'>
                   <form onSubmit={formHandler}>
                     <div className='mb-3'>
                       <input

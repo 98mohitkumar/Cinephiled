@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from "react";
 import {
   ActiveTabIndicator,
   Selection,
@@ -6,15 +6,12 @@ import {
   Tab,
   TabContainer,
   TabSelector
-} from './TabsStyles';
+} from "./TabsStyles";
 
 const Tabs = ({ tabList, currentTab, setTab, styling, children, ...props }) => {
   return (
     <Tab count={tabList.length} styling={styling?.tabStyling} {...props}>
-      <Slider
-        state={tabList.findIndex((item) => item.key === currentTab)}
-        count={tabList.length}
-      />
+      <Slider state={tabList.findIndex((item) => item.key === currentTab)} count={tabList.length} />
 
       {children ?? (
         <Fragment>
@@ -23,8 +20,7 @@ const Tabs = ({ tabList, currentTab, setTab, styling, children, ...props }) => {
               key={key}
               active={key === currentTab}
               onClick={() => setTab(key)}
-              styling={styling?.tabTitleStyling}
-            >
+              styling={styling?.tabTitleStyling}>
               {name}
             </Selection>
           ))}
@@ -40,11 +36,7 @@ export const LinearTabs = ({ tabList, currentTab, setTab }) => {
   const tabContainerRef = useRef(null);
 
   useEffect(() => {
-    if (
-      currentTab === 'recommendations' &&
-      tabContainerRef?.current &&
-      window.innerWidth < 550
-    ) {
+    if (currentTab === "recommendations" && tabContainerRef?.current && window.innerWidth < 550) {
       tabContainerRef.current.scrollLeft = 200;
     }
   }, [currentTab]);
@@ -58,8 +50,7 @@ export const LinearTabs = ({ tabList, currentTab, setTab }) => {
             count={tabList.length}
             active={key === currentTab}
             onClick={() => setTab(key)}
-            className={key === currentTab && 'position-relative'}
-          >
+            className={key === currentTab && "relative"}>
             {name}
             {key === currentTab && <ActiveTabIndicator />}
           </TabSelector>

@@ -1,33 +1,24 @@
 import { createGlobalStyle } from "styled-components";
-import { normalize } from "styled-normalize";
 
 const GlobalStyles = createGlobalStyle`
-
-  ${normalize};
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
 
   ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-}
+  }
 
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0);
-}
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);
+  }
 
-::-webkit-scrollbar-thumb {
-  background: #909090;
-  border-radius: 8px;
-}
+  ::-webkit-scrollbar-thumb {
+    background: #909090;
+    border-radius: 8px;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #606060;
-}
+  ::-webkit-scrollbar-thumb:hover {
+    background: #606060;
+  }
 
   html {
     @media screen and (hover: none) and (pointer: coarse) {

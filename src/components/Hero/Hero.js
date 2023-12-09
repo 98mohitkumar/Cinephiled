@@ -177,15 +177,15 @@ const Hero = ({ searchModal }) => {
   };
 
   return (
-    <Container className='d-flex justify-content-center align-items-center position-relative mb-auto'>
+    <Container className='relative mb-auto'>
       <div className='overflow-wrapper'>{!searchModal && <Banner ref={bannerRef} />}</div>
       <HeroDiv searchModal={searchModal}>
         <Form onSubmit={searchHandler}>
-          <div className='wrapper w-100 position-relative'>
-            <div className='pb-2 d-flex justify-content-center align-items-end border-animated'>
+          <div className='mb-16 w-full relative'>
+            <div className='pb-2 flex justify-between items-end border-animated'>
               <UserInput
                 type='text'
-                className='form-control pb-1 heroSearchInput'
+                className='px-2 pt-[10px] heroSearchInput'
                 placeholder='Search for a movie or tv show'
                 id='inputData'
                 ref={userInputRef}
@@ -200,7 +200,11 @@ const Hero = ({ searchModal }) => {
                     scale: 1.05
                   }}
                   whileTap={{ scale: 0.95 }}>
-                  <Button tabIndex={-1} show={showButton} className='btn d-block' type='submit'>
+                  <Button
+                    tabIndex={-1}
+                    show={showButton}
+                    className='rounded-md text-base inline-block'
+                    type='submit'>
                     Search
                   </Button>
                 </motion.div>

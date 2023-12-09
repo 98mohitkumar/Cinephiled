@@ -1,4 +1,4 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import "styles/globals.css";
 import Layout from "components/Layout/Layout";
 import { AnimatePresence } from "framer-motion";
 import { SessionProvider } from "next-auth/react";

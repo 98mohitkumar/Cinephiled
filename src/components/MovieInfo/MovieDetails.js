@@ -170,11 +170,11 @@ const MovieDetails = ({
         <Fragment>
           {/* easter egg */}
           {!hasSeen ? (
-            <EasterText className='fs-4' show={showEaster}>
+            <EasterText className='text-xl md:text-2xl px-5' show={showEaster}>
               Congratulations, you have found the easter egg.
             </EasterText>
           ) : (
-            <EasterText className='fs-4' show={showEaster}>
+            <EasterText className='text-xl md:text-2xl' show={showEaster}>
               Aren&apos;t you scared?
             </EasterText>
           )}
@@ -201,9 +201,9 @@ const MovieDetails = ({
         )}
       </AnimatePresence>
 
-      <HeroDetailsContainer className='position-relative mb-auto'>
-        <HeroBgContainer className='position-absolute'>
-          <HeroBg className='position-absolute text-center'>
+      <HeroDetailsContainer className='relative mb-auto'>
+        <HeroBgContainer className='absolute'>
+          <HeroBg className='absolute text-center'>
             <Image
               src={
                 backdropPath
@@ -223,7 +223,7 @@ const MovieDetails = ({
 
         <DetailsHeroWrap>
           <HeroImgWrapper>
-            <HeroImg className='position-relative text-center'>
+            <HeroImg className='relative text-center'>
               <Image
                 src={
                   moviePoster
@@ -239,14 +239,14 @@ const MovieDetails = ({
               />
             </HeroImg>
 
-            <div className='w-100'>
+            <div className='w-full'>
               {trailerLink && (
                 <a
                   href={`https://www.youtube.com/watch?v=${trailerLink}`}
                   target='_blank'
                   rel='noreferrer'
                   aria-label='play trailer on youtube'
-                  className='mb-3 d-block'>
+                  className='mb-3 block'>
                   <FeatureButton role='button'>
                     <FaYoutube size='1.5rem' />
                     <Span>Play Trailer</Span>
@@ -255,7 +255,7 @@ const MovieDetails = ({
               )}
 
               <AnimatePresence exitBeforeEnter initial={false}>
-                <div className='d-flex justify-content-start' style={{ gap: "1rem" }}>
+                <div className='flex justify-start' style={{ gap: "1rem" }}>
                   <FeatureButton
                     className='watchlist'
                     role='button'
@@ -315,7 +315,7 @@ const MovieDetails = ({
                     <Fragment>
                       {isFavorite ? (
                         <motion.div
-                          className='d-flex justify-content-center align-items-center w-100 h-100'
+                          className='flex justify-center items-center w-full h-full'
                           key='fav'
                           initial={{ opacity: 0 }}
                           animate={{
@@ -335,7 +335,7 @@ const MovieDetails = ({
                         </motion.div>
                       ) : (
                         <motion.div
-                          className='d-flex justify-content-center align-items-center w-100 h-100'
+                          className='flex justify-center items-center w-full h-full'
                           key='add-to-fav'
                           initial={{ opacity: 0 }}
                           animate={{
@@ -367,7 +367,7 @@ const MovieDetails = ({
                     <Fragment>
                       {savedRating ? (
                         <motion.div
-                          className='d-flex justify-content-center align-items-center w-100 h-100'
+                          className='flex justify-center items-center w-full h-full'
                           key='saved-rating'
                           initial={{ opacity: 0 }}
                           animate={{
@@ -385,12 +385,12 @@ const MovieDetails = ({
                           }}>
                           <RatingOverlay className='media-page'>
                             <AiFillStar size='16px' />
-                            <p className='m-0 fw-semibold text'>{savedRating}</p>
+                            <p className='m-0 font-semibold text'>{savedRating}</p>
                           </RatingOverlay>
                         </motion.div>
                       ) : (
                         <motion.div
-                          className='d-flex justify-content-center align-items-center w-100 h-100'
+                          className='flex justify-center items-center w-full h-full'
                           key='rate'
                           initial={{ opacity: 0 }}
                           animate={{
@@ -426,12 +426,12 @@ const MovieDetails = ({
               {title} ({year})
             </HeroInfoTitle>
             {renderEaster && <Light onClick={easterHandler} />}
-            <RtoR className='my-3'>
+            <RtoR className='my-4'>
               <ReleaseDateWrapper>
-                <Span>{releaseDateFormatted}</Span>
+                <Span className='font-medium'>{releaseDateFormatted}</Span>
               </ReleaseDateWrapper>
               {genres.length > 0 && (
-                <GenreWrap className='fw-bold'>
+                <GenreWrap className='font-bold'>
                   <Divider />
                   {genres.map((item, i) => (
                     <Link
@@ -450,9 +450,9 @@ const MovieDetails = ({
                 </GenreWrap>
               )}
               {runtimeFormatted.getH === 0 && runtimeFormatted.getM === 0 ? (
-                <Span>TBA</Span>
+                <Span className='font-medium'>TBA</Span>
               ) : (
-                <Span>
+                <Span className='font-medium'>
                   {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
                     ? "60m"
                     : runtimeFormatted.getH > 0 && runtimeFormatted.getH + "h "}
@@ -462,28 +462,30 @@ const MovieDetails = ({
             </RtoR>
             {tagline !== "" && (
               <i>
-                <Tagline className='my-4 d-block'>{tagline}</Tagline>
+                <Tagline className='my-4 block'>{tagline}</Tagline>
               </i>
             )}
-            <Overview className='fw-normal'>{!overview ? "-" : overview}</Overview>
+            <Overview className='font-normal'>{!overview ? "-" : overview}</Overview>
             <RatingWrapper>
               {rating !== 0 ? (
                 <Fragment>
-                  <Span className='display-3 fw-bolder'>{rating.toFixed(1)}</Span>
+                  <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
+                    {rating.toFixed(1)}
+                  </Span>
                   <span> / 10</span>
                 </Fragment>
               ) : (
-                <Span className='display-3 fw-bolder'>NR</Span>
+                <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>NR</Span>
               )}
             </RatingWrapper>
             {crewData.length > 0 && (
               <CreditsWrapper>
                 {crewData.map((item) => (
                   <Credits key={item.credit_id}>
-                    <Span className='d-block fw-normal'>{item.job}</Span>
+                    <Span className='block font-normal'>{item.job}</Span>
                     <Link href={`/person/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}>
                       <a>
-                        <Span className='d-block fw-bold credit'>{item.name}</Span>
+                        <Span className='block font-bold credit'>{item.name}</Span>
                       </a>
                     </Link>
                   </Credits>

@@ -1,8 +1,9 @@
-import MoviesGrid from "components/Popular/PopularMovies";
+import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import { motion } from "framer-motion";
 import { apiEndpoints } from "globals/constants";
 import { Fragment, useEffect, useState } from "react";
 import { getCountryCode } from "src/utils/helper";
+import { ModulesWrapper } from "styles/GlobalComponents";
 
 const NowPlayingMovies = () => {
   const [nowPlaying, setNowPlaying] = useState([]);
@@ -40,11 +41,14 @@ const NowPlayingMovies = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.75 }}
-          className='pt-4 mt-4'>
-          <h2 className='display-6 fw-bold text-white text-center mt-3 mb-4 d-block px-4'>
+          className='pt-6 mt-6'>
+          <h2 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-bold text-white text-center block mb-6'>
             Movies playing in theaters
           </h2>
-          <MoviesGrid movies={nowPlaying} />
+
+          <ModulesWrapper>
+            <MoviesTemplate movies={nowPlaying} />
+          </ModulesWrapper>
         </motion.div>
       )}
     </Fragment>

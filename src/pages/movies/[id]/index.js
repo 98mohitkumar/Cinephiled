@@ -5,7 +5,7 @@ import MovieTab from "components/MovieInfo/MovieTab";
 import Recommendations from "components/Recommendations/Recommendations";
 import { apiEndpoints } from "globals/constants";
 import { Fragment, useEffect, useState } from "react";
-import { Error404 } from "styles/GlobalComponents";
+import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const Movie = ({
   id,
@@ -119,7 +119,17 @@ const Movie = ({
           <MovieTab cast={cast} reviews={reviews} backdrops={backdrops} posters={posters} />
 
           {/* recommendations */}
-          {recommendations?.length > 0 && <Recommendations data={recommendations} type='movies' />}
+          {recommendations?.length > 0 && (
+            <ModulesWrapper>
+              <div className='pt-12'>
+                <h2 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-bold text-white text-center mb-4 lg:mb-8'>
+                  Recommendations
+                </h2>
+
+                <Recommendations data={recommendations} type='movies' />
+              </div>
+            </ModulesWrapper>
+          )}
         </Fragment>
       )}
     </Fragment>

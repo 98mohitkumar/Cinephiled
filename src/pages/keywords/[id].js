@@ -34,12 +34,12 @@ const Keyword = ({ error, results, name, id }) => {
         <SearchContainer>
           <SearchResultsContainer>
             {results.length === 0 ? (
-              <EmptySearch className='display-5 text-center'>
+              <EmptySearch className='text-[calc(1.425rem_+_2.1vw)] xl:text-5xl text-center'>
                 No movie results for this keyword.
               </EmptySearch>
             ) : (
               <Fragment>
-                <p className='fs-4'>Results Matching : {name}</p>
+                <p className='text-xl md:text-2xl font-medium'>Results Matching : {name}</p>
                 {results.map((item, i) => (
                   <motion.div whileTap={{ scale: 0.98 }} key={item.id}>
                     <Link
@@ -48,7 +48,7 @@ const Keyword = ({ error, results, name, id }) => {
                       scroll={false}>
                       <a>
                         <QueryContainer>
-                          <QueryImg className='position-relative text-center'>
+                          <QueryImg className='relative text-center'>
                             <Image
                               src={
                                 item.poster_path

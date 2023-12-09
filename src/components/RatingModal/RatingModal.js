@@ -104,25 +104,24 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
               ease: [0.77, 0, 0.175, 1]
             }
           }}>
-          <Span className='d-block mb-3 fw-semibold'>{mediaName}</Span>
+          <Span className='block mb-4 font-semibold'>{mediaName}</Span>
 
           {savedRating && rating === 0 ? (
             <Fragment>
-              <div className='d-flex justify-content-between align-items-center my-3'>
+              <div className='flex justify-between items-center my-4'>
                 <div>
-                  <Span className='fw-normal'>Your rating : </Span>
-                  <Span className='fs-4'>{savedRating}/10</Span>
+                  <Span className='font-normal'>Your rating : </Span>
+                  <Span className='tetx-xl md:text-2xl font-medium'>{savedRating}/10</Span>
                 </div>
                 <div>
                   <Span
                     style={{ color: "#01b4e4" }}
-                    className='fs-6 fw-semibold rating-option me-3'
+                    className='text-base font-semibold rating-option me-3'
                     onClick={() => updateRating(savedRating)}>
                     Update
                   </Span>
                   <Span
-                    style={{ color: "red" }}
-                    className='fs-6 fw-semibold rating-option'
+                    className='text-base font-semibold rating-option text-red-600'
                     onClick={() => setShowConfirmation(true)}>
                     Delete
                   </Span>
@@ -141,7 +140,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
               {rating > 0 && (
                 <Span
                   as={motion.span}
-                  className='fw-normal'
+                  className='font-normal'
                   initial={{ opacity: 0 }}
                   animate={{
                     opacity: 1,
@@ -154,8 +153,8 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
                   Your rating : <strong>{rating}/10</strong>
                 </Span>
               )}
-              <div className='d-flex align-items-center my-3' style={{ gap: "8px" }}>
-                <Span className='fw-normal'>Rate :</Span>
+              <div className='flex items-center my-4 gap-2'>
+                <Span className='font-normal'>Rate :</Span>
                 <RatingStarsContainer>
                   {[...Array(10).keys()].map((i) =>
                     rating <= i ? (
@@ -167,7 +166,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
                 </RatingStarsContainer>
               </div>
 
-              <div className='d-flex justify-between align-items-center' style={{ gap: "1rem" }}>
+              <div className='flex justify-between items-center' style={{ gap: "1rem" }}>
                 <RatingButton
                   className='secondary'
                   onClick={closeModal}
@@ -178,7 +177,8 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
                 <RatingButton
                   onClick={ratingSubmissionHandler}
                   as={motion.button}
-                  whileTap={{ scale: 0.95 }}>
+                  whileTap={{ scale: 0.95 }}
+                  className='text-gray-950'>
                   Submit
                 </RatingButton>
               </div>
@@ -207,11 +207,11 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
             }
           }}>
           <h5 className='mb-4'>
-            Are you sure you want to delete <span className='d-inline fw-bold'>{mediaName}</span>{" "}
+            Are you sure you want to delete <span className='inline font-bold'>{mediaName}</span>{" "}
             rating
           </h5>
 
-          <div className='d-flex justify-between align-items-center' style={{ gap: "1rem" }}>
+          <div className='flex justify-between items-center' style={{ gap: "1rem" }}>
             <RatingButton
               className='secondary'
               onClick={closeModal}
@@ -222,7 +222,8 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
             <RatingButton
               onClick={deleteRatingHandler}
               as={motion.button}
-              whileTap={{ scale: 0.95 }}>
+              whileTap={{ scale: 0.95 }}
+              className='text-gray-950'>
               Remove it
             </RatingButton>
           </div>

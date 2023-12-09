@@ -57,7 +57,9 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
             {movies.length !== 0 && (
-              <Span className='d-block fs-2 text-center'>Movies matching : {search}</Span>
+              <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center'>
+                Movies matching : {search}
+              </Span>
             )}
             <p className='text-center mt-2 mb-0'>
               <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year.
@@ -75,7 +77,9 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
             {tv.length !== 0 && (
-              <Span className='d-block fs-2 text-center'>TV shows matching : {search}</Span>
+              <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center'>
+                TV shows matching : {search}
+              </Span>
             )}
             <p className='text-center mt-2 mb-0'>
               <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year.
@@ -93,7 +97,9 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
             {keywords.length !== 0 && (
-              <Span className='d-block fs-2 text-center'>Keywords matching : {search}</Span>
+              <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center'>
+                Keywords matching : {search}
+              </Span>
             )}
             <KeywordSearch searchQuery={search} keywords={keywords} />
           </motion.div>

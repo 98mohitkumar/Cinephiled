@@ -15,7 +15,7 @@ const About = () => {
         image='https://i.imgur.com/1tH4WvQ.jpg'
       />
 
-      <AboutContainer className='text-center d-flex align-items-center justify-content-center'>
+      <AboutContainer className='text-center flex items-center justify-center'>
         <div className='bg-wrapper'>
           <AboutBackground>
             <Image
@@ -29,8 +29,8 @@ const About = () => {
         </div>
 
         <div style={{ maxWidth: "1100px" }}>
-          <h1 className='fw-bold display-3'>About the Project</h1>
-          <p className='fs-5'>
+          <h1 className='font-bold text-[calc(1.525rem_+_3.3vw)] xl:text-6xl'>About the Project</h1>
+          <p className='text-xl leading-7'>
             <b>Cinephiled </b>- A progressive web app (PWA) to preview any movie or tv show with
             reviews, ratings, description and posters. Acting as a TMDB client,
             <b> Cinephiled</b> gives you access to login into your TMDB account and add movies or tv
@@ -50,15 +50,15 @@ const About = () => {
             find it.
           </p>
 
-          <h2 className='my-4 fw-bold display-3'>Credits</h2>
+          <h2 className='mt-8 mb-6 font-bold text-[calc(1.525rem_+_3.3vw)] xl:text-6xl'>Credits</h2>
           <AboutCreditsWrapper>
             <a href='https://www.themoviedb.org' target='_blank' rel='noreferrer'>
               <FooterAttribute />
             </a>
             <div>
-              <p className='fs-5 mb-0'>Amr Khalid</p>|
+              <p className='text-xl mb-0'>Amr Khalid</p>|
               <a
-                className='text-primary mx-3'
+                className='text-blue-500 mx-3'
                 href='https://www.behance.net/gallery/96475007/60-Days-Challenge-of-Movies-posters'
                 target='_blank'
                 rel='noreferrer'>

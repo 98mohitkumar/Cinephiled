@@ -65,7 +65,7 @@ export const GenreBG = styled.a`
   }
 
   &:hover {
-    letter-spacing: 3px;
+    letter-spacing: 2px;
   }
 `;
 
