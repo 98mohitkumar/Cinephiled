@@ -3,8 +3,6 @@ import styled from "styled-components";
 export const SeasonWrapper = styled.div`
   display: flex;
   width: 100%;
-  max-width: 1000px;
-  margin: auto;
   min-height: 180px;
   border-radius: 10px;
   overflow: hidden;
@@ -32,32 +30,18 @@ export const SeasonInfoWrapper = styled.div`
   @media only ${(props) => props.theme.breakpoints.xs} {
     padding: 1rem;
   }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    .xsRes {
-      margin-bottom: 4px !important;
-    }
-  }
 `;
 
 export const SeasonTitle = styled.h3`
-  font-size: 1.75rem;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
   font-weight: bold;
   color: #121212;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: 1.05rem;
-  }
 `;
 
 export const SeasonsRelease = styled.span`
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
   color: #121212;
   font-weight: bold;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: 0.9rem;
-  }
 
   &.text-alt {
     color: rgb(221 221 221);
@@ -65,21 +49,21 @@ export const SeasonsRelease = styled.span`
   }
 `;
 
-export const SeasonDetailsDivider = styled.div`
-  height: 1rem;
-  width: 1.5px;
-  background: #121212;
-  display: inline-block;
-  margin: 0rem 1rem;
-`;
-
 export const SeasonDetailsWrapper = styled.div`
   display: flex;
   align-items: center;
   width: max-content;
 
+  .divider {
+    height: 1rem;
+    width: 1.5px;
+    background: #121212;
+    display: inline-block;
+    margin: 0rem 1rem;
+  }
+
   @media only ${(props) => props.theme.breakpoints.xs} {
-    & > div {
+    .divider {
       display: none;
     }
 

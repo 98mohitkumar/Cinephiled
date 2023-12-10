@@ -68,7 +68,7 @@ const Navigation = () => {
   };
 
   const closeSearchModalHandler = (e) => {
-    if (!e.target.classList.contains("form-control")) {
+    if (!e.target.classList.contains("heroSearchInput")) {
       setShowSearchModal(false);
       document.body.style.overflow = "auto";
     }

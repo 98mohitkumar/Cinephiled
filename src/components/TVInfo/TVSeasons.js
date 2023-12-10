@@ -8,7 +8,6 @@ import { NoDataText } from "styles/GlobalComponents";
 import {
   SeasonDetailsWrapper,
   SeasonsOverview,
-  SeasonDetailsDivider,
   SeasonImg,
   SeasonInfoWrapper,
   SeasonsRelease,
@@ -30,13 +29,16 @@ const TVSeasons = ({ seasons }) => {
         <NoDataText className='font-bold text-center my-5'>TBA</NoDataText>
       ) : (
         seasons.map((item, i) => (
-          <motion.div key={item.id} whileTap={{ scale: 0.98 }}>
+          <motion.div
+            key={item.id}
+            whileTap={{ scale: 0.98 }}
+            className={"max-w-5xl m-auto [&:not(:last-child)]:mb-5"}>
             <Link
               href={`${routeRef.current.replaceAll("?", "")}/season/${item.season_number}`}
               passHref
               scroll={false}>
               <a>
-                <SeasonWrapper className={seasons.length > 1 && "mb-4"}>
+                <SeasonWrapper>
                   <SeasonImg>
                     <Image
                       src={
@@ -51,9 +53,10 @@ const TVSeasons = ({ seasons }) => {
                       blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
                     />
                   </SeasonImg>
+
                   <SeasonInfoWrapper>
                     <div>
-                      <SeasonTitle className='xsRes'>
+                      <SeasonTitle className='max-sm:mb-1'>
                         {item.name}
                         {Today < new Date(seasonReleaseDates[i]) &&
                         Today !== new Date(seasonReleaseDates[i])
@@ -62,10 +65,12 @@ const TVSeasons = ({ seasons }) => {
                       </SeasonTitle>
                       <SeasonDetailsWrapper>
                         <SeasonsRelease>{seasonReleaseDates[i]}</SeasonsRelease>
-                        <SeasonDetailsDivider />
+                        <div className='divider' />
                         <SeasonsRelease>{item.episode_count} Episodes</SeasonsRelease>
                       </SeasonDetailsWrapper>
-                      {item.overview !== "" && <SeasonsOverview>{item.overview}</SeasonsOverview>}
+                      {item.overview.length > 0 ? (
+                        <SeasonsOverview>{item.overview}</SeasonsOverview>
+                      ) : null}
                     </div>
                   </SeasonInfoWrapper>
                 </SeasonWrapper>
