@@ -8,12 +8,13 @@ export const ReviewsWrap = styled.div`
   overflow: hidden;
 
   &:not(:last-of-type) {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid rgb(251 251 251 / 0.2);
   }
 `;
 
 export const Review = styled.p`
-  padding: 1rem 0rem 0rem 0rem;
+  padding: 1rem 0rem;
+  white-space: pre-wrap;
 `;
 
 export const ReviewAuthorWrap = styled.div`
@@ -22,16 +23,6 @@ export const ReviewAuthorWrap = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
-
-  & span {
-    font-weight: bold;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    & span {
-      font-size: 16px;
-    }
-  }
 `;
 
 export const ReviewAuthorImg = styled.div`

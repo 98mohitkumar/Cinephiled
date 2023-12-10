@@ -1,6 +1,7 @@
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import { Fragment } from "react";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import { NoDataText } from "styles/GlobalComponents";
 import { Review, ReviewAuthorImg, ReviewAuthorWrap, ReviewsWrap } from "./ReviewsStyles";
 
@@ -15,8 +16,8 @@ const Reviews = ({ reviews }) => {
             <ReviewAuthorWrap>
               <ReviewAuthorImg id={item.id} />
               <div>
-                <Span>{item.author}</Span>
-                <Span className='block episode-count font-normal'>
+                <Span className='font-bold'>{item.author}</Span>
+                <Span className='text-sm opacity-80 block font-normal'>
                   {new Date(item.created_at).toLocaleString("en-US", {
                     month: "long"
                   })}{" "}
@@ -26,7 +27,7 @@ const Reviews = ({ reviews }) => {
             </ReviewAuthorWrap>
 
             <Review>
-              <ReactMarkdown>{item.content}</ReactMarkdown>
+              <ReactMarkdown rehypePlugins={[rehypeRaw]}>{item.content}</ReactMarkdown>
             </Review>
           </ReviewsWrap>
         ))
