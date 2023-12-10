@@ -6,7 +6,9 @@ import { GenreBG, OuterWrapper, OverFlowWrapper, PseudoTrack } from "./ExploreSt
 const GenreSection = ({ genres, mediaType }) => {
   return (
     <Fragment>
-      <h2 className='fs-3 m-0 mb-3'>{mediaType === "movie" ? "Movie" : "TV"} Genres</h2>
+      <h2 className='text-[calc(1.3rem_+_.6vw)] xl:text-[1.75rem] font-medium m-0 mb-3'>
+        {mediaType === "movie" ? "Movie" : "TV"} Genres
+      </h2>
 
       <OuterWrapper>
         <OverFlowWrapper>
@@ -30,7 +32,7 @@ const GenreSection = ({ genres, mediaType }) => {
 const Genres = ({ movieGenres, tvGenres }) => {
   return (
     <Fragment>
-      <div className='pb-3 pb-md-5 mb-3'>
+      <div className='pb-5 md:pb-7 mb-5'>
         <GenreSection genres={movieGenres} mediaType='movie' />
       </div>
 

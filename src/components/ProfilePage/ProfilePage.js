@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Fragment, useContext, useMemo, useState, useLayoutEffect } from "react";
 import { MediaContext } from "Store/MediaContext";
 import { UserContext } from "Store/UserContext";
+import { ModulesWrapper } from "styles/GlobalComponents";
 import Favorites from "./Favorites";
 import { Banner, ProfileAvatar, ProfileStats } from "./ProfilePageStyles";
 import ProfileRecommendations from "./ProfileRecommendations";
@@ -93,26 +94,28 @@ const Profile = () => {
       <MetaWrapper title={`${(userInfo?.name ?? userInfo?.username) || ""} - Cinephiled`} />
 
       {userInfo?.id && (
-        <div className='h-100 w-100 flex-grow-1'>
+        <div className='h-full w-full grow'>
           {/* Banner  */}
           <Banner>
             <div className='BG' />
             <div className='on-top'>
-              <div className='profile d-flex align-items-center justify-content-center flex-column'>
+              <div className='profile flex items-center justify-center flex-col'>
                 <ProfileAvatar avatar={userAvatar} />
                 <div className='text-center'>
-                  <h4 className='fw-bold fs-1'>{userInfo?.name}</h4>
-                  <h4 className={userInfo?.name ? "fw-normal fs-5 m-0" : "fw-bold fs-1"}>
-                    {userInfo?.username}
+                  <h4 className='font-bold text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem]'>
+                    {userInfo?.name}
                   </h4>
+                  {userInfo?.name && (
+                    <h4 className='font-normal text-xl m-0'>{userInfo?.username}</h4>
+                  )}
                 </div>
               </div>
 
               <ProfileStats>
                 {Object.entries(stats).map(([key, value]) => (
-                  <div key={key} className='d-flex align-items-center'>
-                    <h4 className='m-0 text'>{key}:</h4>{" "}
-                    <h4 className='m-0 ms-2 fw-normal text'>{value}</h4>
+                  <div key={key} className='flex items-center'>
+                    <h4 className='m-0 text-base sm:text-xl font-medium'>{key}:</h4>
+                    <h4 className='m-0 ms-2 font-normal text-base sm:text-xl'>{value}</h4>
                   </div>
                 ))}
               </ProfileStats>
@@ -120,7 +123,7 @@ const Profile = () => {
           </Banner>
 
           {/* main content */}
-          <div className='h-100 w-100 mt-3'>
+          <div className='h-full w-full mt-3'>
             <div className='px-3'>
               <LinearTabs tabList={tabs} currentTab={currentTab} setTab={tabHandler} />
             </div>
@@ -133,7 +136,9 @@ const Profile = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}>
-                  <Watchlist />
+                  <ModulesWrapper>
+                    <Watchlist />
+                  </ModulesWrapper>
                 </motion.div>
               )}
 
@@ -145,7 +150,9 @@ const Profile = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}>
-                  <Ratings />
+                  <ModulesWrapper>
+                    <Ratings />
+                  </ModulesWrapper>
                 </motion.div>
               )}
 
@@ -157,7 +164,9 @@ const Profile = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}>
-                  <Favorites />
+                  <ModulesWrapper>
+                    <Favorites />
+                  </ModulesWrapper>
                 </motion.div>
               )}
 
@@ -169,7 +178,9 @@ const Profile = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}>
-                  <ProfileRecommendations />
+                  <ModulesWrapper>
+                    <ProfileRecommendations />
+                  </ModulesWrapper>
                 </motion.div>
               )}
             </AnimatePresence>

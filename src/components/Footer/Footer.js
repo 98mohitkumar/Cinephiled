@@ -10,7 +10,7 @@ import {
 
 const Footer = () => {
   return (
-    <FooterWrapper className='d-flex justify-content-between align-items-center'>
+    <FooterWrapper className='flex justify-between items-center'>
       <FooterBranding>Cinephiled</FooterBranding>
       <SocialIconsContainer>
         <SocialIcons

@@ -1,10 +1,5 @@
+import { HeroInfoTitle, HeroInfoWrapper, Span } from "components/MovieInfo/MovieDetailsStyles";
 import {
-  HeroInfoTitle,
-  HeroInfoWrapper,
-  Span
-} from "components/MovieInfo/MovieDetailsStyles";
-import {
-  RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
   RecommendedWrapper,
@@ -19,7 +14,8 @@ import {
   DetailsHeroWrap,
   HeroDetailsContainer,
   HeroImg,
-  HeroImgWrapper
+  HeroImgWrapper,
+  ModulesWrapper
 } from "styles/GlobalComponents";
 import { Bio, Details } from "./PersonDetails.styles";
 
@@ -64,8 +60,7 @@ const PersonDetails = ({ details }) => {
       return age;
     } else {
       const diedAt = Math.floor(
-        (new Date(b) - new Date(details.birthday)) /
-          (1000 * 3600 * 24 * 30.4375 * 12)
+        (new Date(b) - new Date(details.birthday)) / (1000 * 3600 * 24 * 30.4375 * 12)
       );
 
       return diedAt;
@@ -73,11 +68,11 @@ const PersonDetails = ({ details }) => {
   };
 
   return (
-    <div style={{ marginBottom: "auto" }}>
-      <HeroDetailsContainer className='position-relative mb-auto person-details'>
+    <div className='mb-auto'>
+      <HeroDetailsContainer className='relative mb-auto person-details'>
         <DetailsHeroWrap style={{ minHeight: "auto" }} className='pb-0'>
           <HeroImgWrapper>
-            <HeroImg className='no-shadow position-relative text-center'>
+            <HeroImg className='no-shadow relative text-center'>
               <Image
                 src={
                   details.profile_path
@@ -93,23 +88,19 @@ const PersonDetails = ({ details }) => {
             </HeroImg>
           </HeroImgWrapper>
 
-          <HeroInfoWrapper
-            className='w-100 me-auto'
-            style={{ maxWidth: "700px" }}>
+          <HeroInfoWrapper className='w-full me-auto' style={{ maxWidth: "700px" }}>
             <HeroInfoTitle>{details.name}</HeroInfoTitle>
 
             <Details className='py-4'>
               <div>
-                <Span className='d-block fw-bold'>Gender</Span>
-                <Span className='d-block fw-normal'>
-                  {getGender(details.gender)}
-                </Span>
+                <Span className='block font-bold'>Gender</Span>
+                <Span className='block font-normal'>{getGender(details.gender)}</Span>
               </div>
 
               {!details.deathday && details.birthday && (
                 <div>
-                  <Span className='d-block fw-bold'>Age</Span>
-                  <Span className='d-block fw-normal'>
+                  <Span className='block font-bold'>Age</Span>
+                  <Span className='block font-normal'>
                     {getAge(details.birthday, true)} years old
                   </Span>
                 </div>
@@ -117,57 +108,55 @@ const PersonDetails = ({ details }) => {
 
               {details.birthday && (
                 <div>
-                  <Span className='d-block fw-bold'>Birthday</Span>
-                  <Span className='d-block fw-normal'>{details.birthday}</Span>
+                  <Span className='block font-bold'>Birthday</Span>
+                  <Span className='block font-normal'>{details.birthday}</Span>
                 </div>
               )}
 
               {details.deathday && (
                 <div>
-                  <Span className='d-block fw-bold'>Death Day</Span>
-                  <Span className='d-block fw-normal'>{details.deathday}</Span>
+                  <Span className='block font-bold'>Death Day</Span>
+                  <Span className='block font-normal'>{details.deathday}</Span>
                 </div>
               )}
 
               {details.deathday && (
                 <div>
-                  <Span className='d-block fw-bold'>Died at</Span>
-                  <Span className='d-block fw-normal'>
+                  <Span className='block font-bold'>Died at</Span>
+                  <Span className='block font-normal'>
                     {getAge(details.deathday, false)} years old
                   </Span>
                 </div>
               )}
 
               <div>
-                <Span className='d-block fw-bold'>Known For</Span>
-                <Span className='d-block fw-normal'>
-                  {details.known_for_department}
-                </Span>
+                <Span className='block font-bold'>Known For</Span>
+                <Span className='block font-normal'>{details.known_for_department}</Span>
               </div>
 
               <div>
-                <Span className='d-block fw-bold'>Known Credits</Span>
-                <Span className='d-block fw-normal'>{cleaned.length}</Span>
+                <Span className='block font-bold'>Known Credits</Span>
+                <Span className='block font-normal'>{cleaned.length}</Span>
               </div>
             </Details>
           </HeroInfoWrapper>
         </DetailsHeroWrap>
 
         {details.biography && (
-          <DetailsHeroWrap className='no-grid bio'>
+          <div className='mt-6 md:mt-14'>
             {details.biography && (
               <Fragment>
-                <Span className='d-block fw-bold'>Biography</Span>
+                <Span className='block text-3xl md:text-4xl font-bold'>Biography</Span>
                 <Bio>{details.biography}</Bio>
               </Fragment>
             )}
-          </DetailsHeroWrap>
+          </div>
         )}
       </HeroDetailsContainer>
 
       {cleaned?.length > 0 && (
-        <RecommendationsContainer className='py-4'>
-          <Span className='d-block display-5 text-center genre'>
+        <ModulesWrapper>
+          <Span className='block text-[calc(1.425rem_+_2.1vw)] xl:text-5xl text-center genre'>
             Filmography
           </Span>
 
@@ -183,14 +172,11 @@ const PersonDetails = ({ details }) => {
                         }}
                         whileTap={{ scale: 0.95 }}>
                         <Link
-                          href={`/movies/${item.id}-${item.title.replace(
-                            /[' ', '/']/g,
-                            "-"
-                          )}`}
+                          href={`/movies/${item.id}-${item.title.replace(/[' ', '/']/g, "-")}`}
                           passHref
                           scroll={false}>
                           <a>
-                            <RecommendedImg className='position-relative text-center'>
+                            <RecommendedImg className='relative text-center'>
                               <Image
                                 src={
                                   item.backdrop_path
@@ -207,9 +193,7 @@ const PersonDetails = ({ details }) => {
                           </a>
                         </Link>
                       </motion.div>
-                      <InfoTitle className='mt-3 text-center'>
-                        {item.title}
-                      </InfoTitle>
+                      <InfoTitle className='mt-3 text-center'>{item.title}</InfoTitle>
                     </RecommendedWrapper>
                   )
                 : !item?.duplicate && (
@@ -221,14 +205,11 @@ const PersonDetails = ({ details }) => {
                         }}
                         whileTap={{ scale: 0.95 }}>
                         <Link
-                          href={`/tv/${item.id}-${item.name.replace(
-                            /[' ', '/']/g,
-                            "-"
-                          )}`}
+                          href={`/tv/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}
                           passHref
                           scroll={false}>
                           <a>
-                            <RecommendedImg className='position-relative text-center'>
+                            <RecommendedImg className='relative text-center'>
                               <Image
                                 src={
                                   item.backdrop_path
@@ -245,14 +226,12 @@ const PersonDetails = ({ details }) => {
                           </a>
                         </Link>
                       </motion.div>
-                      <InfoTitle className='mt-3 text-center'>
-                        {item.name}
-                      </InfoTitle>
+                      <InfoTitle className='mt-3 text-center'>{item.name}</InfoTitle>
                     </RecommendedWrapper>
                   )
             )}
           </RecommendationsGrid>
-        </RecommendationsContainer>
+        </ModulesWrapper>
       )}
     </div>
   );

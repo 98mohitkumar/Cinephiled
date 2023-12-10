@@ -22,8 +22,6 @@ export const HeroInfoTitle = styled.h1`
 `;
 
 export const Span = styled.span`
-  font-weight: 500;
-
   &.movieCastHead,
   &.toast-message {
     font-size: 18px;

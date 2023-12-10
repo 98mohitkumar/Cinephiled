@@ -1,5 +1,5 @@
 import { revalidationWrapper, useAddToWatchlist } from "api/user";
-import { CardsContainerGrid } from "components/Popular/PopularStyles";
+import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { useModal } from "components/RatingModal/RatingModal";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useMemo, Fragment, useContext } from "react";
@@ -46,12 +46,10 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
             <ModalCard>
               <h5 className='m-0'>
                 Are you sure you want to remove{" "}
-                <span className='d-inline fw-bold'>{`${name} (${year})`}</span> from your watchlist
+                <span className='inline font-bold'>{`${name} (${year})`}</span> from your watchlist
               </h5>
 
-              <div
-                className='d-flex justify-between align-items-center pt-4'
-                style={{ gap: "1rem" }}>
+              <div className='flex justify-between items-center pt-4' style={{ gap: "1rem" }}>
                 <CTAButton
                   className='secondary'
                   onClick={closeModal}
@@ -65,7 +63,8 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
                     clickHandler();
                   }}
                   as={motion.button}
-                  whileTap={{ scale: 0.95 }}>
+                  whileTap={{ scale: 0.95 }}
+                  className='text-gray-950'>
                   Remove it
                 </CTAButton>
               </div>
@@ -78,7 +77,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
         as={motion.button}
         whileTap={{ scale: 0.95 }}
         onClick={openModal}
-        className='secondary text-danger'>
+        className='secondary text-red-500'>
         Remove
       </CTAButton>
     </Fragment>
@@ -151,7 +150,7 @@ const Watchlist = () => {
                 ))}
               </CardsContainerGrid>
             ) : (
-              <NoDataText className='fw-bold text-center my-5'>
+              <NoDataText className='font-bold text-center my-6'>
                 No movies in watchlist yet
               </NoDataText>
             )}
@@ -180,7 +179,7 @@ const Watchlist = () => {
                 ))}
               </CardsContainerGrid>
             ) : (
-              <NoDataText className='fw-bold text-center my-5'>
+              <NoDataText className='font-bold text-center my-6'>
                 No tv shows in watchlist yet
               </NoDataText>
             )}

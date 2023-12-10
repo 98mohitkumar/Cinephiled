@@ -1,50 +1,43 @@
-import MetaWrapper from 'components/MetaWrapper';
-import { Span } from 'components/MovieInfo/MovieDetailsStyles';
+import MetaWrapper from "components/MetaWrapper";
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import {
-  RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
   RecommendedWrapper,
   InfoTitle
-} from 'components/Recommendations/RecommendationsStyles';
-import { motion } from 'framer-motion';
-import { apiEndpoints } from 'globals/constants';
-import useInfiniteQuery from 'hooks/useInfiniteQuery';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Fragment } from 'react';
-import { NoDataText, Error404 } from 'styles/GlobalComponents/index';
+} from "components/Recommendations/RecommendationsStyles";
+import { motion } from "framer-motion";
+import { apiEndpoints } from "globals/constants";
+import useInfiniteQuery from "hooks/useInfiniteQuery";
+import Image from "next/image";
+import Link from "next/link";
+import { Fragment } from "react";
+import { NoDataText, Error404, ModulesWrapper } from "styles/GlobalComponents/index";
 
 const TvShows = ({ renderList, genreName, error, genreId }) => {
   const { list } = useInfiniteQuery({
     initialPage: 3,
-    type: 'tvGenre',
+    type: "tvGenre",
     genreId
   });
 
   return (
     <Fragment>
       <MetaWrapper
-        title={
-          !error
-            ? `${genreName} TV Shows - Cinephiled`
-            : 'Not Found - Cinephiled'
-        }
-        description={!error ? `${genreName} TV Shows` : 'Not Found'}
+        title={!error ? `${genreName} TV Shows - Cinephiled` : "Not Found - Cinephiled"}
+        description={!error ? `${genreName} TV Shows` : "Not Found"}
         url={`https://cinephiled.vercel.app/genre/${genreId}-${genreName}/tv`}
       />
 
       {error ? (
         <Error404>404</Error404>
       ) : (
-        <RecommendationsContainer>
+        <ModulesWrapper>
           {renderList.length === 0 ? (
-            <NoDataText className='fw-bold text-center my-5'>
-              No Tv Shows For Now
-            </NoDataText>
+            <NoDataText className='font-bold text-center my-5'>No Tv Shows For Now</NoDataText>
           ) : (
             <Fragment>
-              <Span className='d-block fs-1 text-center genre'>
+              <Span className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] leading-12 block text-center genre'>
                 {genreName} TV Shows
               </Span>
               <RecommendationsGrid>
@@ -55,23 +48,18 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                         scale: 1.05,
                         transition: { duration: 0.1 }
                       }}
-                      whileTap={{ scale: 0.95 }}
-                    >
+                      whileTap={{ scale: 0.95 }}>
                       <Link
-                        href={`/tv/${item.id}-${item.name.replace(
-                          /[' ', '/']/g,
-                          '-'
-                        )}`}
+                        href={`/tv/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}
                         passHref
-                        scroll={false}
-                      >
+                        scroll={false}>
                         <a>
-                          <RecommendedImg className='position-relative text-center'>
+                          <RecommendedImg className='relative text-center'>
                             <Image
                               src={
                                 item.backdrop_path
                                   ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
-                                  : '/Images/DefaultBackdrop.png'
+                                  : "/Images/DefaultBackdrop.png"
                               }
                               alt='movie-poster'
                               layout='fill'
@@ -83,15 +71,13 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                         </a>
                       </Link>
                     </motion.div>
-                    <InfoTitle className='my-3 text-center'>
-                      {item.name}
-                    </InfoTitle>
+                    <InfoTitle className='my-3 text-center'>{item.name}</InfoTitle>
                   </RecommendedWrapper>
                 ))}
               </RecommendationsGrid>
             </Fragment>
           )}
-        </RecommendationsContainer>
+        </ModulesWrapper>
       )}
     </Fragment>
   );
@@ -101,20 +87,13 @@ export default TvShows;
 
 TvShows.getInitialProps = async (ctx) => {
   try {
-    const param = ctx.query.item.split('-');
+    const param = ctx.query.item.split("-");
 
     const genreId = param[0];
-    const genreName = param
-      .slice(1, param.length)
-      .join('-')
-      .replace('&', ' & ');
+    const genreName = param.slice(1, param.length).join("-").replace("&", " & ");
 
-    const response = await fetch(
-      apiEndpoints.tv.tvGenre({ genreId, pageQuery: 1 })
-    );
-    const nextPage = await fetch(
-      apiEndpoints.tv.tvGenre({ genreId, pageQuery: 2 })
-    );
+    const response = await fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 1 }));
+    const nextPage = await fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 2 }));
 
     const error = response.ok ? false : true;
 
@@ -124,7 +103,7 @@ TvShows.getInitialProps = async (ctx) => {
       const tvList = await response.json();
       const secondTvList = await nextPage.json();
 
-      const renderList = tvList['results'].concat(secondTvList.results);
+      const renderList = tvList["results"].concat(secondTvList.results);
 
       return {
         renderList,

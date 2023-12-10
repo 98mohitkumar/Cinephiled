@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Avatar = styled.div`
   padding: 0rem 2rem;
@@ -13,7 +13,7 @@ export const Avatar = styled.div`
     border-radius: 50%;
     cursor: pointer;
     background: ${({ avatar }) =>
-        avatar.type === 'tmdb'
+        avatar.type === "tmdb"
           ? `url(https://www.themoviedb.org/t/p/w100_and_h100_face${avatar.avatar})`
           : `url(https://api.dicebear.com/6.x/bottts/svg?seed=${avatar.avatar})`}
       center center / contain;
@@ -24,8 +24,8 @@ export const Avatar = styled.div`
     );
 
     @media only ${(props) => props.theme.breakpoints.sm} {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
     }
   }
 
@@ -41,8 +41,7 @@ export const Popup = styled.div`
   border-radius: 8px;
   overflow: hidden;
   background-color: rgb(18 18 18 / 0.8);
-  box-shadow: 0px 0px 5px 2px hsla(0, 0%, 0%, 0.14),
-    0px 0px 22px 4px hsla(0, 0%, 0%, 0.12),
+  box-shadow: 0px 0px 5px 2px hsla(0, 0%, 0%, 0.14), 0px 0px 22px 4px hsla(0, 0%, 0%, 0.12),
     0px 0px 8px -4px hsla(0, 0%, 0%, 0.2);
   border: 1px solid rgb(81 81 81 / 0.5);
 `;
@@ -77,7 +76,6 @@ export const DefaultAvatar = styled.div`
   .mobile-login {
     display: none;
     padding: 0.5rem;
-    padding-bottom: 0.85rem;
   }
 
   @media only ${({ theme }) => theme.breakpoints.sm} {

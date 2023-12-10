@@ -9,6 +9,7 @@ import ReviewsSvg from "components/Svg/reviews";
 import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect, Fragment, useMemo } from "react";
+import { ModulesWrapper } from "styles/GlobalComponents";
 import { TabIcon, TabSelectionTitle, tabStyling } from "./MovieTabStyles";
 
 const MovieTab = ({ cast, reviews, posters, backdrops }) => {
@@ -72,7 +73,9 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
-            <Cast cast={cast} />
+            <ModulesWrapper>
+              <Cast cast={cast} />
+            </ModulesWrapper>
           </motion.div>
         )}
 
@@ -83,7 +86,9 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
-            <Reviews reviews={reviews} />
+            <ModulesWrapper>
+              <Reviews reviews={reviews} />
+            </ModulesWrapper>
           </motion.div>
         )}
 
@@ -94,7 +99,9 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
-            <Backdrops backdrops={backdrops} />
+            <ModulesWrapper>
+              <Backdrops backdrops={backdrops} />
+            </ModulesWrapper>
           </motion.div>
         )}
 
@@ -105,7 +112,9 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
-            <Posters posters={posters} />
+            <ModulesWrapper>
+              <Posters posters={posters} />
+            </ModulesWrapper>
           </motion.div>
         )}
       </AnimatePresence>

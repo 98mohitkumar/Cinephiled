@@ -3,7 +3,7 @@ import useGetReleaseDates from "hooks/useGetReleaseDates";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import { NoDataText } from "styles/GlobalComponents";
 import {
   SeasonDetailsWrapper,
@@ -11,7 +11,6 @@ import {
   SeasonDetailsDivider,
   SeasonImg,
   SeasonInfoWrapper,
-  SeasonsContainer,
   SeasonsRelease,
   SeasonTitle,
   SeasonWrapper
@@ -26,9 +25,9 @@ const TVSeasons = ({ seasons }) => {
   const routeRef = useRef(router.asPath);
 
   return (
-    <SeasonsContainer>
+    <Fragment>
       {seasons.length === 0 ? (
-        <NoDataText className='fw-bold text-center my-5'>TBA</NoDataText>
+        <NoDataText className='font-bold text-center my-5'>TBA</NoDataText>
       ) : (
         seasons.map((item, i) => (
           <motion.div key={item.id} whileTap={{ scale: 0.98 }}>
@@ -75,7 +74,7 @@ const TVSeasons = ({ seasons }) => {
           </motion.div>
         ))
       )}
-    </SeasonsContainer>
+    </Fragment>
   );
 };
 

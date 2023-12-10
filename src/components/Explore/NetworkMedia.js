@@ -1,10 +1,11 @@
-import NetworkMediaGrid from "components/Popular/PopularTV";
+import NetworkMediaGrid from "components/MediaTemplate/TVTemplate";
 import { PostersImg } from "components/Posters/PostersStyles";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import { Fragment } from "react";
 import { FaLink } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
+import { ModulesWrapper } from "styles/GlobalComponents";
 import { NetwrokDetailsWrapper, PostersGrid } from "./ExploreStyles";
 
 const NetworkMedia = ({ details, media }) => {
@@ -21,7 +22,7 @@ const NetworkMedia = ({ details, media }) => {
       <NetwrokDetailsWrapper>
         <PostersGrid>
           {posters.map((poster) => (
-            <PostersImg key={poster} className='position-relative poster-wrapper'>
+            <PostersImg key={poster} className='relative poster-wrapper'>
               <Image
                 src={poster}
                 alt={`${details.name}-poster`}
@@ -51,21 +52,21 @@ const NetworkMedia = ({ details, media }) => {
           </div>
 
           <div className='details-row'>
-            <span className='fw-bold'>{details.name}</span>
+            <span className='font-bold'>{details.name}</span>
             {(details.headquarters || details.origin_country) && (
-              <div className='d-flex align-items-center'>
+              <div className='flex items-center'>
                 <FaLocationDot className='me-1' size={18} />
-                <span className='fw-bold'>{details.headquarters || details.origin_country}</span>
+                <span className='font-bold'>{details.headquarters || details.origin_country}</span>
               </div>
             )}
             {details.homepage && (
-              <div className='d-flex align-items-center'>
+              <div className='flex items-center'>
                 <FaLink className='me-1' size={18} />
                 <a
                   href={details.homepage}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='fw-bold link'>
+                  className='font-bold link'>
                   Homepage
                 </a>
               </div>
@@ -74,7 +75,9 @@ const NetworkMedia = ({ details, media }) => {
         </div>
       </NetwrokDetailsWrapper>
 
-      <NetworkMediaGrid TV={media.concat(list)} />
+      <ModulesWrapper>
+        <NetworkMediaGrid TV={media.concat(list)} />
+      </ModulesWrapper>
     </Fragment>
   );
 };

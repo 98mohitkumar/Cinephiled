@@ -1,13 +1,4 @@
-import styled from 'styled-components';
-
-export const CastContainer = styled.div`
-  width: 100%;
-  padding: 0px 4.2vw 32px;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0rem 1.25rem 1.25rem;
-  }
-`;
+import styled from "styled-components";
 
 export const CastGrid = styled.div`
   display: grid;
@@ -39,8 +30,7 @@ export const CastImg = styled.div`
 
   @media ${(props) => props.theme.breakpoints.hover} {
     &:hover {
-      box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
-        0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
+      box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14), 0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
         0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
     }
   }

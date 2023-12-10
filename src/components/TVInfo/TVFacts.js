@@ -12,7 +12,7 @@ const TVFacts = ({ facts }) => {
 
   return (
     <FactsFieldSet>
-      <FactsLegend className='fw-bold'>Facts</FactsLegend>
+      <FactsLegend className='font-bold text-2xl'>Facts</FactsLegend>
       <FactsWrapper>
         <FactsFlexWrapper>
           <Span>Status</Span>
@@ -29,7 +29,7 @@ const TVFacts = ({ facts }) => {
           {network?.name ? (
             <Link href={`/network/${network?.id}-${network?.name?.replace(/[' ', '/']/g, "-")}`}>
               <a>
-                <Span className='network'>{network?.name}</Span>
+                <Span className='network font-semibold'>{network?.name}</Span>
               </a>
             </Link>
           ) : (

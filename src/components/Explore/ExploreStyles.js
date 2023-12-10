@@ -50,6 +50,7 @@ export const GenreBG = styled.a`
   border-radius: 8px;
   padding: 24px;
   aspect-ratio: 1/0.5;
+  position: relative;
   display: grid;
   place-items: center;
   transition: all 0.325s cubic-bezier(0.77, 0, 0.175, 1);
@@ -61,11 +62,20 @@ export const GenreBG = styled.a`
     z-index: 2;
     font-weight: 600;
     color: white;
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-size: clamp(1.15rem, 1.6vw, 1.75rem);
+  }
+
+  &:after {
+    content: "";
+    inset: 0;
+    background: linear-gradient(0deg, black 0%, transparent);
+    opacity: 0.3;
+    position: absolute;
+    z-index: 1;
   }
 
   &:hover {
-    letter-spacing: 3px;
+    letter-spacing: 2px;
   }
 `;
 
@@ -89,8 +99,6 @@ export const PostersGrid = styled.div`
       `linear-gradient(200deg,${theme.colors.accent1}, ${theme.colors.accent2}, ${theme.colors.accent3})`};
     opacity: 0.5;
     position: absolute;
-    top: 0;
-    left: 0;
     z-index: 1;
   }
 

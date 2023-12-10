@@ -101,7 +101,7 @@ const Navigation = () => {
 
         <MobileNav>
           <Search className='search-sm' onClick={searchHandler} key='search-icon'>
-            <BsSearch size='24px' />
+            <BsSearch size='22px' />
           </Search>
 
           {/* avatar - mobile*/}

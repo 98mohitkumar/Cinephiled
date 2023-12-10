@@ -11,6 +11,7 @@ import SeasonsSvg from "components/Svg/seasons";
 import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
 import { Fragment, useState, useEffect, useMemo } from "react";
+import { ModulesWrapper } from "styles/GlobalComponents";
 import TVSeasons from "./TVSeasons";
 
 const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
@@ -80,7 +81,9 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
-            <Cast cast={cast} />
+            <ModulesWrapper>
+              <Cast cast={cast} />
+            </ModulesWrapper>
           </motion.div>
         )}
 
@@ -91,7 +94,9 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
-            <TVSeasons seasons={seasons} />
+            <ModulesWrapper>
+              <TVSeasons seasons={seasons} />
+            </ModulesWrapper>
           </motion.div>
         )}
 
@@ -102,7 +107,9 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
-            <Reviews reviews={reviews} />
+            <ModulesWrapper>
+              <Reviews reviews={reviews} />
+            </ModulesWrapper>
           </motion.div>
         )}
 
@@ -113,7 +120,9 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
-            <Backdrops backdrops={backdrops} />
+            <ModulesWrapper>
+              <Backdrops backdrops={backdrops} />
+            </ModulesWrapper>
           </motion.div>
         )}
 
@@ -124,7 +133,9 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
-            <Posters posters={posters} />
+            <ModulesWrapper>
+              <Posters posters={posters} />
+            </ModulesWrapper>
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const RatingModalContainer = styled.div`
   background-color: rgb(18 18 18 / 0.75);
@@ -23,8 +23,7 @@ export const RatingCard = styled.div`
   border-radius: 12px;
   border: 1px solid rgba(80, 80, 80, 0.75);
   background: rgba(18, 18, 18);
-  box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
-    0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
+  box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14), 0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
     0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
@@ -47,6 +46,7 @@ export const RatingButton = styled.button`
   font-size: 1.1rem;
   border: none;
   font-weight: 500;
+  background: rgb(221, 221, 221);
 
   &.secondary {
     background-color: transparent;

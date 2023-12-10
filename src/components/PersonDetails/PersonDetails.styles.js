@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Bio = styled.p`
-  margin-top: 0.8rem;
+  margin-top: 1rem;
   white-space: pre-line;
 `;
 

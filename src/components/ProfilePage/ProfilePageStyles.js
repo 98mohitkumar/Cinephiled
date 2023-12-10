@@ -34,21 +34,9 @@ export const Banner = styled.div`
     margin: auto;
     z-index: 10;
     backdrop-filter: blur(2px);
-    background: -moz-linear-gradient(
-      270deg,
-      rgba(31, 31, 31, 0.5) 0%,
-      rgba(18, 18, 18, 1) 95%
-    );
-    background: -webkit-linear-gradient(
-      270deg,
-      rgba(31, 31, 31, 0.5) 0%,
-      rgba(18, 18, 18, 1) 95%
-    );
-    background: linear-gradient(
-      180deg,
-      rgba(31, 31, 31, 0.5) 0%,
-      rgba(18, 18, 18, 1) 95%
-    );
+    background: -moz-linear-gradient(270deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
+    background: -webkit-linear-gradient(270deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
+    background: linear-gradient(180deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
   }
 
   .profile {
@@ -84,14 +72,6 @@ export const ProfileStats = styled.div`
   flex-wrap: wrap;
   gap: 1.5rem clamp(2.5rem, 6vw, 3.25rem);
   margin-top: 2rem;
-
-  h4.text {
-    font-size: 20px;
-
-    @media only ${(props) => props.theme.breakpoints.xs} {
-      font-size: 16px;
-    }
-  }
 `;
 
 export const CTAButton = styled.button`
@@ -108,7 +88,6 @@ export const CTAButton = styled.button`
 
   &.secondary {
     background-color: transparent;
-    color: white;
     border: 1px solid rgb(81 81 81 / 0.8);
   }
 
@@ -140,8 +119,7 @@ export const ModalCard = styled.div`
   border-radius: 12px;
   border: 1px solid rgba(80, 80, 80, 0.75);
   background: rgba(18, 18, 18);
-  box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
-    0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
+  box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14), 0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
     0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
 
   @media only ${(props) => props.theme.breakpoints.sm} {

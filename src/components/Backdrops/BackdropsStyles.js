@@ -1,13 +1,4 @@
-import styled from 'styled-components';
-
-export const BackdropsContainer = styled.div`
-  width: 100%;
-  padding: 0px 4.2vw 32px;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 0rem 1.25rem 1.25rem;
-  }
-`;
+import styled from "styled-components";
 
 export const BackdropsWrapper = styled.div`
   display: grid;
@@ -25,8 +16,7 @@ export const BackdropsImgContainer = styled.div`
   aspect-ratio: 1.68;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
-    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14), 0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
 `;
 

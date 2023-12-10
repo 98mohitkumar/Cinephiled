@@ -1,4 +1,4 @@
-import { CardsContainerGrid } from "components/Popular/PopularStyles";
+import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { motion, AnimatePresence } from "framer-motion";
 import removeDuplicates from "hooks/removeDuplicates";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
@@ -33,18 +33,11 @@ const MovieRecommendations = () => {
       {cleanedItems.length > 0 ? (
         <CardsContainerGrid>
           {cleanedItems.map((movie) => (
-            <MediaCard
-              key={movie?.id}
-              data={movie}
-              link='movies'
-              recommendation
-            />
+            <MediaCard key={movie?.id} data={movie} link='movies' recommendation />
           ))}
         </CardsContainerGrid>
       ) : (
-        <NoDataText className='fw-bold text-center my-5'>
-          No recommendations for now
-        </NoDataText>
+        <NoDataText className='font-bold text-center my-5'>No recommendations for now</NoDataText>
       )}
     </motion.div>
   );
@@ -59,10 +52,7 @@ const TvRecommendations = () => {
     isProfileRecommendations: true
   });
 
-  const extendedList = useMemo(
-    () => tvRecommendations.concat(tvList),
-    [tvList, tvRecommendations]
-  );
+  const extendedList = useMemo(() => tvRecommendations.concat(tvList), [tvList, tvRecommendations]);
 
   const { cleanedItems } = removeDuplicates(extendedList);
 
@@ -79,9 +69,7 @@ const TvRecommendations = () => {
           ))}
         </CardsContainerGrid>
       ) : (
-        <NoDataText className='fw-bold text-center my-5'>
-          No recommendations for now
-        </NoDataText>
+        <NoDataText className='font-bold text-center my-5'>No recommendations for now</NoDataText>
       )}
     </motion.div>
   );

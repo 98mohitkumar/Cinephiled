@@ -1,6 +1,6 @@
 import { apiEndpoints } from "globals/constants";
-import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useSession, signOut } from "next-auth/react";
 import { useContext, useState } from "react";
 import { MediaContext } from "Store/MediaContext";
 import { UserContext } from "Store/UserContext";

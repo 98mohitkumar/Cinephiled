@@ -1,7 +1,6 @@
 import MetaWrapper from "components/MetaWrapper";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import {
-  RecommendationsContainer,
   RecommendationsGrid,
   RecommendedImg,
   RecommendedWrapper,
@@ -13,7 +12,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { NoDataText, Error404 } from "styles/GlobalComponents/index";
+import { NoDataText, Error404, ModulesWrapper } from "styles/GlobalComponents/index";
 
 const Movies = ({ renderList, genreName, error, genreId }) => {
   const { list } = useInfiniteQuery({
@@ -33,12 +32,14 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
       {error ? (
         <Error404>404</Error404>
       ) : (
-        <RecommendationsContainer>
+        <ModulesWrapper>
           {renderList.length === 0 ? (
-            <NoDataText className='fw-bold text-center my-5'>No Movies For Now</NoDataText>
+            <NoDataText className='font-bold text-center my-5'>No Movies For Now</NoDataText>
           ) : (
             <Fragment>
-              <Span className='d-block fs-1 text-center genre'>{genreName} Movies</Span>
+              <Span className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] leading-12 block text-center genre'>
+                {genreName} Movies
+              </Span>
               <RecommendationsGrid>
                 {renderList.concat(list).map((item) => (
                   <RecommendedWrapper key={item.id}>
@@ -53,7 +54,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                         passHref
                         scroll={false}>
                         <a>
-                          <RecommendedImg className='position-relative text-center'>
+                          <RecommendedImg className='relative text-center'>
                             <Image
                               src={
                                 item.backdrop_path
@@ -76,7 +77,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
               </RecommendationsGrid>
             </Fragment>
           )}
-        </RecommendationsContainer>
+        </ModulesWrapper>
       )}
     </Fragment>
   );

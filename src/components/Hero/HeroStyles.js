@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const HeroDiv = styled.div`
   position: absolute;
@@ -10,23 +10,11 @@ export const HeroDiv = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 4;
-  background: -moz-linear-gradient(
-    270deg,
-    rgba(31, 31, 31, 0.5) 0%,
-    rgba(18, 18, 18, 1) 95%
-  );
-  background: -webkit-linear-gradient(
-    270deg,
-    rgba(31, 31, 31, 0.5) 0%,
-    rgba(18, 18, 18, 1) 95%
-  );
-  background: linear-gradient(
-    180deg,
-    rgba(31, 31, 31, 0.5) 0%,
-    rgba(18, 18, 18, 1) 95%
-  );
+  background: -moz-linear-gradient(270deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
+  background: -webkit-linear-gradient(270deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
+  background: linear-gradient(180deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
 
-  background: ${({ searchModal }) => searchModal && 'transparent'};
+  background: ${({ searchModal }) => searchModal && "transparent"};
 `;
 
 export const HeroTitle = styled.h1`
@@ -73,7 +61,7 @@ export const Form = styled.form`
   .border-animated {
     position: relative;
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: 0;
       right: 0;
@@ -108,10 +96,6 @@ export const Form = styled.form`
     }
   }
 
-  .wrapper {
-    margin-bottom: 60px;
-  }
-
   .suggestions {
     position: absolute;
     width: 100%;
@@ -119,8 +103,7 @@ export const Form = styled.form`
     max-height: 240px;
     overflow-y: scroll;
     border-radius: 4px;
-    box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
-      0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+    box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14), 0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
       0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
 
     ::-webkit-scrollbar {
@@ -152,11 +135,9 @@ export const Button = styled.button`
   font-weight: 600;
   color: #121212 !important;
   padding: 0.65rem 2rem;
-  cursor: ${(props) =>
-    props.show ? 'pointer !important' : 'default !important'};
-  visibility: ${(props) =>
-    props.show ? 'visible !important' : 'none !important'};
-  opacity: ${(props) => (props.show ? '1 !important' : '0 !important')};
+  cursor: ${(props) => (props.show ? "pointer !important" : "default !important")};
+  visibility: ${(props) => (props.show ? "visible !important" : "none !important")};
+  opacity: ${(props) => (props.show ? "1 !important" : "0 !important")};
   transition: all 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
@@ -170,18 +151,15 @@ export const UserInput = styled.input`
   position: relative;
   border-radius: 0;
   height: 45px;
-  padding: 15px 0px 0px 5px;
   background-color: transparent;
   font-size: x-large;
-  margin: auto;
+  width: 100%;
   font-weight: 400;
   color: white;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
 
   &::placeholder {
     color: #fff;
-    font-weight: 400;
-    font-family: 'Manrope', sans-serif;
   }
 
   &:focus {
@@ -189,6 +167,7 @@ export const UserInput = styled.input`
     box-shadow: none;
     color: white;
     border-color: white;
+    outline: none;
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
@@ -209,6 +188,8 @@ export const SearchSlice = styled.div`
   .tag {
     color: black;
     margin: 0px;
+    font-weight: 500;
+    line-height: 1.2;
   }
 
   .suggestion-title {
