@@ -62,7 +62,7 @@ export const GenreBG = styled.a`
     z-index: 2;
     font-weight: 600;
     color: white;
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-size: clamp(1.15rem, 1.6vw, 1.75rem);
   }
 
   &:after {
