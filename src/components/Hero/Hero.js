@@ -128,7 +128,7 @@ const Hero = ({ searchModal }) => {
   const scrollListener = () => {
     const scale = 1.7 + window.scrollY / 200;
 
-    if (scale > 1.7 && scale <= 3.5) {
+    if (scale > 1.7 && scale <= 3.5 && bannerRef?.current) {
       bannerRef.current.style.animation = `none`;
       bannerRef.current.style.transform = `scale(${scale}) rotate(10deg) translateZ(0px)`;
     }

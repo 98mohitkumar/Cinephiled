@@ -204,6 +204,6 @@ export const SearchModal = styled.div`
   backdrop-filter: blur(2px);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    top: 62px;
+    top: 48px;
   }
 `;

@@ -160,7 +160,7 @@ const Seasons = ({ error, data, tvData: { id, name, airDate }, seasonNumber }) =
                           <Link href={`${routeRef.current}/episode/${item.episode_number}`}>
                             <a>
                               <Pill className='info'>
-                                Episode details
+                                Episode Details
                                 <BiChevronRight size='22' />
                               </Pill>
                             </a>
