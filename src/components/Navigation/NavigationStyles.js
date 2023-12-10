@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Header = styled.header`
   width: 100%;
@@ -26,7 +26,7 @@ export const NavBar = styled.nav`
   z-index: 20;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     right: 0;
@@ -51,7 +51,7 @@ export const NavBar = styled.nav`
 export const Logo = styled.div`
   min-width: 50px;
   min-height: 30px;
-  background: url('/navLogo.png') no-repeat center center / contain;
+  background: url("/navLogo.png") no-repeat center center / contain;
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     min-height: 24px;
@@ -125,7 +125,7 @@ export const HamburgerIcon = styled.div`
 
   &::after,
   &::before {
-    content: '';
+    content: "";
     width: 100%;
     height: 2px;
     position: absolute;
@@ -162,7 +162,7 @@ export const HamburgerMenu = styled.div`
   height: 100vh;
   position: fixed;
   display: none;
-  top: 56px;
+  top: 46px;
   left: 0;
   margin: auto;
   background-color: rgb(18 18 18 /0.95);
