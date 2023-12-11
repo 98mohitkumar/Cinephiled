@@ -22,7 +22,7 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
           No Keywords for this query.
         </EmptySearch>
       ) : (
-        <SearchResultsContainer>
+        <SearchResultsContainer className='max-sm:pt-6'>
           {cleanedItems.map((item) => (
             <Link
               key={item.id}

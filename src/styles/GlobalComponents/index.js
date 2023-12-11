@@ -248,7 +248,7 @@ export const HeroImgWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   place-items: center;
-  gap: 2rem 0rem;
+  gap: 1.75rem 0rem;
   align-self: flex-start;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
@@ -267,7 +267,7 @@ export const HeroImgWrapper = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    gap: 1.75rem;
+    gap: 1.5rem;
   }
 `;
 export const SocialMediaLinksWrapper = styled.div`
@@ -414,18 +414,9 @@ export const Pill = styled.div`
   color: #121212;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
-  font-size: 1.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  p {
-    margin: 0rem;
-
-    @media only ${(props) => props.theme.breakpoints.xs} {
-      font-size: 0.9rem;
-    }
-  }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     width: 45px;

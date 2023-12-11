@@ -255,7 +255,7 @@ const MovieDetails = ({
               )}
 
               <AnimatePresence exitBeforeEnter initial={false}>
-                <div className='flex justify-start' style={{ gap: "1rem" }}>
+                <div className='flex justify-start gap-4'>
                   <FeatureButton
                     className='watchlist'
                     role='button'

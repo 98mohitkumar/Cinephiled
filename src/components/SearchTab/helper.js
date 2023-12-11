@@ -46,8 +46,7 @@ const Pill = ({ children, sortBy }) => {
           { shallow: true }
         );
       }}
-      className='flex items-center'
-      style={{ gap: "0.2rem" }}>
+      className='flex items-center gap-[3.2px]'>
       {children}{" "}
       {sort && sort === sortBy && (
         <Fragment>{order === "asc" ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}</Fragment>
@@ -60,9 +59,9 @@ export const SortBy = () => {
   const router = useRouter();
 
   return (
-    <div className='flex items-center mt-4' style={{ gap: "1rem", whiteSpace: "nowrap" }}>
-      <span style={{ fontSize: "clamp(16px, 3vw, 18px)" }}>Sort by:</span>
-      <div className='flex' style={{ gap: "0.8rem" }}>
+    <div className='flex items-center mt-4 gap-4 whitespace-nowrap'>
+      <span className='text-[clamp(16px,3vw,18px)]'>Sort by:</span>
+      <div className='flex gap-3'>
         <SortPill
           onClick={() => router.push(window.location.pathname, undefined, { shallow: true })}>
           Default

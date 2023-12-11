@@ -88,7 +88,7 @@ const PersonDetails = ({ details }) => {
             </HeroImg>
           </HeroImgWrapper>
 
-          <HeroInfoWrapper className='w-full me-auto' style={{ maxWidth: "700px" }}>
+          <HeroInfoWrapper className='w-full me-auto max-w-[700px]'>
             <HeroInfoTitle>{details.name}</HeroInfoTitle>
 
             <Details className='py-4'>

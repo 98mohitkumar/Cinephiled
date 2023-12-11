@@ -49,7 +49,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
                 <span className='inline font-bold'>{`${name} (${year})`}</span> from your watchlist
               </h5>
 
-              <div className='flex justify-between items-center pt-4' style={{ gap: "1rem" }}>
+              <div className='flex justify-between items-center pt-4 gap-4'>
                 <CTAButton
                   className='secondary'
                   onClick={closeModal}

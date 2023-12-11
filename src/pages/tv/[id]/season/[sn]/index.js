@@ -143,7 +143,7 @@ const Seasons = ({ error, data, tvData: { id, name, airDate }, seasonNumber }) =
                         </Pill>
 
                         {!isNaN(runtimeFormatted(item.runtime).getH) ? (
-                          <Span className='font-medium'>
+                          <Span className='font-medium text-lg'>
                             {runtimeFormatted(item.runtime).getH === 1 &&
                             runtimeFormatted(item.runtime).getM === 0
                               ? "60m"
@@ -153,13 +153,13 @@ const Seasons = ({ error, data, tvData: { id, name, airDate }, seasonNumber }) =
                               runtimeFormatted(item.runtime).getM + "m"}
                           </Span>
                         ) : (
-                          <Span className='font-medium'>TBA</Span>
+                          <Span className='font-medium text-lg'>TBA</Span>
                         )}
 
                         {new Date(getReleaseDate(item.air_date)) < new Date() && (
                           <Link href={`${routeRef.current}/episode/${item.episode_number}`}>
                             <a>
-                              <Pill className='info'>
+                              <Pill className='info text-base'>
                                 Episode Details
                                 <BiChevronRight size='22' />
                               </Pill>

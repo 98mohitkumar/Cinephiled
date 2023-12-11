@@ -63,7 +63,10 @@ const Navigation = () => {
 
     setTimeout(() => {
       setShowHamburgerMenu(false);
-      document.querySelector(".heroSearchInput").focus();
+      document
+        .querySelector(".heroSearchInput")
+        .scrollIntoView({ behavior: "smooth", block: "end" });
+      document.querySelector(".heroSearchInput").focus({ preventScroll: true });
     }, 100);
   };
 

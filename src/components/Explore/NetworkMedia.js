@@ -17,26 +17,44 @@ const NetworkMedia = ({ details, media }) => {
     networkId: details.id
   });
 
+  if (posters.length % 2 !== 0 && posters.length > 10) {
+    posters.pop();
+  }
+
+  let colCount;
+  const postersLength = posters?.length;
+
+  if (postersLength > 10) {
+    colCount =
+      Math.ceil(postersLength / 2) % 2 === 0
+        ? Math.ceil(postersLength / 2)
+        : Math.ceil(postersLength / 2) + 1;
+  } else {
+    colCount = postersLength;
+  }
+
   return (
     <Fragment>
       <NetwrokDetailsWrapper>
-        <PostersGrid>
-          {posters.map((poster) => (
-            <PostersImg key={poster} className='relative poster-wrapper'>
-              <Image
-                src={poster}
-                alt={`${details.name}-poster`}
-                layout='fill'
-                objectFit='cover'
-                placeholder='blur'
-                loading='eager'
-                blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
-              />
-            </PostersImg>
-          ))}
+        <PostersGrid className={postersLength <= 10 ? "alt-grid" : ""} colCount={colCount || 10}>
+          {postersLength > 0
+            ? posters.map((poster) => (
+                <PostersImg key={poster} className='relative poster-wrapper'>
+                  <Image
+                    src={poster}
+                    alt={`${details.name}-poster`}
+                    layout='fill'
+                    objectFit='cover'
+                    placeholder='blur'
+                    loading='eager'
+                    blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
+                  />
+                </PostersImg>
+              ))
+            : null}
         </PostersGrid>
 
-        <div className='text-center network-info mb-4'>
+        <div className='text-center network-info p-4 mb-4'>
           <div
             className='logo-wrapper m-auto'
             style={{

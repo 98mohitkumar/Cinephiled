@@ -182,7 +182,7 @@ const Hero = ({ searchModal }) => {
       <HeroDiv searchModal={searchModal}>
         <Form onSubmit={searchHandler}>
           <div className='mb-16 w-full relative'>
-            <div className='pb-2 flex justify-between items-end border-animated'>
+            <div className='pb-1 md:pb-2 flex justify-between items-end border-animated'>
               <UserInput
                 type='text'
                 className='px-2 pt-[10px] heroSearchInput'

@@ -166,7 +166,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
                 </RatingStarsContainer>
               </div>
 
-              <div className='flex justify-between items-center' style={{ gap: "1rem" }}>
+              <div className='flex justify-between items-center gap-4'>
                 <RatingButton
                   className='secondary'
                   onClick={closeModal}
@@ -211,7 +211,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal }) => {
             rating
           </h5>
 
-          <div className='flex justify-between items-center' style={{ gap: "1rem" }}>
+          <div className='flex justify-between items-center gap-4'>
             <RatingButton
               className='secondary'
               onClick={closeModal}

@@ -53,7 +53,7 @@ const Episode = ({ error, data, tvData }) => {
       <MetaWrapper
         title={
           !error
-            ? `${tvData.name} S${data.season_number}E${data.episode_number}  (${releaseYear}) - Details -- cinephiled`
+            ? `${tvData.name} S${data.season_number}E${data.episode_number}  (${releaseYear}) - Details - cinephiled`
             : "Not Found - Cinephiled"
         }
         description={data?.overview}
@@ -101,14 +101,14 @@ const Episode = ({ error, data, tvData }) => {
                   </Pill>
 
                   {!isNaN(runtimeFormatted.getH) ? (
-                    <Span className='font-medium'>
+                    <Span className='font-medium text-lg'>
                       {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
                         ? "60m"
                         : runtimeFormatted.getH > 0 && runtimeFormatted.getH + "h "}
                       {runtimeFormatted.getM > 0 && runtimeFormatted.getM + "m"}
                     </Span>
                   ) : (
-                    <Span className='font-medium'>TBA</Span>
+                    <Span className='font-medium text-lg'>TBA</Span>
                   )}
                 </TrWrapper>
 

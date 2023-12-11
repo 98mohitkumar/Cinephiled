@@ -65,7 +65,7 @@ export const GenreBG = styled.a`
     font-size: clamp(1.15rem, 1.6vw, 1.75rem);
   }
 
-  &:after {
+  &::after {
     content: "";
     inset: 0;
     background: linear-gradient(0deg, black 0%, transparent);
@@ -83,7 +83,9 @@ export const PostersGrid = styled.div`
   display: grid;
   position: relative;
   width: 100%;
-  grid-template-columns: repeat(10, minmax(130px, 1fr));
+  margin-bottom: auto;
+  grid-template-columns: ${({ colCount }) => `repeat(${colCount}, minmax(130px, 205px))`};
+  justify-content: center;
   gap: 1.25rem;
   max-height: 35vh;
   overflow: hidden;
@@ -92,7 +94,7 @@ export const PostersGrid = styled.div`
   user-select: none;
   transform: scale(1.01);
 
-  &:after {
+  &::after {
     content: "";
     inset: 0;
     background: ${({ theme }) =>
@@ -102,12 +104,15 @@ export const PostersGrid = styled.div`
     z-index: 1;
   }
 
-  @media only ${({ theme }) => theme.breakpoints.sm} {
-    grid-template-columns: repeat(4, minmax(80px, 1fr));
+  &:not(.alt-grid) {
+    .poster-wrapper:not(:nth-child(odd)) {
+      transform: translateY(-100px);
+    }
   }
 
-  .poster-wrapper:not(:nth-child(odd)) {
-    transform: translateY(-100px);
+  @media only ${({ theme }) => theme.breakpoints.sm} {
+    gap: 0.75rem;
+    grid-template-columns: repeat(4, minmax(80px, 1fr));
   }
 `;
 

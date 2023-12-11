@@ -28,7 +28,7 @@ const About = () => {
           </AboutBackground>
         </div>
 
-        <div style={{ maxWidth: "1100px" }}>
+        <div className='max-w-6xl'>
           <h1 className='font-bold text-[calc(1.525rem_+_3.3vw)] xl:text-6xl'>About the Project</h1>
           <p className='text-xl leading-7'>
             <b>Cinephiled </b>- A progressive web app (PWA) to preview any movie or tv show with

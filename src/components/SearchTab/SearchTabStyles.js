@@ -35,7 +35,7 @@ export const Keyword = styled.h2`
     color: white;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${(props) => props.theme.breakpoints.sm} {
     font-size: 2.5rem;
   }
 `;
@@ -63,8 +63,7 @@ export const QueryContainer = styled.div`
   display: flex;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
-    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14), 0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   outline: 1px solid rgba(255, 255, 255, 0.5);
 

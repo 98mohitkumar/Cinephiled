@@ -12,7 +12,7 @@ const Cast = ({ tvData: { id, title, year, backdrop }, cast, error }) => {
   return (
     <Fragment>
       <MetaWrapper
-        title={!error ? `${title} (${year}) - Cast -- cinephiled` : "Not Found - Cinephiled"}
+        title={!error ? `${title} (${year}) - Cast - cinephiled` : "Not Found - Cinephiled"}
         description={`${title} cast`}
         image={`https://image.tmdb.org/t/p/w780${backdrop}`}
         url={`https://cinephiled.vercel.app/tv/${id}/cast`}
