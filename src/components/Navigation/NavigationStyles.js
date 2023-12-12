@@ -194,14 +194,14 @@ export const HamburgerMenu = styled.div`
 `;
 
 export const SearchModal = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   position: fixed;
   max-width: 2000px;
   margin: auto;
   top: 70px;
   background: rgb(0 0 0 /0.9);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     top: 48px;

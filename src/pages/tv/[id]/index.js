@@ -86,7 +86,7 @@ const TvShow = ({
           {/* recommendations */}
           {recommendations?.length > 0 && (
             <ModulesWrapper className='relative'>
-              <DominantColor image={backdropPath} backdrop />
+              <DominantColor image={backdropPath} tint isUsingBackdrop />
               <div className='pt-12'>
                 <h2 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-bold text-white text-center mb-4 lg:mb-8'>
                   Recommendations

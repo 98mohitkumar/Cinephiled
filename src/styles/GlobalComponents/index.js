@@ -180,8 +180,6 @@ export const HeroImg = styled.div`
 export const DetailsHeroWrap = styled.div`
   display: grid;
   grid-template-columns: 17rem 1fr;
-  align-items: center;
-  justify-items: center;
   min-height: 35rem;
   gap: 0rem 3rem;
 

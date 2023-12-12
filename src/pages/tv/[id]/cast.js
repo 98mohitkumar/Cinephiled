@@ -23,7 +23,7 @@ const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) =>
         <Error404>404</Error404>
       ) : (
         <div className='relative mb-auto'>
-          <DominantColor image={poster} flip backdrop />
+          <DominantColor image={poster} flip tint />
           <ModulesWrapper className='relative z-10'>
             <div className='text-center py-6'>
               <HeroInfoTitle className='mb-4'>

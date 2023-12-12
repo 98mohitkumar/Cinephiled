@@ -74,7 +74,7 @@ const Seasons = ({ error, data, tvData: { id, name, airDate }, seasonNumber }) =
       ) : (
         <Fragment>
           <div className='relative mb-auto'>
-            <DominantColor image={data?.poster_path} backdrop flip />
+            <DominantColor image={data?.poster_path} tint flip />
             <SeasonExpandedContainer className='relative z-10'>
               <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>
                 {name} ({getYear(airDate)})

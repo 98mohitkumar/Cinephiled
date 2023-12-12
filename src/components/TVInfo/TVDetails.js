@@ -392,7 +392,7 @@ const TVDetails = ({
 
           <Gradient />
 
-          <HeroInfoWrapper>
+          <HeroInfoWrapper className='max-w-5xl'>
             <HeroInfoTitle className='mb-2'>
               {title} ({year})
             </HeroInfoTitle>

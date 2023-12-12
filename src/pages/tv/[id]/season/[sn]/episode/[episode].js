@@ -67,7 +67,7 @@ const Episode = ({ error, data, tvData }) => {
       ) : (
         <Fragment>
           <div className='relative mb-auto'>
-            <DominantColor image={data?.still_path} backdrop flip />
+            <DominantColor image={data?.still_path} tint isUsingBackdrop flip />
 
             <EpisodeInfoWrapper className='relative z-10'>
               <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>

@@ -56,6 +56,9 @@ const Navigation = () => {
   const searchHandler = () => {
     if (router.asPath === "/") {
       document.body.style.overflow = "auto";
+      document
+        .querySelector(".heroSearchInput")
+        .scrollIntoView({ behavior: "smooth", block: "end" });
     } else {
       setShowSearchModal(true);
       document.body.style.overflow = "hidden";
@@ -63,9 +66,10 @@ const Navigation = () => {
 
     setTimeout(() => {
       setShowHamburgerMenu(false);
-      document
-        .querySelector(".heroSearchInput")
-        .scrollIntoView({ behavior: "smooth", block: "end" });
+      if (router.asPath !== "/") {
+        navRef.current.classList.add("hide-nav");
+        navRef.current.classList.remove("show-nav");
+      }
       document.querySelector(".heroSearchInput").focus({ preventScroll: true });
     }, 100);
   };
@@ -74,6 +78,8 @@ const Navigation = () => {
     if (!e.target.classList.contains("heroSearchInput")) {
       setShowSearchModal(false);
       document.body.style.overflow = "auto";
+      navRef.current.classList.remove("hide-nav");
+      navRef.current.classList.add("show-nav");
     }
   };
 
