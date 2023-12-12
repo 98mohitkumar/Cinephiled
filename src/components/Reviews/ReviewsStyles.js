@@ -12,9 +12,17 @@ export const ReviewsWrap = styled.div`
   }
 `;
 
-export const Review = styled.p`
+export const Review = styled.div`
   padding: 1rem 0rem;
   white-space: pre-wrap;
+
+  blockquote {
+    font-style: italic;
+    margin: 0;
+    opacity: 0.8;
+    padding: 0 1em;
+    border-left: 0.25em solid #dfe2e5;
+  }
 `;
 
 export const ReviewAuthorWrap = styled.div`
