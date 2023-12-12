@@ -1,4 +1,5 @@
 import { CastGrid, CastImg, CastWrapper } from "components/Cast/CastStyles";
+import DominantColor from "components/DominantColor/DominantColor";
 import MetaWrapper from "components/MetaWrapper";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Posters from "components/Posters/Posters";
@@ -72,164 +73,169 @@ const Seasons = ({ error, data, tvData: { id, name, airDate }, seasonNumber }) =
         <Error404>404</Error404>
       ) : (
         <Fragment>
-          <SeasonExpandedContainer>
-            <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>
-              {name} ({getYear(airDate)})
-            </h3>
+          <div className='relative mb-auto'>
+            <DominantColor image={data?.poster_path} backdrop flip />
+            <SeasonExpandedContainer className='relative z-10'>
+              <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>
+                {name} ({getYear(airDate)})
+              </h3>
 
-            <SeasonShowcaseWrapper>
-              <SeasonShowcaseImg className='relative text-center'>
-                <Image
-                  src={
-                    data.poster_path
-                      ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-                      : "/Images/DefaultImage.png"
-                  }
-                  alt='TV-season-poster'
-                  layout='fill'
-                  objectFit='cover'
-                  placeholder='blur'
-                  blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
-                />
-              </SeasonShowcaseImg>
+              <SeasonShowcaseWrapper>
+                <SeasonShowcaseImg className='relative text-center'>
+                  <Image
+                    src={
+                      data.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
+                        : "/Images/DefaultImage.png"
+                    }
+                    alt='TV-season-poster'
+                    layout='fill'
+                    objectFit='cover'
+                    placeholder='blur'
+                    blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
+                  />
+                </SeasonShowcaseImg>
 
-              <div>
-                <h2 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 m-0 font-bold'>
-                  {data.name} ({getYear(data.air_date)})
-                </h2>
+                <div>
+                  <h2 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 m-0 font-bold'>
+                    {data.name} ({getYear(data.air_date)})
+                  </h2>
 
-                <h3 className='text-[1.25rem] mt-2 mb-0 font-semibold'>
-                  {getReleaseDate(data.air_date)}
-                </h3>
+                  <h3 className='text-[1.25rem] mt-2 mb-0 font-semibold'>
+                    {getReleaseDate(data.air_date)}
+                  </h3>
 
-                {data.overview && <SeasonCommonOverview>{data.overview}</SeasonCommonOverview>}
-              </div>
-            </SeasonShowcaseWrapper>
+                  {data.overview && <SeasonCommonOverview>{data.overview}</SeasonCommonOverview>}
+                </div>
+              </SeasonShowcaseWrapper>
 
-            {data.episodes.length > 0 && (
-              <SeasonEpisodesWrapper>
-                <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 font-bold block mb-6'>
-                  Episodes ({data.episodes.length})
+              {data.episodes.length > 0 && (
+                <SeasonEpisodesWrapper>
+                  <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 font-bold block mb-6'>
+                    Episodes ({data.episodes.length})
+                  </span>
+
+                  {data.episodes.map((item, i) => (
+                    <SeasonShowcaseWrapper key={item.id} className='episodesBox'>
+                      <EpisodeImg className='relative text-center'>
+                        <Image
+                          src={
+                            item.still_path
+                              ? `https://image.tmdb.org/t/p/w500${item.still_path}`
+                              : "/Images/DefaultBackdrop.png"
+                          }
+                          alt='TV-season-episode-poster'
+                          layout='fill'
+                          objectFit='cover'
+                          placeholder='blur'
+                          blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
+                        />
+                      </EpisodeImg>
+
+                      <div>
+                        <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 font-bold'>
+                          {!item.episode_number ? i + 1 : item.episode_number}. {item.name}
+                        </h3>
+
+                        <TrWrapper className='flex-wrap'>
+                          <SeasonsRelease className='text-alt'>
+                            {getReleaseDate(item.air_date)}
+                          </SeasonsRelease>
+                          <Pill>
+                            <p>{getRating(item.vote_average)}</p>
+                          </Pill>
+
+                          {!isNaN(runtimeFormatted(item.runtime).getH) ? (
+                            <Span className='font-medium text-lg'>
+                              {runtimeFormatted(item.runtime).getH === 1 &&
+                              runtimeFormatted(item.runtime).getM === 0
+                                ? "60m"
+                                : runtimeFormatted(item.runtime).getH > 0 &&
+                                  runtimeFormatted(item.runtime).getH + "h "}
+                              {runtimeFormatted(item.runtime).getM > 0 &&
+                                runtimeFormatted(item.runtime).getM + "m"}
+                            </Span>
+                          ) : (
+                            <Span className='font-medium text-lg'>TBA</Span>
+                          )}
+
+                          {new Date(getReleaseDate(item.air_date)) < new Date() && (
+                            <Link href={`${routeRef.current}/episode/${item.episode_number}`}>
+                              <a>
+                                <Pill className='info text-base'>
+                                  Episode Details
+                                  <BiChevronRight size='22' />
+                                </Pill>
+                              </a>
+                            </Link>
+                          )}
+                        </TrWrapper>
+
+                        {item.overview && (
+                          <SeasonCommonOverview className='clamp'>
+                            {item.overview}
+                          </SeasonCommonOverview>
+                        )}
+                      </div>
+                    </SeasonShowcaseWrapper>
+                  ))}
+                </SeasonEpisodesWrapper>
+              )}
+            </SeasonExpandedContainer>
+
+            {data?.aggregate_credits?.cast?.length > 0 && (
+              <ModulesWrapper className='relative z-10'>
+                <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-12 mb-8 font-bold block'>
+                  Cast ({data?.aggregate_credits?.cast?.length})
                 </span>
 
-                {data.episodes.map((item, i) => (
-                  <SeasonShowcaseWrapper key={item.id} className='episodesBox'>
-                    <EpisodeImg className='relative text-center'>
-                      <Image
-                        src={
-                          item.still_path
-                            ? `https://image.tmdb.org/t/p/w500${item.still_path}`
-                            : "/Images/DefaultBackdrop.png"
-                        }
-                        alt='TV-season-episode-poster'
-                        layout='fill'
-                        objectFit='cover'
-                        placeholder='blur'
-                        blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
-                      />
-                    </EpisodeImg>
+                <CastGrid className='justify-start'>
+                  {data.aggregate_credits.cast.map((item) => (
+                    <CastWrapper key={item.id}>
+                      <Link
+                        href={`/person/${item.id}-${item.name.replace(/[' ']/g, "-")}`}
+                        passHref>
+                        <a>
+                          <motion.div
+                            whileHover={{
+                              scale: 1.05,
+                              transition: { duration: 0.1 }
+                            }}
+                            whileTap={{ scale: 0.95 }}>
+                            <CastImg className='relative text-center'>
+                              <Image
+                                src={
+                                  item.profile_path
+                                    ? `https://image.tmdb.org/t/p/w276_and_h350_face${item.profile_path}`
+                                    : "/Images/DefaultAvatar.png"
+                                }
+                                alt='cast-image'
+                                layout='fill'
+                                objectFit='cover'
+                                objectPosition='top'
+                                placeholder='blur'
+                                blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
+                              />
+                            </CastImg>
+                          </motion.div>
+                        </a>
+                      </Link>
 
-                    <div>
-                      <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 font-bold'>
-                        {!item.episode_number ? i + 1 : item.episode_number}. {item.name}
-                      </h3>
-
-                      <TrWrapper className='flex-wrap'>
-                        <SeasonsRelease className='text-alt'>
-                          {getReleaseDate(item.air_date)}
-                        </SeasonsRelease>
-                        <Pill>
-                          <p>{getRating(item.vote_average)}</p>
-                        </Pill>
-
-                        {!isNaN(runtimeFormatted(item.runtime).getH) ? (
-                          <Span className='font-medium text-lg'>
-                            {runtimeFormatted(item.runtime).getH === 1 &&
-                            runtimeFormatted(item.runtime).getM === 0
-                              ? "60m"
-                              : runtimeFormatted(item.runtime).getH > 0 &&
-                                runtimeFormatted(item.runtime).getH + "h "}
-                            {runtimeFormatted(item.runtime).getM > 0 &&
-                              runtimeFormatted(item.runtime).getM + "m"}
-                          </Span>
-                        ) : (
-                          <Span className='font-medium text-lg'>TBA</Span>
-                        )}
-
-                        {new Date(getReleaseDate(item.air_date)) < new Date() && (
-                          <Link href={`${routeRef.current}/episode/${item.episode_number}`}>
-                            <a>
-                              <Pill className='info text-base'>
-                                Episode Details
-                                <BiChevronRight size='22' />
-                              </Pill>
-                            </a>
-                          </Link>
-                        )}
-                      </TrWrapper>
-
-                      {item.overview && (
-                        <SeasonCommonOverview className='clamp'>
-                          {item.overview}
-                        </SeasonCommonOverview>
-                      )}
-                    </div>
-                  </SeasonShowcaseWrapper>
-                ))}
-              </SeasonEpisodesWrapper>
+                      <div className='mt-3'>
+                        <Span className='font-bold movieCastHead block'>
+                          {item?.roles[0]?.character}
+                        </Span>
+                        <Span className='movieCastName block'>{item.name}</Span>
+                        <Span className='movieCastName block episode-count'>
+                          {item?.roles[0]?.episode_count} episodes
+                        </Span>
+                      </div>
+                    </CastWrapper>
+                  ))}
+                </CastGrid>
+              </ModulesWrapper>
             )}
-          </SeasonExpandedContainer>
-
-          {data?.aggregate_credits?.cast?.length > 0 && (
-            <ModulesWrapper>
-              <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-12 mb-8 font-bold block'>
-                Cast ({data?.aggregate_credits?.cast?.length})
-              </span>
-
-              <CastGrid className='justify-start'>
-                {data.aggregate_credits.cast.map((item) => (
-                  <CastWrapper key={item.id}>
-                    <Link href={`/person/${item.id}-${item.name.replace(/[' ']/g, "-")}`} passHref>
-                      <a>
-                        <motion.div
-                          whileHover={{
-                            scale: 1.05,
-                            transition: { duration: 0.1 }
-                          }}
-                          whileTap={{ scale: 0.95 }}>
-                          <CastImg className='relative text-center'>
-                            <Image
-                              src={
-                                item.profile_path
-                                  ? `https://image.tmdb.org/t/p/w276_and_h350_face${item.profile_path}`
-                                  : "/Images/DefaultAvatar.png"
-                              }
-                              alt='cast-image'
-                              layout='fill'
-                              objectFit='cover'
-                              objectPosition='top'
-                              placeholder='blur'
-                              blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
-                            />
-                          </CastImg>
-                        </motion.div>
-                      </a>
-                    </Link>
-
-                    <div className='mt-3'>
-                      <Span className='font-bold movieCastHead block'>
-                        {item?.roles[0]?.character}
-                      </Span>
-                      <Span className='movieCastName block'>{item.name}</Span>
-                      <Span className='movieCastName block episode-count'>
-                        {item?.roles[0]?.episode_count} episodes
-                      </Span>
-                    </div>
-                  </CastWrapper>
-                ))}
-              </CastGrid>
-            </ModulesWrapper>
-          )}
+          </div>
 
           {data?.images?.posters?.length > 0 && (
             <ModulesWrapper>

@@ -29,7 +29,7 @@ const PersonDetails = ({ details }) => {
       case 2:
         return "Male";
       case 3:
-        return "Non Binary";
+        return "NB / Trans / Others";
     }
   };
 
@@ -46,7 +46,7 @@ const PersonDetails = ({ details }) => {
   );
 
   works?.sort((a, z) => z.vote_count - a.vote_count); // sort works array
-  works?.length > 100 && works.splice(100); // splice if bigger than 100 for filtering
+  // works?.length > 100 && works.splice(100); // splice if bigger than 100 for filtering
 
   const { cleanedItems: cleaned } = removeDuplicates(works || []);
 
@@ -88,55 +88,74 @@ const PersonDetails = ({ details }) => {
             </HeroImg>
           </HeroImgWrapper>
 
-          <HeroInfoWrapper className='w-full me-auto max-w-[700px]'>
+          <HeroInfoWrapper className='w-full me-auto max-w-3xl'>
             <HeroInfoTitle>{details.name}</HeroInfoTitle>
 
-            <Details className='py-4'>
+            <Details className='my-4'>
               <div>
                 <Span className='block font-bold'>Gender</Span>
-                <Span className='block font-normal'>{getGender(details.gender)}</Span>
+                <Span className='block font-normal text-lg'>{getGender(details.gender)}</Span>
               </div>
 
               {!details.deathday && details.birthday && (
                 <div>
                   <Span className='block font-bold'>Age</Span>
-                  <Span className='block font-normal'>
+                  <Span className='block font-normal text-lg'>
                     {getAge(details.birthday, true)} years old
                   </Span>
                 </div>
               )}
 
-              {details.birthday && (
+              {details?.birthday && (
                 <div>
                   <Span className='block font-bold'>Birthday</Span>
-                  <Span className='block font-normal'>{details.birthday}</Span>
+                  <Span className='block font-normal text-lg'>
+                    {new Date(details.birthday).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric"
+                    })}
+                  </Span>
                 </div>
               )}
 
-              {details.deathday && (
+              {details?.deathday && (
                 <div>
                   <Span className='block font-bold'>Death Day</Span>
-                  <Span className='block font-normal'>{details.deathday}</Span>
+                  <Span className='block font-normal text-lg'>
+                    {new Date(details.deathday).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric"
+                    })}
+                  </Span>
                 </div>
               )}
 
-              {details.deathday && (
+              {details?.deathday && (
                 <div>
                   <Span className='block font-bold'>Died at</Span>
-                  <Span className='block font-normal'>
+                  <Span className='block font-normal text-lg'>
                     {getAge(details.deathday, false)} years old
                   </Span>
                 </div>
               )}
 
+              {details?.place_of_birth && (
+                <div>
+                  <Span className='block font-bold'>Place of Birth</Span>
+                  <Span className='block font-normal text-lg'>{details.place_of_birth}</Span>
+                </div>
+              )}
+
               <div>
                 <Span className='block font-bold'>Known For</Span>
-                <Span className='block font-normal'>{details.known_for_department}</Span>
+                <Span className='block font-normal text-lg'>{details.known_for_department}</Span>
               </div>
 
               <div>
                 <Span className='block font-bold'>Known Credits</Span>
-                <Span className='block font-normal'>{cleaned.length}</Span>
+                <Span className='block font-normal text-lg'>{cleaned.length}</Span>
               </div>
             </Details>
           </HeroInfoWrapper>
@@ -162,73 +181,71 @@ const PersonDetails = ({ details }) => {
 
           <RecommendationsGrid>
             {cleaned.map((item, i) =>
-              item.media_type === "movie"
-                ? !item?.duplicate && (
-                    <RecommendedWrapper key={i}>
-                      <motion.div
-                        whileHover={{
-                          scale: 1.05,
-                          transition: { duration: 0.1 }
-                        }}
-                        whileTap={{ scale: 0.95 }}>
-                        <Link
-                          href={`/movies/${item.id}-${item.title.replace(/[' ', '/']/g, "-")}`}
-                          passHref
-                          scroll={false}>
-                          <a>
-                            <RecommendedImg className='relative text-center'>
-                              <Image
-                                src={
-                                  item.backdrop_path
-                                    ? `https://image.tmdb.org/t/p/w500${item.backdrop_path}`
-                                    : "/Images/DefaultBackdrop.png"
-                                }
-                                alt='movie-backdrop'
-                                layout='fill'
-                                objectFit='cover'
-                                placeholder='blur'
-                                blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
-                              />
-                            </RecommendedImg>
-                          </a>
-                        </Link>
-                      </motion.div>
-                      <InfoTitle className='mt-3 text-center'>{item.title}</InfoTitle>
-                    </RecommendedWrapper>
-                  )
-                : !item?.duplicate && (
-                    <RecommendedWrapper key={i}>
-                      <motion.div
-                        whileHover={{
-                          scale: 1.05,
-                          transition: { duration: 0.1 }
-                        }}
-                        whileTap={{ scale: 0.95 }}>
-                        <Link
-                          href={`/tv/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}
-                          passHref
-                          scroll={false}>
-                          <a>
-                            <RecommendedImg className='relative text-center'>
-                              <Image
-                                src={
-                                  item.backdrop_path
-                                    ? `https://image.tmdb.org/t/p/w500${item.backdrop_path}`
-                                    : "/Images/DefaultBackdrop.png"
-                                }
-                                alt='TV-backdrop'
-                                layout='fill'
-                                objectFit='cover'
-                                placeholder='blur'
-                                blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
-                              />
-                            </RecommendedImg>
-                          </a>
-                        </Link>
-                      </motion.div>
-                      <InfoTitle className='mt-3 text-center'>{item.name}</InfoTitle>
-                    </RecommendedWrapper>
-                  )
+              item.media_type === "movie" ? (
+                <RecommendedWrapper key={i}>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.1 }
+                    }}
+                    whileTap={{ scale: 0.95 }}>
+                    <Link
+                      href={`/movies/${item.id}-${item.title.replace(/[' ', '/']/g, "-")}`}
+                      passHref
+                      scroll={false}>
+                      <a>
+                        <RecommendedImg className='relative text-center'>
+                          <Image
+                            src={
+                              item.backdrop_path
+                                ? `https://image.tmdb.org/t/p/w500${item.backdrop_path}`
+                                : "/Images/DefaultBackdrop.png"
+                            }
+                            alt='movie-backdrop'
+                            layout='fill'
+                            objectFit='cover'
+                            placeholder='blur'
+                            blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
+                          />
+                        </RecommendedImg>
+                      </a>
+                    </Link>
+                  </motion.div>
+                  <InfoTitle className='mt-3 text-center'>{item.title}</InfoTitle>
+                </RecommendedWrapper>
+              ) : (
+                <RecommendedWrapper key={i}>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.1 }
+                    }}
+                    whileTap={{ scale: 0.95 }}>
+                    <Link
+                      href={`/tv/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}
+                      passHref
+                      scroll={false}>
+                      <a>
+                        <RecommendedImg className='relative text-center'>
+                          <Image
+                            src={
+                              item.backdrop_path
+                                ? `https://image.tmdb.org/t/p/w500${item.backdrop_path}`
+                                : "/Images/DefaultBackdrop.png"
+                            }
+                            alt='TV-backdrop'
+                            layout='fill'
+                            objectFit='cover'
+                            placeholder='blur'
+                            blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
+                          />
+                        </RecommendedImg>
+                      </a>
+                    </Link>
+                  </motion.div>
+                  <InfoTitle className='mt-3 text-center'>{item.name}</InfoTitle>
+                </RecommendedWrapper>
+              )
             )}
           </RecommendationsGrid>
         </ModulesWrapper>

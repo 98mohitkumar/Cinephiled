@@ -1,16 +1,9 @@
 const removeDuplicates = (items) => {
-  let filtered = [];
+  const uniqueIds = new Set();
 
   const cleanedItems = items
-    .map((item) => {
-      if (filtered.includes(item.id)) {
-        return { duplicate: true };
-      } else {
-        filtered.push(item.id);
-        return item;
-      }
-    })
-    .filter((item) => !item?.duplicate);
+    .map((item) => (uniqueIds.has(item.id) ? null : (uniqueIds.add(item.id), item)))
+    .filter(Boolean);
 
   return { cleanedItems };
 };

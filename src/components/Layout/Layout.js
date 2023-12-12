@@ -1,9 +1,13 @@
 import Footer from "components/Footer/Footer";
 import Navigation from "components/Navigation/Navigation";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 import { DetailsWrapper, Wrapper } from "./LayoutStyles";
 
 const Layout = ({ children }) => {
+  const router = useRouter();
+  const footerValidPaths = ["/", "/about", "/login"];
+
   return (
     <Wrapper
       as={motion.div}
@@ -15,8 +19,8 @@ const Layout = ({ children }) => {
       }}>
       <DetailsWrapper className='flex flex-col justify-between'>
         <Navigation />
-        {children}
-        <Footer />
+        <div className='grow content-wrapper'>{children}</div>
+        {footerValidPaths.includes(router.asPath) ? <Footer /> : null}
       </DetailsWrapper>
     </Wrapper>
   );

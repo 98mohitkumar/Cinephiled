@@ -1,5 +1,6 @@
 import Backdrops from "components/Backdrops/Backdrops";
 import { CastGrid, CastImg, CastWrapper } from "components/Cast/CastStyles";
+import DominantColor from "components/DominantColor/DominantColor";
 import MetaWrapper from "components/MetaWrapper";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import { SeasonsRelease } from "components/TVInfo/TVStyles";
@@ -65,103 +66,109 @@ const Episode = ({ error, data, tvData }) => {
         <Error404>404</Error404>
       ) : (
         <Fragment>
-          <EpisodeInfoWrapper>
-            <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>
-              {tvData?.name} ({releaseYear})
-            </h3>
+          <div className='relative mb-auto'>
+            <DominantColor image={data?.still_path} backdrop flip />
 
-            <EpisodeShowCaseWrapper>
-              <div className='image-wrapper'>
-                <Image
-                  src={
-                    data?.still_path
-                      ? `https://image.tmdb.org/t/p/w780${data?.still_path}`
-                      : "/Images/DefaultBackdrop.png"
-                  }
-                  alt='episde-backdrop'
-                  layout='fill'
-                  objectFit='cover'
-                  placeholder='blur'
-                  blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
-                />
-              </div>
+            <EpisodeInfoWrapper className='relative z-10'>
+              <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>
+                {tvData?.name} ({releaseYear})
+              </h3>
 
-              <div>
-                <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 m-0 font-bold'>
-                  {data?.name} ({`S${data.season_number}E${data.episode_number}`})
-                </h3>
+              <EpisodeShowCaseWrapper>
+                <div className='image-wrapper'>
+                  <Image
+                    src={
+                      data?.still_path
+                        ? `https://image.tmdb.org/t/p/w780${data?.still_path}`
+                        : "/Images/DefaultBackdrop.png"
+                    }
+                    alt='episde-backdrop'
+                    layout='fill'
+                    objectFit='cover'
+                    placeholder='blur'
+                    blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
+                  />
+                </div>
 
-                <TrWrapper>
-                  <SeasonsRelease className='text-alt'>
-                    {getReleaseDate(data.air_date)}
-                  </SeasonsRelease>
+                <div>
+                  <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 m-0 font-bold'>
+                    {data?.name} ({`S${data.season_number}E${data.episode_number}`})
+                  </h3>
 
-                  <Pill>
-                    <p>{getRating(data.vote_average)}</p>
-                  </Pill>
+                  <TrWrapper>
+                    <SeasonsRelease className='text-alt'>
+                      {getReleaseDate(data.air_date)}
+                    </SeasonsRelease>
 
-                  {!isNaN(runtimeFormatted.getH) ? (
-                    <Span className='font-medium text-lg'>
-                      {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
-                        ? "60m"
-                        : runtimeFormatted.getH > 0 && runtimeFormatted.getH + "h "}
-                      {runtimeFormatted.getM > 0 && runtimeFormatted.getM + "m"}
-                    </Span>
-                  ) : (
-                    <Span className='font-medium text-lg'>TBA</Span>
-                  )}
-                </TrWrapper>
+                    <Pill>
+                      <p>{getRating(data.vote_average)}</p>
+                    </Pill>
 
-                {data.overview && <SeasonCommonOverview>{data.overview}</SeasonCommonOverview>}
-              </div>
-            </EpisodeShowCaseWrapper>
-          </EpisodeInfoWrapper>
+                    {!isNaN(runtimeFormatted.getH) ? (
+                      <Span className='font-medium text-lg'>
+                        {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
+                          ? "60m"
+                          : runtimeFormatted.getH > 0 && runtimeFormatted.getH + "h "}
+                        {runtimeFormatted.getM > 0 && runtimeFormatted.getM + "m"}
+                      </Span>
+                    ) : (
+                      <Span className='font-medium text-lg'>TBA</Span>
+                    )}
+                  </TrWrapper>
 
-          {cast?.length > 0 && (
-            <ModulesWrapper>
-              <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 my-8 font-bold block'>
-                Cast ({cast?.length})
-              </span>
+                  {data.overview && <SeasonCommonOverview>{data.overview}</SeasonCommonOverview>}
+                </div>
+              </EpisodeShowCaseWrapper>
+            </EpisodeInfoWrapper>
 
-              <CastGrid className='justify-start'>
-                {cast.map((item) => (
-                  <CastWrapper key={item.name}>
-                    <Link href={`/person/${item.id}-${item.name.replace(/[' ']/g, "-")}`} passHref>
-                      <a>
-                        <motion.div
-                          whileHover={{
-                            scale: 1.05,
-                            transition: { duration: 0.1 }
-                          }}
-                          whileTap={{ scale: 0.95 }}>
-                          <CastImg className='relative text-center'>
-                            <Image
-                              src={
-                                item?.profile_path
-                                  ? `https://image.tmdb.org/t/p/w276_and_h350_face${item.profile_path}`
-                                  : "/Images/DefaultAvatar.png"
-                              }
-                              alt='cast-image'
-                              layout='fill'
-                              objectFit='cover'
-                              objectPosition='top'
-                              placeholder='blur'
-                              blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
-                            />
-                          </CastImg>
-                        </motion.div>
-                      </a>
-                    </Link>
+            {cast?.length > 0 && (
+              <ModulesWrapper className='relative z-10'>
+                <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 my-8 font-bold block'>
+                  Cast ({cast?.length})
+                </span>
 
-                    <div className='mt-3'>
-                      <Span className='font-bold movieCastHead block'>{item?.character}</Span>
-                      <Span className='movieCastName block'>{item?.name}</Span>
-                    </div>
-                  </CastWrapper>
-                ))}
-              </CastGrid>
-            </ModulesWrapper>
-          )}
+                <CastGrid className='justify-start'>
+                  {cast.map((item) => (
+                    <CastWrapper key={item.name}>
+                      <Link
+                        href={`/person/${item.id}-${item.name.replace(/[' ']/g, "-")}`}
+                        passHref>
+                        <a>
+                          <motion.div
+                            whileHover={{
+                              scale: 1.05,
+                              transition: { duration: 0.1 }
+                            }}
+                            whileTap={{ scale: 0.95 }}>
+                            <CastImg className='relative text-center'>
+                              <Image
+                                src={
+                                  item?.profile_path
+                                    ? `https://image.tmdb.org/t/p/w276_and_h350_face${item.profile_path}`
+                                    : "/Images/DefaultAvatar.png"
+                                }
+                                alt='cast-image'
+                                layout='fill'
+                                objectFit='cover'
+                                objectPosition='top'
+                                placeholder='blur'
+                                blurDataURL='data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA=='
+                              />
+                            </CastImg>
+                          </motion.div>
+                        </a>
+                      </Link>
+
+                      <div className='mt-3'>
+                        <Span className='font-bold movieCastHead block'>{item?.character}</Span>
+                        <Span className='movieCastName block'>{item?.name}</Span>
+                      </div>
+                    </CastWrapper>
+                  ))}
+                </CastGrid>
+              </ModulesWrapper>
+            )}
+          </div>
 
           {data?.images?.stills?.length > 0 && (
             <Fragment>

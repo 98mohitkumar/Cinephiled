@@ -15,7 +15,7 @@ const About = () => {
         image='https://i.imgur.com/1tH4WvQ.jpg'
       />
 
-      <AboutContainer className='text-center flex items-center justify-center'>
+      <AboutContainer className='text-center flex items-center justify-center about-container'>
         <div className='bg-wrapper'>
           <AboutBackground>
             <Image

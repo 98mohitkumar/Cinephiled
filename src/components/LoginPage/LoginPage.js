@@ -64,7 +64,7 @@ const LoginPage = () => {
         description='Cinephiled login page'
         url='https://cinephiled.vercel.app/login'
       />
-      <LoginContainer className='mb-auto'>
+      <LoginContainer className='mb-auto login-container'>
         <div className='bg-wrapper'>
           <AboutBackground className='loginPage'>
             <Image
