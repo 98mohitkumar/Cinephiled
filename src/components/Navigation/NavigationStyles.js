@@ -5,7 +5,7 @@ export const Header = styled.header`
   position: sticky;
   top: 0;
   z-index: 500;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
   &.show-nav {
     transform: translateY(0%);
@@ -67,7 +67,7 @@ export const NavLinks = styled.div`
   .link {
     color: white;
     padding: 1rem 2rem;
-    transition: all 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transition: color 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
     @media ${(props) => props.theme.breakpoints.hover} {
       &:hover {

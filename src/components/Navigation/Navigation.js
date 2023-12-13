@@ -113,7 +113,6 @@ const Navigation = () => {
             <BsSearch size='22px' />
           </Search>
 
-          {/* avatar - mobile*/}
           <UserAvatar />
 
           <HamburgerIcon
