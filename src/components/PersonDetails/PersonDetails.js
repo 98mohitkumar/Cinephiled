@@ -14,6 +14,7 @@ import { Bio, Details } from "./PersonDetails.styles";
 import PersonPageTab from "./PersonPageTab";
 
 const PersonDetails = ({ details }) => {
+  const { external_ids } = details;
   const casting =
     details?.combined_credits?.cast?.map((item) => ({
       ...item,
@@ -56,11 +57,11 @@ const PersonDetails = ({ details }) => {
   };
 
   const selectedItem = useMemo(() => {
-    const random = Math.floor(Math.random() * 20);
-    return combinedCredits[random];
-  }, [combinedCredits]);
+    const filtered = combinedCredits.filter((item) => item.poster_path);
+    const randomIndex = Math.floor(Math.random() * filtered.length);
 
-  const { external_ids } = details;
+    return filtered[randomIndex];
+  }, [combinedCredits]);
 
   return (
     <div className='mb-auto'>
