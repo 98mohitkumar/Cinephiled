@@ -141,7 +141,13 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
               transition={{ duration: 0.5 }}>
               <Select departmentList={departmentList} />
 
-              <MoviesTemplate movies={creditsToRender} creditsPage />
+              {creditsToRender?.length ? (
+                <MoviesTemplate movies={creditsToRender} creditsPage />
+              ) : (
+                <div className='text-center text-3xl font-semibold min-h-[10vw] grid place-items-center'>
+                  No Movie credits yet
+                </div>
+              )}
             </motion.div>
           )}
 
@@ -154,7 +160,13 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
               transition={{ duration: 0.5 }}>
               <Select departmentList={departmentList} />
 
-              <TVTemplate TV={creditsToRender} creditsPage />
+              {creditsToRender?.length ? (
+                <TVTemplate TV={creditsToRender} creditsPage />
+              ) : (
+                <div className='text-center text-3xl font-semibold min-h-[10vw] grid place-items-center'>
+                  No TV show credits yet
+                </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
