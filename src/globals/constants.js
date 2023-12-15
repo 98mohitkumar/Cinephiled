@@ -111,7 +111,7 @@ export const apiEndpoints = {
   },
   person: {
     personDetails: (id) =>
-      `${baseUrlV3}/person/${id}?api_key=${api_key}&language=en-US&append_to_response=combined_credits`
+      `${baseUrlV3}/person/${id}?api_key=${api_key}&language=en-US&append_to_response=combined_credits,external_ids`
   },
   providers: {
     watchProviders: ({ region }) =>

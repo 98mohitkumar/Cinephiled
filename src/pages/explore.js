@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import Genres from "components/Explore/Genres";
 import NowPlayingMovies from "components/Explore/NowPlayingMovies";
 import MetaWrapper from "components/MetaWrapper";

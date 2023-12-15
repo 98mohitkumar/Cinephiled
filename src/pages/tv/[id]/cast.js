@@ -55,7 +55,7 @@ const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) =>
                 <input
                   type='text'
                   placeholder='Search cast'
-                  className='px-4 py-2 rounded-md bg-neutral-600 text-white focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:border-transparent min-w-[320px] text-lg max-sm:min-w-full'
+                  className='px-4 py-2 rounded-lg bg-neutral-600 text-white focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:border-transparent min-w-[320px] text-lg max-sm:min-w-full'
                   onChange={searchHandler}
                 />
               </div>

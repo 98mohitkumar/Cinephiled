@@ -5,7 +5,6 @@ export const CardsContainerGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
   place-items: center;
-  /* padding: 32px 4.2vw; */
   gap: clamp(20px, 3vw, 32px);
 
   &.xl-row-gap {
@@ -19,10 +18,6 @@ export const CardsContainerGrid = styled.div`
   @media only ${(props) => props.theme.breakpoints.ip} {
     grid-template-columns: repeat(3, 1fr);
   }
-
-  /* @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 0px 20px 20px 20px;
-  } */
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     grid-template-columns: repeat(2, 1fr);
