@@ -6,23 +6,42 @@ import { AnimatePresence, motion } from "framer-motion";
 import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useMemo, useRef, useState } from "react";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
+const mergeEpisodeCount = (cast) => {
+  const mergedCast = [];
+  const casting = structuredClone(cast);
+
+  casting.forEach((item) => {
+    const existing = mergedCast.findIndex((castItem) => castItem.id === item.id);
+    if (existing > -1) {
+      const existingEpisodeCount = mergedCast[existing].episode_count ?? 0;
+      const currentEpisodeCount = item.episode_count ?? 0;
+      mergedCast[existing].episode_count = existingEpisodeCount + currentEpisodeCount;
+    } else {
+      mergedCast.push(item);
+    }
+  });
+
+  return mergedCast;
+};
+
 const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) => {
-  const [filteredCast, setFilteredCast] = useState(cast);
+  const mergedCast = useMemo(() => mergeEpisodeCount(cast), [cast]);
+  const [filteredCast, setFilteredCast] = useState(mergedCast);
   const timeoutRef = useRef(null);
 
   const searchHandler = (e) => {
     clearTimeout(timeoutRef.current);
     if (e.target.value.trim().length === 0) {
-      setFilteredCast(cast);
+      setFilteredCast(mergedCast);
       return;
     }
 
     timeoutRef.current = setTimeout(() => {
       const searchValue = e.target.value.toLowerCase();
-      const filteredCast = cast.filter(
+      const filteredCast = mergedCast.filter(
         ({ name, character }) =>
           name.toLowerCase().includes(searchValue) || character.toLowerCase().includes(searchValue)
       );
@@ -51,7 +70,7 @@ const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) =>
               </HeroInfoTitle>
 
               <div className='flex justify-between items-center py-2 max-sm:flex-col gap-5'>
-                <h3 className='mb-0 text-xl md:text-2xl font-semibold'>{`Cast (${cast.length})`}</h3>
+                <h3 className='mb-0 text-xl md:text-2xl font-semibold'>{`Cast (${mergedCast.length})`}</h3>
                 <input
                   type='text'
                   placeholder='Search cast'

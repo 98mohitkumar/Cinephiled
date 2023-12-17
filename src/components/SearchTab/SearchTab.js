@@ -2,7 +2,7 @@ import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Tabs from "components/Tabs/Tabs";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
-import { Fragment, useState, useEffect, useMemo } from "react";
+import { Fragment, useState, useEffect } from "react";
 import KeywordSearch from "./KeywordSearch";
 import MoviesSearch from "./MoviesSearch";
 import { tabStyling, tabTitleStyling } from "./SearchTabStyles";
@@ -30,15 +30,11 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
     );
   };
 
-  const tabList = useMemo(
-    () => [
-      { key: "movies", name: `Movies (${movies.count})` },
-      { key: "tv", name: `TV (${tv.count})` },
-      { key: "keywords", name: `Keywords (${keywords.count})` }
-    ],
-    [keywords.count, movies.count, tv.count]
-  );
-
+  const tabList = [
+    { key: "movies", name: `Movies (${movies.count})` },
+    { key: "tv", name: `TV (${tv.count})` },
+    { key: "keywords", name: `Keywords (${keywords.count})` }
+  ];
   return (
     <Fragment>
       <Tabs

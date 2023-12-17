@@ -9,8 +9,9 @@ import { ModulesWrapper } from "styles/GlobalComponents";
 
 const groupCredits = (credits) => {
   const groupedCredits = [];
+  const clonedCredits = structuredClone(credits);
 
-  credits.forEach((credit) => {
+  clonedCredits.forEach((credit) => {
     const existingCreditIndex = groupedCredits.findIndex(
       (groupedCredit) => groupedCredit.id === credit.id
     );
@@ -97,15 +98,15 @@ const Select = ({ departmentList }) => {
   );
 };
 
+const tabList = [
+  { key: "movies", name: `Movies` },
+  { key: "tv", name: `TV Shows` }
+];
+
 const PersonPageTab = ({ movieCredits, tvCredits }) => {
   const [tabState, setTabState] = useState("movies");
   const router = useRouter();
   const { department: currentSelectedDepartment } = router.query;
-
-  const tabList = [
-    { key: "movies", name: `Movies` },
-    { key: "tv", name: `TV Shows` }
-  ];
 
   const departmentList = Array.from(
     tabState === "movies"

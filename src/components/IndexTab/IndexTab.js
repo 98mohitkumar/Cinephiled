@@ -2,8 +2,13 @@ import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import TVTemplate from "components/MediaTemplate/TVTemplate";
 import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
-import { Fragment, useEffect, useState, useMemo } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { LayoutContainer } from "styles/GlobalComponents";
+
+const tabList = [
+  { key: "movies", name: `Movies` },
+  { key: "tv", name: `TV Shows` }
+];
 
 const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
   const [tabState, setTabState] = useState("");
@@ -17,14 +22,6 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
     localStorage.setItem("indexTabState", tab);
     setTabState(tab);
   };
-
-  const tabList = useMemo(
-    () => [
-      { key: "movies", name: "Movies" },
-      { key: "tv", name: "TV Shows" }
-    ],
-    []
-  );
 
   return (
     <Fragment>

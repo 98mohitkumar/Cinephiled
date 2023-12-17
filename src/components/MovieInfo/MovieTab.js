@@ -8,9 +8,32 @@ import PostersSvg from "components/Svg/posters";
 import ReviewsSvg from "components/Svg/reviews";
 import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState, useEffect, Fragment, useMemo } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import { TabIcon, TabSelectionTitle, tabStyling } from "./MovieTabStyles";
+
+const tabList = [
+  {
+    key: "cast",
+    name: "Cast",
+    svg: (active) => <CastSvg color={active ? "white" : "black"} />
+  },
+  {
+    key: "reviews",
+    name: "Reviews",
+    svg: (active) => <ReviewsSvg color={active ? "white" : "black"} />
+  },
+  {
+    key: "backdrops",
+    name: "Backdrops",
+    svg: (active) => <BackdropsSvg color={active ? "white" : "black"} />
+  },
+  {
+    key: "posters",
+    name: "Posters",
+    svg: (active) => <PostersSvg color={active ? "white" : "black"} />
+  }
+];
 
 const MovieTab = ({ cast, reviews, posters, backdrops }) => {
   const [tabState, setTabState] = useState("");
@@ -25,32 +48,6 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
     localStorage.setItem("MovieTabState", tab);
   };
 
-  const tabList = useMemo(
-    () => [
-      {
-        key: "cast",
-        name: "Cast",
-        svg: (tab) => <CastSvg color={tabState === tab ? "white" : "black"} />
-      },
-      {
-        key: "reviews",
-        name: "Reviews",
-        svg: (tab) => <ReviewsSvg color={tabState === tab ? "white" : "black"} />
-      },
-      {
-        key: "backdrops",
-        name: "Backdrops",
-        svg: (tab) => <BackdropsSvg color={tabState === tab ? "white" : "black"} />
-      },
-      {
-        key: "posters",
-        name: "Posters",
-        svg: (tab) => <PostersSvg color={tabState === tab ? "white" : "black"} />
-      }
-    ],
-    [tabState]
-  );
-
   return (
     <Fragment>
       <Tabs tabList={tabList} currentTab={tabState} styling={{ tabStyling }}>
@@ -59,7 +56,7 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
             key={key}
             onClick={() => tabSelectionHandler(key)}
             active={tabState === key}>
-            <TabIcon>{svg(key)}</TabIcon>
+            <TabIcon>{svg(key === tabState)}</TabIcon>
             {name}
           </TabSelectionTitle>
         ))}

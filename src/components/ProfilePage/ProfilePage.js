@@ -11,15 +11,19 @@ import ProfileRecommendations from "./ProfileRecommendations";
 import Ratings from "./Ratings";
 import Watchlist from "./Watchlist";
 
-export const ProfileMediaTab = ({ tabState, setTabState }) => {
-  const tabList = useMemo(
-    () => [
-      { key: "movies", name: "Movies" },
-      { key: "tv", name: "TV Shows" }
-    ],
-    []
-  );
+const tabList = [
+  { key: "movies", name: "Movies" },
+  { key: "tv", name: "TV Shows" }
+];
 
+const linearTabsList = [
+  { key: "watchlist", name: "Watchlist" },
+  { key: "ratings", name: "Ratings" },
+  { key: "favorites", name: "Favorites" },
+  { key: "recommendations", name: "Recommendations" }
+];
+
+export const ProfileMediaTab = ({ tabState, setTabState }) => {
   useLayoutEffect(() => {
     const tabPosition = localStorage.getItem("profileMediaTabState");
     setTabState(tabPosition ?? "movies");
@@ -69,16 +73,6 @@ const Profile = () => {
     ]
   );
 
-  const tabs = useMemo(
-    () => [
-      { key: "watchlist", name: "Watchlist" },
-      { key: "ratings", name: "Ratings" },
-      { key: "favorites", name: "Favorites" },
-      { key: "recommendations", name: "Recommendations" }
-    ],
-    []
-  );
-
   const tabHandler = (tab) => {
     localStorage.setItem("profileTab", tab);
     setCurrentTab(tab);
@@ -125,7 +119,7 @@ const Profile = () => {
           {/* main content */}
           <div className='h-full w-full mt-3'>
             <div className='px-3'>
-              <LinearTabs tabList={tabs} currentTab={currentTab} setTab={tabHandler} />
+              <LinearTabs tabList={linearTabsList} currentTab={currentTab} setTab={tabHandler} />
             </div>
             <AnimatePresence exitBeforeEnter initial={false}>
               {/* Watchlist */}

@@ -10,9 +10,37 @@ import ReviewsSvg from "components/Svg/reviews";
 import SeasonsSvg from "components/Svg/seasons";
 import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
-import { Fragment, useState, useEffect, useMemo } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import TVSeasons from "./TVSeasons";
+
+const tabList = [
+  {
+    key: "cast",
+    name: "Cast",
+    svg: (active) => <CastSvg color={active ? "white" : "black"} />
+  },
+  {
+    key: "seasons",
+    name: "Seasons",
+    svg: (active) => <SeasonsSvg color={active ? "white" : "black"} />
+  },
+  {
+    key: "reviews",
+    name: "Reviews",
+    svg: (active) => <ReviewsSvg color={active ? "white" : "black"} />
+  },
+  {
+    key: "backdrops",
+    name: "Backdrops",
+    svg: (active) => <BackdropsSvg color={active ? "white" : "black"} />
+  },
+  {
+    key: "posters",
+    name: "Posters",
+    svg: (active) => <PostersSvg color={active ? "white" : "black"} />
+  }
+];
 
 const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
   const [tabState, setTabState] = useState("");
@@ -27,37 +55,6 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
     localStorage.setItem("TvTabState", tab);
   };
 
-  const tabList = useMemo(
-    () => [
-      {
-        key: "cast",
-        name: "Cast",
-        svg: (tab) => <CastSvg color={tabState === tab ? "white" : "black"} />
-      },
-      {
-        key: "seasons",
-        name: "Seasons",
-        svg: (tab) => <SeasonsSvg color={tabState === tab ? "white" : "black"} />
-      },
-      {
-        key: "reviews",
-        name: "Reviews",
-        svg: (tab) => <ReviewsSvg color={tabState === tab ? "white" : "black"} />
-      },
-      {
-        key: "backdrops",
-        name: "Backdrops",
-        svg: (tab) => <BackdropsSvg color={tabState === tab ? "white" : "black"} />
-      },
-      {
-        key: "posters",
-        name: "Posters",
-        svg: (tab) => <PostersSvg color={tabState === tab ? "white" : "black"} />
-      }
-    ],
-    [tabState]
-  );
-
   return (
     <Fragment>
       <Tabs tabList={tabList} currentTab={tabState} styling={{ tabStyling }}>
@@ -67,7 +64,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
             onClick={() => tabSelectionHandler(key)}
             active={tabState === key}
             tv={true}>
-            <TabIcon>{svg(key)}</TabIcon>
+            <TabIcon>{svg(key === tabState)}</TabIcon>
             {name}
           </TabSelectionTitle>
         ))}
