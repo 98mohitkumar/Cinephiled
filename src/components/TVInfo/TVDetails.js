@@ -443,7 +443,7 @@ const TVDetails = ({
               {rating !== 0 ? (
                 <Fragment>
                   <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
-                    {rating.toFixed(1)}
+                    {rating % 1 === 0 ? rating : rating.toFixed(1)}
                   </Span>
                   <span> / 10</span>
                 </Fragment>

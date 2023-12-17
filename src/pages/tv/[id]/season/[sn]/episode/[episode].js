@@ -33,7 +33,7 @@ const Episode = ({ error, data, tvData }) => {
   };
 
   const getRating = (rating) => {
-    const vote = !rating ? "NR" : Number.parseFloat(rating).toFixed(1);
+    const vote = !rating ? "NR" : rating % 1 === 0 ? rating : rating.toFixed(1);
 
     return vote;
   };

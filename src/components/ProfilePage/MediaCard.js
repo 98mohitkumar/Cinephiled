@@ -62,7 +62,11 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
             </CardImg>
             {recommendation && (
               <Rating className='flex justify-center items-center'>
-                {data.vote_average === 0 ? "NR" : data.vote_average.toFixed(1)}
+                {data.vote_average === 0
+                  ? "NR"
+                  : data.vote_average % 1 === 0
+                  ? data.vote_average
+                  : data.vote_average.toFixed(1)}
               </Rating>
             )}
           </a>
