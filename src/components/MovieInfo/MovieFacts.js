@@ -23,19 +23,19 @@ const MovieFacts = ({ facts, country }) => {
 
         <FactsFlexWrapper>
           <Span>Budget</Span>
-          {facts.budget === 0 ? (
-            <Span>-</Span>
-          ) : (
+          {facts.budget ? (
             <Span>{currency + " " + facts.budget.toLocaleString()}</Span>
+          ) : (
+            <Span>-</Span>
           )}
         </FactsFlexWrapper>
 
         <FactsFlexWrapper>
           <Span>Revenue</Span>
-          {facts.revenue === 0 ? (
-            <Span>-</Span>
-          ) : (
+          {facts.revenue ? (
             <Span>{currency + " " + facts.revenue.toLocaleString()}</Span>
+          ) : (
+            <Span>-</Span>
           )}
         </FactsFlexWrapper>
       </FactsWrapper>

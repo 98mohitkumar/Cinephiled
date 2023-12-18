@@ -15,9 +15,7 @@ const Cast = ({ cast }) => {
 
   return (
     <Fragment>
-      {cast.data.length === 0 ? (
-        <NoDataText className='font-bold text-center my-5'>TBA</NoDataText>
-      ) : (
+      {cast.data.length > 0 ? (
         <CastGrid>
           {cast.data.map((item) => (
             <CastWrapper key={item.id}>
@@ -49,20 +47,20 @@ const Cast = ({ cast }) => {
               </Link>
 
               <div className='mt-3'>
-                <Span className='font-bold movieCastHead block'>
+                <Span className='font-bold movieCastHead line-clamp-2'>
                   {item?.roles?.[0]?.character ?? item?.character}
                 </Span>
                 <Span className='movieCastName block'>{item.name}</Span>
-                {router.asPath.includes("tv") && (
+                {item?.episode_count ? (
                   <Span className='movieCastName block episode-count'>
-                    {item?.roles?.[0]?.episode_count} episodes
+                    {item?.episode_count} episodes
                   </Span>
-                )}
+                ) : null}
               </div>
             </CastWrapper>
           ))}
 
-          {cast.totalCount > 15 && (
+          {cast.totalCount > 15 ? (
             <Link href={`${routeRef.current}/cast`}>
               <a className='mb-auto mt-12'>
                 <motion.div
@@ -78,8 +76,10 @@ const Cast = ({ cast }) => {
                 </motion.div>
               </a>
             </Link>
-          )}
+          ) : null}
         </CastGrid>
+      ) : (
+        <NoDataText className='font-bold text-center my-5'>TBA</NoDataText>
       )}
     </Fragment>
   );

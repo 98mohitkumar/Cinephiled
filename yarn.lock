@@ -3528,20 +3528,10 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash.camelcase@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
-  integrity sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==
-
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
-
-lodash.invoke@^4.5.2:
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/lodash.invoke/-/lodash.invoke-4.5.2.tgz#01ca07e470903affa3ffec7ad2ed22723d2f697c"
-  integrity sha512-SC4Usc0XbIKuz3eH7oNwPqibKHfTJSGVZwO/6eGhdoPzqexOY7z43pKo8xz0M5zzXSRteADV6fW7cRf6Ru0+VA==
 
 lodash.merge@^4.6.2:
   version "4.6.2"
@@ -4539,15 +4529,6 @@ react-merge-refs@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-merge-refs/-/react-merge-refs-1.1.0.tgz#73d88b892c6c68cbb7a66e0800faa374f4c38b06"
   integrity sha512-alTKsjEL0dKH/ru1Iyn7vliS2QRcBp9zZPGoWxUOvRGWPUYgjo+V01is7p04It6KhgrzhJGnIj9GgX8W4bZoCQ==
-
-react-palette@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-palette/-/react-palette-1.0.2.tgz#170edefa27eea73a8cea21bbd8758c3e56498ec0"
-  integrity sha512-H9UXG4mywETORFlHpR2+RvDmHOTWFEfS4ZtG+N6GToMNFzYAa71c3sVEbbYxI0ARYi7n7ZoSZALBk3voDLwyYA==
-  dependencies:
-    lodash.camelcase "^4.3.0"
-    lodash.invoke "^4.5.2"
-    node-vibrant "^3.1.3"
 
 react-use-measure@^2.1.1:
   version "2.1.1"

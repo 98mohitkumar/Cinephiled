@@ -87,7 +87,7 @@ const Profile = () => {
     <Fragment>
       <MetaWrapper title={`${(userInfo?.name ?? userInfo?.username) || ""} - Cinephiled`} />
 
-      {userInfo?.id && (
+      {userInfo?.id ? (
         <div className='h-full w-full grow'>
           {/* Banner  */}
           <Banner>
@@ -180,7 +180,7 @@ const Profile = () => {
             </AnimatePresence>
           </div>
         </div>
-      )}
+      ) : null}
     </Fragment>
   );
 };

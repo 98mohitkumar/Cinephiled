@@ -25,11 +25,12 @@ import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { Fragment, useContext, useEffect, useMemo, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { BiListPlus, BiListCheck } from "react-icons/bi";
 import { BsStarHalf } from "react-icons/bs";
 import { FaYoutube, FaHeart, FaRegHeart } from "react-icons/fa";
+import { getRating, getRuntime } from "src/utils/helper";
 import { MediaContext } from "Store/MediaContext";
 import {
   DetailsHeroWrap,
@@ -54,12 +55,11 @@ const TVDetails = ({
     tagline,
     trailerLink,
     homepage,
-    crewData
-  },
-  year
+    crewData,
+    releaseYear
+  }
 }) => {
   genres.length > 3 && genres.splice(3);
-
   const { status } = useSession();
   const { setFavorite } = useSetFavorite();
   const { addToWatchlist } = useAddToWatchlist();
@@ -71,13 +71,7 @@ const TVDetails = ({
     ratedTvShows
   } = useContext(MediaContext);
   const { isToastVisible, showToast, removeToast, toastMessage, setToastMessage } = useToast();
-
-  const savedRating = useMemo(
-    () => ratedTvShows?.find((item) => item?.id === id)?.rating ?? false,
-
-    [ratedTvShows, id]
-  );
-
+  const savedRating = ratedTvShows?.find((item) => item?.id === id)?.rating ?? false;
   const { isModalVisible, openModal, closeModal } = useModal();
   const [addedToWatchlist, setAddedToWatchlist] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -97,12 +91,6 @@ const TVDetails = ({
       setAddedToWatchlist(isAddedToWatchlist);
     }
   }, [id, tvShowsWatchlist]);
-
-  const runtimeFormatted = useMemo(() => {
-    const getH = Math.floor(runtime / 60);
-    const getM = Math.ceil((runtime / 60 - getH) * 60);
-    return { getH, getM };
-  }, [runtime]);
 
   const favoriteHandler = async () => {
     if (status === "authenticated") {
@@ -173,7 +161,7 @@ const TVDetails = ({
             mediaType='tv'
             mediaId={id}
             closeModal={closeModal}
-            mediaName={`${title} (${year})`}
+            mediaName={`${title} (${releaseYear})`}
           />
         )}
       </AnimatePresence>
@@ -395,11 +383,11 @@ const TVDetails = ({
 
           <HeroInfoWrapper className='max-w-5xl'>
             <HeroInfoTitle className='mb-2'>
-              {title} ({year})
+              {title} ({releaseYear})
             </HeroInfoTitle>
 
             <RtoR className='my-4'>
-              {genres.length > 0 && (
+              {genres.length > 0 ? (
                 <GenreWrap className='font-bold'>
                   {genres.map((item, i) => (
                     <Link
@@ -412,45 +400,29 @@ const TVDetails = ({
                       </a>
                     </Link>
                   ))}
+                  <Divider />
                 </GenreWrap>
-              )}
+              ) : null}
 
-              {!isNaN(runtimeFormatted.getH) ? (
-                <Span className='font-medium'>
-                  {genres?.length > 0 && <Divider className='tvSpan' />}
-                  {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
-                    ? "60m"
-                    : runtimeFormatted.getH > 0 && runtimeFormatted.getH + "h "}
-                  {runtimeFormatted.getM > 0 && runtimeFormatted.getM + "m"}
-                </Span>
-              ) : (
-                <Span className='font-medium'>
-                  {genres?.length > 0 && <Divider className='tvSpan' />}
-                  TBA
-                </Span>
-              )}
+              <Span className='font-medium'>{getRuntime(runtime)}</Span>
             </RtoR>
 
-            {tagline && (
+            {tagline ? (
               <i>
                 <Tagline className='my-4 block'>{tagline}</Tagline>
               </i>
-            )}
-
-            <Overview className='font-normal'>{overview}</Overview>
-
-            <RatingWrapper>
-              {rating !== 0 ? (
+            ) : null}
+            {overview ? <Overview className='font-normal'>{overview}</Overview> : null}
+            {rating ? (
+              <RatingWrapper>
                 <Fragment>
                   <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
-                    {rating % 1 === 0 ? rating : rating.toFixed(1)}
+                    {getRating(rating)}
                   </Span>
                   <span> / 10</span>
                 </Fragment>
-              ) : (
-                <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>NR</Span>
-              )}
-            </RatingWrapper>
+              </RatingWrapper>
+            ) : null}
 
             {crewData.length > 0 && (
               <CreditsWrapper>

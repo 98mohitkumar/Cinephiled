@@ -9,11 +9,12 @@ import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { Fragment, useContext, useEffect, useMemo, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { BiListPlus, BiListCheck } from "react-icons/bi";
 import { BsStarHalf } from "react-icons/bs";
 import { FaYoutube, FaHeart, FaRegHeart } from "react-icons/fa";
+import { getRating, getRuntime } from "src/utils/helper";
 import { MediaContext } from "Store/MediaContext";
 import {
   DetailsHeroWrap,
@@ -50,6 +51,7 @@ const MovieDetails = ({
     id,
     title,
     overview,
+    releaseYear,
     releaseDate,
     backdropPath,
     runtime,
@@ -62,7 +64,6 @@ const MovieDetails = ({
     socialIds,
     homepage
   },
-  year,
   easter
 }) => {
   const { status } = useSession();
@@ -72,16 +73,13 @@ const MovieDetails = ({
   const { favoriteMovies, moviesWatchlist, revalidateFavorites, revalidateWatchlist, ratedMovies } =
     useContext(MediaContext);
   const { isToastVisible, showToast, removeToast, toastMessage, setToastMessage } = useToast();
-
-  const savedRating = useMemo(
-    () => ratedMovies?.find((item) => item?.id === id)?.rating ?? false,
-
-    [id, ratedMovies]
-  );
-
+  const savedRating = ratedMovies?.find((item) => item?.id === id)?.rating ?? false;
   const { isModalVisible, openModal, closeModal } = useModal();
   const [addedToWatchlist, setAddedToWatchlist] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+
+  // splice genres
+  genres.length > 3 && genres.splice(3);
 
   useEffect(() => {
     const isAddedToFavorites = favoriteMovies?.map((item) => item.id)?.includes(id);
@@ -98,18 +96,6 @@ const MovieDetails = ({
       setAddedToWatchlist(isAddedToWatchlist);
     }
   }, [id, moviesWatchlist]);
-
-  const releaseDateFormatted = !releaseDate
-    ? "TBA"
-    : new Date(releaseDate.toString()).toDateString().slice(4, -5) + ", " + year;
-
-  const runtimeFormatted = useMemo(() => {
-    const getH = Math.floor(runtime / 60);
-    const getM = Math.ceil((runtime / 60 - getH) * 60);
-    return { getH, getM };
-  }, [runtime]);
-
-  genres.length > 3 && genres.splice(3);
 
   const favoriteHandler = async () => {
     if (status === "authenticated") {
@@ -167,9 +153,8 @@ const MovieDetails = ({
 
   return (
     <Fragment>
-      {renderEaster && (
+      {renderEaster ? (
         <Fragment>
-          {/* easter egg */}
           {!hasSeen ? (
             <EasterText className='text-xl md:text-2xl px-5' show={showEaster}>
               Congratulations, you have found the easter egg.
@@ -182,24 +167,24 @@ const MovieDetails = ({
           <LightsInOut show={showEaster} onClick={easterHandler} />
           <MovieEaster show={showEaster} />
         </Fragment>
-      )}
+      ) : null}
 
       <AnimatePresence exitBeforeEnter initial={false}>
-        {isToastVisible && (
+        {isToastVisible ? (
           <Toast key='toast'>
             <Span className='toast-message'>{toastMessage}</Span>
           </Toast>
-        )}
+        ) : null}
 
-        {isModalVisible && (
+        {isModalVisible ? (
           <RatingModal
             key='rating-modal'
             mediaType='movie'
             mediaId={id}
             closeModal={closeModal}
-            mediaName={`${title} (${year})`}
+            mediaName={`${title} (${releaseYear})`}
           />
-        )}
+        ) : null}
       </AnimatePresence>
 
       <HeroDetailsContainer className='relative mb-auto'>
@@ -424,14 +409,14 @@ const MovieDetails = ({
           {/* right side info */}
           <HeroInfoWrapper className='max-w-5xl'>
             <HeroInfoTitle className='mb-2'>
-              {title} ({year})
+              {title} ({releaseYear})
             </HeroInfoTitle>
-            {renderEaster && <Light onClick={easterHandler} />}
+            {renderEaster ? <Light onClick={easterHandler} /> : null}
             <RtoR className='my-4'>
               <ReleaseDateWrapper>
-                <Span className='font-medium'>{releaseDateFormatted}</Span>
+                <Span className='font-medium'>{releaseDate}</Span>
               </ReleaseDateWrapper>
-              {genres.length > 0 && (
+              {genres.length > 0 ? (
                 <GenreWrap className='font-bold'>
                   <Divider />
                   {genres.map((item, i) => (
@@ -443,43 +428,35 @@ const MovieDetails = ({
                       passHref
                       scroll={false}>
                       <a>
-                        <Rounded className={genres.length == i + 1 && "sep"}>{item.name}</Rounded>
+                        <Rounded className={genres.length == i + 1 ? "sep" : ""}>
+                          {item.name}
+                        </Rounded>
                       </a>
                     </Link>
                   ))}
                   <Divider />
                 </GenreWrap>
-              )}
-              {runtimeFormatted.getH === 0 && runtimeFormatted.getM === 0 ? (
-                <Span className='font-medium'>TBA</Span>
-              ) : (
-                <Span className='font-medium'>
-                  {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
-                    ? "60m"
-                    : runtimeFormatted.getH > 0 && runtimeFormatted.getH + "h "}
-                  {runtimeFormatted.getM > 0 && runtimeFormatted.getM + "m"}
-                </Span>
-              )}
+              ) : null}
+
+              <Span className='font-medium'>{getRuntime(runtime)}</Span>
             </RtoR>
-            {tagline !== "" && (
+            {tagline ? (
               <i>
                 <Tagline className='my-4 block'>{tagline}</Tagline>
               </i>
-            )}
-            <Overview className='font-normal'>{!overview ? "-" : overview}</Overview>
-            <RatingWrapper>
-              {rating !== 0 ? (
+            ) : null}
+            {overview ? <Overview className='font-normal'>{overview}</Overview> : null}
+            {rating ? (
+              <RatingWrapper>
                 <Fragment>
                   <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
-                    {rating % 1 === 0 ? rating : rating.toFixed(1)}
+                    {getRating(rating)}
                   </Span>
                   <span> / 10</span>
                 </Fragment>
-              ) : (
-                <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>NR</Span>
-              )}
-            </RatingWrapper>
-            {crewData.length > 0 && (
+              </RatingWrapper>
+            ) : null}
+            {crewData?.length > 0 ? (
               <CreditsWrapper>
                 {crewData.map((item) => (
                   <Credits key={item.credit_id}>
@@ -492,7 +469,7 @@ const MovieDetails = ({
                   </Credits>
                 ))}
               </CreditsWrapper>
-            )}
+            ) : null}
           </HeroInfoWrapper>
         </DetailsHeroWrap>
       </HeroDetailsContainer>

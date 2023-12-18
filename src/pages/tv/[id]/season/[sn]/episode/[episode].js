@@ -8,7 +8,8 @@ import { motion } from "framer-motion";
 import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useMemo } from "react";
+import { Fragment } from "react";
+import { getRating, getReleaseDate, getReleaseYear, getRuntime } from "src/utils/helper";
 import {
   EpisodeInfoWrapper,
   EpisodeShowCaseWrapper,
@@ -19,47 +20,33 @@ import {
   TrWrapper
 } from "styles/GlobalComponents";
 
-const Episode = ({ error, data, tvData }) => {
-  const releaseYear = tvData?.airDate ? new Date(tvData?.airDate).getFullYear() : "TBA";
-
-  const getReleaseDate = (date) => {
-    const releaseDate = !date
-      ? "TBA"
-      : new Date(date.toString()).toDateString().slice(4, -5) +
-        ", " +
-        new Date(date.toString()).getFullYear();
-
-    return releaseDate;
-  };
-
-  const getRating = (rating) => {
-    const vote = !rating ? "NR" : rating % 1 === 0 ? rating : rating.toFixed(1);
-
-    return vote;
-  };
-
-  const cast = useMemo(
-    () => data?.credits?.cast?.concat(data?.credits?.guest_stars) ?? [],
-    [data?.credits?.cast, data?.credits?.guest_stars]
-  );
-
-  const runtimeFormatted = useMemo(() => {
-    const getH = Math.floor(data?.runtime / 60);
-    const getM = Math.ceil((data?.runtime / 60 - getH) * 60);
-    return { getH, getM };
-  }, [data?.runtime]);
-
+const Episode = ({
+  error,
+  releaseDate,
+  overview,
+  cast,
+  seasonNumber,
+  episodeNumber,
+  rating,
+  backdrop,
+  episodeName,
+  runtime,
+  posters,
+  tvData: { id, name, airDate }
+}) => {
   return (
     <Fragment>
       <MetaWrapper
         title={
-          !error
-            ? `${tvData.name} S${data.season_number}E${data.episode_number}  (${releaseYear}) - Details - cinephiled`
-            : "Not Found - Cinephiled"
+          error
+            ? "Not Found - Cinephiled"
+            : `${name} (${getReleaseYear(
+                airDate
+              )}) S${seasonNumber}E${episodeNumber} - Details - cinephiled`
         }
-        description={data?.overview}
-        image={`https://image.tmdb.org/t/p/w780${data?.still_path}`}
-        url={`https://cinephiled.vercel.app/tv/${tvData.id}/season/${data.season_number}/episode/${data.episode_number}`}
+        description={overview}
+        image={`https://image.tmdb.org/t/p/w780${backdrop}`}
+        url={`https://cinephiled.vercel.app/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}`}
       />
 
       {error ? (
@@ -67,19 +54,19 @@ const Episode = ({ error, data, tvData }) => {
       ) : (
         <Fragment>
           <div className='relative mb-auto'>
-            <DominantColor image={data?.still_path} tint isUsingBackdrop flip />
+            <DominantColor image={backdrop} tint isUsingBackdrop flip />
 
             <EpisodeInfoWrapper className='relative z-10'>
               <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>
-                {tvData?.name} ({releaseYear})
+                {name} ({getReleaseYear(releaseDate)})
               </h3>
 
               <EpisodeShowCaseWrapper>
                 <div className='image-wrapper'>
                   <Image
                     src={
-                      data?.still_path
-                        ? `https://image.tmdb.org/t/p/w780${data?.still_path}`
+                      backdrop
+                        ? `https://image.tmdb.org/t/p/w780${backdrop}`
                         : "/Images/DefaultBackdrop.png"
                     }
                     alt='episde-backdrop'
@@ -92,36 +79,27 @@ const Episode = ({ error, data, tvData }) => {
 
                 <div>
                   <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 m-0 font-bold'>
-                    {data?.name} ({`S${data.season_number}E${data.episode_number}`})
+                    {episodeName} ({`S${seasonNumber}E${episodeNumber}`})
                   </h3>
 
                   <TrWrapper>
                     <SeasonsRelease className='text-alt'>
-                      {getReleaseDate(data.air_date)}
+                      {getReleaseDate(releaseDate)}
                     </SeasonsRelease>
 
                     <Pill>
-                      <p>{getRating(data.vote_average)}</p>
+                      <p>{getRating(rating)}</p>
                     </Pill>
 
-                    {!isNaN(runtimeFormatted.getH) ? (
-                      <Span className='font-medium text-lg'>
-                        {runtimeFormatted.getH === 1 && runtimeFormatted.getM === 0
-                          ? "60m"
-                          : runtimeFormatted.getH > 0 && runtimeFormatted.getH + "h "}
-                        {runtimeFormatted.getM > 0 && runtimeFormatted.getM + "m"}
-                      </Span>
-                    ) : (
-                      <Span className='font-medium text-lg'>TBA</Span>
-                    )}
+                    <Span className='font-medium text-lg'>{getRuntime(runtime)}</Span>
                   </TrWrapper>
 
-                  {data.overview && <SeasonCommonOverview>{data.overview}</SeasonCommonOverview>}
+                  {overview ? <SeasonCommonOverview>{overview}</SeasonCommonOverview> : null}
                 </div>
               </EpisodeShowCaseWrapper>
             </EpisodeInfoWrapper>
 
-            {cast?.length > 0 && (
+            {cast?.length > 0 ? (
               <ModulesWrapper className='relative z-10'>
                 <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 my-8 font-bold block'>
                   Cast ({cast?.length})
@@ -160,26 +138,28 @@ const Episode = ({ error, data, tvData }) => {
                       </Link>
 
                       <div className='mt-3'>
-                        <Span className='font-bold movieCastHead block'>{item?.character}</Span>
+                        <Span className='font-bold movieCastHead line-clamp-2'>
+                          {item?.character}
+                        </Span>
                         <Span className='movieCastName block'>{item?.name}</Span>
                       </div>
                     </CastWrapper>
                   ))}
                 </CastGrid>
               </ModulesWrapper>
-            )}
+            ) : null}
           </div>
 
-          {data?.images?.stills?.length > 0 && (
+          {posters?.length > 0 ? (
             <Fragment>
               <ModulesWrapper>
                 <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-12 mb-8 font-bold block'>
-                  Backdrops ({data?.images?.stills?.length})
+                  Backdrops ({posters.length})
                 </span>
-                <Backdrops backdrops={data?.images?.stills} />
+                <Backdrops backdrops={posters} />
               </ModulesWrapper>
             </Fragment>
-          )}
+          ) : null}
         </Fragment>
       )}
     </Fragment>
@@ -208,13 +188,21 @@ Episode.getInitialProps = async (ctx) => {
       const res = await response.json();
       const tvData = await tvRes.json();
 
-      delete res?.crew;
-      delete res?.credits?.crew;
-      delete res?.guest_stars;
+      const { cast, guest_stars } = res?.credits;
 
       return {
         error,
         data: res,
+        releaseDate: res?.air_date,
+        overview: res?.overview,
+        cast: cast.concat(guest_stars) || [],
+        seasonNumber: res?.season_number,
+        episodeNumber: res?.episode_number,
+        episodeName: res?.name,
+        rating: res?.vote_average,
+        backdrop: res?.still_path,
+        runtime: res?.runtime,
+        posters: res?.images?.stills,
         tvData: {
           id: ctx.query.id,
           name: tvData?.name,

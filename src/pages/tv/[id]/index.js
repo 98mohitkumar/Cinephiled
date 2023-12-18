@@ -6,6 +6,7 @@ import TVFacts from "components/TVInfo/TVFacts";
 import TVTab from "components/TVInfo/TVTab";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
+import { getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const TvShow = ({
@@ -66,9 +67,9 @@ const TvShow = ({
               socialIds,
               crewData,
               trailerLink,
-              homepage
+              homepage,
+              releaseYear
             }}
-            year={releaseYear}
           />
 
           {/* tv facts */}
@@ -84,7 +85,7 @@ const TvShow = ({
           />
 
           {/* recommendations */}
-          {recommendations?.length > 0 && (
+          {recommendations?.length > 0 ? (
             <ModulesWrapper className='relative'>
               <DominantColor image={backdropPath} tint isUsingBackdrop />
               <div className='pt-12 relative z-10'>
@@ -94,7 +95,7 @@ const TvShow = ({
                 <Recommendations data={recommendations} type='tv' />
               </div>
             </ModulesWrapper>
-          )}
+          ) : null}
         </Fragment>
       )}
     </Fragment>
@@ -105,19 +106,14 @@ TvShow.getInitialProps = async (ctx) => {
   try {
     const tvResponse = await fetch(apiEndpoints.tv.tvDetails(ctx.query.id));
     const languagesResponse = await fetch(apiEndpoints.language);
-
     const error = tvResponse.ok ? false : true;
 
     if (error) {
-      throw new Error();
+      throw new Error("error fetching details");
     } else {
       const tvData = await tvResponse.json();
       const languages = await languagesResponse.json();
-
-      const releaseYear = tvData?.first_air_date
-        ? new Date(tvData?.first_air_date).getFullYear()
-        : "TBA";
-
+      const releaseYear = getReleaseYear(tvData?.first_air_date);
       const endYear =
         tvData?.status === "Ended" || tvData.status === "Canceled"
           ? new Date(tvData?.last_air_date).getFullYear()
@@ -161,7 +157,12 @@ TvShow.getInitialProps = async (ctx) => {
         endYear,
         cast: {
           totalCount: tvData?.aggregate_credits?.cast?.length,
-          data: tvData?.aggregate_credits?.cast?.slice(0, 15)
+          data: mergeEpisodeCount(
+            tvData?.aggregate_credits?.cast
+              ?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
+              .flat()
+              .slice(0, 15)
+          )
         },
         seasons: tvData?.seasons,
         reviews: tvData?.reviews?.results ?? [],

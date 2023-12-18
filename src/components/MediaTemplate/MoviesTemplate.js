@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
-import useGetReleaseDates from "hooks/useGetReleaseDates";
 import Image from "next/image";
 import Link from "next/link";
+import { getRating, getReleaseDate } from "src/utils/helper";
 import {
   CardsContainerGrid,
   Cards,
@@ -14,58 +14,53 @@ import {
 } from "./TemplateStyles";
 
 const MoviesTemplate = ({ movies, creditsPage = false }) => {
-  const releaseDates = useGetReleaseDates(movies);
-
   return (
     <CardsContainerGrid>
-      {movies.length > 0 &&
-        movies.map((movie, i) => (
-          <Cards key={movie.id}>
-            <motion.div
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.1 }
-              }}
-              whileTap={{ scale: 0.95 }}>
-              <Link
-                href={`/movies/${movie.id}-${movie.title.replace(/[' ', '/']/g, "-")}`}
-                passHref
-                scroll={false}>
-                <a className='relative block'>
-                  <CardImg>
-                    <Image
-                      src={
-                        movie.poster_path
-                          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                          : "/Images/DefaultImage.png"
-                      }
-                      alt='movie-poster'
-                      layout='fill'
-                      objectFit='cover'
-                      className='poster'
-                      placeholder='blur'
-                      blurDataURL={blurPlaceholder}
-                    />
-                  </CardImg>
-                  <Rating className='flex justify-center items-center'>
-                    {!movie.vote_average
-                      ? "NR"
-                      : movie.vote_average % 1 === 0
-                      ? movie.vote_average
-                      : movie.vote_average.toFixed(1)}
-                  </Rating>
-                </a>
-              </Link>
-            </motion.div>
-            <CardInfo>
-              {creditsPage ? null : <InfoTitle>{movie.title}</InfoTitle>}
-              <ReleaseDate>{releaseDates[i]}</ReleaseDate>
-              {creditsPage && movie?.job ? (
-                <p className='text-white text-base mt-1 font-medium'>{movie.job.join(", ")}</p>
-              ) : null}
-            </CardInfo>
-          </Cards>
-        ))}
+      {movies.length > 0
+        ? movies.map(({ id, title, poster_path, vote_average, release_date, job }) => (
+            <Cards key={id}>
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.1 }
+                }}
+                whileTap={{ scale: 0.95 }}>
+                <Link
+                  href={`/movies/${id}-${title.replace(/[' ', '/']/g, "-")}`}
+                  passHref
+                  scroll={false}>
+                  <a className='relative block'>
+                    <CardImg>
+                      <Image
+                        src={
+                          poster_path
+                            ? `https://image.tmdb.org/t/p/w500${poster_path}`
+                            : "/Images/DefaultImage.png"
+                        }
+                        alt='movie-poster'
+                        layout='fill'
+                        objectFit='cover'
+                        className='poster'
+                        placeholder='blur'
+                        blurDataURL={blurPlaceholder}
+                      />
+                    </CardImg>
+                    <Rating className='flex justify-center items-center'>
+                      {getRating(vote_average)}
+                    </Rating>
+                  </a>
+                </Link>
+              </motion.div>
+              <CardInfo>
+                {creditsPage ? null : <InfoTitle>{title}</InfoTitle>}
+                <ReleaseDate>{getReleaseDate(release_date)}</ReleaseDate>
+                {creditsPage && job?.length > 0 ? (
+                  <p className='text-white text-base mt-1 font-medium'>{job.join(", ")}</p>
+                ) : null}
+              </CardInfo>
+            </Cards>
+          ))
+        : null}
     </CardsContainerGrid>
   );
 };

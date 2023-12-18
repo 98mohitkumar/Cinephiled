@@ -7,6 +7,7 @@ import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useState, useRef } from "react";
+import { getReleaseYear } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast, error }) => {
@@ -33,8 +34,8 @@ const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast, error })
   return (
     <Fragment>
       <MetaWrapper
-        title={!error ? `${title} (${year}) - Cast - cinephiled` : "Not Found - Cinephiled"}
-        description={`${title} cast`}
+        title={error ? "Not Found - Cinephiled" : `${title} (${year}) - Cast - cinephiled`}
+        description={error ? "Not Found" : `${title} cast`}
         image={`https://image.tmdb.org/t/p/w780${backdrop}`}
         url={`https://cinephiled.vercel.app/movies/${id}/cast`}
       />
@@ -70,11 +71,9 @@ const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast, error })
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.325 }}>
-                  {filteredCast.map((item) => (
-                    <CastWrapper key={item.credit_id}>
-                      <Link
-                        href={`/person/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}
-                        passHref>
+                  {filteredCast.map(({ credit_id, id, name, profile_path, character }) => (
+                    <CastWrapper key={credit_id}>
+                      <Link href={`/person/${id}-${name.replace(/[' ', '/']/g, "-")}`} passHref>
                         <a>
                           <motion.div
                             whileHover={{
@@ -85,8 +84,8 @@ const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast, error })
                             <CastImg className='relative text-center'>
                               <Image
                                 src={
-                                  item.profile_path
-                                    ? `https://image.tmdb.org/t/p/w276_and_h350_face${item.profile_path}`
+                                  profile_path
+                                    ? `https://image.tmdb.org/t/p/w276_and_h350_face${profile_path}`
                                     : "/Images/DefaultAvatar.png"
                                 }
                                 alt='cast-image'
@@ -102,8 +101,8 @@ const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast, error })
                       </Link>
 
                       <div className='mt-3'>
-                        <Span className='font-bold movieCastHead block'>{item.character}</Span>
-                        <Span className='movieCastName block'>{item.name}</Span>
+                        <Span className='font-bold movieCastHead block'>{character}</Span>
+                        <Span className='movieCastName block'>{name}</Span>
                       </div>
                     </CastWrapper>
                   ))}
@@ -135,17 +134,15 @@ Cast.getInitialProps = async (ctx) => {
     if (res.ok) {
       const data = await res.json();
 
-      const releaseYear = !data?.release_date ? "TBA" : new Date(data?.release_date).getFullYear();
-
       return {
         movieData: {
           title: data?.title,
-          year: releaseYear,
+          year: getReleaseYear(data?.release_date),
           id: data?.id,
           backdrop: data?.backdrop_path,
           poster: data?.poster_path
         },
-        cast: data?.credits?.cast,
+        cast: data?.credits?.cast || [],
         error: false
       };
     }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Fragment } from "react";
+import { getReleaseYear } from "src/utils/helper";
 import { Anchor, SearchSlice } from "./HeroStyles";
 
 const SearchSuggestion = ({ data, type, ...props }) => (
@@ -10,7 +11,7 @@ const SearchSuggestion = ({ data, type, ...props }) => (
           <SearchSlice>
             <h5 className='suggestion-title'>
               {data.title}{" "}
-              {data.release_date && `(${new Date(data.release_date.toString()).getFullYear()})`}
+              {data.release_date && `(${getReleaseYear(data.release_date.toString())})`}
             </h5>
 
             <h6 className='tag text-base'>Movie</h6>
@@ -25,7 +26,7 @@ const SearchSuggestion = ({ data, type, ...props }) => (
           <SearchSlice>
             <h5 className='suggestion-title'>
               {data.name}{" "}
-              {data.first_air_date && `(${new Date(data.first_air_date.toString()).getFullYear()})`}
+              {data.first_air_date && `(${getReleaseYear(data.first_air_date.toString())})`}
             </h5>
 
             <h6 className='tag text-base'>TV</h6>

@@ -72,13 +72,13 @@ const NetworkMedia = ({ details, media }) => {
 
           <div className='details-row'>
             <span className='font-bold'>{details.name}</span>
-            {(details.headquarters || details.origin_country) && (
+            {details.headquarters || details.origin_country ? (
               <div className='flex items-center'>
                 <FaLocationDot className='me-1' size={18} />
                 <span className='font-bold'>{details.headquarters || details.origin_country}</span>
               </div>
-            )}
-            {details.homepage && (
+            ) : null}
+            {details.homepage ? (
               <div className='flex items-center'>
                 <FaLink className='me-1' size={18} />
                 <a
@@ -89,7 +89,7 @@ const NetworkMedia = ({ details, media }) => {
                   Homepage
                 </a>
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       </NetwrokDetailsWrapper>

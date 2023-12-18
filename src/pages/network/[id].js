@@ -29,19 +29,14 @@ Network.getInitialProps = async (context) => {
   try {
     const { id } = context.query;
     const networkId = id.split("-")[0];
-
     const res = await fetch(apiEndpoints.network.networkDetails(networkId));
 
     if (res.ok) {
       const data = await res.json();
-
       const networkMedia = await fetch(apiEndpoints.network.networkMedia({ id: networkId }));
-
       const networkMediaData = await networkMedia.json();
-
       return { networkDetails: data, networkMedia: networkMediaData?.results || [] };
     }
-
     return { error: true };
   } catch {
     return { error: true };

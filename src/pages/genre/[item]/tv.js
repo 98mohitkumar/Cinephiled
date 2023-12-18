@@ -24,8 +24,8 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
   return (
     <Fragment>
       <MetaWrapper
-        title={!error ? `${genreName} TV Shows - Cinephiled` : "Not Found - Cinephiled"}
-        description={!error ? `${genreName} TV Shows` : "Not Found"}
+        title={error ? "Not Found - Cinephiled" : `${genreName} TV Shows - Cinephiled`}
+        description={error ? "Not Found" : `${genreName} TV Shows`}
         url={`https://cinephiled.vercel.app/genre/${genreId}-${genreName}/tv`}
       />
 
@@ -33,16 +33,14 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
         <Error404>404</Error404>
       ) : (
         <ModulesWrapper>
-          {renderList.length === 0 ? (
-            <NoDataText className='font-bold text-center my-5'>No Tv Shows For Now</NoDataText>
-          ) : (
+          {renderList?.length > 0 ? (
             <Fragment>
               <Span className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] leading-12 block text-center genre'>
                 {genreName} TV Shows
               </Span>
               <RecommendationsGrid>
-                {renderList.concat(list).map((item) => (
-                  <RecommendedWrapper key={item.id}>
+                {renderList.concat(list).map(({ id, name, backdrop_path }) => (
+                  <RecommendedWrapper key={id}>
                     <motion.div
                       whileHover={{
                         scale: 1.05,
@@ -50,15 +48,15 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                       }}
                       whileTap={{ scale: 0.95 }}>
                       <Link
-                        href={`/tv/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}
+                        href={`/tv/${id}-${name.replace(/[' ', '/']/g, "-")}`}
                         passHref
                         scroll={false}>
                         <a>
                           <RecommendedImg className='relative text-center'>
                             <Image
                               src={
-                                item.backdrop_path
-                                  ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
+                                backdrop_path
+                                  ? `https://image.tmdb.org/t/p/w780${backdrop_path}`
                                   : "/Images/DefaultBackdrop.png"
                               }
                               alt='movie-poster'
@@ -71,11 +69,13 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                         </a>
                       </Link>
                     </motion.div>
-                    <InfoTitle className='my-3 text-center'>{item.name}</InfoTitle>
+                    <InfoTitle className='my-3 text-center'>{name}</InfoTitle>
                   </RecommendedWrapper>
                 ))}
               </RecommendationsGrid>
             </Fragment>
+          ) : (
+            <NoDataText className='font-bold text-center my-5'>No Tv Shows For Now</NoDataText>
           )}
         </ModulesWrapper>
       )}
@@ -98,7 +98,7 @@ TvShows.getInitialProps = async (ctx) => {
     const error = response.ok ? false : true;
 
     if (error) {
-      throw new Error();
+      throw new Error("error fetching tv shows");
     } else {
       const tvList = await response.json();
       const secondTvList = await nextPage.json();

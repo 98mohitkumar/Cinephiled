@@ -4,6 +4,7 @@ import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import { Fragment, useMemo } from "react";
+import { getGender } from "src/utils/helper";
 import {
   DetailsHeroWrap,
   HeroDetailsContainer,
@@ -25,19 +26,6 @@ const PersonDetails = ({ details }) => {
   const combinedCredits = casting?.concat(crew)?.sort((a, z) => z.vote_count - a.vote_count);
   const movieCredits = combinedCredits.filter((item) => item.media_type === "movie");
   const tvCredits = combinedCredits.filter((item) => item.media_type === "tv");
-
-  const getGender = (g) => {
-    switch (g) {
-      case 0:
-        return "-";
-      case 1:
-        return "Female";
-      case 2:
-        return "Male";
-      case 3:
-        return "NB / Trans / Others";
-    }
-  };
 
   const getAge = (b, alive) => {
     if (alive) {

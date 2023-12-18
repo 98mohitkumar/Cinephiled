@@ -1,7 +1,7 @@
-import removeDuplicates from "hooks/removeDuplicates";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Link from "next/link";
-import { Fragment, useMemo } from "react";
+import { Fragment } from "react";
+import { removeDuplicates } from "src/utils/helper";
 import { EmptySearch, SearchResultsContainer, Keyword } from "./SearchTabStyles";
 
 const KeywordSearch = ({ searchQuery, keywords }) => {
@@ -11,17 +11,11 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
     searchQuery
   });
 
-  const extendedList = useMemo(() => keywords.results.concat(list), [list, keywords]);
-
-  const { cleanedItems } = removeDuplicates(extendedList);
+  const { cleanedItems } = removeDuplicates(keywords.results.concat(list));
 
   return (
     <Fragment>
-      {keywords.results.length === 0 ? (
-        <EmptySearch className='text-[calc(1.425rem_+_2.1vw)] xl:text-5xl text-center'>
-          No Keywords for this query.
-        </EmptySearch>
-      ) : (
+      {cleanedItems?.length > 0 ? (
         <SearchResultsContainer className='max-sm:pt-6'>
           {cleanedItems.map((item) => (
             <Link
@@ -35,6 +29,10 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
             </Link>
           ))}
         </SearchResultsContainer>
+      ) : (
+        <EmptySearch className='text-[calc(1.425rem_+_2.1vw)] xl:text-5xl text-center'>
+          No Keywords for this query.
+        </EmptySearch>
       )}
     </Fragment>
   );

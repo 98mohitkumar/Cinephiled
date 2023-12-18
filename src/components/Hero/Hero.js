@@ -24,7 +24,7 @@ const Hero = ({ searchModal }) => {
   };
 
   useEffect(() => {
-    if (userInput.length === 0 || userInput.trim().length === 0) {
+    if (userInput.trim().length === 0) {
       setShowButton(false);
       setMovieSuggestions([]);
       setTvSuggestions([]);
@@ -194,7 +194,7 @@ const Hero = ({ searchModal }) => {
                 onKeyDown={(e) => keyHandler(e, null, true)}
               />
 
-              {showButton && (
+              {showButton ? (
                 <motion.div
                   whileHover={{
                     scale: 1.05
@@ -208,7 +208,7 @@ const Hero = ({ searchModal }) => {
                     Search
                   </Button>
                 </motion.div>
-              )}
+              ) : null}
             </div>
 
             <AnimatePresence exitBeforeEnter>

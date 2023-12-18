@@ -6,42 +6,24 @@ import { AnimatePresence, motion } from "framer-motion";
 import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useMemo, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
+import { getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
-const mergeEpisodeCount = (cast) => {
-  const mergedCast = [];
-  const casting = structuredClone(cast);
-
-  casting.forEach((item) => {
-    const existing = mergedCast.findIndex((castItem) => castItem.id === item.id);
-    if (existing > -1) {
-      const existingEpisodeCount = mergedCast[existing].episode_count ?? 0;
-      const currentEpisodeCount = item.episode_count ?? 0;
-      mergedCast[existing].episode_count = existingEpisodeCount + currentEpisodeCount;
-    } else {
-      mergedCast.push(item);
-    }
-  });
-
-  return mergedCast;
-};
-
 const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) => {
-  const mergedCast = useMemo(() => mergeEpisodeCount(cast), [cast]);
-  const [filteredCast, setFilteredCast] = useState(mergedCast);
+  const [filteredCast, setFilteredCast] = useState(cast);
   const timeoutRef = useRef(null);
 
   const searchHandler = (e) => {
     clearTimeout(timeoutRef.current);
     if (e.target.value.trim().length === 0) {
-      setFilteredCast(mergedCast);
+      setFilteredCast(cast);
       return;
     }
 
     timeoutRef.current = setTimeout(() => {
       const searchValue = e.target.value.toLowerCase();
-      const filteredCast = mergedCast.filter(
+      const filteredCast = cast.filter(
         ({ name, character }) =>
           name.toLowerCase().includes(searchValue) || character.toLowerCase().includes(searchValue)
       );
@@ -52,7 +34,7 @@ const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) =>
   return (
     <Fragment>
       <MetaWrapper
-        title={!error ? `${title} (${year}) - Cast - cinephiled` : "Not Found - Cinephiled"}
+        title={error ? "Not Found - Cinephiled" : `${title} (${year}) - Cast - cinephiled`}
         description={`${title} cast`}
         image={`https://image.tmdb.org/t/p/w780${backdrop}`}
         url={`https://cinephiled.vercel.app/tv/${id}/cast`}
@@ -70,7 +52,7 @@ const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) =>
               </HeroInfoTitle>
 
               <div className='flex justify-between items-center py-2 max-sm:flex-col gap-5'>
-                <h3 className='mb-0 text-xl md:text-2xl font-semibold'>{`Cast (${mergedCast.length})`}</h3>
+                <h3 className='mb-0 text-xl md:text-2xl font-semibold'>{`Cast (${cast?.length})`}</h3>
                 <input
                   type='text'
                   placeholder='Search cast'
@@ -81,7 +63,7 @@ const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) =>
             </div>
 
             <AnimatePresence exitBeforeEnter>
-              {filteredCast.length ? (
+              {filteredCast?.length > 0 ? (
                 <CastGrid
                   as={motion.div}
                   key={`cast-grid-${filteredCast.length}`}
@@ -121,7 +103,9 @@ const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) =>
                       </Link>
 
                       <div className='mt-3'>
-                        <Span className='font-bold movieCastHead block'>{item?.character}</Span>
+                        <Span className='font-bold movieCastHead line-clamp-2'>
+                          {item?.character}
+                        </Span>
                         <Span className='movieCastName block'>{item.name}</Span>
                         <Span className='movieCastName block episode-count'>
                           {item?.episode_count} episodes
@@ -157,9 +141,7 @@ Cast.getInitialProps = async (ctx) => {
     if (res.ok) {
       const data = await res.json();
 
-      const releaseYear = data?.first_air_date
-        ? new Date(data?.first_air_date).getFullYear()
-        : "TBA";
+      const releaseYear = getReleaseYear(data?.first_air_date);
 
       return {
         tvData: {
@@ -169,9 +151,11 @@ Cast.getInitialProps = async (ctx) => {
           poster: data?.poster_path,
           id: data?.id
         },
-        cast: data?.aggregate_credits?.cast
-          .map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
-          .flat(),
+        cast: mergeEpisodeCount(
+          data?.aggregate_credits?.cast
+            .map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
+            .flat()
+        ),
         error: false
       };
     }

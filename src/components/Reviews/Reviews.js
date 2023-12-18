@@ -2,15 +2,14 @@ import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import { Fragment } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import { getReleaseDate } from "src/utils/helper";
 import { NoDataText } from "styles/GlobalComponents";
 import { Review, ReviewAuthorImg, ReviewAuthorWrap, ReviewsWrap } from "./ReviewsStyles";
 
 const Reviews = ({ reviews }) => {
   return (
     <Fragment>
-      {reviews.length === 0 ? (
-        <NoDataText className='font-bold text-center my-5'>No Reviews Yet</NoDataText>
-      ) : (
+      {reviews?.length > 0 ? (
         reviews.map((item) => (
           <ReviewsWrap key={item.id}>
             <ReviewAuthorWrap>
@@ -18,10 +17,7 @@ const Reviews = ({ reviews }) => {
               <div>
                 <Span className='font-bold'>{item.author}</Span>
                 <Span className='text-sm opacity-80 block font-normal'>
-                  {new Date(item.created_at).toLocaleString("en-US", {
-                    month: "long"
-                  })}{" "}
-                  {new Date(item.updated_at).getDate()}, {new Date(item.updated_at).getFullYear()}
+                  {getReleaseDate(item.updated_at)}
                 </Span>
               </div>
             </ReviewAuthorWrap>
@@ -31,6 +27,8 @@ const Reviews = ({ reviews }) => {
             </Review>
           </ReviewsWrap>
         ))
+      ) : (
+        <NoDataText className='font-bold text-center my-5'>No Reviews Yet</NoDataText>
       )}
     </Fragment>
   );

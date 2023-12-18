@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
+import { usePalette } from "hooks/usePalette";
 import { Fragment, memo } from "react";
-import { usePalette } from "react-palette";
 import { Colorful } from "./DominantColorStyles";
 
 const DominantColor = ({ image, tint = false, flip = false, isUsingBackdrop = false }) => {

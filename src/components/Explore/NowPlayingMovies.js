@@ -35,7 +35,7 @@ const NowPlayingMovies = () => {
 
   return (
     <Fragment>
-      {nowPlaying?.length > 0 && (
+      {nowPlaying?.length > 0 ? (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -50,7 +50,7 @@ const NowPlayingMovies = () => {
             <MoviesTemplate movies={nowPlaying} />
           </ModulesWrapper>
         </motion.div>
-      )}
+      ) : null}
     </Fragment>
   );
 };

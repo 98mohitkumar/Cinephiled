@@ -1,8 +1,8 @@
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { motion, AnimatePresence } from "framer-motion";
-import removeDuplicates from "hooks/removeDuplicates";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { useState, useMemo, Fragment, useContext } from "react";
+import { removeDuplicates } from "src/utils/helper";
 import { MediaContext } from "Store/MediaContext";
 import { NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";

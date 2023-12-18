@@ -8,9 +8,7 @@ import { PostersImg, PostersWrapper } from "./PostersStyles";
 const Posters = ({ posters }) => {
   return (
     <Fragment>
-      {posters.length === 0 ? (
-        <NoDataText className='font-bold text-center my-5'>No Posters Yet</NoDataText>
-      ) : (
+      {posters?.length > 0 ? (
         <PostersWrapper>
           {posters.map((item, i) => (
             <PostersImg key={i} className='relative text-center'>
@@ -28,6 +26,8 @@ const Posters = ({ posters }) => {
             </PostersImg>
           ))}
         </PostersWrapper>
+      ) : (
+        <NoDataText className='font-bold text-center my-5'>No Posters Yet</NoDataText>
       )}
     </Fragment>
   );

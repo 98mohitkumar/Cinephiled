@@ -10,25 +10,11 @@ import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
 import { AiFillStar } from "react-icons/ai";
+import { getRating, getReleaseDate } from "src/utils/helper";
 import { RatingOverlay } from "./ProfilePageStyles";
 
 const MediaCard = ({ data, link, children, rating, recommendation }) => {
-  const releaseDate = useMemo(
-    () =>
-      !(data?.release_date || data?.first_air_date)
-        ? "TBA"
-        : new Date(data?.release_date?.toString() || data?.first_air_date?.toString())
-            .toDateString()
-            .slice(4, -5) +
-          ", " +
-          new Date(
-            data?.release_date?.toString() || data?.first_air_date?.toString()
-          ).getFullYear(),
-    [data.first_air_date, data.release_date]
-  );
-
   return (
     <Cards>
       <motion.div
@@ -62,11 +48,7 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
             </CardImg>
             {recommendation && (
               <Rating className='flex justify-center items-center'>
-                {data.vote_average === 0
-                  ? "NR"
-                  : data.vote_average % 1 === 0
-                  ? data.vote_average
-                  : data.vote_average.toFixed(1)}
+                {getRating(data?.vote_average)}
               </Rating>
             )}
           </a>
@@ -75,7 +57,7 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
       {recommendation ? (
         <CardInfo>
           <InfoTitle>{data?.title || data?.name}</InfoTitle>
-          <ReleaseDate>{releaseDate}</ReleaseDate>
+          <ReleaseDate>{getReleaseDate(data?.release_date || data?.first_air_date)}</ReleaseDate>
         </CardInfo>
       ) : (
         <div className='pt-4'>{children}</div>

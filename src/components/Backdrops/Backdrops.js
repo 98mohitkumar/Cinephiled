@@ -8,9 +8,7 @@ import { BackdropsImg, BackdropsImgContainer, BackdropsWrapper } from "./Backdro
 const Backdrops = ({ backdrops }) => {
   return (
     <Fragment>
-      {backdrops?.length === 0 ? (
-        <NoDataText className='font-bold text-center my-5'>No Backdrops Yet</NoDataText>
-      ) : (
+      {backdrops?.length > 0 ? (
         <BackdropsWrapper>
           {backdrops.map((item, i) => (
             <BackdropsImgContainer key={i}>
@@ -31,6 +29,8 @@ const Backdrops = ({ backdrops }) => {
             </BackdropsImgContainer>
           ))}
         </BackdropsWrapper>
+      ) : (
+        <NoDataText className='font-bold text-center my-5'>No Backdrops Yet</NoDataText>
       )}
     </Fragment>
   );

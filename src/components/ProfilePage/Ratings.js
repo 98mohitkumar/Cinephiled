@@ -1,7 +1,8 @@
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import RatingModal, { useModal } from "components/RatingModal/RatingModal";
 import { AnimatePresence, motion } from "framer-motion";
-import { Fragment, useContext, useMemo, useState } from "react";
+import { Fragment, useContext, useState } from "react";
+import { getReleaseYear } from "src/utils/helper";
 import { MediaContext } from "Store/MediaContext";
 import { NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
@@ -10,13 +11,7 @@ import { CTAButton } from "./ProfilePageStyles";
 
 const RatingCTA = ({ mediaData }) => {
   const { isModalVisible, openModal, closeModal } = useModal();
-
   const { id, name, releaseDate, type } = mediaData;
-
-  const year = useMemo(
-    () => (releaseDate ? new Date(releaseDate).getFullYear() : "TBA"),
-    [releaseDate]
-  );
 
   return (
     <Fragment>
@@ -27,7 +22,7 @@ const RatingCTA = ({ mediaData }) => {
             mediaType={type}
             mediaId={id}
             closeModal={closeModal}
-            mediaName={`${name} (${year})`}
+            mediaName={`${name} (${getReleaseYear(releaseDate)})`}
           />
         )}
       </AnimatePresence>

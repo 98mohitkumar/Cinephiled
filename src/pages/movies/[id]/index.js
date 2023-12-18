@@ -6,6 +6,7 @@ import MovieTab from "components/MovieInfo/MovieTab";
 import Recommendations from "components/Recommendations/Recommendations";
 import { apiEndpoints } from "globals/constants";
 import { Fragment, useEffect, useState } from "react";
+import { getReleaseDate, getReleaseYear } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const Movie = ({
@@ -68,7 +69,7 @@ const Movie = ({
   return (
     <Fragment>
       <MetaWrapper
-        title={!error ? `${title} (${releaseYear}) - Cinephiled` : "Not Found - Cinephiled"}
+        title={error ? "Not Found - Cinephiled" : `${title} (${releaseYear}) - Cinephiled`}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
         description={overview}
         url={`https://cinephiled.vercel.app/movies/${id}-${title?.replace(/[' ', '/']/g, "-")}`}
@@ -86,11 +87,11 @@ const Movie = ({
               showEaster,
               easterHandler
             }}
-            year={releaseYear}
             movieDetails={{
               id,
               title,
               overview,
+              releaseYear,
               releaseDate,
               backdropPath,
               runtime,
@@ -120,7 +121,7 @@ const Movie = ({
           <MovieTab cast={cast} reviews={reviews} backdrops={backdrops} posters={posters} />
 
           {/* recommendations */}
-          {recommendations?.length > 0 && (
+          {recommendations?.length > 0 ? (
             <ModulesWrapper className='relative'>
               <DominantColor image={backdropPath} tint isUsingBackdrop />
               <div className='pt-12 relative z-10'>
@@ -131,7 +132,7 @@ const Movie = ({
                 <Recommendations data={recommendations} type='movies' />
               </div>
             </ModulesWrapper>
-          )}
+          ) : null}
         </Fragment>
       )}
     </Fragment>
@@ -141,23 +142,18 @@ const Movie = ({
 Movie.getInitialProps = async (ctx) => {
   try {
     const movieResponse = await fetch(apiEndpoints.movie.movieDetails(ctx.query.id));
-
     const languagesResponse = await fetch(apiEndpoints.language);
     const error = movieResponse.ok ? false : true;
 
     if (error) {
-      throw new Error();
+      throw new Error("error fetching details");
     } else {
       const movieDetails = await movieResponse.json();
       const languages = await languagesResponse.json();
       const country = movieDetails?.production_companies[0]?.origin_country || "US";
-
-      const releaseYear = !movieDetails?.release_date
-        ? "TBA"
-        : new Date(movieDetails?.release_date).getFullYear();
-
+      const releaseYear = getReleaseYear(movieDetails?.release_date);
+      const releaseDate = getReleaseDate(movieDetails?.release_date);
       const status = movieDetails?.status || "TBA";
-
       const language = languages.filter(
         (item) => item.iso_639_1 === movieDetails.original_language
       );
@@ -176,7 +172,7 @@ Movie.getInitialProps = async (ctx) => {
         id: movieDetails?.id,
         title: movieDetails?.title,
         releaseYear,
-        releaseDate: movieDetails?.release_date,
+        releaseDate,
         genres: movieDetails?.genres,
         runtime: movieDetails?.runtime,
         tagline: movieDetails?.tagline,

@@ -2,7 +2,8 @@ import { revalidationWrapper, useAddToWatchlist } from "api/user";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { useModal } from "components/RatingModal/RatingModal";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState, useMemo, Fragment, useContext } from "react";
+import { useEffect, useState, Fragment, useContext } from "react";
+import { getReleaseYear } from "src/utils/helper";
 import { MediaContext } from "Store/MediaContext";
 import { NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
@@ -11,13 +12,7 @@ import { ConfirmationModal, CTAButton, ModalCard } from "./ProfilePageStyles";
 
 export const WatchlistCTA = ({ clickHandler, mediaData }) => {
   const { isModalVisible, openModal, closeModal } = useModal();
-
   const { name, releaseDate } = mediaData;
-
-  const year = useMemo(
-    () => (releaseDate ? new Date(releaseDate).getFullYear() : "TBA"),
-    [releaseDate]
-  );
 
   return (
     <Fragment>
@@ -46,7 +41,10 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
             <ModalCard>
               <h5 className='m-0'>
                 Are you sure you want to remove{" "}
-                <span className='inline font-bold'>{`${name} (${year})`}</span> from your watchlist
+                <span className='inline font-bold'>{`${name} (${getReleaseYear(
+                  releaseDate
+                )})`}</span>{" "}
+                from your watchlist
               </h5>
 
               <div className='flex justify-between items-center pt-4 gap-4'>
