@@ -97,14 +97,16 @@ const Seasons = ({
                     {getReleaseDate(releaseDate)}
                   </h3>
 
-                  <RatingWrapper>
-                    <Fragment>
-                      <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
-                        {getRating(rating)}
-                      </Span>
-                      <span> / 10</span>
-                    </Fragment>
-                  </RatingWrapper>
+                  {rating ? (
+                    <RatingWrapper>
+                      <Fragment>
+                        <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
+                          {getRating(rating)}
+                        </Span>
+                        <span> / 10</span>
+                      </Fragment>
+                    </RatingWrapper>
+                  ) : null}
 
                   {overview && <SeasonCommonOverview>{overview}</SeasonCommonOverview>}
                 </div>
@@ -122,7 +124,7 @@ const Seasons = ({
                         <Image
                           src={
                             item.still_path
-                              ? `https://image.tmdb.org/t/p/w500${item.still_path}`
+                              ? `https://image.tmdb.org/t/p/w300${item.still_path}`
                               : "/Images/DefaultBackdrop.png"
                           }
                           alt='TV-season-episode-poster'

@@ -69,7 +69,7 @@ const TVSearch = ({ searchQuery, tvRes }) => {
                         <Image
                           src={
                             poster_path
-                              ? `https://image.tmdb.org/t/p/w500${poster_path}`
+                              ? `https://image.tmdb.org/t/p/w185${poster_path}`
                               : "/Images/DefaultImage.png"
                           }
                           alt='TV-poster'

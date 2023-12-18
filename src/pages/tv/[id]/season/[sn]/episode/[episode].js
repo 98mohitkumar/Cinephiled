@@ -66,7 +66,7 @@ const Episode = ({
                   <Image
                     src={
                       backdrop
-                        ? `https://image.tmdb.org/t/p/w780${backdrop}`
+                        ? `https://image.tmdb.org/t/p/w300${backdrop}`
                         : "/Images/DefaultBackdrop.png"
                     }
                     alt='episde-backdrop'

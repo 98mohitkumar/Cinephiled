@@ -72,7 +72,7 @@ const Cast = ({ cast }) => {
                   <SeeMore>
                     <BsChevronRight size='22' />
                   </SeeMore>
-                  <Span className='mt-3 font-bold movieCastHead block'>See More</Span>
+                  <Span className='mt-3 font-bold movieCastHead block'>Full Cast</Span>
                 </motion.div>
               </a>
             </Link>

@@ -41,7 +41,7 @@ const TvShow = ({
     <Fragment>
       <MetaWrapper
         title={
-          !error ? `${title} (${releaseYear} - ${endYear}) - Cinephiled` : "Not Found - Cinephiled"
+          error ? "Not Found - Cinephiled" : `${title} (${releaseYear} - ${endYear}) - Cinephiled`
         }
         description={overview}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}

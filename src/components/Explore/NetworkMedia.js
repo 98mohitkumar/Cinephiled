@@ -10,7 +10,7 @@ import { ModulesWrapper } from "styles/GlobalComponents";
 import { NetwrokDetailsWrapper, PostersGrid } from "./ExploreStyles";
 
 const NetworkMedia = ({ details, media }) => {
-  const posters = media.map(({ poster_path }) => `https://image.tmdb.org/t/p/w780${poster_path}`);
+  const posters = media.map(({ poster_path }) => `https://image.tmdb.org/t/p/w185${poster_path}`);
 
   const { list } = useInfiniteQuery({
     initialPage: 2,
