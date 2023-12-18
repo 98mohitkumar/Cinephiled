@@ -62,7 +62,7 @@ const Cast = ({ cast }) => {
 
           {cast.totalCount > 15 ? (
             <Link href={`${routeRef.current}/cast`}>
-              <a className='mb-auto mt-12'>
+              <a className='mb-auto mt-12' aria-label='full cast'>
                 <motion.div
                   whileHover={{
                     scale: 1.05,

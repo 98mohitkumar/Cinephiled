@@ -207,7 +207,7 @@ const TVDetails = ({
                   href={`https://www.youtube.com/watch?v=${trailerLink}`}
                   target='_blank'
                   rel='noreferrer'
-                  aria-label='trailer'
+                  aria-label='play trailer'
                   className='block mb-3'>
                   <FeatureButton>
                     <FaYoutube size='1.5rem' />
