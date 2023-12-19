@@ -1,7 +1,8 @@
+import Breadcrumbs from "components/Breadcrumbs/Breadcrumbs";
 import { CastGrid, CastImg, CastWrapper } from "components/Cast/CastStyles";
 import DominantColor from "components/DominantColor/DominantColor";
 import MetaWrapper from "components/MetaWrapper";
-import { RatingWrapper, Span } from "components/MovieInfo/MovieDetailsStyles";
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Posters from "components/Posters/Posters";
 import { SeasonsRelease } from "components/TVInfo/TVStyles";
 import { motion } from "framer-motion";
@@ -48,6 +49,17 @@ const Seasons = ({
   const router = useRouter();
   const routeRef = useRef(router.asPath);
 
+  const links = [
+    {
+      href: `/tv/${id}`,
+      label: "TV Show Details"
+    },
+    {
+      href: "#",
+      label: `${seasonName} (${getReleaseYear(releaseDate)})`
+    }
+  ];
+
   return (
     <Fragment>
       <MetaWrapper
@@ -68,10 +80,11 @@ const Seasons = ({
           <div className='relative mb-auto'>
             <DominantColor image={seasonPoster} tint flip />
             <SeasonExpandedContainer className='relative z-10'>
+              <Breadcrumbs links={links} />
+
               <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>
                 {name} ({getReleaseYear(airDate)})
               </h3>
-
               <SeasonShowcaseWrapper>
                 <SeasonShowcaseImg className='relative text-center'>
                   <Image
@@ -93,25 +106,19 @@ const Seasons = ({
                     {seasonName} ({getReleaseYear(releaseDate)})
                   </h2>
 
-                  <h3 className='text-[1.25rem] mt-2 mb-0 font-semibold'>
-                    {getReleaseDate(releaseDate)}
-                  </h3>
+                  <TrWrapper className='flex-wrap mt-2'>
+                    <h3 className='text-[1.25rem] m-0 font-semibold'>
+                      {getReleaseDate(releaseDate)}
+                    </h3>
 
-                  {rating ? (
-                    <RatingWrapper>
-                      <Fragment>
-                        <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
-                          {getRating(rating)}
-                        </Span>
-                        <span> / 10</span>
-                      </Fragment>
-                    </RatingWrapper>
-                  ) : null}
+                    <Pill>
+                      <p>{getRating(rating)}</p>
+                    </Pill>
+                  </TrWrapper>
 
                   {overview && <SeasonCommonOverview>{overview}</SeasonCommonOverview>}
                 </div>
               </SeasonShowcaseWrapper>
-
               {episodes?.length > 0 && (
                 <SeasonEpisodesWrapper>
                   <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 font-bold block mb-6'>

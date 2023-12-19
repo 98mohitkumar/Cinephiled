@@ -1,4 +1,5 @@
 import Backdrops from "components/Backdrops/Backdrops";
+import Breadcrumbs from "components/Breadcrumbs/Breadcrumbs";
 import { CastGrid, CastImg, CastWrapper } from "components/Cast/CastStyles";
 import DominantColor from "components/DominantColor/DominantColor";
 import MetaWrapper from "components/MetaWrapper";
@@ -34,6 +35,21 @@ const Episode = ({
   posters,
   tvData: { id, name, airDate }
 }) => {
+  const links = [
+    {
+      href: `/tv/${id}`,
+      label: "TV Show Details"
+    },
+    {
+      href: `/tv/${id}/season/${seasonNumber}`,
+      label: `Season ${seasonNumber}`
+    },
+    {
+      href: "#",
+      label: `${episodeName} (S${seasonNumber}E${episodeNumber})`
+    }
+  ];
+
   return (
     <Fragment>
       <MetaWrapper
@@ -57,6 +73,8 @@ const Episode = ({
             <DominantColor image={backdrop} tint isUsingBackdrop flip />
 
             <EpisodeInfoWrapper className='relative z-10'>
+              <Breadcrumbs links={links} />
+
               <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>
                 {name} ({getReleaseYear(releaseDate)})
               </h3>
@@ -192,7 +210,6 @@ Episode.getInitialProps = async (ctx) => {
 
       return {
         error,
-        data: res,
         releaseDate: res?.air_date,
         overview: res?.overview,
         cast: cast.concat(guest_stars) || [],

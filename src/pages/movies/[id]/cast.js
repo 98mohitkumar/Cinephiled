@@ -101,7 +101,7 @@ const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast, error })
                       </Link>
 
                       <div className='mt-3'>
-                        <Span className='font-bold movieCastHead block'>{character}</Span>
+                        <Span className='font-bold movieCastHead line-clamp-2'>{character}</Span>
                         <Span className='movieCastName block'>{name}</Span>
                       </div>
                     </CastWrapper>
