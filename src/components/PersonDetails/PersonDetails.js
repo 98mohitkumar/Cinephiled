@@ -1,5 +1,8 @@
 import DominantColor from "components/DominantColor/DominantColor";
+import DownloadMediaButton from "components/DownloadMediaButton/DownloadMediaButton";
+import { PseudoTrack } from "components/Explore/ExploreStyles";
 import { HeroInfoTitle, HeroInfoWrapper, Span } from "components/MovieInfo/MovieDetailsStyles";
+import { PostersImg, PostersWrapper } from "components/Posters/PostersStyles";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
@@ -15,7 +18,7 @@ import { Bio, Details } from "./PersonDetails.styles";
 import PersonPageTab from "./PersonPageTab";
 
 const PersonDetails = ({ details }) => {
-  const { external_ids } = details;
+  const { external_ids, images } = details;
   const casting =
     details?.combined_credits?.cast?.map((item) => ({
       ...item,
@@ -159,6 +162,36 @@ const PersonDetails = ({ details }) => {
               )}
             </div>
           )}
+
+          {images?.profiles?.length > 1 ? (
+            <Fragment>
+              <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-14 mb-6 font-bold block'>
+                Media ({images?.profiles?.length})
+              </span>
+
+              <PostersWrapper
+                className='profile-media-grid pb-8'
+                style={{ "--colCount": images?.profiles?.length }}>
+                {images?.profiles.map((item, i) => (
+                  <PostersImg key={i} className='relative text-center'>
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w500${item.file_path}`}
+                      alt='poster'
+                      layout='fill'
+                      objectFit='cover'
+                      quality='100'
+                      placeholder='blur'
+                      blurDataURL={blurPlaceholder}
+                    />
+
+                    <DownloadMediaButton item={item.file_path} />
+                  </PostersImg>
+                ))}
+              </PostersWrapper>
+
+              {images?.profiles?.length >= 8 ? <PseudoTrack /> : null}
+            </Fragment>
+          ) : null}
         </div>
       </HeroDetailsContainer>
 

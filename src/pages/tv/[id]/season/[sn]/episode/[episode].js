@@ -119,7 +119,7 @@ const Episode = ({
 
             {cast?.length > 0 ? (
               <ModulesWrapper className='relative z-10'>
-                <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 my-8 font-bold block'>
+                <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-8 mb-6 font-bold block'>
                   Cast ({cast?.length})
                 </span>
 
@@ -171,7 +171,7 @@ const Episode = ({
           {posters?.length > 0 ? (
             <Fragment>
               <ModulesWrapper>
-                <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-12 mb-8 font-bold block'>
+                <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-12 mb-6 font-bold block'>
                   Backdrops ({posters.length})
                 </span>
                 <Backdrops backdrops={posters} />

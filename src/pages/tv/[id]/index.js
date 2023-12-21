@@ -161,8 +161,7 @@ TvShow.getInitialProps = async (ctx) => {
             tvData?.aggregate_credits?.cast
               ?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
               .flat()
-              .slice(0, 15)
-          )
+          ).slice(0, 15)
         },
         seasons: tvData?.seasons,
         reviews: tvData?.reviews?.results ?? [],

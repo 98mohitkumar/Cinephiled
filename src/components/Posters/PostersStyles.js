@@ -17,6 +17,25 @@ export const PostersWrapper = styled.div`
   @media only ${(props) => props.theme.breakpoints.sm} {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  &.profile-media-grid {
+    overflow-x: scroll;
+    grid-template-columns: repeat(var(--colCount), min(38vw, 200px));
+    gap: clamp(16px, 2.5vw, 24px);
+
+    &::-webkit-scrollbar-track {
+      margin-inline: 16vw;
+    }
+
+    @media only ${({ theme }) => theme.breakpoints.xl} {
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* for firefox */
+      scrollbar-width: none;
+    }
+  }
 `;
 
 export const PostersImg = styled.div`
