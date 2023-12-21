@@ -95,7 +95,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/tv/${id}/season/${seasonNumber}?api_key=${api_key}&language=en-US&append_to_response=aggregate_credits,images&include_image_language=en,null`,
 
     episodeDetails: ({ id, seasonNumber, episodeNumber }) =>
-      `${baseUrlV3}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${api_key}&language=en-US&append_to_response=images,credits`,
+      `${baseUrlV3}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${api_key}&language=en-US&append_to_response=images,credits&include_image_language=en,null`,
 
     tvGenre: ({ genreId, pageQuery }) =>
       `${baseUrlV3}/discover/tv?api_key=${api_key}&language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
