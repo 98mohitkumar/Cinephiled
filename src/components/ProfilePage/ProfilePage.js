@@ -1,7 +1,8 @@
 import MetaWrapper from "components/MetaWrapper";
 import Tabs, { LinearTabs } from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
-import { Fragment, useContext, useMemo, useState, useLayoutEffect } from "react";
+import useTabs from "hooks/useTabs";
+import { Fragment, useContext, useMemo } from "react";
 import { MediaContext } from "Store/MediaContext";
 import { UserContext } from "Store/UserContext";
 import { ModulesWrapper } from "styles/GlobalComponents";
@@ -23,22 +24,21 @@ const linearTabsList = [
   { key: "recommendations", name: "Recommendations" }
 ];
 
-export const ProfileMediaTab = ({ tabState, setTabState }) => {
-  useLayoutEffect(() => {
-    const tabPosition = localStorage.getItem("profileMediaTabState");
-    setTabState(tabPosition ?? "movies");
-  }, [setTabState]);
+export const ProfileMediaTab = ({ children }) => {
+  const { activeTab, setTab } = useTabs({
+    tabLocation: "profileMediaTabState",
+    defaultState: "movies"
+  });
 
-  const tabHandler = (tab) => {
-    localStorage.setItem("profileMediaTabState", tab);
-    setTabState(tab);
-  };
-
-  return <Tabs tabList={tabList} currentTab={tabState} setTab={tabHandler} className='mb-4' />;
+  return (
+    <Fragment>
+      <Tabs tabList={tabList} currentTab={activeTab} setTab={setTab} className='mb-4' />
+      {children(activeTab)}
+    </Fragment>
+  );
 };
 
 const Profile = () => {
-  const [currentTab, setCurrentTab] = useState("");
   const { userInfo } = useContext(UserContext);
   const {
     favoriteMovies,
@@ -73,15 +73,10 @@ const Profile = () => {
     ]
   );
 
-  const tabHandler = (tab) => {
-    localStorage.setItem("profileTab", tab);
-    setCurrentTab(tab);
-  };
-
-  useLayoutEffect(() => {
-    const tabPosition = localStorage.getItem("profileTab");
-    setCurrentTab(tabPosition ?? "watchlist");
-  }, []);
+  const { activeTab, setTab } = useTabs({
+    tabLocation: "profileTab",
+    defaultState: "watchlist"
+  });
 
   return (
     <Fragment>
@@ -119,11 +114,11 @@ const Profile = () => {
           {/* main content */}
           <div className='h-full w-full mt-3'>
             <div className='px-3'>
-              <LinearTabs tabList={linearTabsList} currentTab={currentTab} setTab={tabHandler} />
+              <LinearTabs tabList={linearTabsList} currentTab={activeTab} setTab={setTab} />
             </div>
             <AnimatePresence exitBeforeEnter initial={false}>
               {/* Watchlist */}
-              {currentTab === "watchlist" && (
+              {activeTab === "watchlist" && (
                 <motion.div
                   key='watchlist'
                   initial={{ opacity: 0 }}
@@ -137,7 +132,7 @@ const Profile = () => {
               )}
 
               {/* ratings  */}
-              {currentTab === "ratings" && (
+              {activeTab === "ratings" && (
                 <motion.div
                   key='ratings'
                   initial={{ opacity: 0 }}
@@ -151,7 +146,7 @@ const Profile = () => {
               )}
 
               {/* favorites  */}
-              {currentTab === "favorites" && (
+              {activeTab === "favorites" && (
                 <motion.div
                   key='favorites'
                   initial={{ opacity: 0 }}
@@ -165,7 +160,7 @@ const Profile = () => {
               )}
 
               {/* recommendations */}
-              {currentTab === "recommendations" && (
+              {activeTab === "recommendations" && (
                 <motion.div
                   key='recommendations'
                   initial={{ opacity: 0 }}

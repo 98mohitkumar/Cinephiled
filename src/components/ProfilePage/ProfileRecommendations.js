@@ -1,7 +1,7 @@
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { motion, AnimatePresence } from "framer-motion";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
-import { useState, useMemo, Fragment, useContext } from "react";
+import { useMemo, Fragment, useContext } from "react";
 import { removeDuplicates } from "src/utils/helper";
 import { MediaContext } from "Store/MediaContext";
 import { NoDataText } from "styles/GlobalComponents";
@@ -53,7 +53,6 @@ const TvRecommendations = () => {
   });
 
   const extendedList = useMemo(() => tvRecommendations.concat(tvList), [tvList, tvRecommendations]);
-
   const { cleanedItems } = removeDuplicates(extendedList);
 
   return (
@@ -76,17 +75,16 @@ const TvRecommendations = () => {
 };
 
 const ProfileRecommendations = () => {
-  const [tabState, setTabState] = useState("");
-
   return (
     <Fragment>
-      <ProfileMediaTab tabState={tabState} setTabState={setTabState} />
-
-      <AnimatePresence exitBeforeEnter initial={false}>
-        {tabState === "movies" && <MovieRecommendations key='movies' />}
-
-        {tabState === "tv" && <TvRecommendations key='tv' />}
-      </AnimatePresence>
+      <ProfileMediaTab>
+        {(tabState) => (
+          <AnimatePresence exitBeforeEnter initial={false}>
+            {tabState === "movies" && <MovieRecommendations key='movies' />}
+            {tabState === "tv" && <TvRecommendations key='tv' />}
+          </AnimatePresence>
+        )}
+      </ProfileMediaTab>
     </Fragment>
   );
 };

@@ -83,7 +83,6 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
 };
 
 const Watchlist = () => {
-  const [tabState, setTabState] = useState("");
   const { moviesWatchlist, tvShowsWatchlist, revalidateWatchlist } = useContext(MediaContext);
   const [moviesWatchlistFromApi, setMoviesWatchlistFromApi] = useState(moviesWatchlist);
   const [tvShowsWatchlistFromApi, setTvShowsWatchlistFromApi] = useState(tvShowsWatchlist);
@@ -115,7 +114,6 @@ const Watchlist = () => {
         revalidationWrapper(() => revalidateWatchlist("moviesWatchlist"));
       } else {
         setTvShowsWatchlistFromApi((prev) => prev?.filter((item) => item?.id !== id));
-
         revalidationWrapper(() => revalidateWatchlist("tvShowsWatchlist"));
       }
     }
@@ -123,67 +121,69 @@ const Watchlist = () => {
 
   return (
     <Fragment>
-      <ProfileMediaTab tabState={tabState} setTabState={setTabState} />
-
-      <AnimatePresence exitBeforeEnter initial={false}>
-        {tabState === "movies" && (
-          <motion.div
-            key={`${moviesWatchlistFromApi?.length}-movies`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}>
-            {moviesWatchlistFromApi.length > 0 ? (
-              <CardsContainerGrid className='xl-row-gap'>
-                {moviesWatchlistFromApi.map((movie) => (
-                  <MediaCard key={movie?.id} data={movie} link='movies'>
-                    <WatchlistCTA
-                      clickHandler={() => filterMedia({ id: movie?.id, type: "movie" })}
-                      mediaData={{
-                        name: movie?.title,
-                        releaseDate: movie?.release_date
-                      }}
-                    />
-                  </MediaCard>
-                ))}
-              </CardsContainerGrid>
-            ) : (
-              <NoDataText className='font-bold text-center my-6'>
-                No movies in watchlist yet
-              </NoDataText>
+      <ProfileMediaTab>
+        {(tabState) => (
+          <AnimatePresence exitBeforeEnter initial={false}>
+            {tabState === "movies" && (
+              <motion.div
+                key={`${moviesWatchlistFromApi?.length}-movies`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}>
+                {moviesWatchlistFromApi.length > 0 ? (
+                  <CardsContainerGrid className='xl-row-gap'>
+                    {moviesWatchlistFromApi.map((movie) => (
+                      <MediaCard key={movie?.id} data={movie} link='movies'>
+                        <WatchlistCTA
+                          clickHandler={() => filterMedia({ id: movie?.id, type: "movie" })}
+                          mediaData={{
+                            name: movie?.title,
+                            releaseDate: movie?.release_date
+                          }}
+                        />
+                      </MediaCard>
+                    ))}
+                  </CardsContainerGrid>
+                ) : (
+                  <NoDataText className='font-bold text-center my-6'>
+                    No movies in watchlist yet
+                  </NoDataText>
+                )}
+              </motion.div>
             )}
-          </motion.div>
-        )}
 
-        {tabState === "tv" && (
-          <motion.div
-            key={`${tvShowsWatchlistFromApi?.length}-tv`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}>
-            {tvShowsWatchlistFromApi.length > 0 ? (
-              <CardsContainerGrid className='xl-row-gap'>
-                {tvShowsWatchlistFromApi.map((tv) => (
-                  <MediaCard key={tv?.id} data={tv} link='tv'>
-                    <WatchlistCTA
-                      clickHandler={() => filterMedia({ id: tv?.id, type: "tv" })}
-                      mediaData={{
-                        name: tv?.name,
-                        releaseDate: tv?.first_air_date
-                      }}
-                    />
-                  </MediaCard>
-                ))}
-              </CardsContainerGrid>
-            ) : (
-              <NoDataText className='font-bold text-center my-6'>
-                No tv shows in watchlist yet
-              </NoDataText>
+            {tabState === "tv" && (
+              <motion.div
+                key={`${tvShowsWatchlistFromApi?.length}-tv`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}>
+                {tvShowsWatchlistFromApi.length > 0 ? (
+                  <CardsContainerGrid className='xl-row-gap'>
+                    {tvShowsWatchlistFromApi.map((tv) => (
+                      <MediaCard key={tv?.id} data={tv} link='tv'>
+                        <WatchlistCTA
+                          clickHandler={() => filterMedia({ id: tv?.id, type: "tv" })}
+                          mediaData={{
+                            name: tv?.name,
+                            releaseDate: tv?.first_air_date
+                          }}
+                        />
+                      </MediaCard>
+                    ))}
+                  </CardsContainerGrid>
+                ) : (
+                  <NoDataText className='font-bold text-center my-6'>
+                    No tv shows in watchlist yet
+                  </NoDataText>
+                )}
+              </motion.div>
             )}
-          </motion.div>
+          </AnimatePresence>
         )}
-      </AnimatePresence>
+      </ProfileMediaTab>
     </Fragment>
   );
 };

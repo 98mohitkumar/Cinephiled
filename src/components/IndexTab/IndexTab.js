@@ -2,7 +2,8 @@ import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import TVTemplate from "components/MediaTemplate/TVTemplate";
 import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
-import { Fragment, useEffect, useState } from "react";
+import useTabs from "hooks/useTabs";
+import { Fragment } from "react";
 import { LayoutContainer } from "styles/GlobalComponents";
 
 const tabList = [
@@ -11,24 +12,14 @@ const tabList = [
 ];
 
 const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
-  const [tabState, setTabState] = useState("");
-
-  useEffect(() => {
-    const savedTabState = localStorage.getItem("indexTabState");
-    setTabState(savedTabState ?? "movies");
-  }, []);
-
-  const tabSelectionHandler = (tab) => {
-    localStorage.setItem("indexTabState", tab);
-    setTabState(tab);
-  };
+  const { activeTab, setTab } = useTabs({ tabLocation: "indexTab", defaultState: "movies" });
 
   return (
     <Fragment>
-      <Tabs tabList={tabList} currentTab={tabState} setTab={tabSelectionHandler} />
+      <Tabs tabList={tabList} currentTab={activeTab} setTab={setTab} />
 
       <AnimatePresence initial={false} exitBeforeEnter>
-        {tabState === "movies" && (
+        {activeTab === "movies" && (
           <motion.div
             key='movies'
             initial={{ opacity: 0 }}
@@ -57,7 +48,7 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
           </motion.div>
         )}
 
-        {tabState === "tv" && (
+        {activeTab === "tv" && (
           <motion.div
             key='tv'
             initial={{ opacity: 0 }}

@@ -10,7 +10,8 @@ import ReviewsSvg from "components/Svg/reviews";
 import SeasonsSvg from "components/Svg/seasons";
 import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
-import { Fragment, useState, useEffect } from "react";
+import useTabs from "hooks/useTabs";
+import { Fragment } from "react";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import TVSeasons from "./TVSeasons";
 
@@ -43,35 +44,25 @@ const tabList = [
 ];
 
 const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
-  const [tabState, setTabState] = useState("");
-
-  useEffect(() => {
-    let savedTabState = localStorage.getItem("TvTabState");
-    setTabState(savedTabState ?? "cast");
-  }, []);
-
-  const tabSelectionHandler = (tab) => {
-    setTabState(tab);
-    localStorage.setItem("TvTabState", tab);
-  };
+  const { activeTab, setTab } = useTabs({ tabLocation: "tvTabState", defaultState: "cast" });
 
   return (
     <Fragment>
-      <Tabs tabList={tabList} currentTab={tabState} styling={{ tabStyling }}>
+      <Tabs tabList={tabList} currentTab={activeTab} styling={{ tabStyling }}>
         {tabList.map(({ key, name, svg }) => (
           <TabSelectionTitle
             key={key}
-            onClick={() => tabSelectionHandler(key)}
-            active={tabState === key}
+            onClick={() => setTab(key)}
+            active={activeTab === key}
             tv={true}>
-            <TabIcon>{svg(key === tabState)}</TabIcon>
+            <TabIcon>{svg(key === activeTab)}</TabIcon>
             {name}
           </TabSelectionTitle>
         ))}
       </Tabs>
 
       <AnimatePresence exitBeforeEnter initial={false}>
-        {tabState === "cast" && (
+        {activeTab === "cast" && (
           <motion.div
             key='cast'
             initial={{ opacity: 0 }}
@@ -84,7 +75,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
           </motion.div>
         )}
 
-        {tabState === "seasons" && (
+        {activeTab === "seasons" && (
           <motion.div
             key='seasons'
             initial={{ opacity: 0 }}
@@ -97,7 +88,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
           </motion.div>
         )}
 
-        {tabState === "reviews" && (
+        {activeTab === "reviews" && (
           <motion.div
             key='cast'
             initial={{ opacity: 0 }}
@@ -110,7 +101,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
           </motion.div>
         )}
 
-        {tabState === "backdrops" && (
+        {activeTab === "backdrops" && (
           <motion.div
             key='backdrops'
             initial={{ opacity: 0 }}
@@ -123,7 +114,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
           </motion.div>
         )}
 
-        {tabState === "posters" && (
+        {activeTab === "posters" && (
           <motion.div
             key='posters'
             initial={{ opacity: 0 }}
