@@ -14,6 +14,7 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
   const { data } = useSession();
   const { userInfo } = useContext(UserContext);
   const [media, setMedia] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
   const fetchAllData = useCallback(async () => {
@@ -22,6 +23,7 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
       if (!fetcher) throw new Error("Invalid endpoint");
 
       if (userInfo?.id && data?.user?.sessionId) {
+        setLoading(true);
         const response = await fetcher({
           mediaType,
           pageQuery: page,
@@ -33,6 +35,7 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
 
         if (results?.length > 0) {
           setMedia((prev) => prev.concat(results));
+          setLoading(total_pages > page);
           setPage((prev) => (total_pages > prev ? prev + 1 : prev));
         }
       }
@@ -60,7 +63,7 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
     fetchAllData();
   }, [fetchAllData, page]);
 
-  return { media, validateMedia, revalidateAllPages };
+  return { media, validateMedia, revalidateAllPages, loading };
 };
 
 export default useFetchAllPages;

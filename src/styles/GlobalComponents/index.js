@@ -311,6 +311,12 @@ export const Loader = styled.div`
   display: grid;
   place-items: center;
   background: Url(/Images/Loader.svg) no-repeat center center / contain;
+
+  &.profile-page {
+    width: 100px;
+    aspect-ratio: 1/1;
+    position: static;
+  }
 `;
 
 export const SeasonExpandedContainer = styled.div`

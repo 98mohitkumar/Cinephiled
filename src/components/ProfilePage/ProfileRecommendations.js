@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Fragment, useContext } from "react";
 import { framerTabVariants, removeDuplicates } from "src/utils/helper";
 import { MediaContext } from "Store/MediaContext";
-import { NoDataText } from "styles/GlobalComponents";
+import { Loader, NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
 
@@ -56,16 +56,23 @@ const TvRecommendations = () => {
 };
 
 const ProfileRecommendations = () => {
+  const { movieRecommendationsLoading, tvRecommendationsLoading } = useContext(MediaContext);
   return (
     <Fragment>
-      <ProfileMediaTab>
-        {(tabState) => (
-          <AnimatePresence exitBeforeEnter initial={false}>
-            {tabState === "movies" && <MovieRecommendations key='movies' />}
-            {tabState === "tv" && <TvRecommendations key='tv' />}
-          </AnimatePresence>
-        )}
-      </ProfileMediaTab>
+      {movieRecommendationsLoading || tvRecommendationsLoading ? (
+        <div className='min-h-[45vh] grid place-items-center'>
+          <Loader className='profile-page' />
+        </div>
+      ) : (
+        <ProfileMediaTab>
+          {(tabState) => (
+            <AnimatePresence exitBeforeEnter initial={false}>
+              {tabState === "movies" && <MovieRecommendations key='movies' />}
+              {tabState === "tv" && <TvRecommendations key='tv' />}
+            </AnimatePresence>
+          )}
+        </ProfileMediaTab>
+      )}
     </Fragment>
   );
 };

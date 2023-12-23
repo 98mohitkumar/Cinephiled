@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Fragment, useContext } from "react";
 import { framerTabVariants, getReleaseYear } from "src/utils/helper";
 import { MediaContext } from "Store/MediaContext";
-import { NoDataText } from "styles/GlobalComponents";
+import { Loader, NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
 import { ConfirmationModal, CTAButton, ModalCard } from "./ProfilePageStyles";
@@ -71,8 +71,14 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
 };
 
 const Watchlist = () => {
-  const { moviesWatchlist, tvShowsWatchlist, validateMoviesWatchlist, validateTvWatchlist } =
-    useContext(MediaContext);
+  const {
+    moviesWatchlist,
+    tvShowsWatchlist,
+    moviesWatchlistLoading,
+    tvShowsWatchlistLoading,
+    validateMoviesWatchlist,
+    validateTvWatchlist
+  } = useContext(MediaContext);
   const { addToWatchlist } = useAddToWatchlist();
 
   const filterMedia = async ({ id, type }) => {
@@ -93,71 +99,77 @@ const Watchlist = () => {
 
   return (
     <Fragment>
-      <ProfileMediaTab>
-        {(tabState) => (
-          <AnimatePresence exitBeforeEnter initial={false}>
-            {tabState === "movies" && (
-              <motion.div
-                key={`${moviesWatchlist?.length}-movies`}
-                variants={framerTabVariants}
-                initial='hidden'
-                animate='visible'
-                exit='hidden'
-                transition={{ duration: 0.5 }}>
-                {moviesWatchlist.length > 0 ? (
-                  <CardsContainerGrid className='xl-row-gap'>
-                    {moviesWatchlist.map((movie) => (
-                      <MediaCard key={movie?.id} data={movie} link='movies'>
-                        <WatchlistCTA
-                          clickHandler={() => filterMedia({ id: movie?.id, type: "movie" })}
-                          mediaData={{
-                            name: movie?.title,
-                            releaseDate: movie?.release_date
-                          }}
-                        />
-                      </MediaCard>
-                    ))}
-                  </CardsContainerGrid>
-                ) : (
-                  <NoDataText className='font-bold text-center my-5'>
-                    No movies in watchlist yet
-                  </NoDataText>
-                )}
-              </motion.div>
-            )}
+      {moviesWatchlistLoading || tvShowsWatchlistLoading ? (
+        <div className='min-h-[45vh] grid place-items-center'>
+          <Loader className='profile-page' />
+        </div>
+      ) : (
+        <ProfileMediaTab>
+          {(tabState) => (
+            <AnimatePresence exitBeforeEnter initial={false}>
+              {tabState === "movies" && (
+                <motion.div
+                  key={`${moviesWatchlist?.length}-movies`}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
+                  transition={{ duration: 0.5 }}>
+                  {moviesWatchlist.length > 0 ? (
+                    <CardsContainerGrid className='xl-row-gap'>
+                      {moviesWatchlist.map((movie) => (
+                        <MediaCard key={movie?.id} data={movie} link='movies'>
+                          <WatchlistCTA
+                            clickHandler={() => filterMedia({ id: movie?.id, type: "movie" })}
+                            mediaData={{
+                              name: movie?.title,
+                              releaseDate: movie?.release_date
+                            }}
+                          />
+                        </MediaCard>
+                      ))}
+                    </CardsContainerGrid>
+                  ) : (
+                    <NoDataText className='font-bold text-center my-5'>
+                      No movies in watchlist yet
+                    </NoDataText>
+                  )}
+                </motion.div>
+              )}
 
-            {tabState === "tv" && (
-              <motion.div
-                key={`${tvShowsWatchlist?.length}-tv`}
-                variants={framerTabVariants}
-                initial='hidden'
-                animate='visible'
-                exit='hidden'
-                transition={{ duration: 0.5 }}>
-                {tvShowsWatchlist.length > 0 ? (
-                  <CardsContainerGrid className='xl-row-gap'>
-                    {tvShowsWatchlist.map((tv) => (
-                      <MediaCard key={tv?.id} data={tv} link='tv'>
-                        <WatchlistCTA
-                          clickHandler={() => filterMedia({ id: tv?.id, type: "tv" })}
-                          mediaData={{
-                            name: tv?.name,
-                            releaseDate: tv?.first_air_date
-                          }}
-                        />
-                      </MediaCard>
-                    ))}
-                  </CardsContainerGrid>
-                ) : (
-                  <NoDataText className='font-bold text-center my-5'>
-                    No tv shows in watchlist yet
-                  </NoDataText>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        )}
-      </ProfileMediaTab>
+              {tabState === "tv" && (
+                <motion.div
+                  key={`${tvShowsWatchlist?.length}-tv`}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
+                  transition={{ duration: 0.5 }}>
+                  {tvShowsWatchlist.length > 0 ? (
+                    <CardsContainerGrid className='xl-row-gap'>
+                      {tvShowsWatchlist.map((tv) => (
+                        <MediaCard key={tv?.id} data={tv} link='tv'>
+                          <WatchlistCTA
+                            clickHandler={() => filterMedia({ id: tv?.id, type: "tv" })}
+                            mediaData={{
+                              name: tv?.name,
+                              releaseDate: tv?.first_air_date
+                            }}
+                          />
+                        </MediaCard>
+                      ))}
+                    </CardsContainerGrid>
+                  ) : (
+                    <NoDataText className='font-bold text-center my-5'>
+                      No tv shows in watchlist yet
+                    </NoDataText>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          )}
+        </ProfileMediaTab>
+      )}
     </Fragment>
   );
 };

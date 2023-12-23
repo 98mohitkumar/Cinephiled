@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Fragment, useContext } from "react";
 import { framerTabVariants, getReleaseYear } from "src/utils/helper";
 import { MediaContext } from "Store/MediaContext";
-import { NoDataText } from "styles/GlobalComponents";
+import { Loader, NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
 import { ConfirmationModal, CTAButton, ModalCard } from "./ProfilePageStyles";
@@ -71,8 +71,14 @@ export const FavoritesCTA = ({ clickHandler, mediaData }) => {
 };
 
 const Favorites = () => {
-  const { favoriteMovies, favoriteTvShows, validateFavoriteMovies, validateFavoriteTvShows } =
-    useContext(MediaContext);
+  const {
+    favoriteMovies,
+    favoriteTvShows,
+    favoriteMoviesLoading,
+    favoriteTvShowsLoading,
+    validateFavoriteMovies,
+    validateFavoriteTvShows
+  } = useContext(MediaContext);
   const { setFavorite } = useSetFavorite();
 
   const filterMedia = async ({ id, type }) => {
@@ -99,71 +105,77 @@ const Favorites = () => {
 
   return (
     <Fragment>
-      <ProfileMediaTab>
-        {(tabState) => (
-          <AnimatePresence exitBeforeEnter initial={false}>
-            {tabState === "movies" && (
-              <motion.div
-                key={`${favoriteMovies?.length}-movies`}
-                variants={framerTabVariants}
-                initial='hidden'
-                animate='visible'
-                exit='hidden'
-                transition={{ duration: 0.5 }}>
-                {favoriteMovies.length > 0 ? (
-                  <CardsContainerGrid className='xl-row-gap'>
-                    {favoriteMovies.map((movie) => (
-                      <MediaCard key={movie?.id} data={movie} link='movies'>
-                        <FavoritesCTA
-                          clickHandler={() => filterMedia({ id: movie?.id, type: "movie" })}
-                          mediaData={{
-                            name: movie?.title,
-                            releaseDate: movie?.release_date
-                          }}
-                        />
-                      </MediaCard>
-                    ))}
-                  </CardsContainerGrid>
-                ) : (
-                  <NoDataText className='font-bold text-center my-5'>
-                    No movies marked as favorite yet
-                  </NoDataText>
-                )}
-              </motion.div>
-            )}
+      {favoriteMoviesLoading || favoriteTvShowsLoading ? (
+        <div className='min-h-[45vh] grid place-items-center'>
+          <Loader className='profile-page' />
+        </div>
+      ) : (
+        <ProfileMediaTab>
+          {(tabState) => (
+            <AnimatePresence exitBeforeEnter initial={false}>
+              {tabState === "movies" && (
+                <motion.div
+                  key={`${favoriteMovies?.length}-movies`}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
+                  transition={{ duration: 0.5 }}>
+                  {favoriteMovies.length > 0 ? (
+                    <CardsContainerGrid className='xl-row-gap'>
+                      {favoriteMovies.map((movie) => (
+                        <MediaCard key={movie?.id} data={movie} link='movies'>
+                          <FavoritesCTA
+                            clickHandler={() => filterMedia({ id: movie?.id, type: "movie" })}
+                            mediaData={{
+                              name: movie?.title,
+                              releaseDate: movie?.release_date
+                            }}
+                          />
+                        </MediaCard>
+                      ))}
+                    </CardsContainerGrid>
+                  ) : (
+                    <NoDataText className='font-bold text-center my-5'>
+                      No movies marked as favorite yet
+                    </NoDataText>
+                  )}
+                </motion.div>
+              )}
 
-            {tabState === "tv" && (
-              <motion.div
-                key={`${favoriteTvShows?.length}-tv`}
-                variants={framerTabVariants}
-                initial='hidden'
-                animate='visible'
-                exit='hidden'
-                transition={{ duration: 0.5 }}>
-                {favoriteTvShows.length > 0 ? (
-                  <CardsContainerGrid className='xl-row-gap'>
-                    {favoriteTvShows.map((tv) => (
-                      <MediaCard key={tv?.id} data={tv} link='tv'>
-                        <FavoritesCTA
-                          clickHandler={() => filterMedia({ id: tv?.id, type: "tv" })}
-                          mediaData={{
-                            name: tv?.name,
-                            releaseDate: tv?.first_air_date
-                          }}
-                        />
-                      </MediaCard>
-                    ))}
-                  </CardsContainerGrid>
-                ) : (
-                  <NoDataText className='font-bold text-center my-5'>
-                    No tv shows marked as favorite yet
-                  </NoDataText>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        )}
-      </ProfileMediaTab>
+              {tabState === "tv" && (
+                <motion.div
+                  key={`${favoriteTvShows?.length}-tv`}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
+                  transition={{ duration: 0.5 }}>
+                  {favoriteTvShows.length > 0 ? (
+                    <CardsContainerGrid className='xl-row-gap'>
+                      {favoriteTvShows.map((tv) => (
+                        <MediaCard key={tv?.id} data={tv} link='tv'>
+                          <FavoritesCTA
+                            clickHandler={() => filterMedia({ id: tv?.id, type: "tv" })}
+                            mediaData={{
+                              name: tv?.name,
+                              releaseDate: tv?.first_air_date
+                            }}
+                          />
+                        </MediaCard>
+                      ))}
+                    </CardsContainerGrid>
+                  ) : (
+                    <NoDataText className='font-bold text-center my-5'>
+                      No tv shows marked as favorite yet
+                    </NoDataText>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          )}
+        </ProfileMediaTab>
+      )}
     </Fragment>
   );
 };
