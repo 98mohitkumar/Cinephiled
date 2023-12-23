@@ -39,7 +39,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/${mediaType}/${mediaId}/rating?api_key=${api_key}&session_id=${sessionId}`,
 
     getRecommendations: ({ mediaType, accountId, pageQuery = 1 }) =>
-      `${baseUrlV4}/account/${accountId}/${mediaType}/recommendations?page=${pageQuery}`,
+      `${baseUrlV4}/account/${accountId}/${mediaType}/recommendations?page=${pageQuery}&language=en-US`,
 
     getCountryCode: `https://ipwho.is?fields=country_code`
   },
@@ -73,7 +73,7 @@ export const apiEndpoints = {
     getMovieCredits: ({ id }) =>
       `${baseUrlV3}/movie/${id}?api_key=${api_key}&language=en-US&append_to_response=credits`,
 
-    movieGenreList: `${baseUrlV3}/genre/movie/list?api_key=${api_key}&language=en`,
+    movieGenreList: `${baseUrlV3}/genre/movie/list?api_key=${api_key}&language=en-US`,
 
     nowPlaying: ({ region }) =>
       `${baseUrlV3}/movie/now_playing?api_key=${api_key}&page=1&region=${region}`
@@ -100,7 +100,7 @@ export const apiEndpoints = {
     getTvCredits: ({ id }) =>
       `${baseUrlV3}/tv/${id}?api_key=${api_key}&language=en-US&append_to_response=aggregate_credits`,
 
-    tvGenreList: `${baseUrlV3}/genre/tv/list?api_key=${api_key}&language=en`
+    tvGenreList: `${baseUrlV3}/genre/tv/list?api_key=${api_key}&language=en-US`
   },
   keywords: {
     keywordDetails: (id) =>

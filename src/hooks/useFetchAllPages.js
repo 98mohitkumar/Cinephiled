@@ -43,6 +43,7 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
       }
     } catch {
       setMedia([]);
+      setLoading(false);
     }
   }, [data?.user?.sessionId, endpoint, mediaType, page, userInfo?.accountId, userInfo?.id]);
 

@@ -62,7 +62,7 @@ const RatingModal = ({
           if (index > -1) {
             updatedRatedMovies[index].rating = rating;
           } else {
-            updatedRatedMovies.push({
+            updatedRatedMovies.unshift({
               id: mediaId,
               rating,
               poster_path: posterPath,
@@ -82,7 +82,7 @@ const RatingModal = ({
           if (index > -1) {
             updatedRatedTvShows[index].rating = rating;
           } else {
-            updatedRatedTvShows.push({
+            updatedRatedTvShows.unshift({
               id: mediaId,
               rating,
               poster_path: posterPath,

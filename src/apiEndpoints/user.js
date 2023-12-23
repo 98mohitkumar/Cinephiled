@@ -1,5 +1,5 @@
 import { apiEndpoints } from "globals/constants";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useContext } from "react";
 import { UserContext } from "Store/UserContext";
 
@@ -176,7 +176,9 @@ export const revalidationWrapper = (revalidate, delay = 1000) => {
 };
 
 export const getRecommendations = async ({ mediaType, accountId, pageQuery }) => {
-  const read_access_token = process.env.NEXT_PUBLIC_READ_ACCESS_TOKEN;
+  const {
+    user: { accessToken }
+  } = await getSession();
 
   const recommendationsRes = await fetch(
     apiEndpoints.user.getRecommendations({ mediaType, accountId, pageQuery }),
@@ -184,7 +186,7 @@ export const getRecommendations = async ({ mediaType, accountId, pageQuery }) =>
       method: "GET",
       headers: {
         "content-type": "application/json;charset=utf-8",
-        authorization: `Bearer ${read_access_token}`
+        authorization: `Bearer ${accessToken}`
       }
     }
   );

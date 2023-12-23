@@ -5,7 +5,7 @@ import { Colorful } from "./DominantColorStyles";
 
 const DominantColor = ({ image, tint = false, flip = false, isUsingBackdrop = false }) => {
   const prefix = isUsingBackdrop ? "w533_and_h300_bestv2" : "w300_and_h450_bestv2";
-  const { palette, done } = usePalette(`https://image.tmdb.org/t/p/${prefix}${image}`);
+  const { palette, done } = usePalette(image ? `https://image.tmdb.org/t/p/${prefix}${image}` : "");
 
   return (
     <Fragment>

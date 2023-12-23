@@ -161,7 +161,7 @@ const Watchlist = () => {
                     </CardsContainerGrid>
                   ) : (
                     <NoDataText className='font-bold text-center my-5'>
-                      No tv shows in watchlist yet
+                      No TV shows in watchlist yet
                     </NoDataText>
                   )}
                 </motion.div>

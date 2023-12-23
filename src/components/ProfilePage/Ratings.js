@@ -115,7 +115,7 @@ const Ratings = () => {
                     </CardsContainerGrid>
                   ) : (
                     <NoDataText className='font-bold text-center my-5'>
-                      No tv shows rated yet
+                      No TV shows rated yet
                     </NoDataText>
                   )}
                 </motion.div>

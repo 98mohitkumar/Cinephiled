@@ -40,11 +40,17 @@ const Select = ({ departmentList }) => {
   ];
 
   useEffect(() => {
-    window.addEventListener("click", (e) => {
+    const handleOutsideClick = (e) => {
       if (e.target.closest(".dropdown-toggle") === null) {
         setShowDropdown(false);
       }
-    });
+    };
+
+    window.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
   }, []);
 
   const handleSelect = (key) => {
