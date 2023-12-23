@@ -95,7 +95,7 @@ const Profile = () => {
                   <h4 className='font-bold text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem]'>
                     {userInfo?.name}
                   </h4>
-                  {userInfo?.name && (
+                  {userInfo?.username && (
                     <h4 className='font-normal text-xl m-0'>{userInfo?.username}</h4>
                   )}
                 </div>

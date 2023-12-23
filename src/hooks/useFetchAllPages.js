@@ -37,6 +37,8 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
           setMedia((prev) => prev.concat(results));
           setLoading(total_pages > page);
           setPage((prev) => (total_pages > prev ? prev + 1 : prev));
+        } else {
+          setLoading(false);
         }
       }
     } catch {
