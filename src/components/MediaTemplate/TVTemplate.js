@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { getRating, getReleaseDate } from "src/utils/helper";
+import { getCleanTitle, getRating, getReleaseDate } from "src/utils/helper";
 import {
   CardsContainerGrid,
   Cards,
@@ -25,10 +25,7 @@ const TVTemplate = ({ TV, creditsPage = false }) => {
                   transition: { duration: 0.1 }
                 }}
                 whileTap={{ scale: 0.95 }}>
-                <Link
-                  href={`/tv/${id}-${name.replace(/[' ', '/']/g, "-")}`}
-                  passHref
-                  scroll={false}>
+                <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref scroll={false}>
                   <a className='relative block'>
                     <CardImg>
                       <Image

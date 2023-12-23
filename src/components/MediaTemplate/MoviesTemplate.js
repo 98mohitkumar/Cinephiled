@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { getRating, getReleaseDate } from "src/utils/helper";
+import { getCleanTitle, getRating, getReleaseDate } from "src/utils/helper";
 import {
   CardsContainerGrid,
   Cards,
@@ -25,10 +25,7 @@ const MoviesTemplate = ({ movies, creditsPage = false }) => {
                   transition: { duration: 0.1 }
                 }}
                 whileTap={{ scale: 0.95 }}>
-                <Link
-                  href={`/movies/${id}-${title.replace(/[' ', '/']/g, "-")}`}
-                  passHref
-                  scroll={false}>
+                <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref scroll={false}>
                   <a className='relative block'>
                     <CardImg>
                       <Image

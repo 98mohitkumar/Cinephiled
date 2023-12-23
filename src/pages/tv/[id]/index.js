@@ -6,11 +6,12 @@ import TVFacts from "components/TVInfo/TVFacts";
 import TVTab from "components/TVInfo/TVTab";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
-import { getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
+import { getCleanTitle, getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const TvShow = ({
   id,
+  airDate,
   title,
   status,
   type,
@@ -45,7 +46,7 @@ const TvShow = ({
         }
         description={overview}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
-        url={`https://cinephiled.vercel.app/tv/${id}-${title?.replace(/[' ', '/']/g, "-")}`}
+        url={`https://cinephiled.vercel.app/tv/${id}-${getCleanTitle(title)}`}
       />
 
       {error ? (
@@ -56,6 +57,7 @@ const TvShow = ({
           <TVDetails
             tvData={{
               id,
+              airDate,
               title,
               runtime,
               genres,
@@ -138,6 +140,7 @@ TvShow.getInitialProps = async (ctx) => {
       return {
         id: tvData?.id,
         title: tvData?.name,
+        airDate: tvData?.first_air_date,
         releaseYear,
         genres: tvData?.genres,
         runtime: tvData?.episode_run_time?.[0],

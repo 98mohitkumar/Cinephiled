@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { apiEndpoints } from "globals/constants";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState, useRef } from "react";
+import { framerTabVariants } from "src/utils/helper";
 import { Container } from "styles/GlobalComponents";
 import { Banner, Button, Form, HeroDiv, UserInput } from "./HeroStyles";
 import SearchSuggestion from "./searchSuggestion";
@@ -105,10 +106,7 @@ const Hero = ({ searchModal }) => {
     if (userInput.length === 0 || userInput.trim().length === 0) {
       return;
     } else {
-      router.push({
-        pathname: "/search/[query]",
-        query: { query: userInput }
-      });
+      router.push(`/search/${userInput.replaceAll(" ", "+")}`);
       userInputRef.current = "";
     }
   };
@@ -215,9 +213,10 @@ const Hero = ({ searchModal }) => {
               {sortedSuggestion.length > 0 && (
                 <motion.div
                   key='suggestions'
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
                   transition={{ duration: 0.5 }}>
                   <div className='mt-2 suggestions'>
                     {sortedSuggestion.map((item, index) => (

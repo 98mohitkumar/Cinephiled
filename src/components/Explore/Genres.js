@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Fragment } from "react";
+import { getCleanTitle } from "src/utils/helper";
 import { GenreBG, OuterWrapper, OverFlowWrapper, PseudoTrack } from "./ExploreStyles";
 
 const GenreSection = ({ genres, mediaType }) => {
@@ -15,7 +16,9 @@ const GenreSection = ({ genres, mediaType }) => {
           {genres.map((genre) => (
             <Link
               key={genre.id}
-              href={`/genre/${genre.id}-${genre.name}/${mediaType === "movie" ? "movies" : "tv"}`}
+              href={`/genre/${genre.id}-${getCleanTitle(genre.name)}/${
+                mediaType === "movie" ? "movies" : "tv"
+              }`}
               passHref>
               <GenreBG as={motion.a} whileTap={{ scale: 0.9 }}>
                 <span className='title'>{genre.name}</span>

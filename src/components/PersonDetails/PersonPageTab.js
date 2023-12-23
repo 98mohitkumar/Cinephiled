@@ -2,9 +2,11 @@ import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import TVTemplate from "components/MediaTemplate/TVTemplate";
 import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
+import useTabs from "hooks/useTabs";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import { framerTabVariants } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents";
 
 const groupCredits = (credits) => {
@@ -104,41 +106,42 @@ const tabList = [
 ];
 
 const PersonPageTab = ({ movieCredits, tvCredits }) => {
-  const [tabState, setTabState] = useState("movies");
+  const { activeTab, setTab } = useTabs({ tabLocation: "personPageTab", defaultState: "movies" });
   const router = useRouter();
   const { department: currentSelectedDepartment } = router.query;
 
   const departmentList = Array.from(
-    tabState === "movies"
+    activeTab === "movies"
       ? new Set(movieCredits.map((item) => item.department))
       : new Set(tvCredits.map((item) => item.department))
   );
 
   const creditsToRender = groupCredits(
-    (tabState === "movies" ? movieCredits : tvCredits).filter((item) =>
+    (activeTab === "movies" ? movieCredits : tvCredits).filter((item) =>
       currentSelectedDepartment
         ? item.department.toLowerCase() === currentSelectedDepartment
         : item.department
     )
   );
 
-  const tabStateHandler = () => {
-    setTabState((prev) => (prev === "movies" ? "tv" : "movies"));
+  const tabStateHandler = (key) => {
+    setTab(key);
     router.replace(router.asPath.split("?")[0], undefined, { shallow: true });
   };
 
   return (
     <Fragment>
-      <Tabs tabList={tabList} currentTab={tabState} setTab={tabStateHandler} />
+      <Tabs tabList={tabList} currentTab={activeTab} setTab={tabStateHandler} />
 
       <ModulesWrapper>
         <AnimatePresence initial={false} exitBeforeEnter>
-          {tabState === "movies" && (
+          {activeTab === "movies" && (
             <motion.div
               key='movies'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              variants={framerTabVariants}
+              initial='hidden'
+              animate='visible'
+              exit='hidden'
               transition={{ duration: 0.5 }}>
               <Select departmentList={departmentList} />
 
@@ -152,12 +155,13 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
             </motion.div>
           )}
 
-          {tabState === "tv" && (
+          {activeTab === "tv" && (
             <motion.div
               key='tv'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              variants={framerTabVariants}
+              initial='hidden'
+              animate='visible'
+              exit='hidden'
               transition={{ duration: 0.5 }}>
               <Select departmentList={departmentList} />
 

@@ -5,6 +5,7 @@ import {
   Span
 } from "components/MovieInfo/MovieDetailsStyles";
 import Link from "next/link";
+import { getCleanTitle } from "src/utils/helper";
 import { FactsFlexWrapper } from "styles/GlobalComponents";
 
 const TVFacts = ({ facts }) => {
@@ -27,7 +28,7 @@ const TVFacts = ({ facts }) => {
         <FactsFlexWrapper>
           <Span>Network</Span>
           {network?.name ? (
-            <Link href={`/network/${network?.id}-${network?.name?.replace(/[' ', '/']/g, "-")}`}>
+            <Link href={`/network/${network?.id}-${getCleanTitle(network?.name)}`}>
               <a>
                 <Span className='network font-semibold'>{network?.name}</Span>
               </a>

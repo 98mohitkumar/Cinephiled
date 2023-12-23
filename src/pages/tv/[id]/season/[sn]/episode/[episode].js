@@ -10,7 +10,13 @@ import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { getRating, getReleaseDate, getReleaseYear, getRuntime } from "src/utils/helper";
+import {
+  getCleanTitle,
+  getRating,
+  getReleaseDate,
+  getReleaseYear,
+  getRuntime
+} from "src/utils/helper";
 import {
   EpisodeInfoWrapper,
   EpisodeShowCaseWrapper,
@@ -126,9 +132,7 @@ const Episode = ({
                 <CastGrid className='justify-start'>
                   {cast.map((item) => (
                     <CastWrapper key={item.name}>
-                      <Link
-                        href={`/person/${item.id}-${item.name.replace(/[' ']/g, "-")}`}
-                        passHref>
+                      <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`} passHref>
                         <a>
                           <motion.div
                             whileHover={{

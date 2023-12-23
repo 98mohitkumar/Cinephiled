@@ -11,7 +11,7 @@ import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillStar } from "react-icons/ai";
-import { getRating, getReleaseDate } from "src/utils/helper";
+import { getCleanTitle, getRating, getReleaseDate } from "src/utils/helper";
 import { RatingOverlay } from "./ProfilePageStyles";
 
 const MediaCard = ({ data, link, children, rating, recommendation }) => {
@@ -24,7 +24,7 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
         }}
         whileTap={{ scale: 0.95 }}>
         <Link
-          href={`/${link}/${data?.id}-${(data?.title || data?.name).replace(/[' ', '/']/g, "-")}`}
+          href={`/${link}/${data?.id}-${getCleanTitle(data?.title || data?.name)}`}
           passHref
           scroll={false}>
           <a className='relative block'>

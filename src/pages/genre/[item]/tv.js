@@ -12,6 +12,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
+import { getCleanTitle } from "src/utils/helper";
 import { NoDataText, Error404, ModulesWrapper } from "styles/GlobalComponents/index";
 
 const TvShows = ({ renderList, genreName, error, genreId }) => {
@@ -26,7 +27,7 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
       <MetaWrapper
         title={error ? "Not Found - Cinephiled" : `${genreName} TV Shows - Cinephiled`}
         description={error ? "Not Found" : `${genreName} TV Shows`}
-        url={`https://cinephiled.vercel.app/genre/${genreId}-${genreName}/tv`}
+        url={`https://cinephiled.vercel.app/genre/${genreId}-${getCleanTitle(genreName)}/tv`}
       />
 
       {error ? (
@@ -47,10 +48,7 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                         transition: { duration: 0.1 }
                       }}
                       whileTap={{ scale: 0.95 }}>
-                      <Link
-                        href={`/tv/${id}-${name.replace(/[' ', '/']/g, "-")}`}
-                        passHref
-                        scroll={false}>
+                      <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref scroll={false}>
                         <a>
                           <RecommendedImg className='relative text-center'>
                             <Image

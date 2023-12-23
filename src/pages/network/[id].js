@@ -2,6 +2,7 @@ import NetworkMedia from "components/Explore/NetworkMedia";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
+import { getCleanTitle } from "src/utils/helper";
 import { Error404 } from "styles/GlobalComponents";
 
 const Network = ({ networkDetails, networkMedia, error }) => {
@@ -10,9 +11,9 @@ const Network = ({ networkDetails, networkMedia, error }) => {
       <MetaWrapper
         title={error ? "Not Found - Cinephiled" : `${networkDetails?.name} - cinephiled`}
         description={`TV shows produced by ${networkDetails?.name}.`}
-        url={`https://cinephiled.vercel.app/network/${
-          networkDetails?.id
-        }-${networkDetails?.name.replaceAll(" ", "-")}`}
+        url={`https://cinephiled.vercel.app/network/${networkDetails?.id}-${getCleanTitle(
+          networkDetails?.name
+        )}`}
         image={`https://image.tmdb.org/t/p/original${networkDetails.logo_path}`}
       />
 

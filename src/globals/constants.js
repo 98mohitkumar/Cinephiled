@@ -6,13 +6,10 @@ export const proxy = "https://corsproxy.scharde.workers.dev/?q=";
 
 export const apiEndpoints = {
   auth: {
-    // requestToken: `${baseUrlV3}/authentication/token/new?api_key=${api_key}`,
     requestToken: `${baseUrlV4}/auth/request_token`,
 
-    // validateToken: `${baseUrlV3}/authentication/token/validate_with_login?api_key=${api_key}`,
     accessToken: `${baseUrlV4}/auth/access_token`,
 
-    // generateSession: `${baseUrlV3}/authentication/session/new?api_key=${api_key}`,
     generateSession: `${baseUrlV3}/authentication/session/convert/4`,
 
     logout: `${baseUrlV3}/authentication/session?api_key=${api_key}`

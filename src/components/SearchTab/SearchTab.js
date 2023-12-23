@@ -1,25 +1,25 @@
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Tabs from "components/Tabs/Tabs";
 import { motion, AnimatePresence } from "framer-motion";
+import useTabs from "hooks/useTabs";
 import { useRouter } from "next/router";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment } from "react";
+import { framerTabVariants } from "src/utils/helper";
 import KeywordSearch from "./KeywordSearch";
 import MoviesSearch from "./MoviesSearch";
 import { tabStyling, tabTitleStyling } from "./SearchTabStyles";
 import TVSearch from "./TVSearch";
 
 const SearchTab = ({ movies, tv, search, keywords }) => {
-  const [tabState, setTabState] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    let savedTabState = localStorage.getItem("SearchTabPosition");
-    setTabState(savedTabState ?? "movies");
-  }, []);
+  const { activeTab, setTab } = useTabs({
+    tabLocation: "searchTabPosition",
+    defaultState: "movies"
+  });
 
   const tabSelectionHandler = (tab) => {
-    localStorage.setItem("SearchTabPosition", tab);
-    setTabState(tab);
+    setTab(tab);
     router.replace(router.asPath.split("?")[0], undefined, { shallow: true });
   };
 
@@ -33,18 +33,19 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
     <Fragment>
       <Tabs
         tabList={tabList}
-        currentTab={tabState}
+        currentTab={activeTab}
         setTab={tabSelectionHandler}
         styling={{ tabStyling, tabTitleStyling }}
       />
 
       <AnimatePresence exitBeforeEnter>
-        {tabState === "movies" && (
+        {activeTab === "movies" && (
           <motion.div
             key='movies'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={framerTabVariants}
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
             transition={{ duration: 0.5 }}>
             {movies?.length > 0 ? (
               <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center'>
@@ -59,12 +60,13 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
           </motion.div>
         )}
 
-        {tabState === "tv" && (
+        {activeTab === "tv" && (
           <motion.div
             key='tv'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={framerTabVariants}
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
             transition={{ duration: 0.5 }}>
             {tv?.length > 0 && (
               <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center'>
@@ -79,12 +81,13 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
           </motion.div>
         )}
 
-        {tabState === "keywords" && (
+        {activeTab === "keywords" && (
           <motion.div
             key='keywords'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={framerTabVariants}
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
             transition={{ duration: 0.5 }}>
             {keywords?.length > 0 && (
               <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center'>

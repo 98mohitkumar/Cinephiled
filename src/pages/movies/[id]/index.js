@@ -6,7 +6,7 @@ import MovieTab from "components/MovieInfo/MovieTab";
 import Recommendations from "components/Recommendations/Recommendations";
 import { apiEndpoints } from "globals/constants";
 import { Fragment, useEffect, useState } from "react";
-import { getReleaseDate, getReleaseYear } from "src/utils/helper";
+import { getCleanTitle, getReleaseDate, getReleaseYear } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const Movie = ({
@@ -72,7 +72,7 @@ const Movie = ({
         title={error ? "Not Found - Cinephiled" : `${title} (${releaseYear}) - Cinephiled`}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
         description={overview}
-        url={`https://cinephiled.vercel.app/movies/${id}-${title?.replace(/[' ', '/']/g, "-")}`}
+        url={`https://cinephiled.vercel.app/movies/${id}-${getCleanTitle(title)}`}
       />
 
       {error ? (

@@ -7,7 +7,12 @@ import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useRef, useState } from "react";
-import { getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
+import {
+  framerTabVariants,
+  getCleanTitle,
+  getReleaseYear,
+  mergeEpisodeCount
+} from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) => {
@@ -67,15 +72,14 @@ const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) =>
                 <CastGrid
                   as={motion.div}
                   key={`cast-grid-${filteredCast.length}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
                   transition={{ duration: 0.325 }}>
                   {filteredCast.map((item) => (
                     <CastWrapper key={item.credit_id}>
-                      <Link
-                        href={`/person/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}
-                        passHref>
+                      <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`} passHref>
                         <a>
                           <motion.div
                             whileHover={{
@@ -118,9 +122,10 @@ const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) =>
                 <motion.div
                   className='text-center text-2xl py-6'
                   key='no-results'
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
                   transition={{ duration: 0.325 }}>
                   No results found
                 </motion.div>

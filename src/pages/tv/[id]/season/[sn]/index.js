@@ -17,7 +17,8 @@ import {
   getReleaseYear,
   getReleaseDate,
   getRuntime,
-  mergeEpisodeCount
+  mergeEpisodeCount,
+  getCleanTitle
 } from "src/utils/helper";
 
 import {
@@ -190,9 +191,7 @@ const Seasons = ({
                 <CastGrid className='justify-start'>
                   {cast?.map((item) => (
                     <CastWrapper key={item.id}>
-                      <Link
-                        href={`/person/${item.id}-${item.name.replace(/[' ']/g, "-")}`}
-                        passHref>
+                      <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`} passHref>
                         <a>
                           <motion.div
                             whileHover={{
