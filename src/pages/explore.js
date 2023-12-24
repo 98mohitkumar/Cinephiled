@@ -38,12 +38,19 @@ Explore.getInitialProps = async () => {
       fetch(apiEndpoints.tv.tvGenreList)
     ]);
 
-    if (!genres[0].ok || !genres[1].ok) throw new Error("Failed to fetch genres");
-    const combinedGenresList = await Promise.all(genres.map((res) => res.json()));
+    const error = genres.some((res) => !res.ok);
+
+    if (error) throw new Error("Failed to fetch genres");
+
+    const [movieGenresRes, tvGenresRes] = genres;
+    const [movieGenresList, tvGenresList] = await Promise.all([
+      movieGenresRes.json(),
+      tvGenresRes.json()
+    ]);
 
     return {
-      movieGenres: combinedGenresList[0]?.genres,
-      tvGenres: combinedGenresList[1]?.genres
+      movieGenres: movieGenresList?.genres || [],
+      tvGenres: tvGenresList?.genres || []
     };
   } catch {
     return {

@@ -70,7 +70,7 @@ const TVDetails = ({
     validateTvWatchlist,
     ratedTvShows
   } = useContext(MediaContext);
-  const { isToastVisible, showToast, toastMessage, setToastMessage } = useToast();
+  const { isToastVisible, showToast, toastMessage } = useToast();
   const savedRating = ratedTvShows?.find((item) => item?.id === id)?.rating ?? false;
   const { isModalVisible, openModal, closeModal } = useModal();
 
@@ -103,13 +103,14 @@ const TVDetails = ({
 
           validateFavoriteTvShows({ state: "added", id, media: updatedMedia });
         }
+        showToast({
+          message: isAddedToFavorites ? "Removed from favorites" : "Added to favorites"
+        });
+      } else {
+        showToast({ message: "Something went wrong, try again later" });
       }
-
-      setToastMessage(isAddedToFavorites ? "Removed from favorites" : "Added to favorites");
-      showToast();
     } else if (!isToastVisible) {
-      setToastMessage("Login first to use this feature");
-      showToast();
+      showToast({ message: "Login first to use this feature" });
     }
   };
 
@@ -136,13 +137,14 @@ const TVDetails = ({
 
           validateTvWatchlist({ state: "added", id, media: updatedMedia });
         }
+        showToast({
+          message: isAddedToWatchlist ? "Removed from watchlist" : "Added to watchlist"
+        });
+      } else {
+        showToast({ message: "Something went wrong, try again later" });
       }
-
-      setToastMessage(isAddedToWatchlist ? "Removed from watchlist" : "Added to watchlist");
-      showToast();
     } else if (!isToastVisible) {
-      setToastMessage("Login first to use this feature");
-      showToast();
+      showToast({ message: "Login first to use this feature" });
     }
   };
 
@@ -150,8 +152,7 @@ const TVDetails = ({
     if (status === "authenticated") {
       openModal();
     } else {
-      setToastMessage("Login first to use this feature");
-      showToast();
+      showToast({ message: "Login first to use this feature" });
     }
   };
 

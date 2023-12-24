@@ -10,7 +10,9 @@ import { ModulesWrapper } from "styles/GlobalComponents";
 import { NetwrokDetailsWrapper, PostersGrid } from "./ExploreStyles";
 
 const NetworkMedia = ({ details, media }) => {
-  const posters = media.map(({ poster_path }) => `https://image.tmdb.org/t/p/w185${poster_path}`);
+  const posters = media.map(({ poster_path }) =>
+    poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"
+  );
 
   const { list } = useInfiniteQuery({
     initialPage: 2,
@@ -39,11 +41,11 @@ const NetworkMedia = ({ details, media }) => {
       <NetwrokDetailsWrapper>
         <PostersGrid className={postersLength <= 10 ? "alt-grid" : ""} colCount={colCount || 10}>
           {postersLength > 0
-            ? posters.map((poster) => (
-                <PostersImg key={poster} className='relative poster-wrapper'>
+            ? posters.map((poster, i) => (
+                <PostersImg key={`item -${i}`} className='relative poster-wrapper'>
                   <Image
                     src={poster}
-                    alt={`${details.name}-poster`}
+                    alt={`${details?.name}-poster`}
                     layout='fill'
                     objectFit='cover'
                     placeholder='blur'
@@ -59,11 +61,11 @@ const NetworkMedia = ({ details, media }) => {
           <div
             className='logo-wrapper m-auto'
             style={{
-              "--aspectRatio": details.images.logos[0].aspect_ratio
+              "--aspectRatio": details?.images?.logos?.[0]?.aspect_ratio
             }}>
             <Image
-              src={`https://image.tmdb.org/t/p/w300_filter(negate,000,666)${details.images.logos[0].file_path}`}
-              alt={`${details.name}-poster`}
+              src={`https://image.tmdb.org/t/p/w300_filter(negate,000,666)${details?.images?.logos?.[0]?.file_path}`}
+              alt={`${details?.name}-poster`}
               layout='fill'
               objectFit='cover'
               loading='eager'
@@ -72,7 +74,7 @@ const NetworkMedia = ({ details, media }) => {
 
           <div className='details-row'>
             <span className='font-bold'>{details.name}</span>
-            {details.headquarters || details.origin_country ? (
+            {details?.headquarters || details?.origin_country ? (
               <div className='flex items-center'>
                 <FaLocationDot className='me-1' size={18} />
                 <span className='font-bold'>{details.headquarters || details.origin_country}</span>
@@ -82,7 +84,7 @@ const NetworkMedia = ({ details, media }) => {
               <div className='flex items-center'>
                 <FaLink className='me-1' size={18} />
                 <a
-                  href={details.homepage}
+                  href={details?.homepage}
                   target='_blank'
                   rel='noopener noreferrer'
                   className='font-bold link'>

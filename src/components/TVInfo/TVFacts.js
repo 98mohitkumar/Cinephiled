@@ -27,7 +27,7 @@ const TVFacts = ({ facts }) => {
 
         <FactsFlexWrapper>
           <Span>Network</Span>
-          {network?.name ? (
+          {network?.id ? (
             <Link href={`/network/${network?.id}-${getCleanTitle(network?.name)}`}>
               <a>
                 <Span className='network font-semibold'>{network?.name}</Span>

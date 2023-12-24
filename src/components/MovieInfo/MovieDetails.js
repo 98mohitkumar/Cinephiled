@@ -77,7 +77,7 @@ const MovieDetails = ({
     validateFavoriteMovies,
     ratedMovies
   } = useContext(MediaContext);
-  const { isToastVisible, showToast, toastMessage, setToastMessage } = useToast();
+  const { isToastVisible, showToast, toastMessage } = useToast();
   const savedRating = ratedMovies?.find((item) => item?.id === id)?.rating ?? false;
   const { isModalVisible, openModal, closeModal } = useModal();
 
@@ -118,12 +118,14 @@ const MovieDetails = ({
           });
         }
 
-        setToastMessage(isAddedToFavorites ? "Removed from favorites" : "Added to favorites");
-        showToast();
+        showToast({
+          message: isAddedToFavorites ? "Removed from favorites" : "Added to favorites"
+        });
+      } else {
+        showToast({ message: "Something went wrong, try again later" });
       }
     } else if (!isToastVisible) {
-      setToastMessage("Login first to use this feature");
-      showToast();
+      showToast({ message: "Login first to use this feature" });
     }
   };
 
@@ -157,13 +159,14 @@ const MovieDetails = ({
             media: updatedMedia
           });
         }
-
-        setToastMessage(isAddedToWatchlist ? "Removed from watchlist" : "Added to watchlist");
-        showToast();
+        showToast({
+          message: isAddedToWatchlist ? "Removed from watchlist" : "Added to watchlist"
+        });
+      } else {
+        showToast({ message: "Something went wrong, try again later" });
       }
     } else if (!isToastVisible) {
-      setToastMessage("Login first to use this feature");
-      showToast();
+      showToast({ message: "Login first to use this feature" });
     }
   };
 
@@ -171,8 +174,7 @@ const MovieDetails = ({
     if (status === "authenticated") {
       openModal();
     } else {
-      setToastMessage("Login first to use this feature");
-      showToast();
+      showToast({ message: "Login first to use this feature" });
     }
   };
 

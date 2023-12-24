@@ -71,6 +71,7 @@ export const AboutContainer = styled.div`
 export const Error404 = styled.h1`
   font-weight: bold;
   font-size: 10rem;
+
   text-align: center;
   background: ${(props) => `linear-gradient(
     90deg,
@@ -89,6 +90,12 @@ export const Error404 = styled.h1`
       filter: hue-rotate(360deg);
       -webkit-filter: hue-rotate(360deg);
     }
+  }
+
+  &:not(.index-page) {
+    min-height: 80vh;
+    display: grid;
+    place-items: center;
   }
 `;
 

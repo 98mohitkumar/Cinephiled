@@ -3,22 +3,20 @@ import { useState } from "react";
 import { ToastWrapper } from "./ToastStyles";
 
 export const useToast = () => {
-  const [isToastVisible, setIsToastVisible] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [toast, setToast] = useState({ message: "", isVisible: false });
 
-  const showToast = ({ duration } = { duration: 2000 }) => {
-    setIsToastVisible(true);
+  const showToast = ({ duration = 2000, message }) => {
+    setToast({ message, isVisible: true });
 
     setTimeout(() => {
-      setIsToastVisible(false);
+      setToast({ message: "", isVisible: false });
     }, duration);
   };
 
   return {
-    isToastVisible,
-    showToast,
-    toastMessage,
-    setToastMessage
+    toastMessage: toast.message,
+    isToastVisible: toast.isVisible,
+    showToast
   };
 };
 

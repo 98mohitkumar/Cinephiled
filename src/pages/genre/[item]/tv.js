@@ -73,7 +73,7 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
               </RecommendationsGrid>
             </Fragment>
           ) : (
-            <NoDataText className='font-bold text-center my-5'>No Tv Shows For Now</NoDataText>
+            <NoDataText className='font-bold text-center my-5'>No TV Shows For Now</NoDataText>
           )}
         </ModulesWrapper>
       )}
@@ -90,26 +90,23 @@ TvShows.getInitialProps = async (ctx) => {
     const genreId = param[0];
     const genreName = param.slice(1, param.length).join("-").replace("&", " & ");
 
-    const response = await fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 1 }));
-    const nextPage = await fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 2 }));
+    const [response, nextPage] = await Promise.all([
+      fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 1 })),
+      fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 2 }))
+    ]);
 
-    const error = response.ok ? false : true;
+    if (!response.ok) throw new Error("error fetching tv shows");
 
-    if (error) {
-      throw new Error("error fetching tv shows");
-    } else {
-      const tvList = await response.json();
-      const secondTvList = await nextPage.json();
+    const [tvList, secondTvList] = await Promise.all([response.json(), nextPage.json()]);
 
-      const renderList = tvList["results"].concat(secondTvList.results);
+    const renderList = tvList["results"].concat(secondTvList.results);
 
-      return {
-        renderList,
-        genreName,
-        genreId,
-        error
-      };
-    }
+    return {
+      renderList,
+      genreName,
+      genreId,
+      error: false
+    };
   } catch {
     return {
       error: true

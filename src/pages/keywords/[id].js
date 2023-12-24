@@ -68,7 +68,7 @@ const Keyword = ({ error, results, name, id }) => {
               </Fragment>
             ) : (
               <EmptySearch className='text-[calc(1.425rem_+_2.1vw)] xl:text-5xl text-center'>
-                No movie results for this keyword.
+                No Movie results for this keyword.
               </EmptySearch>
             )}
           </SearchResultsContainer>

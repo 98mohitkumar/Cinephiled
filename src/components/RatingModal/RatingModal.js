@@ -1,5 +1,6 @@
 import { useDeleteRating, useSetRating } from "api/user";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import { useToast } from "components/Toast/Toast";
 import { motion } from "framer-motion";
 import { useState, useContext, Fragment } from "react";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
@@ -42,6 +43,7 @@ const RatingModal = ({
   const { deleteRating } = useDeleteRating();
   const { ratedMovies, ratedTvShows, validateRatedMovies, validateRatedTvShows } =
     useContext(MediaContext);
+  const { showToast } = useToast();
 
   const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -96,6 +98,8 @@ const RatingModal = ({
             media: updatedRatedTvShows
           });
         }
+      } else {
+        showToast({ message: "Something went wrong, please try again later" });
       }
     }
     closeModal();

@@ -137,7 +137,7 @@ const Favorites = () => {
                     </CardsContainerGrid>
                   ) : (
                     <NoDataText className='font-bold text-center my-5'>
-                      No movies marked as favorite yet
+                      No Movies marked as favorite yet
                     </NoDataText>
                   )}
                 </motion.div>
