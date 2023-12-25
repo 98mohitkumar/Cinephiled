@@ -110,9 +110,16 @@ export const apiEndpoints = {
     personDetails: (id) =>
       `${baseUrlV3}/person/${id}?api_key=${api_key}&language=en-US&append_to_response=combined_credits,external_ids,images`
   },
-  providers: {
-    watchProviders: ({ region }) =>
-      `${baseUrlV3}/watch/providers/movie?language=en-US&watch_region=${region}&api_key=${api_key}`
+  watchProviders: {
+    movieWatchProviders: ({ region }) =>
+      `${baseUrlV3}/watch/providers/movie?language=en-US&watch_region=${region}&api_key=${api_key}`,
+    tvWatchProviders: ({ region }) =>
+      `${baseUrlV3}/watch/providers/tv?language=en-US&watch_region=${region}&api_key=${api_key}`,
+    watchProviderMovies: ({ region, pageQuery, providerId }) =>
+      `${baseUrlV3}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&watch_region=${region}&with_watch_providers=${providerId}&api_key=${api_key}`,
+    watchProviderTv: ({ region, pageQuery, providerId }) =>
+      `${baseUrlV3}/discover/tv?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&watch_region=${region}&with_watch_providers=${providerId}&api_key=${api_key}`,
+    regions: `${baseUrlV3}/watch/providers/regions?api_key=${api_key}`
   },
   network: {
     networkDetails: (id) =>

@@ -1,10 +1,10 @@
-import { useAddToWatchlist } from "api/user";
+import { addToWatchlist } from "api/user";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { useModal } from "components/RatingModal/RatingModal";
 import { motion, AnimatePresence } from "framer-motion";
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import { framerTabVariants, getReleaseYear } from "src/utils/helper";
-import { MediaContext } from "Store/MediaContext";
+import { useMediaContext } from "Store/MediaContext";
 import { Loader, NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
@@ -78,8 +78,7 @@ const Watchlist = () => {
     tvShowsWatchlistLoading,
     validateMoviesWatchlist,
     validateTvWatchlist
-  } = useContext(MediaContext);
-  const { addToWatchlist } = useAddToWatchlist();
+  } = useMediaContext();
 
   const filterMedia = async ({ id, type }) => {
     const response = await addToWatchlist({

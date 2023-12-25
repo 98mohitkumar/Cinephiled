@@ -1,11 +1,11 @@
-import { useDeleteRating, useSetRating } from "api/user";
+import { deleteRating, setRating } from "api/user";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import { useToast } from "components/Toast/Toast";
 import { motion } from "framer-motion";
-import { useState, useContext, Fragment } from "react";
+import { useState, Fragment } from "react";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { framerTabVariants } from "src/utils/helper";
-import { MediaContext } from "Store/MediaContext";
+import { useMediaContext } from "Store/MediaContext";
 import {
   RatingButton,
   RatingCard,
@@ -39,10 +39,8 @@ const RatingModal = ({
   title
 }) => {
   const [rating, updateRating] = useState(0);
-  const { setRating } = useSetRating();
-  const { deleteRating } = useDeleteRating();
   const { ratedMovies, ratedTvShows, validateRatedMovies, validateRatedTvShows } =
-    useContext(MediaContext);
+    useMediaContext();
   const { showToast } = useToast();
 
   const [showConfirmation, setShowConfirmation] = useState(false);

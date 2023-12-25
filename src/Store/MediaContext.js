@@ -1,7 +1,17 @@
 import useFetchAllPages from "hooks/useFetchAllPages";
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
-export const MediaContext = createContext();
+const MediaContext = createContext({});
+
+export const useMediaContext = () => {
+  const context = useContext(MediaContext);
+
+  if (context === undefined) {
+    throw new Error("useMediaContext must be used within MediaContextProvider");
+  }
+
+  return context;
+};
 
 const MediaContextProvider = ({ children }) => {
   const {

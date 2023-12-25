@@ -10,7 +10,7 @@ const Explore = ({ movieGenres, tvGenres, error }) => {
     <Fragment>
       <MetaWrapper
         title={error ? "Not Found - Not Found - Cinephiled" : "Explore - Cinephiled"}
-        description="Explore different genres of movies and tv shows. Find out what's playing in theatres near you."
+        description="Embark on a cinematic journey through diverse genres of movies and TV shows. Uncover the latest releases and discover what's currently captivating audiences in theaters near you."
         url='https://cinephiled.vercel.app/explore'
       />
 

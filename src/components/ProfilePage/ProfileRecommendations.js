@@ -1,14 +1,14 @@
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { motion, AnimatePresence } from "framer-motion";
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import { framerTabVariants, removeDuplicates } from "src/utils/helper";
-import { MediaContext } from "Store/MediaContext";
+import { useMediaContext } from "Store/MediaContext";
 import { Loader, NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
 
 const MovieRecommendations = () => {
-  const { movieRecommendations } = useContext(MediaContext);
+  const { movieRecommendations } = useMediaContext();
   const { cleanedItems } = removeDuplicates(movieRecommendations);
 
   return (
@@ -32,7 +32,7 @@ const MovieRecommendations = () => {
 };
 
 const TvRecommendations = () => {
-  const { tvRecommendations } = useContext(MediaContext);
+  const { tvRecommendations } = useMediaContext();
   const { cleanedItems } = removeDuplicates(tvRecommendations);
 
   return (
@@ -56,7 +56,7 @@ const TvRecommendations = () => {
 };
 
 const ProfileRecommendations = () => {
-  const { movieRecommendationsLoading, tvRecommendationsLoading } = useContext(MediaContext);
+  const { movieRecommendationsLoading, tvRecommendationsLoading } = useMediaContext();
   return (
     <Fragment>
       {movieRecommendationsLoading || tvRecommendationsLoading ? (

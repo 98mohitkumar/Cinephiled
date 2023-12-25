@@ -1,7 +1,6 @@
 import { getFavorites, getRated, getRecommendations, getWatchlist } from "api/user";
-import { useSession } from "next-auth/react";
-import { useState, useEffect, useCallback, useContext } from "react";
-import { UserContext } from "Store/UserContext";
+import { useState, useEffect, useCallback } from "react";
+import { useUserContext } from "Store/UserContext";
 
 const endpoints = {
   watchlist: getWatchlist,
@@ -11,8 +10,7 @@ const endpoints = {
 };
 
 const useFetchAllPages = ({ endpoint, mediaType }) => {
-  const { data } = useSession();
-  const { userInfo } = useContext(UserContext);
+  const { userInfo } = useUserContext();
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -22,13 +20,11 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
       const fetcher = endpoints[endpoint];
       if (!fetcher) throw new Error("Invalid endpoint");
 
-      if (userInfo?.id && data?.user?.sessionId) {
+      if (userInfo?.accountId && userInfo?.sessionId) {
         setLoading(true);
         const response = await fetcher({
           mediaType,
-          pageQuery: page,
-          accountId: userInfo?.accountId,
-          sessionId: data?.user?.sessionId
+          pageQuery: page
         });
 
         const { total_pages, results } = response;
@@ -40,12 +36,15 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
         } else {
           setLoading(false);
         }
+      } else {
+        setMedia([]);
+        setLoading(false);
       }
     } catch {
       setMedia([]);
       setLoading(false);
     }
-  }, [data?.user?.sessionId, endpoint, mediaType, page, userInfo?.accountId, userInfo?.id]);
+  }, [endpoint, mediaType, page, userInfo?.accountId, userInfo?.sessionId]);
 
   const revalidateAllPages = () => {
     setMedia([]);

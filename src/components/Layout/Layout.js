@@ -7,7 +7,7 @@ import { DetailsWrapper, Wrapper } from "./LayoutStyles";
 
 const Layout = ({ children }) => {
   const router = useRouter();
-  const footerValidPaths = ["/", "/about", "/login"];
+  const footerValidPaths = ["/", "/about", "/login", "/watch-providers"];
 
   return (
     <Wrapper

@@ -1,4 +1,4 @@
-import { useAddToWatchlist, useSetFavorite } from "api/user";
+import { setFavorite, addToWatchlist } from "api/user";
 import DominantColor from "components/DominantColor/DominantColor";
 import {
   Credits,
@@ -24,14 +24,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { BiListPlus, BiListCheck } from "react-icons/bi";
 import { BsStarHalf } from "react-icons/bs";
 import { FaYoutube, FaHeart, FaRegHeart } from "react-icons/fa";
 import { framerTabVariants, getCleanTitle, getRating, getRuntime } from "src/utils/helper";
-import { MediaContext } from "Store/MediaContext";
+import { useMediaContext } from "Store/MediaContext";
+import { useUserContext } from "Store/UserContext";
 import {
   DetailsHeroWrap,
   HeroBg,
@@ -60,16 +60,14 @@ const TVDetails = ({
     releaseYear
   }
 }) => {
-  const { status } = useSession();
-  const { setFavorite } = useSetFavorite();
-  const { addToWatchlist } = useAddToWatchlist();
+  const { userInfo } = useUserContext();
   const {
     favoriteTvShows,
     tvShowsWatchlist,
     validateFavoriteTvShows,
     validateTvWatchlist,
     ratedTvShows
-  } = useContext(MediaContext);
+  } = useMediaContext();
   const { isToastVisible, showToast, toastMessage } = useToast();
   const savedRating = ratedTvShows?.find((item) => item?.id === id)?.rating ?? false;
   const { isModalVisible, openModal, closeModal } = useModal();
@@ -81,7 +79,7 @@ const TVDetails = ({
   const isAddedToWatchlist = tvShowsWatchlist?.map((item) => item.id)?.includes(id);
 
   const favoriteHandler = async () => {
-    if (status === "authenticated") {
+    if (userInfo?.accountId) {
       const response = await setFavorite({
         mediaType: "tv",
         mediaId: id,
@@ -115,7 +113,7 @@ const TVDetails = ({
   };
 
   const watchlistHandler = async () => {
-    if (status === "authenticated") {
+    if (userInfo?.accountId) {
       const response = await addToWatchlist({
         mediaType: "tv",
         mediaId: id,
@@ -149,7 +147,7 @@ const TVDetails = ({
   };
 
   const ratingModalHandler = () => {
-    if (status === "authenticated") {
+    if (userInfo?.accountId) {
       openModal();
     } else {
       showToast({ message: "Login first to use this feature" });

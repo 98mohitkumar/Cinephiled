@@ -1,9 +1,9 @@
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import RatingModal, { useModal } from "components/RatingModal/RatingModal";
 import { AnimatePresence, motion } from "framer-motion";
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import { framerTabVariants, getReleaseYear } from "src/utils/helper";
-import { MediaContext } from "Store/MediaContext";
+import { useMediaContext } from "Store/MediaContext";
 import { Loader, NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
@@ -42,8 +42,7 @@ const RatingCTA = ({ mediaData }) => {
 };
 
 const Ratings = () => {
-  const { ratedMovies, ratedTvShows, ratedMoviesLoading, ratedTvShowsLoading } =
-    useContext(MediaContext);
+  const { ratedMovies, ratedTvShows, ratedMoviesLoading, ratedTvShowsLoading } = useMediaContext();
   return (
     <Fragment>
       {ratedMoviesLoading || ratedTvShowsLoading ? (

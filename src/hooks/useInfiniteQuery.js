@@ -6,7 +6,9 @@ const useInfiniteQuery = ({
   type,
   genreId = null,
   searchQuery = null,
-  networkId = null
+  networkId = null,
+  providerId = null,
+  region = null
 }) => {
   const [pageToFetch, setPageToFetch] = useState(initialPage);
   const [extendedList, setExtendedList] = useState([]);
@@ -33,9 +35,19 @@ const useInfiniteQuery = ({
         query: searchQuery,
         pageQuery: pageToFetch
       }),
-      networkMedia: apiEndpoints.network.networkMedia({ id: networkId, pageQuery: pageToFetch })
+      networkMedia: apiEndpoints.network.networkMedia({ id: networkId, pageQuery: pageToFetch }),
+      providerMovies: apiEndpoints.watchProviders.watchProviderMovies({
+        providerId,
+        region,
+        pageQuery: pageToFetch
+      }),
+      providerTv: apiEndpoints.watchProviders.watchProviderTv({
+        providerId,
+        region,
+        pageQuery: pageToFetch
+      })
     }),
-    [genreId, networkId, pageToFetch, searchQuery]
+    [genreId, networkId, pageToFetch, providerId, region, searchQuery]
   );
 
   useEffect(() => {

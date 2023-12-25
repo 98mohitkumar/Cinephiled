@@ -1,4 +1,4 @@
-import { useAddToWatchlist, useSetFavorite } from "api/user";
+import { addToWatchlist, setFavorite } from "api/user";
 import DominantColor from "components/DominantColor/DominantColor";
 import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
 import RatingModal, { useModal } from "components/RatingModal/RatingModal";
@@ -8,14 +8,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { BiListPlus, BiListCheck } from "react-icons/bi";
 import { BsStarHalf } from "react-icons/bs";
 import { FaYoutube, FaHeart, FaRegHeart } from "react-icons/fa";
 import { framerTabVariants, getCleanTitle, getRating, getRuntime } from "src/utils/helper";
-import { MediaContext } from "Store/MediaContext";
+import { useMediaContext } from "Store/MediaContext";
+import { useUserContext } from "Store/UserContext";
 import {
   DetailsHeroWrap,
   HeroBg,
@@ -66,9 +66,7 @@ const MovieDetails = ({
   },
   easter
 }) => {
-  const { status } = useSession();
-  const { setFavorite } = useSetFavorite();
-  const { addToWatchlist } = useAddToWatchlist();
+  const { userInfo } = useUserContext();
   const { renderEaster, hasSeen, showEaster, easterHandler } = easter;
   const {
     favoriteMovies,
@@ -76,7 +74,7 @@ const MovieDetails = ({
     validateMoviesWatchlist,
     validateFavoriteMovies,
     ratedMovies
-  } = useContext(MediaContext);
+  } = useMediaContext();
   const { isToastVisible, showToast, toastMessage } = useToast();
   const savedRating = ratedMovies?.find((item) => item?.id === id)?.rating ?? false;
   const { isModalVisible, openModal, closeModal } = useModal();
@@ -88,7 +86,7 @@ const MovieDetails = ({
   const isAddedToFavorites = favoriteMovies?.map((item) => item.id)?.includes(id);
 
   const favoriteHandler = async () => {
-    if (status === "authenticated") {
+    if (userInfo?.accountId) {
       const response = await setFavorite({
         mediaType: "movie",
         mediaId: id,
@@ -130,7 +128,7 @@ const MovieDetails = ({
   };
 
   const watchlistHandler = async () => {
-    if (status === "authenticated") {
+    if (userInfo?.accountId) {
       const response = await addToWatchlist({
         mediaType: "movie",
         mediaId: id,
@@ -171,7 +169,7 @@ const MovieDetails = ({
   };
 
   const ratingModalHandler = () => {
-    if (status === "authenticated") {
+    if (userInfo?.accountId) {
       openModal();
     } else {
       showToast({ message: "Login first to use this feature" });

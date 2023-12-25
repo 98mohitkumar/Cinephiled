@@ -1,8 +1,8 @@
 import { apiEndpoints } from "globals/constants";
 import { useRouter } from "next/router";
-import { useSession, signOut } from "next-auth/react";
-import { useContext, useState } from "react";
-import { UserContext } from "Store/UserContext";
+import { signOut } from "next-auth/react";
+import { useState } from "react";
+import { useUserContext } from "Store/UserContext";
 
 // login hook
 export const useLogin = () => {
@@ -10,12 +10,13 @@ export const useLogin = () => {
   const [error, setError] = useState({ error: false, message: "" });
 
   const clearError = () => {
-    setError((prev) => ({ ...prev, error: false }));
+    setError({ error: false, message: "" });
   };
 
   const login = async () => {
     setIsWaiting(true);
     clearError();
+
     // generate temporary token (validity: 15 mins)
     const requestTokenRes = await fetch(apiEndpoints.auth.requestToken, {
       method: "POST",
@@ -53,8 +54,7 @@ export const useLogin = () => {
 // logout hook
 export const useLogout = () => {
   const router = useRouter();
-  const { data } = useSession();
-  const { setUserInfo } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useUserContext();
 
   const logout = async () => {
     const res = await fetch(apiEndpoints.auth.logout, {
@@ -62,7 +62,7 @@ export const useLogout = () => {
       headers: {
         "content-type": "application/json;charset=utf-8"
       },
-      body: JSON.stringify({ session_id: data?.user?.sessionId })
+      body: JSON.stringify({ session_id: userInfo?.sessionId })
     });
 
     await fetch(apiEndpoints.auth.accessToken, {
@@ -73,13 +73,12 @@ export const useLogout = () => {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_READ_ACCESS_TOKEN}`
       },
       body: JSON.stringify({
-        access_token: data?.user?.accessToken
+        access_token: userInfo?.accessToken
       })
     });
 
-    await signOut({ redirect: false });
-
     if (res.ok && res.status === 200) {
+      await signOut({ redirect: false });
       setUserInfo({});
       router.push("/login");
     }
