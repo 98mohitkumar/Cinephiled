@@ -1,50 +1,32 @@
-import Vibrant from "node-vibrant";
-import { useEffect, useReducer } from "react";
-
-async function getPalette(src) {
-  const palette = await Vibrant.from(src).getPalette();
-
-  return Object.entries(palette).reduce(
-    (acc, [key, value]) => ({ ...acc, [key.charAt(0).toLowerCase() + key.slice(1)]: value.hex }),
-    {}
-  );
-}
-
-const initialState = {
-  loading: true,
-  data: {},
-  error: undefined
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "getPalette":
-      return initialState;
-    case "resolvePalette":
-      return { ...state, data: action.payload, loading: false };
-    case "rejectPalette":
-      return { ...state, error: action.payload, loading: false };
-  }
-}
+import { extractColorsFromSrc } from "extract-colors";
+import { useEffect, useState } from "react";
 
 export function usePalette(src) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [palette, setPalette] = useState({ palette: [], done: false });
 
   useEffect(() => {
-    dispatch({ type: "getPalette" });
+    if (!src) {
+      setPalette({ palette: [], done: true });
+      return;
+    }
 
-    getPalette(src)
-      .then((palette) => {
-        dispatch({ type: "resolvePalette", payload: palette });
+    extractColorsFromSrc(src, {
+      crossOrigin: "anonymous"
+    })
+      .then((colors) => {
+        setPalette({
+          palette: colors.sort((a, b) => (b.hue - a.hue ? 1 : -1)).map(({ hex }) => hex),
+          done: true
+        });
       })
-      .catch((ex) => {
-        dispatch({ type: "rejectPalette", payload: ex });
+      .catch(() => {
+        setPalette({ palette: [], done: true });
       });
 
     return () => {
-      dispatch({ type: "getPalette" });
+      setPalette({ palette: [], done: true });
     };
   }, [src]);
 
-  return state;
+  return palette;
 }

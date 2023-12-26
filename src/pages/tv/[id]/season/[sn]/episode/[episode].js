@@ -10,7 +10,13 @@ import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { getRating, getReleaseDate, getReleaseYear, getRuntime } from "src/utils/helper";
+import {
+  getCleanTitle,
+  getRating,
+  getReleaseDate,
+  getReleaseYear,
+  getRuntime
+} from "src/utils/helper";
 import {
   EpisodeInfoWrapper,
   EpisodeShowCaseWrapper,
@@ -126,9 +132,7 @@ const Episode = ({
                 <CastGrid className='justify-start'>
                   {cast.map((item) => (
                     <CastWrapper key={item.name}>
-                      <Link
-                        href={`/person/${item.id}-${item.name.replace(/[' ']/g, "-")}`}
-                        passHref>
+                      <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`} passHref>
                         <a>
                           <motion.div
                             whileHover={{
@@ -188,45 +192,41 @@ export default Episode;
 
 Episode.getInitialProps = async (ctx) => {
   try {
-    const response = await fetch(
-      apiEndpoints.tv.episodeDetails({
-        id: ctx.query.id,
-        seasonNumber: ctx.query.sn,
-        episodeNumber: ctx.query.episode
-      })
-    );
-
-    const tvRes = await fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id));
-
-    const error = response.ok ? false : true;
-
-    if (error) {
-      throw Error("cannot fetch data");
-    } else {
-      const res = await response.json();
-      const tvData = await tvRes.json();
-
-      const { cast, guest_stars } = res?.credits;
-
-      return {
-        error,
-        releaseDate: res?.air_date,
-        overview: res?.overview,
-        cast: cast.concat(guest_stars) || [],
-        seasonNumber: res?.season_number,
-        episodeNumber: res?.episode_number,
-        episodeName: res?.name,
-        rating: res?.vote_average,
-        backdrop: res?.still_path,
-        runtime: res?.runtime,
-        posters: res?.images?.stills,
-        tvData: {
+    const [response, tvRes] = await Promise.all([
+      fetch(
+        apiEndpoints.tv.episodeDetails({
           id: ctx.query.id,
-          name: tvData?.name,
-          airDate: tvData?.first_air_date
-        }
-      };
-    }
+          seasonNumber: ctx.query.sn,
+          episodeNumber: ctx.query.episode
+        })
+      ),
+      fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id))
+    ]);
+
+    if (!response.ok) throw new Error("error fetching details");
+
+    const [res, tvData] = await Promise.all([response.json(), tvRes.json()]);
+
+    const { cast, guest_stars } = res?.credits;
+
+    return {
+      error: false,
+      releaseDate: res?.air_date,
+      overview: res?.overview,
+      cast: cast.concat(guest_stars) || [],
+      seasonNumber: res?.season_number,
+      episodeNumber: res?.episode_number,
+      episodeName: res?.name,
+      rating: res?.vote_average,
+      backdrop: res?.still_path,
+      runtime: res?.runtime,
+      posters: res?.images?.stills,
+      tvData: {
+        id: ctx.query.id,
+        name: tvData?.name,
+        airDate: tvData?.first_air_date
+      }
+    };
   } catch {
     return { error: true };
   }

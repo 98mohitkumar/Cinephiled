@@ -1,5 +1,6 @@
 import Genres from "components/Explore/Genres";
 import NowPlayingMovies from "components/Explore/NowPlayingMovies";
+import StreamingProvides from "components/Explore/Providers";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
@@ -10,7 +11,7 @@ const Explore = ({ movieGenres, tvGenres, error }) => {
     <Fragment>
       <MetaWrapper
         title={error ? "Not Found - Not Found - Cinephiled" : "Explore - Cinephiled"}
-        description="Explore different genres of movies and tv shows. Find out what's playing in theatres near you."
+        description="Embark on a cinematic journey through diverse genres of movies and TV shows. Uncover the latest releases and discover what's currently captivating audiences in theaters near you."
         url='https://cinephiled.vercel.app/explore'
       />
 
@@ -21,6 +22,10 @@ const Explore = ({ movieGenres, tvGenres, error }) => {
           {/* genres for movies and tv shows */}
           <LayoutContainer className='mb-auto'>
             <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
+          </LayoutContainer>
+
+          <LayoutContainer className='mt-8'>
+            <StreamingProvides />
           </LayoutContainer>
 
           {/* movies that are currently in theatres */}
@@ -38,12 +43,19 @@ Explore.getInitialProps = async () => {
       fetch(apiEndpoints.tv.tvGenreList)
     ]);
 
-    if (!genres[0].ok || !genres[1].ok) throw new Error("Failed to fetch genres");
-    const combinedGenresList = await Promise.all(genres.map((res) => res.json()));
+    const error = genres.some((res) => !res.ok);
+
+    if (error) throw new Error("Failed to fetch genres");
+
+    const [movieGenresRes, tvGenresRes] = genres;
+    const [movieGenresList, tvGenresList] = await Promise.all([
+      movieGenresRes.json(),
+      tvGenresRes.json()
+    ]);
 
     return {
-      movieGenres: combinedGenresList[0]?.genres,
-      tvGenres: combinedGenresList[1]?.genres
+      movieGenres: movieGenresList?.genres || [],
+      tvGenres: tvGenresList?.genres || []
     };
   } catch {
     return {

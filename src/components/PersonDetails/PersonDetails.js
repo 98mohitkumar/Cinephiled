@@ -6,7 +6,7 @@ import { PostersImg, PostersWrapper } from "components/Posters/PostersStyles";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
-import { Fragment, useMemo } from "react";
+import { Fragment } from "react";
 import { getGender } from "src/utils/helper";
 import {
   DetailsHeroWrap,
@@ -27,6 +27,7 @@ const PersonDetails = ({ details }) => {
     })) || [];
   const crew = details?.combined_credits?.crew || [];
   const combinedCredits = casting?.concat(crew)?.sort((a, z) => z.vote_count - a.vote_count);
+
   const movieCredits = combinedCredits.filter((item) => item.media_type === "movie");
   const tvCredits = combinedCredits.filter((item) => item.media_type === "tv");
 
@@ -47,25 +48,18 @@ const PersonDetails = ({ details }) => {
     }
   };
 
-  const selectedItem = useMemo(() => {
-    const filtered = combinedCredits.filter((item) => item.poster_path);
-    const randomIndex = Math.floor(Math.random() * filtered.length);
-
-    return filtered[randomIndex];
-  }, [combinedCredits]);
-
   return (
     <div className='mb-auto'>
       <HeroDetailsContainer className='relative mb-auto person-details'>
-        <DominantColor tint isUsingBackdrop flip image={selectedItem?.poster_path} />
+        <DominantColor tint flip image={combinedCredits[0]?.poster_path} />
         <div className='relative z-10'>
           <DetailsHeroWrap style={{ minHeight: "auto" }} className='pb-0'>
             <HeroImgWrapper>
               <HeroImg className='no-shadow relative text-center'>
                 <Image
                   src={
-                    details.profile_path
-                      ? `https://image.tmdb.org/t/p/w500${details.profile_path}`
+                    details?.profile_path
+                      ? `https://image.tmdb.org/t/p/w500${details?.profile_path}`
                       : "/Images/DefaultImage.png"
                   }
                   alt='cast-image'

@@ -96,3 +96,15 @@ export const removeDuplicates = (items) => {
 
   return { cleanedItems };
 };
+
+export const framerTabVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 }
+};
+
+export const getCleanTitle = (title) => {
+  if (!title) return "";
+
+  const stringWithHyphens = title.replace(/[^\w\d]+/g, "-");
+  return stringWithHyphens.replace(/[-\s]+$/, "");
+};

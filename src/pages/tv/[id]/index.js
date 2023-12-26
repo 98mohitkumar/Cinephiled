@@ -6,11 +6,12 @@ import TVFacts from "components/TVInfo/TVFacts";
 import TVTab from "components/TVInfo/TVTab";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
-import { getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
+import { getCleanTitle, getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const TvShow = ({
   id,
+  airDate,
   title,
   status,
   type,
@@ -45,7 +46,7 @@ const TvShow = ({
         }
         description={overview}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
-        url={`https://cinephiled.vercel.app/tv/${id}-${title?.replace(/[' ', '/']/g, "-")}`}
+        url={`https://cinephiled.vercel.app/tv/${id}-${getCleanTitle(title)}`}
       />
 
       {error ? (
@@ -56,6 +57,7 @@ const TvShow = ({
           <TVDetails
             tvData={{
               id,
+              airDate,
               title,
               runtime,
               genres,
@@ -104,73 +106,74 @@ const TvShow = ({
 
 TvShow.getInitialProps = async (ctx) => {
   try {
-    const tvResponse = await fetch(apiEndpoints.tv.tvDetails(ctx.query.id));
-    const languagesResponse = await fetch(apiEndpoints.language);
-    const error = tvResponse.ok ? false : true;
+    const [tvResponse, languagesResponse] = await Promise.all([
+      fetch(apiEndpoints.tv.tvDetails(ctx.query.id)),
+      fetch(apiEndpoints.language)
+    ]);
 
-    if (error) {
-      throw new Error("error fetching details");
-    } else {
-      const tvData = await tvResponse.json();
-      const languages = await languagesResponse.json();
-      const releaseYear = getReleaseYear(tvData?.first_air_date);
-      const endYear =
-        tvData?.status === "Ended" || tvData.status === "Canceled"
-          ? new Date(tvData?.last_air_date).getFullYear()
-          : "";
+    if (!tvResponse.ok) throw new Error("error fetching details");
 
-      const language = languages.filter((item) => item.iso_639_1 === tvData.original_language);
+    const [tvData, languages] = await Promise.all([tvResponse.json(), languagesResponse.json()]);
 
-      const status = tvData?.status || "TBA";
-      const network = tvData.networks?.[0] || "TBA";
-      const crewData = [
-        ...tvData?.created_by?.slice(0, 2),
-        ...tvData?.aggregate_credits?.crew
-          ?.filter((credit) => credit.job === "Characters")
-          .slice(0, 2)
-      ];
+    const releaseYear = getReleaseYear(tvData?.first_air_date);
+    const endYear =
+      tvData?.status === "Ended" || tvData.status === "Canceled"
+        ? new Date(tvData?.last_air_date).getFullYear()
+        : "";
 
-      const trailers = tvData?.videos?.results?.filter(
-        (item) =>
-          item?.site === "YouTube" && (item?.type === "Trailer" || item.type === "Opening Credits")
-      );
+    const language = languages.find((item) => item.iso_639_1 === tvData.original_language);
 
-      return {
-        id: tvData?.id,
-        title: tvData?.name,
-        releaseYear,
-        genres: tvData?.genres,
-        runtime: tvData?.episode_run_time?.[0],
-        tagline: tvData?.tagline,
-        overview: tvData?.overview,
-        rating: tvData?.vote_average,
-        posterPath: tvData?.poster_path,
-        backdropPath: tvData?.backdrop_path,
-        crewData,
-        trailerLink: trailers?.[0]?.key ?? "",
-        socialIds: tvData?.external_ids,
-        homepage: tvData?.homepage,
-        status,
-        language: language?.[0]?.english_name,
-        network,
-        type: tvData?.type,
-        endYear,
-        cast: {
-          totalCount: tvData?.aggregate_credits?.cast?.length,
-          data: mergeEpisodeCount(
-            tvData?.aggregate_credits?.cast
-              ?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
-              .flat()
-          ).slice(0, 15)
-        },
-        seasons: tvData?.seasons,
-        reviews: tvData?.reviews?.results ?? [],
-        backdrops: tvData?.images?.backdrops ?? [],
-        posters: tvData?.images?.posters ?? [],
-        recommendations: tvData?.recommendations?.results,
-        error
-      };
-    }
+    const status = tvData?.status || "TBA";
+    const network = tvData.networks?.[0] || "TBA";
+    const crewData = [
+      ...tvData?.created_by?.slice(0, 2),
+      ...tvData?.aggregate_credits?.crew
+        ?.filter((credit) => credit.job === "Characters")
+        .slice(0, 2)
+    ];
+
+    const trailer = tvData?.videos?.results?.find(
+      (item) =>
+        item?.site === "YouTube" && (item?.type === "Trailer" || item.type === "Opening Credits")
+    );
+
+    return {
+      id: tvData?.id,
+      title: tvData?.name,
+      airDate: tvData?.first_air_date,
+      releaseYear,
+      genres: tvData?.genres,
+      runtime: tvData?.episode_run_time?.[0],
+      tagline: tvData?.tagline,
+      overview: tvData?.overview,
+      rating: tvData?.vote_average,
+      posterPath: tvData?.poster_path,
+      backdropPath: tvData?.backdrop_path,
+      crewData,
+      trailerLink: trailer?.key ?? "",
+      socialIds: tvData?.external_ids,
+      homepage: tvData?.homepage,
+      status,
+      language: language?.english_name || language?.name || "TBA",
+      network,
+      type: tvData?.type,
+      endYear,
+      cast: {
+        totalCount: tvData?.aggregate_credits?.cast?.length,
+        data: mergeEpisodeCount(
+          tvData?.aggregate_credits?.cast
+            ?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
+            .flat()
+        ).slice(0, 15)
+      },
+      seasons: tvData?.seasons,
+      reviews: tvData?.reviews?.results ?? [],
+      backdrops: tvData?.images?.backdrops ?? [],
+      posters: tvData?.images?.posters ?? [],
+      recommendations: tvData?.recommendations?.results,
+      error: false,
+      tvData
+    };
   } catch {
     return { error: true };
   }

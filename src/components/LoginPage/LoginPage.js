@@ -39,24 +39,6 @@ const LoginPage = () => {
     }
   }, [router, setError, setIsWaiting]);
 
-  // form submission handler
-  // const formHandler = async (e) => {
-  //   e.preventDefault();
-  //   setIsWaiting(true);
-  //   const formData = new FormData(e.target);
-
-  //   const payload = {
-  //     username: formData.get("username"),
-  //     password: formData.get("password")
-  //   };
-
-  //   if (payload?.username.trim().length > 0 && payload?.password.trim().length > 0) {
-  //     await login({ withCredentials: true, payload });
-  //   } else {
-  //     e.target.reset();
-  //   }
-  // };
-
   return (
     <Fragment>
       <MetaWrapper
@@ -109,10 +91,6 @@ const LoginPage = () => {
               </LoginText>
 
               <div className='flex flex-col items-center'>
-                {/* <LoginButton onClick={() => setShowForm(true)}>
-                      Login with credentials
-                    </LoginButton> */}
-
                 <LoginButton onClick={login} className='secondary' isWaiting={isWaiting}>
                   {isWaiting ? "Authenticating..." : "Login with TMDB"}
                 </LoginButton>
@@ -120,92 +98,6 @@ const LoginPage = () => {
                 {error && <p className='text-red-500 m-0 pt-3'>{errorMessage}</p>}
               </div>
             </div>
-
-            {/* <AnimatePresence exitBeforeEnter>
-              {showForm && (
-                <motion.div
-                  initial={{ display: "none", opacity: 0 }}
-                  animate={{
-                    opacity: 1,
-                    display: "block",
-                    transition: {
-                      type: "tween",
-                      delay: 0.6,
-                      duration: 0.6,
-                      ease: [0.77, 0, 0.175, 1]
-                    }
-                  }}
-                  exit={{
-                    opacity: 0,
-                    transition: {
-                      type: "tween",
-                      duration: 0.6,
-                      ease: [0.77, 0, 0.175, 1]
-                    }
-                  }}
-                  className='w-full'>
-                  <form onSubmit={formHandler}>
-                    <div className='mb-3'>
-                      <input
-                        type='text'
-                        className='form-control loginInputs'
-                        name='username'
-                        id='username'
-                        placeholder='Username'
-                        onChange={() => {
-                          clearError();
-                          setIsWaiting(false);
-                        }}
-                        required
-                      />
-                    </div>
-
-                    <div className='mb-4'>
-                      <input
-                        type='password'
-                        name='password'
-                        className='form-control loginInputs'
-                        id='password'
-                        placeholder='Password'
-                        onChange={() => {
-                          clearError();
-                          setIsWaiting(false);
-                        }}
-                        required
-                      />
-                    </div>
-
-                    {error && <p className='text-danger mb-3'>{errorMessage}</p>}
-
-                    <LoginButton
-                      type='submit'
-                      className='login-with-cred-Button mb-2'
-                      isWaiting={isWaiting && !error}>
-                      {isWaiting && !error ? "Authenticating..." : "Login"}
-                    </LoginButton>
-
-                    <LoginButton
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setShowForm(false);
-                      }}
-                      className='login-with-cred-Button secondary'>
-                      Go Back
-                    </LoginButton>
-
-                    <p className='text-center mb-0 mt-3'>
-                      <a
-                        href='https://www.themoviedb.org/signup'
-                        target='_blank'
-                        rel='noreferrer'
-                        className='signup'>
-                        Don&apos;t have a TMDB account?
-                      </a>
-                    </p>
-                  </form>
-                </motion.div>
-              )}
-            </AnimatePresence> */}
           </div>
         </LoginCard>
       </LoginContainer>

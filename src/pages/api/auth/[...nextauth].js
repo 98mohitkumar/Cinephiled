@@ -4,13 +4,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
   providers: [
-    // CredentialsProvider({
-    //   id: "credentials",
-    //   name: "credentials",
-    //   authorize: async (payload) => {
-    //     return await credentialsAuth(payload);
-    //   }
-    // }),
     CredentialsProvider({
       id: "tmdb",
       name: "tmdb",

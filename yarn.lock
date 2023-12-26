@@ -2559,6 +2559,11 @@ extend@^3.0.0:
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
 
+extract-colors@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/extract-colors/-/extract-colors-4.0.2.tgz#041e4dcfa0470c35d90a8137d94dc410754b7e4a"
+  integrity sha512-G7v2C3LJqW38U+yRUPD6nJCjBRfdLD7y8efEHn+1qONt1mhj+OZBpzFmiaS+dZiHU/k0dvgK2kgIkbAllHVbRw==
+
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"

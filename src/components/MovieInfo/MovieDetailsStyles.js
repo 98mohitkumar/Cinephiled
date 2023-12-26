@@ -156,7 +156,7 @@ export const Divider = styled.div`
   }
 `;
 
-export const FeatureButton = styled.div`
+export const FeatureButton = styled.button`
   background: rgb(221, 221, 221);
   color: #121212;
   border-radius: 8px;
@@ -173,12 +173,11 @@ export const FeatureButton = styled.div`
     font-weight: 600;
   }
 
-  &.fav,
-  &.watchlist {
+  &.mediaCTA {
     font-size: 0.95rem;
     height: auto;
     padding: 10px;
-    width: calc(100% - 8px);
+    width: 100%;
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {

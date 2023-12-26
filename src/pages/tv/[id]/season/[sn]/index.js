@@ -17,7 +17,8 @@ import {
   getReleaseYear,
   getReleaseDate,
   getRuntime,
-  mergeEpisodeCount
+  mergeEpisodeCount,
+  getCleanTitle
 } from "src/utils/helper";
 
 import {
@@ -190,9 +191,7 @@ const Seasons = ({
                 <CastGrid className='justify-start'>
                   {cast?.map((item) => (
                     <CastWrapper key={item.id}>
-                      <Link
-                        href={`/person/${item.id}-${item.name.replace(/[' ']/g, "-")}`}
-                        passHref>
+                      <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`} passHref>
                         <a>
                           <motion.div
                             whileHover={{
@@ -252,44 +251,36 @@ const Seasons = ({
 
 Seasons.getInitialProps = async (ctx) => {
   try {
-    const response = await fetch(
-      apiEndpoints.tv.tvSeasonDetails({
+    const [response, tvRes] = await Promise.all([
+      fetch(apiEndpoints.tv.tvSeasonDetails({ id: ctx.query.id, seasonNumber: ctx.query.sn })),
+      fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id))
+    ]);
+
+    if (!response.ok) throw new Error("error fetching details");
+
+    const [res, tvData] = await Promise.all([response.json(), tvRes.json()]);
+
+    return {
+      error: false,
+      releaseDate: res?.air_date,
+      overview: res?.overview,
+      cast: mergeEpisodeCount(
+        res?.aggregate_credits?.cast
+          ?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
+          .flat()
+      ),
+      posters: res?.images?.posters,
+      seasonPoster: res?.poster_path,
+      seasonName: res?.name,
+      seasonNumber: res?.season_number,
+      rating: res?.vote_average,
+      episodes: res?.episodes,
+      tvData: {
         id: ctx.query.id,
-        seasonNumber: ctx.query.sn
-      })
-    );
-
-    const tvRes = await fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id));
-    const error = response.ok ? false : true;
-
-    if (error) {
-      throw Error("cannot fetch data");
-    } else {
-      const res = await response.json();
-      const tvData = await tvRes.json();
-
-      return {
-        error,
-        releaseDate: res?.air_date,
-        overview: res?.overview,
-        cast: mergeEpisodeCount(
-          res?.aggregate_credits?.cast
-            ?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
-            .flat()
-        ),
-        posters: res?.images?.posters,
-        seasonPoster: res?.poster_path,
-        seasonName: res?.name,
-        seasonNumber: res?.season_number,
-        rating: res?.vote_average,
-        episodes: res?.episodes,
-        tvData: {
-          id: ctx.query.id,
-          name: tvData?.name,
-          airDate: tvData?.first_air_date
-        }
-      };
-    }
+        name: tvData?.name,
+        airDate: tvData?.first_air_date
+      }
+    };
   } catch {
     return { error: true };
   }

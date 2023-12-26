@@ -1,4 +1,4 @@
-import { revalidationWrapper, useAddToWatchlist, useSetFavorite } from "api/user";
+import { addToWatchlist, setFavorite } from "api/user";
 import DominantColor from "components/DominantColor/DominantColor";
 import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
 import RatingModal, { useModal } from "components/RatingModal/RatingModal";
@@ -8,14 +8,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { BiListPlus, BiListCheck } from "react-icons/bi";
 import { BsStarHalf } from "react-icons/bs";
 import { FaYoutube, FaHeart, FaRegHeart } from "react-icons/fa";
-import { getRating, getRuntime } from "src/utils/helper";
-import { MediaContext } from "Store/MediaContext";
+import { framerTabVariants, getCleanTitle, getRating, getRuntime } from "src/utils/helper";
+import { useMediaContext } from "Store/MediaContext";
+import { useUserContext } from "Store/UserContext";
 import {
   DetailsHeroWrap,
   HeroBg,
@@ -66,127 +66,118 @@ const MovieDetails = ({
   },
   easter
 }) => {
-  const { status } = useSession();
-  const { setFavorite } = useSetFavorite();
-  const { addToWatchlist } = useAddToWatchlist();
+  const { userInfo } = useUserContext();
   const { renderEaster, hasSeen, showEaster, easterHandler } = easter;
-  const { favoriteMovies, moviesWatchlist, revalidateFavorites, revalidateWatchlist, ratedMovies } =
-    useContext(MediaContext);
-  const { isToastVisible, showToast, removeToast, toastMessage, setToastMessage } = useToast();
+  const {
+    favoriteMovies,
+    moviesWatchlist,
+    validateMoviesWatchlist,
+    validateFavoriteMovies,
+    ratedMovies
+  } = useMediaContext();
+  const { isToastVisible, showToast, toastMessage } = useToast();
   const savedRating = ratedMovies?.find((item) => item?.id === id)?.rating ?? false;
   const { isModalVisible, openModal, closeModal } = useModal();
-  const [addedToWatchlist, setAddedToWatchlist] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   // splice genres
   genres.length > 3 && genres.splice(3);
 
-  useEffect(() => {
-    const isAddedToFavorites = favoriteMovies?.map((item) => item.id)?.includes(id);
-
-    if (favoriteMovies.length > 0) {
-      setIsFavorite(isAddedToFavorites);
-    }
-  }, [favoriteMovies, id]);
-
-  useEffect(() => {
-    const isAddedToWatchlist = moviesWatchlist?.map((item) => item.id)?.includes(id);
-
-    if (moviesWatchlist.length > 0) {
-      setAddedToWatchlist(isAddedToWatchlist);
-    }
-  }, [id, moviesWatchlist]);
+  const isAddedToWatchlist = moviesWatchlist?.map((item) => item.id)?.includes(id);
+  const isAddedToFavorites = favoriteMovies?.map((item) => item.id)?.includes(id);
 
   const favoriteHandler = async () => {
-    if (status === "authenticated") {
+    if (userInfo?.accountId) {
       const response = await setFavorite({
         mediaType: "movie",
         mediaId: id,
-        favoriteState: !isFavorite
+        favoriteState: !isAddedToFavorites
       });
 
       if (response?.success) {
-        setIsFavorite((prev) => !prev);
-        setToastMessage(isFavorite ? "Removed from favorites" : "Added to favorites");
-        showToast();
-        removeToast();
-        revalidationWrapper(() => revalidateFavorites("favoriteMovies"));
+        if (isAddedToFavorites) {
+          validateFavoriteMovies({
+            state: "removed",
+            id
+          });
+        } else {
+          const updatedMedia = [...favoriteMovies];
+
+          updatedMedia.unshift({
+            id,
+            poster_path: moviePoster,
+            title,
+            release_date: releaseDate
+          });
+
+          validateFavoriteMovies({
+            state: "added",
+            id,
+            media: updatedMedia
+          });
+        }
+
+        showToast({
+          message: isAddedToFavorites ? "Removed from favorites" : "Added to favorites"
+        });
+      } else {
+        showToast({ message: "Something went wrong, try again later" });
       }
     } else if (!isToastVisible) {
-      setToastMessage("Login first to use this feature");
-      showToast();
-      removeToast();
+      showToast({ message: "Login first to use this feature" });
     }
   };
 
   const watchlistHandler = async () => {
-    if (status === "authenticated") {
+    if (userInfo?.accountId) {
       const response = await addToWatchlist({
         mediaType: "movie",
         mediaId: id,
-        watchlistState: !addedToWatchlist
+        watchlistState: !isAddedToWatchlist
       });
 
       if (response?.success) {
-        setAddedToWatchlist((prev) => !prev);
-        setToastMessage(addedToWatchlist ? "Removed from watchlist" : "Added to watchlist");
-        showToast();
-        removeToast();
-        revalidationWrapper(() => revalidateWatchlist("moviesWatchlist"));
+        if (isAddedToWatchlist) {
+          validateMoviesWatchlist({
+            state: "removed",
+            id
+          });
+        } else {
+          const updatedMedia = [...moviesWatchlist];
+
+          updatedMedia.unshift({
+            id,
+            poster_path: moviePoster,
+            title,
+            release_date: releaseDate
+          });
+
+          validateMoviesWatchlist({
+            state: "added",
+            id,
+            media: updatedMedia
+          });
+        }
+        showToast({
+          message: isAddedToWatchlist ? "Removed from watchlist" : "Added to watchlist"
+        });
+      } else {
+        showToast({ message: "Something went wrong, try again later" });
       }
     } else if (!isToastVisible) {
-      setToastMessage("Login first to use this feature");
-      showToast();
-      removeToast();
+      showToast({ message: "Login first to use this feature" });
     }
   };
 
   const ratingModalHandler = () => {
-    if (status === "authenticated") {
+    if (userInfo?.accountId) {
       openModal();
     } else {
-      setToastMessage("Login first to use this feature");
-      showToast();
-      removeToast();
+      showToast({ message: "Login first to use this feature" });
     }
   };
 
   return (
     <Fragment>
-      {renderEaster ? (
-        <Fragment>
-          {!hasSeen ? (
-            <EasterText className='text-xl md:text-2xl px-5' show={showEaster}>
-              Congratulations, you have found the easter egg.
-            </EasterText>
-          ) : (
-            <EasterText className='text-xl md:text-2xl' show={showEaster}>
-              Aren&apos;t you scared?
-            </EasterText>
-          )}
-          <LightsInOut show={showEaster} onClick={easterHandler} />
-          <MovieEaster show={showEaster} />
-        </Fragment>
-      ) : null}
-
-      <AnimatePresence exitBeforeEnter initial={false}>
-        {isToastVisible ? (
-          <Toast key='toast'>
-            <Span className='toast-message'>{toastMessage}</Span>
-          </Toast>
-        ) : null}
-
-        {isModalVisible ? (
-          <RatingModal
-            key='rating-modal'
-            mediaType='movie'
-            mediaId={id}
-            closeModal={closeModal}
-            mediaName={`${title} (${releaseYear})`}
-          />
-        ) : null}
-      </AnimatePresence>
-
       <HeroDetailsContainer className='relative mb-auto'>
         <HeroBgContainer className='absolute'>
           <HeroBg className='absolute text-center'>
@@ -233,172 +224,85 @@ const MovieDetails = ({
                   rel='noreferrer'
                   aria-label='play trailer'
                   className='mb-3 block'>
-                  <FeatureButton role='button'>
+                  <FeatureButton>
                     <FaYoutube size='1.5rem' />
                     <Span>Play Trailer</Span>
                   </FeatureButton>
                 </a>
               )}
 
-              <AnimatePresence exitBeforeEnter initial={false}>
-                <div className='flex justify-start gap-4'>
-                  <FeatureButton
-                    className='watchlist'
-                    role='button'
-                    aria-label='watchlist button'
-                    as={motion.div}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={watchlistHandler}>
-                    {addedToWatchlist ? (
-                      <motion.div
-                        key='watchlist'
-                        initial={{ opacity: 0 }}
-                        animate={{
-                          opacity: 1,
-                          transition: {
-                            delay: 0.5,
-                            duration: 0.5
-                          }
-                        }}
-                        exit={{
-                          opacity: 0,
-                          transition: {
-                            duration: 2
-                          }
-                        }}>
+              <div className='flex justify-start gap-4'>
+                <FeatureButton
+                  className='mediaCTA'
+                  disabled={isToastVisible}
+                  aria-label='watchlist button'
+                  as={motion.button}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={watchlistHandler}>
+                  <AnimatePresence exitBeforeEnter initial={false}>
+                    <motion.div
+                      key={`watchlist - ${isAddedToWatchlist.toString()}`}
+                      variants={framerTabVariants}
+                      initial='hidden'
+                      animate='visible'
+                      exit='hidden'
+                      transition={{ duration: 0.5 }}>
+                      {isAddedToWatchlist ? (
                         <BiListCheck size='22px' />
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key='add-to-watchlist'
-                        initial={{ opacity: 0 }}
-                        animate={{
-                          opacity: 1,
-                          transition: {
-                            delay: 0.5,
-                            duration: 0.5
-                          }
-                        }}
-                        exit={{
-                          opacity: 0,
-                          transition: {
-                            duration: 0.5
-                          }
-                        }}
-                        className='watchlist-inner'>
+                      ) : (
                         <BiListPlus size='22px' />
-                      </motion.div>
-                    )}
-                  </FeatureButton>
-
-                  <FeatureButton
-                    className='fav'
-                    role='button'
-                    aria-label='favorite button'
-                    onClick={favoriteHandler}
-                    as={motion.div}
-                    whileTap={{ scale: 0.95 }}>
-                    <Fragment>
-                      {isFavorite ? (
-                        <motion.div
-                          className='flex justify-center items-center w-full h-full'
-                          key='fav'
-                          initial={{ opacity: 0 }}
-                          animate={{
-                            opacity: 1,
-                            transition: {
-                              delay: 0.5,
-                              duration: 0.5
-                            }
-                          }}
-                          exit={{
-                            opacity: 0,
-                            transition: {
-                              duration: 0.5
-                            }
-                          }}>
-                          <FaHeart size='20px' />
-                        </motion.div>
-                      ) : (
-                        <motion.div
-                          className='flex justify-center items-center w-full h-full'
-                          key='add-to-fav'
-                          initial={{ opacity: 0 }}
-                          animate={{
-                            opacity: 1,
-                            transition: {
-                              duration: 0.5,
-                              delay: 0.5
-                            }
-                          }}
-                          exit={{
-                            opacity: 0,
-                            transition: {
-                              duration: 0.5
-                            }
-                          }}>
-                          <FaRegHeart size='20px' />
-                        </motion.div>
                       )}
-                    </Fragment>
-                  </FeatureButton>
+                    </motion.div>
+                  </AnimatePresence>
+                </FeatureButton>
 
-                  <FeatureButton
-                    className='fav'
-                    role='button'
-                    aria-label='rating button'
-                    as={motion.div}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={ratingModalHandler}>
-                    <Fragment>
+                <FeatureButton
+                  className='mediaCTA'
+                  aria-label='favorite button'
+                  onClick={favoriteHandler}
+                  as={motion.button}
+                  disabled={isToastVisible}
+                  whileTap={{ scale: 0.95 }}>
+                  <AnimatePresence exitBeforeEnter initial={false}>
+                    <motion.div
+                      key={`favorite - ${isAddedToFavorites.toString()}`}
+                      variants={framerTabVariants}
+                      initial='hidden'
+                      animate='visible'
+                      exit='hidden'
+                      transition={{ duration: 0.5 }}>
+                      {isAddedToFavorites ? <FaHeart size='20px' /> : <FaRegHeart size='20px' />}
+                    </motion.div>
+                  </AnimatePresence>
+                </FeatureButton>
+
+                <FeatureButton
+                  className='mediaCTA'
+                  aria-label='rating button'
+                  as={motion.button}
+                  disabled={isToastVisible}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={ratingModalHandler}>
+                  <AnimatePresence exitBeforeEnter initial={false}>
+                    <motion.div
+                      key={`rating - ${savedRating.toString()}`}
+                      variants={framerTabVariants}
+                      initial='hidden'
+                      animate='visible'
+                      exit='hidden'
+                      transition={{ duration: 0.5 }}>
                       {savedRating ? (
-                        <motion.div
-                          className='flex justify-center items-center w-full h-full'
-                          key='saved-rating'
-                          initial={{ opacity: 0 }}
-                          animate={{
-                            opacity: 1,
-                            transition: {
-                              delay: 0.5,
-                              duration: 0.5
-                            }
-                          }}
-                          exit={{
-                            opacity: 0,
-                            transition: {
-                              duration: 0.5
-                            }
-                          }}>
-                          <RatingOverlay className='media-page'>
-                            <AiFillStar size='16px' />
-                            <p className='m-0 font-semibold text'>{savedRating}</p>
-                          </RatingOverlay>
-                        </motion.div>
+                        <RatingOverlay className='media-page'>
+                          <AiFillStar size='16px' />
+                          <p className='m-0 font-semibold text'>{savedRating}</p>
+                        </RatingOverlay>
                       ) : (
-                        <motion.div
-                          className='flex justify-center items-center w-full h-full'
-                          key='rate'
-                          initial={{ opacity: 0 }}
-                          animate={{
-                            opacity: 1,
-                            transition: {
-                              duration: 0.5,
-                              delay: 0.5
-                            }
-                          }}
-                          exit={{
-                            opacity: 0,
-                            transition: {
-                              duration: 0.5
-                            }
-                          }}>
-                          <BsStarHalf size='20px' />
-                        </motion.div>
+                        <BsStarHalf size='20px' />
                       )}
-                    </Fragment>
-                  </FeatureButton>
-                </div>
-              </AnimatePresence>
+                    </motion.div>
+                  </AnimatePresence>
+                </FeatureButton>
+              </div>
             </div>
 
             {/* social media links */}
@@ -461,7 +365,7 @@ const MovieDetails = ({
                 {crewData.map((item) => (
                   <Credits key={item.credit_id}>
                     <Span className='block font-normal'>{item.job}</Span>
-                    <Link href={`/person/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}>
+                    <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`}>
                       <a>
                         <Span className='block font-bold credit'>{item.name}</Span>
                       </a>
@@ -473,6 +377,43 @@ const MovieDetails = ({
           </HeroInfoWrapper>
         </DetailsHeroWrap>
       </HeroDetailsContainer>
+
+      {renderEaster ? (
+        <Fragment>
+          {!hasSeen ? (
+            <EasterText className='text-xl md:text-2xl px-5' show={showEaster}>
+              Congratulations, you have found the easter egg.
+            </EasterText>
+          ) : (
+            <EasterText className='text-xl md:text-2xl' show={showEaster}>
+              Aren&apos;t you scared?
+            </EasterText>
+          )}
+          <LightsInOut show={showEaster} onClick={easterHandler} />
+          <MovieEaster show={showEaster} />
+        </Fragment>
+      ) : null}
+
+      <AnimatePresence exitBeforeEnter initial={false}>
+        {isToastVisible ? (
+          <Toast key='toast'>
+            <Span className='toast-message'>{toastMessage}</Span>
+          </Toast>
+        ) : null}
+
+        {isModalVisible ? (
+          <RatingModal
+            key='rating-modal'
+            mediaType='movie'
+            mediaId={id}
+            posterPath={moviePoster}
+            releaseDate={releaseDate}
+            title={title}
+            closeModal={closeModal}
+            mediaName={`${title} (${releaseYear})`}
+          />
+        ) : null}
+      </AnimatePresence>
     </Fragment>
   );
 };

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
+import { getCleanTitle } from "src/utils/helper";
 import {
   RecommendationsGrid,
   RecommendedImg,
@@ -23,10 +24,7 @@ const Recommendations = ({ data, type }) => {
             }}
             whileTap={{ scale: 0.95 }}>
             <Link
-              href={`/${type}/${item.id}-${(item?.title || item?.name).replace(
-                /[' ', '/']/g,
-                "-"
-              )}`}
+              href={`/${type}/${item.id}-${getCleanTitle(item?.title || item?.name)}`}
               passHref
               scroll={false}>
               <a>

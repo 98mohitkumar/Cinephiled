@@ -1,15 +1,28 @@
 import { apiEndpoints } from "globals/constants";
 import { useSession } from "next-auth/react";
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect, useContext } from "react";
 
-export const UserContext = createContext();
+const UserContext = createContext({
+  userInfo: {},
+  setUserInfo: () => {}
+});
+
+export const useUserContext = () => {
+  const context = useContext(UserContext);
+
+  if (context === undefined) {
+    throw new Error("useUserContext must be used within UserContextProvider");
+  }
+
+  return context;
+};
 
 export default function UserContextProvider({ children }) {
   const { status, data } = useSession();
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    if (status === "authenticated" && !userInfo?.id) {
+    if (status === "authenticated" && !userInfo?.accountId) {
       const getUserInfo = async () => {
         const profileRes = await fetch(
           apiEndpoints.user.userInfo({ sessionId: data?.user?.sessionId })
@@ -18,7 +31,7 @@ export default function UserContextProvider({ children }) {
         if (profileRes.ok) {
           const profile = await profileRes.json();
 
-          return { ...profile, accountId: data?.user?.accountId };
+          return { ...profile, ...data?.user, status };
         } else {
           throw Error("cannot fetch profile data");
         }
@@ -28,7 +41,7 @@ export default function UserContextProvider({ children }) {
         .then((data) => setUserInfo(data))
         .catch(() => setUserInfo({}));
     }
-  }, [data?.user?.accountId, data?.user?.sessionId, status, userInfo?.id]);
+  }, [data?.user, status, userInfo?.accountId]);
 
   return <UserContext.Provider value={{ userInfo, setUserInfo }}>{children}</UserContext.Provider>;
 }

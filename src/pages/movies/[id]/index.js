@@ -6,7 +6,7 @@ import MovieTab from "components/MovieInfo/MovieTab";
 import Recommendations from "components/Recommendations/Recommendations";
 import { apiEndpoints } from "globals/constants";
 import { Fragment, useEffect, useState } from "react";
-import { getReleaseDate, getReleaseYear } from "src/utils/helper";
+import { getCleanTitle, getReleaseDate, getReleaseYear } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const Movie = ({
@@ -72,7 +72,7 @@ const Movie = ({
         title={error ? "Not Found - Cinephiled" : `${title} (${releaseYear}) - Cinephiled`}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
         description={overview}
-        url={`https://cinephiled.vercel.app/movies/${id}-${title?.replace(/[' ', '/']/g, "-")}`}
+        url={`https://cinephiled.vercel.app/movies/${id}-${getCleanTitle(title)}`}
       />
 
       {error ? (
@@ -141,66 +141,66 @@ const Movie = ({
 
 Movie.getInitialProps = async (ctx) => {
   try {
-    const movieResponse = await fetch(apiEndpoints.movie.movieDetails(ctx.query.id));
-    const languagesResponse = await fetch(apiEndpoints.language);
-    const error = movieResponse.ok ? false : true;
+    const [movieResponse, languagesResponse] = await Promise.all([
+      fetch(apiEndpoints.movie.movieDetails(ctx.query.id)),
+      fetch(apiEndpoints.language)
+    ]);
 
-    if (error) {
-      throw new Error("error fetching details");
-    } else {
-      const movieDetails = await movieResponse.json();
-      const languages = await languagesResponse.json();
-      const country = movieDetails?.production_companies[0]?.origin_country || "US";
-      const releaseYear = getReleaseYear(movieDetails?.release_date);
-      const releaseDate = getReleaseDate(movieDetails?.release_date);
-      const status = movieDetails?.status || "TBA";
-      const language = languages.filter(
-        (item) => item.iso_639_1 === movieDetails.original_language
-      );
+    if (!movieResponse.ok) throw new Error("error fetching details");
 
-      const trailers = movieDetails?.videos?.results?.filter(
-        (item) => item?.site === "YouTube" && item?.type === "Trailer"
-      );
+    const [movieDetails, languages] = await Promise.all([
+      movieResponse.json(),
+      languagesResponse.json()
+    ]);
 
-      const crewData = [
-        ...movieDetails?.credits?.crew?.filter((credit) => credit?.job === "Director").slice(0, 2),
-        ...movieDetails?.credits?.crew?.filter((credit) => credit?.job === "Writer").slice(0, 3),
-        ...movieDetails?.credits?.crew?.filter((credit) => credit?.job === "Characters").slice(0, 2)
-      ];
+    const country = movieDetails?.production_companies[0]?.origin_country || "US";
+    const releaseYear = getReleaseYear(movieDetails?.release_date);
+    const releaseDate = getReleaseDate(movieDetails?.release_date);
+    const status = movieDetails?.status || "TBA";
+    const language = languages.find((item) => item.iso_639_1 === movieDetails.original_language);
 
-      return {
-        id: movieDetails?.id,
-        title: movieDetails?.title,
-        releaseYear,
-        releaseDate,
-        genres: movieDetails?.genres,
-        runtime: movieDetails?.runtime,
-        tagline: movieDetails?.tagline,
-        overview: movieDetails?.overview,
-        rating: movieDetails?.vote_average,
-        moviePoster: movieDetails?.poster_path,
-        backdropPath: movieDetails?.backdrop_path,
-        crewData,
-        trailerLink: trailers?.[0]?.key ?? "",
-        socialIds: movieDetails?.external_ids,
-        homepage: movieDetails?.homepage,
-        status,
-        language: language?.[0]?.english_name,
-        country,
-        budget: movieDetails?.budget,
-        revenue: movieDetails?.revenue,
-        cast: {
-          totalCount: movieDetails?.credits?.cast?.length,
-          data: movieDetails?.credits?.cast?.slice(0, 15)
-        },
-        isEasterMovie: movieDetails?.id === 345911,
-        reviews: movieDetails?.reviews?.results ?? [],
-        backdrops: movieDetails?.images?.backdrops ?? [],
-        posters: movieDetails?.images?.posters ?? [],
-        recommendations: movieDetails?.recommendations?.results,
-        error
-      };
-    }
+    const trailers = movieDetails?.videos?.results?.find(
+      (item) => item?.site === "YouTube" && item?.type === "Trailer"
+    );
+
+    const crewData = [
+      ...movieDetails?.credits?.crew?.filter((credit) => credit?.job === "Director").slice(0, 2),
+      ...movieDetails?.credits?.crew?.filter((credit) => credit?.job === "Writer").slice(0, 3),
+      ...movieDetails?.credits?.crew?.filter((credit) => credit?.job === "Characters").slice(0, 2)
+    ];
+
+    return {
+      id: movieDetails?.id,
+      title: movieDetails?.title,
+      releaseYear,
+      releaseDate,
+      genres: movieDetails?.genres,
+      runtime: movieDetails?.runtime,
+      tagline: movieDetails?.tagline,
+      overview: movieDetails?.overview,
+      rating: movieDetails?.vote_average,
+      moviePoster: movieDetails?.poster_path,
+      backdropPath: movieDetails?.backdrop_path,
+      crewData,
+      trailerLink: trailers?.key ?? "",
+      socialIds: movieDetails?.external_ids,
+      homepage: movieDetails?.homepage,
+      status,
+      language: language?.english_name || language?.name || "TBA",
+      country,
+      budget: movieDetails?.budget,
+      revenue: movieDetails?.revenue,
+      cast: {
+        totalCount: movieDetails?.credits?.cast?.length,
+        data: movieDetails?.credits?.cast?.slice(0, 15)
+      },
+      isEasterMovie: movieDetails?.id === 345911,
+      reviews: movieDetails?.reviews?.results ?? [],
+      backdrops: movieDetails?.images?.backdrops ?? [],
+      posters: movieDetails?.images?.posters ?? [],
+      recommendations: movieDetails?.recommendations?.results,
+      error: false
+    };
   } catch {
     return {
       error: true

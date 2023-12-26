@@ -1,71 +1,79 @@
 import { apiEndpoints } from "globals/constants";
-import { useSession } from "next-auth/react";
-import { useContext } from "react";
-import { UserContext } from "Store/UserContext";
+import { getSession } from "next-auth/react";
 
-export const useSetFavorite = () => {
-  const { status, data } = useSession();
-  const { userInfo } = useContext(UserContext);
+export const setFavorite = async ({ mediaType, mediaId, favoriteState }) => {
+  const {
+    user: { accountId, sessionId }
+  } = await getSession();
 
-  const setFavorite = async ({ mediaType, mediaId, favoriteState }) => {
-    if (status === "authenticated" && userInfo?.id && data?.user?.sessionId) {
-      const favorite = await fetch(
-        apiEndpoints.user.setFavorite({
-          accountId: userInfo.id,
-          sessionId: data.user.sessionId
-        }),
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json;charset=utf-8"
-          },
-          body: JSON.stringify({
-            media_type: mediaType,
-            media_id: mediaId,
-            favorite: favoriteState
-          })
-        }
-      );
+  if (accountId && sessionId) {
+    const favorite = await fetch(
+      apiEndpoints.user.setFavorite({
+        accountId: accountId,
+        sessionId: sessionId
+      }),
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json;charset=utf-8"
+        },
+        body: JSON.stringify({
+          media_type: mediaType,
+          media_id: mediaId,
+          favorite: favoriteState
+        })
+      }
+    );
 
+    if (favorite.ok) {
       return await favorite.json();
+    } else {
+      return {
+        success: false
+      };
     }
-  };
-
-  return { setFavorite };
+  }
 };
 
-export const useAddToWatchlist = () => {
-  const { status, data } = useSession();
-  const { userInfo } = useContext(UserContext);
+export const addToWatchlist = async ({ mediaType, mediaId, watchlistState }) => {
+  const {
+    user: { accountId, sessionId }
+  } = await getSession();
 
-  const addToWatchlist = async ({ mediaType, mediaId, watchlistState }) => {
-    if (status === "authenticated" && userInfo?.id && data?.user?.sessionId) {
-      const watchlist = await fetch(
-        apiEndpoints.user.addToWatchlist({
-          accountId: userInfo.id,
-          sessionId: data.user.sessionId
-        }),
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json;charset=utf-8"
-          },
-          body: JSON.stringify({
-            media_type: mediaType,
-            media_id: mediaId,
-            watchlist: watchlistState
-          })
-        }
-      );
+  if (accountId && sessionId) {
+    const watchlist = await fetch(
+      apiEndpoints.user.addToWatchlist({
+        accountId: accountId,
+        sessionId: sessionId
+      }),
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json;charset=utf-8"
+        },
+        body: JSON.stringify({
+          media_type: mediaType,
+          media_id: mediaId,
+          watchlist: watchlistState
+        })
+      }
+    );
 
+    if (watchlist.ok) {
       return await watchlist.json();
+    } else {
+      return {
+        success: false
+      };
     }
-  };
-
-  return { addToWatchlist };
+  }
 };
 
-export const getFavorites = async ({ mediaType, accountId, sessionId, pageQuery }) => {
+export const getFavorites = async ({ mediaType, pageQuery }) => {
+  const {
+    user: { accountId, sessionId }
+  } = await getSession();
+
   const favoritesRes = await fetch(
     apiEndpoints.user.getFavorites({
       mediaType,
@@ -83,7 +91,11 @@ export const getFavorites = async ({ mediaType, accountId, sessionId, pageQuery 
   }
 };
 
-export const getWatchlist = async ({ mediaType, accountId, sessionId, pageQuery }) => {
+export const getWatchlist = async ({ mediaType, pageQuery }) => {
+  const {
+    user: { accountId, sessionId }
+  } = await getSession();
+
   const watchlistRes = await fetch(
     apiEndpoints.user.getWatchlist({
       mediaType,
@@ -101,36 +113,44 @@ export const getWatchlist = async ({ mediaType, accountId, sessionId, pageQuery 
   }
 };
 
-export const useSetRating = () => {
-  const { status, data } = useSession();
+export const setRating = async ({ mediaType, mediaId, rating }) => {
+  const {
+    user: { accountId, sessionId }
+  } = await getSession();
 
-  const setRating = async ({ mediaType, mediaId, rating }) => {
-    if (status === "authenticated" && data?.user?.sessionId) {
-      const favorite = await fetch(
-        apiEndpoints.user.setRating({
-          mediaType,
-          mediaId,
-          sessionId: data.user.sessionId
-        }),
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json;charset=utf-8"
-          },
-          body: JSON.stringify({
-            value: rating
-          })
-        }
-      );
+  if (accountId && sessionId) {
+    const rated = await fetch(
+      apiEndpoints.user.setRating({
+        mediaType,
+        mediaId,
+        sessionId
+      }),
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json;charset=utf-8"
+        },
+        body: JSON.stringify({
+          value: rating
+        })
+      }
+    );
 
-      return await favorite.json();
+    if (rated.ok) {
+      return await rated.json();
+    } else {
+      return {
+        success: false
+      };
     }
-  };
-
-  return { setRating };
+  }
 };
 
-export const getRated = async ({ mediaType, accountId, sessionId, pageQuery }) => {
+export const getRated = async ({ mediaType, pageQuery }) => {
+  const {
+    user: { accountId, sessionId }
+  } = await getSession();
+
   const ratedRes = await fetch(
     apiEndpoints.user.getRated({ mediaType, accountId, sessionId, pageQuery })
   );
@@ -143,40 +163,40 @@ export const getRated = async ({ mediaType, accountId, sessionId, pageQuery }) =
   }
 };
 
-export const useDeleteRating = () => {
-  const { status, data } = useSession();
+export const deleteRating = async ({ mediaType, mediaId }) => {
+  const {
+    user: { accountId, sessionId }
+  } = await getSession();
 
-  const deleteRating = async ({ mediaType, mediaId }) => {
-    if (status === "authenticated" && data?.user?.sessionId) {
-      const favorite = await fetch(
-        apiEndpoints.user.deleteRating({
-          mediaType,
-          mediaId,
-          sessionId: data.user.sessionId
-        }),
-        {
-          method: "DELETE",
-          headers: {
-            "content-type": "application/json;charset=utf-8"
-          }
+  if (accountId && sessionId) {
+    const deleted = await fetch(
+      apiEndpoints.user.deleteRating({
+        mediaType,
+        mediaId,
+        sessionId
+      }),
+      {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json;charset=utf-8"
         }
-      );
+      }
+    );
 
-      return await favorite.json();
+    if (deleted.ok) {
+      return await deleted.json();
+    } else {
+      return {
+        success: false
+      };
     }
-  };
-
-  return { deleteRating };
+  }
 };
 
-export const revalidationWrapper = (revalidate, delay = 1000) => {
-  setTimeout(() => {
-    revalidate();
-  }, delay);
-};
-
-export const getRecommendations = async ({ mediaType, accountId, pageQuery }) => {
-  const read_access_token = process.env.NEXT_PUBLIC_READ_ACCESS_TOKEN;
+export const getRecommendations = async ({ mediaType, pageQuery }) => {
+  const {
+    user: { accessToken, accountId }
+  } = await getSession();
 
   const recommendationsRes = await fetch(
     apiEndpoints.user.getRecommendations({ mediaType, accountId, pageQuery }),
@@ -184,7 +204,7 @@ export const getRecommendations = async ({ mediaType, accountId, pageQuery }) =>
       method: "GET",
       headers: {
         "content-type": "application/json;charset=utf-8",
-        authorization: `Bearer ${read_access_token}`
+        authorization: `Bearer ${accessToken}`
       }
     }
   );
