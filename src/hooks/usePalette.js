@@ -20,8 +20,12 @@ export function usePalette(src) {
         });
       })
       .catch(() => {
-        setPalette({ palette: [], done: false });
+        setPalette({ palette: [], done: true });
       });
+
+    return () => {
+      setPalette({ palette: [], done: true });
+    };
   }, [src]);
 
   return palette;

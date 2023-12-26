@@ -1,7 +1,7 @@
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Link from "next/link";
 import { Fragment } from "react";
-import { removeDuplicates } from "src/utils/helper";
+import { getCleanTitle, removeDuplicates } from "src/utils/helper";
 import { EmptySearch, SearchResultsContainer, Keyword } from "./SearchTabStyles";
 
 const KeywordSearch = ({ searchQuery, keywords }) => {
@@ -20,7 +20,7 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
           {cleanedItems.map((item) => (
             <Link
               key={item.id}
-              href={`/keywords/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`}
+              href={`/keywords/${item.id}-${getCleanTitle(item.name)}`}
               passHref
               scroll={false}>
               <a>

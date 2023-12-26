@@ -71,6 +71,7 @@ export const AboutContainer = styled.div`
 export const Error404 = styled.h1`
   font-weight: bold;
   font-size: 10rem;
+
   text-align: center;
   background: ${(props) => `linear-gradient(
     90deg,
@@ -89,6 +90,12 @@ export const Error404 = styled.h1`
       filter: hue-rotate(360deg);
       -webkit-filter: hue-rotate(360deg);
     }
+  }
+
+  &:not(.index-page) {
+    min-height: 80vh;
+    display: grid;
+    place-items: center;
   }
 `;
 
@@ -311,6 +318,12 @@ export const Loader = styled.div`
   display: grid;
   place-items: center;
   background: Url(/Images/Loader.svg) no-repeat center center / contain;
+
+  &.profile-page {
+    width: 100px;
+    aspect-ratio: 1/1;
+    position: static;
+  }
 `;
 
 export const SeasonExpandedContainer = styled.div`

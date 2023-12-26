@@ -10,6 +10,7 @@ import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
 import useTabs from "hooks/useTabs";
 import { Fragment } from "react";
+import { framerTabVariants } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import { TabIcon, TabSelectionTitle, tabStyling } from "./MovieTabStyles";
 
@@ -54,9 +55,10 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
         {activeTab === "cast" && (
           <motion.div
             key='cast'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={framerTabVariants}
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
             transition={{ duration: 0.5 }}>
             <ModulesWrapper>
               <Cast cast={cast} />
@@ -67,9 +69,10 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
         {activeTab === "reviews" && (
           <motion.div
             key='reviews'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={framerTabVariants}
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
             transition={{ duration: 0.5 }}>
             <ModulesWrapper>
               <Reviews reviews={reviews} />
@@ -80,9 +83,10 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
         {activeTab === "backdrops" && (
           <motion.div
             key='backdrops'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={framerTabVariants}
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
             transition={{ duration: 0.5 }}>
             <ModulesWrapper>
               <Backdrops backdrops={backdrops} />
@@ -93,9 +97,10 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
         {activeTab === "posters" && (
           <motion.div
             key='posters'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={framerTabVariants}
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
             transition={{ duration: 0.5 }}>
             <ModulesWrapper>
               <Posters posters={posters} />

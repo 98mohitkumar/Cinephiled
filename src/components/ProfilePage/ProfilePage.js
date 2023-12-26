@@ -2,9 +2,10 @@ import MetaWrapper from "components/MetaWrapper";
 import Tabs, { LinearTabs } from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
 import useTabs from "hooks/useTabs";
-import { Fragment, useContext, useMemo } from "react";
-import { MediaContext } from "Store/MediaContext";
-import { UserContext } from "Store/UserContext";
+import { Fragment } from "react";
+import { framerTabVariants } from "src/utils/helper";
+import { useMediaContext } from "Store/MediaContext";
+import { useUserContext } from "Store/UserContext";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import Favorites from "./Favorites";
 import { Banner, ProfileAvatar, ProfileStats } from "./ProfilePageStyles";
@@ -39,7 +40,7 @@ export const ProfileMediaTab = ({ children }) => {
 };
 
 const Profile = () => {
-  const { userInfo } = useContext(UserContext);
+  const { userInfo } = useUserContext();
   const {
     favoriteMovies,
     favoriteTvShows,
@@ -47,31 +48,18 @@ const Profile = () => {
     tvShowsWatchlist,
     ratedMovies,
     ratedTvShows
-  } = useContext(MediaContext);
+  } = useMediaContext();
 
-  const userAvatar = useMemo(
-    () => ({
-      type: userInfo?.avatar?.tmdb?.avatar_path ? "tmdb" : "hash",
-      avatar: userInfo?.avatar?.tmdb?.avatar_path ?? userInfo?.avatar?.gravatar?.hash
-    }),
-    [userInfo?.avatar]
-  );
+  const userAvatar = {
+    type: userInfo?.avatar?.tmdb?.avatar_path ? "tmdb" : "hash",
+    avatar: userInfo?.avatar?.tmdb?.avatar_path ?? userInfo?.avatar?.gravatar?.hash
+  };
 
-  const stats = useMemo(
-    () => ({
-      Watchlist: moviesWatchlist?.length + tvShowsWatchlist?.length ?? 0,
-      Favorites: favoriteMovies?.length + favoriteTvShows?.length ?? 0,
-      Rated: ratedMovies?.length + ratedTvShows.length ?? 0
-    }),
-    [
-      favoriteMovies?.length,
-      favoriteTvShows?.length,
-      moviesWatchlist?.length,
-      ratedMovies?.length,
-      ratedTvShows.length,
-      tvShowsWatchlist?.length
-    ]
-  );
+  const stats = {
+    Watchlist: moviesWatchlist?.length + tvShowsWatchlist?.length ?? 0,
+    Favorites: favoriteMovies?.length + favoriteTvShows?.length ?? 0,
+    Rated: ratedMovies?.length + ratedTvShows.length ?? 0
+  };
 
   const { activeTab, setTab } = useTabs({
     tabLocation: "profileTab",
@@ -82,7 +70,7 @@ const Profile = () => {
     <Fragment>
       <MetaWrapper title={`${(userInfo?.name ?? userInfo?.username) || ""} - Cinephiled`} />
 
-      {userInfo?.id ? (
+      {userInfo?.accountId ? (
         <div className='h-full w-full grow'>
           {/* Banner  */}
           <Banner>
@@ -94,7 +82,7 @@ const Profile = () => {
                   <h4 className='font-bold text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem]'>
                     {userInfo?.name}
                   </h4>
-                  {userInfo?.name && (
+                  {userInfo?.username && (
                     <h4 className='font-normal text-xl m-0'>{userInfo?.username}</h4>
                   )}
                 </div>
@@ -121,9 +109,10 @@ const Profile = () => {
               {activeTab === "watchlist" && (
                 <motion.div
                   key='watchlist'
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
                   transition={{ duration: 0.5 }}>
                   <ModulesWrapper>
                     <Watchlist />
@@ -135,9 +124,10 @@ const Profile = () => {
               {activeTab === "ratings" && (
                 <motion.div
                   key='ratings'
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
                   transition={{ duration: 0.5 }}>
                   <ModulesWrapper>
                     <Ratings />
@@ -149,9 +139,10 @@ const Profile = () => {
               {activeTab === "favorites" && (
                 <motion.div
                   key='favorites'
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
                   transition={{ duration: 0.5 }}>
                   <ModulesWrapper>
                     <Favorites />
@@ -163,9 +154,10 @@ const Profile = () => {
               {activeTab === "recommendations" && (
                 <motion.div
                   key='recommendations'
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
                   transition={{ duration: 0.5 }}>
                   <ModulesWrapper>
                     <ProfileRecommendations />

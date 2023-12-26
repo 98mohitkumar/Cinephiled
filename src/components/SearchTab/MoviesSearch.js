@@ -4,7 +4,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getReleaseDate, removeDuplicates } from "src/utils/helper";
+import { getCleanTitle, getReleaseDate, removeDuplicates } from "src/utils/helper";
 import { SortBy } from "./helper";
 import {
   SearchResultsContainer,
@@ -58,10 +58,7 @@ const MoviesSearch = ({ searchQuery, movieRes }) => {
           {(sortBy ? getRenderList(cleanedItems) : cleanedItems)?.map(
             ({ id, title, poster_path, overview, release_date }) => (
               <motion.div whileTap={{ scale: 0.98 }} key={id}>
-                <Link
-                  href={`/movies/${id}-${title.replace(/[' ', '/']/g, "-")}`}
-                  passHref
-                  scroll={false}>
+                <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref scroll={false}>
                   <a>
                     <QueryContainer>
                       <QueryImg className='relative text-center'>
@@ -94,7 +91,7 @@ const MoviesSearch = ({ searchQuery, movieRes }) => {
         </section>
       ) : (
         <EmptySearch className='text-[calc(1.425rem_+_2.1vw)] xl:text-5xl text-center'>
-          No movie results for this query.
+          No Movie results for this query.
         </EmptySearch>
       )}
     </SearchResultsContainer>

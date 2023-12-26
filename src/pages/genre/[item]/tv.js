@@ -12,6 +12,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
+import { getCleanTitle } from "src/utils/helper";
 import { NoDataText, Error404, ModulesWrapper } from "styles/GlobalComponents/index";
 
 const TvShows = ({ renderList, genreName, error, genreId }) => {
@@ -26,7 +27,7 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
       <MetaWrapper
         title={error ? "Not Found - Cinephiled" : `${genreName} TV Shows - Cinephiled`}
         description={error ? "Not Found" : `${genreName} TV Shows`}
-        url={`https://cinephiled.vercel.app/genre/${genreId}-${genreName}/tv`}
+        url={`https://cinephiled.vercel.app/genre/${genreId}-${getCleanTitle(genreName)}/tv`}
       />
 
       {error ? (
@@ -47,10 +48,7 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                         transition: { duration: 0.1 }
                       }}
                       whileTap={{ scale: 0.95 }}>
-                      <Link
-                        href={`/tv/${id}-${name.replace(/[' ', '/']/g, "-")}`}
-                        passHref
-                        scroll={false}>
+                      <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref scroll={false}>
                         <a>
                           <RecommendedImg className='relative text-center'>
                             <Image
@@ -75,7 +73,7 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
               </RecommendationsGrid>
             </Fragment>
           ) : (
-            <NoDataText className='font-bold text-center my-5'>No Tv Shows For Now</NoDataText>
+            <NoDataText className='font-bold text-center my-5'>No TV Shows For Now</NoDataText>
           )}
         </ModulesWrapper>
       )}
@@ -92,26 +90,23 @@ TvShows.getInitialProps = async (ctx) => {
     const genreId = param[0];
     const genreName = param.slice(1, param.length).join("-").replace("&", " & ");
 
-    const response = await fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 1 }));
-    const nextPage = await fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 2 }));
+    const [response, nextPage] = await Promise.all([
+      fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 1 })),
+      fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 2 }))
+    ]);
 
-    const error = response.ok ? false : true;
+    if (!response.ok) throw new Error("error fetching tv shows");
 
-    if (error) {
-      throw new Error("error fetching tv shows");
-    } else {
-      const tvList = await response.json();
-      const secondTvList = await nextPage.json();
+    const [tvList, secondTvList] = await Promise.all([response.json(), nextPage.json()]);
 
-      const renderList = tvList["results"].concat(secondTvList.results);
+    const renderList = tvList["results"].concat(secondTvList.results);
 
-      return {
-        renderList,
-        genreName,
-        genreId,
-        error
-      };
-    }
+    return {
+      renderList,
+      genreName,
+      genreId,
+      error: false
+    };
   } catch {
     return {
       error: true

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useRef } from "react";
 import { BsChevronRight } from "react-icons/bs";
+import { getCleanTitle } from "src/utils/helper";
 import { NoDataText } from "styles/GlobalComponents";
 import { CastGrid, CastImg, CastWrapper, SeeMore } from "./CastStyles";
 
@@ -19,7 +20,7 @@ const Cast = ({ cast }) => {
         <CastGrid>
           {cast.data.map((item) => (
             <CastWrapper key={item.id}>
-              <Link href={`/person/${item.id}-${item.name.replace(/[' ', '/']/g, "-")}`} passHref>
+              <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`} passHref>
                 <a>
                   <motion.div
                     whileHover={{

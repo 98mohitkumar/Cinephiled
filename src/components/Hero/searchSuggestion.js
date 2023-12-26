@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { Fragment } from "react";
-import { getReleaseYear } from "src/utils/helper";
+import { getCleanTitle, getReleaseYear } from "src/utils/helper";
 import { Anchor, SearchSlice } from "./HeroStyles";
 
 const SearchSuggestion = ({ data, type, ...props }) => (
   <Fragment>
     {type === "movie" && (
-      <Link href={`/movies/${data.id}-${data.title.replace(/[' ', '/']/g, "-")}`} passHref>
+      <Link href={`/movies/${data.id}-${getCleanTitle(data.title)}`} passHref>
         <Anchor {...props}>
           <SearchSlice>
             <h5 className='suggestion-title'>
@@ -21,7 +21,7 @@ const SearchSuggestion = ({ data, type, ...props }) => (
     )}
 
     {type === "tv" && (
-      <Link href={`/tv/${data.id}-${data.name.replace(/[' ', '/']/g, "-")}`} passHref>
+      <Link href={`/tv/${data.id}-${getCleanTitle(data.name)}`} passHref>
         <Anchor {...props}>
           <SearchSlice>
             <h5 className='suggestion-title'>

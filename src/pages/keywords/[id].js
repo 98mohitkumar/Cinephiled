@@ -14,7 +14,7 @@ import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { getReleaseDate } from "src/utils/helper";
+import { getCleanTitle, getReleaseDate } from "src/utils/helper";
 import { Error404, SearchContainer } from "styles/GlobalComponents";
 
 const Keyword = ({ error, results, name, id }) => {
@@ -36,10 +36,7 @@ const Keyword = ({ error, results, name, id }) => {
                 <p className='text-xl md:text-2xl font-medium'>Results Matching : {name}</p>
                 {results.map(({ id, title, poster_path, overview, release_date }) => (
                   <motion.div whileTap={{ scale: 0.98 }} key={id}>
-                    <Link
-                      href={`/movies/${id}-${title.replace(/[' ', '/']/g, "-")}`}
-                      passHref
-                      scroll={false}>
+                    <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref scroll={false}>
                       <a>
                         <QueryContainer>
                           <QueryImg className='relative text-center'>
@@ -71,7 +68,7 @@ const Keyword = ({ error, results, name, id }) => {
               </Fragment>
             ) : (
               <EmptySearch className='text-[calc(1.425rem_+_2.1vw)] xl:text-5xl text-center'>
-                No movie results for this keyword.
+                No Movie results for this keyword.
               </EmptySearch>
             )}
           </SearchResultsContainer>

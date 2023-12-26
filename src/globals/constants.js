@@ -6,13 +6,10 @@ export const proxy = "https://corsproxy.scharde.workers.dev/?q=";
 
 export const apiEndpoints = {
   auth: {
-    // requestToken: `${baseUrlV3}/authentication/token/new?api_key=${api_key}`,
     requestToken: `${baseUrlV4}/auth/request_token`,
 
-    // validateToken: `${baseUrlV3}/authentication/token/validate_with_login?api_key=${api_key}`,
     accessToken: `${baseUrlV4}/auth/access_token`,
 
-    // generateSession: `${baseUrlV3}/authentication/session/new?api_key=${api_key}`,
     generateSession: `${baseUrlV3}/authentication/session/convert/4`,
 
     logout: `${baseUrlV3}/authentication/session?api_key=${api_key}`
@@ -42,7 +39,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/${mediaType}/${mediaId}/rating?api_key=${api_key}&session_id=${sessionId}`,
 
     getRecommendations: ({ mediaType, accountId, pageQuery = 1 }) =>
-      `${baseUrlV4}/account/${accountId}/${mediaType}/recommendations?page=${pageQuery}`,
+      `${baseUrlV4}/account/${accountId}/${mediaType}/recommendations?page=${pageQuery}&language=en-US`,
 
     getCountryCode: `https://ipwho.is?fields=country_code`
   },
@@ -76,7 +73,7 @@ export const apiEndpoints = {
     getMovieCredits: ({ id }) =>
       `${baseUrlV3}/movie/${id}?api_key=${api_key}&language=en-US&append_to_response=credits`,
 
-    movieGenreList: `${baseUrlV3}/genre/movie/list?api_key=${api_key}&language=en`,
+    movieGenreList: `${baseUrlV3}/genre/movie/list?api_key=${api_key}&language=en-US`,
 
     nowPlaying: ({ region }) =>
       `${baseUrlV3}/movie/now_playing?api_key=${api_key}&page=1&region=${region}`
@@ -103,7 +100,7 @@ export const apiEndpoints = {
     getTvCredits: ({ id }) =>
       `${baseUrlV3}/tv/${id}?api_key=${api_key}&language=en-US&append_to_response=aggregate_credits`,
 
-    tvGenreList: `${baseUrlV3}/genre/tv/list?api_key=${api_key}&language=en`
+    tvGenreList: `${baseUrlV3}/genre/tv/list?api_key=${api_key}&language=en-US`
   },
   keywords: {
     keywordDetails: (id) =>
@@ -113,9 +110,16 @@ export const apiEndpoints = {
     personDetails: (id) =>
       `${baseUrlV3}/person/${id}?api_key=${api_key}&language=en-US&append_to_response=combined_credits,external_ids,images`
   },
-  providers: {
-    watchProviders: ({ region }) =>
-      `${baseUrlV3}/watch/providers/movie?language=en-US&watch_region=${region}&api_key=${api_key}`
+  watchProviders: {
+    movieWatchProviders: ({ region }) =>
+      `${baseUrlV3}/watch/providers/movie?language=en-US&watch_region=${region}&api_key=${api_key}`,
+    tvWatchProviders: ({ region }) =>
+      `${baseUrlV3}/watch/providers/tv?language=en-US&watch_region=${region}&api_key=${api_key}`,
+    watchProviderMovies: ({ region, pageQuery, providerId }) =>
+      `${baseUrlV3}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&watch_region=${region}&with_watch_providers=${providerId}&api_key=${api_key}`,
+    watchProviderTv: ({ region, pageQuery, providerId }) =>
+      `${baseUrlV3}/discover/tv?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&watch_region=${region}&with_watch_providers=${providerId}&api_key=${api_key}`,
+    regions: `${baseUrlV3}/watch/providers/regions?api_key=${api_key}`
   },
   network: {
     networkDetails: (id) =>

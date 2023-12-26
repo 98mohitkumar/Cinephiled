@@ -8,11 +8,13 @@ import { Error404 } from "styles/GlobalComponents";
 export default function Home({ popularMovies, popularTv, trendingMovies, trendingTv, error }) {
   if (error) {
     return (
-      <div>
-        <Error404>404</Error404>
-        <p className='text-2xl text-center'>
-          Please check your internet connection or try again later.
-        </p>
+      <div className='grid place-items-center min-h-[75vh]'>
+        <Error404 className='index-page'>
+          404
+          <p className='text-2xl text-center'>
+            Please check your internet connection or try again later.
+          </p>
+        </Error404>
       </div>
     );
   } else {
@@ -44,34 +46,36 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
 
 export async function getStaticProps() {
   try {
-    const popularMoviesRes = await fetch(apiEndpoints.movie.popularMovies);
-    const popularTvRes = await fetch(apiEndpoints.tv.popularTV);
+    const indexPageMedia = await Promise.all([
+      fetch(apiEndpoints.movie.popularMovies),
+      fetch(apiEndpoints.tv.popularTV),
+      fetch(apiEndpoints.movie.trendingMovies),
+      fetch(apiEndpoints.tv.trendingTV)
+    ]);
 
-    const trendingMoviesRes = await fetch(apiEndpoints.movie.trendingMovies);
-    const trendingTvRes = await fetch(apiEndpoints.tv.trendingTV);
+    const error = indexPageMedia.some((res) => !res.ok);
 
-    const error = popularMoviesRes.ok && popularTvRes.ok ? false : true;
+    if (error) throw new Error("Failed to fetch data");
 
-    if (error) {
-      throw new Error();
-    } else {
-      const popularMovies = await popularMoviesRes.json();
-      const popularTv = await popularTvRes.json();
+    const [popularMoviesRes, popularTvRes, trendingMoviesRes, trendingTvRes] = indexPageMedia;
 
-      const trendingMovies = await trendingMoviesRes.json();
-      const trendingTv = await trendingTvRes.json();
+    const [popularMovies, popularTv, trendingMovies, trendingTv] = await Promise.all([
+      popularMoviesRes.json(),
+      popularTvRes.json(),
+      trendingMoviesRes.json(),
+      trendingTvRes.json()
+    ]);
 
-      return {
-        props: {
-          popularMovies: popularMovies.results,
-          popularTv: popularTv.results,
-          trendingMovies: trendingMovies.results,
-          trendingTv: trendingTv.results,
-          error
-        },
-        revalidate: 3600
-      };
-    }
+    return {
+      props: {
+        popularMovies: popularMovies.results,
+        popularTv: popularTv.results,
+        trendingMovies: trendingMovies.results,
+        trendingTv: trendingTv.results,
+        error
+      },
+      revalidate: 3600
+    };
   } catch {
     return {
       props: { error: true }

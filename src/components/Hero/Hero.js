@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { apiEndpoints } from "globals/constants";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState, useRef } from "react";
+import { framerTabVariants } from "src/utils/helper";
 import { Container } from "styles/GlobalComponents";
 import { Banner, Button, Form, HeroDiv, UserInput } from "./HeroStyles";
 import SearchSuggestion from "./searchSuggestion";
@@ -29,6 +30,8 @@ const Hero = ({ searchModal }) => {
       setMovieSuggestions([]);
       setTvSuggestions([]);
     } else {
+      setShowButton(true);
+
       // fetch for suggestions
       const fetchSuggestions = async () => {
         let searchQuery = userInput;
@@ -39,63 +42,50 @@ const Hero = ({ searchModal }) => {
           searchQuery = searchQuery.slice(0, searchQuery.length - 7);
         }
 
-        if (year !== "") {
-          const movieResponse = await fetch(
-            apiEndpoints.search.movieSearchWithYear({
-              query: searchQuery,
-              year
-            })
-          );
+        if (year.trim().length > 0) {
+          const searchQueryWithYear = await Promise.all([
+            fetch(apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year })),
+            fetch(apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year }))
+          ]);
 
-          const tvResponse = await fetch(
-            apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year })
-          );
+          const error = searchQueryWithYear.some((res) => !res.ok);
+          if (error) throw new Error("error fetching data");
 
-          const error = movieResponse.ok && tvResponse.ok ? false : true;
+          const [movieResponse, tvResponse] = searchQueryWithYear;
+          const [movieRes, tvRes] = await Promise.all([movieResponse.json(), tvResponse.json()]);
 
-          if (error) {
-            throw new Error();
-          } else {
-            const movieRes = await movieResponse.json();
-            const tvRes = await tvResponse.json();
-            return {
-              movieRes: movieResponse.ok ? movieRes.results.splice(0, 10) : [],
-              tvRes: tvResponse.ok ? tvRes.results.splice(0, 10) : []
-            };
-          }
+          return {
+            movieRes: movieRes.results.splice(0, 10) || [],
+            tvRes: tvRes.results.splice(0, 10) || []
+          };
         } else {
-          const movieResponse = await fetch(
-            apiEndpoints.search.movieSearch({ query: searchQuery })
-          );
+          const searchQueryWithoutYear = await Promise.all([
+            fetch(apiEndpoints.search.movieSearch({ query: searchQuery })),
+            fetch(apiEndpoints.search.tvSearch({ query: searchQuery }))
+          ]);
 
-          const tvResponse = await fetch(apiEndpoints.search.tvSearch({ query: searchQuery }));
+          const error = searchQueryWithoutYear.some((res) => !res.ok);
+          if (error) throw new Error("error fetching data");
 
-          const error = movieResponse.ok && tvResponse.ok ? false : true;
+          const [movieResponse, tvResponse] = searchQueryWithoutYear;
+          const [movieRes, tvRes] = await Promise.all([movieResponse.json(), tvResponse.json()]);
 
-          if (error) {
-            throw new Error();
-          } else {
-            const movieRes = await movieResponse.json();
-            const tvRes = await tvResponse.json();
-            return {
-              movieRes: movieResponse.ok ? movieRes.results.splice(0, 10) : [],
-              tvRes: tvResponse.ok ? tvRes.results.splice(0, 10) : []
-            };
-          }
+          return {
+            movieRes: movieRes.results.splice(0, 10) || [],
+            tvRes: tvRes.results.splice(0, 10) || []
+          };
         }
       };
 
       fetchSuggestions()
         .then(({ movieRes, tvRes }) => {
           setMovieSuggestions(movieRes);
-          setTvSuggestions(tvRes);
+          setTvSuggestions(tvRes.map((item) => ({ ...item, type: "tv" })));
         })
         .catch(() => {
           setMovieSuggestions([]);
           setTvSuggestions([]);
         });
-
-      setShowButton(true);
     }
   }, [userInput]);
 
@@ -105,15 +95,10 @@ const Hero = ({ searchModal }) => {
     if (userInput.length === 0 || userInput.trim().length === 0) {
       return;
     } else {
-      router.push({
-        pathname: "/search/[query]",
-        query: { query: userInput }
-      });
+      router.push(`/search/${userInput.replaceAll(" ", "+")}`);
       userInputRef.current = "";
     }
   };
-
-  tvSuggestions.forEach((item) => (item.type = "tv"));
 
   const sortedSuggestion = useMemo(
     () =>
@@ -215,9 +200,10 @@ const Hero = ({ searchModal }) => {
               {sortedSuggestion.length > 0 && (
                 <motion.div
                   key='suggestions'
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  variants={framerTabVariants}
+                  initial='hidden'
+                  animate='visible'
+                  exit='hidden'
                   transition={{ duration: 0.5 }}>
                   <div className='mt-2 suggestions'>
                     {sortedSuggestion.map((item, index) => (

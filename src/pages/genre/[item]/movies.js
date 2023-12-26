@@ -12,6 +12,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
+import { getCleanTitle } from "src/utils/helper";
 import { NoDataText, Error404, ModulesWrapper } from "styles/GlobalComponents/index";
 
 const Movies = ({ renderList, genreName, error, genreId }) => {
@@ -26,7 +27,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
       <MetaWrapper
         title={error ? "Not Found - Cinephiled" : `${genreName} Movies - Cinephiled`}
         description={error ? "Not Found" : `${genreName} Movies`}
-        url={`https://cinephiled.vercel.app/genre/${genreId}-${genreName}/movies`}
+        url={`https://cinephiled.vercel.app/genre/${genreId}-${getCleanTitle(genreName)}/movies`}
       />
 
       {error ? (
@@ -47,10 +48,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                         transition: { duration: 0.1 }
                       }}
                       whileTap={{ scale: 0.95 }}>
-                      <Link
-                        href={`/movies/${id}-${title.replace(/[' ', '/']/g, "-")}`}
-                        passHref
-                        scroll={false}>
+                      <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref scroll={false}>
                         <a>
                           <RecommendedImg className='relative text-center'>
                             <Image
@@ -90,26 +88,23 @@ Movies.getInitialProps = async (ctx) => {
     const genreId = ctx.query.item.split("-")[0];
     const genreName = ctx.query.item.split("-").slice(1).join(" ");
 
-    const response = await fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 1 }));
-    const nextPage = await fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 2 }));
+    const [response, nextPage] = await Promise.all([
+      fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 1 })),
+      fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 2 }))
+    ]);
 
-    const error = response.ok ? false : true;
+    if (!response.ok) throw new Error("error fetching movies");
 
-    if (error) {
-      throw new Error("error fetching movies");
-    } else {
-      const moviesList = await response.json();
-      const secondMoviesList = await nextPage.json();
+    const [moviesList, secondMoviesList] = await Promise.all([response.json(), nextPage.json()]);
 
-      const renderList = moviesList["results"].concat(secondMoviesList.results);
+    const renderList = moviesList["results"].concat(secondMoviesList.results);
 
-      return {
-        renderList,
-        genreName,
-        genreId,
-        error
-      };
-    }
+    return {
+      renderList,
+      genreName,
+      genreId,
+      error: false
+    };
   } catch {
     return {
       error: true

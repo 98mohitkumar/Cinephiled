@@ -1,34 +1,22 @@
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { motion, AnimatePresence } from "framer-motion";
-import useInfiniteQuery from "hooks/useInfiniteQuery";
-import { useMemo, Fragment, useContext } from "react";
-import { removeDuplicates } from "src/utils/helper";
-import { MediaContext } from "Store/MediaContext";
-import { NoDataText } from "styles/GlobalComponents";
+import { Fragment } from "react";
+import { framerTabVariants, removeDuplicates } from "src/utils/helper";
+import { useMediaContext } from "Store/MediaContext";
+import { Loader, NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
 
 const MovieRecommendations = () => {
-  const { movieRecommendations } = useContext(MediaContext);
-
-  const { list: moviesList } = useInfiniteQuery({
-    initialPage: 2,
-    mediaType: "movie",
-    isProfileRecommendations: true
-  });
-
-  const extendedList = useMemo(
-    () => movieRecommendations.concat(moviesList),
-    [movieRecommendations, moviesList]
-  );
-
-  const { cleanedItems } = removeDuplicates(extendedList);
+  const { movieRecommendations } = useMediaContext();
+  const { cleanedItems } = removeDuplicates(movieRecommendations);
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      variants={framerTabVariants}
+      initial='hidden'
+      animate='visible'
+      exit='hidden'
       transition={{ duration: 0.5 }}>
       {cleanedItems.length > 0 ? (
         <CardsContainerGrid>
@@ -44,22 +32,15 @@ const MovieRecommendations = () => {
 };
 
 const TvRecommendations = () => {
-  const { tvRecommendations } = useContext(MediaContext);
-
-  const { list: tvList } = useInfiniteQuery({
-    initialPage: 2,
-    mediaType: "tv",
-    isProfileRecommendations: true
-  });
-
-  const extendedList = useMemo(() => tvRecommendations.concat(tvList), [tvList, tvRecommendations]);
-  const { cleanedItems } = removeDuplicates(extendedList);
+  const { tvRecommendations } = useMediaContext();
+  const { cleanedItems } = removeDuplicates(tvRecommendations);
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      variants={framerTabVariants}
+      initial='hidden'
+      animate='visible'
+      exit='hidden'
       transition={{ duration: 0.5 }}>
       {cleanedItems.length > 0 ? (
         <CardsContainerGrid>
@@ -75,16 +56,23 @@ const TvRecommendations = () => {
 };
 
 const ProfileRecommendations = () => {
+  const { movieRecommendationsLoading, tvRecommendationsLoading } = useMediaContext();
   return (
     <Fragment>
-      <ProfileMediaTab>
-        {(tabState) => (
-          <AnimatePresence exitBeforeEnter initial={false}>
-            {tabState === "movies" && <MovieRecommendations key='movies' />}
-            {tabState === "tv" && <TvRecommendations key='tv' />}
-          </AnimatePresence>
-        )}
-      </ProfileMediaTab>
+      {movieRecommendationsLoading || tvRecommendationsLoading ? (
+        <div className='min-h-[45vh] grid place-items-center'>
+          <Loader className='profile-page' />
+        </div>
+      ) : (
+        <ProfileMediaTab>
+          {(tabState) => (
+            <AnimatePresence exitBeforeEnter initial={false}>
+              {tabState === "movies" && <MovieRecommendations key='movies' />}
+              {tabState === "tv" && <TvRecommendations key='tv' />}
+            </AnimatePresence>
+          )}
+        </ProfileMediaTab>
+      )}
     </Fragment>
   );
 };

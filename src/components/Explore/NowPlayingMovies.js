@@ -2,7 +2,7 @@ import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import { motion } from "framer-motion";
 import { apiEndpoints } from "globals/constants";
 import { Fragment, useEffect, useState } from "react";
-import { getCountryCode } from "src/utils/helper";
+import { framerTabVariants, getCountryCode } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents";
 
 const NowPlayingMovies = () => {
@@ -37,9 +37,10 @@ const NowPlayingMovies = () => {
     <Fragment>
       {nowPlaying?.length > 0 ? (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          variants={framerTabVariants}
+          initial='hidden'
+          animate='visible'
+          exit='hidden'
           transition={{ duration: 0.75 }}
           className='pt-6 mt-6'>
           <h2 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-bold text-white text-center block mb-6'>

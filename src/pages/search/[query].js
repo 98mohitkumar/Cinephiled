@@ -41,65 +41,65 @@ Search.getInitialProps = async (ctx) => {
     //common in both
     const keywordsResponse = await fetch(apiEndpoints.search.keywordSearch({ query: searchQuery }));
 
-    if (year !== "") {
-      const movieResponse = await fetch(
-        apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year })
-      );
+    if (year.trim().length > 0) {
+      const searchQueryWithYear = await Promise.all([
+        fetch(apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year })),
+        fetch(apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year }))
+      ]);
 
-      const tvResponse = await fetch(
-        apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year })
-      );
+      const error = searchQueryWithYear.some((res) => !res.ok);
+      if (error) throw new Error("error fetching data");
 
-      const error = movieResponse.ok && tvResponse.ok ? false : true;
+      const [movieResponse, tvResponse] = searchQueryWithYear;
+      const [movieRes, tvRes, keywordsRes] = await Promise.all([
+        movieResponse.json(),
+        tvResponse.json(),
+        keywordsResponse.json()
+      ]);
 
-      if (error) {
-        throw new Error("error fetching data");
-      } else {
-        const movieRes = await movieResponse.json();
-        const tvRes = await tvResponse.json();
-        const keywordsRes = await keywordsResponse.json();
-        return {
-          movieRes: {
-            results: movieRes.results,
-            count: movieRes.total_results
-          },
-          tvRes: { results: tvRes.results, count: tvRes.total_results },
-          error,
-          searchQuery: searchQuery,
-          keywordsRes: {
-            results: keywordsRes.results,
-            count: keywordsRes.total_results
-          }
-        };
-      }
+      return {
+        movieRes: {
+          results: movieRes.results,
+          count: movieRes.total_results
+        },
+        tvRes: { results: tvRes.results, count: tvRes.total_results },
+        error,
+        searchQuery: searchQuery,
+        keywordsRes: {
+          results: keywordsRes.results,
+          count: keywordsRes.total_results
+        }
+      };
     } else {
-      const movieResponse = await fetch(apiEndpoints.search.movieSearch({ query: searchQuery }));
+      const searchQueryWithoutYear = await Promise.all([
+        fetch(apiEndpoints.search.movieSearch({ query: searchQuery })),
+        fetch(apiEndpoints.search.tvSearch({ query: searchQuery }))
+      ]);
 
-      const tvResponse = await fetch(apiEndpoints.search.tvSearch({ query: searchQuery }));
+      const error = searchQueryWithoutYear.some((res) => !res.ok);
+      if (error) throw new Error("error fetching data");
 
-      const error = movieResponse.ok || tvResponse.ok ? false : true;
+      const [movieResponse, tvResponse] = searchQueryWithoutYear;
+      const [movieRes, tvRes, keywordsRes] = await Promise.all([
+        movieResponse.json(),
+        tvResponse.json(),
+        keywordsResponse.json()
+      ]);
 
-      if (error) {
-        throw new Error("error fetching data");
-      } else {
-        const movieRes = await movieResponse.json();
-        const tvRes = await tvResponse.json();
-        const keywordsRes = await keywordsResponse.json();
-        return {
-          movieRes: {
-            results: movieRes.results,
-            count: movieRes.total_results
-          },
-          tvRes: { results: tvRes.results, count: tvRes.total_results },
-          error,
-          searchQuery: searchQuery,
-          keywordsRes: {
-            results: keywordsRes.results,
-            count: keywordsRes.total_results
-          },
-          test: movieRes
-        };
-      }
+      return {
+        movieRes: {
+          results: movieRes.results,
+          count: movieRes.total_results
+        },
+        tvRes: { results: tvRes.results, count: tvRes.total_results },
+        error,
+        searchQuery: searchQuery,
+        keywordsRes: {
+          results: keywordsRes.results,
+          count: keywordsRes.total_results
+        },
+        test: movieRes
+      };
     }
   } catch {
     return { error: true };

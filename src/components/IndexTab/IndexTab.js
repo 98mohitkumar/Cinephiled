@@ -4,6 +4,7 @@ import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
 import useTabs from "hooks/useTabs";
 import { Fragment } from "react";
+import { framerTabVariants } from "src/utils/helper";
 import { LayoutContainer } from "styles/GlobalComponents";
 
 const tabList = [
@@ -22,9 +23,10 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
         {activeTab === "movies" && (
           <motion.div
             key='movies'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={framerTabVariants}
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
             transition={{ duration: 0.5 }}>
             {/* popular movies */}
             <section>
@@ -51,9 +53,10 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
         {activeTab === "tv" && (
           <motion.div
             key='tv'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={framerTabVariants}
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
             transition={{ duration: 0.5 }}>
             {/* popular TV */}
             <section>

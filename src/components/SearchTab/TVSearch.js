@@ -4,7 +4,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { removeDuplicates, getReleaseDate } from "src/utils/helper";
+import { removeDuplicates, getReleaseDate, getCleanTitle } from "src/utils/helper";
 import { SortBy } from "./helper";
 import {
   SearchResultsContainer,
@@ -59,10 +59,7 @@ const TVSearch = ({ searchQuery, tvRes }) => {
           {(sortBy ? getRenderList(cleanedItems) : cleanedItems)?.map(
             ({ id, name, poster_path, first_air_date, overview }) => (
               <motion.div whileTap={{ scale: 0.98 }} key={id}>
-                <Link
-                  href={`/tv/${id}-${name.replace(/[' ', '/']/g, "-")}`}
-                  passHref
-                  scroll={false}>
+                <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref scroll={false}>
                   <a>
                     <QueryContainer>
                       <QueryImg className='relative text-center'>

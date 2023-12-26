@@ -127,22 +127,14 @@ const Navigation = () => {
         {showHamburgerMenu && (
           <HamburgerMenu
             as={motion.div}
+            key='hamburger-menu'
             initial={{ translateY: "-100vh" }}
-            animate={{
-              translateY: 0,
-              transition: {
-                type: "tween",
-                duration: 0.8,
-                ease: [0.77, 0, 0.175, 1]
-              }
-            }}
-            exit={{
-              translateY: "-100vh",
-              transition: {
-                type: "tween",
-                duration: 1,
-                ease: [0.77, 0, 0.175, 1]
-              }
+            animate={{ translateY: 0 }}
+            exit={{ translateY: "-100vh" }}
+            transition={{
+              type: "tween",
+              duration: 0.9,
+              ease: [0.77, 0, 0.175, 1]
             }}>
             <div className='menu-wrapper'>
               {navLinks.map(({ text, link }) => (
