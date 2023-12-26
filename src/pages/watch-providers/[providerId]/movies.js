@@ -33,7 +33,7 @@ const ProviderMovies = ({ error, media, region, providerName, providerId }) => {
           <div className='relative z-20'>
             {renderList?.length > 0 ? (
               <Fragment>
-                <h1 className='my-4 pb-5 max-sm:text-3xl text-4xl w-full text-center font-medium text-zinc-400'>
+                <h1 className='mt-2 mb-4 pb-5 max-sm:text-2xl text-4xl w-full text-center font-medium text-zinc-400'>
                   Movies available on <br className='max-sm:block hidden' />
                   <span className='text-neutral-50 font-semibold'>
                     {providerName} ({region?.iso_3166_1})

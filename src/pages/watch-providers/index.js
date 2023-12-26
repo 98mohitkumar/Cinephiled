@@ -7,6 +7,7 @@ import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import useTabs from "hooks/useTabs";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { framerTabVariants, getCleanTitle, getCountryCode } from "src/utils/helper";
 import { Error404, LayoutContainer, Loader } from "styles/GlobalComponents";
@@ -17,13 +18,17 @@ const tabList = [
 ];
 
 const WatchProviders = ({ regions }) => {
+  const router = useRouter();
+  const {
+    query: { region: selectedRegion }
+  } = router;
+
   const [{ loading, error }, setResponseState] = useState({
     loading: false,
     error: false
   });
   const [searchQuery, setSearchQuery] = useState("");
-  const [{ selectedRegion, movieProviders, tvProviders }, setProviders] = useState({
-    selectedRegion: "",
+  const [{ movieProviders, tvProviders }, setProviders] = useState({
     movieProviders: [],
     tvProviders: []
   });
@@ -90,8 +95,7 @@ const WatchProviders = ({ regions }) => {
 
     getWatchProviders()
       .then(({ movieProviders, tvProviders }) => {
-        setProviders((prev) => ({
-          selectedRegion: prev.selectedRegion,
+        setProviders({
           movieProviders: movieProviders.filter((provider) => provider.logo_path),
           tvProviders: tvProviders
             .filter((provider) => provider.logo_path)
@@ -99,7 +103,7 @@ const WatchProviders = ({ regions }) => {
               ...provider,
               tvProvider: true
             }))
-        }));
+        });
 
         setResponseState({
           loading: false,
@@ -107,11 +111,10 @@ const WatchProviders = ({ regions }) => {
         });
       })
       .catch(() => {
-        setProviders((prev) => ({
-          selectedRegion: prev.selectedRegion,
+        setProviders({
           movieProviders: [],
           tvProviders: []
-        }));
+        });
 
         setResponseState({
           loading: false,
@@ -132,15 +135,9 @@ const WatchProviders = ({ regions }) => {
 
   const handleSelectChange = (key) => {
     if (key === "default") {
-      setProviders((prev) => ({
-        ...prev,
-        selectedRegion: userRegion.current
-      }));
+      router.replace(`/watch-providers`);
     } else {
-      setProviders((prev) => ({
-        ...prev,
-        selectedRegion: key
-      }));
+      router.replace(`/watch-providers?region=${key}`);
     }
   };
 
@@ -212,7 +209,7 @@ const WatchProviders = ({ regions }) => {
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  className='mt-12 mb-4 max-sm:gap-6 gap-8 grid grid-cols-[repeat(auto-fill,minmax(min(70px,20vw),1fr))] relative z-10'>
+                  className='mt-12 mb-4 max-sm:gap-6 gap-8 grid grid-cols-[repeat(auto-fill,minmax(min(65px,20vw),1fr))] relative z-10'>
                   {currentRenderList.map((provider) => (
                     <Link
                       key={provider.provider_id}

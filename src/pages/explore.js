@@ -1,5 +1,6 @@
 import Genres from "components/Explore/Genres";
 import NowPlayingMovies from "components/Explore/NowPlayingMovies";
+import StreamingProvides from "components/Explore/Providers";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
@@ -21,6 +22,10 @@ const Explore = ({ movieGenres, tvGenres, error }) => {
           {/* genres for movies and tv shows */}
           <LayoutContainer className='mb-auto'>
             <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
+          </LayoutContainer>
+
+          <LayoutContainer className='mt-8'>
+            <StreamingProvides />
           </LayoutContainer>
 
           {/* movies that are currently in theatres */}
