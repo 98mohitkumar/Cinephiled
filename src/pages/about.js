@@ -12,7 +12,6 @@ const About = () => {
         title=' About - Cinephiled'
         description='Cinephiled - A progressive web app (PWA) to preview any movie or tv show with reviews, ratings, description and posters. Acting as a TMDB client, Cinephiled gives you access to login into your TMDB account and add movies or tv shows to your watchlist, set as favorites, rate and get personalized recommendations.'
         url='https://cinephiled.vercel.app'
-        image='https://i.imgur.com/1tH4WvQ.jpg'
       />
 
       <AboutContainer className='text-center flex items-center justify-center about-container'>

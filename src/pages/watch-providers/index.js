@@ -151,6 +151,7 @@ const WatchProviders = ({ regions }) => {
         title='Watch Providers - Cinephiled'
         description='Explore a comprehensive list of OTT/streaming providers, both locally and globally, to elevate your entertainment experience. Discover a diverse range of options available in your country and around the world, ensuring you never miss out on the latest and greatest in streaming content.'
         url='https://cinephiled.vercel.app/watch-providers'
+        image='https://raw.githubusercontent.com/98mohitkumar/Cinephiled/main/public/Images/watch-providers.webp'
       />
 
       {error ? (
