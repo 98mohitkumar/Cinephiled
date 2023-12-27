@@ -12,6 +12,7 @@ const StreamingProvides = () => {
           alt='Watch Providers'
           layout='fill'
           loading='eager'
+          placeholder='blur'
           className='object-cover object-left-top group-hover:scale-105 transition-transform'
         />
       </div>
