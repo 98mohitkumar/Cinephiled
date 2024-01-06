@@ -1,9 +1,10 @@
+import Loading from "components/Loading";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
+import PlaceholderText from "components/PlaceholderText";
 import { motion, AnimatePresence } from "framer-motion";
 import { Fragment } from "react";
 import { framerTabVariants, removeDuplicates } from "src/utils/helper";
 import { useMediaContext } from "Store/MediaContext";
-import { Loader, NoDataText } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
 
@@ -25,7 +26,7 @@ const MovieRecommendations = () => {
           ))}
         </CardsContainerGrid>
       ) : (
-        <NoDataText className='font-bold text-center my-5'>No recommendations for now</NoDataText>
+        <PlaceholderText>No recommendations for now</PlaceholderText>
       )}
     </motion.div>
   );
@@ -49,7 +50,7 @@ const TvRecommendations = () => {
           ))}
         </CardsContainerGrid>
       ) : (
-        <NoDataText className='font-bold text-center my-5'>No recommendations for now</NoDataText>
+        <PlaceholderText>No recommendations for now</PlaceholderText>
       )}
     </motion.div>
   );
@@ -60,9 +61,7 @@ const ProfileRecommendations = () => {
   return (
     <Fragment>
       {movieRecommendationsLoading || tvRecommendationsLoading ? (
-        <div className='min-h-[45vh] grid place-items-center'>
-          <Loader className='profile-page' />
-        </div>
+        <Loading />
       ) : (
         <ProfileMediaTab>
           {(tabState) => (

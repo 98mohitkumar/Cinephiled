@@ -1,14 +1,15 @@
 import { setFavorite } from "api/user";
+import Loading from "components/Loading";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
-import { useModal } from "components/RatingModal/RatingModal";
+import Modal, { useModal } from "components/Modal/Modal";
+import PlaceholderText from "components/PlaceholderText";
 import { motion, AnimatePresence } from "framer-motion";
 import { Fragment } from "react";
 import { framerTabVariants, getReleaseYear } from "src/utils/helper";
 import { useMediaContext } from "Store/MediaContext";
-import { Loader, NoDataText } from "styles/GlobalComponents";
+import { Button } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
-import { ConfirmationModal, CTAButton, ModalCard } from "./ProfilePageStyles";
 
 export const FavoritesCTA = ({ clickHandler, mediaData }) => {
   const { isModalVisible, openModal, closeModal } = useModal();
@@ -16,56 +17,43 @@ export const FavoritesCTA = ({ clickHandler, mediaData }) => {
 
   return (
     <Fragment>
-      <AnimatePresence exitBeforeEnter initial={false}>
-        {isModalVisible ? (
-          <ConfirmationModal
-            as={motion.div}
-            key='rating-modal'
-            variants={framerTabVariants}
-            initial='hidden'
-            animate='visible'
-            exit='hidden'
-            transition={{ duration: 0.5 }}>
-            <ModalCard>
-              <h5 className='m-0'>
-                Are you sure you want to remove{" "}
-                <span className='inline font-bold'>{`${name} (${getReleaseYear(
-                  releaseDate
-                )})`}</span>{" "}
-                from favorites
-              </h5>
+      <Modal isOpen={isModalVisible} closeModal={closeModal} align='items-center' width='max-w-lg'>
+        <div>
+          <h5 className='m-0'>
+            Are you sure you want to remove{" "}
+            <span className='inline font-bold'>{`${name} (${getReleaseYear(releaseDate)})`}</span>{" "}
+            from favorites
+          </h5>
 
-              <div className='flex justify-between items-center pt-4 gap-4'>
-                <CTAButton
-                  className='secondary'
-                  onClick={closeModal}
-                  as={motion.button}
-                  whileTap={{ scale: 0.95 }}>
-                  Keep it
-                </CTAButton>
-                <CTAButton
-                  onClick={() => {
-                    closeModal();
-                    clickHandler();
-                  }}
-                  as={motion.button}
-                  whileTap={{ scale: 0.95 }}
-                  className='text-gray-950'>
-                  Remove it
-                </CTAButton>
-              </div>
-            </ModalCard>
-          </ConfirmationModal>
-        ) : null}
-      </AnimatePresence>
+          <div className='flex justify-between items-center pt-4 gap-4'>
+            <Button
+              className='secondary w-full'
+              onClick={closeModal}
+              as={motion.button}
+              whileTap={{ scale: 0.95 }}>
+              Keep it
+            </Button>
+            <Button
+              onClick={() => {
+                closeModal();
+                clickHandler();
+              }}
+              as={motion.button}
+              whileTap={{ scale: 0.95 }}
+              className='danger w-full'>
+              Remove it
+            </Button>
+          </div>
+        </div>
+      </Modal>
 
-      <CTAButton
+      <Button
         as={motion.button}
         whileTap={{ scale: 0.95 }}
         onClick={openModal}
-        className='secondary text-red-500'>
+        className='danger w-full'>
         Remove
-      </CTAButton>
+      </Button>
     </Fragment>
   );
 };
@@ -105,9 +93,7 @@ const Favorites = () => {
   return (
     <Fragment>
       {favoriteMoviesLoading || favoriteTvShowsLoading ? (
-        <div className='min-h-[45vh] grid place-items-center'>
-          <Loader className='profile-page' />
-        </div>
+        <Loading />
       ) : (
         <ProfileMediaTab>
           {(tabState) => (
@@ -135,9 +121,7 @@ const Favorites = () => {
                       ))}
                     </CardsContainerGrid>
                   ) : (
-                    <NoDataText className='font-bold text-center my-5'>
-                      No Movies marked as favorite yet
-                    </NoDataText>
+                    <PlaceholderText>No Movies marked as favorite yet</PlaceholderText>
                   )}
                 </motion.div>
               )}
@@ -165,9 +149,7 @@ const Favorites = () => {
                       ))}
                     </CardsContainerGrid>
                   ) : (
-                    <NoDataText className='font-bold text-center my-5'>
-                      No TV shows marked as favorite yet
-                    </NoDataText>
+                    <PlaceholderText>No TV Shows marked as favorite yet</PlaceholderText>
                   )}
                 </motion.div>
               )}

@@ -1,13 +1,15 @@
+import Loading from "components/Loading";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
-import RatingModal, { useModal } from "components/RatingModal/RatingModal";
+import { useModal } from "components/Modal/Modal";
+import PlaceholderText from "components/PlaceholderText";
+import RatingModal from "components/RatingModal/RatingModal";
 import { AnimatePresence, motion } from "framer-motion";
 import { Fragment } from "react";
 import { framerTabVariants, getReleaseYear } from "src/utils/helper";
 import { useMediaContext } from "Store/MediaContext";
-import { Loader, NoDataText } from "styles/GlobalComponents";
+import { Button } from "styles/GlobalComponents";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
-import { CTAButton } from "./ProfilePageStyles";
 
 const RatingCTA = ({ mediaData }) => {
   const { isModalVisible, openModal, closeModal } = useModal();
@@ -15,28 +17,20 @@ const RatingCTA = ({ mediaData }) => {
 
   return (
     <Fragment>
-      <AnimatePresence exitBeforeEnter initial={false}>
-        {isModalVisible ? (
-          <RatingModal
-            key='rating-modal'
-            mediaType={type}
-            mediaId={id}
-            posterPath={posterPath}
-            releaseDate={releaseDate}
-            title={name}
-            closeModal={closeModal}
-            mediaName={`${name} (${getReleaseYear(releaseDate)})`}
-          />
-        ) : null}
-      </AnimatePresence>
+      <RatingModal
+        mediaType={type}
+        mediaId={id}
+        isOpen={isModalVisible}
+        posterPath={posterPath}
+        releaseDate={releaseDate}
+        title={name}
+        closeModal={closeModal}
+        mediaName={`${name} (${getReleaseYear(releaseDate)})`}
+      />
 
-      <CTAButton
-        as={motion.button}
-        whileTap={{ scale: 0.95 }}
-        onClick={openModal}
-        className='text-gray-950'>
+      <Button as={motion.button} whileTap={{ scale: 0.95 }} onClick={openModal} className='w-full'>
         Edit Rating
-      </CTAButton>
+      </Button>
     </Fragment>
   );
 };
@@ -46,9 +40,7 @@ const Ratings = () => {
   return (
     <Fragment>
       {ratedMoviesLoading || ratedTvShowsLoading ? (
-        <div className='min-h-[45vh] grid place-items-center'>
-          <Loader className='profile-page' />
-        </div>
+        <Loading />
       ) : (
         <ProfileMediaTab>
           {(tabState) => (
@@ -82,9 +74,7 @@ const Ratings = () => {
                       ))}
                     </CardsContainerGrid>
                   ) : (
-                    <NoDataText className='font-bold text-center my-5'>
-                      No Movies rated yet
-                    </NoDataText>
+                    <PlaceholderText>No movies rated yet</PlaceholderText>
                   )}
                 </motion.div>
               )}
@@ -113,9 +103,7 @@ const Ratings = () => {
                       ))}
                     </CardsContainerGrid>
                   ) : (
-                    <NoDataText className='font-bold text-center my-5'>
-                      No TV shows rated yet
-                    </NoDataText>
+                    <PlaceholderText>No TV Shows rated yet</PlaceholderText>
                   )}
                 </motion.div>
               )}

@@ -1,14 +1,14 @@
 import { setFavorite, addToWatchlist } from "api/user";
 import DominantColor from "components/DominantColor/DominantColor";
+import AddToListModal from "components/List/AddToListModal";
+import { useModal } from "components/Modal/Modal";
 import {
   Credits,
   CreditsWrapper,
-  Divider,
   GenreWrap,
   Gradient,
   HeroInfoTitle,
   HeroInfoWrapper,
-  FeatureButton,
   Overview,
   RatingWrapper,
   Rounded,
@@ -17,7 +17,7 @@ import {
   Tagline
 } from "components/MovieInfo/MovieDetailsStyles";
 import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
-import RatingModal, { useModal } from "components/RatingModal/RatingModal";
+import RatingModal from "components/RatingModal/RatingModal";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import Toast, { useToast } from "components/Toast/Toast";
 import { motion, AnimatePresence } from "framer-motion";
@@ -29,10 +29,11 @@ import { AiFillStar } from "react-icons/ai";
 import { BiListPlus, BiListCheck } from "react-icons/bi";
 import { BsStarHalf } from "react-icons/bs";
 import { FaYoutube, FaHeart, FaRegHeart } from "react-icons/fa";
-import { framerTabVariants, getCleanTitle, getRating, getRuntime } from "src/utils/helper";
+import { framerTabVariants, getCleanTitle, getRating } from "src/utils/helper";
 import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import {
+  Button,
   DetailsHeroWrap,
   HeroBg,
   HeroBgContainer,
@@ -52,7 +53,6 @@ const TVDetails = ({
     socialIds,
     rating,
     genres,
-    runtime,
     tagline,
     trailerLink,
     homepage,
@@ -108,7 +108,7 @@ const TVDetails = ({
         showToast({ message: "Something went wrong, try again later" });
       }
     } else if (!isToastVisible) {
-      showToast({ message: "Login first to use this feature" });
+      showToast({ message: "Please login first to use this feature" });
     }
   };
 
@@ -142,7 +142,7 @@ const TVDetails = ({
         showToast({ message: "Something went wrong, try again later" });
       }
     } else if (!isToastVisible) {
-      showToast({ message: "Login first to use this feature" });
+      showToast({ message: "Please login first to use this feature" });
     }
   };
 
@@ -150,7 +150,7 @@ const TVDetails = ({
     if (userInfo?.accountId) {
       openModal();
     } else {
-      showToast({ message: "Login first to use this feature" });
+      showToast({ message: "Please login first to use this feature" });
     }
   };
 
@@ -199,17 +199,21 @@ const TVDetails = ({
                   rel='noreferrer'
                   aria-label='play trailer'
                   className='block mb-3'>
-                  <FeatureButton>
+                  <Button className='w-full gap-3' as={motion.button} whileTap={{ scale: 0.95 }}>
                     <FaYoutube size='1.5rem' />
-                    <Span>Play Trailer</Span>
-                  </FeatureButton>
+                    <Span className='font-semibold'>Play Trailer</Span>
+                  </Button>
                 </a>
               )}
 
+              <div className='mb-3'>
+                <AddToListModal mediaType='tv' mediaId={id} />
+              </div>
+
               <div className='flex justify-start gap-4'>
-                <FeatureButton
-                  className='mediaCTA'
-                  disabled={isToastVisible}
+                <Button
+                  className='mediaCTA w-full'
+                  loading={+isToastVisible}
                   aria-label='watchlist button'
                   as={motion.button}
                   whileTap={{ scale: 0.95 }}
@@ -229,11 +233,11 @@ const TVDetails = ({
                       )}
                     </motion.div>
                   </AnimatePresence>
-                </FeatureButton>
+                </Button>
 
-                <FeatureButton
-                  className='mediaCTA'
-                  disabled={isToastVisible}
+                <Button
+                  className='mediaCTA w-full'
+                  loading={+isToastVisible}
                   aria-label='favorite button'
                   onClick={favoriteHandler}
                   as={motion.button}
@@ -249,11 +253,11 @@ const TVDetails = ({
                       {isAddedToFavorites ? <FaHeart size='20px' /> : <FaRegHeart size='20px' />}
                     </motion.div>
                   </AnimatePresence>
-                </FeatureButton>
+                </Button>
 
-                <FeatureButton
-                  className='mediaCTA'
-                  disabled={isToastVisible}
+                <Button
+                  className='mediaCTA w-full'
+                  loading={+isToastVisible}
                   aria-label='rating button'
                   as={motion.button}
                   whileTap={{ scale: 0.95 }}
@@ -269,14 +273,14 @@ const TVDetails = ({
                       {savedRating ? (
                         <RatingOverlay className='media-page'>
                           <AiFillStar size='16px' />
-                          <p className='m-0 font-semibold text'>{savedRating}</p>
+                          <p className='m-0 font-semibold leading-tight'>{savedRating}</p>
                         </RatingOverlay>
                       ) : (
                         <BsStarHalf size='20px' />
                       )}
                     </motion.div>
                   </AnimatePresence>
-                </FeatureButton>
+                </Button>
               </div>
             </div>
             <SocialMediaLinks links={socialIds} homepage={homepage} />
@@ -303,11 +307,8 @@ const TVDetails = ({
                       </a>
                     </Link>
                   ))}
-                  <Divider />
                 </GenreWrap>
               ) : null}
-
-              <Span className='font-medium'>{getRuntime(runtime)}</Span>
             </RtoR>
 
             {tagline ? (
@@ -345,26 +346,20 @@ const TVDetails = ({
         </DetailsHeroWrap>
       </HeroDetailsContainer>
 
-      <AnimatePresence exitBeforeEnter initial={false}>
-        {isToastVisible ? (
-          <Toast key='toast'>
-            <Span className='movieCastHead'>{toastMessage}</Span>
-          </Toast>
-        ) : null}
+      <Toast isToastVisible={isToastVisible}>
+        <Span className='movieCastHead'>{toastMessage}</Span>
+      </Toast>
 
-        {isModalVisible ? (
-          <RatingModal
-            key='rating-modal'
-            mediaType='tv'
-            mediaId={id}
-            posterPath={posterPath}
-            title={title}
-            releaseDate={airDate}
-            closeModal={closeModal}
-            mediaName={`${title} (${releaseYear})`}
-          />
-        ) : null}
-      </AnimatePresence>
+      <RatingModal
+        mediaType='tv'
+        mediaId={id}
+        posterPath={posterPath}
+        title={title}
+        releaseDate={airDate}
+        isOpen={isModalVisible}
+        closeModal={closeModal}
+        mediaName={`${title} (${releaseYear})`}
+      />
     </Fragment>
   );
 };

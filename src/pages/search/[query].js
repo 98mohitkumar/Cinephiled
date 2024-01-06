@@ -2,7 +2,8 @@ import MetaWrapper from "components/MetaWrapper";
 import SearchTab from "components/SearchTab/SearchTab";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
-import { BadQuery, Error404, SearchContainer } from "styles/GlobalComponents";
+import { fetchOptions } from "src/utils/helper";
+import { BadQuery, Error404 } from "styles/GlobalComponents";
 
 const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
   return (
@@ -16,9 +17,7 @@ const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
       {error ? (
         <Error404>404</Error404>
       ) : movieRes?.results?.length > 0 || tvRes?.results?.length > 0 ? (
-        <SearchContainer>
-          <SearchTab search={searchQuery} movies={movieRes} tv={tvRes} keywords={keywordsRes} />
-        </SearchContainer>
+        <SearchTab search={searchQuery} movies={movieRes} tv={tvRes} keywords={keywordsRes} />
       ) : (
         <div className='fixed inset-0 flex items-center justify-center'>
           <BadQuery>{"Bad Query :("}</BadQuery>
@@ -39,12 +38,18 @@ Search.getInitialProps = async (ctx) => {
     }
 
     //common in both
-    const keywordsResponse = await fetch(apiEndpoints.search.keywordSearch({ query: searchQuery }));
+    const keywordsResponse = await fetch(
+      apiEndpoints.search.keywordSearch({ query: searchQuery }),
+      fetchOptions()
+    );
 
     if (year.trim().length > 0) {
       const searchQueryWithYear = await Promise.all([
-        fetch(apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year })),
-        fetch(apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year }))
+        fetch(
+          apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }),
+          fetchOptions()
+        ),
+        fetch(apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year }), fetchOptions())
       ]);
 
       const error = searchQueryWithYear.some((res) => !res.ok);
@@ -72,8 +77,8 @@ Search.getInitialProps = async (ctx) => {
       };
     } else {
       const searchQueryWithoutYear = await Promise.all([
-        fetch(apiEndpoints.search.movieSearch({ query: searchQuery })),
-        fetch(apiEndpoints.search.tvSearch({ query: searchQuery }))
+        fetch(apiEndpoints.search.movieSearch({ query: searchQuery }), fetchOptions()),
+        fetch(apiEndpoints.search.tvSearch({ query: searchQuery }), fetchOptions())
       ]);
 
       const error = searchQueryWithoutYear.some((res) => !res.ok);

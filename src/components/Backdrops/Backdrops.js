@@ -1,8 +1,8 @@
 import DownloadMediaButton from "components/DownloadMediaButton/DownloadMediaButton";
+import PlaceholderText from "components/PlaceholderText";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import { Fragment } from "react";
-import { NoDataText } from "styles/GlobalComponents";
 import { BackdropsImg, BackdropsImgContainer, BackdropsWrapper } from "./BackdropsStyles";
 
 const Backdrops = ({ backdrops }) => {
@@ -30,7 +30,7 @@ const Backdrops = ({ backdrops }) => {
           ))}
         </BackdropsWrapper>
       ) : (
-        <NoDataText className='font-bold text-center my-5'>No Backdrops Yet</NoDataText>
+        <PlaceholderText>No Backdrops Yet</PlaceholderText>
       )}
     </Fragment>
   );

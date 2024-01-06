@@ -4,6 +4,7 @@ import StreamingProvides from "components/Explore/Providers";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
+import { fetchOptions } from "src/utils/helper";
 import { LayoutContainer, Error404 } from "styles/GlobalComponents";
 
 const Explore = ({ movieGenres, tvGenres, error }) => {
@@ -39,8 +40,8 @@ const Explore = ({ movieGenres, tvGenres, error }) => {
 Explore.getInitialProps = async () => {
   try {
     const genres = await Promise.all([
-      fetch(apiEndpoints.movie.movieGenreList),
-      fetch(apiEndpoints.tv.tvGenreList)
+      fetch(apiEndpoints.movie.movieGenreList, fetchOptions()),
+      fetch(apiEndpoints.tv.tvGenreList, fetchOptions())
     ]);
 
     const error = genres.some((res) => !res.ok);

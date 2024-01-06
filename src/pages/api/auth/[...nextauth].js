@@ -18,13 +18,12 @@ export default NextAuth({
   },
   callbacks: {
     session: async ({ session, token }) => {
-      session.user.sessionId = token?.session_id;
       session.user.accountId = token?.account_id;
       session.user.accessToken = token?.access_token;
       return session;
     },
     jwt: async ({ user, token }) => {
-      if (user?.session_id) {
+      if (user?.account_id) {
         token = user;
       }
       return token;

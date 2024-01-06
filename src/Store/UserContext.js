@@ -1,6 +1,7 @@
 import { apiEndpoints } from "globals/constants";
 import { useSession } from "next-auth/react";
 import { useState, createContext, useEffect, useContext } from "react";
+import { fetchOptions } from "src/utils/helper";
 
 const UserContext = createContext({
   userInfo: {},
@@ -25,7 +26,8 @@ export default function UserContextProvider({ children }) {
     if (status === "authenticated" && !userInfo?.accountId) {
       const getUserInfo = async () => {
         const profileRes = await fetch(
-          apiEndpoints.user.userInfo({ sessionId: data?.user?.sessionId })
+          apiEndpoints.user.userInfo({ accountId: data?.user?.accountId }),
+          fetchOptions({ token: data?.user?.accessToken })
         );
 
         if (profileRes.ok) {

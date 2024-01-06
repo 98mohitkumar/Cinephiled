@@ -7,7 +7,6 @@ export const Colorful = styled.div`
     `linear-gradient(90deg, ${palette?.[0]}, ${palette?.[1] + "8e"})`};
 
   &.tint {
-    opacity: 0.4;
     background-image: ${({ flip }) =>
       `linear-gradient(${flip ? "180deg" : "0deg"}, #ccbdb463, #392a28d6, #121212)`};
     background-image: ${({ palette, flip }) =>

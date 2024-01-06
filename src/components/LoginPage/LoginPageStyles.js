@@ -109,26 +109,3 @@ export const Integration = styled.div`
   align-items: center;
   gap: 1.5rem;
 `;
-
-export const LoginButton = styled.button`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.25rem;
-  border-radius: 8px;
-  max-width: 250px;
-  font-size: 1.1rem;
-  border: none;
-  font-weight: 500;
-  background: rgb(221, 221, 221);
-
-  ${({ isWaiting }) => isWaiting && "pointer-events: none"};
-
-  &.secondary {
-    background-color: transparent;
-    color: white;
-    border: 1px solid rgb(81 81 81 / 0.8);
-    margin-top: 12px;
-  }
-`;

@@ -5,6 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
 import { Fragment, useEffect, useState } from "react";
+import ListsContextProvider from "Store/ListsContext";
 import MediaContextProvider from "Store/MediaContext";
 import UserContextProvider from "Store/UserContext";
 import { Loader } from "styles/GlobalComponents";
@@ -27,6 +28,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     router.events.on("routeChangeStart", handleStart);
     router.events.on("routeChangeComplete", handleComplete);
     router.events.on("routeChangeError", handleComplete);
+
+    return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
+    };
   }, [router]);
 
   return (
@@ -38,17 +45,19 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <Theme>
         <SessionProvider session={session} refetchOnWindowFocus={false}>
           <UserContextProvider>
-            <MediaContextProvider>
-              <AnimatePresence exitBeforeEnter>
-                {isLoading ? (
-                  <Loader />
-                ) : (
-                  <Layout key={router.pathname}>
-                    <Component {...pageProps} />
-                  </Layout>
-                )}
-              </AnimatePresence>
-            </MediaContextProvider>
+            <ListsContextProvider>
+              <MediaContextProvider>
+                <AnimatePresence exitBeforeEnter>
+                  {isLoading ? (
+                    <Loader />
+                  ) : (
+                    <Layout key={router.pathname}>
+                      <Component {...pageProps} />
+                    </Layout>
+                  )}
+                </AnimatePresence>
+              </MediaContextProvider>
+            </ListsContextProvider>
           </UserContextProvider>
         </SessionProvider>
       </Theme>

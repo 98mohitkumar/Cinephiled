@@ -1,33 +1,14 @@
 import { deleteRating, setRating } from "api/user";
+import Modal, { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import { useToast } from "components/Toast/Toast";
+import Toast, { useToast } from "components/Toast/Toast";
 import { motion } from "framer-motion";
 import { useState, Fragment } from "react";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { framerTabVariants } from "src/utils/helper";
 import { useMediaContext } from "Store/MediaContext";
-import {
-  RatingButton,
-  RatingCard,
-  RatingModalContainer,
-  RatingStarsContainer
-} from "./RatingStyles";
-
-export const useModal = () => {
-  const [isModalVisible, setShowModal] = useState(false);
-
-  const openModal = () => {
-    document.body.style.overflow = "hidden";
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    document.body.style.overflow = "auto";
-    setShowModal(false);
-  };
-
-  return { isModalVisible, openModal, closeModal };
-};
+import { Button } from "styles/GlobalComponents";
+import { RatingStarsContainer } from "./RatingStyles";
 
 const RatingModal = ({
   mediaType,
@@ -36,14 +17,19 @@ const RatingModal = ({
   closeModal,
   posterPath,
   releaseDate,
+  isOpen,
   title
 }) => {
   const [rating, updateRating] = useState(0);
   const { ratedMovies, ratedTvShows, validateRatedMovies, validateRatedTvShows } =
     useMediaContext();
-  const { showToast } = useToast();
+  const { showToast, isToastVisible, toastMessage } = useToast();
 
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const {
+    isModalVisible: isDeleteConfirmationModalVisible,
+    openModal: openDeleteConfirmationModal,
+    closeModal: closeDeleteConfirmationModal
+  } = useModal();
 
   const savedRating =
     mediaType === "movie"
@@ -96,11 +82,14 @@ const RatingModal = ({
             media: updatedRatedTvShows
           });
         }
+
+        showToast({ message: "Rating submitted successfully" });
       } else {
         showToast({ message: "Something went wrong, please try again later" });
       }
     }
     closeModal();
+    updateRating(0);
   };
 
   const deleteRatingHandler = async () => {
@@ -119,19 +108,23 @@ const RatingModal = ({
         });
       }
     }
+    closeDeleteConfirmationModal();
+  };
+
+  const cancelButtonHandler = () => {
     closeModal();
+    updateRating(0);
+  };
+
+  const deleteButtonHandler = () => {
+    closeModal();
+    openDeleteConfirmationModal();
   };
 
   return (
-    <RatingModalContainer
-      as={motion.div}
-      variants={framerTabVariants}
-      initial='hidden'
-      animate='visible'
-      exit='hidden'
-      transition={{ duration: 0.5 }}>
-      {!showConfirmation ? (
-        <RatingCard>
+    <Fragment>
+      <Modal isOpen={isOpen} closeModal={cancelButtonHandler} align='items-center' width='max-w-lg'>
+        <div>
           <Span className='block mb-4 font-semibold'>{mediaName}</Span>
 
           {savedRating && rating === 0 ? (
@@ -150,18 +143,18 @@ const RatingModal = ({
                   </Span>
                   <Span
                     className='text-base font-semibold rating-option text-red-600'
-                    onClick={() => setShowConfirmation(true)}>
+                    onClick={deleteButtonHandler}>
                     Delete
                   </Span>
                 </div>
               </div>
-              <RatingButton
-                className='secondary full-width'
+              <Button
+                className='secondary w-full'
                 onClick={closeModal}
                 as={motion.button}
                 whileTap={{ scale: 0.95 }}>
                 Close
-              </RatingButton>
+              </Button>
             </Fragment>
           ) : (
             <Fragment>
@@ -176,6 +169,7 @@ const RatingModal = ({
                   Your rating : <strong>{rating}/10</strong>
                 </Span>
               )}
+
               <div className='flex items-center my-4 gap-2'>
                 <Span className='font-normal'>Rate :</Span>
                 <RatingStarsContainer>
@@ -190,56 +184,60 @@ const RatingModal = ({
               </div>
 
               <div className='flex justify-between items-center gap-4'>
-                <RatingButton
-                  className='secondary'
-                  onClick={closeModal}
+                <Button
+                  className='secondary w-full'
+                  onClick={cancelButtonHandler}
                   as={motion.button}
                   whileTap={{ scale: 0.95 }}>
                   Cancel
-                </RatingButton>
-                <RatingButton
+                </Button>
+                <Button
                   onClick={ratingSubmissionHandler}
                   as={motion.button}
                   whileTap={{ scale: 0.95 }}
-                  className='text-gray-950'>
+                  className='w-full'>
                   Submit
-                </RatingButton>
+                </Button>
               </div>
             </Fragment>
           )}
-        </RatingCard>
-      ) : (
-        <RatingCard
-          key='rating-delete-confirmation'
-          as={motion.div}
-          variants={framerTabVariants}
-          initial='hidden'
-          animate='visible'
-          transition={{ duration: 0.5 }}>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={isDeleteConfirmationModalVisible}
+        closeModal={closeDeleteConfirmationModal}
+        align='items-center'
+        width='max-w-lg'>
+        <div>
           <h5 className='mb-4'>
             Are you sure you want to delete <span className='inline font-bold'>{mediaName}</span>{" "}
             rating
           </h5>
 
           <div className='flex justify-between items-center gap-4'>
-            <RatingButton
-              className='secondary'
-              onClick={closeModal}
+            <Button
+              className='secondary w-full'
+              onClick={closeDeleteConfirmationModal}
               as={motion.button}
               whileTap={{ scale: 0.95 }}>
               Keep it
-            </RatingButton>
-            <RatingButton
+            </Button>
+            <Button
               onClick={deleteRatingHandler}
               as={motion.button}
               whileTap={{ scale: 0.95 }}
-              className='text-gray-950'>
+              className='danger w-full'>
               Remove it
-            </RatingButton>
+            </Button>
           </div>
-        </RatingCard>
-      )}
-    </RatingModalContainer>
+        </div>
+      </Modal>
+
+      <Toast isToastVisible={isToastVisible}>
+        <Span className='toast-message'>{toastMessage}</Span>
+      </Toast>
+    </Fragment>
   );
 };
 

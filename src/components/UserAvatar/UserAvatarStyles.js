@@ -37,10 +37,11 @@ export const Avatar = styled.div`
 export const Popup = styled.div`
   position: absolute;
   top: 60px;
-  min-width: 140px;
+  min-width: 160px;
   border-radius: 8px;
   overflow: hidden;
-  background-color: rgb(18 18 18 / 0.8);
+  background-color: rgb(18 18 18 / 0.9);
+  backdrop-filter: blur(2px);
   box-shadow: 0px 0px 5px 2px hsla(0, 0%, 0%, 0.14), 0px 0px 22px 4px hsla(0, 0%, 0%, 0.12),
     0px 0px 8px -4px hsla(0, 0%, 0%, 0.2);
   border: 1px solid rgb(81 81 81 / 0.5);
@@ -54,7 +55,7 @@ export const PopupOption = styled.div`
   transition: all 0.4s ease-in-out;
 
   &:not(:last-of-type) {
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   @media only ${({ theme }) => theme.breakpoints.hover} {

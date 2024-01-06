@@ -39,25 +39,25 @@ const NetworkMedia = ({ details, media }) => {
   return (
     <Fragment>
       <NetwrokDetailsWrapper>
-        <PostersGrid className={postersLength <= 10 ? "alt-grid" : ""} colCount={colCount || 10}>
-          {postersLength > 0
-            ? posters.map((poster, i) => (
-                <PostersImg key={`item -${i}`} className='relative poster-wrapper'>
-                  <Image
-                    src={poster}
-                    alt={`${details?.name}-poster`}
-                    layout='fill'
-                    objectFit='cover'
-                    placeholder='blur'
-                    loading='eager'
-                    blurDataURL={blurPlaceholder}
-                  />
-                </PostersImg>
-              ))
-            : null}
-        </PostersGrid>
+        {postersLength > 0 ? (
+          <PostersGrid className={postersLength <= 10 ? "alt-grid" : ""} colCount={colCount || 10}>
+            {posters.map((poster, i) => (
+              <PostersImg key={`item -${i}`} className='relative poster-wrapper'>
+                <Image
+                  src={poster}
+                  alt={`${details?.name}-poster`}
+                  layout='fill'
+                  objectFit='cover'
+                  placeholder='blur'
+                  loading='eager'
+                  blurDataURL={blurPlaceholder}
+                />
+              </PostersImg>
+            ))}
+          </PostersGrid>
+        ) : null}
 
-        <div className='text-center network-info p-4 mb-4'>
+        <div className='text-center network-info p-8 mb-4'>
           <div
             className='logo-wrapper m-auto'
             style={{

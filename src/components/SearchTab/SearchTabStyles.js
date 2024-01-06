@@ -1,25 +1,25 @@
 import styled, { css } from "styled-components";
 
 export const tabStyling = css`
-  width: clamp(350px, 90vw, 850px);
-  margin: 0rem auto 3rem;
+  width: clamp(300px, 90vw, 850px);
+  margin: 3rem auto;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     height: 4rem;
-    font-size: 18px;
-    margin: 0rem auto 3rem;
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    font-size: 14px;
-    width: 100%;
-    margin: 0rem auto 1.75rem;
+    margin: 1.75rem auto;
   }
 `;
 
 export const tabTitleStyling = css`
+  @media only ${(props) => props.theme.breakpoints.md} {
+    font-size: 16px;
+  }
+
   @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 0rem;
+    padding: 0rem 0.5rem;
     font-size: 14px;
   }
 `;
@@ -45,13 +45,8 @@ export const SearchHeading = styled.h1`
 `;
 
 export const SearchResultsContainer = styled.div`
-  width: clamp(350px, 90vw, 1400px);
+  width: clamp(330px, 90vw, 1400px);
   margin: auto;
-`;
-
-export const EmptySearch = styled.h3`
-  padding: 2rem 0rem;
-  font-weight: 500;
 `;
 
 export const QueryContainer = styled.div`

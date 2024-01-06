@@ -1,5 +1,6 @@
 import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import TVTemplate from "components/MediaTemplate/TVTemplate";
+import PlaceholderText from "components/PlaceholderText";
 import Select from "components/Select/Select";
 import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
@@ -105,12 +106,10 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
                 />
               </div>
 
-              {creditsToRender?.length ? (
+              {creditsToRender?.length > 0 ? (
                 <MoviesTemplate movies={creditsToRender} creditsPage />
               ) : (
-                <div className='text-center text-3xl font-semibold min-h-[10vw] grid place-items-center'>
-                  No Movie credits yet
-                </div>
+                <PlaceholderText>No Movie credits yet</PlaceholderText>
               )}
             </motion.div>
           )}
@@ -139,12 +138,10 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
                 />
               </div>
 
-              {creditsToRender?.length ? (
+              {creditsToRender?.length > 0 ? (
                 <TVTemplate TV={creditsToRender} creditsPage />
               ) : (
-                <div className='text-center text-3xl font-semibold min-h-[10vw] grid place-items-center'>
-                  No TV show credits yet
-                </div>
+                <PlaceholderText>No TV Show credits yet</PlaceholderText>
               )}
             </motion.div>
           )}

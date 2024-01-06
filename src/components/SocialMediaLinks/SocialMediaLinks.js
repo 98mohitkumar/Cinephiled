@@ -1,13 +1,9 @@
-import { BiLink } from 'react-icons/bi';
-import { FiFacebook, FiTwitter, FiInstagram } from 'react-icons/fi';
-import { SocialMediaLinksWrapper } from 'styles/GlobalComponents';
+import { BiLink } from "react-icons/bi";
+import { FiFacebook, FiTwitter, FiInstagram } from "react-icons/fi";
+import { SocialMediaLinksWrapper } from "styles/GlobalComponents";
 
 const SocialMediaLinks = ({ links, homepage }) => {
-  const display =
-    !links?.facebook_id &&
-    !links?.instagram_id &&
-    !links?.twitter_id &&
-    !homepage;
+  const display = !links?.facebook_id && !links?.instagram_id && !links?.twitter_id && !homepage;
 
   return (
     <SocialMediaLinksWrapper notShow={display}>
@@ -15,9 +11,9 @@ const SocialMediaLinks = ({ links, homepage }) => {
         <a
           href={`https://facebook.com/${links?.facebook_id}`}
           target='_blank'
+          className='link'
           rel='noreferrer'
-          aria-label='facebook'
-        >
+          aria-label='facebook'>
           <FiFacebook size='1.6rem' />
         </a>
       )}
@@ -26,9 +22,9 @@ const SocialMediaLinks = ({ links, homepage }) => {
         <a
           href={`https://instagram.com/${links?.instagram_id}`}
           target='_blank'
+          className='link'
           rel='noreferrer'
-          aria-label='instagram'
-        >
+          aria-label='instagram'>
           <FiInstagram size='1.65rem' />
         </a>
       )}
@@ -37,20 +33,15 @@ const SocialMediaLinks = ({ links, homepage }) => {
         <a
           href={`https://twitter.com/${links?.twitter_id}`}
           target='_blank'
+          className='link'
           rel='noreferrer'
-          aria-label='twitter'
-        >
+          aria-label='twitter'>
           <FiTwitter size='1.65rem' />
         </a>
       )}
 
       {homepage && (
-        <a
-          href={homepage}
-          target='_blank'
-          rel='noreferrer'
-          aria-label='homepage'
-        >
+        <a href={homepage} target='_blank' className='link' rel='noreferrer' aria-label='homepage'>
           <BiLink size='1.8rem' />
         </a>
       )}

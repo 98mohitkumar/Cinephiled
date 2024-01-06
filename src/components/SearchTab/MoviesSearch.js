@@ -1,3 +1,4 @@
+import PlaceholderText from "components/PlaceholderText";
 import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
@@ -8,7 +9,6 @@ import { getCleanTitle, getReleaseDate, removeDuplicates } from "src/utils/helpe
 import { SortBy } from "./helper";
 import {
   SearchResultsContainer,
-  EmptySearch,
   QueryContainer,
   QueryImg,
   QueryTitle,
@@ -90,9 +90,7 @@ const MoviesSearch = ({ searchQuery, movieRes }) => {
           )}
         </section>
       ) : (
-        <EmptySearch className='text-[calc(1.425rem_+_2.1vw)] xl:text-5xl text-center'>
-          No Movie results for this query.
-        </EmptySearch>
+        <PlaceholderText height='large'>No Movie results for this query.</PlaceholderText>
       )}
     </SearchResultsContainer>
   );

@@ -1,5 +1,7 @@
 import DominantColor from "components/DominantColor/DominantColor";
+import Loading from "components/Loading";
 import MetaWrapper from "components/MetaWrapper";
+import PlaceholderText from "components/PlaceholderText";
 import Select from "components/Select/Select";
 import Tabs from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
@@ -9,8 +11,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef, useState } from "react";
-import { framerTabVariants, getCleanTitle, getCountryCode } from "src/utils/helper";
-import { Error404, LayoutContainer, Loader } from "styles/GlobalComponents";
+import { fetchOptions, framerTabVariants, getCleanTitle, getCountryCode } from "src/utils/helper";
+import { Error404, LayoutContainer } from "styles/GlobalComponents";
 
 const tabList = [
   { key: "movies", name: `Movies` },
@@ -60,6 +62,7 @@ const WatchProviders = ({ regions }) => {
             region: selectedRegion || userRegion.current
           }),
           {
+            ...fetchOptions(),
             signal: AbortCtrl.signal
           }
         ),
@@ -68,6 +71,7 @@ const WatchProviders = ({ regions }) => {
             region: selectedRegion || userRegion.current
           }),
           {
+            ...fetchOptions(),
             signal: AbortCtrl.signal
           }
         )
@@ -187,7 +191,7 @@ const WatchProviders = ({ regions }) => {
               </div>
             </div>
 
-            <h1 className='max-sm:text-3xl text-4xl w-full text-center font-semibold'>
+            <h1 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.25rem] w-full text-center font-semibold'>
               Watch Providers {currentRegionName ? `available in ${currentRegionName}` : ""}
             </h1>
           </div>
@@ -200,7 +204,7 @@ const WatchProviders = ({ regions }) => {
           />
 
           {loading ? (
-            <Loader className='profile-page' />
+            <Loading />
           ) : (
             <AnimatePresence exitBeforeEnter initial={false}>
               {currentRenderList?.length > 0 ? (
@@ -216,12 +220,12 @@ const WatchProviders = ({ regions }) => {
                       key={provider.provider_id}
                       href={`/watch-providers/${provider.provider_id}-${getCleanTitle(
                         provider.provider_name
-                      )}/${provider.tvProvider ? "tv" : "movies"}?region=${
+                      )}/${provider.tvProvider ? "tv" : "movies"}?watchregion=${
                         selectedRegion || userRegion.current
                       }`}>
                       <a className='block h-full w-full'>
                         <motion.div
-                          className='w-full aspect-square'
+                          className='w-full aspect-square rounded-lg overflow-hidden'
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}>
                           <Image
@@ -232,7 +236,6 @@ const WatchProviders = ({ regions }) => {
                             height={200}
                             blurDataURL={blurPlaceholder}
                             placeholder='blur'
-                            className='rounded-lg'
                           />
                         </motion.div>
                       </a>
@@ -240,9 +243,7 @@ const WatchProviders = ({ regions }) => {
                   ))}
                 </motion.div>
               ) : (
-                <div className='text-center py-12 relative z-10'>
-                  <h2 className='text-3xl font-semibold '>No Watch Providers Found</h2>
-                </div>
+                <PlaceholderText>No Watch Providers Found</PlaceholderText>
               )}
             </AnimatePresence>
           )}
@@ -254,7 +255,7 @@ const WatchProviders = ({ regions }) => {
 
 WatchProviders.getInitialProps = async () => {
   try {
-    const regionsRes = await fetch(apiEndpoints.watchProviders.regions);
+    const regionsRes = await fetch(apiEndpoints.watchProviders.regions, fetchOptions());
 
     if (!regionsRes.ok) throw Error("cannot fetch data");
 

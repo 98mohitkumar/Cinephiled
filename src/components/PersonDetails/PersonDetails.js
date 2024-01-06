@@ -150,7 +150,9 @@ const PersonDetails = ({ details }) => {
             <div className='mt-6 md:mt-14'>
               {details.biography && (
                 <Fragment>
-                  <Span className='block text-3xl md:text-4xl font-bold'>Biography</Span>
+                  <Span className='block text-[calc(1.35rem_+_.9vw)] lg:text-[2.2rem] font-semibold'>
+                    Biography
+                  </Span>
                   <Bio>{details.biography}</Bio>
                 </Fragment>
               )}
@@ -159,7 +161,7 @@ const PersonDetails = ({ details }) => {
 
           {images?.profiles?.length > 1 ? (
             <Fragment>
-              <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-14 mb-6 font-bold block'>
+              <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-14 mb-6 font-semibold block'>
                 Media ({images?.profiles?.length})
               </span>
 

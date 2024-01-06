@@ -1,4 +1,5 @@
 import MetaWrapper from "components/MetaWrapper";
+import PlaceholderText from "components/PlaceholderText";
 import {
   QueryContainer,
   QueryImg,
@@ -6,16 +7,15 @@ import {
   QueryTitle,
   QueryReleaseDate,
   QueryDescription,
-  SearchResultsContainer,
-  EmptySearch
+  SearchResultsContainer
 } from "components/SearchTab/SearchTabStyles";
 import { motion } from "framer-motion";
 import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { getCleanTitle, getReleaseDate } from "src/utils/helper";
-import { Error404, SearchContainer } from "styles/GlobalComponents";
+import { fetchOptions, getCleanTitle, getReleaseDate } from "src/utils/helper";
+import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const Keyword = ({ error, results, name, id }) => {
   return (
@@ -29,7 +29,7 @@ const Keyword = ({ error, results, name, id }) => {
       {error ? (
         <Error404>404</Error404>
       ) : (
-        <SearchContainer>
+        <ModulesWrapper className='mt-6'>
           <SearchResultsContainer>
             {results?.length > 0 ? (
               <Fragment>
@@ -67,12 +67,10 @@ const Keyword = ({ error, results, name, id }) => {
                 ))}
               </Fragment>
             ) : (
-              <EmptySearch className='text-[calc(1.425rem_+_2.1vw)] xl:text-5xl text-center'>
-                No Movie results for this keyword.
-              </EmptySearch>
+              <PlaceholderText height='large'>No Movie results for this keyword.</PlaceholderText>
             )}
           </SearchResultsContainer>
-        </SearchContainer>
+        </ModulesWrapper>
       )}
     </Fragment>
   );
@@ -81,7 +79,7 @@ const Keyword = ({ error, results, name, id }) => {
 Keyword.getInitialProps = async (ctx) => {
   try {
     const keyword = ctx.query.id;
-    const keywordRes = await fetch(apiEndpoints.keywords.keywordDetails(keyword));
+    const keywordRes = await fetch(apiEndpoints.keywords.keywordDetails(keyword), fetchOptions());
     const error = keywordRes.ok ? false : true;
 
     if (error) {

@@ -1,4 +1,5 @@
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import PlaceholderText from "components/PlaceholderText";
 import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
@@ -7,7 +8,6 @@ import { useRouter } from "next/router";
 import { Fragment, useRef } from "react";
 import { BsChevronRight } from "react-icons/bs";
 import { getCleanTitle } from "src/utils/helper";
-import { NoDataText } from "styles/GlobalComponents";
 import { CastGrid, CastImg, CastWrapper, SeeMore } from "./CastStyles";
 
 const Cast = ({ cast }) => {
@@ -80,7 +80,7 @@ const Cast = ({ cast }) => {
           ) : null}
         </CastGrid>
       ) : (
-        <NoDataText className='font-bold text-center my-5'>TBA</NoDataText>
+        <PlaceholderText>TBA</PlaceholderText>
       )}
     </Fragment>
   );

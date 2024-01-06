@@ -2,7 +2,7 @@ import MetaWrapper from "components/MetaWrapper";
 import PersonDetails from "components/PersonDetails/PersonDetails";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
-import { getCleanTitle } from "src/utils/helper";
+import { fetchOptions, getCleanTitle } from "src/utils/helper";
 import { Error404 } from "styles/GlobalComponents";
 
 const Person = ({ error, personDetails }) => {
@@ -24,7 +24,7 @@ const Person = ({ error, personDetails }) => {
 
 Person.getInitialProps = async (ctx) => {
   try {
-    const response = await fetch(apiEndpoints.person.personDetails(ctx.query.id));
+    const response = await fetch(apiEndpoints.person.personDetails(ctx.query.id), fetchOptions());
     const error = response.ok ? false : true;
 
     if (error) {

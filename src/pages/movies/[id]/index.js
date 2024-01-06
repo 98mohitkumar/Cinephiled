@@ -6,7 +6,7 @@ import MovieTab from "components/MovieInfo/MovieTab";
 import Recommendations from "components/Recommendations/Recommendations";
 import { apiEndpoints } from "globals/constants";
 import { Fragment, useEffect, useState } from "react";
-import { getCleanTitle, getReleaseDate, getReleaseYear } from "src/utils/helper";
+import { fetchOptions, getCleanTitle, getReleaseDate, getReleaseYear } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const Movie = ({
@@ -142,8 +142,8 @@ const Movie = ({
 Movie.getInitialProps = async (ctx) => {
   try {
     const [movieResponse, languagesResponse] = await Promise.all([
-      fetch(apiEndpoints.movie.movieDetails(ctx.query.id)),
-      fetch(apiEndpoints.language)
+      fetch(apiEndpoints.movie.movieDetails(ctx.query.id), fetchOptions()),
+      fetch(apiEndpoints.language, fetchOptions())
     ]);
 
     if (!movieResponse.ok) throw new Error("error fetching details");

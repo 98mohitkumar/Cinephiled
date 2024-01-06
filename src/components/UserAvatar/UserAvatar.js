@@ -58,9 +58,12 @@ const UserAvatar = () => {
                 }}>
                 <Link href='/profile' passHref>
                   <PopupOption className='font-semibold' role='button'>
-                    {userInfo?.username}
+                    {userInfo?.name || userInfo?.username}
                     <p className='sub-text'>view profile</p>
                   </PopupOption>
+                </Link>
+                <Link href='/lists' passHref>
+                  <PopupOption role='button'>Lists</PopupOption>
                 </Link>
                 <PopupOption onClick={logout} role='button'>
                   Logout

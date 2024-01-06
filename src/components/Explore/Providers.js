@@ -1,7 +1,7 @@
-import { RatingButton } from "components/RatingModal/RatingStyles";
 import WatchProvidersImage from "images/watch-providers.webp";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "styles/GlobalComponents";
 
 const StreamingProvides = () => {
   return (
@@ -26,7 +26,7 @@ const StreamingProvides = () => {
 
         <Link href='/watch-providers'>
           <a className='inline-block mt-6'>
-            <RatingButton className='text-black max-sm:'>Explore Providers</RatingButton>
+            <Button>Explore Providers</Button>
           </a>
         </Link>
       </div>

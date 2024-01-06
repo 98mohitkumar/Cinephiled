@@ -1,8 +1,8 @@
 import DownloadMediaButton from "components/DownloadMediaButton/DownloadMediaButton";
+import PlaceholderText from "components/PlaceholderText";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import { Fragment } from "react";
-import { NoDataText } from "styles/GlobalComponents";
 import { PostersImg, PostersWrapper } from "./PostersStyles";
 
 const Posters = ({ posters }) => {
@@ -27,7 +27,7 @@ const Posters = ({ posters }) => {
           ))}
         </PostersWrapper>
       ) : (
-        <NoDataText className='font-bold text-center my-5'>No Posters Yet</NoDataText>
+        <PlaceholderText>No Posters Yet</PlaceholderText>
       )}
     </Fragment>
   );

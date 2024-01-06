@@ -1,11 +1,11 @@
+import PlaceholderText from "components/PlaceholderText";
 import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, useRef } from "react";
+import { Fragment } from "react";
 import { getReleaseDate } from "src/utils/helper";
-import { NoDataText } from "styles/GlobalComponents";
 import {
   SeasonDetailsWrapper,
   SeasonsOverview,
@@ -19,7 +19,6 @@ import {
 const TVSeasons = ({ seasons }) => {
   const router = useRouter();
   const today = new Date();
-  const routeRef = useRef(router.asPath);
 
   return (
     <Fragment>
@@ -30,10 +29,7 @@ const TVSeasons = ({ seasons }) => {
               key={id}
               whileTap={{ scale: 0.98 }}
               className={"max-w-5xl m-auto [&:not(:last-child)]:mb-5"}>
-              <Link
-                href={`${routeRef.current.replaceAll("?", "")}/season/${season_number}`}
-                passHref
-                scroll={false}>
+              <Link href={`${router.query.id}/season/${season_number}`} passHref scroll={false}>
                 <a>
                   <SeasonWrapper>
                     <SeasonImg>
@@ -74,7 +70,7 @@ const TVSeasons = ({ seasons }) => {
           )
         )
       ) : (
-        <NoDataText className='font-bold text-center my-5'>TBA</NoDataText>
+        <PlaceholderText>TBA</PlaceholderText>
       )}
     </Fragment>
   );

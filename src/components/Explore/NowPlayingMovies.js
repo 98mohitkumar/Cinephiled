@@ -2,7 +2,7 @@ import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import { motion } from "framer-motion";
 import { apiEndpoints } from "globals/constants";
 import { Fragment, useEffect, useState } from "react";
-import { framerTabVariants, getCountryCode } from "src/utils/helper";
+import { framerTabVariants, getCountryCode, fetchOptions } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents";
 
 const NowPlayingMovies = () => {
@@ -15,6 +15,7 @@ const NowPlayingMovies = () => {
       const region = await getCountryCode();
 
       const res = await fetch(apiEndpoints.movie.nowPlaying({ region }), {
+        ...fetchOptions(),
         signal: AbortCtrl.signal
       });
 

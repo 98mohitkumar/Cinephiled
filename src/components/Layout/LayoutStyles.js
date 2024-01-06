@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   margin: auto;
   position: relative;
 
-  .content-wrapper:has(.login-container, .about-container) {
+  .content-wrapper:has(.login-container, .about-container, .list-wrapper) {
     display: flex;
     flex-direction: column;
   }

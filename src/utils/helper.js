@@ -1,4 +1,30 @@
-const { apiEndpoints } = require("globals/constants");
+import { apiEndpoints, read_access_token } from "globals/constants";
+
+export const fetchOptions = (
+  { method, body, token } = {
+    method: "GET",
+    body: null,
+    token: null
+  }
+) => {
+  const options = {
+    method,
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json;charset=utf-8",
+      authorization: `Bearer ${read_access_token}`
+    }
+  };
+
+  if (method) options.method = method;
+  if (token) {
+    options.headers.authorization = `Bearer ${token}`;
+  }
+
+  if (body) options.body = JSON.stringify(body);
+
+  return options;
+};
 
 export const getCountryCode = async () => {
   try {
@@ -107,4 +133,64 @@ export const getCleanTitle = (title) => {
 
   const stringWithHyphens = title.replace(/[^\w\d]+/g, "-");
   return stringWithHyphens.replace(/[-\s]+$/, "");
+};
+
+export const fetchSuggestions = async (userInput) => {
+  let searchQuery = userInput;
+  let year = "";
+
+  if (searchQuery.includes("y:")) {
+    year = searchQuery.slice(-4);
+    searchQuery = searchQuery.slice(0, searchQuery.length - 7);
+  }
+
+  if (year.trim().length > 0) {
+    const searchQueryWithYear = await Promise.all([
+      fetch(apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }), fetchOptions()),
+      fetch(apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year }), fetchOptions())
+    ]);
+
+    const error = searchQueryWithYear.some((res) => !res.ok);
+    if (error) throw new Error("error fetching data");
+
+    const [movieResponse, tvResponse] = searchQueryWithYear;
+    const [movieRes, tvRes] = await Promise.all([movieResponse.json(), tvResponse.json()]);
+
+    return {
+      movieRes: movieRes.results || [],
+      tvRes: tvRes.results.map((item) => ({ ...item, type: "tv" })) || []
+    };
+  } else {
+    const searchQueryWithoutYear = await Promise.all([
+      fetch(apiEndpoints.search.movieSearch({ query: searchQuery }), fetchOptions()),
+      fetch(apiEndpoints.search.tvSearch({ query: searchQuery }), fetchOptions())
+    ]);
+
+    const error = searchQueryWithoutYear.some((res) => !res.ok);
+    if (error) throw new Error("error fetching data");
+
+    const [movieResponse, tvResponse] = searchQueryWithoutYear;
+    const [movieRes, tvRes] = await Promise.all([movieResponse.json(), tvResponse.json()]);
+
+    return {
+      movieRes: movieRes.results || [],
+      tvRes: tvRes.results.map((item) => ({ ...item, type: "tv" })) || []
+    };
+  }
+};
+
+export const copyToClipboard = async ({ text, nodeId }) => {
+  try {
+    let textToCopy;
+
+    if (nodeId) {
+      textToCopy = document.getElementById(nodeId).value;
+    } else {
+      textToCopy = text || window.location.href;
+    }
+
+    await navigator.clipboard.writeText(textToCopy);
+  } catch {
+    throw new Error("error copying to clipboard");
+  }
 };

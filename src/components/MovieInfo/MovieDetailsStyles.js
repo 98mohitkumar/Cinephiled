@@ -8,7 +8,7 @@ export const HeroInfoWrapper = styled.div`
 
 export const HeroInfoTitle = styled.h1`
   font-weight: bold;
-  font-size: 2.25rem;
+  font-size: 2.5rem;
   margin-top: 0rem;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
@@ -16,7 +16,7 @@ export const HeroInfoTitle = styled.h1`
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: 1.35rem;
+    font-size: 1.75rem;
     line-height: 1.5;
   }
 `;
@@ -41,7 +41,7 @@ export const Span = styled.span`
   }
 
   &.genre {
-    font-weight: bold;
+    font-weight: 600;
     padding-top: clamp(1.5rem, 4vw, 2rem);
     padding-bottom: clamp(2rem, 4.25vw, 2.5rem);
   }
@@ -156,48 +156,20 @@ export const Divider = styled.div`
   }
 `;
 
-export const FeatureButton = styled.button`
-  background: rgb(221, 221, 221);
-  color: #121212;
-  border-radius: 8px;
-  width: 17rem;
-  height: 45px;
-  padding: 0.25rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 1.1rem;
-
-  & span {
-    font-weight: 600;
-  }
-
-  &.mediaCTA {
-    font-size: 0.95rem;
-    height: auto;
-    padding: 10px;
-    width: 100%;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    width: 12rem;
-    font-size: 1rem;
-  }
-`;
-
 export const Gradient = styled.div`
   position: absolute;
   background: linear-gradient(0deg, #121212 14%, rgba(21, 21, 21, 0.5) 100%);
   inset: 0;
   z-index: -1;
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    bottom: 20rem;
-  }
+  &:not(.list) {
+    @media only ${(props) => props.theme.breakpoints.ip} {
+      bottom: 20rem;
+    }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    bottom: 50%;
+    @media only ${(props) => props.theme.breakpoints.xs} {
+      bottom: 50%;
+    }
   }
 `;
 

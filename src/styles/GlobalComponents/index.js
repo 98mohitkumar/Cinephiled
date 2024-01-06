@@ -15,6 +15,59 @@ export const Container = styled.div`
   }
 `;
 
+export const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  line-height: 1.2;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  border: none;
+  font-weight: 500;
+  background: rgb(221, 221, 221);
+  color: #121212;
+  white-space: nowrap;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgb(221, 221, 221, 0.9);
+  }
+
+  &.secondary {
+    background-color: transparent;
+    border: 1px solid rgb(81 81 81 / 0.8);
+    color: rgb(221, 221, 221);
+
+    &:hover {
+      background-color: rgb(221, 221, 221, 0.25);
+    }
+  }
+
+  &.danger {
+    color: rgb(220 38 38);
+    background: rgb(127 29 29 / 0.2);
+    border: 1px solid #dc2626;
+
+    &:hover {
+      background-color: rgb(127 29 29 / 0.4);
+    }
+  }
+
+  ${({ loading }) => loading && "pointer-events: none"};
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    font-size: 1rem;
+    padding: 10px 16px;
+  }
+
+  &.mediaCTA {
+    font-size: 0.95rem;
+    height: auto;
+    padding: 10px;
+  }
+`;
+
 export const AboutBackground = styled.div`
   position: absolute;
   inset: 0;
@@ -153,8 +206,8 @@ export const HeroBg = styled.div`
 `;
 
 export const HeroImg = styled.div`
-  height: 25rem;
   width: 17rem;
+  aspect-ratio: 1/1.54;
   border-radius: 12px;
   box-shadow: 0 0 2rem rgb(12 12 12 /0.4);
   overflow: hidden;
@@ -174,12 +227,7 @@ export const HeroImg = styled.div`
     }
   }
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
-    margin: 0rem !important;
-  }
-
   @media only ${(props) => props.theme.breakpoints.ip} {
-    height: 18rem;
     width: 12rem;
   }
 `;
@@ -225,20 +273,9 @@ export const FactsFlexWrapper = styled.div`
   }
 `;
 
-export const SearchContainer = styled.div`
-  width: 100%;
-  height: auto;
-  margin-bottom: auto;
-  padding: 3rem 4.2vw;
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    padding: 3rem 1.25rem;
-  }
-`;
-
 export const NoDataText = styled.p`
-  padding: 1.25rem;
-  font-size: 2rem;
+  font-size: clamp(1.25rem, 2.8vw, 2rem);
+  color: rgb(163 163 163);
 `;
 
 export const BadQuery = styled.h1`
@@ -260,7 +297,7 @@ export const HeroImgWrapper = styled.div`
     padding: 0rem;
     grid-template-columns: 192px;
     place-items: flex-end flex-start;
-    gap: 2rem;
+    gap: 1.5rem;
 
     & > div:first-child {
       grid-column: 1 / span 2;
@@ -279,11 +316,12 @@ export const SocialMediaLinksWrapper = styled.div`
   width: 17rem;
   height: 45px;
   color: #ebebeb;
-  display: ${(props) => (props.notShow ? "none;" : "flex;")};
+  display: ${(props) => (props.notShow ? "none" : "flex")};
   justify-content: center;
   align-items: center;
   padding: 0.25rem;
   gap: 3rem;
+  transition: color 0.2s ease-in-out;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
     justify-content: flex-start;
@@ -293,6 +331,10 @@ export const SocialMediaLinksWrapper = styled.div`
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     gap: 2.5rem;
+  }
+
+  a.link:hover {
+    color: ${({ theme }) => theme.colors.accent2};
   }
 `;
 
@@ -311,7 +353,7 @@ export const AboutCreditsWrapper = styled.div`
 
 export const Loader = styled.div`
   width: 12vw;
-  height: 12vw;
+  aspect-ratio: 1/1;
   position: absolute;
   inset: 0;
   margin: auto;
@@ -319,9 +361,8 @@ export const Loader = styled.div`
   place-items: center;
   background: Url(/Images/Loader.svg) no-repeat center center / contain;
 
-  &.profile-page {
+  &.small {
     width: 100px;
-    aspect-ratio: 1/1;
     position: static;
   }
 `;
@@ -477,7 +518,7 @@ export const EpisodeShowCaseWrapper = styled.div`
   }
 `;
 
-export const LayoutContainer = styled.div`
+export const LayoutContainer = styled.section`
   width: 100%;
   padding: 32px 4.2vw;
 

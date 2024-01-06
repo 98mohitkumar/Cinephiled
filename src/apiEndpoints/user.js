@@ -1,28 +1,147 @@
 import { apiEndpoints } from "globals/constants";
 import { getSession } from "next-auth/react";
+import { fetchOptions } from "src/utils/helper";
+
+// GET requsts
+
+export const getWatchlist = async ({ mediaType, pageQuery }) => {
+  const {
+    user: { accountId, accessToken }
+  } = await getSession();
+
+  const watchlistRes = await fetch(
+    apiEndpoints.user.getWatchlist({
+      mediaType,
+      accountId,
+      pageQuery
+    }),
+    fetchOptions({
+      token: accessToken
+    })
+  );
+
+  if (watchlistRes?.ok) {
+    const watchlist = await watchlistRes.json();
+    return watchlist;
+  } else {
+    throw Error("cannot fetch data");
+  }
+};
+
+export const getRated = async ({ mediaType, pageQuery }) => {
+  const {
+    user: { accountId, accessToken }
+  } = await getSession();
+
+  const ratedRes = await fetch(
+    apiEndpoints.user.getRated({ mediaType, accountId, pageQuery }),
+    fetchOptions({
+      token: accessToken
+    })
+  );
+
+  if (ratedRes?.ok) {
+    const rated = await ratedRes.json();
+    return rated;
+  } else {
+    throw Error("cannot fetch data");
+  }
+};
+
+export const getFavorites = async ({ mediaType, pageQuery }) => {
+  const {
+    user: { accountId, accessToken }
+  } = await getSession();
+
+  const favoritesRes = await fetch(
+    apiEndpoints.user.getFavorites({
+      mediaType,
+      accountId,
+      pageQuery
+    }),
+    fetchOptions({
+      token: accessToken
+    })
+  );
+
+  if (favoritesRes?.ok) {
+    const favoritesList = await favoritesRes.json();
+    return favoritesList;
+  } else {
+    throw Error("cannot fetch data");
+  }
+};
+
+export const getRecommendations = async ({ mediaType, pageQuery }) => {
+  const {
+    user: { accessToken, accountId }
+  } = await getSession();
+
+  const recommendationsRes = await fetch(
+    apiEndpoints.user.getRecommendations({ mediaType, accountId, pageQuery }),
+    fetchOptions({
+      token: accessToken
+    })
+  );
+
+  if (recommendationsRes?.ok) {
+    const recommendations = await recommendationsRes.json();
+    return recommendations;
+  } else {
+    throw Error("cannot fetch data");
+  }
+};
+
+export const getListItemStatus = async ({ listId, mediaType, mediaId }) => {
+  const {
+    user: { accessToken }
+  } = await getSession();
+
+  const res = await fetch(
+    "/api/getItemStatus",
+    fetchOptions({
+      token: accessToken,
+      method: "POST",
+      body: {
+        id: listId,
+        mediaType,
+        mediaId
+      }
+    })
+  );
+
+  if (res.ok) {
+    const data = await res.json();
+
+    return data;
+  } else {
+    return {
+      success: false
+    };
+  }
+};
+
+// POST requests
 
 export const setFavorite = async ({ mediaType, mediaId, favoriteState }) => {
   const {
-    user: { accountId, sessionId }
+    user: { accountId, accessToken }
   } = await getSession();
 
-  if (accountId && sessionId) {
+  if (accountId) {
     const favorite = await fetch(
       apiEndpoints.user.setFavorite({
-        accountId: accountId,
-        sessionId: sessionId
+        accountId: accountId
       }),
-      {
+      fetchOptions({
         method: "POST",
-        headers: {
-          "content-type": "application/json;charset=utf-8"
-        },
-        body: JSON.stringify({
+        token: accessToken,
+        body: {
           media_type: mediaType,
           media_id: mediaId,
           favorite: favoriteState
-        })
-      }
+        }
+      })
     );
 
     if (favorite.ok) {
@@ -37,26 +156,23 @@ export const setFavorite = async ({ mediaType, mediaId, favoriteState }) => {
 
 export const addToWatchlist = async ({ mediaType, mediaId, watchlistState }) => {
   const {
-    user: { accountId, sessionId }
+    user: { accountId, accessToken }
   } = await getSession();
 
-  if (accountId && sessionId) {
+  if (accountId) {
     const watchlist = await fetch(
       apiEndpoints.user.addToWatchlist({
-        accountId: accountId,
-        sessionId: sessionId
+        accountId: accountId
       }),
-      {
+      fetchOptions({
         method: "POST",
-        headers: {
-          "content-type": "application/json;charset=utf-8"
-        },
-        body: JSON.stringify({
+        token: accessToken,
+        body: {
           media_type: mediaType,
           media_id: mediaId,
           watchlist: watchlistState
-        })
-      }
+        }
+      })
     );
 
     if (watchlist.ok) {
@@ -69,71 +185,24 @@ export const addToWatchlist = async ({ mediaType, mediaId, watchlistState }) => 
   }
 };
 
-export const getFavorites = async ({ mediaType, pageQuery }) => {
-  const {
-    user: { accountId, sessionId }
-  } = await getSession();
-
-  const favoritesRes = await fetch(
-    apiEndpoints.user.getFavorites({
-      mediaType,
-      accountId,
-      sessionId,
-      pageQuery
-    })
-  );
-
-  if (favoritesRes?.ok) {
-    const favoritesList = await favoritesRes.json();
-    return favoritesList;
-  } else {
-    throw Error("cannot fetch data");
-  }
-};
-
-export const getWatchlist = async ({ mediaType, pageQuery }) => {
-  const {
-    user: { accountId, sessionId }
-  } = await getSession();
-
-  const watchlistRes = await fetch(
-    apiEndpoints.user.getWatchlist({
-      mediaType,
-      accountId,
-      sessionId,
-      pageQuery
-    })
-  );
-
-  if (watchlistRes?.ok) {
-    const watchlist = await watchlistRes.json();
-    return watchlist;
-  } else {
-    throw Error("cannot fetch data");
-  }
-};
-
 export const setRating = async ({ mediaType, mediaId, rating }) => {
   const {
-    user: { accountId, sessionId }
+    user: { accountId, accessToken }
   } = await getSession();
 
-  if (accountId && sessionId) {
+  if (accountId) {
     const rated = await fetch(
       apiEndpoints.user.setRating({
         mediaType,
-        mediaId,
-        sessionId
+        mediaId
       }),
-      {
+      fetchOptions({
         method: "POST",
-        headers: {
-          "content-type": "application/json;charset=utf-8"
-        },
-        body: JSON.stringify({
+        token: accessToken,
+        body: {
           value: rating
-        })
-      }
+        }
+      })
     );
 
     if (rated.ok) {
@@ -146,41 +215,83 @@ export const setRating = async ({ mediaType, mediaId, rating }) => {
   }
 };
 
-export const getRated = async ({ mediaType, pageQuery }) => {
+export const createList = async ({ listData }) => {
   const {
-    user: { accountId, sessionId }
+    user: { accessToken }
   } = await getSession();
 
-  const ratedRes = await fetch(
-    apiEndpoints.user.getRated({ mediaType, accountId, sessionId, pageQuery })
+  const res = await fetch(
+    apiEndpoints.lists.createList,
+    fetchOptions({
+      method: "POST",
+      body: listData,
+      token: accessToken
+    })
   );
 
-  if (ratedRes?.ok) {
-    const rated = await ratedRes.json();
-    return rated;
-  } else {
-    throw Error("cannot fetch data");
-  }
+  return {
+    success: res.ok,
+    response: res
+  };
 };
+
+export const updateListItems = async ({ id, itemsData, method }) => {
+  const {
+    user: { accessToken }
+  } = await getSession();
+
+  const res = await fetch(
+    apiEndpoints.lists.listItems({ id: id }),
+    fetchOptions({
+      method,
+      body: itemsData,
+      token: accessToken
+    })
+  );
+
+  return {
+    success: res.ok
+  };
+};
+
+// PUT requests
+
+export const updateList = async ({ id, listData }) => {
+  const {
+    user: { accessToken }
+  } = await getSession();
+
+  const res = await fetch(
+    apiEndpoints.lists.updateList({ id: id }),
+    fetchOptions({
+      method: "PUT",
+      body: listData,
+      token: accessToken
+    })
+  );
+
+  return {
+    success: res.ok
+  };
+};
+
+// DELETE requests
 
 export const deleteRating = async ({ mediaType, mediaId }) => {
   const {
-    user: { accountId, sessionId }
+    user: { accountId, accessToken }
   } = await getSession();
 
-  if (accountId && sessionId) {
+  if (accountId) {
     const deleted = await fetch(
       apiEndpoints.user.deleteRating({
         mediaType,
-        mediaId,
-        sessionId
+        mediaId
       }),
-      {
+      fetchOptions({
         method: "DELETE",
-        headers: {
-          "content-type": "application/json;charset=utf-8"
-        }
-      }
+        token: accessToken
+      })
     );
 
     if (deleted.ok) {
@@ -193,26 +304,20 @@ export const deleteRating = async ({ mediaType, mediaId }) => {
   }
 };
 
-export const getRecommendations = async ({ mediaType, pageQuery }) => {
+export const deleteList = async ({ id }) => {
   const {
-    user: { accessToken, accountId }
+    user: { accessToken }
   } = await getSession();
 
-  const recommendationsRes = await fetch(
-    apiEndpoints.user.getRecommendations({ mediaType, accountId, pageQuery }),
-    {
-      method: "GET",
-      headers: {
-        "content-type": "application/json;charset=utf-8",
-        authorization: `Bearer ${accessToken}`
-      }
-    }
+  const res = await fetch(
+    apiEndpoints.lists.updateList({ id: id }),
+    fetchOptions({
+      method: "DELETE",
+      token: accessToken
+    })
   );
 
-  if (recommendationsRes?.ok) {
-    const recommendations = await recommendationsRes.json();
-    return recommendations;
-  } else {
-    throw Error("cannot fetch data");
-  }
+  return {
+    success: res.ok
+  };
 };

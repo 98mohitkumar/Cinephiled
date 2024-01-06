@@ -6,7 +6,7 @@ import TVFacts from "components/TVInfo/TVFacts";
 import TVTab from "components/TVInfo/TVTab";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
-import { getCleanTitle, getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
+import { fetchOptions, getCleanTitle, getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const TvShow = ({
@@ -33,7 +33,6 @@ const TvShow = ({
   genres,
   rating,
   recommendations,
-  runtime,
   homepage,
   tagline,
   trailerLink
@@ -59,7 +58,6 @@ const TvShow = ({
               id,
               airDate,
               title,
-              runtime,
               genres,
               overview,
               tagline,
@@ -107,8 +105,8 @@ const TvShow = ({
 TvShow.getInitialProps = async (ctx) => {
   try {
     const [tvResponse, languagesResponse] = await Promise.all([
-      fetch(apiEndpoints.tv.tvDetails(ctx.query.id)),
-      fetch(apiEndpoints.language)
+      fetch(apiEndpoints.tv.tvDetails(ctx.query.id), fetchOptions()),
+      fetch(apiEndpoints.language, fetchOptions())
     ]);
 
     if (!tvResponse.ok) throw new Error("error fetching details");
@@ -143,7 +141,6 @@ TvShow.getInitialProps = async (ctx) => {
       airDate: tvData?.first_air_date,
       releaseYear,
       genres: tvData?.genres,
-      runtime: tvData?.episode_run_time?.[0],
       tagline: tvData?.tagline,
       overview: tvData?.overview,
       rating: tvData?.vote_average,

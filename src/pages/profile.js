@@ -1,6 +1,6 @@
-import ProfilePage from 'components/ProfilePage/ProfilePage';
-import Router from 'next/router';
-import { getSession } from 'next-auth/react';
+import ProfilePage from "components/ProfilePage/ProfilePage";
+import Router from "next/router";
+import { getSession } from "next-auth/react";
 
 const Profile = () => {
   return <ProfilePage />;
@@ -12,14 +12,14 @@ Profile.getInitialProps = async (ctx) => {
   if (data) {
     return { signedIn: true };
   } else {
-    if (typeof window === 'undefined') {
-      ctx.res.writeHead(302, { location: '/login' });
+    if (typeof window === "undefined") {
+      ctx.res.writeHead(302, { location: "/login" });
       ctx.res.end();
-      return { signedIn: false };
     } else {
-      Router.push('/login');
-      return { signedIn: false };
+      Router.push("/login");
     }
+
+    return { signedIn: false };
   }
 };
 

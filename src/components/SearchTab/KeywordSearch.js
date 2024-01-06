@@ -1,8 +1,9 @@
+import PlaceholderText from "components/PlaceholderText";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Link from "next/link";
 import { Fragment } from "react";
 import { getCleanTitle, removeDuplicates } from "src/utils/helper";
-import { EmptySearch, SearchResultsContainer, Keyword } from "./SearchTabStyles";
+import { SearchResultsContainer, Keyword } from "./SearchTabStyles";
 
 const KeywordSearch = ({ searchQuery, keywords }) => {
   const { list } = useInfiniteQuery({
@@ -30,9 +31,7 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
           ))}
         </SearchResultsContainer>
       ) : (
-        <EmptySearch className='text-[calc(1.425rem_+_2.1vw)] xl:text-5xl text-center'>
-          No Keywords for this query.
-        </EmptySearch>
+        <PlaceholderText height='large'>No Keywords for this query.</PlaceholderText>
       )}
     </Fragment>
   );

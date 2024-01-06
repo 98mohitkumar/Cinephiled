@@ -1,9 +1,11 @@
 import DominantColor from "components/DominantColor/DominantColor";
 import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import MetaWrapper from "components/MetaWrapper";
+import PlaceholderText from "components/PlaceholderText";
 import { apiEndpoints } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { Fragment } from "react";
+import { fetchOptions } from "src/utils/helper";
 import { Error404, LayoutContainer } from "styles/GlobalComponents";
 
 const ProviderMovies = ({ error, media, region, providerName, providerId }) => {
@@ -33,7 +35,7 @@ const ProviderMovies = ({ error, media, region, providerName, providerId }) => {
           <div className='relative z-20'>
             {renderList?.length > 0 ? (
               <Fragment>
-                <h1 className='mt-2 mb-4 pb-5 max-sm:text-2xl text-4xl w-full text-center font-medium text-zinc-400'>
+                <h1 className='mt-2 mb-4 pb-5 text-[calc(1.375rem_+_1.5vw)] xl:text-[2.25rem] w-full text-center font-medium text-zinc-400'>
                   Movies available on <br className='max-sm:block hidden' />
                   <span className='text-neutral-50 font-semibold'>
                     {providerName} ({region?.iso_3166_1})
@@ -43,11 +45,9 @@ const ProviderMovies = ({ error, media, region, providerName, providerId }) => {
                 <MoviesTemplate movies={renderList} />
               </Fragment>
             ) : (
-              <div className='min-h-[75vh] grid place-items-center'>
-                <h2 className='text-3xl font-semibold relative z-10 text-center'>
-                  No Movies available on {providerName} in this region
-                </h2>
-              </div>
+              <PlaceholderText height='large'>
+                No Movies available on {providerName} in this region
+              </PlaceholderText>
             )}
           </div>
         )}
@@ -58,17 +58,18 @@ const ProviderMovies = ({ error, media, region, providerName, providerId }) => {
 
 ProviderMovies.getInitialProps = async (ctx) => {
   try {
-    const { providerId, region } = ctx.query;
+    const { providerId, watchregion } = ctx.query;
 
     const [providerMoviesRes, regionsRes] = await Promise.all([
       fetch(
         apiEndpoints.watchProviders.watchProviderMovies({
           providerId: providerId.split("-")[0],
-          region: region || "US",
+          region: watchregion || "US",
           pageQuery: 1
-        })
+        }),
+        fetchOptions()
       ),
-      fetch(apiEndpoints.watchProviders.regions)
+      fetch(apiEndpoints.watchProviders.regions, fetchOptions())
     ]);
 
     if (!providerMoviesRes.ok) throw Error("cannot fetch data");
@@ -83,7 +84,8 @@ ProviderMovies.getInitialProps = async (ctx) => {
       providerId: providerId.split("-")[0],
       media: providerMoviesData.results || [],
       providerName: providerId.split("-").slice(1).join(" "),
-      region: regionsData?.results?.find(({ iso_3166_1 }) => iso_3166_1 === (region || "US")) || {}
+      region:
+        regionsData?.results?.find(({ iso_3166_1 }) => iso_3166_1 === (watchregion || "US")) || {}
     };
   } catch {
     return {

@@ -2,12 +2,13 @@ import { CastGrid, CastImg, CastWrapper } from "components/Cast/CastStyles";
 import DominantColor from "components/DominantColor/DominantColor";
 import MetaWrapper from "components/MetaWrapper";
 import { HeroInfoTitle, Span } from "components/MovieInfo/MovieDetailsStyles";
+import PlaceholderText from "components/PlaceholderText";
 import { AnimatePresence, motion } from "framer-motion";
 import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useState, useRef } from "react";
-import { framerTabVariants, getCleanTitle, getReleaseYear } from "src/utils/helper";
+import { fetchOptions, framerTabVariants, getCleanTitle, getReleaseYear } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
 const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast, error }) => {
@@ -52,7 +53,7 @@ const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast, error })
               </HeroInfoTitle>
 
               <div className='flex justify-between items-center py-2 max-sm:flex-col gap-5'>
-                <h3 className='mb-0 text-xl md:text-2xl font-semibold'>{`Cast (${cast.length})`}</h3>
+                <h3 className='mb-0 text-2xl md:text-3xl font-semibold'>{`Cast (${cast.length})`}</h3>
                 <input
                   type='text'
                   placeholder='Search cast'
@@ -110,14 +111,13 @@ const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast, error })
                 </CastGrid>
               ) : (
                 <motion.div
-                  className='text-center text-2xl py-6'
                   key='no-results'
                   variants={framerTabVariants}
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
                   transition={{ duration: 0.325 }}>
-                  No results found
+                  <PlaceholderText height='large'>No results found</PlaceholderText>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -131,7 +131,7 @@ const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast, error })
 Cast.getInitialProps = async (ctx) => {
   try {
     const { id } = ctx.query;
-    const res = await fetch(apiEndpoints.movie.getMovieCredits({ id }));
+    const res = await fetch(apiEndpoints.movie.getMovieCredits({ id }), fetchOptions());
 
     if (res.ok) {
       const data = await res.json();

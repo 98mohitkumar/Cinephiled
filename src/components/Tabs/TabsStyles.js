@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Tab = styled.div`
-  width: clamp(360px, 90vw, 630px); // fallback width, check custom styling
+  width: clamp(300px, 90vw, 630px); // fallback width, check custom styling
   min-height: 4.5rem;
   display: grid;
   grid-template-columns: ${({ count }) => `repeat(${count}, 1fr)`};
@@ -9,8 +9,7 @@ export const Tab = styled.div`
   border: 4px solid rgb(221, 221, 221);
   background: rgb(221, 221, 221);
   border-radius: 14px;
-  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
-    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14), 0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   position: relative;
 
@@ -47,10 +46,11 @@ export const Selection = styled.div`
   padding: 1rem;
   display: grid;
   place-items: center;
-  color: ${({ active }) => (active ? 'white' : 'black')};
+  color: ${({ active }) => (active ? "white" : "black")};
   font-weight: bold;
   cursor: pointer;
   z-index: 5;
+  text-align: center;
   transition: color 0.4s cubic-bezier(0.77, 0, 0.18, 1);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
@@ -108,7 +108,7 @@ export const TabSelector = styled.div`
   width: ${({ count }) => `${100 / count}%`};
   display: grid;
   place-items: center;
-  color: ${({ active }) => (active ? 'white' : '#ababab')};
+  color: ${({ active }) => (active ? "white" : "#ababab")};
   font-weight: 600;
   cursor: pointer;
   z-index: 5;

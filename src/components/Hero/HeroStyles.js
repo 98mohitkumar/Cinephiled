@@ -120,7 +120,7 @@ export const Form = styled.form`
   }
 `;
 
-export const Button = styled.button`
+export const SearchCTA = styled.button`
   ${(props) => `background: linear-gradient(
     135deg,
     ${props.theme.colors.accent3},
@@ -133,12 +133,11 @@ export const Button = styled.button`
   );`}
   border: none;
   font-weight: 600;
-  color: #121212 !important;
+  color: #121212;
+  display: grid;
+  place-items: center;
+  align-self: center;
   padding: 0.65rem 2rem;
-  cursor: ${(props) => (props.show ? "pointer !important" : "default !important")};
-  visibility: ${(props) => (props.show ? "visible !important" : "none !important")};
-  opacity: ${(props) => (props.show ? "1 !important" : "0 !important")};
-  transition: all 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     padding: 0.35rem 1rem;
@@ -150,9 +149,8 @@ export const UserInput = styled.input`
   box-shadow: none;
   position: relative;
   border-radius: 0;
-  height: 45px;
   background-color: transparent;
-  font-size: x-large;
+  font-size: 1.5rem;
   width: 100%;
   font-weight: 400;
   color: white;

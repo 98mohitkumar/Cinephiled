@@ -6,8 +6,8 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import logo from "public/logo512.png";
 import { Fragment, useEffect } from "react";
-import { AboutBackground } from "styles/GlobalComponents";
-import { Integration, LoginButton, LoginCard, LoginContainer, LoginText } from "./LoginPageStyles";
+import { AboutBackground, Button } from "styles/GlobalComponents";
+import { Integration, LoginCard, LoginContainer, LoginText } from "./LoginPageStyles";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -91,9 +91,9 @@ const LoginPage = () => {
               </LoginText>
 
               <div className='flex flex-col items-center'>
-                <LoginButton onClick={login} className='secondary' isWaiting={isWaiting}>
+                <Button onClick={login} className='mt-3' loading={+isWaiting}>
                   {isWaiting ? "Authenticating..." : "Login with TMDB"}
-                </LoginButton>
+                </Button>
 
                 {error && <p className='text-red-500 m-0 pt-3'>{errorMessage}</p>}
               </div>

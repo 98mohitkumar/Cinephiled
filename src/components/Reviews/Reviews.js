@@ -1,9 +1,9 @@
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import PlaceholderText from "components/PlaceholderText";
 import { Fragment } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { getReleaseDate } from "src/utils/helper";
-import { NoDataText } from "styles/GlobalComponents";
 import { Review, ReviewAuthorImg, ReviewAuthorWrap, ReviewsWrap } from "./ReviewsStyles";
 
 const Reviews = ({ reviews }) => {
@@ -28,7 +28,7 @@ const Reviews = ({ reviews }) => {
           </ReviewsWrap>
         ))
       ) : (
-        <NoDataText className='font-bold text-center my-5'>No Reviews Yet</NoDataText>
+        <PlaceholderText>No Reviews Yet</PlaceholderText>
       )}
     </Fragment>
   );

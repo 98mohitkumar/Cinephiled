@@ -18,7 +18,8 @@ import {
   getReleaseDate,
   getRuntime,
   mergeEpisodeCount,
-  getCleanTitle
+  getCleanTitle,
+  fetchOptions
 } from "src/utils/helper";
 
 import {
@@ -60,6 +61,8 @@ const Seasons = ({
       label: `${seasonName} (${getReleaseYear(releaseDate)})`
     }
   ];
+
+  const totalRuntime = episodes?.reduce((acc, item) => acc + item.runtime, 0);
 
   return (
     <Fragment>
@@ -103,7 +106,7 @@ const Seasons = ({
                 </SeasonShowcaseImg>
 
                 <div>
-                  <h2 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 m-0 font-bold'>
+                  <h2 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-snug m-0 font-bold'>
                     {seasonName} ({getReleaseYear(releaseDate)})
                   </h2>
 
@@ -115,6 +118,8 @@ const Seasons = ({
                     <Pill>
                       <p>{getRating(rating)}</p>
                     </Pill>
+
+                    <h3 className='font-semibold text-[1.25rem]'>{getRuntime(totalRuntime)}</h3>
                   </TrWrapper>
 
                   {overview && <SeasonCommonOverview>{overview}</SeasonCommonOverview>}
@@ -144,7 +149,7 @@ const Seasons = ({
                       </EpisodeImg>
 
                       <div>
-                        <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 font-bold'>
+                        <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-snug font-bold'>
                           {item.episode_number || i + 1}. {item.name}
                         </h3>
 
@@ -252,8 +257,11 @@ const Seasons = ({
 Seasons.getInitialProps = async (ctx) => {
   try {
     const [response, tvRes] = await Promise.all([
-      fetch(apiEndpoints.tv.tvSeasonDetails({ id: ctx.query.id, seasonNumber: ctx.query.sn })),
-      fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id))
+      fetch(
+        apiEndpoints.tv.tvSeasonDetails({ id: ctx.query.id, seasonNumber: ctx.query.sn }),
+        fetchOptions()
+      ),
+      fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id), fetchOptions())
     ]);
 
     if (!response.ok) throw new Error("error fetching details");

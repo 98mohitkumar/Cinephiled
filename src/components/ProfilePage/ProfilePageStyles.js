@@ -2,8 +2,6 @@ import styled from "styled-components";
 
 export const Banner = styled.div`
   width: 100%;
-  height: 30vh;
-  max-height: 400px;
   min-height: 300px;
   position: relative;
   display: grid;
@@ -40,7 +38,7 @@ export const Banner = styled.div`
   }
 
   .profile {
-    gap: 1.5rem;
+    gap: 8px;
   }
 `;
 
@@ -72,63 +70,6 @@ export const ProfileStats = styled.div`
   flex-wrap: wrap;
   gap: 1.5rem clamp(2.5rem, 6vw, 3.25rem);
   margin-top: 2rem;
-`;
-
-export const CTAButton = styled.button`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  border: none;
-  font-weight: 500;
-  background: rgb(221, 221, 221);
-
-  &.secondary {
-    background-color: transparent;
-    border: 1px solid rgb(81 81 81 / 0.8);
-  }
-
-  @media only ${(props) => props.theme.breakpoints.xs} {
-    font-size: 1rem;
-  }
-`;
-
-export const ConfirmationModal = styled.div`
-  background-color: rgb(18 18 18 / 0.75);
-  position: fixed;
-  inset: 0;
-  margin: auto;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  backdrop-filter: blur(2px);
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    place-items: flex-end center;
-    padding-bottom: 2rem;
-  }
-`;
-
-export const ModalCard = styled.div`
-  width: 100%;
-  max-width: clamp(360px, 90vw, 500px);
-  padding: 1.75rem;
-  border-radius: 12px;
-  border: 1px solid rgba(80, 80, 80, 0.75);
-  background: rgba(18, 18, 18);
-  box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14), 0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
-    0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 1.25rem;
-  }
-
-  & > * {
-    line-height: 1.4;
-  }
 `;
 
 export const RatingOverlay = styled.div`

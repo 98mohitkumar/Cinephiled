@@ -1,7 +1,9 @@
 import { addToWatchlist, setFavorite } from "api/user";
 import DominantColor from "components/DominantColor/DominantColor";
+import AddToListModal from "components/List/AddToListModal";
+import { useModal } from "components/Modal/Modal";
 import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
-import RatingModal, { useModal } from "components/RatingModal/RatingModal";
+import RatingModal from "components/RatingModal/RatingModal";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import Toast, { useToast } from "components/Toast/Toast";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,6 +19,7 @@ import { framerTabVariants, getCleanTitle, getRating, getRuntime } from "src/uti
 import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import {
+  Button,
   DetailsHeroWrap,
   HeroBg,
   HeroBgContainer,
@@ -42,8 +45,7 @@ import {
   EasterText,
   LightsInOut,
   Gradient,
-  MovieEaster,
-  FeatureButton
+  MovieEaster
 } from "./MovieDetailsStyles";
 
 const MovieDetails = ({
@@ -123,7 +125,7 @@ const MovieDetails = ({
         showToast({ message: "Something went wrong, try again later" });
       }
     } else if (!isToastVisible) {
-      showToast({ message: "Login first to use this feature" });
+      showToast({ message: "Please login first to use this feature" });
     }
   };
 
@@ -164,7 +166,7 @@ const MovieDetails = ({
         showToast({ message: "Something went wrong, try again later" });
       }
     } else if (!isToastVisible) {
-      showToast({ message: "Login first to use this feature" });
+      showToast({ message: "Please login first to use this feature" });
     }
   };
 
@@ -172,7 +174,7 @@ const MovieDetails = ({
     if (userInfo?.accountId) {
       openModal();
     } else {
-      showToast({ message: "Login first to use this feature" });
+      showToast({ message: "Please login first to use this feature" });
     }
   };
 
@@ -224,17 +226,21 @@ const MovieDetails = ({
                   rel='noreferrer'
                   aria-label='play trailer'
                   className='mb-3 block'>
-                  <FeatureButton>
+                  <Button className='w-full gap-3' as={motion.button} whileTap={{ scale: 0.95 }}>
                     <FaYoutube size='1.5rem' />
-                    <Span>Play Trailer</Span>
-                  </FeatureButton>
+                    <Span className='font-semibold'>Play Trailer</Span>
+                  </Button>
                 </a>
               )}
 
-              <div className='flex justify-start gap-4'>
-                <FeatureButton
-                  className='mediaCTA'
-                  disabled={isToastVisible}
+              <div className='mb-3'>
+                <AddToListModal mediaType='movie' mediaId={id} />
+              </div>
+
+              <div className='flex justify-start gap-4 max-w-full'>
+                <Button
+                  className='w-full mediaCTA'
+                  loading={+isToastVisible}
                   aria-label='watchlist button'
                   as={motion.button}
                   whileTap={{ scale: 0.95 }}
@@ -254,14 +260,14 @@ const MovieDetails = ({
                       )}
                     </motion.div>
                   </AnimatePresence>
-                </FeatureButton>
+                </Button>
 
-                <FeatureButton
-                  className='mediaCTA'
+                <Button
+                  className='w-full mediaCTA'
                   aria-label='favorite button'
                   onClick={favoriteHandler}
                   as={motion.button}
-                  disabled={isToastVisible}
+                  loading={+isToastVisible}
                   whileTap={{ scale: 0.95 }}>
                   <AnimatePresence exitBeforeEnter initial={false}>
                     <motion.div
@@ -274,13 +280,13 @@ const MovieDetails = ({
                       {isAddedToFavorites ? <FaHeart size='20px' /> : <FaRegHeart size='20px' />}
                     </motion.div>
                   </AnimatePresence>
-                </FeatureButton>
+                </Button>
 
-                <FeatureButton
-                  className='mediaCTA'
+                <Button
+                  className='w-full mediaCTA'
                   aria-label='rating button'
                   as={motion.button}
-                  disabled={isToastVisible}
+                  loading={+isToastVisible}
                   whileTap={{ scale: 0.95 }}
                   onClick={ratingModalHandler}>
                   <AnimatePresence exitBeforeEnter initial={false}>
@@ -294,14 +300,14 @@ const MovieDetails = ({
                       {savedRating ? (
                         <RatingOverlay className='media-page'>
                           <AiFillStar size='16px' />
-                          <p className='m-0 font-semibold text'>{savedRating}</p>
+                          <p className='m-0 leading-tight font-semibold'>{savedRating}</p>
                         </RatingOverlay>
                       ) : (
                         <BsStarHalf size='20px' />
                       )}
                     </motion.div>
                   </AnimatePresence>
-                </FeatureButton>
+                </Button>
               </div>
             </div>
 
@@ -394,26 +400,20 @@ const MovieDetails = ({
         </Fragment>
       ) : null}
 
-      <AnimatePresence exitBeforeEnter initial={false}>
-        {isToastVisible ? (
-          <Toast key='toast'>
-            <Span className='toast-message'>{toastMessage}</Span>
-          </Toast>
-        ) : null}
+      <Toast isToastVisible={isToastVisible}>
+        <Span className='toast-message'>{toastMessage}</Span>
+      </Toast>
 
-        {isModalVisible ? (
-          <RatingModal
-            key='rating-modal'
-            mediaType='movie'
-            mediaId={id}
-            posterPath={moviePoster}
-            releaseDate={releaseDate}
-            title={title}
-            closeModal={closeModal}
-            mediaName={`${title} (${releaseYear})`}
-          />
-        ) : null}
-      </AnimatePresence>
+      <RatingModal
+        mediaType='movie'
+        mediaId={id}
+        posterPath={moviePoster}
+        releaseDate={releaseDate}
+        title={title}
+        isOpen={isModalVisible}
+        closeModal={closeModal}
+        mediaName={`${title} (${releaseYear})`}
+      />
     </Fragment>
   );
 };

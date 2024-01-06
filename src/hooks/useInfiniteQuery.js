@@ -1,18 +1,26 @@
 import { apiEndpoints } from "globals/constants";
 import { useMemo, useEffect, useState, useRef } from "react";
+import { fetchOptions } from "src/utils/helper";
+import { useUserContext } from "Store/UserContext";
 
 const useInfiniteQuery = ({
   initialPage,
   type,
+  listId = null,
   genreId = null,
   searchQuery = null,
   networkId = null,
   providerId = null,
-  region = null
+  region = null,
+  listOrder = null,
+  useUserToken = false
 }) => {
   const [pageToFetch, setPageToFetch] = useState(initialPage);
   const [extendedList, setExtendedList] = useState([]);
   const [isEmptyPage, setIsEmptyPage] = useState(false);
+  const {
+    userInfo: { accountId, accessToken }
+  } = useUserContext();
 
   const fetchTimeOut = useRef(null);
 
@@ -45,9 +53,16 @@ const useInfiniteQuery = ({
         providerId,
         region,
         pageQuery: pageToFetch
-      })
+      }),
+      lists: apiEndpoints.lists.getLists({ accountId, pageQuery: pageToFetch }),
+      list: listOrder
+        ? `${apiEndpoints.lists.getListDetails({
+            id: listId,
+            pageQuery: pageToFetch
+          })}&sort_by=original_order.desc`
+        : apiEndpoints.lists.getListDetails({ id: listId, pageQuery: pageToFetch })
     }),
-    [genreId, networkId, pageToFetch, providerId, region, searchQuery]
+    [accountId, genreId, listId, listOrder, networkId, pageToFetch, providerId, region, searchQuery]
   );
 
   useEffect(() => {
@@ -55,6 +70,7 @@ const useInfiniteQuery = ({
 
     const fetchQuery = async () => {
       const res = await fetch(endpoint[type], {
+        ...fetchOptions(useUserToken ? { token: accessToken } : {}),
         signal: abortCtrl.signal
       });
 
@@ -92,7 +108,7 @@ const useInfiniteQuery = ({
       abortCtrl.abort();
       window.removeEventListener("scroll", detectBottom);
     };
-  }, [endpoint, isEmptyPage, type]);
+  }, [accessToken, endpoint, isEmptyPage, type, useUserToken]);
 
   return { list: extendedList };
 };

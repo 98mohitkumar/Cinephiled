@@ -1,5 +1,6 @@
 import MetaWrapper from "components/MetaWrapper";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import PlaceholderText from "components/PlaceholderText";
 import {
   RecommendationsGrid,
   RecommendedImg,
@@ -12,8 +13,8 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { getCleanTitle } from "src/utils/helper";
-import { NoDataText, Error404, ModulesWrapper } from "styles/GlobalComponents/index";
+import { fetchOptions, getCleanTitle } from "src/utils/helper";
+import { Error404, ModulesWrapper } from "styles/GlobalComponents/index";
 
 const Movies = ({ renderList, genreName, error, genreId }) => {
   const { list } = useInfiniteQuery({
@@ -73,7 +74,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
               </RecommendationsGrid>
             </Fragment>
           ) : (
-            <NoDataText className='font-bold text-center my-5'>No Movies For Now</NoDataText>
+            <PlaceholderText height='large'>No Movies For Now</PlaceholderText>
           )}
         </ModulesWrapper>
       )}
@@ -89,8 +90,8 @@ Movies.getInitialProps = async (ctx) => {
     const genreName = ctx.query.item.split("-").slice(1).join(" ");
 
     const [response, nextPage] = await Promise.all([
-      fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 1 })),
-      fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 2 }))
+      fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 1 }), fetchOptions()),
+      fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 2 }), fetchOptions())
     ]);
 
     if (!response.ok) throw new Error("error fetching movies");

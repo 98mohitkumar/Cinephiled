@@ -1,5 +1,5 @@
 import { getFavorites, getRated, getRecommendations, getWatchlist } from "api/user";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useUserContext } from "Store/UserContext";
 
 const endpoints = {
@@ -15,13 +15,12 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
-  const fetchAllData = useCallback(async () => {
-    try {
-      const fetcher = endpoints[endpoint];
-      if (!fetcher) throw new Error("Invalid endpoint");
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        const fetcher = endpoints[endpoint];
+        if (!fetcher) throw new Error("Invalid endpoint");
 
-      if (userInfo?.accountId && userInfo?.sessionId) {
-        setLoading(true);
         const response = await fetcher({
           mediaType,
           pageQuery: page
@@ -36,15 +35,17 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
         } else {
           setLoading(false);
         }
-      } else {
+      } catch {
         setMedia([]);
         setLoading(false);
       }
-    } catch {
-      setMedia([]);
-      setLoading(false);
+    };
+
+    if (userInfo?.accountId) {
+      setLoading(true);
+      fetchAllData();
     }
-  }, [endpoint, mediaType, page, userInfo?.accountId, userInfo?.sessionId]);
+  }, [endpoint, mediaType, page, userInfo?.accountId]);
 
   const revalidateAllPages = () => {
     setMedia([]);
@@ -60,10 +61,6 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
       setMedia(media);
     }
   };
-
-  useEffect(() => {
-    fetchAllData();
-  }, [fetchAllData, page]);
 
   return { media, validateMedia, revalidateAllPages, loading };
 };

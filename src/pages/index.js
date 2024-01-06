@@ -3,6 +3,7 @@ import IndexTab from "components/IndexTab/IndexTab";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
+import { fetchOptions } from "src/utils/helper";
 import { Error404 } from "styles/GlobalComponents";
 
 export default function Home({ popularMovies, popularTv, trendingMovies, trendingTv, error }) {
@@ -46,10 +47,10 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
 export async function getStaticProps() {
   try {
     const indexPageMedia = await Promise.all([
-      fetch(apiEndpoints.movie.popularMovies),
-      fetch(apiEndpoints.tv.popularTV),
-      fetch(apiEndpoints.movie.trendingMovies),
-      fetch(apiEndpoints.tv.trendingTV)
+      fetch(apiEndpoints.movie.popularMovies, fetchOptions()),
+      fetch(apiEndpoints.tv.popularTV, fetchOptions()),
+      fetch(apiEndpoints.movie.trendingMovies, fetchOptions()),
+      fetch(apiEndpoints.tv.trendingTV, fetchOptions())
     ]);
 
     const error = indexPageMedia.some((res) => !res.ok);

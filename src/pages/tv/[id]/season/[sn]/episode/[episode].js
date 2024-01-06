@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import {
+  fetchOptions,
   getCleanTitle,
   getRating,
   getReleaseDate,
@@ -198,9 +199,10 @@ Episode.getInitialProps = async (ctx) => {
           id: ctx.query.id,
           seasonNumber: ctx.query.sn,
           episodeNumber: ctx.query.episode
-        })
+        }),
+        fetchOptions()
       ),
-      fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id))
+      fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id), fetchOptions())
     ]);
 
     if (!response.ok) throw new Error("error fetching details");

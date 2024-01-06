@@ -2,7 +2,7 @@ import NetworkMedia from "components/Explore/NetworkMedia";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
-import { getCleanTitle } from "src/utils/helper";
+import { fetchOptions, getCleanTitle } from "src/utils/helper";
 import { Error404 } from "styles/GlobalComponents";
 
 const Network = ({ networkDetails, networkMedia, error }) => {
@@ -32,8 +32,8 @@ Network.getInitialProps = async (context) => {
     const networkId = id.split("-")[0];
 
     const [res, networkMedia] = await Promise.all([
-      fetch(apiEndpoints.network.networkDetails(networkId)),
-      fetch(apiEndpoints.network.networkMedia({ id: networkId }))
+      fetch(apiEndpoints.network.networkDetails(networkId), fetchOptions()),
+      fetch(apiEndpoints.network.networkMedia({ id: networkId }), fetchOptions())
     ]);
 
     if (!res.ok) throw new Error("cannot fetch details");
