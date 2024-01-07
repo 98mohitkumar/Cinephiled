@@ -75,7 +75,7 @@ const AddToListModal = ({ mediaId, mediaType }) => {
     if (userInfo?.accountId) {
       openModal();
     } else {
-      showToast({ message: "Login first to use this feature" });
+      showToast({ message: "Please login first to use this feature" });
     }
   };
 
