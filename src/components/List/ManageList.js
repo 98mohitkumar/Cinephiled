@@ -25,6 +25,7 @@ const ManageList = ({ id }) => {
   const { isToastVisible, showToast, toastMessage } = useToast();
   const [updateCover, setUpdateCover] = useState(false);
   const [selectedCover, setSelectedCover] = useState(null);
+  const [isWaiting, setIsWaiting] = useState(false);
   const {
     query: { create = false }
   } = useRouter();
@@ -124,15 +125,18 @@ const ManageList = ({ id }) => {
   };
 
   const coverClickHandler = async (cover) => {
+    setIsWaiting(true);
     const { success } = await updateList({ id, listData: { backdrop_path: cover } });
 
     if (!success) {
       showToast({ message: "Error updating the list details, please try again later." });
+      setIsWaiting(false);
       return;
     }
 
     setSelectedCover(cover);
     showToast({ message: "List cover added successfully." });
+    setIsWaiting(false);
     revalidateWithQuery();
   };
 
@@ -153,19 +157,29 @@ const ManageList = ({ id }) => {
               Something went wrong. Please try again later.
             </div>
           ) : (
-            <div className='mb-8'>
+            <div className='mb-8 relative'>
+              {isWaiting ? (
+                <div className='absolute inset-0 grid place-items-center z-50'>
+                  <Loading />
+                </div>
+              ) : null}
+
               <div className='flex gap-4 justify-between items-center mb-8 flex-wrap'>
                 <h3 className='text-3xl font-semibold'>{listDetails.name}</h3>
 
                 <div className='flex gap-3 items-center max-sm:w-full'>
-                  <Button onClick={() => setUpdateCover((prev) => !prev)} className='w-full'>
+                  <Button
+                    onClick={() => setUpdateCover((prev) => !prev)}
+                    className='w-full'
+                    loading={+isWaiting}>
                     Update {updateCover ? "Items" : "Cover"}
                   </Button>
 
                   <Button
                     disabled={items?.length === 0}
                     onClick={revalidateData}
-                    className='disabled:opacity-50 disabled:cursor-not-allowed w-full'>
+                    className='disabled:opacity-50 disabled:cursor-not-allowed w-full'
+                    loading={+isWaiting}>
                     Done
                   </Button>
                 </div>
@@ -178,7 +192,8 @@ const ManageList = ({ id }) => {
                     variants={framerTabVariants}
                     initial='hidden'
                     animate='visible'
-                    exit='hidden'>
+                    exit='hidden'
+                    className={isWaiting ? "brightness-[25%] blur-sm" : ""}>
                     <h4 className='mb-4 font-medium'>Select a cover for your list</h4>
 
                     {items.length > 0 ? (

@@ -135,7 +135,7 @@ export const getCleanTitle = (title) => {
   return stringWithHyphens.replace(/[-\s]+$/, "");
 };
 
-export const fetchSuggestions = async (userInput) => {
+export const fetchSuggestions = async (userInput, controller) => {
   let searchQuery = userInput;
   let year = "";
 
@@ -146,8 +146,14 @@ export const fetchSuggestions = async (userInput) => {
 
   if (year.trim().length > 0) {
     const searchQueryWithYear = await Promise.all([
-      fetch(apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }), fetchOptions()),
-      fetch(apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year }), fetchOptions())
+      fetch(apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }), {
+        ...fetchOptions(),
+        signal: controller.signal
+      }),
+      fetch(apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year }), {
+        ...fetchOptions(),
+        signal: controller.signal
+      })
     ]);
 
     const error = searchQueryWithYear.some((res) => !res.ok);
@@ -162,8 +168,14 @@ export const fetchSuggestions = async (userInput) => {
     };
   } else {
     const searchQueryWithoutYear = await Promise.all([
-      fetch(apiEndpoints.search.movieSearch({ query: searchQuery }), fetchOptions()),
-      fetch(apiEndpoints.search.tvSearch({ query: searchQuery }), fetchOptions())
+      fetch(apiEndpoints.search.movieSearch({ query: searchQuery }), {
+        ...fetchOptions(),
+        signal: controller.signal
+      }),
+      fetch(apiEndpoints.search.tvSearch({ query: searchQuery }), {
+        ...fetchOptions(),
+        signal: controller.signal
+      })
     ]);
 
     const error = searchQueryWithoutYear.some((res) => !res.ok);

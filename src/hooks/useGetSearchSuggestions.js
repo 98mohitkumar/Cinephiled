@@ -6,12 +6,14 @@ const useGetSearchSuggestions = (query) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     if (query.trim().length === 0) {
       setSuggestions([]);
     } else {
       setLoading(true);
 
-      fetchSuggestions(query)
+      fetchSuggestions(query, abortController)
         .then(({ movieRes, tvRes }) => {
           setSuggestions(movieRes.concat(tvRes).sort((a, b) => b.vote_count - a.vote_count));
           setLoading(false);
@@ -24,6 +26,7 @@ const useGetSearchSuggestions = (query) => {
 
     return () => {
       setSuggestions([]);
+      abortController.abort();
     };
   }, [query]);
 
