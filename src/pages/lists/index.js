@@ -47,7 +47,10 @@ const Lists = ({ error, lists }) => {
 
   return (
     <Fragment>
-      <MetaWrapper title='My Lists - Cinephiled' description='Create and manage your lists.' />
+      <MetaWrapper
+        title={`${create ? "Create List" : "My Lists"} - Cinephiled`}
+        description='Create and manage your lists.'
+      />
 
       {error ? (
         <Error404>404</Error404>

@@ -17,20 +17,22 @@ const steps = [
 ];
 
 const CreateList = () => {
-  const [{ step, error, listId }, setListData] = useState({
+  const [{ step, error, listId, isWaiting }, setListData] = useState({
     step: 1,
     error: null,
-    listId: null
+    listId: null,
+    isWaiting: false
   });
 
   const { userInfo } = useUserContext();
-  const { lists, updateList } = useListsContext();
+  const { updateList } = useListsContext();
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
     setListData((prevState) => ({
       ...prevState,
-      error: null
+      error: null,
+      isWaiting: true
     }));
 
     const formData = new FormData(e.target);
@@ -50,7 +52,8 @@ const CreateList = () => {
     if (!success) {
       setListData((prevState) => ({
         ...prevState,
-        error: "Error creating the list, please try again later."
+        error: "Error creating the list, please try again later.",
+        isWaiting: false
       }));
     } else {
       const data = await response.json();
@@ -62,8 +65,8 @@ const CreateList = () => {
       );
 
       const listDetails = await res.json();
-      updateList([listDetails, ...lists]);
-      setListData({ error: null, listId: data?.id, step: 2 });
+      updateList((prev) => [listDetails, ...prev]);
+      setListData({ error: null, listId: data?.id, step: 2, isWaiting: false });
     }
   };
 
@@ -118,8 +121,9 @@ const CreateList = () => {
                   type='submit'
                   as={motion.button}
                   whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}>
-                  Continue
+                  whileTap={{ scale: 0.95 }}
+                  loading={+isWaiting}>
+                  {isWaiting ? "Creating..." : "Continue"}
                 </Button>
               </CreateListForm>
             </motion.div>

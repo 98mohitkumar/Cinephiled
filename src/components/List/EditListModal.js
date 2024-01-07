@@ -4,6 +4,7 @@ import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Toast, { useToast } from "components/Toast/Toast";
 import { motion } from "framer-motion";
 import { Fragment } from "react";
+import { useListsContext } from "Store/ListsContext";
 import { Button } from "styles/GlobalComponents";
 import CreateListForm from "./CreateListForm";
 import useRevalidateList from "./useRevalidateList";
@@ -12,6 +13,7 @@ const EditListModal = ({ list }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
   const { isToastVisible, showToast, toastMessage } = useToast();
   const { revalidateData } = useRevalidateList();
+  const { updateList: updateListContext, lists } = useListsContext();
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
@@ -33,6 +35,13 @@ const EditListModal = ({ list }) => {
     } else {
       closeModal();
       revalidateData();
+      const editedList = lists.find((item) => item.id === list.id);
+
+      if (listData.name !== editedList.name) {
+        updateListContext((prev) =>
+          prev.map((item) => (item.id === list.id ? { ...item, name: listData.name } : item))
+        );
+      }
       showToast({ message: "List updated successfully." });
     }
   };

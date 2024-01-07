@@ -13,14 +13,13 @@ const DeleteListModal = ({ list }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
   const { isToastVisible, showToast, toastMessage } = useToast();
   const router = useRouter();
-  const { lists, updateList } = useListsContext();
+  const { updateList } = useListsContext();
 
   const deleteListHandler = async () => {
     const { success } = await deleteList({ id: list.id });
 
     if (success) {
-      const updatedLists = lists.filter((item) => item.id !== list.id);
-      updateList(updatedLists);
+      updateList((prev) => prev.filter((item) => item.id !== list.id));
       closeModal();
       router.push("/lists");
     } else {

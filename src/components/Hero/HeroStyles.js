@@ -10,8 +10,6 @@ export const HeroDiv = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 4;
-  background: -moz-linear-gradient(270deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
-  background: -webkit-linear-gradient(270deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
   background: linear-gradient(180deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
 
   background: ${({ searchModal }) => searchModal && "transparent"};
@@ -79,7 +77,6 @@ export const Form = styled.form`
       );
       background-position: -1500px 0px;
       animation: shift 1.5s cubic-bezier(0.39, 0.58, 0.57, 1) 0s infinite;
-      -moz-animation: shift 1.5s cubic-bezier(0.39, 0.58, 0.57, 1) 0s infinite;
 
       @keyframes shift {
         from {

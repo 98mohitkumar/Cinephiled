@@ -58,7 +58,7 @@ const List = ({ list, error }) => {
           <DominantColor flip tint isUsingBackdrop image={list.backdrop_path} />
 
           {list?.backdrop_path && (
-            <div className='absolute inset-0 max-h-80'>
+            <div className='absolute inset-0 max-h-72'>
               <Image
                 src={`https://image.tmdb.org/t/p/w1920_and_h318_multi_faces${list.backdrop_path}`}
                 alt={list.name}

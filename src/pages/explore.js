@@ -1,3 +1,4 @@
+import DominantColor from "components/DominantColor/DominantColor";
 import Genres from "components/Explore/Genres";
 import NowPlayingMovies from "components/Explore/NowPlayingMovies";
 import StreamingProvides from "components/Explore/Providers";
@@ -20,14 +21,18 @@ const Explore = ({ movieGenres, tvGenres, error }) => {
         <Error404>404</Error404>
       ) : (
         <Fragment>
-          {/* genres for movies and tv shows */}
-          <LayoutContainer className='mb-auto'>
-            <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
-          </LayoutContainer>
+          <section className='relative'>
+            <DominantColor flip tint />
 
-          <LayoutContainer className='mt-8'>
-            <StreamingProvides />
-          </LayoutContainer>
+            {/* genres for movies and tv shows */}
+            <LayoutContainer className='mb-auto relative z-20'>
+              <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
+            </LayoutContainer>
+
+            <LayoutContainer className='mt-8 relative z-20'>
+              <StreamingProvides />
+            </LayoutContainer>
+          </section>
 
           {/* movies that are currently in theatres */}
           <NowPlayingMovies />

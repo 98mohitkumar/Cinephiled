@@ -32,8 +32,6 @@ export const Banner = styled.div`
     margin: auto;
     z-index: 10;
     backdrop-filter: blur(2px);
-    background: -moz-linear-gradient(270deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
-    background: -webkit-linear-gradient(270deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
     background: linear-gradient(180deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
   }
 

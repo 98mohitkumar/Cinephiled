@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  height: 600px;
+  height: 500px;
 
   .overflow-wrapper {
     position: absolute;
@@ -11,7 +11,7 @@ export const Container = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    height: 460px;
+    height: 400px;
   }
 `;
 

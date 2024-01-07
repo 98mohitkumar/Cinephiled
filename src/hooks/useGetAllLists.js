@@ -40,14 +40,10 @@ const useGetAllLists = () => {
     }
   }, [page, userInfo?.accessToken, userInfo?.accountId]);
 
-  const updateList = (lists) => {
-    setLists(lists);
-  };
-
   return {
     lists,
     loading,
-    updateList
+    updateList: setLists
   };
 };
 
