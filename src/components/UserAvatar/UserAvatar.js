@@ -65,7 +65,10 @@ const UserAvatar = () => {
                 <Link href='/lists' passHref>
                   <PopupOption role='button'>Lists</PopupOption>
                 </Link>
-                <PopupOption onClick={logout} role='button'>
+                <PopupOption
+                  onClick={logout}
+                  role='button'
+                  className='text-red-500 font-semibold logout'>
                   Logout
                 </PopupOption>
               </Popup>

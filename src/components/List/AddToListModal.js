@@ -6,6 +6,7 @@ import Toast, { useToast } from "components/Toast/Toast";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
+import { MdOutlineFormatListBulleted } from "react-icons/md";
 import { useListsContext } from "Store/ListsContext";
 import { useUserContext } from "Store/UserContext";
 import { Button } from "styles/GlobalComponents";
@@ -210,10 +211,11 @@ const AddToListModal = ({ mediaId, mediaType }) => {
       </Modal>
 
       <Button
-        className='w-full'
+        className='w-full gap-3'
         as={motion.button}
         whileTap={{ scale: 0.95 }}
         onClick={openModalHandler}>
+        <MdOutlineFormatListBulleted size={22} />
         <span className='font-semibold'>Add to list</span>
       </Button>
 

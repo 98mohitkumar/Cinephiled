@@ -59,6 +59,10 @@ export const PopupOption = styled.div`
   }
 
   @media only ${({ theme }) => theme.breakpoints.hover} {
+    &.logout:hover {
+      background: rgb(127 29 29 / 0.4);
+    }
+
     &:hover {
       background-color: rgb(81 81 81 / 0.3);
     }
