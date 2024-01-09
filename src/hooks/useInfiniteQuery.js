@@ -83,7 +83,7 @@ const useInfiniteQuery = ({
     };
 
     function detectBottom() {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isEmptyPage) {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 400 && !isEmptyPage) {
         clearTimeout(fetchTimeOut.current);
 
         fetchTimeOut.current = setTimeout(() => {

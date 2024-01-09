@@ -13,7 +13,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { fetchOptions, getCleanTitle } from "src/utils/helper";
+import { fetchOptions, getCleanTitle, removeDuplicates } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents/index";
 
 const Movies = ({ renderList, genreName, error, genreId }) => {
@@ -22,6 +22,8 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
     type: "movieGenre",
     genreId
   });
+
+  const { cleanedItems } = removeDuplicates(renderList.concat(list));
 
   return (
     <Fragment>
@@ -41,7 +43,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                 {genreName} Movies
               </Span>
               <RecommendationsGrid>
-                {renderList.concat(list).map(({ id, title, backdrop_path }) => (
+                {cleanedItems?.map(({ id, title, backdrop_path }) => (
                   <RecommendedWrapper key={id}>
                     <motion.div
                       whileHover={{
