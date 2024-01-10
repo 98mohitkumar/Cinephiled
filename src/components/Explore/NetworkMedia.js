@@ -64,7 +64,7 @@ const NetworkMedia = ({ details, media }) => {
               "--aspectRatio": details?.images?.logos?.[0]?.aspect_ratio
             }}>
             <Image
-              src={`https://image.tmdb.org/t/p/w300_filter(negate,000,666)${details?.images?.logos?.[0]?.file_path}`}
+              src={`https://image.tmdb.org/t/p/w300_filter(negate,000,111)${details?.images?.logos?.[0]?.file_path}`}
               alt={`${details?.name}-poster`}
               layout='fill'
               objectFit='cover'
