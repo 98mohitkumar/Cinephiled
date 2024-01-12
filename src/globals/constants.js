@@ -33,7 +33,7 @@ export const apiEndpoints = {
     getRecommendations: ({ mediaType, accountId, pageQuery = 1 }) =>
       `${baseUrlV4}/account/${accountId}/${mediaType}/recommendations?page=${pageQuery}&language=en-US`,
 
-    getCountryCode: `https://ipwho.is?fields=country_code`
+    getCountryCode: (ip) => `https://ipwho.is/${ip}?fields=country_code`
   },
   search: {
     movieSearchWithYear: ({ query, year }) =>

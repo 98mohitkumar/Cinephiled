@@ -121,6 +121,23 @@ export const getListItemStatus = async ({ listId, mediaType, mediaId }) => {
   }
 };
 
+export const getCountryCode = async (ip) => {
+  try {
+    if (process.env.NODE_ENV === "production") {
+      const res = await fetch(apiEndpoints.user.getCountryCode(ip));
+
+      if (res.ok && res.status === 200) {
+        const data = await res.json();
+        return data.country_code;
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching country code:", error);
+  }
+
+  return "US";
+};
+
 // POST requests
 
 export const setFavorite = async ({ mediaType, mediaId, favoriteState }) => {

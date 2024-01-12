@@ -1,5 +1,5 @@
+import { getCountryCode } from "api/user";
 import DominantColor from "components/DominantColor/DominantColor";
-import Loading from "components/Loading";
 import MetaWrapper from "components/MetaWrapper";
 import PlaceholderText from "components/PlaceholderText";
 import Select from "components/Select/Select";
@@ -10,8 +10,8 @@ import useTabs from "hooks/useTabs";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useRef, useState } from "react";
-import { fetchOptions, framerTabVariants, getCleanTitle, getCountryCode } from "src/utils/helper";
+import { Fragment, useState } from "react";
+import { fetchOptions, framerTabVariants, getCleanTitle } from "src/utils/helper";
 import { Error404, LayoutContainer } from "styles/GlobalComponents";
 
 const tabList = [
@@ -19,115 +19,13 @@ const tabList = [
   { key: "tv", name: `TV Shows` }
 ];
 
-const WatchProviders = ({ regions }) => {
+const WatchProviders = ({ error, regions, movieProviders, tvProviders, selectedRegion }) => {
   const router = useRouter();
-  const {
-    query: { region: selectedRegion }
-  } = router;
-
-  const [{ loading, error }, setResponseState] = useState({
-    loading: false,
-    error: false
-  });
   const [searchQuery, setSearchQuery] = useState("");
-  const [{ movieProviders, tvProviders }, setProviders] = useState({
-    movieProviders: [],
-    tvProviders: []
-  });
-
   const { activeTab, setTab } = useTabs({
     tabLocation: "watchProviders",
     defaultState: "movies"
   });
-
-  const userRegion = useRef("");
-
-  useEffect(() => {
-    const AbortCtrl = new AbortController();
-
-    const getWatchProviders = async () => {
-      setResponseState({
-        loading: true,
-        error: false
-      });
-
-      if (!userRegion.current) {
-        const region = await getCountryCode();
-        userRegion.current = region;
-      }
-
-      const [movieRes, tvRes] = await Promise.all([
-        fetch(
-          apiEndpoints.watchProviders.movieWatchProviders({
-            region: selectedRegion || userRegion.current
-          }),
-          {
-            ...fetchOptions(),
-            signal: AbortCtrl.signal
-          }
-        ),
-        fetch(
-          apiEndpoints.watchProviders.tvWatchProviders({
-            region: selectedRegion || userRegion.current
-          }),
-          {
-            ...fetchOptions(),
-            signal: AbortCtrl.signal
-          }
-        )
-      ]);
-
-      const error = [movieRes, tvRes].some((res) => !res.ok);
-
-      if (error) throw new Error("Failed to fetch watch providers");
-
-      const [movieData, tvData] = await Promise.all([movieRes.json(), tvRes.json()]);
-
-      movieData?.results?.forEach((item) => {
-        delete item.display_priorities;
-      });
-
-      tvData?.results?.forEach((item) => {
-        delete item.display_priorities;
-      });
-
-      return {
-        movieProviders: movieData.results,
-        tvProviders: tvData.results
-      };
-    };
-
-    getWatchProviders()
-      .then(({ movieProviders, tvProviders }) => {
-        setProviders({
-          movieProviders: movieProviders.filter((provider) => provider.logo_path),
-          tvProviders: tvProviders
-            .filter((provider) => provider.logo_path)
-            .map((provider) => ({
-              ...provider,
-              tvProvider: true
-            }))
-        });
-
-        setResponseState({
-          loading: false,
-          error: false
-        });
-      })
-      .catch(() => {
-        setProviders({
-          movieProviders: [],
-          tvProviders: []
-        });
-
-        setResponseState({
-          loading: false,
-          error: true
-        });
-      });
-
-    return () => AbortCtrl.abort();
-  }, [selectedRegion]);
 
   const searchHandler = (e) => {
     setSearchQuery(e.target.value);
@@ -141,13 +39,11 @@ const WatchProviders = ({ regions }) => {
     if (key === "default") {
       router.replace(`/watch-providers`);
     } else {
-      router.replace(`/watch-providers?region=${key}`);
+      router.replace(`/watch-providers?region=${key}`, null, { shallow: false });
     }
   };
 
-  const currentRegionName = regions.find(
-    ({ key }) => key === (selectedRegion || userRegion.current)
-  )?.niceName;
+  const currentRegionName = regions.find(({ key }) => key === selectedRegion)?.niceName;
 
   return (
     <Fragment>
@@ -176,16 +72,13 @@ const WatchProviders = ({ regions }) => {
 
               <div className='min-w-[250px] max-sm:min-w-full max-md:grow'>
                 <Select
-                  options={[
-                    { key: "default", value: `Default (${userRegion.current})` },
-                    ...regions
-                  ]}
+                  options={[{ key: "default", value: `Default (${selectedRegion})` }, ...regions]}
                   handleChange={handleSelectChange}
                   activeKey={selectedRegion || "default"}
                   triggerText={
                     selectedRegion
                       ? regions.find(({ key }) => key === selectedRegion)?.value
-                      : `Default (${userRegion.current})`
+                      : `Default (${selectedRegion})`
                   }
                 />
               </div>
@@ -203,77 +96,95 @@ const WatchProviders = ({ regions }) => {
             className='[margin:2.5rem_auto!important]'
           />
 
-          {loading ? (
-            <Loading />
-          ) : (
-            <AnimatePresence exitBeforeEnter initial={false}>
-              {currentRenderList?.length > 0 ? (
-                <motion.div
-                  key={activeTab}
-                  variants={framerTabVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='hidden'
-                  className='mt-12 mb-4 max-sm:gap-6 gap-8 grid grid-cols-[repeat(auto-fill,minmax(min(65px,20vw),1fr))] relative z-10'>
-                  {currentRenderList.map((provider) => (
-                    <Link
-                      key={provider.provider_id}
-                      href={`/watch-providers/${provider.provider_id}-${getCleanTitle(
-                        provider.provider_name
-                      )}/${provider.tvProvider ? "tv" : "movies"}?watchregion=${
-                        selectedRegion || userRegion.current
-                      }`}>
-                      <a className='block h-full w-full'>
-                        <motion.div
-                          className='w-full aspect-square rounded-lg overflow-hidden'
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}>
-                          <Image
-                            src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                            alt={provider.provider_name}
-                            layout='responsive'
-                            width={200}
-                            height={200}
-                            blurDataURL={blurPlaceholder}
-                            placeholder='blur'
-                          />
-                        </motion.div>
-                      </a>
-                    </Link>
-                  ))}
-                </motion.div>
-              ) : (
-                <PlaceholderText>No Watch Providers Found</PlaceholderText>
-              )}
-            </AnimatePresence>
-          )}
+          <AnimatePresence exitBeforeEnter>
+            {currentRenderList?.length > 0 ? (
+              <motion.div
+                key={activeTab}
+                variants={framerTabVariants}
+                initial='hidden'
+                animate='visible'
+                exit='hidden'
+                className='mt-12 mb-4 max-sm:gap-6 gap-8 grid grid-cols-[repeat(auto-fill,minmax(min(65px,20vw),1fr))] relative z-10'>
+                {currentRenderList.map((provider) => (
+                  <Link
+                    key={provider.provider_id}
+                    href={`/watch-providers/${provider.provider_id}-${getCleanTitle(
+                      provider.provider_name
+                    )}/${provider.tvProvider ? "tv" : "movies"}?watchregion=${selectedRegion}`}>
+                    <a className='block h-full w-full'>
+                      <motion.div
+                        className='w-full aspect-square rounded-lg overflow-hidden'
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}>
+                        <Image
+                          src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                          alt={provider.provider_name}
+                          layout='responsive'
+                          width={200}
+                          height={200}
+                          blurDataURL={blurPlaceholder}
+                          placeholder='blur'
+                        />
+                      </motion.div>
+                    </a>
+                  </Link>
+                ))}
+              </motion.div>
+            ) : (
+              <PlaceholderText>No Watch Providers Found</PlaceholderText>
+            )}
+          </AnimatePresence>
         </LayoutContainer>
       )}
     </Fragment>
   );
 };
 
-WatchProviders.getInitialProps = async () => {
+export const getServerSideProps = async ({ req, query }) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  let region = query.region;
+
+  if (!query.region) {
+    region = await getCountryCode(ip);
+  }
+
   try {
-    const regionsRes = await fetch(apiEndpoints.watchProviders.regions, fetchOptions());
+    const providersData = await Promise.all([
+      fetch(apiEndpoints.watchProviders.movieWatchProviders({ region }), fetchOptions()),
+      fetch(apiEndpoints.watchProviders.tvWatchProviders({ region }), fetchOptions()),
+      fetch(apiEndpoints.watchProviders.regions, fetchOptions())
+    ]);
 
-    if (!regionsRes.ok) throw Error("cannot fetch data");
+    const error = providersData.some((res) => !res.ok);
 
-    const regionsData = await regionsRes.json();
+    if (error) throw new Error("Failed to fetch watch providers");
+
+    const [movieProviders, tvProviders, regions] = await Promise.all(
+      providersData.map((res) => res.json())
+    );
 
     return {
-      error: false,
-      regions:
-        regionsData?.results.map(({ iso_3166_1, english_name }) => ({
-          key: iso_3166_1,
-          niceName: english_name,
-          value: `${english_name} (${iso_3166_1})`
-        })) || []
+      props: {
+        error: false,
+        regions:
+          regions?.results.map(({ iso_3166_1, english_name }) => ({
+            key: iso_3166_1,
+            niceName: english_name,
+            value: `${english_name} (${iso_3166_1})`
+          })) || [],
+        movieProviders: movieProviders?.results || [],
+        tvProviders: tvProviders?.results || [],
+        selectedRegion: region
+      }
     };
   } catch {
     return {
-      error: true,
-      regions: []
+      props: {
+        error: true,
+        regions: [],
+        movieProviders: [],
+        tvProviders: []
+      }
     };
   }
 };
