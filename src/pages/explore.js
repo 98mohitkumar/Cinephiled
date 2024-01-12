@@ -1,3 +1,4 @@
+import { getCountryCode } from "api/user";
 import DominantColor from "components/DominantColor/DominantColor";
 import Genres from "components/Explore/Genres";
 import NowPlayingMovies from "components/Explore/NowPlayingMovies";
@@ -8,11 +9,11 @@ import { Fragment } from "react";
 import { fetchOptions } from "src/utils/helper";
 import { LayoutContainer, Error404 } from "styles/GlobalComponents";
 
-const Explore = ({ movieGenres, tvGenres, error }) => {
+const Explore = ({ movieGenres, tvGenres, error, nowPlaying }) => {
   return (
     <Fragment>
       <MetaWrapper
-        title={error ? "Not Found - Not Found - Cinephiled" : "Explore - Cinephiled"}
+        title={error ? "Not Found - Cinephiled" : "Explore - Cinephiled"}
         description="Embark on a cinematic journey through diverse genres of movies and TV shows. Uncover the latest releases and discover what's currently captivating audiences in theaters near you."
         url='https://cinephiled.vercel.app/explore'
       />
@@ -35,37 +36,48 @@ const Explore = ({ movieGenres, tvGenres, error }) => {
           </section>
 
           {/* movies that are currently in theatres */}
-          <NowPlayingMovies />
+          <NowPlayingMovies nowPlaying={nowPlaying} />
         </Fragment>
       )}
     </Fragment>
   );
 };
 
-Explore.getInitialProps = async () => {
+export const getServerSideProps = async ({ req }) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const region = await getCountryCode(ip);
+
   try {
-    const genres = await Promise.all([
+    const explorePageData = await Promise.all([
       fetch(apiEndpoints.movie.movieGenreList, fetchOptions()),
-      fetch(apiEndpoints.tv.tvGenreList, fetchOptions())
+      fetch(apiEndpoints.tv.tvGenreList, fetchOptions()),
+      fetch(apiEndpoints.movie.nowPlaying({ region }), fetchOptions())
     ]);
 
-    const error = genres.some((res) => !res.ok);
+    const error = explorePageData.some((res) => !res.ok);
 
     if (error) throw new Error("Failed to fetch genres");
 
-    const [movieGenresRes, tvGenresRes] = genres;
-    const [movieGenresList, tvGenresList] = await Promise.all([
+    const [movieGenresRes, tvGenresRes, nowPlayingRes] = explorePageData;
+    const [movieGenresList, tvGenresList, nowPlayingList] = await Promise.all([
       movieGenresRes.json(),
-      tvGenresRes.json()
+      tvGenresRes.json(),
+      nowPlayingRes.json()
     ]);
 
     return {
-      movieGenres: movieGenresList?.genres || [],
-      tvGenres: tvGenresList?.genres || []
+      props: {
+        movieGenres: movieGenresList?.genres || [],
+        tvGenres: tvGenresList?.genres || [],
+        nowPlaying: nowPlayingList?.results || []
+      }
     };
   } catch {
     return {
-      error: true
+      props: {
+        error: true
+      }
     };
   }
 };
