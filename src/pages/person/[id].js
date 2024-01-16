@@ -13,7 +13,7 @@ const Person = ({ error, personDetails }) => {
         image={`https://image.tmdb.org/t/p/w780${personDetails?.profile_path}`}
         description={personDetails?.biography}
         url={`https://cinephiled.vercel.app/person/${personDetails?.id}-${getCleanTitle(
-          personDetails.name
+          personDetails?.name
         )}`}
       />
 
