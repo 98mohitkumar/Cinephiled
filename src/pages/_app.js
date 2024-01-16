@@ -1,4 +1,5 @@
 import "styles/globals.css";
+import { Analytics } from "@vercel/analytics/react";
 import Layout from "components/Layout/Layout";
 import { AnimatePresence } from "framer-motion";
 import Head from "next/head";
@@ -53,6 +54,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
                   ) : (
                     <Layout key={router.pathname}>
                       <Component {...pageProps} />
+                      <Analytics />
                     </Layout>
                   )}
                 </AnimatePresence>
