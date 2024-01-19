@@ -53,7 +53,7 @@ export const GenreBG = styled.a`
   position: relative;
   display: grid;
   place-items: center;
-  transition: all 0.325s cubic-bezier(0.77, 0, 0.175, 1);
+  transition: letter-spacing 0.325s cubic-bezier(0.77, 0, 0.175, 1);
   background: ${({ theme }) =>
     `linear-gradient(200deg,${theme.colors.accent1}, ${theme.colors.accent2}, ${theme.colors.accent3})`};
 

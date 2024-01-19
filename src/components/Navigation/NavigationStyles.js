@@ -166,6 +166,7 @@ export const HamburgerMenu = styled.div`
   left: 0;
   margin: auto;
   background-color: rgb(18 18 18 /0.95);
+  backdrop-filter: blur(3px);
   z-index: -1;
 
   .menu-wrapper {
