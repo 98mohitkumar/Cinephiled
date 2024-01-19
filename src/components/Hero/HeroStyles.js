@@ -162,7 +162,7 @@ export const UserInput = styled.input`
     box-shadow: none;
     color: white;
     border-color: white;
-    outline: none;
+    outline-color: transparent;
   }
 
   @media only ${(props) => props.theme.breakpoints.ip} {
@@ -211,7 +211,7 @@ export const SearchSlice = styled.div`
 export const Anchor = styled.a`
   &:focus-visible {
     border: none;
-    outline: none;
+    outline-color: transparent;
   }
 
   &:focus > div {
