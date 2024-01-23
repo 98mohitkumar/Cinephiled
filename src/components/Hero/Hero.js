@@ -1,13 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { framerTabVariants } from "src/utils/helper";
 import { Container } from "styles/GlobalComponents";
-import { Banner, SearchCTA, Form, HeroDiv, UserInput } from "./HeroStyles";
+import { SearchCTA, Form, HeroDiv, UserInput } from "./HeroStyles";
 import SearchSuggestion from "./searchSuggestion";
 
-const Hero = ({ searchModal }) => {
+const Hero = ({ banner = null }) => {
   const userInputRef = useRef("");
   const router = useRouter();
   const [userInput, setUserInput] = useState("");
@@ -32,23 +32,6 @@ const Hero = ({ searchModal }) => {
       userInputRef.current = "";
     }
   };
-
-  const bannerRef = useRef(null);
-
-  const scrollListener = () => {
-    const scale = 1.7 + window.scrollY / 200;
-
-    if (scale > 1.7 && scale <= 3.5 && bannerRef?.current) {
-      bannerRef.current.style.animation = `none`;
-      bannerRef.current.style.transform = `scale(${scale}) rotate(10deg) translateZ(0px)`;
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", scrollListener);
-
-    return () => window.removeEventListener("scroll", scrollListener);
-  }, []);
 
   const keyHandler = (e, currentIndex, onSearchInput = false) => {
     const isArrowUp = e.code === "ArrowUp";
@@ -82,8 +65,8 @@ const Hero = ({ searchModal }) => {
 
   return (
     <Container className='relative mb-auto'>
-      <div className='overflow-wrapper'>{!searchModal && <Banner ref={bannerRef} />}</div>
-      <HeroDiv searchModal={searchModal}>
+      {banner ? <div className='overflow-wrapper'>{banner}</div> : null}
+      <HeroDiv searchModal={!banner}>
         <Form onSubmit={searchHandler}>
           <div className='mb-16 w-full relative'>
             <div className='pb-1.5 flex justify-between items-end border-animated'>

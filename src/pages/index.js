@@ -1,12 +1,20 @@
+import BackdropBanner from "components/Hero/BackdropBanner";
 import Hero from "components/Hero/Hero";
 import IndexTab from "components/IndexTab/IndexTab";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
-import { fetchOptions } from "src/utils/helper";
+import { fetchOptions, removeDuplicates } from "src/utils/helper";
 import { Error404 } from "styles/GlobalComponents";
 
-export default function Home({ popularMovies, popularTv, trendingMovies, trendingTv, error }) {
+export default function Home({
+  popularMovies,
+  popularTv,
+  trendingMovies,
+  trendingTv,
+  error,
+  posters
+}) {
   if (error) {
     return (
       <div className='grid place-items-center min-h-[75vh]'>
@@ -24,13 +32,11 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
         <MetaWrapper
           title='Cinephiled'
           description='Cinephiled - A progressive web app (PWA) to preview any movie or tv show with reviews, ratings, description and posters. Acting as a TMDB client, Cinephiled gives you access to login into your TMDB account and add movies or tv shows to your watchlist, set as favorites, rate and get personalized recommendations.'
-          url='https://cinephiled.vercel.app'>
-          {/* Preloads */}
-          <link rel='preload' href='/Images/poster.webp' as='image' />
-        </MetaWrapper>
+          url='https://cinephiled.vercel.app'
+        />
 
         {/* hero section */}
-        <Hero />
+        <Hero banner={<BackdropBanner posters={posters} />} />
 
         {/* index tabs */}
         <IndexTab
@@ -66,13 +72,21 @@ export async function getStaticProps() {
       trendingTvRes.json()
     ]);
 
+    const { cleanedItems: posters } = removeDuplicates(
+      [...popularMovies.results, ...trendingMovies.results, ...trendingTv.results].map((item) => ({
+        src: item.poster_path,
+        id: item.id
+      }))
+    );
+
     return {
       props: {
         popularMovies: popularMovies.results,
         popularTv: popularTv.results,
         trendingMovies: trendingMovies.results,
         trendingTv: trendingTv.results,
-        error
+        error,
+        posters
       },
       revalidate: 3600
     };
