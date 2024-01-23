@@ -91,7 +91,7 @@ const Episode = ({
                   <Image
                     src={
                       backdrop
-                        ? `https://image.tmdb.org/t/p/w300${backdrop}`
+                        ? `https://image.tmdb.org/t/p/w500${backdrop}`
                         : "/Images/DefaultBackdrop.png"
                     }
                     alt='episde-backdrop'
@@ -116,7 +116,7 @@ const Episode = ({
                       <p>{getRating(rating)}</p>
                     </Pill>
 
-                    <Span className='font-medium text-lg'>{getRuntime(runtime)}</Span>
+                    <Span className='font-semibold text-lg'>{getRuntime(runtime)}</Span>
                   </TrWrapper>
 
                   {overview ? <SeasonCommonOverview>{overview}</SeasonCommonOverview> : null}

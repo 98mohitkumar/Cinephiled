@@ -148,8 +148,8 @@ const Seasons = ({
                         />
                       </EpisodeImg>
 
-                      <div>
-                        <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-snug font-bold'>
+                      <div className='self-start'>
+                        <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 font-bold'>
                           {item.episode_number || i + 1}. {item.name}
                         </h3>
 
@@ -161,12 +161,12 @@ const Seasons = ({
                             <p>{getRating(item.vote_average)}</p>
                           </Pill>
 
-                          <Span className='font-medium text-lg'>{getRuntime(item.runtime)}</Span>
+                          <Span className='font-semibold text-lg'>{getRuntime(item.runtime)}</Span>
 
                           {new Date(getReleaseDate(item.air_date)) < new Date() ? (
                             <Link href={`${routeRef.current}/episode/${item.episode_number}`}>
                               <a>
-                                <Pill className='info text-base'>
+                                <Pill className='info text-[15px]'>
                                   Episode Details
                                   <BiChevronRight size='22' />
                                 </Pill>

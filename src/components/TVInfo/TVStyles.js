@@ -46,6 +46,7 @@ export const SeasonsRelease = styled.span`
   &.text-alt {
     color: rgb(221 221 221);
     font-size: 1.15rem;
+    font-weight: 600;
   }
 `;
 
