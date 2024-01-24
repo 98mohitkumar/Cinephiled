@@ -131,8 +131,7 @@ TvShow.getInitialProps = async (ctx) => {
     ];
 
     const trailer = tvData?.videos?.results?.find(
-      (item) =>
-        item?.site === "YouTube" && (item?.type === "Trailer" || item.type === "Opening Credits")
+      (item) => item?.site === "YouTube" && item?.type === "Trailer"
     );
 
     return {

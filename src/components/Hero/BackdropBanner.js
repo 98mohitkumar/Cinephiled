@@ -13,6 +13,7 @@ const BackdropBanner = ({ posters }) => {
             layout='fill'
             objectFit='cover'
             placeholder='blur'
+            loading='eager'
             blurDataURL={blurPlaceholder}
             src={`https://image.tmdb.org/t/p/w185${src}`}
             alt={`poster-${id}`}

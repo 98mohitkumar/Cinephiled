@@ -224,11 +224,11 @@ const MovieDetails = ({
                   href={`https://www.youtube.com/watch?v=${trailerLink}`}
                   target='_blank'
                   rel='noreferrer'
-                  aria-label='play trailer'
+                  aria-label='watch trailer'
                   className='mb-3 block'>
                   <Button className='w-full gap-3' as={motion.button} whileTap={{ scale: 0.95 }}>
                     <FaYoutube size='1.5rem' />
-                    <Span className='font-semibold'>Play Trailer</Span>
+                    <Span className='font-semibold'>Watch Trailer</Span>
                   </Button>
                 </a>
               )}
