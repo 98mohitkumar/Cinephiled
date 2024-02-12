@@ -401,7 +401,7 @@ export const SeasonShowcaseWrapper = styled.div`
 `;
 
 export const SeasonShowcaseImg = styled.div`
-  width: 15rem;
+  min-width: 15rem;
   aspect-ratio: 2/3;
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px,
