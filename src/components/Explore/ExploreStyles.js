@@ -14,31 +14,27 @@ export const PseudoTrack = styled.div`
   }
 `;
 
-export const OuterWrapper = styled.div`
+export const OverFlowWrapper = styled.div`
+  display: flex;
+  gap: 1.25rem;
+  padding-bottom: 1rem;
   max-width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
+  padding-right: 1.5rem;
 
   &::-webkit-scrollbar-track {
     margin-inline: 16vw;
   }
 
   @media only ${({ theme }) => theme.breakpoints.xl} {
+    padding-bottom: 0px;
+
     &::-webkit-scrollbar {
       display: none;
     }
 
     /* for firefox */
     scrollbar-width: none;
-  }
-`;
-
-export const OverFlowWrapper = styled.div`
-  display: flex;
-  gap: 1.25rem;
-  padding-bottom: 1rem;
-
-  @media only ${({ theme }) => theme.breakpoints.xl} {
-    padding-bottom: 0px;
   }
 `;
 

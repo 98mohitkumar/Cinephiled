@@ -533,6 +533,10 @@ export const LayoutContainer = styled.section`
       padding: 0px 20px 20px 20px;
     }
   }
+
+  &.right-p-0 {
+    padding-right: 0px;
+  }
 `;
 
 export const ModulesWrapper = styled.div`
