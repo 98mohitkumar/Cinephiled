@@ -237,7 +237,7 @@ const MovieDetails = ({
                 <AddToListModal mediaType='movie' mediaId={id} />
               </div>
 
-              <div className='flex justify-start gap-4 max-w-full'>
+              <div className='flex justify-start gap-3'>
                 <Button
                   className='w-full mediaCTA'
                   loading={+isToastVisible}

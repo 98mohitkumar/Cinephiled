@@ -210,7 +210,7 @@ const TVDetails = ({
                 <AddToListModal mediaType='tv' mediaId={id} />
               </div>
 
-              <div className='flex justify-start gap-4'>
+              <div className='flex justify-start gap-3'>
                 <Button
                   className='mediaCTA w-full'
                   loading={+isToastVisible}
