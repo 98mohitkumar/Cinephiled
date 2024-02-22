@@ -3,6 +3,7 @@ import Layout from "components/Layout/Layout";
 import { AnimatePresence } from "framer-motion";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Script from "next/script";
 import { SessionProvider } from "next-auth/react";
 import { Fragment, useEffect, useState } from "react";
 import ListsContextProvider from "Store/ListsContext";
@@ -41,6 +42,13 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <Head>
         <title>Cinephiled</title>
       </Head>
+      <Script id='ms-clarity' strategy='beforeInteractive'>
+        {`(function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_MS_CLARITY_TAG}");`}
+      </Script>
 
       <Theme>
         <SessionProvider session={session} refetchOnWindowFocus={false}>
