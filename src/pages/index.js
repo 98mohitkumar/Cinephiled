@@ -1,11 +1,15 @@
-import BackdropBanner from "components/Hero/BackdropBanner";
 import Hero from "components/Hero/Hero";
 import IndexTab from "components/IndexTab/IndexTab";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
+import dynamic from "next/dynamic";
 import { Fragment } from "react";
 import { fetchOptions, removeDuplicates } from "src/utils/helper";
 import { Error404 } from "styles/GlobalComponents";
+
+const BackdropBanner = dynamic(() => import("components/Hero/BackdropBanner"), {
+  ssr: false
+});
 
 export default function Home({
   popularMovies,
