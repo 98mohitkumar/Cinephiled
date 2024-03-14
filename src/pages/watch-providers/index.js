@@ -110,7 +110,7 @@ const WatchProviders = ({ error, regions, movieProviders, tvProviders, selectedR
                     key={provider.provider_id}
                     href={`/watch-providers/${provider.provider_id}-${getCleanTitle(
                       provider.provider_name
-                    )}/${provider.tvProvider ? "tv" : "movies"}?watchregion=${selectedRegion}`}>
+                    )}/${activeTab}?watchregion=${selectedRegion}`}>
                     <a className='block h-full w-full'>
                       <motion.div
                         className='w-full aspect-square rounded-lg overflow-hidden'
