@@ -9,7 +9,6 @@ import { blurPlaceholder } from "globals/constants";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { framerTabVariants, getReleaseDate } from "src/utils/helper";
 import { Button } from "styles/GlobalComponents";
@@ -26,9 +25,6 @@ const ManageList = ({ id }) => {
   const [updateCover, setUpdateCover] = useState(false);
   const [selectedCover, setSelectedCover] = useState(null);
   const [isWaiting, setIsWaiting] = useState(false);
-  const {
-    query: { create = false }
-  } = useRouter();
 
   // local state for list items
   const [items, setItems] = useState([]);
@@ -54,17 +50,13 @@ const ManageList = ({ id }) => {
 
   useEffect(() => {
     if (listDetails?.results?.length > 0) {
-      setItems(listDetails.results);
+      setItems(listDetails.results.concat(infiniteQueryListMedia));
     }
-  }, [listDetails.results]);
+  }, [listDetails.results, infiniteQueryListMedia]);
 
   useEffect(() => {
     setSelectedCover(listDetails.backdrop_path || null);
   }, [listDetails.backdrop_path]);
-
-  useEffect(() => {
-    setItems((prev) => prev.concat(infiniteQueryListMedia || []));
-  }, [create, infiniteQueryListMedia]);
 
   const itemsHandler = async ({ item, action = "add" }) => {
     if (action === "add") {
