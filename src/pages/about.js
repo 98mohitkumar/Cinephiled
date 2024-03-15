@@ -28,18 +28,18 @@ const About = () => {
         </div>
 
         <div className='max-w-6xl'>
-          <h1 className='font-bold text-[calc(1.525rem_+_3.3vw)] xl:text-6xl'>About the Project</h1>
+          <h1 className='font-bold text-[calc(1.525rem_+_3.3vw)] xl:text-6xl my-6'>
+            About the Project
+          </h1>
           <p className='text-xl leading-7'>
             <b>Cinephiled </b>- A progressive web app (PWA) to preview any movie or tv show with
             reviews, ratings, description and posters. Acting as a TMDB client,
             <b> Cinephiled</b> gives you access to login into your TMDB account and add movies or tv
-            shows to your watchlist, set as favorites, rate and get personalized recommendations.
+            shows to your watchlist, set as favorites, rate, create custom lists and get
+            personalized recommendations.
             <br />
             <br />
             <b>Cinephiled</b> is made using Next.js, styled components and Next Auth.
-            <br />
-            <br />
-            Banner Image is made by Amr Khalid, big thanks to him.
             <br />
             <br />
             Any feedback or suggestions are welcomed, feel free to contact me using the social media
@@ -55,13 +55,25 @@ const About = () => {
               <FooterAttribute />
             </a>
             <div>
-              <p className='text-xl mb-0'>Amr Khalid</p>|
+              <p className='text-xl mb-0'>Noun Project</p>|
               <a
                 className='text-blue-500 mx-3'
-                href='https://www.behance.net/gallery/96475007/60-Days-Challenge-of-Movies-posters'
+                href='https://thenounproject.com'
                 target='_blank'
                 rel='noreferrer'>
-                Behance
+                Noun Project
+              </a>
+              |
+            </div>
+
+            <div>
+              <p className='text-xl mb-0'>DiceBear</p>|
+              <a
+                className='text-blue-500 mx-3'
+                href='https://www.dicebear.com'
+                target='_blank'
+                rel='noreferrer'>
+                DiceBear
               </a>
               |
             </div>

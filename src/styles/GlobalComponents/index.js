@@ -106,10 +106,6 @@ export const AboutContainer = styled.div`
   flex-grow: 1;
   position: relative;
 
-  h1 {
-    margin: 28px 0px;
-  }
-
   .bg-wrapper {
     position: absolute;
     width: 100%;

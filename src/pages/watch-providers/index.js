@@ -19,7 +19,14 @@ const tabList = [
   { key: "tv", name: `TV Shows` }
 ];
 
-const WatchProviders = ({ error, regions, movieProviders, tvProviders, selectedRegion }) => {
+const WatchProviders = ({
+  error,
+  regions,
+  movieProviders,
+  tvProviders,
+  selectedRegion,
+  defaultRegion
+}) => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const { activeTab, setTab } = useTabs({
@@ -43,7 +50,9 @@ const WatchProviders = ({ error, regions, movieProviders, tvProviders, selectedR
     }
   };
 
-  const currentRegionName = regions.find(({ key }) => key === selectedRegion)?.niceName;
+  const currentRegionName = regions.find(({ key }) =>
+    [selectedRegion, defaultRegion].includes(key)
+  )?.niceName;
 
   return (
     <Fragment>
@@ -72,13 +81,13 @@ const WatchProviders = ({ error, regions, movieProviders, tvProviders, selectedR
 
               <div className='min-w-[250px] max-sm:min-w-full max-md:grow'>
                 <Select
-                  options={[{ key: "default", value: `Default (${selectedRegion})` }, ...regions]}
+                  options={[{ key: "default", value: `Default (${defaultRegion})` }, ...regions]}
                   handleChange={handleSelectChange}
                   activeKey={selectedRegion || "default"}
                   triggerText={
                     selectedRegion
                       ? regions.find(({ key }) => key === selectedRegion)?.value
-                      : `Default (${selectedRegion})`
+                      : `Default (${defaultRegion})`
                   }
                 />
               </div>
@@ -110,7 +119,7 @@ const WatchProviders = ({ error, regions, movieProviders, tvProviders, selectedR
                     key={provider.provider_id}
                     href={`/watch-providers/${provider.provider_id}-${getCleanTitle(
                       provider.provider_name
-                    )}/${activeTab}?watchregion=${selectedRegion}`}>
+                    )}/${activeTab}?watchregion=${selectedRegion || defaultRegion}`}>
                     <a className='block h-full w-full'>
                       <motion.div
                         className='w-full aspect-square rounded-lg overflow-hidden'
@@ -142,16 +151,21 @@ const WatchProviders = ({ error, regions, movieProviders, tvProviders, selectedR
 
 export const getServerSideProps = async ({ req, query }) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-  let region = query.region;
-
-  if (!query.region) {
-    region = await getCountryCode(ip);
-  }
+  let selectedRegion = query.region || "";
+  const defaultRegion = await getCountryCode(ip);
 
   try {
     const providersData = await Promise.all([
-      fetch(apiEndpoints.watchProviders.movieWatchProviders({ region }), fetchOptions()),
-      fetch(apiEndpoints.watchProviders.tvWatchProviders({ region }), fetchOptions()),
+      fetch(
+        apiEndpoints.watchProviders.movieWatchProviders({
+          region: selectedRegion || defaultRegion
+        }),
+        fetchOptions()
+      ),
+      fetch(
+        apiEndpoints.watchProviders.tvWatchProviders({ region: selectedRegion || defaultRegion }),
+        fetchOptions()
+      ),
       fetch(apiEndpoints.watchProviders.regions, fetchOptions())
     ]);
 
@@ -174,7 +188,8 @@ export const getServerSideProps = async ({ req, query }) => {
           })) || [],
         movieProviders: movieProviders?.results || [],
         tvProviders: tvProviders?.results || [],
-        selectedRegion: region
+        selectedRegion,
+        defaultRegion
       }
     };
   } catch {

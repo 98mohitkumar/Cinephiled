@@ -23,7 +23,9 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
 
         const response = await fetcher({
           mediaType,
-          pageQuery: page
+          pageQuery: page,
+          accountId: userInfo?.accountId,
+          token: userInfo?.accessToken
         });
 
         const { total_pages, results } = response;
@@ -45,7 +47,7 @@ const useFetchAllPages = ({ endpoint, mediaType }) => {
       setLoading(true);
       fetchAllData();
     }
-  }, [endpoint, mediaType, page, userInfo?.accountId]);
+  }, [endpoint, mediaType, page, userInfo?.accessToken, userInfo?.accountId]);
 
   const revalidateAllPages = () => {
     setMedia([]);

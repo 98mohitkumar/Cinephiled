@@ -4,11 +4,7 @@ import { fetchOptions } from "src/utils/helper";
 
 // GET requsts
 
-export const getWatchlist = async ({ mediaType, pageQuery }) => {
-  const {
-    user: { accountId, accessToken }
-  } = await getSession();
-
+export const getWatchlist = async ({ mediaType, pageQuery, accountId, token }) => {
   const watchlistRes = await fetch(
     apiEndpoints.user.getWatchlist({
       mediaType,
@@ -16,7 +12,7 @@ export const getWatchlist = async ({ mediaType, pageQuery }) => {
       pageQuery
     }),
     fetchOptions({
-      token: accessToken
+      token
     })
   );
 
@@ -28,15 +24,11 @@ export const getWatchlist = async ({ mediaType, pageQuery }) => {
   }
 };
 
-export const getRated = async ({ mediaType, pageQuery }) => {
-  const {
-    user: { accountId, accessToken }
-  } = await getSession();
-
+export const getRated = async ({ mediaType, pageQuery, accountId, token }) => {
   const ratedRes = await fetch(
     apiEndpoints.user.getRated({ mediaType, accountId, pageQuery }),
     fetchOptions({
-      token: accessToken
+      token
     })
   );
 
@@ -48,11 +40,7 @@ export const getRated = async ({ mediaType, pageQuery }) => {
   }
 };
 
-export const getFavorites = async ({ mediaType, pageQuery }) => {
-  const {
-    user: { accountId, accessToken }
-  } = await getSession();
-
+export const getFavorites = async ({ mediaType, pageQuery, accountId, token }) => {
   const favoritesRes = await fetch(
     apiEndpoints.user.getFavorites({
       mediaType,
@@ -60,7 +48,7 @@ export const getFavorites = async ({ mediaType, pageQuery }) => {
       pageQuery
     }),
     fetchOptions({
-      token: accessToken
+      token
     })
   );
 
@@ -72,15 +60,11 @@ export const getFavorites = async ({ mediaType, pageQuery }) => {
   }
 };
 
-export const getRecommendations = async ({ mediaType, pageQuery }) => {
-  const {
-    user: { accessToken, accountId }
-  } = await getSession();
-
+export const getRecommendations = async ({ mediaType, pageQuery, accountId, token }) => {
   const recommendationsRes = await fetch(
     apiEndpoints.user.getRecommendations({ mediaType, accountId, pageQuery }),
     fetchOptions({
-      token: accessToken
+      token
     })
   );
 

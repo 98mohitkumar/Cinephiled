@@ -29,7 +29,7 @@ const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
 
 Search.getInitialProps = async (ctx) => {
   try {
-    let searchQuery = ctx.query.query;
+    let searchQuery = ctx.query.query.replaceAll("+", " ");
     let year = "";
 
     if (searchQuery.includes("y:")) {

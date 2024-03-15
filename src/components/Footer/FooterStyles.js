@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 export const FooterWrapper = styled.footer`
   position: relative;
   width: 100%;
@@ -7,7 +7,7 @@ export const FooterWrapper = styled.footer`
   background-color: rgb(18 18 18 /0.95);
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     right: 0;
@@ -38,9 +38,9 @@ export const FooterBranding = styled.span`
 `;
 
 export const FooterAttribute = styled.div`
-  width: 4.25rem;
-  height: 2.15rem;
-  background: url('https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg')
+  width: 4.5rem;
+  aspect-ratio: 100/43;
+  background: url("https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg")
     no-repeat center center / contain;
 
   @media only ${(props) => props.theme.breakpoints.ip} {

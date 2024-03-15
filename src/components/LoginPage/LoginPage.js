@@ -86,8 +86,8 @@ const LoginPage = () => {
           <div className='flex w-full justify-center'>
             <div>
               <LoginText className='block mb-4'>
-                In order to use the rating capabilities of Cinephiled, as well as using watchlist
-                feature you will need to login with your TMDB account.
+                To unlock powerful features such as rating, favoriting, adding to watchlist, and
+                creating custom lists, please log in with your TMDB account.
               </LoginText>
 
               <div className='flex flex-col items-center'>
