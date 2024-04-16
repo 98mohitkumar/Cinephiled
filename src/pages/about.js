@@ -28,7 +28,7 @@ const About = () => {
         </div>
 
         <div className='max-w-6xl'>
-          <h1 className='font-bold text-[calc(1.525rem_+_3.3vw)] xl:text-6xl my-6'>
+          <h1 className='font-bold text-[calc(1.525rem_+_3.3vw)] xl:text-6xl my-3 md:my-6'>
             About the Project
           </h1>
           <p className='text-xl leading-7'>
@@ -42,14 +42,16 @@ const About = () => {
             <b>Cinephiled</b> is made using Next.js, styled components and Next Auth.
             <br />
             <br />
-            Any feedback or suggestions are welcomed, feel free to contact me using the social media
-            linked at the bottom. <br />
+            Any feedback or suggestions are welcomed, feel free to contact me using the links at the
+            bottom. <br />
             <br />
             Also there is an easter egg somewhere in one of the horror movies from 2016, try and
             find it.
           </p>
 
-          <h2 className='mt-8 mb-6 font-bold text-[calc(1.525rem_+_3.3vw)] xl:text-6xl'>Credits</h2>
+          <h2 className='mt-12 mb-6 font-bold text-[calc(1.525rem_+_3.3vw)] xl:text-6xl'>
+            Credits
+          </h2>
           <AboutCreditsWrapper>
             <a href='https://www.themoviedb.org' target='_blank' rel='noreferrer'>
               <FooterAttribute />

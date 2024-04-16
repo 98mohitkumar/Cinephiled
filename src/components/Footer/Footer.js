@@ -1,5 +1,6 @@
 import { memo } from "react";
-import { FiLinkedin, FiInstagram } from "react-icons/fi";
+import { AiFillGithub } from "react-icons/ai";
+import { FiLinkedin } from "react-icons/fi";
 import {
   FooterAttribute,
   FooterBranding,
@@ -22,11 +23,11 @@ const Footer = () => {
         </SocialIcons>
 
         <SocialIcons
-          href='https://instagram.com/mohitkek'
+          href='https://github.com/98mohitkumar'
           target='_blank'
           rel='noreferrer'
-          aria-label='instagram link'>
-          <FiInstagram size='2rem' />
+          aria-label='github link'>
+          <AiFillGithub size='2rem' />
         </SocialIcons>
 
         <SocialIcons

@@ -336,14 +336,21 @@ export const SocialMediaLinksWrapper = styled.div`
 
 export const AboutCreditsWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  width: 50%;
+  /* width: clamp(380px, 45vw, 50%); */
   margin: auto;
   margin-bottom: 26px;
+  gap: 100px;
+  white-space: nowrap;
 
   @media only ${(props) => props.theme.breakpoints.xs} {
     width: 80%;
+  }
+
+  @media only ${(props) => props.theme.breakpoints.sm} {
+    flex-direction: column;
+    gap: 20px;
   }
 `;
 
