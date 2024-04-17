@@ -151,7 +151,7 @@ const ManageList = ({ id }) => {
           ) : (
             <div className='mb-8 relative'>
               {isWaiting ? (
-                <div className='absolute inset-0 grid place-items-center z-50'>
+                <div className='fixed inset-0 grid place-items-center z-50 bg-gray-900/50'>
                   <Loading />
                 </div>
               ) : null}
@@ -190,35 +190,37 @@ const ManageList = ({ id }) => {
 
                     {items.length > 0 ? (
                       <div className='grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4'>
-                        {items.map(({ id, backdrop_path }) => (
-                          <div
-                            className={`aspect-[1.68] relative rounded-lg overflow-hidden hover:grayscale-0 cursor-pointer transition-colors ${
-                              selectedCover === backdrop_path
-                                ? "ring-2 ring-green-700 grayscale-0"
-                                : "ring-0 grayscale"
-                            }`}
-                            onClick={() => coverClickHandler(backdrop_path)}
-                            key={id}>
-                            <Image
-                              src={
-                                backdrop_path
-                                  ? `https://image.tmdb.org/t/p/w500${backdrop_path}`
-                                  : "/Images/DefaultBackdrop.png"
-                              }
-                              alt='backdrop'
-                              layout='fill'
-                              objectFit='cover'
-                              placeholder='blur'
-                              blurDataURL={blurPlaceholder}
-                            />
+                        {items.map(({ id, backdrop_path, title, name }) => (
+                          <div key={id}>
+                            <div
+                              className={`aspect-[1.68] relative rounded-lg overflow-hidden hover:grayscale-0 cursor-pointer transition-colors ${
+                                selectedCover === backdrop_path
+                                  ? "ring-2 ring-green-700 grayscale-0"
+                                  : "ring-0 grayscale"
+                              }`}
+                              onClick={() => coverClickHandler(backdrop_path)}>
+                              <Image
+                                src={
+                                  backdrop_path
+                                    ? `https://image.tmdb.org/t/p/w500${backdrop_path}`
+                                    : "/Images/DefaultBackdrop.png"
+                                }
+                                alt='backdrop'
+                                layout='fill'
+                                objectFit='cover'
+                                placeholder='blur'
+                                blurDataURL={blurPlaceholder}
+                              />
 
-                            {selectedCover === backdrop_path && (
-                              <div className='absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
-                                <span className='text-green-500 text-xl font-semibold'>
-                                  Selected
-                                </span>
-                              </div>
-                            )}
+                              {selectedCover === backdrop_path && (
+                                <div className='absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
+                                  <span className='text-green-500 text-xl font-semibold'>
+                                    Selected
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                            <p className='mt-2 text-lg font-medium text-center'>{title || name}</p>
                           </div>
                         ))}
                       </div>
