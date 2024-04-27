@@ -102,10 +102,10 @@ const WatchProviders = ({
             tabList={tabList}
             currentTab={activeTab}
             setTab={setTab}
-            className='[margin:2.5rem_auto!important]'
+            className='![margin:2.5rem_auto]'
           />
 
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode='wait'>
             {currentRenderList?.length > 0 ? (
               <motion.div
                 key={activeTab}
@@ -120,7 +120,7 @@ const WatchProviders = ({
                     href={`/watch-providers/${provider.provider_id}-${getCleanTitle(
                       provider.provider_name
                     )}/${activeTab}?watchregion=${selectedRegion || defaultRegion}`}>
-                    <a className='block h-full w-full'>
+                    <div className='block h-full w-full'>
                       <motion.div
                         className='w-full aspect-square rounded-lg overflow-hidden'
                         whileHover={{ scale: 1.1 }}
@@ -128,14 +128,13 @@ const WatchProviders = ({
                         <Image
                           src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
                           alt={provider.provider_name}
-                          layout='responsive'
                           width={200}
                           height={200}
                           blurDataURL={blurPlaceholder}
                           placeholder='blur'
                         />
                       </motion.div>
-                    </a>
+                    </div>
                   </Link>
                 ))}
               </motion.div>

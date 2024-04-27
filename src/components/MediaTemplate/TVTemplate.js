@@ -26,7 +26,7 @@ const TVTemplate = ({ TV, creditsPage = false }) => {
                 }}
                 whileTap={{ scale: 0.95 }}>
                 <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref scroll={false}>
-                  <a className='relative block'>
+                  <div className='relative'>
                     <CardImg>
                       <Image
                         src={
@@ -35,8 +35,8 @@ const TVTemplate = ({ TV, creditsPage = false }) => {
                             : "/Images/DefaultImage.png"
                         }
                         alt='movie-poster'
-                        layout='fill'
-                        objectFit='cover'
+                        fill
+                        style={{ objectFit: "cover" }}
                         className='poster'
                         placeholder='blur'
                         blurDataURL={blurPlaceholder}
@@ -45,7 +45,7 @@ const TVTemplate = ({ TV, creditsPage = false }) => {
                     <Rating className='flex justify-center items-center'>
                       {getRating(vote_average)}
                     </Rating>
-                  </a>
+                  </div>
                 </Link>
               </motion.div>
               <CardInfo>

@@ -98,8 +98,8 @@ const Seasons = ({
                         : "/Images/DefaultImage.png"
                     }
                     alt='TV-season-poster'
-                    layout='fill'
-                    objectFit='cover'
+                    fill
+                    style={{ objectFit: "cover" }}
                     placeholder='blur'
                     blurDataURL={blurPlaceholder}
                   />
@@ -141,8 +141,8 @@ const Seasons = ({
                               : "/Images/DefaultBackdrop.png"
                           }
                           alt='TV-season-episode-poster'
-                          layout='fill'
-                          objectFit='cover'
+                          fill
+                          style={{ objectFit: "cover" }}
                           placeholder='blur'
                           blurDataURL={blurPlaceholder}
                         />
@@ -165,12 +165,10 @@ const Seasons = ({
 
                           {new Date(getReleaseDate(item.air_date)) < new Date() ? (
                             <Link href={`${routeRef.current}/episode/${item.episode_number}`}>
-                              <a>
-                                <Pill className='info text-[15px]'>
-                                  Episode Details
-                                  <BiChevronRight size='22' />
-                                </Pill>
-                              </a>
+                              <Pill className='info text-[15px]'>
+                                Episode Details
+                                <BiChevronRight size='22' />
+                              </Pill>
                             </Link>
                           ) : null}
                         </TrWrapper>
@@ -197,30 +195,27 @@ const Seasons = ({
                   {cast?.map((item) => (
                     <CastWrapper key={item.id}>
                       <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`} passHref>
-                        <a>
-                          <motion.div
-                            whileHover={{
-                              scale: 1.05,
-                              transition: { duration: 0.1 }
-                            }}
-                            whileTap={{ scale: 0.95 }}>
-                            <CastImg className='relative text-center'>
-                              <Image
-                                src={
-                                  item.profile_path
-                                    ? `https://image.tmdb.org/t/p/w276_and_h350_face${item.profile_path}`
-                                    : "/Images/DefaultAvatar.png"
-                                }
-                                alt='cast-image'
-                                layout='fill'
-                                objectFit='cover'
-                                objectPosition='top'
-                                placeholder='blur'
-                                blurDataURL={blurPlaceholder}
-                              />
-                            </CastImg>
-                          </motion.div>
-                        </a>
+                        <motion.div
+                          whileHover={{
+                            scale: 1.05,
+                            transition: { duration: 0.1 }
+                          }}
+                          whileTap={{ scale: 0.95 }}>
+                          <CastImg className='relative text-center'>
+                            <Image
+                              src={
+                                item.profile_path
+                                  ? `https://image.tmdb.org/t/p/w276_and_h350_face${item.profile_path}`
+                                  : "/Images/DefaultAvatar.png"
+                              }
+                              alt='cast-image'
+                              fill
+                              style={{ objectFit: "cover", objectPosition: "top" }}
+                              placeholder='blur'
+                              blurDataURL={blurPlaceholder}
+                            />
+                          </CastImg>
+                        </motion.div>
                       </Link>
 
                       <div className='mt-3'>

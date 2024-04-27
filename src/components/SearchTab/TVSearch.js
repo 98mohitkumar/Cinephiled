@@ -60,31 +60,29 @@ const TVSearch = ({ searchQuery, tvRes }) => {
             ({ id, name, poster_path, first_air_date, overview }) => (
               <motion.div whileTap={{ scale: 0.98 }} key={id}>
                 <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref scroll={false}>
-                  <a>
-                    <QueryContainer>
-                      <QueryImg className='relative text-center'>
-                        <Image
-                          src={
-                            poster_path
-                              ? `https://image.tmdb.org/t/p/w185${poster_path}`
-                              : "/Images/DefaultImage.png"
-                          }
-                          alt='TV-poster'
-                          layout='fill'
-                          objectFit='cover'
-                          placeholder='blur'
-                          blurDataURL={blurPlaceholder}
-                        />
-                      </QueryImg>
-                      <QueryInfoWrapper>
-                        <div>
-                          <QueryTitle>{name}</QueryTitle>
-                          <QueryReleaseDate>{getReleaseDate(first_air_date)}</QueryReleaseDate>
-                        </div>
-                        <QueryDescription>{overview}</QueryDescription>
-                      </QueryInfoWrapper>
-                    </QueryContainer>
-                  </a>
+                  <QueryContainer>
+                    <QueryImg className='relative text-center'>
+                      <Image
+                        src={
+                          poster_path
+                            ? `https://image.tmdb.org/t/p/w185${poster_path}`
+                            : "/Images/DefaultImage.png"
+                        }
+                        alt='TV-poster'
+                        fill
+                        style={{ objectFit: "cover" }}
+                        placeholder='blur'
+                        blurDataURL={blurPlaceholder}
+                      />
+                    </QueryImg>
+                    <QueryInfoWrapper>
+                      <div>
+                        <QueryTitle>{name}</QueryTitle>
+                        <QueryReleaseDate>{getReleaseDate(first_air_date)}</QueryReleaseDate>
+                      </div>
+                      <QueryDescription>{overview}</QueryDescription>
+                    </QueryInfoWrapper>
+                  </QueryContainer>
                 </Link>
               </motion.div>
             )

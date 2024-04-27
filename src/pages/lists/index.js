@@ -20,12 +20,11 @@ import { fetchOptions, framerTabVariants, getCleanTitle } from "src/utils/helper
 import { Button, Error404, LayoutContainer } from "styles/GlobalComponents";
 
 const Lists = ({ error, lists }) => {
-  const {
-    query: { create = false }
-  } = useRouter();
+  const router = useRouter();
+  const create = router.query.create === "true";
 
   const createListHandler = () => {
-    Router.push(
+    router.push(
       {
         pathname: "lists",
         query: {
@@ -59,7 +58,7 @@ const Lists = ({ error, lists }) => {
           <DominantColor flip tint />
 
           <div className='relative z-20'>
-            <AnimatePresence exitBeforeEnter>
+            <AnimatePresence mode='wait'>
               {create ? (
                 <motion.div
                   key={create}
@@ -104,22 +103,20 @@ const Lists = ({ error, lists }) => {
                               href={`lists/${id}-${getCleanTitle(name)}`}
                               passHref
                               scroll={false}>
-                              <a>
-                                <RecommendedImg className='relative text-center'>
-                                  <Image
-                                    src={
-                                      backdrop_path
-                                        ? `https://image.tmdb.org/t/p/w780${backdrop_path}`
-                                        : "/Images/DefaultBackdrop.png"
-                                    }
-                                    alt='backdrop'
-                                    layout='fill'
-                                    objectFit='cover'
-                                    placeholder='blur'
-                                    blurDataURL={blurPlaceholder}
-                                  />
-                                </RecommendedImg>
-                              </a>
+                              <RecommendedImg className='relative text-center'>
+                                <Image
+                                  src={
+                                    backdrop_path
+                                      ? `https://image.tmdb.org/t/p/w780${backdrop_path}`
+                                      : "/Images/DefaultBackdrop.png"
+                                  }
+                                  alt='backdrop'
+                                  fill
+                                  style={{ objectFit: "cover" }}
+                                  placeholder='blur'
+                                  blurDataURL={blurPlaceholder}
+                                />
+                              </RecommendedImg>
                             </Link>
                           </motion.div>
                           <InfoTitle className='mt-3 mb-0 text-center'>{name}</InfoTitle>

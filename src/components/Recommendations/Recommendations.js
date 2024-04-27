@@ -27,22 +27,20 @@ const Recommendations = ({ data, type }) => {
               href={`/${type}/${item.id}-${getCleanTitle(item?.title || item?.name)}`}
               passHref
               scroll={false}>
-              <a>
-                <RecommendedImg className='relative text-center'>
-                  <Image
-                    src={
-                      item.backdrop_path
-                        ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
-                        : "/Images/DefaultBackdrop.png"
-                    }
-                    alt={`${type}-poster`}
-                    layout='fill'
-                    objectFit='cover'
-                    placeholder='blur'
-                    blurDataURL={blurPlaceholder}
-                  />
-                </RecommendedImg>
-              </a>
+              <RecommendedImg className='relative text-center'>
+                <Image
+                  src={
+                    item.backdrop_path
+                      ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
+                      : "/Images/DefaultBackdrop.png"
+                  }
+                  alt={`${type}-poster`}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  placeholder='blur'
+                  blurDataURL={blurPlaceholder}
+                />
+              </RecommendedImg>
             </Link>
           </motion.div>
           <InfoTitle className='mt-3 mb-0 text-center'>{item?.title || item?.name}</InfoTitle>

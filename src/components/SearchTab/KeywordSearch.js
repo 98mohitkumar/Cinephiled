@@ -24,9 +24,7 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
               href={`/keywords/${item.id}-${getCleanTitle(item.name)}`}
               passHref
               scroll={false}>
-              <a>
-                <Keyword className='leading-tight'>{item.name}</Keyword>
-              </a>
+              <Keyword className='leading-tight'>{item.name}</Keyword>
             </Link>
           ))}
         </SearchResultsContainer>

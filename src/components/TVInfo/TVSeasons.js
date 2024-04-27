@@ -30,41 +30,39 @@ const TVSeasons = ({ seasons }) => {
               whileTap={{ scale: 0.98 }}
               className={"max-w-5xl m-auto [&:not(:last-child)]:mb-5"}>
               <Link href={`${router.query.id}/season/${season_number}`} passHref scroll={false}>
-                <a>
-                  <SeasonWrapper>
-                    <SeasonImg>
-                      <Image
-                        src={
-                          poster_path
-                            ? `https://image.tmdb.org/t/p/w185${poster_path}`
-                            : "/Images/DefaultImage.png"
-                        }
-                        alt='TV-season-poster'
-                        layout='fill'
-                        objectFit='cover'
-                        placeholder='blur'
-                        blurDataURL={blurPlaceholder}
-                      />
-                    </SeasonImg>
+                <SeasonWrapper>
+                  <SeasonImg>
+                    <Image
+                      src={
+                        poster_path
+                          ? `https://image.tmdb.org/t/p/w185${poster_path}`
+                          : "/Images/DefaultImage.png"
+                      }
+                      alt='TV-season-poster'
+                      fill
+                      style={{ objectFit: "cover" }}
+                      placeholder='blur'
+                      blurDataURL={blurPlaceholder}
+                    />
+                  </SeasonImg>
 
-                    <SeasonInfoWrapper>
-                      <div>
-                        <SeasonTitle className='max-sm:mb-1'>
-                          {name}
-                          {today < new Date(air_date) && today !== new Date(air_date)
-                            ? " (Upcoming)"
-                            : ""}
-                        </SeasonTitle>
-                        <SeasonDetailsWrapper>
-                          <SeasonsRelease>{getReleaseDate(air_date)}</SeasonsRelease>
-                          <div className='divider' />
-                          <SeasonsRelease>{episode_count} Episodes</SeasonsRelease>
-                        </SeasonDetailsWrapper>
-                        {overview ? <SeasonsOverview>{overview}</SeasonsOverview> : null}
-                      </div>
-                    </SeasonInfoWrapper>
-                  </SeasonWrapper>
-                </a>
+                  <SeasonInfoWrapper>
+                    <div>
+                      <SeasonTitle className='max-sm:mb-1'>
+                        {name}
+                        {today < new Date(air_date) && today !== new Date(air_date)
+                          ? " (Upcoming)"
+                          : ""}
+                      </SeasonTitle>
+                      <SeasonDetailsWrapper>
+                        <SeasonsRelease>{getReleaseDate(air_date)}</SeasonsRelease>
+                        <div className='divider' />
+                        <SeasonsRelease>{episode_count} Episodes</SeasonsRelease>
+                      </SeasonDetailsWrapper>
+                      {overview ? <SeasonsOverview>{overview}</SeasonsOverview> : null}
+                    </div>
+                  </SeasonInfoWrapper>
+                </SeasonWrapper>
               </Link>
             </motion.div>
           )

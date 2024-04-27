@@ -46,8 +46,8 @@ const NetworkMedia = ({ details, media }) => {
                 <Image
                   src={poster}
                   alt={`${details?.name}-poster`}
-                  layout='fill'
-                  objectFit='cover'
+                  fill
+                  style={{ objectFit: "cover" }}
                   placeholder='blur'
                   loading='eager'
                   blurDataURL={blurPlaceholder}
@@ -66,8 +66,8 @@ const NetworkMedia = ({ details, media }) => {
             <Image
               src={`https://image.tmdb.org/t/p/w300_filter(negate,000,111)${details?.images?.logos?.[0]?.file_path}`}
               alt={`${details?.name}-poster`}
-              layout='fill'
-              objectFit='cover'
+              fill
+              style={{ objectFit: "cover" }}
               loading='eager'
             />
           </div>

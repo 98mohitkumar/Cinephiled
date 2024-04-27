@@ -104,7 +104,7 @@ const Profile = () => {
             <div className='px-3'>
               <LinearTabs tabList={linearTabsList} currentTab={activeTab} setTab={setTab} />
             </div>
-            <AnimatePresence exitBeforeEnter initial={false}>
+            <AnimatePresence mode='wait' initial={false}>
               {/* Watchlist */}
               {activeTab === "watchlist" && (
                 <motion.div

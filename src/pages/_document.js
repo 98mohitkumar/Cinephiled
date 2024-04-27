@@ -1,21 +1,11 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
+import Script from "next/script";
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html lang='en'>
         <Head>
-          <link rel='preconnect' href='https://fonts.googleapis.com' />
-          <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin={+true} />
-          <link
-            href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap'
-            rel='stylesheet'
-          />
-          <link
-            href='https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap'
-            rel='stylesheet'
-          />
-
           <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png'></link>
           <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png'></link>
           <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png'></link>
@@ -24,6 +14,14 @@ export default class MyDocument extends Document {
           <meta name='keywords' content='Cinema, Tv, Movies'></meta>
           <meta property='og:type' content='website' />
           <meta property='twitter:card' content='summary_large_image' />
+
+          <Script id='ms-clarity' strategy='beforeInteractive'>
+            {`(function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_MS_CLARITY_TAG}");`}
+          </Script>
         </Head>
         <body>
           <Main />

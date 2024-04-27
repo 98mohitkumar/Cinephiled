@@ -81,7 +81,7 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
       <Tabs tabList={tabList} currentTab={activeTab} setTab={tabStateHandler} />
 
       <ModulesWrapper>
-        <AnimatePresence initial={false} exitBeforeEnter>
+        <AnimatePresence initial={false} mode='wait'>
           {activeTab === "movies" && (
             <motion.div
               key='movies'

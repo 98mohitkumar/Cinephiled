@@ -69,7 +69,7 @@ const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) =>
               </div>
             </div>
 
-            <AnimatePresence exitBeforeEnter>
+            <AnimatePresence mode='wait'>
               {filteredCast?.length > 0 ? (
                 <CastGrid
                   as={motion.div}
@@ -82,30 +82,27 @@ const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast, error }) =>
                   {filteredCast.map((item) => (
                     <CastWrapper key={item.credit_id}>
                       <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`} passHref>
-                        <a>
-                          <motion.div
-                            whileHover={{
-                              scale: 1.05,
-                              transition: { duration: 0.1 }
-                            }}
-                            whileTap={{ scale: 0.95 }}>
-                            <CastImg className='relative text-center'>
-                              <Image
-                                src={
-                                  item.profile_path
-                                    ? `https://image.tmdb.org/t/p/w276_and_h350_face${item.profile_path}`
-                                    : "/Images/DefaultAvatar.png"
-                                }
-                                alt='cast-image'
-                                layout='fill'
-                                objectFit='cover'
-                                objectPosition='top'
-                                placeholder='blur'
-                                blurDataURL={blurPlaceholder}
-                              />
-                            </CastImg>
-                          </motion.div>
-                        </a>
+                        <motion.div
+                          whileHover={{
+                            scale: 1.05,
+                            transition: { duration: 0.1 }
+                          }}
+                          whileTap={{ scale: 0.95 }}>
+                          <CastImg className='relative text-center'>
+                            <Image
+                              src={
+                                item.profile_path
+                                  ? `https://image.tmdb.org/t/p/w276_and_h350_face${item.profile_path}`
+                                  : "/Images/DefaultAvatar.png"
+                              }
+                              alt='cast-image'
+                              fill
+                              style={{ objectFit: "cover", objectPosition: "top" }}
+                              placeholder='blur'
+                              blurDataURL={blurPlaceholder}
+                            />
+                          </CastImg>
+                        </motion.div>
                       </Link>
 
                       <div className='mt-3'>

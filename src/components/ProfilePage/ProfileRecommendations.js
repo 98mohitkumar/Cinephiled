@@ -65,7 +65,7 @@ const ProfileRecommendations = () => {
       ) : (
         <ProfileMediaTab>
           {(tabState) => (
-            <AnimatePresence exitBeforeEnter initial={false}>
+            <AnimatePresence mode='wait' initial={false}>
               {tabState === "movies" && <MovieRecommendations key='movies' />}
               {tabState === "tv" && <TvRecommendations key='tv' />}
             </AnimatePresence>

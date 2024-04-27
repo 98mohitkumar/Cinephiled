@@ -177,9 +177,9 @@ const AddToListModal = ({ mediaId, mediaType }) => {
             <PlaceholderText>
               You don&apos;t have any lists yet.
               <Link href='/lists?create=true'>
-                <a className='block text-lg underline text-cyan-400 hover:text-cyan-600 transition-colors'>
+                <p className='block text-lg underline text-cyan-400 hover:text-cyan-600 transition-colors'>
                   Create a list
-                </a>
+                </p>
               </Link>
             </PlaceholderText>
           )}

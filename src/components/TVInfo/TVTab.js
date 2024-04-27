@@ -54,15 +54,15 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
           <TabSelectionTitle
             key={key}
             onClick={() => setTab(key)}
-            active={activeTab === key}
-            tv={true}>
+            $active={activeTab === key}
+            $tv={true}>
             <TabIcon>{svg(key === activeTab)}</TabIcon>
             {name}
           </TabSelectionTitle>
         ))}
       </Tabs>
 
-      <AnimatePresence exitBeforeEnter initial={false}>
+      <AnimatePresence mode='wait' initial={false}>
         {activeTab === "cast" && (
           <motion.div
             key='cast'

@@ -10,9 +10,7 @@ const StreamingProvides = () => {
         <Image
           src={WatchProvidersImage}
           alt='Watch Providers'
-          layout='fill'
-          loading='eager'
-          placeholder='blur'
+          fill
           className='object-cover object-left-top group-hover:scale-105 transition-transform'
         />
       </div>
@@ -25,9 +23,7 @@ const StreamingProvides = () => {
         </p>
 
         <Link href='/watch-providers'>
-          <a className='inline-block mt-6'>
-            <Button>Explore Providers</Button>
-          </a>
+          <Button className='inline-block mt-6'>Explore Providers</Button>
         </Link>
       </div>
     </div>

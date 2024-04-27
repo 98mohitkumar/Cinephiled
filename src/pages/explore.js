@@ -26,7 +26,7 @@ const Explore = ({ movieGenres, tvGenres, error, nowPlaying }) => {
             <DominantColor flip tint />
 
             {/* genres for movies and tv shows */}
-            <LayoutContainer className='mb-auto relative z-20 right-p-0'>
+            <LayoutContainer className='mb-auto relative z-20 !pr-0'>
               <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
             </LayoutContainer>
 

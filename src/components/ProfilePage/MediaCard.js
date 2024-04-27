@@ -27,13 +27,13 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
           href={`/${link}/${data?.id}-${getCleanTitle(data?.title || data?.name)}`}
           passHref
           scroll={false}>
-          <a className='relative block'>
+          <div className='relative'>
             <CardImg className='flex justify-end'>
               <Image
                 src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`}
                 alt='movie-poster'
-                layout='fill'
-                objectFit='cover'
+                fill
+                style={{ objectFit: "cover" }}
                 className='poster'
                 placeholder='blur'
                 blurDataURL={blurPlaceholder}
@@ -51,7 +51,7 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
                 {getRating(data?.vote_average)}
               </Rating>
             )}
-          </a>
+          </div>
         </Link>
       </motion.div>
       {recommendation ? (

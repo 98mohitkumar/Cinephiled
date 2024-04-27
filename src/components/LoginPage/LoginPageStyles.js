@@ -76,7 +76,6 @@ export const LoginCard = styled.div`
     margin: auto;
     font-weight: 400;
     color: white;
-    font-family: "Manrope", sans-serif;
 
     &:-webkit-autofill {
       box-shadow: 0 0 0 30px #121212 inset !important;
@@ -91,7 +90,6 @@ export const LoginCard = styled.div`
     &::placeholder {
       color: grey;
       font-weight: 400;
-      font-family: "Manrope", sans-serif;
     }
 
     &:focus {

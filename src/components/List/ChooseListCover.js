@@ -74,8 +74,8 @@ const ChooseListCover = ({ id }) => {
                               : "/Images/DefaultBackdrop.png"
                           }
                           alt='backdrop'
-                          layout='fill'
-                          objectFit='cover'
+                          fill
+                          style={{ objectFit: "cover" }}
                           placeholder='blur'
                           blurDataURL={blurPlaceholder}
                         />

@@ -103,7 +103,7 @@ const CreateList = () => {
           ))}
         </div>
 
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence mode='wait'>
           {step === 1 ? (
             <motion.div
               className='grow max-w-3xl max-md:max-w-full'

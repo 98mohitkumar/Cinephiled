@@ -12,7 +12,7 @@ export const HeroDiv = styled.div`
   z-index: 4;
   background: linear-gradient(180deg, rgba(31, 31, 31, 0.5) 0%, rgba(18, 18, 18, 1) 95%);
 
-  background: ${({ searchModal }) => searchModal && "transparent"};
+  background: ${({ $searchModal }) => $searchModal && "transparent"};
 `;
 
 export const HeroTitle = styled.h1`
@@ -140,7 +140,6 @@ export const UserInput = styled.input`
   width: 100%;
   font-weight: 400;
   color: white;
-  font-family: "Manrope", sans-serif;
 
   &::placeholder {
     color: #fff;
