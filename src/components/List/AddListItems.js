@@ -149,7 +149,7 @@ const AddListItems = ({ id, CTAHandler }) => {
                   />
                 </div>
 
-                <AnimatePresence exitBeforeEnter>
+                <AnimatePresence mode='wait'>
                   {(searchSuggestionsLoading || searchSuggestions?.length > 0) && (
                     <motion.div
                       className='absolute top-full mt-2 left-0 right-0 z-10 bg-neutral-800 rounded-lg overflow-hidden shadow-lg'
@@ -197,9 +197,8 @@ const AddListItems = ({ id, CTAHandler }) => {
                                               : "/Images/DefaultImage.png"
                                           }
                                           alt='poster'
-                                          layout='fill'
-                                          objectFit='cover'
-                                          quality='100'
+                                          fill
+                                          style={{ objectFit: "cover" }}
                                           placeholder='blur'
                                           blurDataURL={blurPlaceholder}
                                         />
@@ -254,9 +253,8 @@ const AddListItems = ({ id, CTAHandler }) => {
                                 : "/Images/DefaultImage.png"
                             }
                             alt='poster'
-                            layout='fill'
-                            objectFit='cover'
-                            quality='100'
+                            fill
+                            style={{ objectFit: "cover" }}
                             placeholder='blur'
                             blurDataURL={blurPlaceholder}
                           />

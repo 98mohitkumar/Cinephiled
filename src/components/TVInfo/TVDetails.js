@@ -166,8 +166,8 @@ const TVDetails = ({
                   : "/Images/Hex.webp"
               }
               alt='tv-backdrop'
-              layout='fill'
-              objectFit='cover'
+              fill
+              style={{ objectFit: "cover" }}
               priority
             />
           </HeroBg>
@@ -183,8 +183,8 @@ const TVDetails = ({
                     : "/Images/DefaultImage.png"
                 }
                 alt='tv-poster'
-                layout='fill'
-                objectFit='cover'
+                fill
+                style={{ objectFit: "cover" }}
                 priority
                 placeholder='blur'
                 blurDataURL={blurPlaceholder}
@@ -218,7 +218,7 @@ const TVDetails = ({
                   as={motion.button}
                   whileTap={{ scale: 0.95 }}
                   onClick={watchlistHandler}>
-                  <AnimatePresence exitBeforeEnter initial={false}>
+                  <AnimatePresence mode='wait' initial={false}>
                     <motion.div
                       key={`watchlist - ${isAddedToWatchlist.toString()}`}
                       variants={framerTabVariants}
@@ -242,7 +242,7 @@ const TVDetails = ({
                   onClick={favoriteHandler}
                   as={motion.button}
                   whileTap={{ scale: 0.95 }}>
-                  <AnimatePresence exitBeforeEnter initial={false}>
+                  <AnimatePresence mode='wait' initial={false}>
                     <motion.div
                       key={`favorite - ${isAddedToFavorites.toString()}`}
                       variants={framerTabVariants}
@@ -262,7 +262,7 @@ const TVDetails = ({
                   as={motion.button}
                   whileTap={{ scale: 0.95 }}
                   onClick={ratingModalHandler}>
-                  <AnimatePresence exitBeforeEnter initial={false}>
+                  <AnimatePresence mode='wait' initial={false}>
                     <motion.div
                       key={`rating - ${savedRating.toString()}`}
                       variants={framerTabVariants}
@@ -302,9 +302,7 @@ const TVDetails = ({
                       href={`/genre/${item.id.toString() + "-" + item.name.split(" ").join("")}/tv`}
                       passHref
                       scroll={false}>
-                      <a>
-                        <Rounded className={genres.length == i + 1 && "sep"}>{item.name}</Rounded>
-                      </a>
+                      <Rounded className={genres.length == i + 1 && "sep"}>{item.name}</Rounded>
                     </Link>
                   ))}
                 </GenreWrap>
@@ -334,9 +332,7 @@ const TVDetails = ({
                   <Credits key={item.credit_id}>
                     <Span className='block font-normal'>{item.job ?? "Creator"}</Span>
                     <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`}>
-                      <a>
-                        <Span className='block font-bold credit'>{item.name}</Span>
-                      </a>
+                      <Span className='block font-bold credit'>{item.name}</Span>
                     </Link>
                   </Credits>
                 ))}

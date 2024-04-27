@@ -70,7 +70,6 @@ export const InfoTitle = styled.h2`
 `;
 
 export const ReleaseDate = styled.p`
-  font-family: "Manrope", sans-serif;
   font-weight: 500;
   margin: 0;
 
@@ -86,7 +85,7 @@ export const Rating = styled.div`
   border-radius: 50%;
   background-color: #ddd;
   color: #212121;
-  font-family: "Montserrat", sans-serif;
+  font-family: ${(props) => props.theme.fonts.montserrat};
   font-weight: 600;
   font-size: 0.9rem;
   border: 5px solid #121212;

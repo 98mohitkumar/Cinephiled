@@ -312,7 +312,7 @@ export const SocialMediaLinksWrapper = styled.div`
   width: 17rem;
   height: 45px;
   color: #ebebeb;
-  display: ${(props) => (props.notShow ? "none" : "flex")};
+  display: ${({ $hide }) => ($hide ? "none" : "flex")};
   justify-content: center;
   align-items: center;
   padding: 0.25rem;
@@ -471,7 +471,7 @@ export const Pill = styled.div`
   border-radius: 20px;
   background-color: rgb(221 221 221);
   color: #121212;
-  font-family: "Montserrat", sans-serif;
+  font-family: ${(props) => props.theme.fonts.montserrat};
   font-weight: 600;
   display: flex;
   justify-content: center;
@@ -487,7 +487,7 @@ export const Pill = styled.div`
     padding-left: 12px;
     padding-right: 6px;
     line-height: 0.9;
-    font-family: "Manrope", sans-serif;
+    font-family: ${(props) => props.theme.fonts.main};
   }
 `;
 
@@ -535,10 +535,6 @@ export const LayoutContainer = styled.section`
     &.index-page {
       padding: 0px 20px 20px 20px;
     }
-  }
-
-  &.right-p-0 {
-    padding-right: 0px;
   }
 `;
 

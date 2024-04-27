@@ -15,9 +15,8 @@ const Posters = ({ posters }) => {
               <Image
                 src={`https://image.tmdb.org/t/p/w500${item.file_path}`}
                 alt='poster'
-                layout='fill'
-                objectFit='cover'
-                quality='100'
+                fill
+                style={{ objectFit: "cover" }}
                 placeholder='blur'
                 blurDataURL={blurPlaceholder}
               />

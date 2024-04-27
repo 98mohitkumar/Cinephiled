@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const tabStyling = css`
   width: clamp(360px, 92vw, 730px);
@@ -31,7 +31,7 @@ export const TabSelectionTitle = styled.div`
   padding: 1rem;
   display: grid;
   place-items: center;
-  color: ${({ active }) => (active ? 'white' : 'black')};
+  color: ${({ $active }) => ($active ? "white" : "black")};
   font-weight: bold;
   cursor: pointer;
   z-index: 5;
@@ -42,9 +42,9 @@ export const TabSelectionTitle = styled.div`
   }
 
   @media only ${(props) => props.theme.breakpoints.sm} {
-    font-size: ${(props) => (props.tv ? '0.6rem' : '0.7rem')};
+    font-size: ${({ $tv }) => ($tv ? "0.6rem" : "0.7rem")};
     font-weight: 500;
-    padding: ${(props) => (props.tv ? '0.6rem 0.7rem' : '0.5rem')};
+    padding: ${($tv) => ($tv ? "0.6rem 0.7rem" : "0.5rem")};
 
     & > div svg path {
       transition: fill 0.325s cubic-bezier(0.77, 0, 0.18, 1);

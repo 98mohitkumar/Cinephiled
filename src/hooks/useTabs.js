@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useTabs = ({ tabLocation, defaultState = "" }) => {
-  const [activeTab, setActiveTab] = useState("");
+  const [activeTab, setActiveTab] = useState(defaultState);
 
   useEffect(() => {
     const tabStates = JSON.parse(localStorage.getItem("tabStates")) || {};

@@ -41,10 +41,10 @@ const UserAvatar = () => {
   return (
     <Fragment>
       {userInfo?.accountId ? (
-        <Avatar avatar={userAvatar}>
+        <Avatar $avatar={userAvatar}>
           <div className='avatar' onClick={() => setShowPopup((prev) => !prev)} />
 
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode='wait'>
             {showPopup && (
               <Popup
                 as={motion.div}
@@ -57,13 +57,15 @@ const UserAvatar = () => {
                   ease: [0.77, 0, 0.175, 1]
                 }}>
                 <Link href='/profile' passHref>
-                  <PopupOption className='font-semibold' role='button'>
+                  <PopupOption className='font-semibold border-b border-neutral-600' role='button'>
                     {userInfo?.name || userInfo?.username}
                     <p className='sub-text'>view profile</p>
                   </PopupOption>
                 </Link>
                 <Link href='/lists' passHref>
-                  <PopupOption role='button'>Lists</PopupOption>
+                  <PopupOption role='button' className='border-b border-neutral-600'>
+                    Lists
+                  </PopupOption>
                 </Link>
                 <PopupOption
                   onClick={logout}
@@ -79,15 +81,19 @@ const UserAvatar = () => {
         <DefaultAvatar>
           <div className='desktop-login'>
             <Link href='/login'>
-              <a className={`link ${router.asPath === "/login" ? "active" : ""}`}>Login</a>
+              <div
+                className={`link ${router.asPath === "/login" ? "active" : ""}`}
+                aria-label='Login'>
+                Login
+              </div>
             </Link>
           </div>
 
           <div className='mobile-login'>
             <Link href='/login'>
-              <a className='link'>
+              <div className='link' aria-label='Login'>
                 <FaRegUser size='24px' />
-              </a>
+              </div>
             </Link>
           </div>
         </DefaultAvatar>

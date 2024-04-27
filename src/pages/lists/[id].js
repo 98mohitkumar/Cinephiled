@@ -62,9 +62,8 @@ const List = ({ list, error }) => {
               <Image
                 src={`https://image.tmdb.org/t/p/w1920_and_h318_multi_faces${list.backdrop_path}`}
                 alt={list.name}
-                layout='fill'
-                objectFit='cover'
-                quality={100}
+                fill
+                style={{ objectFit: "cover" }}
                 placeholder='blur'
                 blurDataURL={blurPlaceholder}
                 className='-z-10'
@@ -74,7 +73,7 @@ const List = ({ list, error }) => {
             </div>
           )}
 
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode='wait'>
             {manageList ? (
               <motion.div
                 key={`isAddItemsMode-${manageList}`}

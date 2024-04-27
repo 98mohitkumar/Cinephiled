@@ -10,17 +10,20 @@ import {
 
 const Tabs = ({ tabList, currentTab, setTab, styling, children, ...props }) => {
   return (
-    <Tab count={tabList.length} styling={styling?.tabStyling} {...props}>
-      <Slider state={tabList.findIndex((item) => item.key === currentTab)} count={tabList.length} />
+    <Tab $count={tabList.length} $styling={styling?.tabStyling} {...props}>
+      <Slider
+        $state={tabList.findIndex((item) => item.key === currentTab)}
+        $count={tabList.length}
+      />
 
       {children ?? (
         <Fragment>
           {tabList.map(({ key, name }) => (
             <Selection
               key={key}
-              active={key === currentTab}
+              $active={key === currentTab}
               onClick={() => setTab(key)}
-              styling={styling?.tabTitleStyling}>
+              $styling={styling?.tabTitleStyling}>
               {name}
             </Selection>
           ))}
@@ -47,8 +50,8 @@ export const LinearTabs = ({ tabList, currentTab, setTab }) => {
         {tabList.map(({ key, name }) => (
           <TabSelector
             key={key}
-            count={tabList.length}
-            active={key === currentTab}
+            $count={tabList.length}
+            $active={key === currentTab}
             onClick={() => setTab(key)}
             className={key === currentTab && "relative"}>
             {name}

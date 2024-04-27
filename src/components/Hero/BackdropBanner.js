@@ -10,8 +10,8 @@ const BackdropBanner = ({ posters }) => {
       {posters.map(({ src, id }) => (
         <div key={id} className='relative aspect-[0.666]'>
           <Image
-            layout='fill'
-            objectFit='cover'
+            fill
+            style={{ objectFit: "cover" }}
             placeholder='blur'
             loading='eager'
             blurDataURL={blurPlaceholder}

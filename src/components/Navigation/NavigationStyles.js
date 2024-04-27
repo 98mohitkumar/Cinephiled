@@ -142,8 +142,8 @@ export const HamburgerIcon = styled.div`
     bottom: 13px;
   }
 
-  ${({ active }) =>
-    active &&
+  ${({ $active }) =>
+    $active &&
     `
       &::after {
         transform: rotate(-45deg);

@@ -6,7 +6,7 @@ const SocialMediaLinks = ({ links, homepage }) => {
   const display = !links?.facebook_id && !links?.instagram_id && !links?.twitter_id && !homepage;
 
   return (
-    <SocialMediaLinksWrapper notShow={display}>
+    <SocialMediaLinksWrapper $hide={display}>
       {links?.facebook_id && (
         <a
           href={`https://facebook.com/${links?.facebook_id}`}

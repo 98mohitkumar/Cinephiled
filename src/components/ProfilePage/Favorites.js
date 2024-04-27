@@ -97,7 +97,7 @@ const Favorites = () => {
       ) : (
         <ProfileMediaTab>
           {(tabState) => (
-            <AnimatePresence exitBeforeEnter initial={false}>
+            <AnimatePresence mode='wait' initial={false}>
               {tabState === "movies" && (
                 <motion.div
                   key={`${favoriteMovies?.length}-movies`}

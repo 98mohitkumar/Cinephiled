@@ -29,9 +29,7 @@ const TVFacts = ({ facts }) => {
           <Span>Network</Span>
           {network?.id ? (
             <Link href={`/network/${network?.id}-${getCleanTitle(network?.name)}`}>
-              <a>
-                <Span className='network font-semibold'>{network?.name}</Span>
-              </a>
+              <Span className='network font-semibold'>{network?.name}</Span>
             </Link>
           ) : (
             <Span>{network?.name}</Span>

@@ -52,22 +52,20 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                       }}
                       whileTap={{ scale: 0.95 }}>
                       <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref scroll={false}>
-                        <a>
-                          <RecommendedImg className='relative text-center'>
-                            <Image
-                              src={
-                                backdrop_path
-                                  ? `https://image.tmdb.org/t/p/w780${backdrop_path}`
-                                  : "/Images/DefaultBackdrop.png"
-                              }
-                              alt='movie-poster'
-                              layout='fill'
-                              objectFit='cover'
-                              placeholder='blur'
-                              blurDataURL={blurPlaceholder}
-                            />
-                          </RecommendedImg>
-                        </a>
+                        <RecommendedImg className='relative text-center'>
+                          <Image
+                            src={
+                              backdrop_path
+                                ? `https://image.tmdb.org/t/p/w780${backdrop_path}`
+                                : "/Images/DefaultBackdrop.png"
+                            }
+                            alt='movie-poster'
+                            fill
+                            style={{ objectFit: "cover" }}
+                            placeholder='blur'
+                            blurDataURL={blurPlaceholder}
+                          />
+                        </RecommendedImg>
                       </Link>
                     </motion.div>
                     <InfoTitle className='my-3 text-center'>{name}</InfoTitle>

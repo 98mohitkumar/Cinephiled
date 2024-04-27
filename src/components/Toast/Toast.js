@@ -29,7 +29,7 @@ export const useToast = () => {
 
 const Toast = ({ children, isToastVisible }) => {
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode='wait'>
       {isToastVisible && (
         <ToastWrapper
           as={motion.div}

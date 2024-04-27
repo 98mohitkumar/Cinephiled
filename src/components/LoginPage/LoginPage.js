@@ -51,9 +51,9 @@ const LoginPage = () => {
           <AboutBackground className='loginPage'>
             <Image
               src={posters}
-              layout='fill'
+              fill
               alt='about-login-background'
-              objectFit='cover'
+              style={{ objectFit: "cover" }}
               priority
             />
           </AboutBackground>
@@ -62,23 +62,15 @@ const LoginPage = () => {
         {/* login card */}
         <LoginCard>
           <Integration>
-            <Image
-              src={logo}
-              width='85px'
-              height='50px'
-              alt='cinephiled-logo'
-              objectFit='cover'
-              priority
-            />
+            <Image src={logo} width={85} height={50} alt='cinephiled-logo' priority />
 
             <p className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] m-0'>+</p>
 
             <Image
               src='https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg'
-              width='100px'
-              height='40px'
+              width={100}
+              height={40}
               alt='cinephiled-logo'
-              objectFit='contain'
               priority
             />
           </Integration>

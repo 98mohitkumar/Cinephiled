@@ -5,18 +5,19 @@ import { useRouter } from "next/router";
 import { framerTabVariants } from "src/utils/helper";
 import { DetailsWrapper, Wrapper } from "./LayoutStyles";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, className }) => {
   const router = useRouter();
   const footerValidPaths = ["/", "/about", "/login", "/watch-providers"];
 
   return (
     <Wrapper
-      as={motion.div}
+      as={motion.main}
       variants={framerTabVariants}
       initial='hidden'
       animate='visible'
       exit='hidden'
-      transition={{ duration: 0.5 }}>
+      transition={{ duration: 0.5 }}
+      className={className}>
       <DetailsWrapper className='flex flex-col justify-between'>
         <Navigation />
         <div className='grow content-wrapper'>{children}</div>

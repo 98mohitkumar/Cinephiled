@@ -33,7 +33,7 @@ const Modal = ({ children, isOpen, closeModal, width, align }) => {
   return (
     <Fragment>
       {createPortal(
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence mode='wait'>
           {isOpen && (
             <motion.div
               variants={framerTabVariants}

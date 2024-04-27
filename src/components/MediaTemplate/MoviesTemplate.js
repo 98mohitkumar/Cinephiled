@@ -26,7 +26,7 @@ const MoviesTemplate = ({ movies, creditsPage = false }) => {
                 }}
                 whileTap={{ scale: 0.95 }}>
                 <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref scroll={false}>
-                  <a className='relative block'>
+                  <div className='relative'>
                     <CardImg>
                       <Image
                         src={
@@ -35,8 +35,8 @@ const MoviesTemplate = ({ movies, creditsPage = false }) => {
                             : "/Images/DefaultImage.png"
                         }
                         alt='movie-poster'
-                        layout='fill'
-                        objectFit='cover'
+                        fill
+                        style={{ objectFit: "cover" }}
                         className='poster'
                         placeholder='blur'
                         blurDataURL={blurPlaceholder}
@@ -45,7 +45,7 @@ const MoviesTemplate = ({ movies, creditsPage = false }) => {
                     <Rating className='flex justify-center items-center'>
                       {getRating(vote_average)}
                     </Rating>
-                  </a>
+                  </div>
                 </Link>
               </motion.div>
               <CardInfo>

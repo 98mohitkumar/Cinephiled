@@ -18,7 +18,8 @@ const GenreSection = ({ genres, mediaType }) => {
             href={`/genre/${genre.id}-${getCleanTitle(genre.name)}/${
               mediaType === "movie" ? "movies" : "tv"
             }`}
-            passHref>
+            passHref
+            legacyBehavior>
             <GenreBG as={motion.a} whileTap={{ scale: 0.9 }} className='snap-start snap-always'>
               <span className='title'>{genre.name}</span>
             </GenreBG>

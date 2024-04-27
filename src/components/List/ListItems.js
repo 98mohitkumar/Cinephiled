@@ -54,7 +54,7 @@ const ListItems = ({ listItems, id }) => {
                     )}`}
                     passHref
                     scroll={false}>
-                    <a className='relative block'>
+                    <div className='relative'>
                       <CardImg>
                         <Image
                           src={
@@ -63,8 +63,8 @@ const ListItems = ({ listItems, id }) => {
                               : "/Images/DefaultImage.png"
                           }
                           alt='movie-poster'
-                          layout='fill'
-                          objectFit='cover'
+                          fill
+                          style={{ objectFit: "cover" }}
                           className='poster'
                           placeholder='blur'
                           blurDataURL={blurPlaceholder}
@@ -73,7 +73,7 @@ const ListItems = ({ listItems, id }) => {
                       <Rating className='flex justify-center items-center'>
                         {getRating(vote_average)}
                       </Rating>
-                    </a>
+                    </div>
                   </Link>
                 </motion.div>
                 <CardInfo>

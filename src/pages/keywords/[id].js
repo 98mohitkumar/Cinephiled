@@ -37,31 +37,29 @@ const Keyword = ({ error, results, name, id }) => {
                 {results.map(({ id, title, poster_path, overview, release_date }) => (
                   <motion.div whileTap={{ scale: 0.98 }} key={id}>
                     <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref scroll={false}>
-                      <a>
-                        <QueryContainer>
-                          <QueryImg className='relative text-center'>
-                            <Image
-                              src={
-                                poster_path
-                                  ? `https://image.tmdb.org/t/p/w185${poster_path}`
-                                  : "/Images/DefaultImage.png"
-                              }
-                              alt='movie-poster'
-                              layout='fill'
-                              objectFit='cover'
-                              placeholder='blur'
-                              blurDataURL={blurPlaceholder}
-                            />
-                          </QueryImg>
-                          <QueryInfoWrapper>
-                            <div>
-                              <QueryTitle>{title}</QueryTitle>
-                              <QueryReleaseDate>{getReleaseDate(release_date)}</QueryReleaseDate>
-                            </div>
-                            <QueryDescription>{overview}</QueryDescription>
-                          </QueryInfoWrapper>
-                        </QueryContainer>
-                      </a>
+                      <QueryContainer>
+                        <QueryImg className='relative text-center'>
+                          <Image
+                            src={
+                              poster_path
+                                ? `https://image.tmdb.org/t/p/w185${poster_path}`
+                                : "/Images/DefaultImage.png"
+                            }
+                            alt='movie-poster'
+                            fill
+                            style={{ objectFit: "cover" }}
+                            placeholder='blur'
+                            blurDataURL={blurPlaceholder}
+                          />
+                        </QueryImg>
+                        <QueryInfoWrapper>
+                          <div>
+                            <QueryTitle>{title}</QueryTitle>
+                            <QueryReleaseDate>{getReleaseDate(release_date)}</QueryReleaseDate>
+                          </div>
+                          <QueryDescription>{overview}</QueryDescription>
+                        </QueryInfoWrapper>
+                      </QueryContainer>
                     </Link>
                   </motion.div>
                 ))}

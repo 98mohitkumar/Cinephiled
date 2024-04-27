@@ -4,7 +4,7 @@ export const Tab = styled.div`
   width: clamp(300px, 90vw, 630px); // fallback width, check custom styling
   min-height: 4.5rem;
   display: grid;
-  grid-template-columns: ${({ count }) => `repeat(${count}, 1fr)`};
+  grid-template-columns: ${({ $count }) => `repeat(${$count}, 1fr)`};
   margin: 4rem auto;
   border: 4px solid rgb(221, 221, 221);
   background: rgb(221, 221, 221);
@@ -28,15 +28,15 @@ export const Tab = styled.div`
   }
 
   /* custom styling */
-  ${({ styling }) => styling}
+  ${({ $styling }) => $styling}
 `;
 
 export const Slider = styled.div`
   position: absolute;
-  width: ${({ count }) => `${100 / count}%`};
+  width: ${({ $count }) => `${100 / $count}%`};
   height: 100%;
   background: black;
-  transform: ${({ state }) => `translateX(${state === -1 ? 0 : state * 100}%)`};
+  transform: ${({ $state }) => `translateX(${$state === -1 ? 0 : $state * 100}%)`};
   border-radius: 12px;
   z-index: 4;
   transition: transform 0.325s cubic-bezier(0.77, 0, 0.18, 1);
@@ -46,7 +46,7 @@ export const Selection = styled.div`
   padding: 1rem;
   display: grid;
   place-items: center;
-  color: ${({ active }) => (active ? "white" : "black")};
+  color: ${({ $active }) => ($active ? "white" : "black")};
   font-weight: bold;
   cursor: pointer;
   z-index: 5;
@@ -59,7 +59,7 @@ export const Selection = styled.div`
   }
 
   /* custom styling */
-  ${({ styling }) => styling}
+  ${({ $styling }) => $styling}
 `;
 
 export const TabContainer = styled.div`
@@ -105,10 +105,10 @@ export const ActiveTabIndicator = styled.div`
 
 export const TabSelector = styled.div`
   padding: 1rem;
-  width: ${({ count }) => `${100 / count}%`};
+  width: ${({ $count }) => `${100 / $count}%`};
   display: grid;
   place-items: center;
-  color: ${({ active }) => (active ? "white" : "#ababab")};
+  color: ${({ $active }) => ($active ? "white" : "#ababab")};
   font-weight: 600;
   cursor: pointer;
   z-index: 5;

@@ -7,15 +7,14 @@ const Breadcrumbs = ({ links }) => {
         {links?.map(({ href, label }, index) => (
           <li className='inline-flex items-center gap-2' key={index}>
             <Link href={href} passHref>
-              <a
-                href='#'
+              <p
                 className={`inline-flex items-center text-sm sm:text-base font-semibold hover:text-white transition-colors ${
                   index !== links?.length - 1
                     ? "text-neutral-200"
                     : "text-neutral-400 pointer-events-none"
                 }`}>
                 {label}
-              </a>
+              </p>
             </Link>
 
             {index !== links?.length - 1 ? (

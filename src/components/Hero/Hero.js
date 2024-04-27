@@ -66,7 +66,7 @@ const Hero = ({ banner = null }) => {
   return (
     <Container className='relative mb-auto'>
       {banner ? <div className='overflow-wrapper'>{banner}</div> : null}
-      <HeroDiv searchModal={!banner}>
+      <HeroDiv $searchModal={!banner}>
         <Form onSubmit={searchHandler}>
           <div className='mb-16 w-full relative'>
             <div className='pb-1.5 flex justify-between items-end border-animated'>
@@ -97,7 +97,7 @@ const Hero = ({ banner = null }) => {
               ) : null}
             </div>
 
-            <AnimatePresence exitBeforeEnter>
+            <AnimatePresence mode='wait'>
               {searchSuggestions?.length > 0 && (
                 <motion.div
                   key='suggestions'

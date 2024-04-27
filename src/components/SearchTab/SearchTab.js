@@ -40,7 +40,7 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
       />
 
       <ModulesWrapper>
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence mode='wait'>
           {activeTab === "movies" && (
             <motion.div
               key='movies'

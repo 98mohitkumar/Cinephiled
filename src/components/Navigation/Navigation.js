@@ -30,19 +30,19 @@ const Navigation = () => {
   const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
 
+  const navHandler = () => {
+    if (window.scrollY > 100 && window.scrollY > lastScroll.current) {
+      navRef.current?.classList.add("hide-nav");
+      navRef.current?.classList.remove("show-nav");
+    } else {
+      navRef.current?.classList.remove("hide-nav");
+      navRef.current?.classList.add("show-nav");
+    }
+
+    lastScroll.current = window.scrollY;
+  };
+
   useEffect(() => {
-    const navHandler = () => {
-      if (window.scrollY > 100 && window.scrollY > lastScroll.current) {
-        navRef.current.classList.add("hide-nav");
-        navRef.current.classList.remove("show-nav");
-      } else {
-        navRef.current.classList.remove("hide-nav");
-        navRef.current.classList.add("show-nav");
-      }
-
-      lastScroll.current = window.scrollY;
-    };
-
     window.addEventListener("scroll", navHandler);
     return () => window.removeEventListener("scroll", navHandler);
   }, []);
@@ -87,17 +87,19 @@ const Navigation = () => {
     <Header ref={navRef}>
       <NavBar>
         <Link href='/'>
-          <a aria-label='cinephiled logo'>
-            <div className='py-3'>
-              <Logo />
-            </div>
-          </a>
+          <div className='py-3' aria-label='cinephiled logo'>
+            <Logo />
+          </div>
         </Link>
 
         <NavLinks>
           {navLinks.map(({ text, link }) => (
             <Link href={link} key={text}>
-              <a className={`link ${router.asPath === link ? "active" : ""}`}>{text}</a>
+              <div
+                className={`link ${router.asPath === link ? "active" : ""}`}
+                aria-label={`go to ${text} page`}>
+                {text}
+              </div>
             </Link>
           ))}
 
@@ -117,7 +119,7 @@ const Navigation = () => {
 
           <HamburgerIcon
             onClick={hamburgerHandler}
-            active={showHamburgerMenu}
+            $active={showHamburgerMenu}
             key='hamburger-menu'
           />
         </MobileNav>
@@ -139,11 +141,11 @@ const Navigation = () => {
             <div className='menu-wrapper'>
               {navLinks.map(({ text, link }) => (
                 <Link href={link} key={text}>
-                  <a
+                  <div
                     className={`navlink ${router.asPath === link ? "active" : ""}`}
                     onClick={hamburgerHandler}>
                     {text}
-                  </a>
+                  </div>
                 </Link>
               ))}
             </div>

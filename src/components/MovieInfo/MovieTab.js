@@ -44,14 +44,14 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
     <Fragment>
       <Tabs tabList={tabList} currentTab={activeTab} styling={{ tabStyling }}>
         {tabList.map(({ key, name, svg }) => (
-          <TabSelectionTitle key={key} onClick={() => setTab(key)} active={activeTab === key}>
+          <TabSelectionTitle key={key} onClick={() => setTab(key)} $active={activeTab === key}>
             <TabIcon>{svg(key === activeTab)}</TabIcon>
             {name}
           </TabSelectionTitle>
         ))}
       </Tabs>
 
-      <AnimatePresence exitBeforeEnter initial={false}>
+      <AnimatePresence mode='wait' initial={false}>
         {activeTab === "cast" && (
           <motion.div
             key='cast'

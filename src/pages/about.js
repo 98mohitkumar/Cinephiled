@@ -19,9 +19,9 @@ const About = () => {
           <AboutBackground>
             <Image
               src={aboutBackground}
-              layout='fill'
+              fill
               alt='about-cinephiled-background'
-              objectFit='cover'
+              style={{ objectFit: "cover" }}
               priority
             />
           </AboutBackground>

@@ -27,10 +27,13 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: ${(props) => props.theme.fonts.main};
     font-size: 1.25rem;
     background: ${(props) => props.theme.colors.background};
     color: #ddd;
+  }
+
+  .main-wrapper{
+    font-family: ${(props) => props.theme.fonts.main};
   }
 
   h1,h2,h3,h4,h5,h6,button {

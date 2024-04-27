@@ -103,7 +103,6 @@ export const QueryInfoWrapper = styled.div`
 export const QueryReleaseDate = styled.p`
   color: #818181;
   font-size: 1rem;
-  font-family: "Manrope", sans-serif;
   font-weight: 500;
   margin-bottom: 0rem;
 
