@@ -70,7 +70,13 @@ const PersonDetails = ({ details }) => {
                 />
               </HeroImg>
 
-              <SocialMediaLinks links={external_ids} />
+              <SocialMediaLinks
+                links={external_ids}
+                mediaDetails={{
+                  title: details.name,
+                  description: details.biography
+                }}
+              />
             </HeroImgWrapper>
 
             <HeroInfoWrapper className='w-full me-auto max-w-3xl'>

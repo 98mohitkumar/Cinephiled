@@ -283,7 +283,14 @@ const TVDetails = ({
                 </Button>
               </div>
             </div>
-            <SocialMediaLinks links={socialIds} homepage={homepage} />
+            <SocialMediaLinks
+              links={socialIds}
+              homepage={homepage}
+              mediaDetails={{
+                title,
+                overview
+              }}
+            />
           </HeroImgWrapper>
 
           <Gradient />

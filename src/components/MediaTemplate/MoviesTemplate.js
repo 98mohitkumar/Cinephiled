@@ -52,7 +52,7 @@ const MoviesTemplate = ({ movies, creditsPage = false }) => {
                 {creditsPage ? null : <InfoTitle>{title}</InfoTitle>}
                 <ReleaseDate>{getReleaseDate(release_date)}</ReleaseDate>
                 {creditsPage && job?.length > 0 ? (
-                  <p className='text-white text-base mt-1 font-medium'>{job.join(", ")}</p>
+                  <p className='text-neutral-400 text-base font-medium'>{job.join(", ")}</p>
                 ) : null}
               </CardInfo>
             </Cards>

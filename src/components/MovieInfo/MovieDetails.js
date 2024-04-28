@@ -312,7 +312,14 @@ const MovieDetails = ({
             </div>
 
             {/* social media links */}
-            <SocialMediaLinks links={socialIds} homepage={homepage} />
+            <SocialMediaLinks
+              links={socialIds}
+              homepage={homepage}
+              mediaDetails={{
+                title: title,
+                description: overview
+              }}
+            />
           </HeroImgWrapper>
           <Gradient />
 
