@@ -116,7 +116,7 @@ export const framerTabVariants = {
 export const getCleanTitle = (title) => {
   if (!title) return "";
 
-  const stringWithHyphens = title.replace(/[^\w\d]+/g, "-");
+  const stringWithHyphens = title.replace(/[^\w\d\u0080-\uFFFF]+/g, "-");
   return stringWithHyphens.replace(/[-\s]+$/, "");
 };
 

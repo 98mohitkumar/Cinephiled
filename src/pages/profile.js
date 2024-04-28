@@ -8,8 +8,9 @@ const Profile = () => {
 
 Profile.getInitialProps = async (ctx) => {
   const data = await getSession(ctx);
+  const hasTokenExpired = new Date() > new Date(data?.expires);
 
-  if (data) {
+  if (data && !hasTokenExpired) {
     return { signedIn: true };
   } else {
     if (typeof window === "undefined") {

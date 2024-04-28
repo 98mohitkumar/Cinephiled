@@ -54,7 +54,7 @@ const Modal = ({ children, isOpen, closeModal, width, align }) => {
             </motion.div>
           )}
         </AnimatePresence>,
-        document?.body
+        document.querySelector(".main-wrapper") || document.body
       )}
     </Fragment>
   );
