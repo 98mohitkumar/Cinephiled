@@ -44,10 +44,10 @@ export const ProfileAvatar = styled.div`
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: ${({ avatar }) =>
-      avatar.type === "tmdb"
-        ? `url(https://www.themoviedb.org/t/p/w100_and_h100_face${avatar.avatar})`
-        : `url(https://api.dicebear.com/6.x/bottts/svg?seed=${avatar.avatar})`}
+  background: ${({ $avatar }) =>
+      $avatar.type === "tmdb"
+        ? `url(https://www.themoviedb.org/t/p/w100_and_h100_face${$avatar.avatar})`
+        : `url(https://api.dicebear.com/6.x/bottts/svg?seed=${$avatar.avatar})`}
     center center / contain;
   filter: drop-shadow(
     0px 0px 5px 2px hsla(0, 0%, 0%, 0.14),

@@ -77,7 +77,7 @@ const Profile = () => {
             <div className='BG' />
             <div className='on-top'>
               <div className='profile flex items-center justify-center flex-col'>
-                <ProfileAvatar avatar={userAvatar} />
+                <ProfileAvatar $avatar={userAvatar} />
                 <div className='text-center'>
                   <h4 className='font-bold text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] leading-snug'>
                     {userInfo?.name}
