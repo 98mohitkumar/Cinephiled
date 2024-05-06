@@ -288,7 +288,7 @@ const TVDetails = ({
               homepage={homepage}
               mediaDetails={{
                 title,
-                overview
+                description: overview
               }}
             />
           </HeroImgWrapper>
