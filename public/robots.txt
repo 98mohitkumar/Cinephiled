@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /movies/
+Disallow: /tv/
+Disallow: /person/

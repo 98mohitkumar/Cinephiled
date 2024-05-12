@@ -312,7 +312,7 @@ export const SocialMediaLinksWrapper = styled.div`
   width: 17rem;
   height: 45px;
   color: #ebebeb;
-  display: ${({ $hide }) => ($hide ? "none" : "flex")};
+  display: flex;
   justify-content: center;
   align-items: center;
   padding: 0.25rem;

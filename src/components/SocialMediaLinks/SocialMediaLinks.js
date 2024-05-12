@@ -12,8 +12,6 @@ const SocialMediaLinks = ({ links, homepage, mediaDetails }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
   const { isToastVisible, showToast, toastMessage } = useToast();
 
-  const display = !links?.instagram_id && !links?.twitter_id && !homepage;
-
   const shareHandler = (e) => {
     e.preventDefault();
 
@@ -43,7 +41,7 @@ const SocialMediaLinks = ({ links, homepage, mediaDetails }) => {
   };
 
   return (
-    <SocialMediaLinksWrapper $hide={display}>
+    <SocialMediaLinksWrapper>
       {links?.instagram_id && (
         <a
           href={`https://instagram.com/${links?.instagram_id}`}
