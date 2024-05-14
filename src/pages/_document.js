@@ -15,6 +15,11 @@ export default class MyDocument extends Document {
           <meta property='og:type' content='website' />
           <meta property='twitter:card' content='summary_large_image' />
 
+          <meta
+            name='google-site-verification'
+            content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION}
+          />
+
           <Script id='ms-clarity' strategy='beforeInteractive'>
             {`(function(c,l,a,r,i,t,y){
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
