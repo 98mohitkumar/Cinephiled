@@ -3,3 +3,5 @@ Disallow: /movies/
 Disallow: /tv/
 Disallow: /person/
 Disallow: /*.jpg
+Disallow: /en/
+Disallow: /m/
