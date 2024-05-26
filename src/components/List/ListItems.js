@@ -4,17 +4,17 @@ import {
   Cards,
   CardsContainerGrid,
   InfoTitle,
-  Rating,
   ReleaseDate
 } from "components/MediaTemplate/TemplateStyles";
 import PlaceholderText from "components/PlaceholderText";
+import RatingTag from "components/RatingTag/RatingTag";
 import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { getCleanTitle, getRating, getReleaseDate } from "src/utils/helper";
+import { getCleanTitle, getReleaseDate } from "src/utils/helper";
 
 const ListItems = ({ listItems, id }) => {
   const { list: infiniteQueryListMedia } = useInfiniteQuery({
@@ -70,9 +70,7 @@ const ListItems = ({ listItems, id }) => {
                           blurDataURL={blurPlaceholder}
                         />
                       </CardImg>
-                      <Rating className='flex justify-center items-center'>
-                        {getRating(vote_average)}
-                      </Rating>
+                      <RatingTag rating={vote_average} />
                     </div>
                   </Link>
                 </motion.div>

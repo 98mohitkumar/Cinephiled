@@ -9,6 +9,7 @@
     "lint-fix": "eslint --fix --ext .js,.jsx ."
   },
   "dependencies": {
+    "@suyalcinkaya/gauge": "^0.1.0",
     "country-to-currency": "^1.0.3",
     "currency-symbol-map": "^5.0.1",
     "extract-colors": "^4.0.2",

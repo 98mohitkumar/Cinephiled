@@ -3,15 +3,15 @@ import {
   CardInfo,
   Cards,
   InfoTitle,
-  Rating,
   ReleaseDate
 } from "components/MediaTemplate/TemplateStyles";
+import RatingTag from "components/RatingTag/RatingTag";
 import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillStar } from "react-icons/ai";
-import { getCleanTitle, getRating, getReleaseDate } from "src/utils/helper";
+import { getCleanTitle, getReleaseDate } from "src/utils/helper";
 import { RatingOverlay } from "./ProfilePageStyles";
 
 const MediaCard = ({ data, link, children, rating, recommendation }) => {
@@ -46,11 +46,7 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
                 </RatingOverlay>
               )}
             </CardImg>
-            {recommendation && (
-              <Rating className='flex justify-center items-center'>
-                {getRating(data?.vote_average)}
-              </Rating>
-            )}
+            {recommendation && <RatingTag rating={data?.vote_average} />}
           </div>
         </Link>
       </motion.div>

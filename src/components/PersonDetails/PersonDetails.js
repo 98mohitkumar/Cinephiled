@@ -14,7 +14,7 @@ import {
   HeroImg,
   HeroImgWrapper
 } from "styles/GlobalComponents";
-import { Bio, Details } from "./PersonDetails.styles";
+import { Bio, Details } from "./PersonDetailsStyles";
 import PersonPageTab from "./PersonPageTab";
 
 const PersonDetails = ({ details }) => {

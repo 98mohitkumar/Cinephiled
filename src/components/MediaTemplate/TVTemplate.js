@@ -1,13 +1,13 @@
+import RatingTag from "components/RatingTag/RatingTag";
 import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { getCleanTitle, getRating, getReleaseDate } from "src/utils/helper";
+import { getCleanTitle, getReleaseDate } from "src/utils/helper";
 import {
   CardsContainerGrid,
   Cards,
   CardImg,
-  Rating,
   CardInfo,
   InfoTitle,
   ReleaseDate
@@ -42,9 +42,7 @@ const TVTemplate = ({ TV, creditsPage = false }) => {
                         blurDataURL={blurPlaceholder}
                       />
                     </CardImg>
-                    <Rating className='flex justify-center items-center'>
-                      {getRating(vote_average)}
-                    </Rating>
+                    <RatingTag rating={vote_average} />
                   </div>
                 </Link>
               </motion.div>

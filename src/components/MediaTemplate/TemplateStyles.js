@@ -77,26 +77,3 @@ export const ReleaseDate = styled.p`
     font-size: 14px;
   }
 `;
-
-export const Rating = styled.div`
-  position: absolute;
-  height: 48px;
-  width: 48px;
-  border-radius: 50%;
-  background-color: #ddd;
-  color: #212121;
-  font-family: ${(props) => props.theme.fonts.montserrat};
-  font-weight: 600;
-  font-size: 0.9rem;
-  border: 5px solid #121212;
-  right: 16px;
-  bottom: -22px;
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    height: 40px;
-    width: 40px;
-    right: 12px;
-    bottom: -22px;
-    font-size: 0.75rem;
-  }
-`;

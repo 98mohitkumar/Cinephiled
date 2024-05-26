@@ -294,14 +294,6 @@ export const HeroImgWrapper = styled.div`
     grid-template-columns: 192px;
     place-items: flex-end flex-start;
     gap: 1.5rem;
-
-    & > div:first-child {
-      grid-column: 1 / span 2;
-
-      @media only ${(props) => props.theme.breakpoints.sm} {
-        grid-column: 1 / 2;
-      }
-    }
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
