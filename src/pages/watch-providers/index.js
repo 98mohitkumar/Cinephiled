@@ -180,11 +180,13 @@ export const getServerSideProps = async ({ req, query }) => {
       props: {
         error: false,
         regions:
-          regions?.results.map(({ iso_3166_1, english_name }) => ({
-            key: iso_3166_1,
-            niceName: english_name,
-            value: `${english_name} (${iso_3166_1})`
-          })) || [],
+          regions?.results
+            .map(({ iso_3166_1, english_name }) => ({
+              key: iso_3166_1,
+              niceName: english_name,
+              value: `${english_name} (${iso_3166_1})`
+            }))
+            .sort((a, b) => a.niceName.localeCompare(b.niceName)) || [],
         movieProviders: movieProviders?.results || [],
         tvProviders: tvProviders?.results || [],
         selectedRegion,
