@@ -50,9 +50,9 @@ const WatchProviders = ({
     }
   };
 
-  const currentRegionName = regions.find(({ key }) =>
-    [selectedRegion, defaultRegion].includes(key)
-  )?.niceName;
+  const currentRegionName =
+    regions.find(({ key }) => key === selectedRegion)?.niceName ||
+    regions.find(({ key }) => key === defaultRegion)?.niceName;
 
   return (
     <Fragment>
