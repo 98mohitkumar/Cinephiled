@@ -4,6 +4,7 @@ import DominantColor from "components/DominantColor/DominantColor";
 import MetaWrapper from "components/MetaWrapper";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Posters from "components/Posters/Posters";
+import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import { SeasonsRelease } from "components/TVInfo/TVStyles";
 import { motion } from "framer-motion";
 import { apiEndpoints, blurPlaceholder } from "globals/constants";
@@ -122,9 +123,20 @@ const Seasons = ({
                     <h3 className='font-semibold text-[1.25rem]'>{getRuntime(totalRuntime)}</h3>
                   </TrWrapper>
 
+                  <SocialMediaLinks
+                    links={{}}
+                    homepage={null}
+                    mediaDetails={{
+                      title: seasonName,
+                      description: overview
+                    }}
+                    className='!justify-start'
+                  />
+
                   {overview && <SeasonCommonOverview>{overview}</SeasonCommonOverview>}
                 </div>
               </SeasonShowcaseWrapper>
+
               {episodes?.length > 0 && (
                 <SeasonEpisodesWrapper>
                   <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 font-bold block mb-6'>

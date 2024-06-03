@@ -4,6 +4,7 @@ import { CastGrid, CastImg, CastWrapper } from "components/Cast/CastStyles";
 import DominantColor from "components/DominantColor/DominantColor";
 import MetaWrapper from "components/MetaWrapper";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import { SeasonsRelease } from "components/TVInfo/TVStyles";
 import { motion } from "framer-motion";
 import { apiEndpoints, blurPlaceholder } from "globals/constants";
@@ -118,6 +119,16 @@ const Episode = ({
 
                     <Span className='font-semibold text-lg'>{getRuntime(runtime)}</Span>
                   </TrWrapper>
+
+                  <SocialMediaLinks
+                    links={{}}
+                    homepage={null}
+                    mediaDetails={{
+                      title: name,
+                      description: overview
+                    }}
+                    className='!justify-start'
+                  />
 
                   {overview ? <SeasonCommonOverview>{overview}</SeasonCommonOverview> : null}
                 </div>

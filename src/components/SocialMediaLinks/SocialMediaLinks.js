@@ -8,7 +8,7 @@ import { MdShare } from "react-icons/md";
 import { copyToClipboard } from "src/utils/helper";
 import { Button, SocialMediaLinksWrapper } from "styles/GlobalComponents";
 
-const SocialMediaLinks = ({ links, homepage, mediaDetails }) => {
+const SocialMediaLinks = ({ links, homepage, mediaDetails, ...props }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
   const { isToastVisible, showToast, toastMessage } = useToast();
 
@@ -41,7 +41,7 @@ const SocialMediaLinks = ({ links, homepage, mediaDetails }) => {
   };
 
   return (
-    <SocialMediaLinksWrapper>
+    <SocialMediaLinksWrapper {...props}>
       {links?.instagram_id && (
         <a
           href={`https://instagram.com/${links?.instagram_id}`}
