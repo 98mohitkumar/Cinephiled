@@ -5,7 +5,7 @@ const Breadcrumbs = ({ links }) => {
     <nav className='flex mb-4' aria-label='Breadcrumb'>
       <ol className='inline-flex items-center gap-2 flex-wrap'>
         {links?.map(({ href, label }, index) => (
-          <li className='inline-flex items-center gap-2' key={index}>
+          <li className='inline-flex items-baseline gap-2' key={index}>
             <Link href={href} passHref>
               <p
                 className={`inline-flex items-center text-sm sm:text-base font-semibold hover:text-white transition-colors ${
