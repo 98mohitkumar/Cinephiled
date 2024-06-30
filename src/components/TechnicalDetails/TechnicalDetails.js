@@ -29,11 +29,13 @@ const TechnicalDetails = ({ data }) => {
           <div className='overflow-clip'>
             {tableItems.map((item) => (
               <div
-                className='flex items-center pb-3 mb-3 gap-x-4 gap-y-2 border-b border-neutral-600 last:border-none last:p-0 last:m-0 flex-wrap'
+                className='flex items-center pb-3 mb-3 gap-x-4 gap-y-1 border-b border-neutral-600 last:border-none last:p-0 last:m-0 flex-wrap'
                 key={item.id}>
-                <span className='text-base font-semibold text-neutral-400 shrink-0'>
-                  {item?.rowTitle}
-                </span>
+                <div>
+                  <span className='text-base font-semibold text-neutral-400 shrink-0'>
+                    {item?.rowTitle}
+                  </span>
+                </div>
 
                 {item?.listContent && item.listContent?.length > 0 ? (
                   <div>
