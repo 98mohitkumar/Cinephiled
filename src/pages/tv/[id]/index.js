@@ -35,7 +35,8 @@ const TvShow = ({
   recommendations,
   homepage,
   tagline,
-  trailerLink
+  trailerLink,
+  technicalDetails
 }) => {
   return (
     <Fragment>
@@ -68,7 +69,8 @@ const TvShow = ({
               crewData,
               trailerLink,
               homepage,
-              releaseYear
+              releaseYear,
+              technicalDetails
             }}
           />
 
@@ -134,6 +136,20 @@ TvShow.getInitialProps = async (ctx) => {
       (item) => item?.site === "YouTube" && item?.type === "Trailer"
     );
 
+    const imdbId = tvData?.external_ids?.imdb_id;
+
+    const technicalDetails = await fetch(apiEndpoints.cfWorker, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: imdbId
+      })
+    });
+
+    const technicalDetailsData = await technicalDetails.json();
+
     return {
       id: tvData?.id,
       title: tvData?.name,
@@ -167,6 +183,7 @@ TvShow.getInitialProps = async (ctx) => {
       backdrops: tvData?.images?.backdrops ?? [],
       posters: tvData?.images?.posters ?? [],
       recommendations: tvData?.recommendations?.results,
+      technicalDetails: technicalDetailsData || null,
       error: false,
       tvData
     };

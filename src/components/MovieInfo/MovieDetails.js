@@ -5,6 +5,7 @@ import { useModal } from "components/Modal/Modal";
 import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
 import RatingModal from "components/RatingModal/RatingModal";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
+import TechnicalDetails from "components/TechnicalDetails/TechnicalDetails";
 import Toast, { useToast } from "components/Toast/Toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
@@ -64,7 +65,8 @@ const MovieDetails = ({
     moviePoster,
     crewData,
     socialIds,
-    homepage
+    homepage,
+    technicalDetails
   },
   easter
 }) => {
@@ -232,6 +234,8 @@ const MovieDetails = ({
                   </Button>
                 </a>
               )}
+
+              <TechnicalDetails data={technicalDetails} />
 
               <div className='mb-3'>
                 <AddToListModal mediaType='movie' mediaId={id} />
