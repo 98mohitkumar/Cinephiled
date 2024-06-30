@@ -38,7 +38,9 @@ const TechnicalDetails = ({ data }) => {
                 {item?.listContent && item.listContent?.length > 0 ? (
                   <div>
                     {item.listContent.map(({ text, subText }, index, arr) => (
-                      <span key={index} className='text-white text-base'>
+                      <span
+                        key={index}
+                        className='text-white text-base whitespace-normal inline-block'>
                         {text} {subText || ""}
                         {arr.length - 1 > index && <span className='mx-2 text-xl'>&middot;</span>}
                       </span>
