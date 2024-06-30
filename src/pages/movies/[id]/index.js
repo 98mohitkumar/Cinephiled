@@ -36,6 +36,7 @@ const Movie = ({
   backdrops,
   posters,
   recommendations,
+  technicalDetails,
   error
 }) => {
   const [showEaster, setShowEaster] = useState(false);
@@ -102,7 +103,8 @@ const Movie = ({
               moviePoster,
               crewData,
               socialIds,
-              homepage
+              homepage,
+              technicalDetails
             }}
           />
 
@@ -169,6 +171,20 @@ Movie.getInitialProps = async (ctx) => {
       ...movieDetails?.credits?.crew?.filter((credit) => credit?.job === "Characters").slice(0, 2)
     ];
 
+    const imdbId = movieDetails?.external_ids?.imdb_id;
+
+    const technicalDetails = await fetch(apiEndpoints.cfWorker, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: imdbId
+      })
+    });
+
+    const technicalDetailsData = await technicalDetails.json();
+
     return {
       id: movieDetails?.id,
       title: movieDetails?.title,
@@ -199,6 +215,7 @@ Movie.getInitialProps = async (ctx) => {
       backdrops: movieDetails?.images?.backdrops ?? [],
       posters: movieDetails?.images?.posters ?? [],
       recommendations: movieDetails?.recommendations?.results,
+      technicalDetails: technicalDetailsData || null,
       error: false
     };
   } catch {
