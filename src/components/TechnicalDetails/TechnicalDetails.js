@@ -24,7 +24,7 @@ const TechnicalDetails = ({ data }) => {
         <FaChevronRight className='text-black text-2xl' size='16' />
       </Button>
 
-      <Modal isOpen={isModalVisible} closeModal={closeModal} align='items-start'>
+      <Modal isOpen={isModalVisible} closeModal={closeModal} align='items-start' width='max-w-2xl'>
         <div className='flex flex-col gap-6'>
           <div className='overflow-clip'>
             {tableItems.map((item) => (
@@ -39,13 +39,18 @@ const TechnicalDetails = ({ data }) => {
 
                 {item?.listContent && item.listContent?.length > 0 ? (
                   <div>
-                    {item.listContent.map(({ text, subText }, index, arr) => (
-                      <span
-                        key={index}
-                        className='text-white text-base whitespace-normal inline-block'>
-                        {text} {subText || ""}
-                        {arr.length - 1 > index && <span className='mx-2 text-xl'>&middot;</span>}
-                      </span>
+                    {item.listContent.map(({ text, subText }, index) => (
+                      <Fragment key={text}>
+                        <span className='text-white text-base inline'>{text}</span>{" "}
+                        {subText && (
+                          <span
+                            key={subText}
+                            className='text-neutral-400 text-base inline'>{` ${subText}`}</span>
+                        )}
+                        {index < item.listContent.length - 1 && (
+                          <span className='whitespace-pre inline-block text-white'>{` • `}</span>
+                        )}
+                      </Fragment>
                     ))}
                   </div>
                 ) : (
