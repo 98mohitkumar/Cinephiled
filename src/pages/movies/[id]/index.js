@@ -27,7 +27,6 @@ const Movie = ({
   homepage,
   status,
   language,
-  country,
   budget,
   revenue,
   cast,
@@ -116,7 +115,6 @@ const Movie = ({
               revenue,
               language
             }}
-            country={country}
           />
 
           {/* movie tabs */}
