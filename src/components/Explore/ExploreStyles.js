@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const PseudoTrack = styled.div`
   background-color: rgba(255, 255, 255, 0.2);
   height: 2px;
-  width: calc(100% - 32vw);
+  width: calc(100% - 32.1vw);
   margin: auto;
   position: relative;
   top: -4px;
@@ -52,6 +52,7 @@ export const GenreBG = styled.a`
   transition: letter-spacing 0.325s cubic-bezier(0.77, 0, 0.175, 1);
   background: ${({ theme }) =>
     `linear-gradient(200deg,${theme.colors.accent1}, ${theme.colors.accent2}, ${theme.colors.accent3})`};
+  overflow: hidden;
 
   .title {
     text-align: center;
