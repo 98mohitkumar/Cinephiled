@@ -139,7 +139,7 @@ const Movie = ({
   );
 };
 
-Movie.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   try {
     const [movieResponse, languagesResponse] = await Promise.all([
       fetch(apiEndpoints.movie.movieDetails(ctx.query.id), fetchOptions()),
@@ -184,41 +184,45 @@ Movie.getInitialProps = async (ctx) => {
     const technicalDetailsData = await technicalDetails.json();
 
     return {
-      id: movieDetails?.id,
-      title: movieDetails?.title,
-      releaseYear,
-      releaseDate,
-      genres: movieDetails?.genres,
-      runtime: movieDetails?.runtime,
-      tagline: movieDetails?.tagline,
-      overview: movieDetails?.overview,
-      rating: movieDetails?.vote_average,
-      moviePoster: movieDetails?.poster_path,
-      backdropPath: movieDetails?.backdrop_path,
-      crewData,
-      trailerLink: trailers?.key ?? "",
-      socialIds: movieDetails?.external_ids,
-      homepage: movieDetails?.homepage,
-      status,
-      language: language?.english_name || language?.name || "TBA",
-      country,
-      budget: movieDetails?.budget,
-      revenue: movieDetails?.revenue,
-      cast: {
-        totalCount: movieDetails?.credits?.cast?.length,
-        data: movieDetails?.credits?.cast?.slice(0, 15)
-      },
-      isEasterMovie: movieDetails?.id === 345911,
-      reviews: movieDetails?.reviews?.results ?? [],
-      backdrops: movieDetails?.images?.backdrops ?? [],
-      posters: movieDetails?.images?.posters ?? [],
-      recommendations: movieDetails?.recommendations?.results,
-      technicalDetails: technicalDetailsData || null,
-      error: false
+      props: {
+        id: movieDetails?.id,
+        title: movieDetails?.title,
+        releaseYear,
+        releaseDate,
+        genres: movieDetails?.genres,
+        runtime: movieDetails?.runtime,
+        tagline: movieDetails?.tagline,
+        overview: movieDetails?.overview,
+        rating: movieDetails?.vote_average,
+        moviePoster: movieDetails?.poster_path,
+        backdropPath: movieDetails?.backdrop_path,
+        crewData,
+        trailerLink: trailers?.key ?? "",
+        socialIds: movieDetails?.external_ids,
+        homepage: movieDetails?.homepage,
+        status,
+        language: language?.english_name || language?.name || "TBA",
+        country,
+        budget: movieDetails?.budget,
+        revenue: movieDetails?.revenue,
+        cast: {
+          totalCount: movieDetails?.credits?.cast?.length,
+          data: movieDetails?.credits?.cast?.slice(0, 15)
+        },
+        isEasterMovie: movieDetails?.id === 345911,
+        reviews: movieDetails?.reviews?.results ?? [],
+        backdrops: movieDetails?.images?.backdrops ?? [],
+        posters: movieDetails?.images?.posters ?? [],
+        recommendations: movieDetails?.recommendations?.results,
+        technicalDetails: technicalDetailsData || null,
+        error: false
+      }
     };
   } catch {
     return {
-      error: true
+      props: {
+        error: true
+      }
     };
   }
 };

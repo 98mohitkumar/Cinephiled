@@ -127,7 +127,7 @@ export const apiEndpoints = {
       `${baseUrlV4}/list/${id}/item_status?media_id=${mediaId}&media_type=${mediaType}`
   },
   language: `${baseUrlV3}/configuration/languages`,
-  cfWorker: "https://imdbtechnical.98mohitkumar.workers.dev"
+  cfWorker: `https://imdbtechnical.98mohitkumar.workers.dev?secret=${process.env.CF_WORKER_SECRET}`
 };
 
 export const blurPlaceholder =

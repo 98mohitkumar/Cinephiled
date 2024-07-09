@@ -104,7 +104,7 @@ const TvShow = ({
   );
 };
 
-TvShow.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   try {
     const [tvResponse, languagesResponse] = await Promise.all([
       fetch(apiEndpoints.tv.tvDetails(ctx.query.id), fetchOptions()),
@@ -151,44 +151,46 @@ TvShow.getInitialProps = async (ctx) => {
     const technicalDetailsData = await technicalDetails.json();
 
     return {
-      id: tvData?.id,
-      title: tvData?.name,
-      airDate: tvData?.first_air_date,
-      releaseYear,
-      genres: tvData?.genres,
-      tagline: tvData?.tagline,
-      overview: tvData?.overview,
-      rating: tvData?.vote_average,
-      posterPath: tvData?.poster_path,
-      backdropPath: tvData?.backdrop_path,
-      crewData,
-      trailerLink: trailer?.key ?? "",
-      socialIds: tvData?.external_ids,
-      homepage: tvData?.homepage,
-      status,
-      language: language?.english_name || language?.name || "TBA",
-      network,
-      type: tvData?.type,
-      endYear,
-      cast: {
-        totalCount: tvData?.aggregate_credits?.cast?.length,
-        data: mergeEpisodeCount(
-          tvData?.aggregate_credits?.cast
-            ?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
-            .flat()
-        ).slice(0, 15)
-      },
-      seasons: tvData?.seasons,
-      reviews: tvData?.reviews?.results ?? [],
-      backdrops: tvData?.images?.backdrops ?? [],
-      posters: tvData?.images?.posters ?? [],
-      recommendations: tvData?.recommendations?.results,
-      technicalDetails: technicalDetailsData || null,
-      error: false,
-      tvData
+      props: {
+        id: tvData?.id,
+        title: tvData?.name,
+        airDate: tvData?.first_air_date,
+        releaseYear,
+        genres: tvData?.genres,
+        tagline: tvData?.tagline,
+        overview: tvData?.overview,
+        rating: tvData?.vote_average,
+        posterPath: tvData?.poster_path,
+        backdropPath: tvData?.backdrop_path,
+        crewData,
+        trailerLink: trailer?.key ?? "",
+        socialIds: tvData?.external_ids,
+        homepage: tvData?.homepage,
+        status,
+        language: language?.english_name || language?.name || "TBA",
+        network,
+        type: tvData?.type,
+        endYear,
+        cast: {
+          totalCount: tvData?.aggregate_credits?.cast?.length,
+          data: mergeEpisodeCount(
+            tvData?.aggregate_credits?.cast
+              ?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
+              .flat()
+          ).slice(0, 15)
+        },
+        seasons: tvData?.seasons,
+        reviews: tvData?.reviews?.results ?? [],
+        backdrops: tvData?.images?.backdrops ?? [],
+        posters: tvData?.images?.posters ?? [],
+        recommendations: tvData?.recommendations?.results,
+        technicalDetails: technicalDetailsData || null,
+        error: false,
+        tvData
+      }
     };
   } catch {
-    return { error: true };
+    return { props: { error: true } };
   }
 };
 
