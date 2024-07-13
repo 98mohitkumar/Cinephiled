@@ -6,7 +6,7 @@ import { Button } from "styles/GlobalComponents";
 const StreamingProvides = () => {
   return (
     <div className='rounded-xl flex max-lg:flex-col outline outline-1 outline-neutral-700 group overflow-hidden bg-neutral-900'>
-      <div className='relative min-w-[70%] min-h-[200px] lg:min-h-[320px] overflow-hidden'>
+      <div className='relative min-w-[70%] min-h-[200px] lg:min-h-[320px] aspect-[3.52/1] overflow-hidden'>
         <Image
           src={WatchProvidersImage}
           alt='Watch Providers'

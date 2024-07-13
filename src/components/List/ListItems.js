@@ -52,8 +52,7 @@ const ListItems = ({ listItems, id }) => {
                     href={`/${media_type === "tv" ? "tv" : "movies"}/${id}-${getCleanTitle(
                       title || name
                     )}`}
-                    passHref
-                    scroll={false}>
+                    passHref>
                     <div className='relative'>
                       <CardImg>
                         <Image

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 const useTabs = ({ tabLocation, defaultState = "" }) => {
   const [activeTab, setActiveTab] = useState(defaultState);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const tabStates = JSON.parse(localStorage.getItem("tabStates")) || {};
 
     if (tabStates[tabLocation]) {

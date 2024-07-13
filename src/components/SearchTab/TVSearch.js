@@ -59,7 +59,7 @@ const TVSearch = ({ searchQuery, tvRes }) => {
           {(sortBy ? getRenderList(cleanedItems) : cleanedItems)?.map(
             ({ id, name, poster_path, first_air_date, overview }) => (
               <motion.div whileTap={{ scale: 0.98 }} key={id}>
-                <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref scroll={false}>
+                <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref>
                   <QueryContainer>
                     <QueryImg className='relative text-center'>
                       <Image

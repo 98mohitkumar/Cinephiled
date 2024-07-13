@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const PostersWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   place-items: center;
   gap: clamp(20px, 3vw, 32px);
 

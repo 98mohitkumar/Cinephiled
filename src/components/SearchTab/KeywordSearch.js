@@ -19,11 +19,7 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
       {cleanedItems?.length > 0 ? (
         <SearchResultsContainer className='max-sm:pt-6'>
           {cleanedItems.map((item) => (
-            <Link
-              key={item.id}
-              href={`/keywords/${item.id}-${getCleanTitle(item.name)}`}
-              passHref
-              scroll={false}>
+            <Link key={item.id} href={`/keywords/${item.id}-${getCleanTitle(item.name)}`} passHref>
               <Keyword className='leading-tight'>{item.name}</Keyword>
             </Link>
           ))}

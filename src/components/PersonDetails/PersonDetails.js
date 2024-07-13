@@ -6,7 +6,7 @@ import { PostersImg, PostersWrapper } from "components/Posters/PostersStyles";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { getGender } from "src/utils/helper";
 import {
   DetailsHeroWrap,
@@ -18,6 +18,8 @@ import { Bio, Details } from "./PersonDetailsStyles";
 import PersonPageTab from "./PersonPageTab";
 
 const PersonDetails = ({ details }) => {
+  const [isOverflowing, setIsOverflowing] = useState(false);
+  const postersWrapperRef = useRef(null);
   const { external_ids, images } = details;
   const casting =
     details?.combined_credits?.cast?.map((item) => ({
@@ -47,6 +49,28 @@ const PersonDetails = ({ details }) => {
       return diedAt;
     }
   };
+
+  const imageCount = images?.profiles?.length;
+
+  useEffect(() => {
+    const checkOverFlow = () => {
+      if (postersWrapperRef.current) {
+        const { scrollWidth, clientWidth } = postersWrapperRef.current;
+
+        if (scrollWidth > clientWidth) {
+          setIsOverflowing(true);
+        } else {
+          setIsOverflowing(false);
+        }
+      }
+    };
+
+    checkOverFlow();
+    window.addEventListener("resize", checkOverFlow);
+    return () => {
+      window.removeEventListener("resize", checkOverFlow);
+    };
+  }, [imageCount]);
 
   return (
     <div className='mb-auto'>
@@ -165,15 +189,16 @@ const PersonDetails = ({ details }) => {
             </div>
           )}
 
-          {images?.profiles?.length > 1 ? (
+          {imageCount > 1 ? (
             <Fragment>
               <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-14 mb-6 font-semibold block'>
-                Media ({images?.profiles?.length})
+                Media ({imageCount})
               </span>
 
               <PostersWrapper
                 className='profile-media-grid pb-8'
-                style={{ "--colCount": images?.profiles?.length }}>
+                style={{ "--colCount": imageCount }}
+                ref={postersWrapperRef}>
                 {images?.profiles.map((item, i) => (
                   <PostersImg key={i} className='relative text-center'>
                     <Image
@@ -190,7 +215,7 @@ const PersonDetails = ({ details }) => {
                 ))}
               </PostersWrapper>
 
-              {images?.profiles?.length >= 8 ? <PseudoTrack /> : null}
+              {isOverflowing ? <PseudoTrack /> : null}
             </Fragment>
           ) : null}
         </div>

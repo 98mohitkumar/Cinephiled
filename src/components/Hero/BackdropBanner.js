@@ -3,12 +3,10 @@ import Image from "next/image";
 import { Banner } from "./HeroStyles";
 
 const BackdropBanner = ({ posters }) => {
-  posters.sort(() => Math.random() - 0.5);
-
   return (
     <Banner>
-      {posters.map(({ src, id }) => (
-        <div key={id} className='relative aspect-[0.666]'>
+      {posters.map(({ src, id }, index) => (
+        <div key={`${id}-${index}`} className='relative aspect-[0.666]'>
           <Image
             fill
             style={{ objectFit: "cover" }}
@@ -16,7 +14,7 @@ const BackdropBanner = ({ posters }) => {
             loading='eager'
             blurDataURL={blurPlaceholder}
             src={`https://image.tmdb.org/t/p/w185${src}`}
-            alt={`poster-${id}`}
+            alt='poster'
           />
         </div>
       ))}

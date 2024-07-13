@@ -65,6 +65,9 @@ const nextConfig = {
     ],
     unoptimized: true
   },
+  experimental: {
+    scrollRestoration: true
+  },
   compiler: {
     styledComponents: true
   }

@@ -99,10 +99,7 @@ const Lists = ({ error, lists }) => {
                               transition: { duration: 0.1 }
                             }}
                             whileTap={{ scale: 0.95 }}>
-                            <Link
-                              href={`lists/${id}-${getCleanTitle(name)}`}
-                              passHref
-                              scroll={false}>
+                            <Link href={`lists/${id}-${getCleanTitle(name)}`} passHref>
                               <RecommendedImg className='relative text-center'>
                                 <Image
                                   src={

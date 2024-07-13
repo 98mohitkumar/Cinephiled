@@ -52,6 +52,7 @@ export const Selection = styled.div`
   z-index: 5;
   text-align: center;
   transition: color 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+  user-select: none;
 
   @media only ${(props) => props.theme.breakpoints.sm} {
     padding: 0.2rem;
@@ -114,6 +115,7 @@ export const TabSelector = styled.div`
   z-index: 5;
   transition: color 0.4s cubic-bezier(0.77, 0, 0.18, 1);
   min-width: 120px;
+  user-select: none;
 
   &:last-of-type {
     min-width: 220px;

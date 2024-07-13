@@ -346,8 +346,7 @@ const MovieDetails = ({
                       href={`/genre/${
                         item.id.toString() + "-" + item.name.replaceAll(" ", "-")
                       }/movies`}
-                      passHref
-                      scroll={false}>
+                      passHref>
                       <Rounded className={genres.length == i + 1 ? "sep" : ""}>{item.name}</Rounded>
                     </Link>
                   ))}

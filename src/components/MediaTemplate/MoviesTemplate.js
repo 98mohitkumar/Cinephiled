@@ -25,7 +25,7 @@ const MoviesTemplate = ({ movies, creditsPage = false }) => {
                   transition: { duration: 0.1 }
                 }}
                 whileTap={{ scale: 0.95 }}>
-                <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref scroll={false}>
+                <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref>
                   <div className='relative'>
                     <CardImg>
                       <Image
@@ -47,10 +47,12 @@ const MoviesTemplate = ({ movies, creditsPage = false }) => {
                 </Link>
               </motion.div>
               <CardInfo>
-                {creditsPage ? null : <InfoTitle>{title}</InfoTitle>}
+                <InfoTitle className={creditsPage ? "leading-6" : ""}>{title}</InfoTitle>
                 <ReleaseDate>{getReleaseDate(release_date)}</ReleaseDate>
                 {creditsPage && job?.length > 0 ? (
-                  <p className='text-neutral-400 text-base font-medium'>{job.join(", ")}</p>
+                  <p className='text-neutral-400 text-base font-medium'>
+                    {[...new Set(job)].join(", ")}
+                  </p>
                 ) : null}
               </CardInfo>
             </Cards>

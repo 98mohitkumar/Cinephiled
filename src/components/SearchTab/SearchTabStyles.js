@@ -136,6 +136,7 @@ export const SortPill = styled.span`
   font-size: clamp(12px, 2.2vw, 14px);
   cursor: pointer;
   transition: background-color 0.3s ease-in;
+  user-select: none;
 
   &:hover {
     background: #303030;

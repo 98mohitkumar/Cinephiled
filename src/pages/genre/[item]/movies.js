@@ -51,7 +51,7 @@ const Movies = ({ renderList, genreName, error, genreId }) => {
                         transition: { duration: 0.1 }
                       }}
                       whileTap={{ scale: 0.95 }}>
-                      <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref scroll={false}>
+                      <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref>
                         <RecommendedImg className='relative text-center'>
                           <Image
                             src={

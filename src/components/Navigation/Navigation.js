@@ -87,7 +87,7 @@ const Navigation = () => {
     <Header ref={navRef}>
       <NavBar>
         <Link href='/'>
-          <div className='py-3' aria-label='cinephiled logo'>
+          <div className='py-3' aria-label='cinephiled logo' role='link'>
             <Logo />
           </div>
         </Link>

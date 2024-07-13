@@ -1,3 +1,4 @@
+import { MAX_WIDTH } from "globals/constants";
 import styled from "styled-components";
 
 export const Header = styled.header`
@@ -198,7 +199,7 @@ export const SearchModal = styled.div`
   width: 100%;
   height: 100vh;
   position: fixed;
-  max-width: 2000px;
+  max-width: ${MAX_WIDTH}px;
   margin: auto;
   top: 70px;
   background: rgb(0 0 0 /0.9);

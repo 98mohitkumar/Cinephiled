@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const BackdropsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
   place-items: center;
   gap: clamp(20px, 3vw, 32px);
 

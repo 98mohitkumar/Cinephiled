@@ -51,7 +51,7 @@ const TvShows = ({ renderList, genreName, error, genreId }) => {
                         transition: { duration: 0.1 }
                       }}
                       whileTap={{ scale: 0.95 }}>
-                      <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref scroll={false}>
+                      <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref>
                         <RecommendedImg className='relative text-center'>
                           <Image
                             src={

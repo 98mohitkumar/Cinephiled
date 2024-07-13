@@ -311,8 +311,7 @@ const TVDetails = ({
                     <Link
                       key={item.id}
                       href={`/genre/${item.id.toString() + "-" + item.name.split(" ").join("")}/tv`}
-                      passHref
-                      scroll={false}>
+                      passHref>
                       <Rounded className={genres.length == i + 1 && "sep"}>{item.name}</Rounded>
                     </Link>
                   ))}

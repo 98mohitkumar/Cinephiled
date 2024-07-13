@@ -347,14 +347,21 @@ export const AboutCreditsWrapper = styled.div`
 `;
 
 export const Loader = styled.div`
-  width: 12vw;
-  aspect-ratio: 1/1;
-  position: absolute;
+  position: fixed;
+  z-index: 9999;
+  background: #121212;
   inset: 0;
   margin: auto;
   display: grid;
   place-items: center;
-  background: Url("/Images/loader.svg") no-repeat center center / contain;
+
+  &::before {
+    content: "";
+    width: max(10vw, 150px);
+    aspect-ratio: 1/1;
+    position: absolute;
+    background: Url("/Images/loader.svg") no-repeat center center / contain;
+  }
 
   &.small {
     width: 100px;
