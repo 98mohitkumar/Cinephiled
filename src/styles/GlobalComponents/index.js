@@ -354,7 +354,7 @@ export const Loader = styled.div`
   margin: auto;
   display: grid;
   place-items: center;
-  background: Url(/Images/Loader.svg) no-repeat center center / contain;
+  background: Url("/Images/loader.svg") no-repeat center center / contain;
 
   &.small {
     width: 100px;
