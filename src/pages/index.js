@@ -79,6 +79,11 @@ export async function getStaticProps() {
       }))
     );
 
+    const extraSet = [...posters].splice(0, 20).map((item) => ({
+      src: item.src,
+      id: item.id + 1000 * 1000
+    }));
+
     return {
       props: {
         popularMovies: popularMovies.results,
@@ -86,7 +91,7 @@ export async function getStaticProps() {
         trendingMovies: trendingMovies.results,
         trendingTv: trendingTv.results,
         error,
-        posters: posters.concat([...posters].splice(0, 20)).sort(() => Math.random() - 0.5)
+        posters: posters.concat(extraSet).sort((a, b) => a.id - b.id)
       },
       revalidate: 3600
     };
