@@ -69,7 +69,7 @@ const List = ({ list, error }) => {
                 className='-z-10'
                 loading='eager'
               />
-              <Gradient className='list backdrop-brightness-50' />
+              <Gradient className='backdrop-brightness-50 z-[-1]' />
             </div>
           )}
 

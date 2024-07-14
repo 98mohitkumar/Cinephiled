@@ -184,7 +184,7 @@ const MovieDetails = ({ movieDetails, easter }) => {
     <Fragment>
       <HeroDetailsContainer className='relative mb-auto'>
         <HeroBgContainer className='absolute'>
-          <HeroBg className='absolute text-center'>
+          <HeroBg className='absolute text-center z-10'>
             <Image
               src={
                 backdropPath
@@ -199,7 +199,9 @@ const MovieDetails = ({ movieDetails, easter }) => {
           </HeroBg>
 
           {/* color gradient overlay */}
-          <DominantColor image={moviePoster} />
+          <DominantColor image={moviePoster} className='z-20' />
+
+          <Gradient className='z-30' />
         </HeroBgContainer>
 
         <DetailsHeroWrap>
@@ -325,7 +327,6 @@ const MovieDetails = ({ movieDetails, easter }) => {
               }}
             />
           </HeroImgWrapper>
-          <Gradient />
 
           {/* right side info */}
           <HeroInfoWrapper className='max-w-5xl'>

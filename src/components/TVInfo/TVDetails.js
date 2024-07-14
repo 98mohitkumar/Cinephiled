@@ -159,7 +159,7 @@ const TVDetails = ({ tvData }) => {
     <Fragment>
       <HeroDetailsContainer className='relative mb-auto'>
         <HeroBgContainer className='absolute'>
-          <HeroBg className='absolute text-center'>
+          <HeroBg className='absolute text-center z-10'>
             <Image
               src={
                 backdropPath
@@ -172,8 +172,12 @@ const TVDetails = ({ tvData }) => {
               priority
             />
           </HeroBg>
-          <DominantColor image={posterPath} />
+
+          <DominantColor image={posterPath} className='z-20' />
+
+          <Gradient className='z-30' />
         </HeroBgContainer>
+
         <DetailsHeroWrap>
           <HeroImgWrapper>
             <HeroImg className='relative text-center'>
@@ -295,8 +299,6 @@ const TVDetails = ({ tvData }) => {
               }}
             />
           </HeroImgWrapper>
-
-          <Gradient />
 
           <HeroInfoWrapper className='max-w-5xl'>
             <HeroInfoTitle className='mb-2'>

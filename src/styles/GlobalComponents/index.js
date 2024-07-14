@@ -174,13 +174,15 @@ export const HeroBgContainer = styled.div`
   inset: 0;
   z-index: -1;
   overflow: hidden;
+  min-height: 400px;
+  isolation: isolate;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    bottom: 320px;
+    bottom: 45%;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    bottom: 50%;
+    bottom: 60%;
   }
 `;
 

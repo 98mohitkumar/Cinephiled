@@ -63,7 +63,7 @@ export const Collection = ({ collectionData, error, movieGenresData, collectionI
         <Fragment>
           <HeroDetailsContainer className='relative mb-auto'>
             <HeroBgContainer className='absolute'>
-              <HeroBg className='absolute text-center'>
+              <HeroBg className='absolute text-center z-10'>
                 <Image
                   src={
                     backdrop_path
@@ -78,7 +78,9 @@ export const Collection = ({ collectionData, error, movieGenresData, collectionI
               </HeroBg>
 
               {/* color gradient overlay */}
-              <DominantColor image={poster_path} />
+              <DominantColor image={poster_path} className='z-20' />
+
+              <Gradient className='z-30' />
             </HeroBgContainer>
 
             <DetailsHeroWrap>
@@ -99,8 +101,6 @@ export const Collection = ({ collectionData, error, movieGenresData, collectionI
                   />
                 </HeroImg>
               </HeroImgWrapper>
-
-              <Gradient />
 
               <HeroInfoWrapper className='max-w-5xl'>
                 <HeroInfoTitle className='mb-2'>{name}</HeroInfoTitle>

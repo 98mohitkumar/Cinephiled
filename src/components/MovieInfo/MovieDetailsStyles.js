@@ -154,17 +154,6 @@ export const Gradient = styled.div`
   position: absolute;
   background: linear-gradient(0deg, #121212 14%, rgba(21, 21, 21, 0.5) 100%);
   inset: 0;
-  z-index: -1;
-
-  &:not(.list) {
-    @media only ${(props) => props.theme.breakpoints.ip} {
-      bottom: 20rem;
-    }
-
-    @media only ${(props) => props.theme.breakpoints.xs} {
-      bottom: 50%;
-    }
-  }
 `;
 
 export const RtoR = styled.div`
