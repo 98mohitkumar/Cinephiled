@@ -83,7 +83,7 @@ export const Collection = ({ collectionData, error, movieGenresData, collectionI
               <Gradient className='z-30' />
             </HeroBgContainer>
 
-            <DetailsHeroWrap>
+            <DetailsHeroWrap className='!gap-y-5'>
               <HeroImgWrapper>
                 <HeroImg className='relative text-center'>
                   <Image

@@ -395,7 +395,7 @@ const MovieDetails = ({ movieDetails, easter }) => {
                     <div className='relative min-w-44 md:min-w-52 lg:min-w-72 aspect-[300/169]'>
                       <div className='absolute -inset-1 bg-gradient-to-l from-neutral-300 to-transparent z-10' />
                       <Image
-                        src={`https://image.tmdb.org/t/p/w300${collection.backdrop_path}`}
+                        src={`https://image.tmdb.org/t/p/w500${collection.backdrop_path}`}
                         alt='collection-poster'
                         fill
                         style={{ objectFit: "cover", zIndex: 1 }}
