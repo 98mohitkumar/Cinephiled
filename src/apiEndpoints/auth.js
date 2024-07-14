@@ -56,7 +56,7 @@ export const useLogout = () => {
   const { userInfo, setUserInfo } = useUserContext();
 
   const logout = async () => {
-    const res = await fetch(
+    await fetch(
       apiEndpoints.auth.accessToken,
       fetchOptions({
         method: "DELETE",
@@ -64,11 +64,9 @@ export const useLogout = () => {
       })
     );
 
-    if (res.ok && res.status === 200) {
-      await signOut({ redirect: false });
-      setUserInfo({});
-      router.push("/login");
-    }
+    await signOut({ redirect: false });
+    setUserInfo({});
+    router.push("/login");
   };
 
   return { logout };
