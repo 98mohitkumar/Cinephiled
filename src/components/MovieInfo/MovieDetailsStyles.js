@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const HeroInfoWrapper = styled.div`
   color: white;
@@ -38,12 +38,6 @@ export const Span = styled.span`
     @media only ${(props) => props.theme.breakpoints.sm} {
       font-size: 14px;
     }
-  }
-
-  &.genre {
-    font-weight: 600;
-    padding-top: clamp(1.5rem, 4vw, 2rem);
-    padding-bottom: clamp(2rem, 4.25vw, 2.5rem);
   }
 
   &.credit {
@@ -160,17 +154,7 @@ export const Gradient = styled.div`
   position: absolute;
   background: linear-gradient(0deg, #121212 14%, rgba(21, 21, 21, 0.5) 100%);
   inset: 0;
-  z-index: -1;
-
-  &:not(.list) {
-    @media only ${(props) => props.theme.breakpoints.ip} {
-      bottom: 20rem;
-    }
-
-    @media only ${(props) => props.theme.breakpoints.xs} {
-      bottom: 50%;
-    }
-  }
+  bottom: -10px;
 `;
 
 export const RtoR = styled.div`
@@ -333,34 +317,38 @@ export const MovieEaster = styled.div`
   background-color: rgb(18 18 18 /1);
   z-index: 10;
 
-  ${(props) =>
-    !props.show
-      ? ` animation: hideEaster 1s ease-in-out forwards;
+  ${({ $show }) =>
+    !$show
+      ? css`
+          animation: hideEaster 1s ease-in-out forwards;
 
-@keyframes hideEaster{
-  from {
-    background-color: rgb(18 18 18 /1);
-    z-index: 10;
-  }
+          @keyframes hideEaster {
+            from {
+              background-color: rgb(18 18 18 /1);
+              z-index: 10;
+            }
 
-  to {
-    background-color: rgb(18 18 18 /0);
-    z-index: -1;
-  }
-}`
-      : ` animation: showEaster 0.5s ease-in-out forwards;
+            to {
+              background-color: rgb(18 18 18 /0);
+              z-index: -1;
+            }
+          }
+        `
+      : css`
+          animation: showEaster 0.5s ease-in-out forwards;
 
-@keyframes showEaster{
-  from {
-    background-color: rgb(18 18 18 /0);
-    z-index: -1;
-  }
+          @keyframes showEaster {
+            from {
+              background-color: rgb(18 18 18 /0);
+              z-index: -1;
+            }
 
-  to {
-    background-color: rgb(18 18 18 /1);
-    z-index: 10;
-  }
-}`};
+            to {
+              background-color: rgb(18 18 18 /1);
+              z-index: 10;
+            }
+          }
+        `};
 `;
 
 export const LightsInOut = styled.div`
@@ -371,23 +359,28 @@ export const LightsInOut = styled.div`
   border-radius: 50px;
   background: url(/Images/lightsIn.png) no-repeat center center / 50%;
   background-color: #313131;
-  ${(props) =>
-    props.show
-      ? `box-shadow: 0px 0px 25px rgb(255 255 255 /0.8);  
-      opacity: 0;
-      animation: hideLight 0s 0.5s ease-in-out forwards;
+  ${({ $show }) =>
+    $show
+      ? css`
+          box-shadow: 0px 0px 25px rgb(255 255 255 /0.8);
+          opacity: 0;
+          animation: hideLight 0s 0.5s ease-in-out forwards;
 
-@keyframes hideLight{
-  from {
-    z-index: -1;
-  }
+          @keyframes hideLight {
+            from {
+              z-index: -1;
+            }
 
-  to {
-    opacity: 1;
-    z-index: 11;
-  }
-}`
-      : "display: none"};
+            to {
+              opacity: 1;
+              z-index: 11;
+            }
+          }
+        `
+      : css`
+          display: none;
+        `};
+
   inset: 22rem 0 0 0;
   cursor: pointer;
 
@@ -404,21 +397,23 @@ export const EasterText = styled.span`
   height: max-content;
   text-align: center;
   font-weight: 500;
-  display: ${(props) => (props.show ? "inline" : "none")};
+  display: ${({ $show }) => ($show ? "inline" : "none")};
 
-  ${(props) =>
-    props.show &&
-    ` animation: showText 0s 0.5s ease-in-out forwards;
-    opacity: 0;
+  ${({ $show }) =>
+    $show &&
+    css`
+      animation: showText 0s 0.5s ease-in-out forwards;
+      opacity: 0;
 
-@keyframes showText{
-  from {
-    z-index: -1;
-  }
+      @keyframes showText {
+        from {
+          z-index: -1;
+        }
 
-  to {
-    opacity: 1;
-    z-index: 11;
-  }
-}`};
+        to {
+          opacity: 1;
+          z-index: 11;
+        }
+      }
+    `};
 `;

@@ -23,10 +23,7 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
           transition: { duration: 0.1 }
         }}
         whileTap={{ scale: 0.95 }}>
-        <Link
-          href={`/${link}/${data?.id}-${getCleanTitle(data?.title || data?.name)}`}
-          passHref
-          scroll={false}>
+        <Link href={`/${link}/${data?.id}-${getCleanTitle(data?.title || data?.name)}`} passHref>
           <div className='relative'>
             <CardImg className='flex justify-end'>
               <Image

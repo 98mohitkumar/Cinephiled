@@ -8,8 +8,8 @@ export const Avatar = styled.div`
   justify-content: center;
 
   .avatar {
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     cursor: pointer;
     background: ${({ $avatar }) =>
@@ -24,8 +24,7 @@ export const Avatar = styled.div`
     );
 
     @media only ${(props) => props.theme.breakpoints.sm} {
-      width: 26px;
-      height: 26px;
+      width: 30px;
     }
   }
 

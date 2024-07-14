@@ -49,7 +49,13 @@ export const apiEndpoints = {
       `${baseUrlV3}/search/tv?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
 
     keywordSearch: ({ query, pageQuery = 1 }) =>
-      `${baseUrlV3}/search/keyword?query=${query}&page=${pageQuery}`
+      `${baseUrlV3}/search/keyword?query=${query}&page=${pageQuery}`,
+
+    personSearch: ({ query, pageQuery = 1 }) =>
+      `${baseUrlV3}/search/person?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
+
+    collectionSearch: ({ query, pageQuery = 1 }) =>
+      `${baseUrlV3}/search/collection?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`
   },
   movie: {
     popularMovies: `${baseUrlV3}/movie/popular?language=en-US&page=1`,
@@ -103,28 +109,42 @@ export const apiEndpoints = {
   watchProviders: {
     movieWatchProviders: ({ region }) =>
       `${baseUrlV3}/watch/providers/movie?language=en-US&watch_region=${region}`,
+
     tvWatchProviders: ({ region }) =>
       `${baseUrlV3}/watch/providers/tv?language=en-US&watch_region=${region}`,
+
     watchProviderMovies: ({ region, pageQuery, providerId }) =>
       `${baseUrlV3}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&watch_region=${region}&with_watch_providers=${providerId}`,
+
     watchProviderTv: ({ region, pageQuery, providerId }) =>
       `${baseUrlV3}/discover/tv?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&watch_region=${region}&with_watch_providers=${providerId}`,
+
     regions: `${baseUrlV3}/watch/providers/regions`
   },
   network: {
     networkDetails: (id) => `${baseUrlV3}/network/${id}?append_to_response=images`,
+
     networkMedia: ({ id, pageQuery = 1 }) =>
       `${baseUrlV3}/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&with_networks=${id}`
   },
   lists: {
     getLists: ({ accountId, pageQuery = 1 }) =>
       `${baseUrlV4}/account/${accountId}/lists?page=${pageQuery}&sort_by=created_at.desc`,
+
     getListDetails: ({ id, pageQuery = 1 }) => `${baseUrlV4}/list/${id}?page=${pageQuery}`,
+
     createList: `${baseUrlV4}/list`,
+
     updateList: ({ id }) => `${baseUrlV4}/list/${id}`,
+
     listItems: ({ id }) => `${baseUrlV4}/list/${id}/items`,
+
     listItemStatus: ({ id, mediaId, mediaType }) =>
       `${baseUrlV4}/list/${id}/item_status?media_id=${mediaId}&media_type=${mediaType}`
+  },
+  collection: {
+    collectionDetails: (id) => `${baseUrlV3}/collection/${id}?language=en-US`,
+    collectionImages: (id) => `${baseUrlV3}/collection/${id}/images`
   },
   language: `${baseUrlV3}/configuration/languages`,
   cfWorker: `https://imdbtechnical.98mohitkumar.workers.dev?secret=${process.env.CF_WORKER_SECRET}`
@@ -132,3 +152,5 @@ export const apiEndpoints = {
 
 export const blurPlaceholder =
   "data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA==";
+
+export const MAX_WIDTH = 2560;

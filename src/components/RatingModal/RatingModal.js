@@ -165,7 +165,7 @@ const RatingModal = ({
                   variants={framerTabVariants}
                   initial='hidden'
                   animate='visible'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   Your rating : <strong>{rating}/10</strong>
                 </Span>
               )}

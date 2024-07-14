@@ -1,18 +1,21 @@
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import Tabs from "components/Tabs/Tabs";
+import { ActiveTabIndicator } from "components/Tabs/TabsStyles";
 import { motion, AnimatePresence } from "framer-motion";
 import useTabs from "hooks/useTabs";
 import { useRouter } from "next/router";
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { framerTabVariants } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents";
+import CollectionsSearch from "./CollectionsSearch";
 import KeywordSearch from "./KeywordSearch";
 import MoviesSearch from "./MoviesSearch";
-import { tabStyling, tabTitleStyling } from "./SearchTabStyles";
+import PeopleSearch from "./PeopleSearch";
+import { SearchTabSelector, SearchTabWrapper } from "./SearchTabStyles";
 import TVSearch from "./TVSearch";
 
-const SearchTab = ({ movies, tv, search, keywords }) => {
+const SearchTab = ({ movies, tv, search, keywords, people, collections }) => {
   const router = useRouter();
+  const tabContainerRef = useRef(null);
 
   const { activeTab, setTab } = useTabs({
     tabLocation: "searchTabPosition",
@@ -25,19 +28,55 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
   };
 
   const tabList = [
-    { key: "movies", name: `Movies (${movies.count})` },
-    { key: "tv", name: `TV (${tv.count})` },
-    { key: "keywords", name: `Keywords (${keywords.count})` }
+    {
+      key: "movies",
+      name: `Movies (${movies.count})`
+    },
+    {
+      key: "tv",
+      name: `TV (${tv.count})`
+    },
+    {
+      key: "people",
+      name: `People (${people.count})`
+    },
+    {
+      key: "collections",
+      name: `Collections (${collections.count})`
+    },
+    {
+      key: "keywords",
+      name: `Keywords (${keywords.count})`
+    }
   ];
+
+  useEffect(() => {
+    // scroll to active tab
+    if (tabContainerRef?.current) {
+      const activeTabElement = tabContainerRef.current.querySelector(".active");
+      if (activeTabElement) {
+        tabContainerRef.current.scrollLeft = activeTabElement.offsetLeft - 150;
+      }
+    }
+  }, [activeTab]);
 
   return (
     <Fragment>
-      <Tabs
-        tabList={tabList}
-        currentTab={activeTab}
-        setTab={tabSelectionHandler}
-        styling={{ tabStyling, tabTitleStyling }}
-      />
+      <div className='px-3 my-7 lg:my-9'>
+        <SearchTabWrapper ref={tabContainerRef}>
+          {tabList.map(({ key, name }) => (
+            <SearchTabSelector
+              key={key}
+              $count={tabList.length}
+              $active={key === activeTab}
+              onClick={() => tabSelectionHandler(key)}
+              className={key === activeTab && "relative active"}>
+              {name}
+              {key === activeTab && <ActiveTabIndicator />}
+            </SearchTabSelector>
+          ))}
+        </SearchTabWrapper>
+      </div>
 
       <ModulesWrapper>
         <AnimatePresence mode='wait'>
@@ -48,9 +87,9 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
               initial='hidden'
               animate='visible'
               exit='hidden'
-              transition={{ duration: 0.5 }}>
+              transition={{ duration: 0.325 }}>
               {movies?.count > 0 ? (
-                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center'>
+                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center text-pretty'>
                   Movies matching : {search}
                 </Span>
               ) : null}
@@ -69,9 +108,9 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
               initial='hidden'
               animate='visible'
               exit='hidden'
-              transition={{ duration: 0.5 }}>
+              transition={{ duration: 0.325 }}>
               {tv?.count > 0 && (
-                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center'>
+                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center text-pretty'>
                   TV shows matching : {search}
                 </Span>
               )}
@@ -83,6 +122,23 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
             </motion.div>
           )}
 
+          {activeTab === "people" && (
+            <motion.div
+              key='people'
+              variants={framerTabVariants}
+              initial='hidden'
+              animate='visible'
+              exit='hidden'
+              transition={{ duration: 0.325 }}>
+              {people?.count > 0 && (
+                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center text-pretty'>
+                  People matching : {search}
+                </Span>
+              )}
+              <PeopleSearch searchQuery={search} peopleRes={people} />
+            </motion.div>
+          )}
+
           {activeTab === "keywords" && (
             <motion.div
               key='keywords'
@@ -90,13 +146,30 @@ const SearchTab = ({ movies, tv, search, keywords }) => {
               initial='hidden'
               animate='visible'
               exit='hidden'
-              transition={{ duration: 0.5 }}>
+              transition={{ duration: 0.325 }}>
               {keywords?.count > 0 && (
-                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center'>
+                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center text-pretty'>
                   Keywords matching : {search}
                 </Span>
               )}
               <KeywordSearch searchQuery={search} keywords={keywords} />
+            </motion.div>
+          )}
+
+          {activeTab === "collections" && (
+            <motion.div
+              key='collections'
+              variants={framerTabVariants}
+              initial='hidden'
+              animate='visible'
+              exit='hidden'
+              transition={{ duration: 0.325 }}>
+              {collections?.count > 0 && (
+                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center text-pretty'>
+                  Collections matching : {search}
+                </Span>
+              )}
+              <CollectionsSearch searchQuery={search} collections={collections} />
             </motion.div>
           )}
         </AnimatePresence>

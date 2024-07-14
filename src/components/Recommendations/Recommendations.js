@@ -23,10 +23,7 @@ const Recommendations = ({ data, type }) => {
               transition: { duration: 0.1 }
             }}
             whileTap={{ scale: 0.95 }}>
-            <Link
-              href={`/${type}/${item.id}-${getCleanTitle(item?.title || item?.name)}`}
-              passHref
-              scroll={false}>
+            <Link href={`/${type}/${item.id}-${getCleanTitle(item?.title || item?.name)}`} passHref>
               <RecommendedImg className='relative text-center'>
                 <Image
                   src={

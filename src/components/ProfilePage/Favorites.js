@@ -105,7 +105,7 @@ const Favorites = () => {
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   {favoriteMovies.length > 0 ? (
                     <CardsContainerGrid className='xl-row-gap'>
                       {favoriteMovies.map((movie) => (
@@ -133,7 +133,7 @@ const Favorites = () => {
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   {favoriteTvShows.length > 0 ? (
                     <CardsContainerGrid className='xl-row-gap'>
                       {favoriteTvShows.map((tv) => (

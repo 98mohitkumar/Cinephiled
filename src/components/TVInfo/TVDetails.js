@@ -43,8 +43,8 @@ import {
   HeroImgWrapper
 } from "styles/GlobalComponents";
 
-const TVDetails = ({
-  tvData: {
+const TVDetails = ({ tvData }) => {
+  const {
     id,
     title,
     airDate,
@@ -60,8 +60,7 @@ const TVDetails = ({
     crewData,
     releaseYear,
     technicalDetails
-  }
-}) => {
+  } = tvData;
   const { userInfo } = useUserContext();
   const {
     favoriteTvShows,
@@ -160,7 +159,7 @@ const TVDetails = ({
     <Fragment>
       <HeroDetailsContainer className='relative mb-auto'>
         <HeroBgContainer className='absolute'>
-          <HeroBg className='absolute text-center'>
+          <HeroBg className='absolute text-center z-10'>
             <Image
               src={
                 backdropPath
@@ -173,8 +172,12 @@ const TVDetails = ({
               priority
             />
           </HeroBg>
-          <DominantColor image={posterPath} />
+
+          <DominantColor image={posterPath} className='z-20' />
+
+          <Gradient className='z-30' />
         </HeroBgContainer>
+
         <DetailsHeroWrap>
           <HeroImgWrapper>
             <HeroImg className='relative text-center'>
@@ -229,7 +232,7 @@ const TVDetails = ({
                       initial='hidden'
                       animate='visible'
                       exit='hidden'
-                      transition={{ duration: 0.5 }}>
+                      transition={{ duration: 0.325 }}>
                       {isAddedToWatchlist ? (
                         <BiListCheck size='22px' />
                       ) : (
@@ -253,7 +256,7 @@ const TVDetails = ({
                       initial='hidden'
                       animate='visible'
                       exit='hidden'
-                      transition={{ duration: 0.5 }}>
+                      transition={{ duration: 0.325 }}>
                       {isAddedToFavorites ? <FaHeart size='20px' /> : <FaRegHeart size='20px' />}
                     </motion.div>
                   </AnimatePresence>
@@ -273,7 +276,7 @@ const TVDetails = ({
                       initial='hidden'
                       animate='visible'
                       exit='hidden'
-                      transition={{ duration: 0.5 }}>
+                      transition={{ duration: 0.325 }}>
                       {savedRating ? (
                         <RatingOverlay className='media-page'>
                           <AiFillStar size='16px' />
@@ -297,8 +300,6 @@ const TVDetails = ({
             />
           </HeroImgWrapper>
 
-          <Gradient />
-
           <HeroInfoWrapper className='max-w-5xl'>
             <HeroInfoTitle className='mb-2'>
               {title} ({releaseYear})
@@ -311,8 +312,7 @@ const TVDetails = ({
                     <Link
                       key={item.id}
                       href={`/genre/${item.id.toString() + "-" + item.name.split(" ").join("")}/tv`}
-                      passHref
-                      scroll={false}>
+                      passHref>
                       <Rounded className={genres.length == i + 1 && "sep"}>{item.name}</Rounded>
                     </Link>
                   ))}

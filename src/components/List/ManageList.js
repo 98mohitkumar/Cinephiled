@@ -5,7 +5,7 @@ import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
 import Toast, { useToast } from "components/Toast/Toast";
 import { AnimatePresence, motion } from "framer-motion";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder, apiEndpoints } from "globals/constants";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
@@ -19,7 +19,9 @@ const ManageList = ({ id }) => {
   const [query, setQuery] = useState("");
   const { revalidateData: revalidateWithQuery } = useRevalidateList({ withQuery: true });
   const { revalidateData } = useRevalidateList({ withQuery: false });
-  const { searchSuggestions, loading: searchSuggestionsLoading } = useGetSearchSuggestions(query);
+  const { searchSuggestions, loading: searchSuggestionsLoading } = useGetSearchSuggestions({
+    query
+  });
   const { error, listDetails, loading } = useGetListDetails({ id, order: "desc" });
   const { isToastVisible, showToast, toastMessage } = useToast();
   const [updateCover, setUpdateCover] = useState(false);
@@ -30,11 +32,13 @@ const ManageList = ({ id }) => {
   const [items, setItems] = useState([]);
 
   const { list: infiniteQueryListMedia } = useInfiniteQuery({
-    type: "list",
     initialPage: 2,
-    listId: id,
-    listOrder: "desc",
-    useUserToken: true
+    useUserToken: true,
+    getEndpoint: ({ page }) =>
+      `${apiEndpoints.lists.getListDetails({
+        id,
+        pageQuery: page
+      })}&sort_by=original_order.desc`
   });
 
   const searchInputTimeout = useRef(null);
@@ -273,7 +277,7 @@ const ManageList = ({ id }) => {
                             initial='hidden'
                             animate='visible'
                             exit='hidden'
-                            transition={{ duration: 0.5 }}>
+                            transition={{ duration: 0.325 }}>
                             {searchSuggestionsLoading ? (
                               <Loading />
                             ) : (
@@ -300,7 +304,7 @@ const ManageList = ({ id }) => {
                                                 id,
                                                 poster_path,
                                                 backdrop_path,
-                                                media_type: type === "tv" ? "tv" : "movie"
+                                                media_type: type
                                               },
                                               action: "add"
                                             })

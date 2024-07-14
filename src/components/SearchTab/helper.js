@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import { SortPill } from "./SearchTabStyles";
 
-const Pill = ({ children, sortBy }) => {
+const Pill = ({ children, sortBy, descFirst = false }) => {
   const router = useRouter();
   const {
     query: { sortBy: sort, order }
@@ -17,7 +17,15 @@ const Pill = ({ children, sortBy }) => {
             query: {
               ...router.query,
               sortBy,
-              order: sortBy === router.query.sortBy && router.query.order === "asc" ? "desc" : "asc"
+              order:
+                sortBy === router.query.sortBy &&
+                router.query.order === (descFirst ? "desc" : "asc")
+                  ? descFirst
+                    ? "asc"
+                    : "desc"
+                  : descFirst
+                  ? "desc"
+                  : "asc"
             }
           },
           undefined,
@@ -33,7 +41,7 @@ const Pill = ({ children, sortBy }) => {
   );
 };
 
-export const SortBy = () => {
+export const SortBy = ({ sortOptions }) => {
   const router = useRouter();
 
   return (
@@ -44,8 +52,11 @@ export const SortBy = () => {
           onClick={() => router.push(window.location.pathname, undefined, { shallow: true })}>
           Default
         </SortPill>
-        <Pill sortBy={"name"}>Name</Pill>
-        <Pill sortBy={"releaseDate"}>Release date</Pill>
+        {sortOptions?.map(({ key, name, descFirst }) => (
+          <Pill sortBy={key} key={key} descFirst={descFirst}>
+            {name}
+          </Pill>
+        ))}
       </div>
     </div>
   );

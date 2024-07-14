@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
-import { FaRegUser } from "react-icons/fa";
+import { FaUserAlt } from "react-icons/fa";
 import { useUserContext } from "Store/UserContext";
 import { Avatar, DefaultAvatar, Popup, PopupOption } from "./UserAvatarStyles";
 
@@ -92,7 +92,7 @@ const UserAvatar = () => {
           <div className='mobile-login'>
             <Link href='/login'>
               <div className='link' aria-label='Login'>
-                <FaRegUser size='24px' />
+                <FaUserAlt size='24px' />
               </div>
             </Link>
           </div>

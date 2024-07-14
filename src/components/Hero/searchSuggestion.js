@@ -34,6 +34,18 @@ const SearchSuggestion = ({ data, type, ...props }) => (
         </Anchor>
       </Link>
     )}
+
+    {type === "person" && (
+      <Link href={`/person/${data.id}-${getCleanTitle(data.name)}`} passHref legacyBehavior>
+        <Anchor {...props}>
+          <SearchSlice>
+            <h5 className='suggestion-title'>{data.name}</h5>
+
+            <h6 className='tag text-base'>Person</h6>
+          </SearchSlice>
+        </Anchor>
+      </Link>
+    )}
   </Fragment>
 );
 

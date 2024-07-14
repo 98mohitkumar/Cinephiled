@@ -5,7 +5,14 @@ import { Fragment } from "react";
 import { fetchOptions } from "src/utils/helper";
 import { BadQuery, Error404 } from "styles/GlobalComponents";
 
-const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
+const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes, peopleRes, collectionRes }) => {
+  const allEmptyResults =
+    movieRes?.results?.length === 0 &&
+    tvRes?.results?.length === 0 &&
+    keywordsRes?.results?.length === 0 &&
+    peopleRes?.results?.length === 0 &&
+    collectionRes?.results?.length === 0;
+
   return (
     <Fragment>
       <MetaWrapper
@@ -16,12 +23,19 @@ const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes }) => {
 
       {error ? (
         <Error404>404</Error404>
-      ) : movieRes?.results?.length > 0 || tvRes?.results?.length > 0 ? (
-        <SearchTab search={searchQuery} movies={movieRes} tv={tvRes} keywords={keywordsRes} />
-      ) : (
+      ) : allEmptyResults ? (
         <div className='fixed inset-0 flex items-center justify-center'>
           <BadQuery>{"Bad Query :("}</BadQuery>
         </div>
+      ) : (
+        <SearchTab
+          search={searchQuery}
+          movies={movieRes}
+          tv={tvRes}
+          keywords={keywordsRes}
+          people={peopleRes}
+          collections={collectionRes}
+        />
       )}
     </Fragment>
   );
@@ -37,75 +51,64 @@ Search.getInitialProps = async (ctx) => {
       searchQuery = searchQuery.slice(0, searchQuery.length - 7);
     }
 
-    //common in both
-    const keywordsResponse = await fetch(
-      apiEndpoints.search.keywordSearch({ query: searchQuery }),
-      fetchOptions()
-    );
-
-    if (year.trim().length > 0) {
-      const searchQueryWithYear = await Promise.all([
-        fetch(
-          apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }),
-          fetchOptions()
-        ),
-        fetch(apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year }), fetchOptions())
+    const fetchCommonData = async () => {
+      const [keywordsResponse, peopleResponse, collectionResponse] = await Promise.all([
+        fetch(apiEndpoints.search.keywordSearch({ query: searchQuery }), fetchOptions()),
+        fetch(apiEndpoints.search.personSearch({ query: searchQuery }), fetchOptions()),
+        fetch(apiEndpoints.search.collectionSearch({ query: searchQuery }), fetchOptions())
       ]);
 
-      const error = searchQueryWithYear.some((res) => !res.ok);
-      if (error) throw new Error("error fetching data");
-
-      const [movieResponse, tvResponse] = searchQueryWithYear;
-      const [movieRes, tvRes, keywordsRes] = await Promise.all([
-        movieResponse.json(),
-        tvResponse.json(),
-        keywordsResponse.json()
+      const [keywordsRes, peopleRes, collectionRes] = await Promise.all([
+        keywordsResponse.json(),
+        peopleResponse.json(),
+        collectionResponse.json()
       ]);
 
       return {
-        movieRes: {
-          results: movieRes.results,
-          count: movieRes.total_results
-        },
-        tvRes: { results: tvRes.results, count: tvRes.total_results },
-        error,
-        searchQuery: searchQuery,
-        keywordsRes: {
-          results: keywordsRes.results,
-          count: keywordsRes.total_results
-        }
+        keywordsRes: { results: keywordsRes.results, count: keywordsRes.total_results },
+        peopleRes: { results: peopleRes.results, count: peopleRes.total_results },
+        collectionRes: { results: collectionRes.results, count: collectionRes.total_results }
       };
-    } else {
-      const searchQueryWithoutYear = await Promise.all([
-        fetch(apiEndpoints.search.movieSearch({ query: searchQuery }), fetchOptions()),
-        fetch(apiEndpoints.search.tvSearch({ query: searchQuery }), fetchOptions())
-      ]);
+    };
 
-      const error = searchQueryWithoutYear.some((res) => !res.ok);
-      if (error) throw new Error("error fetching data");
+    const fetchSearchResults = async (withYear) => {
+      const searchEndpoints = withYear
+        ? [
+            apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }),
+            apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year })
+          ]
+        : [
+            apiEndpoints.search.movieSearch({ query: searchQuery }),
+            apiEndpoints.search.tvSearch({ query: searchQuery })
+          ];
 
-      const [movieResponse, tvResponse] = searchQueryWithoutYear;
-      const [movieRes, tvRes, keywordsRes] = await Promise.all([
-        movieResponse.json(),
-        tvResponse.json(),
-        keywordsResponse.json()
-      ]);
+      const [movieResponse, tvResponse] = await Promise.all(
+        searchEndpoints.map((endpoint) => fetch(endpoint, fetchOptions()))
+      );
+
+      if (!movieResponse.ok || !tvResponse.ok) {
+        throw new Error("Error fetching data");
+      }
+
+      const [movieRes, tvRes] = await Promise.all([movieResponse.json(), tvResponse.json()]);
 
       return {
-        movieRes: {
-          results: movieRes.results,
-          count: movieRes.total_results
-        },
-        tvRes: { results: tvRes.results, count: tvRes.total_results },
-        error,
-        searchQuery: searchQuery,
-        keywordsRes: {
-          results: keywordsRes.results,
-          count: keywordsRes.total_results
-        },
-        test: movieRes
+        movieRes: { results: movieRes.results, count: movieRes.total_results },
+        tvRes: { results: tvRes.results, count: tvRes.total_results }
       };
-    }
+    };
+
+    const [commonData, searchData] = await Promise.all([
+      fetchCommonData(),
+      year.trim().length > 0 ? fetchSearchResults(true) : fetchSearchResults(false)
+    ]);
+
+    return {
+      ...searchData,
+      ...commonData,
+      error: false,
+      searchQuery
+    };
   } catch {
     return { error: true };
   }

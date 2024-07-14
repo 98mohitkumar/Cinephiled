@@ -99,7 +99,7 @@ const Watchlist = () => {
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   {moviesWatchlist.length > 0 ? (
                     <CardsContainerGrid className='xl-row-gap'>
                       {moviesWatchlist.map((movie) => (
@@ -127,7 +127,7 @@ const Watchlist = () => {
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   {tvShowsWatchlist.length > 0 ? (
                     <CardsContainerGrid className='xl-row-gap'>
                       {tvShowsWatchlist.map((tv) => (

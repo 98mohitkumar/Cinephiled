@@ -87,7 +87,7 @@ const Navigation = () => {
     <Header ref={navRef}>
       <NavBar>
         <Link href='/'>
-          <div className='py-3' aria-label='cinephiled logo'>
+          <div className='py-3' aria-label='cinephiled logo' role='link'>
             <Logo />
           </div>
         </Link>
@@ -163,7 +163,7 @@ const Navigation = () => {
               zIndex: 500
             }}
             exit={{ opacity: 0, zIndex: 500 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.325 }}
             onClick={closeSearchModalHandler}>
             <Hero />
           </SearchModal>

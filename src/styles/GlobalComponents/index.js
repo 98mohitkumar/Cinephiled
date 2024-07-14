@@ -150,7 +150,6 @@ export const Error404 = styled.h1`
 
 export const HeroDetailsContainer = styled.div`
   width: 100%;
-  overflow: hidden;
   padding: 64px 4.2vw;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
@@ -173,25 +172,30 @@ export const HeroDetailsContainer = styled.div`
 export const HeroBgContainer = styled.div`
   inset: 0;
   z-index: -1;
-  overflow: hidden;
+  min-height: 400px;
+  isolation: isolate;
 
   @media only ${(props) => props.theme.breakpoints.ip} {
-    bottom: 320px;
+    bottom: 45%;
   }
 
   @media only ${(props) => props.theme.breakpoints.xs} {
-    bottom: 50%;
+    bottom: 60%;
   }
 `;
 
 export const HeroBg = styled.div`
   inset: 0;
-  animation: backdrop 4s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  overflow: hidden;
+
+  img {
+    animation: backdrop 4s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  }
 
   @keyframes backdrop {
     from {
       opacity: 0;
-      transform: scale(1.1);
+      transform: scale(1.4);
     }
 
     to {
@@ -347,14 +351,21 @@ export const AboutCreditsWrapper = styled.div`
 `;
 
 export const Loader = styled.div`
-  width: 12vw;
-  aspect-ratio: 1/1;
-  position: absolute;
+  position: fixed;
+  z-index: 9999;
+  background: #121212;
   inset: 0;
   margin: auto;
   display: grid;
   place-items: center;
-  background: Url("/Images/loader.svg") no-repeat center center / contain;
+
+  &::before {
+    content: "";
+    width: max(10vw, 150px);
+    aspect-ratio: 1/1;
+    position: absolute;
+    background: Url("/Images/loader.svg") no-repeat center center / contain;
+  }
 
   &.small {
     width: 100px;

@@ -27,7 +27,7 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 0.325 }}>
             {/* popular movies */}
             <section>
               <span className='text-[calc(1.425rem_+_2.1vw)] xl:text-5xl font-bold text-white text-center my-4 block'>
@@ -57,7 +57,7 @@ const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 0.325 }}>
             {/* popular TV */}
             <section>
               <span className='text-[calc(1.425rem_+_2.1vw)] xl:text-5xl font-bold text-white text-center my-4 block'>

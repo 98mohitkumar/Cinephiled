@@ -70,9 +70,9 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 0.325 }}>
             <ModulesWrapper>
-              <Cast cast={cast} />
+              <Cast cast={cast} showFullCastLink />
             </ModulesWrapper>
           </motion.div>
         )}
@@ -84,7 +84,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 0.325 }}>
             <ModulesWrapper>
               <TVSeasons seasons={seasons} />
             </ModulesWrapper>
@@ -98,7 +98,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 0.325 }}>
             <ModulesWrapper>
               <Reviews reviews={reviews} />
             </ModulesWrapper>
@@ -112,7 +112,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 0.325 }}>
             <ModulesWrapper>
               <Backdrops backdrops={backdrops} />
             </ModulesWrapper>
@@ -126,7 +126,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 0.325 }}>
             <ModulesWrapper>
               <Posters posters={posters} />
             </ModulesWrapper>

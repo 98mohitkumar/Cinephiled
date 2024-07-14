@@ -1,114 +1,70 @@
-import { apiEndpoints } from "globals/constants";
-import { useMemo, useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { fetchOptions } from "src/utils/helper";
 import { useUserContext } from "Store/UserContext";
 
-const useInfiniteQuery = ({
-  initialPage,
-  type,
-  listId = null,
-  genreId = null,
-  searchQuery = null,
-  networkId = null,
-  providerId = null,
-  region = null,
-  listOrder = null,
-  useUserToken = false
-}) => {
+const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint }) => {
   const [pageToFetch, setPageToFetch] = useState(initialPage);
   const [extendedList, setExtendedList] = useState([]);
   const [isEmptyPage, setIsEmptyPage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {
-    userInfo: { accountId, accessToken }
+    userInfo: { accessToken }
   } = useUserContext();
 
   const fetchTimeOut = useRef(null);
 
-  const endpoint = useMemo(
-    () => ({
-      movieGenre: apiEndpoints.movie.movieGenre({
-        genreId,
-        pageQuery: pageToFetch
-      }),
-      tvGenre: apiEndpoints.tv.tvGenre({ genreId, pageQuery: pageToFetch }),
-      movieSearch: apiEndpoints.search.movieSearch({
-        query: searchQuery,
-        pageQuery: pageToFetch
-      }),
-      tvSearch: apiEndpoints.search.tvSearch({
-        query: searchQuery,
-        pageQuery: pageToFetch
-      }),
-      keywordSearch: apiEndpoints.search.keywordSearch({
-        query: searchQuery,
-        pageQuery: pageToFetch
-      }),
-      networkMedia: apiEndpoints.network.networkMedia({ id: networkId, pageQuery: pageToFetch }),
-      providerMovies: apiEndpoints.watchProviders.watchProviderMovies({
-        providerId,
-        region,
-        pageQuery: pageToFetch
-      }),
-      providerTv: apiEndpoints.watchProviders.watchProviderTv({
-        providerId,
-        region,
-        pageQuery: pageToFetch
-      }),
-      lists: apiEndpoints.lists.getLists({ accountId, pageQuery: pageToFetch }),
-      list: listOrder
-        ? `${apiEndpoints.lists.getListDetails({
-            id: listId,
-            pageQuery: pageToFetch
-          })}&sort_by=original_order.desc`
-        : apiEndpoints.lists.getListDetails({ id: listId, pageQuery: pageToFetch })
-    }),
-    [accountId, genreId, listId, listOrder, networkId, pageToFetch, providerId, region, searchQuery]
-  );
+  const fetchQuery = useCallback(
+    async (page) => {
+      setIsLoading(true);
+      try {
+        const res = await fetch(getEndpoint({ page }), {
+          ...fetchOptions(useUserToken ? { token: accessToken } : {})
+        });
 
-  useEffect(() => {
-    const abortCtrl = new AbortController();
+        if (!res.ok) {
+          throw new Error("Cannot fetch data");
+        }
 
-    const fetchQuery = async () => {
-      const res = await fetch(endpoint[type], {
-        ...fetchOptions(useUserToken ? { token: accessToken } : {}),
-        signal: abortCtrl.signal
-      });
-
-      if (res.ok) {
         const data = await res.json();
         return data;
-      } else {
-        throw Error("cannot fetch data");
+      } catch (error) {
+        console.error(error.message);
+        return null;
+      } finally {
+        setIsLoading(false);
       }
-    };
+    },
+    [accessToken, getEndpoint, useUserToken]
+  );
 
-    function detectBottom() {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 400 && !isEmptyPage) {
-        clearTimeout(fetchTimeOut.current);
+  const handleScroll = useCallback(() => {
+    if (
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 700 * (pageToFetch - 1) &&
+      !isLoading &&
+      !isEmptyPage
+    ) {
+      clearTimeout(fetchTimeOut.current);
 
-        fetchTimeOut.current = setTimeout(() => {
-          fetchQuery()
-            .then((data) => {
-              if (data?.results?.length > 0) {
-                setExtendedList((prev) => prev.concat(data.results));
-
-                setPageToFetch((prev) => prev + 1);
-              } else {
-                setIsEmptyPage(true);
-              }
-            })
-            .catch((err) => console.error(err.message));
-        }, 100);
-      }
+      fetchTimeOut.current = setTimeout(() => {
+        fetchQuery(pageToFetch).then((data) => {
+          if (data && data.results && data.results.length > 0) {
+            setExtendedList((prev) => [...prev, ...data.results]);
+            setPageToFetch((prev) => prev + 1);
+          } else {
+            setIsEmptyPage(true);
+          }
+        });
+      }, 100);
     }
+  }, [fetchQuery, isLoading, isEmptyPage, pageToFetch]);
 
-    window.addEventListener("scroll", detectBottom);
-
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      abortCtrl.abort();
-      window.removeEventListener("scroll", detectBottom);
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(fetchTimeOut.current);
     };
-  }, [accessToken, endpoint, isEmptyPage, type, useUserToken]);
+  }, [handleScroll]);
 
   return { list: extendedList };
 };

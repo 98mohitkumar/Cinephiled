@@ -29,7 +29,7 @@ const TVSeasons = ({ seasons }) => {
               key={id}
               whileTap={{ scale: 0.98 }}
               className={"max-w-5xl m-auto [&:not(:last-child)]:mb-5"}>
-              <Link href={`${router.query.id}/season/${season_number}`} passHref scroll={false}>
+              <Link href={`${router.query.id}/season/${season_number}`} passHref>
                 <SeasonWrapper>
                   <SeasonImg>
                     <Image

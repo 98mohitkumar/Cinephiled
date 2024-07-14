@@ -11,9 +11,12 @@ import { Error404, LayoutContainer } from "styles/GlobalComponents";
 const ProviderTV = ({ error, media, region, providerName, providerId }) => {
   const { list } = useInfiniteQuery({
     initialPage: 2,
-    type: "providerTv",
-    providerId,
-    region: region?.iso_3166_1
+    getEndpoint: ({ page }) =>
+      apiEndpoints.watchProviders.watchProviderTv({
+        providerId,
+        region: region?.iso_3166_1,
+        pageQuery: page
+      })
   });
 
   const renderList = media.concat(list);
@@ -35,12 +38,14 @@ const ProviderTV = ({ error, media, region, providerName, providerId }) => {
           <div className='relative z-20'>
             {renderList?.length > 0 ? (
               <Fragment>
-                <h1 className='mt-2 mb-4 pb-5 text-[calc(1.375rem_+_1.5vw)] xl:text-[2.25rem] w-full text-center font-medium text-zinc-400'>
-                  TV Shows available on <br className='max-sm:block hidden' />
-                  <span className='text-neutral-50 font-semibold'>
-                    {providerName} ({region?.iso_3166_1})
-                  </span>
-                </h1>
+                <div className='text-center pb-6 my-5 lg:my-10'>
+                  <h1 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.25rem] w-full font-semibold text-zinc-400'>
+                    TV Shows available on <br className='max-sm:block hidden' />
+                    <span className='text-neutral-50 font-semibold'>
+                      {providerName} ({region?.iso_3166_1})
+                    </span>
+                  </h1>
+                </div>
 
                 <TVTemplate TV={renderList} />
               </Fragment>

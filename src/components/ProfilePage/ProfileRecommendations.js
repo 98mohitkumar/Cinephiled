@@ -18,7 +18,7 @@ const MovieRecommendations = () => {
       initial='hidden'
       animate='visible'
       exit='hidden'
-      transition={{ duration: 0.5 }}>
+      transition={{ duration: 0.325 }}>
       {cleanedItems.length > 0 ? (
         <CardsContainerGrid>
           {cleanedItems.map((movie) => (
@@ -42,7 +42,7 @@ const TvRecommendations = () => {
       initial='hidden'
       animate='visible'
       exit='hidden'
-      transition={{ duration: 0.5 }}>
+      transition={{ duration: 0.325 }}>
       {cleanedItems.length > 0 ? (
         <CardsContainerGrid>
           {cleanedItems.map((tv) => (

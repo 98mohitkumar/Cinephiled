@@ -9,35 +9,36 @@ import { Fragment } from "react";
 import { fetchOptions, getCleanTitle, getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
-const TvShow = ({
-  id,
-  airDate,
-  title,
-  status,
-  type,
-  overview,
-  backdropPath,
-  posterPath,
-  releaseYear,
-  endYear,
-  cast,
-  seasons,
-  reviews,
-  backdrops,
-  posters,
-  network,
-  socialIds,
-  error,
-  language,
-  crewData,
-  genres,
-  rating,
-  recommendations,
-  homepage,
-  tagline,
-  trailerLink,
-  technicalDetails
-}) => {
+const TvShow = ({ tvData, error }) => {
+  const {
+    id,
+    airDate,
+    title,
+    status,
+    type,
+    overview,
+    backdropPath,
+    posterPath,
+    releaseYear,
+    endYear,
+    cast,
+    seasons,
+    reviews,
+    backdrops,
+    posters,
+    network,
+    socialIds,
+    language,
+    crewData,
+    genres,
+    rating,
+    recommendations,
+    homepage,
+    tagline,
+    trailerLink,
+    technicalDetails
+  } = tvData;
+
   return (
     <Fragment>
       <MetaWrapper
@@ -152,41 +153,42 @@ export const getServerSideProps = async (ctx) => {
 
     return {
       props: {
-        id: tvData?.id,
-        title: tvData?.name,
-        airDate: tvData?.first_air_date,
-        releaseYear,
-        genres: tvData?.genres,
-        tagline: tvData?.tagline,
-        overview: tvData?.overview,
-        rating: tvData?.vote_average,
-        posterPath: tvData?.poster_path,
-        backdropPath: tvData?.backdrop_path,
-        crewData,
-        trailerLink: trailer?.key ?? "",
-        socialIds: tvData?.external_ids,
-        homepage: tvData?.homepage,
-        status,
-        language: language?.english_name || language?.name || "TBA",
-        network,
-        type: tvData?.type,
-        endYear,
-        cast: {
-          totalCount: tvData?.aggregate_credits?.cast?.length,
-          data: mergeEpisodeCount(
-            tvData?.aggregate_credits?.cast
-              ?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
-              .flat()
-          ).slice(0, 15)
+        tvData: {
+          id: tvData?.id,
+          title: tvData?.name,
+          airDate: tvData?.first_air_date,
+          releaseYear,
+          genres: tvData?.genres,
+          tagline: tvData?.tagline,
+          overview: tvData?.overview,
+          rating: tvData?.vote_average,
+          posterPath: tvData?.poster_path,
+          backdropPath: tvData?.backdrop_path,
+          crewData,
+          trailerLink: trailer?.key ?? "",
+          socialIds: tvData?.external_ids,
+          homepage: tvData?.homepage,
+          status,
+          language: language?.english_name || language?.name || "TBA",
+          network,
+          type: tvData?.type,
+          endYear,
+          cast: {
+            totalCount: tvData?.aggregate_credits?.cast?.length,
+            data: mergeEpisodeCount(
+              tvData?.aggregate_credits?.cast
+                ?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
+                .flat()
+            ).slice(0, 15)
+          },
+          seasons: tvData?.seasons,
+          reviews: tvData?.reviews?.results ?? [],
+          backdrops: tvData?.images?.backdrops ?? [],
+          posters: tvData?.images?.posters ?? [],
+          recommendations: tvData?.recommendations?.results,
+          technicalDetails: technicalDetailsData || null
         },
-        seasons: tvData?.seasons,
-        reviews: tvData?.reviews?.results ?? [],
-        backdrops: tvData?.images?.backdrops ?? [],
-        posters: tvData?.images?.posters ?? [],
-        recommendations: tvData?.recommendations?.results,
-        technicalDetails: technicalDetailsData || null,
-        error: false,
-        tvData
+        error: false
       }
     };
   } catch {
