@@ -42,10 +42,14 @@ export default function UserContextProvider({ children }) {
       }
     };
 
-    if (status === "authenticated" && !userInfo?.accountId) {
+    if (status === "authenticated") {
       getUserInfo();
     }
-  }, [data?.user, status, userInfo?.accountId]);
+
+    return () => {
+      setUserInfo({});
+    };
+  }, [data?.user, status]);
 
   return <UserContext.Provider value={{ userInfo, setUserInfo }}>{children}</UserContext.Provider>;
 }
