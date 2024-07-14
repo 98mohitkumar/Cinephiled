@@ -154,6 +154,7 @@ export const Gradient = styled.div`
   position: absolute;
   background: linear-gradient(0deg, #121212 14%, rgba(21, 21, 21, 0.5) 100%);
   inset: 0;
+  bottom: -10px;
 `;
 
 export const RtoR = styled.div`

@@ -150,7 +150,6 @@ export const Error404 = styled.h1`
 
 export const HeroDetailsContainer = styled.div`
   width: 100%;
-  overflow: hidden;
   padding: 64px 4.2vw;
 
   @media only ${(props) => props.theme.breakpoints.lg} {
@@ -173,7 +172,6 @@ export const HeroDetailsContainer = styled.div`
 export const HeroBgContainer = styled.div`
   inset: 0;
   z-index: -1;
-  overflow: hidden;
   min-height: 400px;
   isolation: isolate;
 
@@ -188,12 +186,16 @@ export const HeroBgContainer = styled.div`
 
 export const HeroBg = styled.div`
   inset: 0;
-  animation: backdrop 4s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  overflow: hidden;
+
+  img {
+    animation: backdrop 4s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  }
 
   @keyframes backdrop {
     from {
       opacity: 0;
-      transform: scale(1.1);
+      transform: scale(1.4);
     }
 
     to {
