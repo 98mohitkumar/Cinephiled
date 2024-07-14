@@ -9,19 +9,27 @@ import {
 import PlaceholderText from "components/PlaceholderText";
 import RatingTag from "components/RatingTag/RatingTag";
 import { motion } from "framer-motion";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder, apiEndpoints } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { getCleanTitle, getReleaseDate } from "src/utils/helper";
+import { useUserContext } from "Store/UserContext";
 
 const ListItems = ({ listItems, id }) => {
+  const {
+    userInfo: { accountId }
+  } = useUserContext();
   const { list: infiniteQueryListMedia } = useInfiniteQuery({
-    type: "list",
     initialPage: 2,
-    listId: id,
-    useUserToken: true
+    useUserToken: true,
+    getEndpoint: ({ page }) =>
+      apiEndpoints.lists.getListDetails({
+        id,
+        accountId,
+        pageQuery: page
+      })
   });
 
   const renderList = listItems.concat(infiniteQueryListMedia);

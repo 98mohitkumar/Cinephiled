@@ -36,7 +36,7 @@ const Explore = ({ movieGenres, tvGenres, error, nowPlaying }) => {
           </section>
 
           {/* movies that are currently in theatres */}
-          <NowPlayingMovies nowPlaying={nowPlaying} />
+          {nowPlaying.length > 0 ? <NowPlayingMovies nowPlaying={nowPlaying} /> : null}
         </Fragment>
       )}
     </Fragment>

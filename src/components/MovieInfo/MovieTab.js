@@ -59,9 +59,9 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 0.325 }}>
             <ModulesWrapper>
-              <Cast cast={cast} />
+              <Cast cast={cast} showFullCastLink />
             </ModulesWrapper>
           </motion.div>
         )}
@@ -73,7 +73,7 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 0.325 }}>
             <ModulesWrapper>
               <Reviews reviews={reviews} />
             </ModulesWrapper>
@@ -87,7 +87,7 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 0.325 }}>
             <ModulesWrapper>
               <Backdrops backdrops={backdrops} />
             </ModulesWrapper>
@@ -101,7 +101,7 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
             initial='hidden'
             animate='visible'
             exit='hidden'
-            transition={{ duration: 0.5 }}>
+            transition={{ duration: 0.325 }}>
             <ModulesWrapper>
               <Posters posters={posters} />
             </ModulesWrapper>

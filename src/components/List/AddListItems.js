@@ -15,7 +15,9 @@ import useGetListDetails from "./useGetListDetails";
 
 const AddListItems = ({ id, CTAHandler }) => {
   const [query, setQuery] = useState("");
-  const { searchSuggestions, loading: searchSuggestionsLoading } = useGetSearchSuggestions(query);
+  const { searchSuggestions, loading: searchSuggestionsLoading } = useGetSearchSuggestions({
+    query
+  });
   const { error, listDetails, loading } = useGetListDetails({ id, order: "desc" });
   const { isToastVisible, showToast, toastMessage } = useToast();
 
@@ -158,7 +160,7 @@ const AddListItems = ({ id, CTAHandler }) => {
                       initial='hidden'
                       animate='visible'
                       exit='hidden'
-                      transition={{ duration: 0.5 }}>
+                      transition={{ duration: 0.325 }}>
                       {searchSuggestionsLoading ? (
                         <Loading />
                       ) : (
@@ -183,7 +185,7 @@ const AddListItems = ({ id, CTAHandler }) => {
                                         item: {
                                           id,
                                           poster_path,
-                                          media_type: type === "tv" ? "tv" : "movie"
+                                          media_type: type
                                         },
                                         action: "add"
                                       })

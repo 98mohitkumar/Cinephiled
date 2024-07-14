@@ -113,7 +113,7 @@ const Profile = () => {
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   <ModulesWrapper>
                     <Watchlist />
                   </ModulesWrapper>
@@ -128,7 +128,7 @@ const Profile = () => {
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   <ModulesWrapper>
                     <Ratings />
                   </ModulesWrapper>
@@ -143,7 +143,7 @@ const Profile = () => {
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   <ModulesWrapper>
                     <Favorites />
                   </ModulesWrapper>
@@ -158,7 +158,7 @@ const Profile = () => {
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   <ModulesWrapper>
                     <ProfileRecommendations />
                   </ModulesWrapper>

@@ -1,4 +1,5 @@
 import PlaceholderText from "components/PlaceholderText";
+import { apiEndpoints } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -8,8 +9,11 @@ import { SearchResultsContainer, Keyword } from "./SearchTabStyles";
 const KeywordSearch = ({ searchQuery, keywords }) => {
   const { list } = useInfiniteQuery({
     initialPage: 2,
-    type: "keywordSearch",
-    searchQuery
+    getEndpoint: ({ page }) =>
+      apiEndpoints.search.keywordSearch({
+        query: searchQuery,
+        pageQuery: page
+      })
   });
 
   const { cleanedItems } = removeDuplicates(keywords.results.concat(list));
@@ -25,7 +29,7 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
           ))}
         </SearchResultsContainer>
       ) : (
-        <PlaceholderText height='large'>No Keywords for this query.</PlaceholderText>
+        <PlaceholderText height='large'>No Keywords found for this query.</PlaceholderText>
       )}
     </Fragment>
   );

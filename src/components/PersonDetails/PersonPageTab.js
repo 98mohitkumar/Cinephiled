@@ -89,7 +89,7 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
               initial='hidden'
               animate='visible'
               exit='hidden'
-              transition={{ duration: 0.5 }}>
+              transition={{ duration: 0.325 }}>
               <div className='max-w-[160px] mb-6 ml-auto'>
                 <Select
                   options={[
@@ -121,7 +121,7 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
               initial='hidden'
               animate='visible'
               exit='hidden'
-              transition={{ duration: 0.5 }}>
+              transition={{ duration: 0.325 }}>
               <div className='max-w-[160px] mb-6 ml-auto'>
                 <Select
                   options={[

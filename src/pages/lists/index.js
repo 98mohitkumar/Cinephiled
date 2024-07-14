@@ -17,11 +17,15 @@ import Router, { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { Fragment } from "react";
 import { fetchOptions, framerTabVariants, getCleanTitle } from "src/utils/helper";
+import { useUserContext } from "Store/UserContext";
 import { Button, Error404, LayoutContainer } from "styles/GlobalComponents";
 
 const Lists = ({ error, lists }) => {
   const router = useRouter();
   const create = router.query.create === "true";
+  const {
+    userInfo: { accountId }
+  } = useUserContext();
 
   const createListHandler = () => {
     router.push(
@@ -37,9 +41,9 @@ const Lists = ({ error, lists }) => {
   };
 
   const { list: infiniteQueryLists } = useInfiniteQuery({
-    type: "lists",
     initialPage: 2,
-    useUserToken: true
+    useUserToken: true,
+    getEndpoint: ({ page }) => apiEndpoints.lists.getLists({ pageQuery: page, accountId })
   });
 
   const renderList = lists.concat(infiniteQueryLists);

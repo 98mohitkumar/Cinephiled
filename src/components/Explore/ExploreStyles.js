@@ -81,7 +81,7 @@ export const PostersGrid = styled.div`
   position: relative;
   width: 100%;
   margin-bottom: auto;
-  grid-template-columns: ${({ colCount }) => `repeat(${colCount}, minmax(130px, 205px))`};
+  grid-template-columns: ${({ $colCount }) => `repeat(${$colCount}, minmax(130px, 205px))`};
   justify-content: center;
   gap: 1.25rem;
   max-height: 35vh;

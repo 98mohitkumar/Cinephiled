@@ -10,7 +10,7 @@ import { BsChevronRight } from "react-icons/bs";
 import { getCleanTitle } from "src/utils/helper";
 import { CastGrid, CastImg, CastWrapper, SeeMore } from "./CastStyles";
 
-const Cast = ({ cast }) => {
+const Cast = ({ cast, showFullCastLink = false, isSearchGrid = false }) => {
   const router = useRouter();
   const routeRef = useRef(router.asPath);
 
@@ -31,7 +31,7 @@ const Cast = ({ cast }) => {
                     <Image
                       src={
                         item.profile_path
-                          ? `https://image.tmdb.org/t/p/w276_and_h350_face${item.profile_path}`
+                          ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}`
                           : "/Images/DefaultAvatar.png"
                       }
                       alt='cast-image'
@@ -45,20 +45,31 @@ const Cast = ({ cast }) => {
               </Link>
 
               <div className='mt-3'>
-                <Span className='font-bold movieCastHead line-clamp-2'>
-                  {item?.roles?.[0]?.character ?? item?.character}
-                </Span>
-                <Span className='movieCastName block'>{item.name}</Span>
-                {item?.episode_count ? (
-                  <Span className='movieCastName block episode-count'>
-                    {item?.episode_count} episodes
-                  </Span>
-                ) : null}
+                {isSearchGrid ? (
+                  <Fragment>
+                    <Span className='movieCastHead block'>{item.name}</Span>
+                    <Span className='movieCastName block text-neutral-400'>
+                      {item.known_for_department}
+                    </Span>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <Span className='font-bold movieCastHead line-clamp-2'>
+                      {item?.roles?.[0]?.character ?? item?.character}
+                    </Span>
+                    <Span className='movieCastName block'>{item.name}</Span>
+                    {item?.episode_count ? (
+                      <Span className='movieCastName block episode-count'>
+                        {item?.episode_count} episodes
+                      </Span>
+                    ) : null}
+                  </Fragment>
+                )}
               </div>
             </CastWrapper>
           ))}
 
-          {cast.totalCount > 15 ? (
+          {cast.totalCount > 15 && showFullCastLink ? (
             <Link href={`${routeRef.current}/cast`}>
               <motion.div
                 whileHover={{

@@ -105,7 +105,7 @@ export const ActiveTabIndicator = styled.div`
 `;
 
 export const TabSelector = styled.div`
-  padding: 1rem;
+  padding: 1rem 2rem;
   width: ${({ $count }) => `${100 / $count}%`};
   display: grid;
   place-items: center;
@@ -117,15 +117,5 @@ export const TabSelector = styled.div`
   min-width: 120px;
   user-select: none;
 
-  &:last-of-type {
-    min-width: 220px;
-
-    @media only ${(props) => props.theme.breakpoints.sm} {
-      min-width: 170px;
-    }
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 1rem 0.5rem;
-  }
+  min-width: max-content;
 `;

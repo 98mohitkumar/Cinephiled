@@ -43,8 +43,8 @@ import {
   HeroImgWrapper
 } from "styles/GlobalComponents";
 
-const TVDetails = ({
-  tvData: {
+const TVDetails = ({ tvData }) => {
+  const {
     id,
     title,
     airDate,
@@ -60,8 +60,7 @@ const TVDetails = ({
     crewData,
     releaseYear,
     technicalDetails
-  }
-}) => {
+  } = tvData;
   const { userInfo } = useUserContext();
   const {
     favoriteTvShows,
@@ -229,7 +228,7 @@ const TVDetails = ({
                       initial='hidden'
                       animate='visible'
                       exit='hidden'
-                      transition={{ duration: 0.5 }}>
+                      transition={{ duration: 0.325 }}>
                       {isAddedToWatchlist ? (
                         <BiListCheck size='22px' />
                       ) : (
@@ -253,7 +252,7 @@ const TVDetails = ({
                       initial='hidden'
                       animate='visible'
                       exit='hidden'
-                      transition={{ duration: 0.5 }}>
+                      transition={{ duration: 0.325 }}>
                       {isAddedToFavorites ? <FaHeart size='20px' /> : <FaRegHeart size='20px' />}
                     </motion.div>
                   </AnimatePresence>
@@ -273,7 +272,7 @@ const TVDetails = ({
                       initial='hidden'
                       animate='visible'
                       exit='hidden'
-                      transition={{ duration: 0.5 }}>
+                      transition={{ duration: 0.325 }}>
                       {savedRating ? (
                         <RatingOverlay className='media-page'>
                           <AiFillStar size='16px' />

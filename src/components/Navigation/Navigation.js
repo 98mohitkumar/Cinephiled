@@ -163,7 +163,7 @@ const Navigation = () => {
               zIndex: 500
             }}
             exit={{ opacity: 0, zIndex: 500 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.325 }}
             onClick={closeSearchModalHandler}>
             <Hero />
           </SearchModal>

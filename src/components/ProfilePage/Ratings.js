@@ -52,7 +52,7 @@ const Ratings = () => {
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   {ratedMovies.length > 0 ? (
                     <CardsContainerGrid className='xl-row-gap'>
                       {ratedMovies.map((movie) => (
@@ -86,7 +86,7 @@ const Ratings = () => {
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   {ratedTvShows.length > 0 ? (
                     <CardsContainerGrid className='xl-row-gap'>
                       {ratedTvShows.map((tv) => (

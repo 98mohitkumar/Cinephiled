@@ -49,8 +49,8 @@ import {
   MovieEaster
 } from "./MovieDetailsStyles";
 
-const MovieDetails = ({
-  movieDetails: {
+const MovieDetails = ({ movieDetails, easter }) => {
+  const {
     id,
     title,
     overview,
@@ -66,10 +66,10 @@ const MovieDetails = ({
     crewData,
     socialIds,
     homepage,
-    technicalDetails
-  },
-  easter
-}) => {
+    technicalDetails,
+    collection
+  } = movieDetails;
+
   const { userInfo } = useUserContext();
   const { renderEaster, hasSeen, showEaster, easterHandler } = easter;
   const {
@@ -256,7 +256,7 @@ const MovieDetails = ({
                       initial='hidden'
                       animate='visible'
                       exit='hidden'
-                      transition={{ duration: 0.5 }}>
+                      transition={{ duration: 0.325 }}>
                       {isAddedToWatchlist ? (
                         <BiListCheck size='22px' />
                       ) : (
@@ -280,7 +280,7 @@ const MovieDetails = ({
                       initial='hidden'
                       animate='visible'
                       exit='hidden'
-                      transition={{ duration: 0.5 }}>
+                      transition={{ duration: 0.325 }}>
                       {isAddedToFavorites ? <FaHeart size='20px' /> : <FaRegHeart size='20px' />}
                     </motion.div>
                   </AnimatePresence>
@@ -300,7 +300,7 @@ const MovieDetails = ({
                       initial='hidden'
                       animate='visible'
                       exit='hidden'
-                      transition={{ duration: 0.5 }}>
+                      transition={{ duration: 0.325 }}>
                       {savedRating ? (
                         <RatingOverlay className='media-page'>
                           <AiFillStar size='16px' />
@@ -384,6 +384,37 @@ const MovieDetails = ({
                 ))}
               </CreditsWrapper>
             ) : null}
+
+            {collection ? (
+              <div className='rounded-xl p-1 max-w-full lg:max-w-max bg-neutral-300 mt-6 lg:mt-8 drop-shadow-xl group'>
+                <Link
+                  href={`/collection/${collection.id}-${getCleanTitle(collection.name)}`}
+                  legacyBehavior>
+                  <a className='flex gap-3 min-h-32 rounded-lg rounded-r-none overflow-hidden'>
+                    <div className='relative min-w-44 md:min-w-52 lg:min-w-72 aspect-[300/169]'>
+                      <div className='absolute -inset-1 bg-gradient-to-l from-neutral-300 to-transparent z-10' />
+                      <Image
+                        src={`https://image.tmdb.org/t/p/w300${collection.backdrop_path}`}
+                        alt='collection-poster'
+                        fill
+                        style={{ objectFit: "cover", zIndex: 1 }}
+                        placeholder='blur'
+                        blurDataURL={blurPlaceholder}
+                        className='group-[:hover]:saturate-[2.5] transition-all'
+                      />
+                    </div>
+                    <div className='pe-2 lg:pe-4 py-4 flex flex-col gap-3 justify-center'>
+                      <p className='font-bold text-lg sm:text-xl text-neutral-800 leading-6'>
+                        Part of the <br /> {collection.name}
+                      </p>
+                      <p className='text-xs sm:text-sm py-2 px-4 bg-neutral-800 w-max rounded-full hover:bg-neutral-950 transition-colors'>
+                        View Collection
+                      </p>
+                    </div>
+                  </a>
+                </Link>
+              </div>
+            ) : null}
           </HeroInfoWrapper>
         </DetailsHeroWrap>
       </HeroDetailsContainer>
@@ -391,16 +422,16 @@ const MovieDetails = ({
       {renderEaster ? (
         <Fragment>
           {!hasSeen ? (
-            <EasterText className='text-xl md:text-2xl px-5' show={showEaster}>
+            <EasterText className='text-xl md:text-2xl px-5' $show={showEaster}>
               Congratulations, you have found the easter egg.
             </EasterText>
           ) : (
-            <EasterText className='text-xl md:text-2xl' show={showEaster}>
+            <EasterText className='text-xl md:text-2xl' $show={showEaster}>
               Aren&apos;t you scared?
             </EasterText>
           )}
-          <LightsInOut show={showEaster} onClick={easterHandler} />
-          <MovieEaster show={showEaster} />
+          <LightsInOut $show={showEaster} onClick={easterHandler} />
+          <MovieEaster $show={showEaster} />
         </Fragment>
       ) : null}
 

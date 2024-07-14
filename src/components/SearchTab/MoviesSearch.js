@@ -1,6 +1,6 @@
 import PlaceholderText from "components/PlaceholderText";
 import { motion } from "framer-motion";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder, apiEndpoints } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,12 +16,16 @@ import {
   QueryReleaseDate,
   QueryDescription
 } from "./SearchTabStyles";
+import { sortOptions } from "./TVSearch";
 
 const MoviesSearch = ({ searchQuery, movieRes }) => {
   const { list } = useInfiniteQuery({
     initialPage: 2,
-    type: "movieSearch",
-    searchQuery
+    getEndpoint: ({ page }) =>
+      apiEndpoints.search.movieSearch({
+        query: searchQuery,
+        pageQuery: page
+      })
   });
 
   const { query } = useRouter();
@@ -54,7 +58,7 @@ const MoviesSearch = ({ searchQuery, movieRes }) => {
     <SearchResultsContainer>
       {cleanedItems?.length > 0 ? (
         <section>
-          <SortBy />
+          <SortBy sortOptions={sortOptions} />
           {(sortBy ? getRenderList(cleanedItems) : cleanedItems)?.map(
             ({ id, title, poster_path, overview, release_date }) => (
               <motion.div whileTap={{ scale: 0.98 }} key={id}>
@@ -88,7 +92,7 @@ const MoviesSearch = ({ searchQuery, movieRes }) => {
           )}
         </section>
       ) : (
-        <PlaceholderText height='large'>No Movie results for this query.</PlaceholderText>
+        <PlaceholderText height='large'>No Movie results found for this query.</PlaceholderText>
       )}
     </SearchResultsContainer>
   );

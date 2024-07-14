@@ -1,6 +1,6 @@
 import NetworkMediaGrid from "components/MediaTemplate/TVTemplate";
 import { PostersImg } from "components/Posters/PostersStyles";
-import { blurPlaceholder } from "globals/constants";
+import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import { Fragment } from "react";
@@ -16,8 +16,8 @@ const NetworkMedia = ({ details, media }) => {
 
   const { list } = useInfiniteQuery({
     initialPage: 2,
-    type: "networkMedia",
-    networkId: details.id
+    getEndpoint: ({ page }) =>
+      apiEndpoints.network.networkMedia({ id: details.id, pageQuery: page })
   });
 
   if (posters.length % 2 !== 0 && posters.length > 10) {
@@ -40,7 +40,7 @@ const NetworkMedia = ({ details, media }) => {
     <Fragment>
       <NetwrokDetailsWrapper>
         {postersLength > 0 ? (
-          <PostersGrid className={postersLength <= 10 ? "alt-grid" : ""} colCount={colCount || 10}>
+          <PostersGrid className={postersLength <= 10 ? "alt-grid" : ""} $colCount={colCount || 10}>
             {posters.map((poster, i) => (
               <PostersImg key={`item -${i}`} className='relative poster-wrapper'>
                 <Image

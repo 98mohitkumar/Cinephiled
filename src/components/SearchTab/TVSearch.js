@@ -1,6 +1,6 @@
 import PlaceholderText from "components/PlaceholderText";
 import { motion } from "framer-motion";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder, apiEndpoints } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,11 +17,25 @@ import {
   QueryDescription
 } from "./SearchTabStyles";
 
+export const sortOptions = [
+  {
+    key: "name",
+    name: "Name"
+  },
+  {
+    key: "releaseDate",
+    name: "Release date"
+  }
+];
+
 const TVSearch = ({ searchQuery, tvRes }) => {
   const { list } = useInfiniteQuery({
     initialPage: 2,
-    type: "tvSearch",
-    searchQuery
+    getEndpoint: ({ page }) =>
+      apiEndpoints.search.tvSearch({
+        query: searchQuery,
+        pageQuery: page
+      })
   });
 
   const { query } = useRouter();
@@ -54,7 +68,7 @@ const TVSearch = ({ searchQuery, tvRes }) => {
     <SearchResultsContainer>
       {cleanedItems?.length > 0 ? (
         <section>
-          <SortBy />
+          <SortBy sortOptions={sortOptions} />
 
           {(sortBy ? getRenderList(cleanedItems) : cleanedItems)?.map(
             ({ id, name, poster_path, first_air_date, overview }) => (
@@ -89,7 +103,7 @@ const TVSearch = ({ searchQuery, tvRes }) => {
           )}
         </section>
       ) : (
-        <PlaceholderText height='large'>No TV show results for this query.</PlaceholderText>
+        <PlaceholderText height='large'>No TV show results found for this query.</PlaceholderText>
       )}
     </SearchResultsContainer>
   );

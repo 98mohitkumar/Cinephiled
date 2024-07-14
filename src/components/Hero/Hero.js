@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
 import { useRouter } from "next/router";
-import { useState, useRef } from "react";
+import { useState, useRef, Fragment } from "react";
 import { framerTabVariants } from "src/utils/helper";
 import { Container } from "styles/GlobalComponents";
 import { SearchCTA, Form, HeroDiv, UserInput } from "./HeroStyles";
@@ -11,23 +11,26 @@ const Hero = ({ banner = null }) => {
   const userInputRef = useRef("");
   const router = useRouter();
   const [userInput, setUserInput] = useState("");
-  const { searchSuggestions } = useGetSearchSuggestions(userInput);
+  const { searchSuggestions, loading } = useGetSearchSuggestions({
+    query: userInput,
+    includePeople: true
+  });
   const searchInputUpdate = useRef(null);
+
+  const isValidInput = userInput.length > 0 && userInput.trim().length > 0;
 
   const inputChangeHandler = (e) => {
     clearTimeout(searchInputUpdate);
 
     searchInputUpdate.current = setTimeout(() => {
       setUserInput(e.target.value);
-    }, 1000);
+    }, 500);
   };
 
   const searchHandler = async (event) => {
     event.preventDefault();
 
-    if (userInput.length === 0 || userInput.trim().length === 0) {
-      return;
-    } else {
+    if (isValidInput) {
       router.push(`/search/${userInput.replaceAll(" ", "+")}`);
       userInputRef.current = "";
     }
@@ -81,7 +84,7 @@ const Hero = ({ banner = null }) => {
                 onKeyDown={(e) => keyHandler(e, null, true)}
               />
 
-              {userInput?.trim()?.length > 0 ? (
+              {isValidInput ? (
                 <SearchCTA
                   as={motion.button}
                   initial={{ opacity: 0 }}
@@ -98,26 +101,36 @@ const Hero = ({ banner = null }) => {
             </div>
 
             <AnimatePresence mode='wait'>
-              {searchSuggestions?.length > 0 && (
+              {(searchSuggestions?.length > 0 || loading) && (
                 <motion.div
                   key='suggestions'
                   variants={framerTabVariants}
                   initial='hidden'
                   animate='visible'
                   exit='hidden'
-                  transition={{ duration: 0.5 }}>
+                  transition={{ duration: 0.325 }}>
                   <div className='mt-2 suggestions'>
-                    {searchSuggestions.map((item, index) => (
-                      <SearchSuggestion
-                        key={item.id}
-                        type={item.type === "tv" ? "tv" : "movie"}
-                        data={item}
-                        className={`search-suggestion ${
-                          index === 0 ? "first-suggestion-item" : ""
-                        }`}
-                        onKeyDown={(e) => keyHandler(e, index, false)}
-                      />
-                    ))}
+                    {loading ? (
+                      <div className='min-h-20 grid place-items-center'>
+                        <span className='text-neutral-700 font-semibold'>
+                          Loading Suggestions....
+                        </span>
+                      </div>
+                    ) : (
+                      <Fragment>
+                        {searchSuggestions.map((item, index) => (
+                          <SearchSuggestion
+                            key={item.id}
+                            type={item.type}
+                            data={item}
+                            className={`search-suggestion ${
+                              index === 0 ? "first-suggestion-item" : ""
+                            }`}
+                            onKeyDown={(e) => keyHandler(e, index, false)}
+                          />
+                        ))}
+                      </Fragment>
+                    )}
                   </div>
                 </motion.div>
               )}

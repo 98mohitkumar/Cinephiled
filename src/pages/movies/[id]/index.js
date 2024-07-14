@@ -9,47 +9,48 @@ import { Fragment, useEffect, useState } from "react";
 import { fetchOptions, getCleanTitle, getReleaseDate, getReleaseYear } from "src/utils/helper";
 import { Error404, ModulesWrapper } from "styles/GlobalComponents";
 
-const Movie = ({
-  id,
-  title,
-  releaseYear,
-  releaseDate,
-  genres,
-  runtime,
-  tagline,
-  overview,
-  rating,
-  moviePoster,
-  backdropPath,
-  crewData,
-  trailerLink,
-  socialIds,
-  homepage,
-  status,
-  language,
-  budget,
-  revenue,
-  cast,
-  reviews,
-  isEasterMovie,
-  backdrops,
-  posters,
-  recommendations,
-  technicalDetails,
-  error
-}) => {
+const Movie = ({ movieData, error }) => {
   const [showEaster, setShowEaster] = useState(false);
   const [hasSeen, setHasSeen] = useState(false);
+  const {
+    id,
+    title,
+    overview,
+    releaseYear,
+    releaseDate,
+    runtime,
+    collection,
+    trailerLink,
+    genres,
+    tagline,
+    rating,
+    moviePoster,
+    crewData,
+    socialIds,
+    homepage,
+    status,
+    technicalDetails,
+    backdropPath,
+    budget,
+    revenue,
+    language,
+    isEasterMovie,
+    cast,
+    reviews,
+    backdrops,
+    posters,
+    recommendations
+  } = movieData;
 
   useEffect(() => {
     let easterSeen = localStorage.getItem("easterSeen");
-    if (isEasterMovie && easterSeen !== "seen") {
-      setShowEaster(true);
-      document.body.style.overflow = "hidden";
-    }
-
-    if (easterSeen === "seen") {
-      setHasSeen(true);
+    if (isEasterMovie) {
+      if (easterSeen === "seen") {
+        setHasSeen(true);
+      } else {
+        setShowEaster(true);
+        document.body.style.overflow = "hidden";
+      }
     }
   }, [isEasterMovie]);
 
@@ -103,7 +104,8 @@ const Movie = ({
               crewData,
               socialIds,
               homepage,
-              technicalDetails
+              technicalDetails,
+              collection
             }}
           />
 
@@ -181,40 +183,44 @@ export const getServerSideProps = async (ctx) => {
       })
     });
 
+    const collection = movieDetails?.belongs_to_collection || null;
     const technicalDetailsData = await technicalDetails.json();
 
     return {
       props: {
-        id: movieDetails?.id,
-        title: movieDetails?.title,
-        releaseYear,
-        releaseDate,
-        genres: movieDetails?.genres,
-        runtime: movieDetails?.runtime,
-        tagline: movieDetails?.tagline,
-        overview: movieDetails?.overview,
-        rating: movieDetails?.vote_average,
-        moviePoster: movieDetails?.poster_path,
-        backdropPath: movieDetails?.backdrop_path,
-        crewData,
-        trailerLink: trailers?.key ?? "",
-        socialIds: movieDetails?.external_ids,
-        homepage: movieDetails?.homepage,
-        status,
-        language: language?.english_name || language?.name || "TBA",
-        country,
-        budget: movieDetails?.budget,
-        revenue: movieDetails?.revenue,
-        cast: {
-          totalCount: movieDetails?.credits?.cast?.length,
-          data: movieDetails?.credits?.cast?.slice(0, 15)
+        movieData: {
+          id: movieDetails?.id,
+          title: movieDetails?.title,
+          releaseYear,
+          releaseDate,
+          collection,
+          genres: movieDetails?.genres,
+          runtime: movieDetails?.runtime,
+          tagline: movieDetails?.tagline,
+          overview: movieDetails?.overview,
+          rating: movieDetails?.vote_average,
+          moviePoster: movieDetails?.poster_path,
+          backdropPath: movieDetails?.backdrop_path,
+          crewData,
+          trailerLink: trailers?.key ?? "",
+          socialIds: movieDetails?.external_ids,
+          homepage: movieDetails?.homepage,
+          status,
+          language: language?.english_name || language?.name || "TBA",
+          country,
+          budget: movieDetails?.budget,
+          revenue: movieDetails?.revenue,
+          cast: {
+            totalCount: movieDetails?.credits?.cast?.length,
+            data: movieDetails?.credits?.cast?.slice(0, 15)
+          },
+          isEasterMovie: movieDetails?.id === 345911,
+          reviews: movieDetails?.reviews?.results ?? [],
+          backdrops: movieDetails?.images?.backdrops ?? [],
+          posters: movieDetails?.images?.posters ?? [],
+          recommendations: movieDetails?.recommendations?.results,
+          technicalDetails: technicalDetailsData || null
         },
-        isEasterMovie: movieDetails?.id === 345911,
-        reviews: movieDetails?.reviews?.results ?? [],
-        backdrops: movieDetails?.images?.backdrops ?? [],
-        posters: movieDetails?.images?.posters ?? [],
-        recommendations: movieDetails?.recommendations?.results,
-        technicalDetails: technicalDetailsData || null,
         error: false
       }
     };

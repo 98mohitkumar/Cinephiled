@@ -120,60 +120,60 @@ export const getCleanTitle = (title) => {
   return stringWithHyphens.replace(/[-\s]+$/, "");
 };
 
-export const fetchSuggestions = async (userInput, controller) => {
-  let searchQuery = userInput;
+export const fetchSuggestions = async ({ query, controller, includePeople }) => {
+  let searchQuery = query;
   let year = "";
+  const people = [];
 
   if (searchQuery.includes("y:")) {
     year = searchQuery.slice(-4);
     searchQuery = searchQuery.slice(0, searchQuery.length - 7);
   }
 
-  if (year.trim().length > 0) {
-    const searchQueryWithYear = await Promise.all([
-      fetch(apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }), {
-        ...fetchOptions(),
-        signal: controller.signal
-      }),
-      fetch(apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year }), {
-        ...fetchOptions(),
-        signal: controller.signal
-      })
-    ]);
+  if (includePeople) {
+    const peopleResponse = await fetch(
+      apiEndpoints.search.personSearch({ query: searchQuery }),
+      fetchOptions()
+    );
 
-    const error = searchQueryWithYear.some((res) => !res.ok);
-    if (error) throw new Error("error fetching data");
-
-    const [movieResponse, tvResponse] = searchQueryWithYear;
-    const [movieRes, tvRes] = await Promise.all([movieResponse.json(), tvResponse.json()]);
-
-    return {
-      movieRes: movieRes.results || [],
-      tvRes: tvRes.results.map((item) => ({ ...item, type: "tv" })) || []
-    };
-  } else {
-    const searchQueryWithoutYear = await Promise.all([
-      fetch(apiEndpoints.search.movieSearch({ query: searchQuery }), {
-        ...fetchOptions(),
-        signal: controller.signal
-      }),
-      fetch(apiEndpoints.search.tvSearch({ query: searchQuery }), {
-        ...fetchOptions(),
-        signal: controller.signal
-      })
-    ]);
-
-    const error = searchQueryWithoutYear.some((res) => !res.ok);
-    if (error) throw new Error("error fetching data");
-
-    const [movieResponse, tvResponse] = searchQueryWithoutYear;
-    const [movieRes, tvRes] = await Promise.all([movieResponse.json(), tvResponse.json()]);
-
-    return {
-      movieRes: movieRes.results || [],
-      tvRes: tvRes.results.map((item) => ({ ...item, type: "tv" })) || []
-    };
+    const peopleRes = await peopleResponse.json();
+    people.push(...peopleRes.results.map((item) => ({ ...item, type: "person" })));
   }
+
+  const fetchSearchResults = async (withYear) => {
+    const searchEndpoints = withYear
+      ? [
+          apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }),
+          apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year })
+        ]
+      : [
+          apiEndpoints.search.movieSearch({ query: searchQuery }),
+          apiEndpoints.search.tvSearch({ query: searchQuery })
+        ];
+
+    const [movieResponse, tvResponse] = await Promise.all(
+      searchEndpoints.map((endpoint) =>
+        fetch(endpoint, {
+          ...fetchOptions(),
+          signal: controller.signal
+        })
+      )
+    );
+
+    if (!movieResponse.ok || !tvResponse.ok) {
+      throw new Error("Error fetching data");
+    }
+
+    const [movieRes, tvRes] = await Promise.all([movieResponse.json(), tvResponse.json()]);
+
+    return {
+      movieRes: movieRes.results.map((item) => ({ ...item, type: "movie" })) || [],
+      tvRes: tvRes.results.map((item) => ({ ...item, type: "tv" })) || [],
+      peopleRes: people
+    };
+  };
+
+  return year.trim().length > 0 ? fetchSearchResults(true) : fetchSearchResults(false);
 };
 
 export const copyToClipboard = async ({ text, nodeId }) => {

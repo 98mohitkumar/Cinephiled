@@ -1,26 +1,37 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-export const tabStyling = css`
-  width: clamp(300px, 90vw, 850px);
-  margin: 3rem auto;
+export const SearchTabWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: min(100%, 1100px);
+  margin: auto;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(100, 100, 100, 0.9);
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
-    height: 4rem;
+  &::-webkit-scrollbar {
+    display: none;
   }
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    margin: 1.75rem auto;
-  }
+  /* for firefox */
+  scrollbar-width: none;
 `;
 
-export const tabTitleStyling = css`
+export const SearchTabSelector = styled.div`
+  padding: 1rem 1.25rem;
+  display: grid;
+  place-items: center;
+  color: ${({ $active }) => ($active ? "white" : "#ababab")};
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 5;
+  white-space: nowrap;
+  transition: color 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+  min-width: 120px;
+  user-select: none;
+  min-width: max-content;
+
   @media only ${(props) => props.theme.breakpoints.md} {
     font-size: 16px;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 0rem 0.5rem;
-    font-size: 14px;
   }
 `;
 

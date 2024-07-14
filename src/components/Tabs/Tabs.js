@@ -46,19 +46,17 @@ export const LinearTabs = ({ tabList, currentTab, setTab }) => {
 
   return (
     <TabContainer ref={tabContainerRef}>
-      <Fragment>
-        {tabList.map(({ key, name }) => (
-          <TabSelector
-            key={key}
-            $count={tabList.length}
-            $active={key === currentTab}
-            onClick={() => setTab(key)}
-            className={key === currentTab && "relative"}>
-            {name}
-            {key === currentTab && <ActiveTabIndicator />}
-          </TabSelector>
-        ))}
-      </Fragment>
+      {tabList.map(({ key, name }) => (
+        <TabSelector
+          key={key}
+          $count={tabList.length}
+          $active={key === currentTab}
+          onClick={() => setTab(key)}
+          className={key === currentTab && "relative"}>
+          {name}
+          {key === currentTab && <ActiveTabIndicator />}
+        </TabSelector>
+      ))}
     </TabContainer>
   );
 };
