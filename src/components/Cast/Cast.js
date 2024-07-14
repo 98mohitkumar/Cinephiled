@@ -47,7 +47,7 @@ const Cast = ({ cast, showFullCastLink = false, isSearchGrid = false }) => {
               <div className='mt-3'>
                 {isSearchGrid ? (
                   <Fragment>
-                    <Span className='movieCastHead block'>{item.name}</Span>
+                    <Span className='movieCastHead block font-semibold'>{item.name}</Span>
                     <Span className='movieCastName block text-neutral-400'>
                       {item.known_for_department}
                     </Span>
