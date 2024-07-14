@@ -1,5 +1,5 @@
 import { apiEndpoints } from "globals/constants";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useState, createContext, useEffect, useContext } from "react";
 import { fetchOptions } from "src/utils/helper";
 
@@ -23,25 +23,27 @@ export default function UserContextProvider({ children }) {
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    if (status === "authenticated" && !userInfo?.accountId) {
-      const getUserInfo = async () => {
-        const profileRes = await fetch(
-          apiEndpoints.user.userInfo({ accountId: data?.user?.accountId }),
-          fetchOptions({ token: data?.user?.accessToken })
-        );
+    const getUserInfo = async () => {
+      const profileRes = await fetch(
+        apiEndpoints.user.userInfo({ accountId: data?.user?.accountId }),
+        fetchOptions({ token: data?.user?.accessToken })
+      );
 
-        if (profileRes.ok) {
-          const profile = await profileRes.json();
+      if (profileRes.ok) {
+        const profile = await profileRes.json();
+        setUserInfo({ ...profile, ...data?.user, status });
+      } else {
+        console.error("cannot fetch profile data");
 
-          return { ...profile, ...data?.user, status };
-        } else {
-          throw Error("cannot fetch profile data");
+        setUserInfo({});
+        if (profileRes.status === 401) {
+          signOut({ redirect: false });
         }
-      };
+      }
+    };
 
-      getUserInfo()
-        .then((data) => setUserInfo(data))
-        .catch(() => setUserInfo({}));
+    if (status === "authenticated" && !userInfo?.accountId) {
+      getUserInfo();
     }
   }, [data?.user, status, userInfo?.accountId]);
 
