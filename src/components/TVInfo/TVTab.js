@@ -45,7 +45,7 @@ const tabList = [
 ];
 
 const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
-  const { activeTab, setTab } = useTabs({ tabLocation: "tvTabState", defaultState: "cast" });
+  const { activeTab, setTab } = useTabs({ tabLocation: "tvTab" });
 
   return (
     <Fragment>

@@ -30,8 +30,7 @@ const WatchProviders = ({
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const { activeTab, setTab } = useTabs({
-    tabLocation: "watchProviders",
-    defaultState: "movies"
+    tabLocation: "watchProvidersTab"
   });
 
   const searchHandler = (e) => {

@@ -27,7 +27,7 @@ const linearTabsList = [
 
 export const ProfileMediaTab = ({ children }) => {
   const { activeTab, setTab } = useTabs({
-    tabLocation: "profileMediaTabState",
+    tabLocation: "profileMediaTab",
     defaultState: "movies"
   });
 

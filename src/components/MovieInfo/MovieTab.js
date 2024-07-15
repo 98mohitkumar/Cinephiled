@@ -38,7 +38,7 @@ const tabList = [
 ];
 
 const MovieTab = ({ cast, reviews, posters, backdrops }) => {
-  const { activeTab, setTab } = useTabs({ tabLocation: "movieTabState", defaultState: "cast" });
+  const { activeTab, setTab } = useTabs({ tabLocation: "movieTab" });
 
   return (
     <Fragment>

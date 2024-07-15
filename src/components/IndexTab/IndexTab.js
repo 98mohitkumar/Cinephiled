@@ -13,7 +13,7 @@ const tabList = [
 ];
 
 const IndexTab = ({ moviesData, TVData, trendingMovies, trendingTv }) => {
-  const { activeTab, setTab } = useTabs({ tabLocation: "indexTab", defaultState: "movies" });
+  const { activeTab, setTab } = useTabs({ tabLocation: "indexTab" });
 
   return (
     <Fragment>

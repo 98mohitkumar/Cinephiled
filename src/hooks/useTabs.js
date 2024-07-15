@@ -1,30 +1,29 @@
-import { useLayoutEffect, useState } from "react";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-const useTabs = ({ tabLocation, defaultState = "" }) => {
-  const [activeTab, setActiveTab] = useState(defaultState);
+const tabsAtom = atomWithStorage("tabStates", {
+  indexTab: "movies",
+  movieTab: "cast",
+  tvTab: "cast",
+  profileTab: "watchlist",
+  profileMediaTab: "movies",
+  searchTab: "movies",
+  watchProvidersTab: "movies",
+  personPageTab: "movies"
+});
 
-  useLayoutEffect(() => {
-    const tabStates = JSON.parse(localStorage.getItem("tabStates")) || {};
-
-    if (tabStates[tabLocation]) {
-      setActiveTab(tabStates[tabLocation]);
-    } else {
-      setActiveTab(defaultState);
-    }
-  }, [tabLocation, defaultState]);
+const useTabs = ({ tabLocation }) => {
+  const [activeTabs, setActiveTabs] = useAtom(tabsAtom);
 
   const setTab = (key) => {
-    if (key === activeTab) return;
-
-    localStorage.setItem(
-      "tabStates",
-      JSON.stringify({ ...JSON.parse(localStorage.getItem("tabStates")), [tabLocation]: key })
-    );
-
-    setActiveTab(key);
+    if (key === activeTabs[tabLocation]) return;
+    setActiveTabs({ ...activeTabs, [tabLocation]: key });
   };
 
-  return { activeTab, setTab };
+  return {
+    activeTab: activeTabs[tabLocation],
+    setTab
+  };
 };
 
 export default useTabs;

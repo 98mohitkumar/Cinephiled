@@ -1906,11 +1906,6 @@ core-js-compat@^3.31.0, core-js-compat@^3.36.1:
   dependencies:
     browserslist "^4.23.0"
 
-country-to-currency@^1.0.3:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/country-to-currency/-/country-to-currency-1.1.5.tgz#9ba009b0be8e1a667abbcd6e47bca07ec2a7e619"
-  integrity sha512-IrIKgWA/B/gY6CF4JX45N1MixXHmk63eHF+0OjeFctx5OFR+VH5M/EQ0HGFuv8lz+Z1sLfSSFmuyZPfqI/9TYA==
-
 cross-spawn@^7.0.0, cross-spawn@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
@@ -1948,11 +1943,6 @@ csstype@3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
-
-currency-symbol-map@^5.0.1:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/currency-symbol-map/-/currency-symbol-map-5.1.0.tgz#59531fbe977ba95e8d358e90e3c9e9053efb75ad"
-  integrity sha512-LO/lzYRw134LMDVnLyAf1dHE5tyO6axEFkR3TXjQIOmMkAM9YL6QsiUwuXzZAmFnuDJcs4hayOgyIYtViXFrLw==
 
 damerau-levenshtein@^1.0.8:
   version "1.0.8"
@@ -3281,6 +3271,11 @@ jose@^4.15.5:
   version "4.15.5"
   resolved "https://registry.yarnpkg.com/jose/-/jose-4.15.5.tgz#6475d0f467ecd3c630a1b5dadd2735a7288df706"
   integrity sha512-jc7BFxgKPKi94uOvEmzlSWFFe2+vASyXaKUpdQKatWAESU2MWjDfFf0fdfc83CDKcA5QecabZeNLyfhe3yKNkg==
+
+jotai@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-2.9.0.tgz#240f37fb1bb8a8d4c8d178b423575f2da677814f"
+  integrity sha512-MioTpMvR78IGfJ+W8EwQj3kwTkb+u0reGnTyg3oJZMWK9rK9v8NBSC9Rhrg9jrrFYA6bGZtzJa96zsuAYF6W3w==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"

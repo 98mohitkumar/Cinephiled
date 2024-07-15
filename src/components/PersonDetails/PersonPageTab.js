@@ -37,7 +37,7 @@ const tabList = [
 ];
 
 const PersonPageTab = ({ movieCredits, tvCredits }) => {
-  const { activeTab, setTab } = useTabs({ tabLocation: "personPageTab", defaultState: "movies" });
+  const { activeTab, setTab } = useTabs({ tabLocation: "personPageTab" });
   const router = useRouter();
   const { department: currentSelectedDepartment } = router.query;
 

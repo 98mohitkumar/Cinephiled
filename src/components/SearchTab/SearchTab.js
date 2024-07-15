@@ -18,8 +18,7 @@ const SearchTab = ({ movies, tv, search, keywords, people, collections }) => {
   const tabContainerRef = useRef(null);
 
   const { activeTab, setTab } = useTabs({
-    tabLocation: "searchTabPosition",
-    defaultState: "movies"
+    tabLocation: "searchTab"
   });
 
   const tabSelectionHandler = (tab) => {
