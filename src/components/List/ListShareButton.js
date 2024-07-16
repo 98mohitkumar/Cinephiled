@@ -54,14 +54,22 @@ const ListShareButton = ({ listName }) => {
                   className='border text-base rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-500 placeholder-neutral-400 text-white focus:border'
                 />
 
-                <Button className='mediaCTA w-[50px] shrink-0' onClick={copyButtonHandler}>
+                <Button
+                  as={motion.button}
+                  whileTap={{ scale: 0.95 }}
+                  className='mediaCTA w-[50px] shrink-0'
+                  onClick={copyButtonHandler}>
                   <IoCopy size={20} />
                 </Button>
               </div>
             </div>
           </div>
 
-          <Button className='secondary w-full mt-3' onClick={closeModal}>
+          <Button
+            as={motion.button}
+            whileTap={{ scale: 0.95 }}
+            className='secondary w-full mt-3'
+            onClick={closeModal}>
             Close
           </Button>
         </div>

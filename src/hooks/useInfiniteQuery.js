@@ -17,9 +17,10 @@ const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint }) =>
     async (page) => {
       setIsLoading(true);
       try {
-        const res = await fetch(getEndpoint({ page }), {
-          ...fetchOptions(useUserToken ? { token: accessToken } : {})
-        });
+        const res = await fetch(
+          getEndpoint({ page }),
+          fetchOptions({ token: useUserToken ? accessToken : null })
+        );
 
         if (!res.ok) {
           throw new Error("Cannot fetch data");

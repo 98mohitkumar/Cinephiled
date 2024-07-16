@@ -1,7 +1,7 @@
 import { apiEndpoints, read_access_token } from "globals/constants";
 
 export const fetchOptions = (
-  { method, body, token } = {
+  { method, body, token, signal } = {
     method: "GET",
     body: null,
     token: null
@@ -22,6 +22,8 @@ export const fetchOptions = (
   }
 
   if (body) options.body = JSON.stringify(body);
+
+  if (signal) options.signal = signal;
 
   return options;
 };
@@ -133,7 +135,9 @@ export const fetchSuggestions = async ({ query, controller, includePeople }) => 
   if (includePeople) {
     const peopleResponse = await fetch(
       apiEndpoints.search.personSearch({ query: searchQuery }),
-      fetchOptions()
+      fetchOptions({
+        signal: controller.signal
+      })
     );
 
     const peopleRes = await peopleResponse.json();

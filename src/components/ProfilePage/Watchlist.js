@@ -59,14 +59,8 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
 };
 
 const Watchlist = () => {
-  const {
-    moviesWatchlist,
-    tvShowsWatchlist,
-    moviesWatchlistLoading,
-    tvShowsWatchlistLoading,
-    validateMoviesWatchlist,
-    validateTvWatchlist
-  } = useMediaContext();
+  const { moviesWatchlist, tvShowsWatchlist, isLoading, renderKey, validateMedia } =
+    useMediaContext();
 
   const filterMedia = async ({ id, type }) => {
     const response = await addToWatchlist({
@@ -76,17 +70,17 @@ const Watchlist = () => {
     });
 
     if (response?.success) {
-      if (type === "movie") {
-        validateMoviesWatchlist({ state: "removed", id });
-      } else {
-        validateTvWatchlist({ state: "removed", id });
-      }
+      validateMedia({
+        state: "removed",
+        id,
+        key: type === "movie" ? "moviesWatchlist" : "tvShowsWatchlist"
+      });
     }
   };
 
   return (
     <Fragment>
-      {moviesWatchlistLoading || tvShowsWatchlistLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <ProfileMediaTab>
@@ -94,7 +88,7 @@ const Watchlist = () => {
             <AnimatePresence mode='wait' initial={false}>
               {tabState === "movies" && (
                 <motion.div
-                  key={`${moviesWatchlist?.length}-movies`}
+                  key={`${renderKey}-movies`}
                   variants={framerTabVariants}
                   initial='hidden'
                   animate='visible'
@@ -122,7 +116,7 @@ const Watchlist = () => {
 
               {tabState === "tv" && (
                 <motion.div
-                  key={`${tvShowsWatchlist?.length}-tv`}
+                  key={`${renderKey}-tv`}
                   variants={framerTabVariants}
                   initial='hidden'
                   animate='visible'

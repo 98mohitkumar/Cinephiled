@@ -129,7 +129,7 @@ const AddListItems = ({ id, CTAHandler }) => {
                     <label
                       htmlFor='addItem'
                       className='block text-base font-medium text-neutral-200'>
-                      Add Item
+                      Search Item
                     </label>
 
                     {query?.trim()?.length > 0 && (

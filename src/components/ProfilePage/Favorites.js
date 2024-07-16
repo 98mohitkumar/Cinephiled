@@ -59,14 +59,8 @@ export const FavoritesCTA = ({ clickHandler, mediaData }) => {
 };
 
 const Favorites = () => {
-  const {
-    favoriteMovies,
-    favoriteTvShows,
-    favoriteMoviesLoading,
-    favoriteTvShowsLoading,
-    validateFavoriteMovies,
-    validateFavoriteTvShows
-  } = useMediaContext();
+  const { favoriteMovies, favoriteTvShows, isLoading, renderKey, validateMedia } =
+    useMediaContext();
 
   const filterMedia = async ({ id, type }) => {
     const response = await setFavorite({
@@ -76,23 +70,17 @@ const Favorites = () => {
     });
 
     if (response?.success) {
-      if (type === "movie") {
-        validateFavoriteMovies({
-          state: "removed",
-          id
-        });
-      } else {
-        validateFavoriteTvShows({
-          state: "removed",
-          id
-        });
-      }
+      validateMedia({
+        state: "removed",
+        id,
+        key: type === "movie" ? "favoriteMovies" : "favoriteTvShows"
+      });
     }
   };
 
   return (
     <Fragment>
-      {favoriteMoviesLoading || favoriteTvShowsLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <ProfileMediaTab>
@@ -100,7 +88,7 @@ const Favorites = () => {
             <AnimatePresence mode='wait' initial={false}>
               {tabState === "movies" && (
                 <motion.div
-                  key={`${favoriteMovies?.length}-movies`}
+                  key={`${renderKey}-movies`}
                   variants={framerTabVariants}
                   initial='hidden'
                   animate='visible'
@@ -128,7 +116,7 @@ const Favorites = () => {
 
               {tabState === "tv" && (
                 <motion.div
-                  key={`${favoriteTvShows?.length}-tv`}
+                  key={`${renderKey}-tv`}
                   variants={framerTabVariants}
                   initial='hidden'
                   animate='visible'

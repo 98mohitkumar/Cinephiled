@@ -57,10 +57,10 @@ const TvRecommendations = () => {
 };
 
 const ProfileRecommendations = () => {
-  const { movieRecommendationsLoading, tvRecommendationsLoading } = useMediaContext();
+  const { isLoading } = useMediaContext();
   return (
     <Fragment>
-      {movieRecommendationsLoading || tvRecommendationsLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <ProfileMediaTab>

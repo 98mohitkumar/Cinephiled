@@ -72,13 +72,7 @@ const MovieDetails = ({ movieDetails, easter }) => {
 
   const { userInfo } = useUserContext();
   const { renderEaster, hasSeen, showEaster, easterHandler } = easter;
-  const {
-    favoriteMovies,
-    moviesWatchlist,
-    validateMoviesWatchlist,
-    validateFavoriteMovies,
-    ratedMovies
-  } = useMediaContext();
+  const { favoriteMovies, moviesWatchlist, ratedMovies, validateMedia } = useMediaContext();
   const { isToastVisible, showToast, toastMessage } = useToast();
   const savedRating = ratedMovies?.find((item) => item?.id === id)?.rating ?? false;
   const { isModalVisible, openModal, closeModal } = useModal();
@@ -99,9 +93,10 @@ const MovieDetails = ({ movieDetails, easter }) => {
 
       if (response?.success) {
         if (isAddedToFavorites) {
-          validateFavoriteMovies({
+          validateMedia({
             state: "removed",
-            id
+            id,
+            key: "favoriteMovies"
           });
         } else {
           const updatedMedia = [...favoriteMovies];
@@ -113,9 +108,10 @@ const MovieDetails = ({ movieDetails, easter }) => {
             release_date: releaseDate
           });
 
-          validateFavoriteMovies({
+          validateMedia({
             state: "added",
             id,
+            key: "favoriteMovies",
             media: updatedMedia
           });
         }
@@ -141,9 +137,10 @@ const MovieDetails = ({ movieDetails, easter }) => {
 
       if (response?.success) {
         if (isAddedToWatchlist) {
-          validateMoviesWatchlist({
+          validateMedia({
             state: "removed",
-            id
+            id,
+            key: "moviesWatchlist"
           });
         } else {
           const updatedMedia = [...moviesWatchlist];
@@ -155,9 +152,10 @@ const MovieDetails = ({ movieDetails, easter }) => {
             release_date: releaseDate
           });
 
-          validateMoviesWatchlist({
+          validateMedia({
             state: "added",
             id,
+            key: "moviesWatchlist",
             media: updatedMedia
           });
         }

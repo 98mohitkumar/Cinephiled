@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { ToastWrapper } from "./ToastStyles";
 
 export const useToast = () => {
@@ -28,32 +29,39 @@ export const useToast = () => {
 };
 
 const Toast = ({ children, isToastVisible }) => {
+  if (typeof window === "undefined") return null;
+
   return (
-    <AnimatePresence mode='wait'>
-      {isToastVisible && (
-        <ToastWrapper
-          as={motion.div}
-          initial={{ translateY: "100px" }}
-          animate={{
-            translateY: "-50px",
-            transition: {
-              type: "tween",
-              duration: 0.6,
-              ease: [0.77, 0, 0.175, 1]
-            }
-          }}
-          exit={{
-            translateY: "100px",
-            transition: {
-              type: "tween",
-              duration: 0.6,
-              ease: [0.77, 0, 0.175, 1]
-            }
-          }}>
-          {children}
-        </ToastWrapper>
+    <Fragment>
+      {createPortal(
+        <AnimatePresence mode='wait'>
+          {isToastVisible && (
+            <ToastWrapper
+              as={motion.div}
+              initial={{ translateY: "100px" }}
+              animate={{
+                translateY: "-50px",
+                transition: {
+                  type: "tween",
+                  duration: 0.6,
+                  ease: [0.77, 0, 0.175, 1]
+                }
+              }}
+              exit={{
+                translateY: "100px",
+                transition: {
+                  type: "tween",
+                  duration: 0.6,
+                  ease: [0.77, 0, 0.175, 1]
+                }
+              }}>
+              {children}
+            </ToastWrapper>
+          )}
+        </AnimatePresence>,
+        document.querySelector(".main-wrapper") || document.body
       )}
-    </AnimatePresence>
+    </Fragment>
   );
 };
 

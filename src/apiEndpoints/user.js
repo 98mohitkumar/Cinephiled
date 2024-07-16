@@ -4,7 +4,7 @@ import { fetchOptions } from "src/utils/helper";
 
 // GET requsts
 
-export const getWatchlist = async ({ mediaType, pageQuery, accountId, token }) => {
+export const getWatchlist = async ({ mediaType, pageQuery, accountId, token, signal }) => {
   const watchlistRes = await fetch(
     apiEndpoints.user.getWatchlist({
       mediaType,
@@ -12,7 +12,8 @@ export const getWatchlist = async ({ mediaType, pageQuery, accountId, token }) =
       pageQuery
     }),
     fetchOptions({
-      token
+      token,
+      signal
     })
   );
 
@@ -24,11 +25,12 @@ export const getWatchlist = async ({ mediaType, pageQuery, accountId, token }) =
   }
 };
 
-export const getRated = async ({ mediaType, pageQuery, accountId, token }) => {
+export const getRated = async ({ mediaType, pageQuery, accountId, token, signal }) => {
   const ratedRes = await fetch(
     apiEndpoints.user.getRated({ mediaType, accountId, pageQuery }),
     fetchOptions({
-      token
+      token,
+      signal
     })
   );
 
@@ -40,7 +42,7 @@ export const getRated = async ({ mediaType, pageQuery, accountId, token }) => {
   }
 };
 
-export const getFavorites = async ({ mediaType, pageQuery, accountId, token }) => {
+export const getFavorites = async ({ mediaType, pageQuery, accountId, token, signal }) => {
   const favoritesRes = await fetch(
     apiEndpoints.user.getFavorites({
       mediaType,
@@ -48,7 +50,8 @@ export const getFavorites = async ({ mediaType, pageQuery, accountId, token }) =
       pageQuery
     }),
     fetchOptions({
-      token
+      token,
+      signal
     })
   );
 
@@ -60,11 +63,12 @@ export const getFavorites = async ({ mediaType, pageQuery, accountId, token }) =
   }
 };
 
-export const getRecommendations = async ({ mediaType, pageQuery, accountId, token }) => {
+export const getRecommendations = async ({ mediaType, pageQuery, accountId, token, signal }) => {
   const recommendationsRes = await fetch(
     apiEndpoints.user.getRecommendations({ mediaType, accountId, pageQuery }),
     fetchOptions({
-      token
+      token,
+      signal
     })
   );
 
@@ -76,7 +80,7 @@ export const getRecommendations = async ({ mediaType, pageQuery, accountId, toke
   }
 };
 
-export const getListItemStatus = async ({ listId, mediaType, mediaId }) => {
+export const getListItemStatus = async ({ listId, mediaType, mediaId, signal }) => {
   const {
     user: { accessToken }
   } = await getSession();
@@ -90,7 +94,8 @@ export const getListItemStatus = async ({ listId, mediaType, mediaId }) => {
         id: listId,
         mediaType,
         mediaId
-      }
+      },
+      signal
     })
   );
 

@@ -56,7 +56,7 @@ const ChooseListCover = ({ id }) => {
                 </Button>
               </div>
 
-              {listDetails.results.length > 0 ? (
+              {listDetails?.results?.length > 0 ? (
                 <div className='grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4'>
                   {listDetails.results.map(({ id, backdrop_path, name, title }) => (
                     <div key={id}>

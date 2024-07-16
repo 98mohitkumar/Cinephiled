@@ -112,7 +112,7 @@ const Hero = ({ banner = null }) => {
                   <div className='mt-2 suggestions'>
                     {loading ? (
                       <div className='min-h-20 grid place-items-center'>
-                        <span className='text-neutral-700 font-semibold'>
+                        <span className='text-neutral-700 font-medium text-base lg:text-lg'>
                           Loading Suggestions....
                         </span>
                       </div>

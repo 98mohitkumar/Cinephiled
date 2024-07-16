@@ -28,7 +28,11 @@ const RatingCTA = ({ mediaData }) => {
         mediaName={`${name} (${getReleaseYear(releaseDate)})`}
       />
 
-      <Button as={motion.button} whileTap={{ scale: 0.95 }} onClick={openModal} className='w-full'>
+      <Button
+        as={motion.button}
+        whileTap={{ scale: 0.95 }}
+        onClick={openModal}
+        className='w-full !font-semibold'>
         Edit Rating
       </Button>
     </Fragment>
@@ -36,10 +40,10 @@ const RatingCTA = ({ mediaData }) => {
 };
 
 const Ratings = () => {
-  const { ratedMovies, ratedTvShows, ratedMoviesLoading, ratedTvShowsLoading } = useMediaContext();
+  const { ratedMovies, ratedTvShows, isLoading, renderKey } = useMediaContext();
   return (
     <Fragment>
-      {ratedMoviesLoading || ratedTvShowsLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <ProfileMediaTab>
@@ -47,7 +51,7 @@ const Ratings = () => {
             <AnimatePresence mode='wait' initial={false}>
               {tabState === "movies" && (
                 <motion.div
-                  key={`${ratedMovies?.length}-movies`}
+                  key={`${renderKey}-movies`}
                   variants={framerTabVariants}
                   initial='hidden'
                   animate='visible'
@@ -81,7 +85,7 @@ const Ratings = () => {
 
               {tabState === "tv" && (
                 <motion.div
-                  key={`${ratedTvShows?.length}-tv`}
+                  key={`${renderKey}-tv`}
                   variants={framerTabVariants}
                   initial='hidden'
                   animate='visible'

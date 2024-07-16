@@ -28,7 +28,7 @@ const useGetSearchSuggestions = ({ query, includePeople = false }) => {
 
     return () => {
       setSuggestions([]);
-      abortController.abort();
+      abortController.abort("unmounted");
     };
   }, [includePeople, query]);
 

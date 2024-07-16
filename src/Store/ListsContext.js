@@ -1,5 +1,7 @@
-import useGetAllLists from "hooks/useGetAllLists";
-import { createContext, useContext } from "react";
+import { apiEndpoints } from "globals/constants";
+import { createContext, useContext, useEffect, useState } from "react";
+import { fetchOptions } from "src/utils/helper";
+import { useUserContext } from "./UserContext";
 
 const ListsContext = createContext({
   lists: [],
@@ -17,9 +19,50 @@ export const useListsContext = () => {
 };
 
 const ListsContextProvider = ({ children }) => {
-  const { lists, updateList } = useGetAllLists();
+  const [lists, setLists] = useState([]);
+  const { userInfo } = useUserContext();
 
-  return <ListsContext.Provider value={{ lists, updateList }}>{children}</ListsContext.Provider>;
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    const fetchAllLists = async ({ page }) => {
+      try {
+        const res = await fetch(
+          apiEndpoints.lists.getLists({ accountId: userInfo?.accountId, pageQuery: page }),
+          fetchOptions({ token: userInfo?.accessToken, signal: abortController.signal })
+        );
+
+        if (!res.ok) throw new Error("Cannot fetch lists");
+
+        const { total_pages, results } = await res.json();
+
+        if (results?.length > 0) {
+          setLists((prev) => prev.concat(results));
+
+          if (total_pages > page) {
+            fetchAllLists({ page: page + 1 });
+          }
+        }
+      } catch {
+        setLists([]);
+      }
+    };
+
+    if (userInfo?.accountId) {
+      fetchAllLists({ page: 1 });
+    }
+
+    return () => {
+      abortController.abort("unmounted");
+      setLists([]);
+    };
+  }, [userInfo?.accessToken, userInfo?.accountId]);
+
+  return (
+    <ListsContext.Provider value={{ lists, updateList: setLists }}>
+      {children}
+    </ListsContext.Provider>
+  );
 };
 
 export default ListsContextProvider;

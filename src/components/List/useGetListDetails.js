@@ -41,7 +41,10 @@ const useGetListDetails = ({ id, order }) => {
       setDetails({ error: false, listDetails: {}, loading: false });
     }
 
-    return () => abortController.abort();
+    return () => {
+      abortController.abort("unmounted");
+      setDetails({ error: false, listDetails: {}, loading: true });
+    };
   }, [id, order, userInfo.accessToken]);
 
   return { error, listDetails, loading };

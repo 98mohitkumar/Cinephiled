@@ -1,7 +1,6 @@
 import { getListItemStatus, updateListItems } from "api/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import PlaceholderText from "components/PlaceholderText";
 import Toast, { useToast } from "components/Toast/Toast";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -16,8 +15,10 @@ const ListSlice = ({ mediaId, list, mediaType, CTA }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     setLoading(true);
-    getListItemStatus({ listId: list.id, mediaId, mediaType })
+    getListItemStatus({ listId: list.id, mediaId, mediaType, signal: abortController.signal })
       .then((data) => {
         if (data.success) {
           setIsAdded(true);
@@ -30,6 +31,12 @@ const ListSlice = ({ mediaId, list, mediaType, CTA }) => {
         console.error(err);
         setLoading(false);
       });
+
+    return () => {
+      abortController.abort("unmounted");
+      setIsAdded(false);
+      setLoading(false);
+    };
   }, [list.id, mediaId, mediaType]);
 
   const selectectionHandler = () => {
@@ -174,14 +181,14 @@ const AddToListModal = ({ mediaId, mediaType }) => {
               ))}
             </div>
           ) : (
-            <PlaceholderText>
-              You don&apos;t have any lists yet.
+            <div className='grid place-items-center py-3 gap-2'>
+              <p className='text-xl'>You don&apos;t have any lists yet.</p>
               <Link href='/lists?create=true'>
                 <p className='block text-lg underline text-cyan-400 hover:text-cyan-600 transition-colors'>
                   Create a list
                 </p>
               </Link>
-            </PlaceholderText>
+            </div>
           )}
 
           <div className='mt-6 flex gap-3'>

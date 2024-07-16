@@ -62,13 +62,7 @@ const TVDetails = ({ tvData }) => {
     technicalDetails
   } = tvData;
   const { userInfo } = useUserContext();
-  const {
-    favoriteTvShows,
-    tvShowsWatchlist,
-    validateFavoriteTvShows,
-    validateTvWatchlist,
-    ratedTvShows
-  } = useMediaContext();
+  const { favoriteTvShows, tvShowsWatchlist, ratedTvShows, validateMedia } = useMediaContext();
   const { isToastVisible, showToast, toastMessage } = useToast();
   const savedRating = ratedTvShows?.find((item) => item?.id === id)?.rating ?? false;
   const { isModalVisible, openModal, closeModal } = useModal();
@@ -89,7 +83,7 @@ const TVDetails = ({ tvData }) => {
 
       if (response.success) {
         if (isAddedToFavorites) {
-          validateFavoriteTvShows({ state: "removed", id });
+          validateMedia({ state: "removed", id, key: "favoriteTvShows" });
         } else {
           const updatedMedia = [...favoriteTvShows];
 
@@ -100,7 +94,7 @@ const TVDetails = ({ tvData }) => {
             first_air_date: airDate
           });
 
-          validateFavoriteTvShows({ state: "added", id, media: updatedMedia });
+          validateMedia({ state: "added", id, media: updatedMedia, key: "favoriteTvShows" });
         }
         showToast({
           message: isAddedToFavorites ? "Removed from favorites" : "Added to favorites"
@@ -123,7 +117,7 @@ const TVDetails = ({ tvData }) => {
 
       if (response.success) {
         if (isAddedToWatchlist) {
-          validateTvWatchlist({ state: "removed", id });
+          validateMedia({ state: "removed", id, key: "tvShowsWatchlist" });
         } else {
           const updatedMedia = [...tvShowsWatchlist];
 
@@ -134,7 +128,7 @@ const TVDetails = ({ tvData }) => {
             first_air_date: airDate
           });
 
-          validateTvWatchlist({ state: "added", id, media: updatedMedia });
+          validateMedia({ state: "added", id, media: updatedMedia, key: "tvShowsWatchlist" });
         }
         showToast({
           message: isAddedToWatchlist ? "Removed from watchlist" : "Added to watchlist"

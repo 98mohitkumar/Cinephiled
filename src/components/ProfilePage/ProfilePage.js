@@ -52,13 +52,13 @@ const Profile = () => {
 
   const userAvatar = {
     type: userInfo?.avatar?.tmdb?.avatar_path ? "tmdb" : "hash",
-    avatar: userInfo?.avatar?.tmdb?.avatar_path ?? userInfo?.avatar?.gravatar?.hash
+    avatar: userInfo?.avatar?.tmdb?.avatar_path || userInfo?.avatar?.gravatar?.hash
   };
 
   const stats = {
-    Watchlist: moviesWatchlist?.length + tvShowsWatchlist?.length ?? 0,
-    Favorites: favoriteMovies?.length + favoriteTvShows?.length ?? 0,
-    Rated: ratedMovies?.length + ratedTvShows.length ?? 0
+    Watchlist: moviesWatchlist?.length + tvShowsWatchlist?.length || 0,
+    Favorites: favoriteMovies?.length + favoriteTvShows?.length || 0,
+    Rated: ratedMovies?.length + ratedTvShows.length || 0
   };
 
   const { activeTab, setTab } = useTabs({
@@ -68,7 +68,7 @@ const Profile = () => {
 
   return (
     <Fragment>
-      <MetaWrapper title={`${(userInfo?.name ?? userInfo?.username) || ""} - Cinephiled`} />
+      <MetaWrapper title={`${userInfo?.name || userInfo?.username || ""} - Cinephiled`} />
 
       {userInfo?.accountId ? (
         <div className='h-full w-full grow'>

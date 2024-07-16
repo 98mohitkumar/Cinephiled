@@ -37,6 +37,7 @@ const EditListModal = ({ list }) => {
       revalidateData();
       const editedList = lists.find((item) => item.id === list.id);
 
+      // this is done so that the name of the list that appears in add to list modal is in sync
       if (listData.name !== editedList.name) {
         updateListContext((prev) =>
           prev.map((item) => (item.id === list.id ? { ...item, name: listData.name } : item))

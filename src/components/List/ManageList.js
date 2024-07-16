@@ -165,6 +165,8 @@ const ManageList = ({ id }) => {
 
                 <div className='flex gap-3 items-center max-sm:w-full'>
                   <Button
+                    as={motion.button}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => setUpdateCover((prev) => !prev)}
                     className='w-full'
                     loading={+isWaiting}>
@@ -172,6 +174,8 @@ const ManageList = ({ id }) => {
                   </Button>
 
                   <Button
+                    as={motion.button}
+                    whileTap={{ scale: 0.95 }}
                     disabled={items?.length === 0}
                     onClick={revalidateData}
                     className='disabled:opacity-50 disabled:cursor-not-allowed w-full'
@@ -247,7 +251,7 @@ const ManageList = ({ id }) => {
                           <label
                             htmlFor='addItem'
                             className='block text-base font-medium text-neutral-200'>
-                            Add Item
+                            Search Item
                           </label>
 
                           {query?.trim()?.length > 0 && (
@@ -373,6 +377,8 @@ const ManageList = ({ id }) => {
                               </div>
 
                               <Button
+                                as={motion.button}
+                                whileTap={{ scale: 0.95 }}
                                 className='danger w-full mt-4'
                                 onClick={() =>
                                   itemsHandler({

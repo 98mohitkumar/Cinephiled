@@ -21,8 +21,7 @@ const RatingModal = ({
   title
 }) => {
   const [rating, updateRating] = useState(0);
-  const { ratedMovies, ratedTvShows, validateRatedMovies, validateRatedTvShows } =
-    useMediaContext();
+  const { ratedMovies, ratedTvShows, validateMedia } = useMediaContext();
   const { showToast, isToastVisible, toastMessage } = useToast();
 
   const {
@@ -56,9 +55,10 @@ const RatingModal = ({
               title
             });
           }
-          validateRatedMovies({
+          validateMedia({
             state: "added",
             id: mediaId,
+            key: "ratedMovies",
             media: updatedRatedMovies
           });
         } else {
@@ -76,9 +76,10 @@ const RatingModal = ({
               title
             });
           }
-          validateRatedTvShows({
+          validateMedia({
             state: "added",
             id: mediaId,
+            key: "ratedTvShows",
             media: updatedRatedTvShows
           });
         }
@@ -96,17 +97,11 @@ const RatingModal = ({
     const res = await deleteRating({ mediaType, mediaId });
 
     if (res?.success) {
-      if (mediaType === "movie") {
-        validateRatedMovies({
-          state: "removed",
-          id: mediaId
-        });
-      } else {
-        validateRatedTvShows({
-          state: "removed",
-          id: mediaId
-        });
-      }
+      validateMedia({
+        state: "removed",
+        id: mediaId,
+        key: mediaType === "movie" ? "ratedMovies" : "ratedTvShows"
+      });
     }
     closeDeleteConfirmationModal();
   };
@@ -130,14 +125,15 @@ const RatingModal = ({
           {savedRating && rating === 0 ? (
             <Fragment>
               <div className='flex justify-between items-center my-4'>
-                <div>
-                  <Span className='font-normal'>Your rating : </Span>
-                  <Span className='tetx-xl md:text-2xl font-medium'>{savedRating}/10</Span>
+                <div className='flex gap-1 items-center'>
+                  <Span className='font-normal leading-5 block'>Your rating:</Span>
+                  <Span className='text-xl md:text-2xl font-semibold'>{savedRating}/10</Span>
                 </div>
-                <div>
+
+                <div className='flex gap-3'>
                   <Span
                     style={{ color: "#01b4e4" }}
-                    className='text-base font-semibold rating-option me-3'
+                    className='text-base font-semibold rating-option'
                     onClick={() => updateRating(savedRating)}>
                     Update
                   </Span>
