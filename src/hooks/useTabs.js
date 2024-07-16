@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-const tabsAtom = atomWithStorage("tabStates", {
+const tabsAtom = atomWithStorage("tabComponentStates", {
   indexTab: "movies",
   movieTab: "cast",
   tvTab: "cast",
