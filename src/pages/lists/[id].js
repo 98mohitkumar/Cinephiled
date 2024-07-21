@@ -137,7 +137,14 @@ const List = ({ list, error }) => {
                         />
                       )}
 
-                      {list.public && <ListShareButton listName={list?.name} />}
+                      {list.public && (
+                        <ListShareButton
+                          list={{
+                            name: list?.name,
+                            description: list?.description
+                          }}
+                        />
+                      )}
                     </div>
                   </div>
 
