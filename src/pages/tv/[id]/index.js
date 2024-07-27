@@ -36,7 +36,7 @@ const TvShow = ({ tvData, error }) => {
     homepage,
     tagline,
     trailerLink,
-    technicalDetails
+    imdbId
   } = tvData;
 
   return (
@@ -71,7 +71,7 @@ const TvShow = ({ tvData, error }) => {
               trailerLink,
               homepage,
               releaseYear,
-              technicalDetails
+              imdbId
             }}
           />
 
@@ -139,18 +139,6 @@ export const getServerSideProps = async (ctx) => {
 
     const imdbId = tvData?.external_ids?.imdb_id;
 
-    const technicalDetails = await fetch(apiEndpoints.cfWorker, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id: imdbId
-      })
-    });
-
-    const technicalDetailsData = await technicalDetails.json();
-
     return {
       props: {
         tvData: {
@@ -186,7 +174,7 @@ export const getServerSideProps = async (ctx) => {
           backdrops: tvData?.images?.backdrops ?? [],
           posters: tvData?.images?.posters ?? [],
           recommendations: tvData?.recommendations?.results,
-          technicalDetails: technicalDetailsData || null
+          imdbId
         },
         error: false
       }

@@ -6,12 +6,9 @@ import { fetchOptions } from "src/utils/helper";
 import { BadQuery, Error404 } from "styles/GlobalComponents";
 
 const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes, peopleRes, collectionRes }) => {
-  const allEmptyResults =
-    movieRes?.results?.length === 0 &&
-    tvRes?.results?.length === 0 &&
-    keywordsRes?.results?.length === 0 &&
-    peopleRes?.results?.length === 0 &&
-    collectionRes?.results?.length === 0;
+  const allEmptyResults = [movieRes, tvRes, keywordsRes, peopleRes, collectionRes].every(
+    (res) => res?.results?.length === 0
+  );
 
   return (
     <Fragment>

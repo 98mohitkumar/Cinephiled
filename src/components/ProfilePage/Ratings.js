@@ -100,7 +100,8 @@ const Ratings = () => {
                               id: tv?.id,
                               name: tv?.name,
                               releaseDate: tv?.first_air_date,
-                              type: "tv"
+                              type: "tv",
+                              posterPath: tv?.poster_path
                             }}
                           />
                         </MediaCard>

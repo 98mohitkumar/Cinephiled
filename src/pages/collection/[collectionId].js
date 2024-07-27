@@ -17,6 +17,7 @@ import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
+import { getSortedItems } from "src/utils/getSortedItems";
 import { fetchOptions, getCleanTitle, getRating } from "src/utils/helper";
 import {
   DetailsHeroWrap,
@@ -47,6 +48,8 @@ export const Collection = ({ collectionData, error, movieGenresData, collectionI
 
   const posters = collectionImagesData?.posters || [];
   const backdrops = collectionImagesData?.backdrops || [];
+
+  const sortedByReleaseDate = getSortedItems({ items: parts, sortBy: "releaseDate" });
 
   return (
     <Fragment>
@@ -154,7 +157,7 @@ export const Collection = ({ collectionData, error, movieGenresData, collectionI
                       Movies ({parts.length})
                     </span>
 
-                    <MoviesTemplate movies={parts} />
+                    <MoviesTemplate movies={sortedByReleaseDate} />
                   </section>
                 </ModulesWrapper>
               ) : null}

@@ -195,3 +195,5 @@ export const copyToClipboard = async ({ text, nodeId }) => {
     throw new Error("error copying to clipboard");
   }
 };
+
+export const matcher = (item1, item2) => item1 === item2;

@@ -1,7 +1,5 @@
-import { setFavorite, addToWatchlist } from "api/user";
 import DominantColor from "components/DominantColor/DominantColor";
-import AddToListModal from "components/List/AddToListModal";
-import { useModal } from "components/Modal/Modal";
+
 import {
   Credits,
   CreditsWrapper,
@@ -16,23 +14,17 @@ import {
   Span,
   Tagline
 } from "components/MovieInfo/MovieDetailsStyles";
-import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
-import RatingModal from "components/RatingModal/RatingModal";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import TechnicalDetails from "components/TechnicalDetails/TechnicalDetails";
-import Toast, { useToast } from "components/Toast/Toast";
-import { motion, AnimatePresence } from "framer-motion";
+import UserActions from "components/UserActions/UserActions";
+import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { AiFillStar } from "react-icons/ai";
-import { BiListPlus, BiListCheck } from "react-icons/bi";
-import { BsStarHalf } from "react-icons/bs";
-import { FaYoutube, FaHeart, FaRegHeart } from "react-icons/fa";
-import { framerTabVariants, getCleanTitle, getRating } from "src/utils/helper";
-import { useMediaContext } from "Store/MediaContext";
-import { useUserContext } from "Store/UserContext";
+import { FaYoutube } from "react-icons/fa";
+import { getCleanTitle, getRating } from "src/utils/helper";
+
 import {
   Button,
   DetailsHeroWrap,
@@ -59,95 +51,11 @@ const TVDetails = ({ tvData }) => {
     homepage,
     crewData,
     releaseYear,
-    technicalDetails
+    imdbId
   } = tvData;
-  const { userInfo } = useUserContext();
-  const { favoriteTvShows, tvShowsWatchlist, ratedTvShows, validateMedia } = useMediaContext();
-  const { isToastVisible, showToast, toastMessage } = useToast();
-  const savedRating = ratedTvShows?.find((item) => item?.id === id)?.rating ?? false;
-  const { isModalVisible, openModal, closeModal } = useModal();
 
   // splice genres
   genres.length > 3 && genres.splice(3);
-
-  const isAddedToFavorites = favoriteTvShows?.map((item) => item.id)?.includes(id);
-  const isAddedToWatchlist = tvShowsWatchlist?.map((item) => item.id)?.includes(id);
-
-  const favoriteHandler = async () => {
-    if (userInfo?.accountId) {
-      const response = await setFavorite({
-        mediaType: "tv",
-        mediaId: id,
-        favoriteState: !isAddedToFavorites
-      });
-
-      if (response.success) {
-        if (isAddedToFavorites) {
-          validateMedia({ state: "removed", id, key: "favoriteTvShows" });
-        } else {
-          const updatedMedia = [...favoriteTvShows];
-
-          updatedMedia.unshift({
-            id,
-            title,
-            poster_path: posterPath,
-            first_air_date: airDate
-          });
-
-          validateMedia({ state: "added", id, media: updatedMedia, key: "favoriteTvShows" });
-        }
-        showToast({
-          message: isAddedToFavorites ? "Removed from favorites" : "Added to favorites"
-        });
-      } else {
-        showToast({ message: "Something went wrong, try again later" });
-      }
-    } else if (!isToastVisible) {
-      showToast({ message: "Please login first to use this feature" });
-    }
-  };
-
-  const watchlistHandler = async () => {
-    if (userInfo?.accountId) {
-      const response = await addToWatchlist({
-        mediaType: "tv",
-        mediaId: id,
-        watchlistState: !isAddedToWatchlist
-      });
-
-      if (response.success) {
-        if (isAddedToWatchlist) {
-          validateMedia({ state: "removed", id, key: "tvShowsWatchlist" });
-        } else {
-          const updatedMedia = [...tvShowsWatchlist];
-
-          updatedMedia.unshift({
-            id,
-            title,
-            poster_path: posterPath,
-            first_air_date: airDate
-          });
-
-          validateMedia({ state: "added", id, media: updatedMedia, key: "tvShowsWatchlist" });
-        }
-        showToast({
-          message: isAddedToWatchlist ? "Removed from watchlist" : "Added to watchlist"
-        });
-      } else {
-        showToast({ message: "Something went wrong, try again later" });
-      }
-    } else if (!isToastVisible) {
-      showToast({ message: "Please login first to use this feature" });
-    }
-  };
-
-  const ratingModalHandler = () => {
-    if (userInfo?.accountId) {
-      openModal();
-    } else {
-      showToast({ message: "Please login first to use this feature" });
-    }
-  };
 
   return (
     <Fragment>
@@ -205,84 +113,13 @@ const TVDetails = ({ tvData }) => {
                 </a>
               )}
 
-              <TechnicalDetails data={technicalDetails} />
+              <TechnicalDetails imdbId={imdbId} />
 
-              <div className='mb-3'>
-                <AddToListModal mediaType='tv' mediaId={id} />
-              </div>
-
-              <div className='flex justify-start gap-3'>
-                <Button
-                  className='mediaCTA w-full'
-                  loading={+isToastVisible}
-                  aria-label='watchlist button'
-                  as={motion.button}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={watchlistHandler}>
-                  <AnimatePresence mode='wait' initial={false}>
-                    <motion.div
-                      key={`watchlist - ${isAddedToWatchlist.toString()}`}
-                      variants={framerTabVariants}
-                      initial='hidden'
-                      animate='visible'
-                      exit='hidden'
-                      transition={{ duration: 0.325 }}>
-                      {isAddedToWatchlist ? (
-                        <BiListCheck size='22px' />
-                      ) : (
-                        <BiListPlus size='22px' />
-                      )}
-                    </motion.div>
-                  </AnimatePresence>
-                </Button>
-
-                <Button
-                  className='mediaCTA w-full'
-                  loading={+isToastVisible}
-                  aria-label='favorite button'
-                  onClick={favoriteHandler}
-                  as={motion.button}
-                  whileTap={{ scale: 0.95 }}>
-                  <AnimatePresence mode='wait' initial={false}>
-                    <motion.div
-                      key={`favorite - ${isAddedToFavorites.toString()}`}
-                      variants={framerTabVariants}
-                      initial='hidden'
-                      animate='visible'
-                      exit='hidden'
-                      transition={{ duration: 0.325 }}>
-                      {isAddedToFavorites ? <FaHeart size='20px' /> : <FaRegHeart size='20px' />}
-                    </motion.div>
-                  </AnimatePresence>
-                </Button>
-
-                <Button
-                  className='mediaCTA w-full'
-                  loading={+isToastVisible}
-                  aria-label='rating button'
-                  as={motion.button}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={ratingModalHandler}>
-                  <AnimatePresence mode='wait' initial={false}>
-                    <motion.div
-                      key={`rating - ${savedRating.toString()}`}
-                      variants={framerTabVariants}
-                      initial='hidden'
-                      animate='visible'
-                      exit='hidden'
-                      transition={{ duration: 0.325 }}>
-                      {savedRating ? (
-                        <RatingOverlay className='media-page'>
-                          <AiFillStar size='16px' />
-                          <p className='m-0 font-semibold leading-tight'>{savedRating}</p>
-                        </RatingOverlay>
-                      ) : (
-                        <BsStarHalf size='20px' />
-                      )}
-                    </motion.div>
-                  </AnimatePresence>
-                </Button>
-              </div>
+              <UserActions
+                mediaType='tv'
+                mediaId={id}
+                mediaDetails={{ name: title, poster: posterPath, releaseYear, airDate }}
+              />
             </div>
             <SocialMediaLinks
               links={socialIds}
@@ -346,21 +183,6 @@ const TVDetails = ({ tvData }) => {
           </HeroInfoWrapper>
         </DetailsHeroWrap>
       </HeroDetailsContainer>
-
-      <Toast isToastVisible={isToastVisible}>
-        <Span className='movieCastHead'>{toastMessage}</Span>
-      </Toast>
-
-      <RatingModal
-        mediaType='tv'
-        mediaId={id}
-        posterPath={posterPath}
-        title={title}
-        releaseDate={airDate}
-        isOpen={isModalVisible}
-        closeModal={closeModal}
-        mediaName={`${title} (${releaseYear})`}
-      />
     </Fragment>
   );
 };

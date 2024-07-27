@@ -45,7 +45,7 @@ export const Button = styled.button`
   }
 
   &.danger {
-    color: rgb(220 38 38);
+    color: #dc2626;
     background: rgb(127 29 29 / 0.2);
     border: 1px solid #dc2626;
 

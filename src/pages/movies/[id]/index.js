@@ -29,7 +29,6 @@ const Movie = ({ movieData, error }) => {
     socialIds,
     homepage,
     status,
-    technicalDetails,
     backdropPath,
     budget,
     revenue,
@@ -39,7 +38,8 @@ const Movie = ({ movieData, error }) => {
     reviews,
     backdrops,
     posters,
-    recommendations
+    recommendations,
+    imdbId
   } = movieData;
 
   useEffect(() => {
@@ -104,8 +104,8 @@ const Movie = ({ movieData, error }) => {
               crewData,
               socialIds,
               homepage,
-              technicalDetails,
-              collection
+              collection,
+              imdbId
             }}
           />
 
@@ -172,19 +172,7 @@ export const getServerSideProps = async (ctx) => {
     ];
 
     const imdbId = movieDetails?.external_ids?.imdb_id;
-
-    const technicalDetails = await fetch(apiEndpoints.cfWorker, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id: imdbId
-      })
-    });
-
     const collection = movieDetails?.belongs_to_collection || null;
-    const technicalDetailsData = await technicalDetails.json();
 
     return {
       props: {
@@ -219,7 +207,7 @@ export const getServerSideProps = async (ctx) => {
           backdrops: movieDetails?.images?.backdrops ?? [],
           posters: movieDetails?.images?.posters ?? [],
           recommendations: movieDetails?.recommendations?.results,
-          technicalDetails: technicalDetailsData || null
+          imdbId
         },
         error: false
       }

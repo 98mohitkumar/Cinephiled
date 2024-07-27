@@ -40,7 +40,7 @@ const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint }) =>
 
   const handleScroll = useCallback(() => {
     if (
-      window.innerHeight + window.scrollY >= document.body.offsetHeight - 700 * (pageToFetch - 1) &&
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 700 &&
       !isLoading &&
       !isEmptyPage
     ) {
@@ -51,6 +51,9 @@ const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint }) =>
           if (data && data.results && data.results.length > 0) {
             setExtendedList((prev) => [...prev, ...data.results]);
             setPageToFetch((prev) => prev + 1);
+            requestAnimationFrame(() => {
+              window.scrollTo({ top: window.scrollY + 250, behavior: "smooth" });
+            });
           } else {
             setIsEmptyPage(true);
           }

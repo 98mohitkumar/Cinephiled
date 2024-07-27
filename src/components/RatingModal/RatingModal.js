@@ -72,8 +72,8 @@ const RatingModal = ({
               id: mediaId,
               rating,
               poster_path: posterPath,
-              release_date: releaseDate,
-              title
+              first_air_date: releaseDate,
+              name: title
             });
           }
           validateMedia({
