@@ -7,38 +7,34 @@ import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
 import { fetchOptions } from "src/utils/helper";
-import { LayoutContainer, Error404 } from "styles/GlobalComponents";
+import { LayoutContainer } from "styles/GlobalComponents";
 
-const Explore = ({ movieGenres, tvGenres, error, nowPlaying }) => {
+const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
   return (
     <Fragment>
       <MetaWrapper
-        title={error ? "Not Found - Cinephiled" : "Explore - Cinephiled"}
+        title='Explore - Cinephiled'
         description="Embark on a cinematic journey through diverse genres of movies and TV shows. Uncover the latest releases and discover what's currently captivating audiences in theaters near you."
         url='https://cinephiled.vercel.app/explore'
       />
 
-      {error ? (
-        <Error404>404</Error404>
-      ) : (
-        <Fragment>
-          <section className='relative'>
-            <DominantColor flip tint />
+      <Fragment>
+        <section className='relative'>
+          <DominantColor flip tint />
 
-            {/* genres for movies and tv shows */}
-            <LayoutContainer className='mb-auto relative z-20 !pr-0'>
-              <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
-            </LayoutContainer>
+          {/* genres for movies and tv shows */}
+          <LayoutContainer className='mb-auto relative z-20 !pr-0'>
+            <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
+          </LayoutContainer>
 
-            <LayoutContainer className='mt-8 relative z-20'>
-              <StreamingProvides />
-            </LayoutContainer>
-          </section>
+          <LayoutContainer className='mt-8 relative z-20'>
+            <StreamingProvides />
+          </LayoutContainer>
+        </section>
 
-          {/* movies that are currently in theatres */}
-          {nowPlaying.length > 0 ? <NowPlayingMovies nowPlaying={nowPlaying} /> : null}
-        </Fragment>
-      )}
+        {/* movies that are currently in theatres */}
+        {nowPlaying.length > 0 ? <NowPlayingMovies nowPlaying={nowPlaying} /> : null}
+      </Fragment>
     </Fragment>
   );
 };
@@ -75,9 +71,7 @@ export const getServerSideProps = async ({ req }) => {
     };
   } catch {
     return {
-      props: {
-        error: true
-      }
+      notFound: true
     };
   }
 };

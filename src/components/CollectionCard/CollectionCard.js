@@ -4,6 +4,8 @@ import Link from "next/link";
 import { getCleanTitle } from "src/utils/helper";
 
 const CollectionCard = ({ collection }) => {
+  console.info(collection);
+
   return (
     <div className='rounded-xl p-1 max-w-full lg:max-w-max bg-neutral-300 mt-6 lg:mt-8 drop-shadow-xl group'>
       <Link href={`/collection/${collection.id}-${getCleanTitle(collection.name)}`} legacyBehavior>
@@ -11,7 +13,11 @@ const CollectionCard = ({ collection }) => {
           <div className='relative min-w-44 md:min-w-52 lg:min-w-72 aspect-[300/169]'>
             <div className='absolute -inset-1 bg-gradient-to-l from-neutral-300 to-transparent z-10' />
             <Image
-              src={`https://image.tmdb.org/t/p/w500${collection.backdrop_path}`}
+              src={
+                collection.backdrop_path
+                  ? `https://image.tmdb.org/t/p/w500${collection.backdrop_path}`
+                  : "/Images/DefaultBackdrop.png"
+              }
               alt='collection-poster'
               fill
               style={{ objectFit: "cover", zIndex: 1 }}

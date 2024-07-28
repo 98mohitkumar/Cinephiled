@@ -7,9 +7,9 @@ import Recommendations from "components/Recommendations/Recommendations";
 import { apiEndpoints } from "globals/constants";
 import { Fragment, useEffect, useState } from "react";
 import { fetchOptions, getCleanTitle, getReleaseDate, getReleaseYear } from "src/utils/helper";
-import { Error404, ModulesWrapper } from "styles/GlobalComponents";
+import { ModulesWrapper } from "styles/GlobalComponents";
 
-const Movie = ({ movieData, error }) => {
+const Movie = ({ movieData }) => {
   const [showEaster, setShowEaster] = useState(false);
   const [hasSeen, setHasSeen] = useState(false);
   const {
@@ -70,73 +70,69 @@ const Movie = ({ movieData, error }) => {
   return (
     <Fragment>
       <MetaWrapper
-        title={error ? "Not Found - Cinephiled" : `${title} (${releaseYear}) - Cinephiled`}
+        title={`${title} (${releaseYear}) - Cinephiled`}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
         description={overview}
         url={`https://cinephiled.vercel.app/movies/${id}-${getCleanTitle(title)}`}
       />
 
-      {error ? (
-        <Error404>404</Error404>
-      ) : (
-        <Fragment>
-          {/* movie info hero section */}
-          <MovieDetails
-            easter={{
-              renderEaster: isEasterMovie,
-              hasSeen,
-              showEaster,
-              easterHandler
-            }}
-            movieDetails={{
-              id,
-              title,
-              overview,
-              releaseYear,
-              releaseDate,
-              backdropPath,
-              runtime,
-              trailerLink,
-              genres,
-              tagline,
-              rating,
-              moviePoster,
-              crewData,
-              socialIds,
-              homepage,
-              collection,
-              imdbId
-            }}
-          />
+      <Fragment>
+        {/* movie info hero section */}
+        <MovieDetails
+          easter={{
+            renderEaster: isEasterMovie,
+            hasSeen,
+            showEaster,
+            easterHandler
+          }}
+          movieDetails={{
+            id,
+            title,
+            overview,
+            releaseYear,
+            releaseDate,
+            backdropPath,
+            runtime,
+            trailerLink,
+            genres,
+            tagline,
+            rating,
+            moviePoster,
+            crewData,
+            socialIds,
+            homepage,
+            collection,
+            imdbId
+          }}
+        />
 
-          {/* movie facts */}
-          <MovieFacts
-            facts={{
-              status,
-              budget,
-              revenue,
-              language
-            }}
-          />
+        {/* movie facts */}
+        <MovieFacts
+          facts={{
+            status,
+            budget,
+            revenue,
+            language
+          }}
+        />
 
-          {/* movie tabs */}
-          <MovieTab cast={cast} reviews={reviews} backdrops={backdrops} posters={posters} />
+        {/* movie tabs */}
+        <MovieTab cast={cast} reviews={reviews} backdrops={backdrops} posters={posters} />
 
-          {/* recommendations */}
-          {recommendations?.length > 0 ? (
-            <ModulesWrapper className='relative'>
-              <DominantColor image={backdropPath} tint isUsingBackdrop />
-              <div className='pt-12 relative z-10'>
-                <h2 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-bold text-white text-center mb-4 lg:mb-8'>
-                  Recommendations
-                </h2>
+        {/* recommendations */}
+        {recommendations?.length > 0 ? (
+          <ModulesWrapper className='relative'>
+            <DominantColor image={backdropPath} tint isUsingBackdrop />
+            <div className='pt-12 relative z-10'>
+              <h2 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-bold text-white text-center mb-4 lg:mb-8'>
+                Recommendations
+              </h2>
 
-                <Recommendations data={recommendations} type='movies' />
-              </div>
-            </ModulesWrapper>
-          ) : null}
-        </Fragment>
-      )}
+              <Recommendations data={recommendations} type='movies' />
+            </div>
+          </ModulesWrapper>
+        ) : null}
+      </Fragment>
     </Fragment>
   );
 };
@@ -208,15 +204,12 @@ export const getServerSideProps = async (ctx) => {
           posters: movieDetails?.images?.posters ?? [],
           recommendations: movieDetails?.recommendations?.results,
           imdbId
-        },
-        error: false
+        }
       }
     };
   } catch {
     return {
-      props: {
-        error: true
-      }
+      notFound: true
     };
   }
 };

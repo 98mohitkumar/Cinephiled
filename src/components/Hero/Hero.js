@@ -24,7 +24,7 @@ const Hero = ({ banner = null }) => {
 
     searchInputUpdate.current = setTimeout(() => {
       setUserInput(e.target.value);
-    }, 500);
+    }, 300);
   };
 
   const searchHandler = async (event) => {

@@ -3,32 +3,35 @@ import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
 import { fetchOptions, getReleaseYear } from "src/utils/helper";
-import { Error404 } from "styles/GlobalComponents";
 
-const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast, error }) => {
+const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast }) => {
   return (
     <Fragment>
       <MetaWrapper
-        title={error ? "Not Found - Cinephiled" : `${title} (${year}) - Cast - cinephiled`}
-        description={error ? "Not Found" : `${title} cast`}
+        title={`${title} (${year}) - Cast - cinephiled`}
+        description={`${title} cast`}
         image={`https://image.tmdb.org/t/p/w780${backdrop}`}
         url={`https://cinephiled.vercel.app/movies/${id}/cast`}
       />
 
-      {error ? <Error404>404</Error404> : <CastPage cast={cast} media={{ title, year, poster }} />}
+      <CastPage cast={cast} media={{ title, year, poster }} />
     </Fragment>
   );
 };
 
-Cast.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   try {
     const { id } = ctx.query;
     const res = await fetch(apiEndpoints.movie.getMovieCredits({ id }), fetchOptions());
 
-    if (res.ok) {
-      const data = await res.json();
+    if (!res.ok) {
+      throw new Error("error fetching data");
+    }
 
-      return {
+    const data = await res.json();
+
+    return {
+      props: {
         movieData: {
           title: data?.title,
           year: getReleaseYear(data?.release_date),
@@ -36,21 +39,12 @@ Cast.getInitialProps = async (ctx) => {
           backdrop: data?.backdrop_path,
           poster: data?.poster_path
         },
-        cast: data?.credits?.cast || [],
-        error: false
-      };
-    }
-
-    return {
-      movieData: {},
-      cast: [],
-      error: true
+        cast: data?.credits?.cast || []
+      }
     };
   } catch {
     return {
-      movieData: {},
-      cast: [],
-      error: true
+      notFound: true
     };
   }
 };

@@ -21,7 +21,6 @@ import { getSortedItems } from "src/utils/getSortedItems";
 import { fetchOptions, getCleanTitle, getRating } from "src/utils/helper";
 import {
   DetailsHeroWrap,
-  Error404,
   HeroBg,
   HeroBgContainer,
   HeroDetailsContainer,
@@ -30,7 +29,7 @@ import {
   ModulesWrapper
 } from "styles/GlobalComponents";
 
-export const Collection = ({ collectionData, error, movieGenresData, collectionImagesData }) => {
+export const Collection = ({ collectionData, movieGenresData, collectionImagesData }) => {
   const { id, name, overview, backdrop_path, poster_path, parts } = collectionData;
 
   const allGenres = Array.from(new Set(parts.map((part) => part.genre_ids).flat()))
@@ -54,147 +53,142 @@ export const Collection = ({ collectionData, error, movieGenresData, collectionI
   return (
     <Fragment>
       <MetaWrapper
-        title={error ? "Not Found - Cinephiled" : `${name} - Cinephiled`}
+        title={`${name} - Cinephiled`}
         image={`https://image.tmdb.org/t/p/w780${backdrop_path}`}
         description={overview}
         url={`https://cinephiled.vercel.app/collection/${id}-${getCleanTitle(name)}`}
       />
 
-      {error ? (
-        <Error404>404</Error404>
-      ) : (
-        <Fragment>
-          <HeroDetailsContainer className='relative mb-auto'>
-            <HeroBgContainer className='absolute'>
-              <HeroBg className='absolute text-center z-10'>
+      <Fragment>
+        <HeroDetailsContainer className='relative mb-auto'>
+          <HeroBgContainer className='absolute'>
+            <HeroBg className='absolute text-center z-10'>
+              <Image
+                src={
+                  backdrop_path
+                    ? `https://image.tmdb.org/t/p/w1280${backdrop_path}`
+                    : "/Images/Hex.webp"
+                }
+                alt='movie-backdrop'
+                fill
+                style={{ objectFit: "cover" }}
+                priority
+              />
+            </HeroBg>
+
+            {/* color gradient overlay */}
+            <DominantColor image={poster_path} className='z-20' />
+
+            <Gradient className='z-30' />
+          </HeroBgContainer>
+
+          <DetailsHeroWrap className='!gap-y-5'>
+            <HeroImgWrapper>
+              <HeroImg className='relative text-center'>
                 <Image
                   src={
-                    backdrop_path
-                      ? `https://image.tmdb.org/t/p/w1280${backdrop_path}`
-                      : "/Images/Hex.webp"
+                    poster_path
+                      ? `https://image.tmdb.org/t/p/w500${poster_path}`
+                      : "/Images/DefaultImage.png"
                   }
-                  alt='movie-backdrop'
+                  alt='movie-poster'
                   fill
                   style={{ objectFit: "cover" }}
                   priority
+                  placeholder='blur'
+                  blurDataURL={blurPlaceholder}
                 />
-              </HeroBg>
+              </HeroImg>
+            </HeroImgWrapper>
 
-              {/* color gradient overlay */}
-              <DominantColor image={poster_path} className='z-20' />
+            <HeroInfoWrapper className='max-w-5xl'>
+              <HeroInfoTitle className='mb-2'>{name}</HeroInfoTitle>
 
-              <Gradient className='z-30' />
-            </HeroBgContainer>
-
-            <DetailsHeroWrap className='!gap-y-5'>
-              <HeroImgWrapper>
-                <HeroImg className='relative text-center'>
-                  <Image
-                    src={
-                      poster_path
-                        ? `https://image.tmdb.org/t/p/w500${poster_path}`
-                        : "/Images/DefaultImage.png"
-                    }
-                    alt='movie-poster'
-                    fill
-                    style={{ objectFit: "cover" }}
-                    priority
-                    placeholder='blur'
-                    blurDataURL={blurPlaceholder}
-                  />
-                </HeroImg>
-              </HeroImgWrapper>
-
-              <HeroInfoWrapper className='max-w-5xl'>
-                <HeroInfoTitle className='mb-2'>{name}</HeroInfoTitle>
-
-                {allGenres.length > 0 ? (
-                  <div className='my-3'>
-                    <GenreWrap className='font-bold'>
-                      {allGenres.map((item, i) => (
-                        <Link
-                          key={item.id}
-                          href={`/genre/${
-                            item.id.toString() + "-" + item.name.replaceAll(" ", "-")
-                          }/movies`}
-                          passHref>
-                          <Rounded className={allGenres.length == i + 1 ? "sep" : ""}>
-                            {item.name}
-                          </Rounded>
-                        </Link>
-                      ))}
-                    </GenreWrap>
-                  </div>
-                ) : null}
-
-                {overview ? <Overview className='font-normal my-4'>{overview}</Overview> : null}
-
-                <RatingWrapper>
-                  <Fragment>
-                    <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
-                      {getRating(averageRating)}
-                    </Span>
-                    <span> / 10</span>
-                  </Fragment>
-                </RatingWrapper>
-
-                <div className='mt-4'>
-                  <span className='font-semibold'>Number of movies:</span>{" "}
-                  <span>{parts.length}</span>
+              {allGenres.length > 0 ? (
+                <div className='my-3'>
+                  <GenreWrap className='font-bold'>
+                    {allGenres.map((item, i) => (
+                      <Link
+                        key={item.id}
+                        href={`/genre/${
+                          item.id.toString() + "-" + item.name.replaceAll(" ", "-")
+                        }/movies`}
+                        passHref>
+                        <Rounded className={allGenres.length == i + 1 ? "sep" : ""}>
+                          {item.name}
+                        </Rounded>
+                      </Link>
+                    ))}
+                  </GenreWrap>
                 </div>
-              </HeroInfoWrapper>
-            </DetailsHeroWrap>
-          </HeroDetailsContainer>
-
-          <section className='relative'>
-            <DominantColor image={backdrop_path} tint isUsingBackdrop />
-
-            <div className='relative z-10'>
-              {parts.length > 0 ? (
-                <ModulesWrapper>
-                  <section className='mt-8'>
-                    <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mb-5 md:mb-8 font-semibold block'>
-                      Movies ({parts.length})
-                    </span>
-
-                    <MoviesTemplate movies={sortedByReleaseDate} />
-                  </section>
-                </ModulesWrapper>
               ) : null}
 
-              {backdrops?.length > 0 ? (
+              {overview ? <Overview className='font-normal my-4'>{overview}</Overview> : null}
+
+              <RatingWrapper>
                 <Fragment>
-                  <ModulesWrapper>
-                    <section className='mt-12'>
-                      <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mb-5 md:mb-8 font-semibold block'>
-                        Backdrops ({backdrops.length})
-                      </span>
-                      <Backdrops backdrops={backdrops} />
-                    </section>
-                  </ModulesWrapper>
+                  <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
+                    {getRating(averageRating)}
+                  </Span>
+                  <span> / 10</span>
                 </Fragment>
-              ) : null}
+              </RatingWrapper>
 
-              {posters?.length > 0 ? (
+              <div className='mt-4'>
+                <span className='font-semibold'>Number of movies:</span> <span>{parts.length}</span>
+              </div>
+            </HeroInfoWrapper>
+          </DetailsHeroWrap>
+        </HeroDetailsContainer>
+
+        <section className='relative'>
+          <DominantColor image={backdrop_path} tint isUsingBackdrop />
+
+          <div className='relative z-10'>
+            {parts.length > 0 ? (
+              <ModulesWrapper>
+                <section className='mt-8'>
+                  <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mb-5 md:mb-8 font-semibold block'>
+                    Movies ({parts.length})
+                  </span>
+
+                  <MoviesTemplate movies={sortedByReleaseDate} />
+                </section>
+              </ModulesWrapper>
+            ) : null}
+
+            {backdrops?.length > 0 ? (
+              <Fragment>
                 <ModulesWrapper>
                   <section className='mt-12'>
                     <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mb-5 md:mb-8 font-semibold block'>
-                      Posters ({posters?.length})
+                      Backdrops ({backdrops.length})
                     </span>
+                    <Backdrops backdrops={backdrops} />
                   </section>
-
-                  <Posters posters={posters} />
                 </ModulesWrapper>
-              ) : null}
-            </div>
-          </section>
-        </Fragment>
-      )}
+              </Fragment>
+            ) : null}
+
+            {posters?.length > 0 ? (
+              <ModulesWrapper>
+                <section className='mt-12'>
+                  <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mb-5 md:mb-8 font-semibold block'>
+                    Posters ({posters?.length})
+                  </span>
+                </section>
+
+                <Posters posters={posters} />
+              </ModulesWrapper>
+            ) : null}
+          </div>
+        </section>
+      </Fragment>
     </Fragment>
   );
 };
 
-Collection.getInitialProps = async ({ query }) => {
+export const getServerSideProps = async ({ query }) => {
   try {
     const collectionId = query.collectionId;
     const [collectionRes, movieGenresRes, collectionImagesRes] = await Promise.all([
@@ -213,9 +207,13 @@ Collection.getInitialProps = async ({ query }) => {
       collectionImagesRes.json()
     ]);
 
-    return { collectionData: collectionData, error: false, movieGenresData, collectionImagesData };
+    return {
+      props: { collectionData: collectionData, movieGenresData, collectionImagesData }
+    };
   } catch {
-    return { error: true };
+    return {
+      notFound: true
+    };
   }
 };
 

@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { fetchOptions, framerTabVariants, getCleanTitle } from "src/utils/helper";
-import { Error404, LayoutContainer } from "styles/GlobalComponents";
+import { LayoutContainer } from "styles/GlobalComponents";
 
 const tabList = [
   { key: "movies", name: `Movies` },
@@ -20,7 +20,6 @@ const tabList = [
 ];
 
 const WatchProviders = ({
-  error,
   regions,
   movieProviders,
   tvProviders,
@@ -62,87 +61,83 @@ const WatchProviders = ({
         image='https://raw.githubusercontent.com/98mohitkumar/Cinephiled/main/public/Images/watch-providers.webp'
       />
 
-      {error ? (
-        <Error404>404</Error404>
-      ) : (
-        <LayoutContainer className='relative'>
-          <DominantColor tint flip />
+      <LayoutContainer className='relative'>
+        <DominantColor tint flip />
 
-          <div className='flex flex-col gap-8 relative z-20'>
-            <div className='flex justify-end gap-3 max-sm:w-full flex-wrap max-md:order-2'>
-              <input
-                type='text'
-                placeholder='Search watch providers'
-                className='px-4 py-2 rounded-lg bg-neutral-600 text-white focus:outline-none 
+        <div className='flex flex-col gap-8 relative z-20'>
+          <div className='flex justify-end gap-3 max-sm:w-full flex-wrap max-md:order-2'>
+            <input
+              type='text'
+              placeholder='Search watch providers'
+              className='px-4 py-2 rounded-lg bg-neutral-600 text-white focus:outline-none 
                 focus:ring-2 focus:ring-neutral-400 focus:border-transparent md:min-w-[300px] text-lg max-md:grow max-sm:min-w-full'
-                onChange={searchHandler}
+              onChange={searchHandler}
+            />
+
+            <div className='min-w-[250px] max-sm:min-w-full max-md:grow'>
+              <Select
+                options={[{ key: "default", value: `Default (${defaultRegion})` }, ...regions]}
+                handleChange={handleSelectChange}
+                activeKey={selectedRegion || "default"}
+                triggerText={
+                  selectedRegion
+                    ? regions.find(({ key }) => key === selectedRegion)?.value
+                    : `Default (${defaultRegion})`
+                }
               />
-
-              <div className='min-w-[250px] max-sm:min-w-full max-md:grow'>
-                <Select
-                  options={[{ key: "default", value: `Default (${defaultRegion})` }, ...regions]}
-                  handleChange={handleSelectChange}
-                  activeKey={selectedRegion || "default"}
-                  triggerText={
-                    selectedRegion
-                      ? regions.find(({ key }) => key === selectedRegion)?.value
-                      : `Default (${defaultRegion})`
-                  }
-                />
-              </div>
             </div>
-
-            <h1 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.25rem] w-full text-center font-semibold'>
-              Watch Providers {currentRegionName ? `available in ${currentRegionName}` : ""}
-            </h1>
           </div>
 
-          <Tabs
-            tabList={tabList}
-            currentTab={activeTab}
-            setTab={setTab}
-            className='![margin:2.5rem_auto]'
-          />
+          <h1 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.25rem] w-full text-center font-semibold'>
+            Watch Providers {currentRegionName ? `available in ${currentRegionName}` : ""}
+          </h1>
+        </div>
 
-          <AnimatePresence mode='wait'>
-            {currentRenderList?.length > 0 ? (
-              <motion.div
-                key={activeTab}
-                variants={framerTabVariants}
-                initial='hidden'
-                animate='visible'
-                exit='hidden'
-                className='mt-12 mb-4 max-sm:gap-6 gap-8 grid grid-cols-[repeat(auto-fill,minmax(min(65px,20vw),1fr))] relative z-10'>
-                {currentRenderList.map((provider) => (
-                  <Link
-                    key={provider.provider_id}
-                    href={`/watch-providers/${provider.provider_id}-${getCleanTitle(
-                      provider.provider_name
-                    )}/${activeTab}?watchregion=${selectedRegion || defaultRegion}`}>
-                    <div className='block h-full w-full'>
-                      <motion.div
-                        className='w-full aspect-square rounded-lg overflow-hidden'
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}>
-                        <Image
-                          src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                          alt={provider.provider_name}
-                          width={200}
-                          height={200}
-                          blurDataURL={blurPlaceholder}
-                          placeholder='blur'
-                        />
-                      </motion.div>
-                    </div>
-                  </Link>
-                ))}
-              </motion.div>
-            ) : (
-              <PlaceholderText>No Watch Providers Found</PlaceholderText>
-            )}
-          </AnimatePresence>
-        </LayoutContainer>
-      )}
+        <Tabs
+          tabList={tabList}
+          currentTab={activeTab}
+          setTab={setTab}
+          className='![margin:2.5rem_auto]'
+        />
+
+        <AnimatePresence mode='wait'>
+          {currentRenderList?.length > 0 ? (
+            <motion.div
+              key={activeTab}
+              variants={framerTabVariants}
+              initial='hidden'
+              animate='visible'
+              exit='hidden'
+              className='mt-12 mb-4 max-sm:gap-6 gap-8 grid grid-cols-[repeat(auto-fill,minmax(min(65px,20vw),1fr))] relative z-10'>
+              {currentRenderList.map((provider) => (
+                <Link
+                  key={provider.provider_id}
+                  href={`/watch-providers/${provider.provider_id}-${getCleanTitle(
+                    provider.provider_name
+                  )}/${activeTab}?watchregion=${selectedRegion || defaultRegion}`}>
+                  <div className='block h-full w-full'>
+                    <motion.div
+                      className='w-full aspect-square rounded-lg overflow-hidden'
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}>
+                      <Image
+                        src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                        alt={provider.provider_name}
+                        width={200}
+                        height={200}
+                        blurDataURL={blurPlaceholder}
+                        placeholder='blur'
+                      />
+                    </motion.div>
+                  </div>
+                </Link>
+              ))}
+            </motion.div>
+          ) : (
+            <PlaceholderText>No Watch Providers Found</PlaceholderText>
+          )}
+        </AnimatePresence>
+      </LayoutContainer>
     </Fragment>
   );
 };
@@ -177,7 +172,6 @@ export const getServerSideProps = async ({ req, query }) => {
 
     return {
       props: {
-        error: false,
         regions:
           regions?.results
             .map(({ iso_3166_1, english_name }) => ({
@@ -194,12 +188,7 @@ export const getServerSideProps = async ({ req, query }) => {
     };
   } catch {
     return {
-      props: {
-        error: true,
-        regions: [],
-        movieProviders: [],
-        tvProviders: []
-      }
+      notFound: true
     };
   }
 };

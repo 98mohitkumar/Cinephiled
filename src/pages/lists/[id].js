@@ -6,15 +6,15 @@ import ListShareButton from "components/List/ListShareButton";
 import ManageList from "components/List/ManageList";
 import MetaWrapper from "components/MetaWrapper";
 import { Gradient } from "components/MovieInfo/MovieDetailsStyles";
+import PlaceholderText from "components/PlaceholderText";
 import { AnimatePresence, motion } from "framer-motion";
-import { apiEndpoints, blurPlaceholder, read_access_token } from "globals/constants";
+import { apiEndpoints, blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { Fragment } from "react";
 import { fetchOptions, framerTabVariants, getCleanTitle, getRuntime } from "src/utils/helper";
-import { useUserContext } from "Store/UserContext";
-import { Button, Error404, LayoutContainer } from "styles/GlobalComponents";
+import { Button, LayoutContainer } from "styles/GlobalComponents";
 
 const ListDetails = ({ title, copy }) => {
   return (
@@ -30,10 +30,8 @@ const ListDetails = ({ title, copy }) => {
   );
 };
 
-const List = ({ list, error }) => {
+const List = ({ list, isListAccessible, userCanEditList }) => {
   const router = useRouter();
-  const { userInfo } = useUserContext();
-  const userCanEdit = userInfo?.accountId === list?.created_by?.id;
   const {
     query: { manageList = false }
   } = router;
@@ -51,28 +49,26 @@ const List = ({ list, error }) => {
         url={`https://cinephiled.vercel.app/lists/${list?.id}-${getCleanTitle(list?.name)}`}
       />
 
-      {error ? (
-        <Error404>404</Error404>
-      ) : (
-        <LayoutContainer className='relative list-wrapper grow'>
-          <DominantColor flip tint isUsingBackdrop image={list.backdrop_path} />
+      <LayoutContainer className='relative list-wrapper grow'>
+        <DominantColor flip tint isUsingBackdrop image={list.backdrop_path} />
 
-          {list?.backdrop_path && (
-            <div className='absolute inset-0 max-h-72'>
-              <Image
-                src={`https://image.tmdb.org/t/p/w1920_and_h318_multi_faces${list.backdrop_path}`}
-                alt={list.name}
-                fill
-                style={{ objectFit: "cover" }}
-                placeholder='blur'
-                blurDataURL={blurPlaceholder}
-                className='-z-10'
-                loading='eager'
-              />
-              <Gradient className='backdrop-brightness-50 z-[-1]' />
-            </div>
-          )}
+        {list?.backdrop_path && (
+          <div className='absolute inset-0 max-h-72'>
+            <Image
+              src={`https://image.tmdb.org/t/p/w1920_and_h318_multi_faces${list.backdrop_path}`}
+              alt={list.name}
+              fill
+              style={{ objectFit: "cover" }}
+              placeholder='blur'
+              blurDataURL={blurPlaceholder}
+              className='-z-10'
+              loading='eager'
+            />
+            <Gradient className='backdrop-brightness-50 z-[-1]' />
+          </div>
+        )}
 
+        {isListAccessible ? (
           <AnimatePresence mode='wait'>
             {manageList ? (
               <motion.div
@@ -117,7 +113,7 @@ const List = ({ list, error }) => {
 
                   <div className='mt-8'>
                     <div className='flex gap-3 w-full flex-wrap justify-end'>
-                      {userCanEdit && (
+                      {userCanEditList && (
                         <Button
                           as={motion.button}
                           whileTap={{ scale: 0.95 }}
@@ -126,9 +122,9 @@ const List = ({ list, error }) => {
                         </Button>
                       )}
 
-                      {userCanEdit && <EditListModal list={list} />}
+                      {userCanEditList && <EditListModal list={list} />}
 
-                      {userCanEdit && (
+                      {userCanEditList && (
                         <DeleteListModal
                           list={{
                             name: list.name,
@@ -155,34 +151,38 @@ const List = ({ list, error }) => {
               </motion.div>
             )}
           </AnimatePresence>
-        </LayoutContainer>
-      )}
+        ) : (
+          <PlaceholderText height='large' className='relative z-10'>
+            This list is private.
+          </PlaceholderText>
+        )}
+      </LayoutContainer>
     </Fragment>
   );
 };
 
-List.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   try {
     const { id } = ctx.query;
     const data = await getSession(ctx);
 
-    const res = await fetch(
-      apiEndpoints.lists.getListDetails({ id }),
-      fetchOptions({ token: data?.user?.accessToken || read_access_token })
-    );
-
+    const res = await fetch(apiEndpoints.lists.getListDetails({ id }), fetchOptions());
     if (!res.ok) throw new Error("Failed to fetch list details");
 
     const list = await res.json();
+    const userCanEditList = data?.user?.accountId === list?.created_by?.id;
+    const isListAccessible = list?.public || userCanEditList;
 
     return {
-      error: false,
-      list
+      props: {
+        userCanEditList,
+        isListAccessible,
+        list
+      }
     };
   } catch {
     return {
-      error: true,
-      list: {}
+      notFound: true
     };
   }
 };

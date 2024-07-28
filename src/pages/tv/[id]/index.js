@@ -7,9 +7,9 @@ import TVTab from "components/TVInfo/TVTab";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
 import { fetchOptions, getCleanTitle, getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
-import { Error404, ModulesWrapper } from "styles/GlobalComponents";
+import { ModulesWrapper } from "styles/GlobalComponents";
 
-const TvShow = ({ tvData, error }) => {
+const TvShow = ({ tvData }) => {
   const {
     id,
     airDate,
@@ -42,65 +42,59 @@ const TvShow = ({ tvData, error }) => {
   return (
     <Fragment>
       <MetaWrapper
-        title={
-          error ? "Not Found - Cinephiled" : `${title} (${releaseYear} - ${endYear}) - Cinephiled`
-        }
+        title={`${title} (${releaseYear} - ${endYear}) - Cinephiled`}
         description={overview}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
         url={`https://cinephiled.vercel.app/tv/${id}-${getCleanTitle(title)}`}
       />
 
-      {error ? (
-        <Error404>404</Error404>
-      ) : (
-        <Fragment>
-          {/* tv info hero section */}
-          <TVDetails
-            tvData={{
-              id,
-              airDate,
-              title,
-              genres,
-              overview,
-              tagline,
-              rating,
-              backdropPath,
-              posterPath,
-              socialIds,
-              crewData,
-              trailerLink,
-              homepage,
-              releaseYear,
-              imdbId
-            }}
-          />
+      <Fragment>
+        {/* tv info hero section */}
+        <TVDetails
+          tvData={{
+            id,
+            airDate,
+            title,
+            genres,
+            overview,
+            tagline,
+            rating,
+            backdropPath,
+            posterPath,
+            socialIds,
+            crewData,
+            trailerLink,
+            homepage,
+            releaseYear,
+            imdbId
+          }}
+        />
 
-          {/* tv facts */}
-          <TVFacts facts={{ status, network, type, language }} />
+        {/* tv facts */}
+        <TVFacts facts={{ status, network, type, language }} />
 
-          {/* tv tabs */}
-          <TVTab
-            cast={cast}
-            seasons={seasons}
-            reviews={reviews}
-            backdrops={backdrops}
-            posters={posters}
-          />
+        {/* tv tabs */}
+        <TVTab
+          cast={cast}
+          seasons={seasons}
+          reviews={reviews}
+          backdrops={backdrops}
+          posters={posters}
+        />
 
-          {/* recommendations */}
-          {recommendations?.length > 0 ? (
-            <ModulesWrapper className='relative'>
-              <DominantColor image={backdropPath} tint isUsingBackdrop />
-              <div className='pt-12 relative z-10'>
-                <h2 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-bold text-white text-center mb-4 lg:mb-8'>
-                  Recommendations
-                </h2>
-                <Recommendations data={recommendations} type='tv' />
-              </div>
-            </ModulesWrapper>
-          ) : null}
-        </Fragment>
-      )}
+        {/* recommendations */}
+        {recommendations?.length > 0 ? (
+          <ModulesWrapper className='relative'>
+            <DominantColor image={backdropPath} tint isUsingBackdrop />
+            <div className='pt-12 relative z-10'>
+              <h2 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-bold text-white text-center mb-4 lg:mb-8'>
+                Recommendations
+              </h2>
+              <Recommendations data={recommendations} type='tv' />
+            </div>
+          </ModulesWrapper>
+        ) : null}
+      </Fragment>
     </Fragment>
   );
 };
@@ -175,12 +169,13 @@ export const getServerSideProps = async (ctx) => {
           posters: tvData?.images?.posters ?? [],
           recommendations: tvData?.recommendations?.results,
           imdbId
-        },
-        error: false
+        }
       }
     };
   } catch {
-    return { props: { error: true } };
+    return {
+      notFound: true
+    };
   }
 };
 

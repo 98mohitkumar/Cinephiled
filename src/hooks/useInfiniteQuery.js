@@ -52,7 +52,7 @@ const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint }) =>
             setExtendedList((prev) => [...prev, ...data.results]);
             setPageToFetch((prev) => prev + 1);
             requestAnimationFrame(() => {
-              window.scrollTo({ top: window.scrollY + 250, behavior: "smooth" });
+              window.scrollTo({ top: window.scrollY + 200, behavior: "smooth" });
             });
           } else {
             setIsEmptyPage(true);

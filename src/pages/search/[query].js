@@ -3,24 +3,22 @@ import SearchTab from "components/SearchTab/SearchTab";
 import { apiEndpoints } from "globals/constants";
 import { Fragment } from "react";
 import { fetchOptions } from "src/utils/helper";
-import { BadQuery, Error404 } from "styles/GlobalComponents";
+import { BadQuery } from "styles/GlobalComponents";
 
-const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes, peopleRes, collectionRes }) => {
-  const allEmptyResults = [movieRes, tvRes, keywordsRes, peopleRes, collectionRes].every(
+const Search = ({ movieRes, tvRes, searchQuery, keywordsRes, peopleRes, collectionRes }) => {
+  const allResultsEmpty = [movieRes, tvRes, keywordsRes, peopleRes, collectionRes].every(
     (res) => res?.results?.length === 0
   );
 
   return (
     <Fragment>
       <MetaWrapper
-        title={error ? "Not Found - Cinephiled" : `${searchQuery} - Search`}
+        title={`${searchQuery} - Search`}
         description={`Search results matching : ${searchQuery}`}
         url={`https://cinephiled.vercel.app/search/${searchQuery}`}
       />
 
-      {error ? (
-        <Error404>404</Error404>
-      ) : allEmptyResults ? (
+      {allResultsEmpty ? (
         <div className='fixed inset-0 flex items-center justify-center'>
           <BadQuery>{"Bad Query :("}</BadQuery>
         </div>
@@ -38,7 +36,7 @@ const Search = ({ movieRes, tvRes, error, searchQuery, keywordsRes, peopleRes, c
   );
 };
 
-Search.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   try {
     let searchQuery = ctx.query.query.replaceAll("+", " ");
     let year = "";
@@ -101,13 +99,16 @@ Search.getInitialProps = async (ctx) => {
     ]);
 
     return {
-      ...searchData,
-      ...commonData,
-      error: false,
-      searchQuery
+      props: {
+        ...searchData,
+        ...commonData,
+        searchQuery
+      }
     };
   } catch {
-    return { error: true };
+    return {
+      notFound: true
+    };
   }
 };
 

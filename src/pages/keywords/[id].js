@@ -15,66 +15,62 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { fetchOptions, getCleanTitle, getReleaseDate } from "src/utils/helper";
-import { Error404, ModulesWrapper } from "styles/GlobalComponents";
+import { ModulesWrapper } from "styles/GlobalComponents";
 
-const Keyword = ({ error, results, name, id }) => {
+const Keyword = ({ results, name, id }) => {
   return (
     <Fragment>
       <MetaWrapper
-        title={error ? "Not Found - Cinephiled" : `${name} - Movies`}
-        description={error ? "Not Found" : `Movies matching the keyword : ${name}`}
+        title={`${name} - Movies`}
+        description={`Movies matching the keyword : ${name}`}
         url={`https://cinephiled.vercel.app/keywords/${id}`}
       />
 
-      {error ? (
-        <Error404>404</Error404>
-      ) : (
-        <ModulesWrapper className='mt-6'>
-          <SearchResultsContainer>
-            {results?.length > 0 ? (
-              <Fragment>
-                <p className='text-xl md:text-2xl font-medium'>Results Matching : {name}</p>
-                {results.map(({ id, title, poster_path, overview, release_date }) => (
-                  <motion.div whileTap={{ scale: 0.98 }} key={id}>
-                    <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref>
-                      <QueryContainer>
-                        <QueryImg className='relative text-center'>
-                          <Image
-                            src={
-                              poster_path
-                                ? `https://image.tmdb.org/t/p/w185${poster_path}`
-                                : "/Images/DefaultImage.png"
-                            }
-                            alt='movie-poster'
-                            fill
-                            style={{ objectFit: "cover" }}
-                            placeholder='blur'
-                            blurDataURL={blurPlaceholder}
-                          />
-                        </QueryImg>
-                        <QueryInfoWrapper>
-                          <div>
-                            <QueryTitle>{title}</QueryTitle>
-                            <QueryReleaseDate>{getReleaseDate(release_date)}</QueryReleaseDate>
-                          </div>
-                          <QueryDescription>{overview}</QueryDescription>
-                        </QueryInfoWrapper>
-                      </QueryContainer>
-                    </Link>
-                  </motion.div>
-                ))}
-              </Fragment>
-            ) : (
-              <PlaceholderText height='large'>No Movie results for this keyword.</PlaceholderText>
-            )}
-          </SearchResultsContainer>
-        </ModulesWrapper>
-      )}
+      <ModulesWrapper className='mt-6'>
+        <SearchResultsContainer>
+          {results?.length > 0 ? (
+            <Fragment>
+              <p className='text-xl md:text-2xl font-medium'>Results Matching : {name}</p>
+              {results.map(({ id, title, poster_path, overview, release_date }) => (
+                <motion.div whileTap={{ scale: 0.98 }} key={id}>
+                  <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref>
+                    <QueryContainer>
+                      <QueryImg className='relative text-center'>
+                        <Image
+                          src={
+                            poster_path
+                              ? `https://image.tmdb.org/t/p/w185${poster_path}`
+                              : "/Images/DefaultImage.png"
+                          }
+                          alt='movie-poster'
+                          fill
+                          style={{ objectFit: "cover" }}
+                          placeholder='blur'
+                          blurDataURL={blurPlaceholder}
+                        />
+                      </QueryImg>
+                      <QueryInfoWrapper>
+                        <div>
+                          <QueryTitle>{title}</QueryTitle>
+                          <QueryReleaseDate>{getReleaseDate(release_date)}</QueryReleaseDate>
+                        </div>
+                        <QueryDescription>{overview}</QueryDescription>
+                      </QueryInfoWrapper>
+                    </QueryContainer>
+                  </Link>
+                </motion.div>
+              ))}
+            </Fragment>
+          ) : (
+            <PlaceholderText height='large'>No Movie results for this keyword.</PlaceholderText>
+          )}
+        </SearchResultsContainer>
+      </ModulesWrapper>
     </Fragment>
   );
 };
 
-Keyword.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   try {
     const keyword = ctx.query.id;
     const keywordRes = await fetch(apiEndpoints.keywords.keywordDetails(keyword), fetchOptions());
@@ -82,18 +78,21 @@ Keyword.getInitialProps = async (ctx) => {
 
     if (error) {
       throw new Error("error fetch data");
-    } else {
-      const keywordData = await keywordRes.json();
+    }
 
-      return {
-        error,
+    const keywordData = await keywordRes.json();
+
+    return {
+      props: {
         results: keywordData.results,
         name: keyword.split("-").slice(1).join(" "),
         id: keyword
-      };
-    }
+      }
+    };
   } catch {
-    return { error: true };
+    return {
+      notFound: true
+    };
   }
 };
 export default Keyword;

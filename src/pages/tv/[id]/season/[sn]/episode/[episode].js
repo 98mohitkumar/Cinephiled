@@ -22,7 +22,6 @@ import {
 import {
   EpisodeInfoWrapper,
   EpisodeShowCaseWrapper,
-  Error404,
   ModulesWrapper,
   Pill,
   SeasonCommonOverview,
@@ -30,7 +29,6 @@ import {
 } from "styles/GlobalComponents";
 
 const Episode = ({
-  error,
   releaseDate,
   overview,
   cast,
@@ -61,145 +59,137 @@ const Episode = ({
   return (
     <Fragment>
       <MetaWrapper
-        title={
-          error
-            ? "Not Found - Cinephiled"
-            : `${name} (${getReleaseYear(
-                airDate
-              )}) S${seasonNumber}E${episodeNumber} - Details - cinephiled`
-        }
+        title={`${name} (${getReleaseYear(
+          airDate
+        )}) S${seasonNumber}E${episodeNumber} - Details - cinephiled`}
         description={overview}
         image={`https://image.tmdb.org/t/p/w780${backdrop}`}
         url={`https://cinephiled.vercel.app/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}`}
       />
 
-      {error ? (
-        <Error404>404</Error404>
-      ) : (
-        <Fragment>
-          <div className='relative mb-auto'>
-            <DominantColor image={backdrop} tint isUsingBackdrop flip />
+      <Fragment>
+        <div className='relative mb-auto'>
+          <DominantColor image={backdrop} tint isUsingBackdrop flip />
 
-            <EpisodeInfoWrapper className='relative z-10'>
-              <Breadcrumbs links={links} />
+          <EpisodeInfoWrapper className='relative z-10'>
+            <Breadcrumbs links={links} />
 
-              <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>
-                {name} ({getReleaseYear(releaseDate)})
-              </h3>
+            <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>
+              {name} ({getReleaseYear(releaseDate)})
+            </h3>
 
-              <EpisodeShowCaseWrapper>
-                <div className='image-wrapper'>
-                  <Image
-                    src={
-                      backdrop
-                        ? `https://image.tmdb.org/t/p/w500${backdrop}`
-                        : "/Images/DefaultBackdrop.png"
-                    }
-                    alt='episde-backdrop'
-                    fill
-                    style={{ objectFit: "cover" }}
-                    placeholder='blur'
-                    blurDataURL={blurPlaceholder}
-                  />
-                </div>
+            <EpisodeShowCaseWrapper>
+              <div className='image-wrapper'>
+                <Image
+                  src={
+                    backdrop
+                      ? `https://image.tmdb.org/t/p/w500${backdrop}`
+                      : "/Images/DefaultBackdrop.png"
+                  }
+                  alt='episde-backdrop'
+                  fill
+                  style={{ objectFit: "cover" }}
+                  placeholder='blur'
+                  blurDataURL={blurPlaceholder}
+                />
+              </div>
 
-                <div>
-                  <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 m-0 font-bold'>
-                    {episodeName} ({`S${seasonNumber}E${episodeNumber}`})
-                  </h3>
+              <div>
+                <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 m-0 font-bold'>
+                  {episodeName} ({`S${seasonNumber}E${episodeNumber}`})
+                </h3>
 
-                  <TrWrapper>
-                    <SeasonsRelease className='text-alt'>
-                      {getReleaseDate(releaseDate)}
-                    </SeasonsRelease>
+                <TrWrapper>
+                  <SeasonsRelease className='text-alt'>
+                    {getReleaseDate(releaseDate)}
+                  </SeasonsRelease>
 
-                    <Pill>
-                      <p>{getRating(rating)}</p>
-                    </Pill>
+                  <Pill>
+                    <p>{getRating(rating)}</p>
+                  </Pill>
 
-                    <Span className='font-semibold text-lg'>{getRuntime(runtime)}</Span>
-                  </TrWrapper>
+                  <Span className='font-semibold text-lg'>{getRuntime(runtime)}</Span>
+                </TrWrapper>
 
-                  <SocialMediaLinks
-                    links={{}}
-                    homepage={null}
-                    mediaDetails={{
-                      title: name,
-                      description: overview
-                    }}
-                    className='!justify-start'
-                  />
+                <SocialMediaLinks
+                  links={{}}
+                  homepage={null}
+                  mediaDetails={{
+                    title: name,
+                    description: overview
+                  }}
+                  className='!justify-start'
+                />
 
-                  {overview ? <SeasonCommonOverview>{overview}</SeasonCommonOverview> : null}
-                </div>
-              </EpisodeShowCaseWrapper>
-            </EpisodeInfoWrapper>
+                {overview ? <SeasonCommonOverview>{overview}</SeasonCommonOverview> : null}
+              </div>
+            </EpisodeShowCaseWrapper>
+          </EpisodeInfoWrapper>
 
-            {cast?.length > 0 ? (
-              <ModulesWrapper className='relative z-10'>
-                <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-8 mb-6 font-bold block'>
-                  Cast ({cast?.length})
-                </span>
+          {cast?.length > 0 ? (
+            <ModulesWrapper className='relative z-10'>
+              <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-8 mb-6 font-bold block'>
+                Cast ({cast?.length})
+              </span>
 
-                <CastGrid className='justify-start'>
-                  {cast.map((item) => (
-                    <CastWrapper key={item.name}>
-                      <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`} passHref>
-                        <motion.div
-                          whileHover={{
-                            scale: 1.05,
-                            transition: { duration: 0.1 }
-                          }}
-                          whileTap={{ scale: 0.95 }}>
-                          <CastImg className='relative text-center'>
-                            <Image
-                              src={
-                                item?.profile_path
-                                  ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}`
-                                  : "/Images/DefaultAvatar.png"
-                              }
-                              alt='cast-image'
-                              fill
-                              style={{ objectFit: "cover", objectPosition: "top" }}
-                              placeholder='blur'
-                              blurDataURL={blurPlaceholder}
-                            />
-                          </CastImg>
-                        </motion.div>
-                      </Link>
+              <CastGrid className='justify-start'>
+                {cast.map((item) => (
+                  <CastWrapper key={item.name}>
+                    <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`} passHref>
+                      <motion.div
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.1 }
+                        }}
+                        whileTap={{ scale: 0.95 }}>
+                        <CastImg className='relative text-center'>
+                          <Image
+                            src={
+                              item?.profile_path
+                                ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}`
+                                : "/Images/DefaultAvatar.png"
+                            }
+                            alt='cast-image'
+                            fill
+                            style={{ objectFit: "cover", objectPosition: "top" }}
+                            placeholder='blur'
+                            blurDataURL={blurPlaceholder}
+                          />
+                        </CastImg>
+                      </motion.div>
+                    </Link>
 
-                      <div className='mt-3'>
-                        <Span className='font-bold movieCastHead line-clamp-2'>
-                          {item?.character}
-                        </Span>
-                        <Span className='movieCastName block'>{item?.name}</Span>
-                      </div>
-                    </CastWrapper>
-                  ))}
-                </CastGrid>
-              </ModulesWrapper>
-            ) : null}
-          </div>
-
-          {posters?.length > 0 ? (
-            <Fragment>
-              <ModulesWrapper>
-                <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-12 mb-6 font-bold block'>
-                  Backdrops ({posters.length})
-                </span>
-                <Backdrops backdrops={posters} />
-              </ModulesWrapper>
-            </Fragment>
+                    <div className='mt-3'>
+                      <Span className='font-bold movieCastHead line-clamp-2'>
+                        {item?.character}
+                      </Span>
+                      <Span className='movieCastName block'>{item?.name}</Span>
+                    </div>
+                  </CastWrapper>
+                ))}
+              </CastGrid>
+            </ModulesWrapper>
           ) : null}
-        </Fragment>
-      )}
+        </div>
+
+        {posters?.length > 0 ? (
+          <Fragment>
+            <ModulesWrapper>
+              <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-12 mb-6 font-bold block'>
+                Backdrops ({posters.length})
+              </span>
+              <Backdrops backdrops={posters} />
+            </ModulesWrapper>
+          </Fragment>
+        ) : null}
+      </Fragment>
     </Fragment>
   );
 };
 
 export default Episode;
 
-Episode.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   try {
     const [response, tvRes] = await Promise.all([
       fetch(
@@ -220,24 +210,27 @@ Episode.getInitialProps = async (ctx) => {
     const { cast, guest_stars } = res?.credits;
 
     return {
-      error: false,
-      releaseDate: res?.air_date,
-      overview: res?.overview,
-      cast: cast.concat(guest_stars) || [],
-      seasonNumber: res?.season_number,
-      episodeNumber: res?.episode_number,
-      episodeName: res?.name,
-      rating: res?.vote_average,
-      backdrop: res?.still_path,
-      runtime: res?.runtime,
-      posters: res?.images?.stills,
-      tvData: {
-        id: ctx.query.id,
-        name: tvData?.name,
-        airDate: tvData?.first_air_date
+      props: {
+        releaseDate: res?.air_date,
+        overview: res?.overview,
+        cast: cast.concat(guest_stars) || [],
+        seasonNumber: res?.season_number,
+        episodeNumber: res?.episode_number,
+        episodeName: res?.name,
+        rating: res?.vote_average,
+        backdrop: res?.still_path,
+        runtime: res?.runtime,
+        posters: res?.images?.stills,
+        tvData: {
+          id: ctx.query.id,
+          name: tvData?.name,
+          airDate: tvData?.first_air_date
+        }
       }
     };
   } catch {
-    return { error: true };
+    return {
+      notFound: true
+    };
   }
 };
