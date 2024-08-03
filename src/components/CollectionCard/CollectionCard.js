@@ -4,8 +4,6 @@ import Link from "next/link";
 import { getCleanTitle } from "src/utils/helper";
 
 const CollectionCard = ({ collection }) => {
-  console.info(collection);
-
   return (
     <div className='rounded-xl p-1 max-w-full lg:max-w-max bg-neutral-300 mt-6 lg:mt-8 drop-shadow-xl group'>
       <Link href={`/collection/${collection.id}-${getCleanTitle(collection.name)}`} legacyBehavior>

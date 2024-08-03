@@ -43,17 +43,18 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
                 </RatingOverlay>
               )}
             </CardImg>
-            {recommendation && <RatingTag rating={data?.vote_average} />}
+            {rating ? null : <RatingTag rating={data?.vote_average} />}
           </div>
         </Link>
       </motion.div>
+
       {recommendation ? (
         <CardInfo>
           <InfoTitle>{data?.title || data?.name}</InfoTitle>
           <ReleaseDate>{getReleaseDate(data?.release_date || data?.first_air_date)}</ReleaseDate>
         </CardInfo>
       ) : (
-        <div className='pt-4'>{children}</div>
+        <div className={rating ? "pt-4" : "pt-9"}>{children}</div>
       )}
     </Cards>
   );

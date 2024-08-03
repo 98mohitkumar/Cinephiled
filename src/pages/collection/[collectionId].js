@@ -48,7 +48,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
   const posters = collectionImagesData?.posters || [];
   const backdrops = collectionImagesData?.backdrops || [];
 
-  const sortedByReleaseDate = getSortedItems({ items: parts, sortBy: "releaseDate" });
+  const sortedByReleaseDate = getSortedItems({ items: parts, sortBy: "release_date" });
 
   return (
     <Fragment>
