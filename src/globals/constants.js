@@ -2,7 +2,6 @@ export const read_access_token = process.env.NEXT_PUBLIC_READ_ACCESS_TOKEN;
 
 const baseUrlV3 = "https://api.themoviedb.org/3";
 const baseUrlV4 = "https://api.themoviedb.org/4";
-export const proxy = "https://corsproxy.scharde.workers.dev/?q=";
 
 export const apiEndpoints = {
   auth: {
@@ -113,23 +112,23 @@ export const apiEndpoints = {
     tvWatchProviders: ({ region }) =>
       `${baseUrlV3}/watch/providers/tv?language=en-US&watch_region=${region}`,
 
-    watchProviderMovies: ({ region, pageQuery, providerId }) =>
-      `${baseUrlV3}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&watch_region=${region}&with_watch_providers=${providerId}`,
+    watchProviderMovies: ({ region, pageQuery, providerId, sortBy = "popularity.desc" }) =>
+      `${baseUrlV3}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=${sortBy}&watch_region=${region}&with_watch_providers=${providerId}`,
 
-    watchProviderTv: ({ region, pageQuery, providerId }) =>
-      `${baseUrlV3}/discover/tv?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&watch_region=${region}&with_watch_providers=${providerId}`,
+    watchProviderTv: ({ region, pageQuery, providerId, sortBy = "popularity.desc" }) =>
+      `${baseUrlV3}/discover/tv?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=${sortBy}&watch_region=${region}&with_watch_providers=${providerId}`,
 
     regions: `${baseUrlV3}/watch/providers/regions`
   },
   network: {
     networkDetails: (id) => `${baseUrlV3}/network/${id}?append_to_response=images`,
 
-    networkMedia: ({ id, pageQuery = 1 }) =>
-      `${baseUrlV3}/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&with_networks=${id}`
+    networkMedia: ({ id, pageQuery = 1, sortBy = "popularity.desc" }) =>
+      `${baseUrlV3}/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${pageQuery}&sort_by=${sortBy}&with_networks=${id}`
   },
   lists: {
     getLists: ({ accountId, pageQuery = 1 }) =>
-      `${baseUrlV4}/account/${accountId}/lists?page=${pageQuery}&sort_by=created_at.desc`,
+      `${baseUrlV4}/account/${accountId}/lists?page=${pageQuery}`,
 
     getListDetails: ({ id, pageQuery = 1 }) => `${baseUrlV4}/list/${id}?page=${pageQuery}`,
 
@@ -154,3 +153,43 @@ export const blurPlaceholder =
   "data:image/webp;base64,UklGRgwCAABXRUJQVlA4WAoAAAAgAAAAAQAAAgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggHgAAAJABAJ0BKgIAAwAHQJYlpAAC51m2AAD+5R4qGAAAAA==";
 
 export const MAX_WIDTH = 2560;
+
+export const sortOptions = {
+  localOptions: [
+    { key: "default", value: "Default" },
+    { key: "rating.asc", value: "Rating Ascending" },
+    { key: "rating.desc", value: "Rating Descending" },
+    { key: "popularity.asc", value: "Popularity Ascending" },
+    { key: "popularity.desc", value: "Popularity Descending" },
+    { key: "release_date.asc", value: "Release Date Ascending" },
+    { key: "release_date.desc", value: "Release Date Descending" }
+  ],
+  tmdbOptions: {
+    movie: [
+      { key: "default", value: "Default (Popularity Desc)" },
+      { key: "vote_average.asc", value: "Rating Ascending" },
+      { key: "vote_average.desc", value: "Rating Descending" },
+      { key: "popularity.asc", value: "Popularity Ascending" },
+      { key: "primary_release_date.asc", value: "Release Date Ascending" },
+      { key: "primary_release_date.desc", value: "Release Date Descending" }
+    ],
+    tv: [
+      { key: "default", value: "Default (Popularity Desc)" },
+      { key: "vote_average.asc", value: "Rating Ascending" },
+      { key: "vote_average.desc", value: "Rating Descending" },
+      { key: "popularity.asc", value: "Popularity Ascending" },
+      { key: "first_air_date.asc", value: "Release Date Ascending" },
+      { key: "first_air_date.desc", value: "Release Date Descending" }
+    ]
+  },
+  listOptions: [
+    { name: "Original Ascending", value: "original_order.asc" },
+    { name: "Original Descending", value: "original_order.desc" },
+    { name: "Rating Ascending", value: "vote_average.asc" },
+    { name: "Rating Descending", value: "vote_average.desc" },
+    { name: "Release Date Ascending", value: "release_date.asc" },
+    { name: "Release Date Descending", value: "release_date.desc" },
+    { name: "Title (A-Z)", value: "title.asc" },
+    { name: "Title (Z-A)", value: "title.desc" }
+  ]
+};

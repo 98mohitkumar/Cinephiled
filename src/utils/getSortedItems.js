@@ -9,10 +9,10 @@ export const getSortedItems = ({ items, sortBy, order = "asc" }) => {
         order === "asc" ? a.popularity - b.popularity : b.popularity - a.popularity
       );
 
-    case "releaseDate":
+    case "release_date":
       return itemsToSort.sort((a, b) => {
-        const dateA = new Date(a.release_date);
-        const dateB = new Date(b.release_date);
+        const dateA = new Date(a.release_date || a.first_air_date);
+        const dateB = new Date(b.release_date || b.first_air_date);
         return order === "asc" ? dateA - dateB : dateB - dateA;
       });
 
@@ -25,7 +25,17 @@ export const getSortedItems = ({ items, sortBy, order = "asc" }) => {
         }
       });
 
+    case "rating":
+      return itemsToSort.sort((a, b) =>
+        order === "asc" ? a.vote_average - b.vote_average : b.vote_average - a.vote_average
+      );
+
     default:
       return items;
   }
+};
+
+export const getActiveSortKey = ({ options, sortBy, defaultKey = "default" }) => {
+  const sortKey = options?.find((item) => item.key === sortBy);
+  return sortKey?.value || defaultKey;
 };

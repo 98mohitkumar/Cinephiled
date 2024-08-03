@@ -2,24 +2,39 @@ import DominantColor from "components/DominantColor/DominantColor";
 import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import MetaWrapper from "components/MetaWrapper";
 import PlaceholderText from "components/PlaceholderText";
-import { apiEndpoints } from "globals/constants";
+import Select from "components/Select/Select";
+import { apiEndpoints, sortOptions } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
+import useSort from "hooks/useSort";
 import { Fragment } from "react";
-import { fetchOptions } from "src/utils/helper";
+import { getActiveSortKey } from "src/utils/getSortedItems";
+import { fetchOptions, removeDuplicates } from "src/utils/helper";
 import { LayoutContainer } from "styles/GlobalComponents";
 
 const ProviderMovies = ({ media, region, providerName, providerId }) => {
-  const { list } = useInfiniteQuery({
+  const { sortBy, handleSortSelection } = useSort({ shallow: false });
+
+  const {
+    tmdbOptions: { movie: movieSortOptions }
+  } = sortOptions;
+
+  const { list, resetQueryState } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) =>
       apiEndpoints.watchProviders.watchProviderMovies({
         providerId,
         region: region?.iso_3166_1,
-        pageQuery: page
+        pageQuery: page,
+        sortBy
       })
   });
 
-  const renderList = media.concat(list);
+  const { cleanedItems: renderList } = removeDuplicates(media.concat(list));
+
+  const handleSort = (key) => {
+    handleSortSelection(key);
+    resetQueryState();
+  };
 
   return (
     <Fragment>
@@ -44,6 +59,21 @@ const ProviderMovies = ({ media, region, providerName, providerId }) => {
                 </h1>
               </div>
 
+              <div className='flex justify-end mb-8'>
+                <Select
+                  options={movieSortOptions}
+                  activeKey={sortBy || "default"}
+                  triggerText={getActiveSortKey({
+                    options: movieSortOptions,
+                    sortBy,
+                    defaultKey: "default"
+                  })}
+                  baseSizeOptions
+                  label='Sort By:'
+                  handleChange={handleSort}
+                />
+              </div>
+
               <MoviesTemplate movies={renderList} />
             </Fragment>
           ) : (
@@ -59,14 +89,15 @@ const ProviderMovies = ({ media, region, providerName, providerId }) => {
 
 export const getServerSideProps = async (ctx) => {
   try {
-    const { providerId, watchregion } = ctx.query;
+    const { providerId, watchregion, sortBy } = ctx.query;
 
     const [providerMoviesRes, regionsRes] = await Promise.all([
       fetch(
         apiEndpoints.watchProviders.watchProviderMovies({
           providerId: providerId.split("-")[0],
           region: watchregion || "US",
-          pageQuery: 1
+          pageQuery: 1,
+          sortBy
         }),
         fetchOptions()
       ),

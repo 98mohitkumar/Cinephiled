@@ -23,12 +23,12 @@ const Network = ({ networkDetails, networkMedia }) => {
 
 export const getServerSideProps = async (context) => {
   try {
-    const { id } = context.query;
+    const { id, sortBy } = context.query;
     const networkId = id.split("-")[0];
 
     const [res, networkMedia] = await Promise.all([
       fetch(apiEndpoints.network.networkDetails(networkId), fetchOptions()),
-      fetch(apiEndpoints.network.networkMedia({ id: networkId }), fetchOptions())
+      fetch(apiEndpoints.network.networkMedia({ id: networkId, sortBy }), fetchOptions())
     ]);
 
     if (!res.ok) throw new Error("cannot fetch details");

@@ -1,11 +1,14 @@
 import NetworkMediaGrid from "components/MediaTemplate/TVTemplate";
 import { PostersImg } from "components/Posters/PostersStyles";
-import { apiEndpoints, blurPlaceholder } from "globals/constants";
+import Select from "components/Select/Select";
+import { apiEndpoints, blurPlaceholder, sortOptions } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
+import useSort from "hooks/useSort";
 import Image from "next/image";
 import { Fragment } from "react";
 import { FaLink } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
+import { getActiveSortKey } from "src/utils/getSortedItems";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import { NetwrokDetailsWrapper, PostersGrid } from "./ExploreStyles";
 
@@ -14,10 +17,12 @@ const NetworkMedia = ({ details, media }) => {
     poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"
   );
 
-  const { list } = useInfiniteQuery({
+  const { sortBy, handleSortSelection } = useSort({ shallow: false });
+
+  const { list, resetQueryState } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) =>
-      apiEndpoints.network.networkMedia({ id: details.id, pageQuery: page })
+      apiEndpoints.network.networkMedia({ id: details.id, pageQuery: page, sortBy })
   });
 
   if (posters.length % 2 !== 0 && posters.length > 10) {
@@ -35,6 +40,13 @@ const NetworkMedia = ({ details, media }) => {
   } else {
     colCount = postersLength;
   }
+
+  const networkMediaSortOptions = sortOptions.tmdbOptions.tv;
+
+  const handleSort = (key) => {
+    handleSortSelection(key);
+    resetQueryState();
+  };
 
   return (
     <Fragment>
@@ -97,6 +109,21 @@ const NetworkMedia = ({ details, media }) => {
       </NetwrokDetailsWrapper>
 
       <ModulesWrapper>
+        <div className='flex justify-end mb-8'>
+          <Select
+            options={networkMediaSortOptions}
+            activeKey={sortBy || "default"}
+            triggerText={getActiveSortKey({
+              options: networkMediaSortOptions,
+              sortBy,
+              defaultKey: "default"
+            })}
+            baseSizeOptions
+            label='Sort By:'
+            handleChange={handleSort}
+          />
+        </div>
+
         <NetworkMediaGrid TV={media.concat(list)} />
       </ModulesWrapper>
     </Fragment>

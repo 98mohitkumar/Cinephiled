@@ -1,20 +1,12 @@
 import Loading from "components/Loading";
+import { sortOptions } from "globals/constants";
 import { Fragment } from "react";
 import useGetListDetails from "./useGetListDetails";
 
-const sortBy = [
-  { name: "Original Ascending", value: "original_order.asc" },
-  { name: "Original Descending", value: "original_order.desc" },
-  { name: "Rating Ascending", value: "vote_average.asc" },
-  { name: "Rating Descending", value: "vote_average.desc" },
-  { name: "Release Date Ascending", value: "release_date.asc" },
-  { name: "Release Date Descending", value: "release_date.desc" },
-  { name: "Title (A-Z)", value: "title.asc" },
-  { name: "Title (Z-A)", value: "title.desc" }
-];
-
 const CreateListForm = ({ submitHandler, id, children }) => {
   const { error, listDetails: storedValues, loading } = useGetListDetails({ id });
+
+  const { listOptions } = sortOptions;
 
   return (
     <Fragment>
@@ -93,7 +85,7 @@ const CreateListForm = ({ submitHandler, id, children }) => {
                   defaultValue={storedValues?.sort_by}
                   className='border text-base rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-500
          placeholder-neutral-400 text-white'>
-                  {sortBy.map(({ name, value }) => (
+                  {listOptions.map(({ name, value }) => (
                     <option key={value} value={value}>
                       {name}
                     </option>

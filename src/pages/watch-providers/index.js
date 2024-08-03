@@ -76,7 +76,11 @@ const WatchProviders = ({
 
             <div className='min-w-[250px] max-sm:min-w-full max-md:grow'>
               <Select
-                options={[{ key: "default", value: `Default (${defaultRegion})` }, ...regions]}
+                options={[
+                  { key: "default", value: `Default (${defaultRegion})`, highlight: true },
+                  ...regions
+                ]}
+                baseSizeOptions
                 handleChange={handleSelectChange}
                 activeKey={selectedRegion || "default"}
                 triggerText={
