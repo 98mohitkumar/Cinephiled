@@ -1,20 +1,14 @@
-import {
-  CardImg,
-  CardInfo,
-  Cards,
-  InfoTitle,
-  ReleaseDate
-} from "components/MediaTemplate/TemplateStyles";
+import { CardImg, Cards } from "components/MediaTemplate/TemplateStyles";
 import RatingTag from "components/RatingTag/RatingTag";
 import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillStar } from "react-icons/ai";
-import { getCleanTitle, getReleaseDate } from "src/utils/helper";
+import { getCleanTitle } from "src/utils/helper";
 import { RatingOverlay } from "./ProfilePageStyles";
 
-const MediaCard = ({ data, link, children, rating, recommendation }) => {
+const MediaCard = ({ data, link, children, rating }) => {
   return (
     <Cards>
       <motion.div
@@ -48,14 +42,7 @@ const MediaCard = ({ data, link, children, rating, recommendation }) => {
         </Link>
       </motion.div>
 
-      {recommendation ? (
-        <CardInfo>
-          <InfoTitle>{data?.title || data?.name}</InfoTitle>
-          <ReleaseDate>{getReleaseDate(data?.release_date || data?.first_air_date)}</ReleaseDate>
-        </CardInfo>
-      ) : (
-        <div className={rating ? "pt-4" : "pt-9"}>{children}</div>
-      )}
+      <div className={rating ? "pt-4" : "pt-9"}>{children}</div>
     </Cards>
   );
 };

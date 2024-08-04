@@ -128,7 +128,13 @@ const MovieDetails = ({ movieDetails, easter }) => {
               <UserActions
                 mediaType='movie'
                 mediaId={id}
-                mediaDetails={{ title: title, poster: moviePoster, releaseYear, releaseDate }}
+                mediaDetails={{
+                  title: title,
+                  poster: moviePoster,
+                  releaseYear,
+                  releaseDate,
+                  rating
+                }}
               />
             </div>
 

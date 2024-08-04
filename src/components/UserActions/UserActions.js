@@ -97,14 +97,14 @@ const UserActionButtons = ({
   );
 };
 
-const UserMovieActions = ({ mediaId, mediaType, mediaDetails }) => {
+const UserMovieActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
   const { userInfo } = useUserContext();
   const { favoriteMovies, moviesWatchlist, ratedMovies, validateMedia } = useMediaContext();
   const { isToastVisible, showToast, toastMessage } = useToast();
   const { isModalVisible, openModal, closeModal } = useModal();
 
-  const isAddedToWatchlist = moviesWatchlist?.map((item) => item.id)?.includes(mediaId);
-  const isAddedToFavorites = favoriteMovies?.map((item) => item.id)?.includes(mediaId);
+  const isAddedToWatchlist = moviesWatchlist?.some((item) => item.id === mediaId);
+  const isAddedToFavorites = favoriteMovies?.some((item) => item.id === mediaId);
   const savedRating = ratedMovies?.find((item) => item?.id === mediaId)?.rating || false;
 
   const title = mediaDetails?.title;
@@ -134,7 +134,8 @@ const UserMovieActions = ({ mediaId, mediaType, mediaDetails }) => {
             id: mediaId,
             poster_path: poster,
             title,
-            release_date: releaseDate
+            release_date: releaseDate,
+            vote_average: rating
           });
 
           validateMedia({
@@ -237,15 +238,15 @@ const UserMovieActions = ({ mediaId, mediaType, mediaDetails }) => {
   );
 };
 
-const UserTVActions = ({ mediaId, mediaType, mediaDetails }) => {
+const UserTVActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
   const { userInfo } = useUserContext();
   const { favoriteTvShows, tvShowsWatchlist, ratedTvShows, validateMedia } = useMediaContext();
   const { isToastVisible, showToast, toastMessage } = useToast();
   const { isModalVisible, openModal, closeModal } = useModal();
 
-  const isAddedToFavorites = favoriteTvShows?.map((item) => item.id)?.includes(mediaId);
-  const isAddedToWatchlist = tvShowsWatchlist?.map((item) => item.id)?.includes(mediaId);
-  const savedRating = ratedTvShows?.find((item) => item?.id === mediaId)?.rating ?? false;
+  const isAddedToFavorites = favoriteTvShows?.some((item) => item.id === mediaId);
+  const isAddedToWatchlist = tvShowsWatchlist?.some((item) => item.id === mediaId);
+  const savedRating = ratedTvShows?.find((item) => item?.id === mediaId)?.rating || false;
 
   const name = mediaDetails?.name;
   const poster = mediaDetails?.poster;
@@ -270,7 +271,8 @@ const UserTVActions = ({ mediaId, mediaType, mediaDetails }) => {
             id: mediaId,
             name,
             poster_path: poster,
-            first_air_date: airDate
+            first_air_date: airDate,
+            vote_average: rating
           });
 
           validateMedia({
@@ -368,7 +370,7 @@ const UserTVActions = ({ mediaId, mediaType, mediaDetails }) => {
   );
 };
 
-const UserActions = ({ mediaId, mediaType, mediaDetails }) => {
+const UserActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
   return (
     <Fragment>
       <div className='mb-3'>
@@ -376,9 +378,19 @@ const UserActions = ({ mediaId, mediaType, mediaDetails }) => {
       </div>
 
       {matcher(mediaType, "movie") ? (
-        <UserMovieActions mediaId={mediaId} mediaType={mediaType} mediaDetails={mediaDetails} />
+        <UserMovieActions
+          mediaId={mediaId}
+          mediaType={mediaType}
+          mediaDetails={mediaDetails}
+          rating={rating}
+        />
       ) : (
-        <UserTVActions mediaId={mediaId} mediaType={mediaType} mediaDetails={mediaDetails} />
+        <UserTVActions
+          mediaId={mediaId}
+          mediaType={mediaType}
+          mediaDetails={mediaDetails}
+          rating={rating}
+        />
       )}
     </Fragment>
   );
