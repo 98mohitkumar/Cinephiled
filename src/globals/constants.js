@@ -64,8 +64,8 @@ export const apiEndpoints = {
     movieDetails: (id) =>
       `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=images,videos,credits,reviews,recommendations,external_ids&include_image_language=en,null`,
 
-    movieGenre: ({ genreId, pageQuery = 1 }) =>
-      `${baseUrlV3}/discover/movie?language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
+    movieGenre: ({ genreId, pageQuery = 1, sortBy = "popularity.desc" }) =>
+      `${baseUrlV3}/discover/movie?language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}&sort_by=${sortBy}`,
 
     getMovieCredits: ({ id }) =>
       `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=credits`,
@@ -90,8 +90,9 @@ export const apiEndpoints = {
     episodeDetails: ({ id, seasonNumber, episodeNumber }) =>
       `${baseUrlV3}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?language=en-US&append_to_response=images,credits&include_image_language=en,null`,
 
-    tvGenre: ({ genreId, pageQuery }) =>
-      `${baseUrlV3}/discover/tv?language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}`,
+    tvGenre: ({ genreId, pageQuery, sortBy = "popularity.desc" }) =>
+      `${baseUrlV3}/discover/tv?language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}
+      &sort_by=${sortBy}`,
 
     getTvCredits: ({ id }) =>
       `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=aggregate_credits`,

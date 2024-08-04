@@ -1,29 +1,35 @@
 import DominantColor from "components/DominantColor/DominantColor";
+import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import MetaWrapper from "components/MetaWrapper";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
-import {
-  RecommendationsGrid,
-  RecommendedImg,
-  RecommendedWrapper,
-  InfoTitle
-} from "components/Recommendations/RecommendationsStyles";
-import { motion } from "framer-motion";
-import { apiEndpoints, blurPlaceholder } from "globals/constants";
+import Select from "components/Select/Select";
+import { apiEndpoints, sortOptions } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
-import Image from "next/image";
-import Link from "next/link";
+import useSort from "hooks/useSort";
 import { Fragment } from "react";
+import { getActiveSortKey } from "src/utils/getSortedItems";
 import { fetchOptions, getCleanTitle, removeDuplicates } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents/index";
 
 const Movies = ({ renderList, genreName, genreId }) => {
-  const { list } = useInfiniteQuery({
+  const { sortBy, handleSortSelection } = useSort({ shallow: false });
+
+  const {
+    tmdbOptions: { movie: movieSortOptions }
+  } = sortOptions;
+
+  const { list, resetQueryState } = useInfiniteQuery({
     initialPage: 3,
-    getEndpoint: ({ page }) => apiEndpoints.movie.movieGenre({ genreId, pageQuery: page })
+    getEndpoint: ({ page }) => apiEndpoints.movie.movieGenre({ genreId, pageQuery: page, sortBy })
   });
 
   const { cleanedItems } = removeDuplicates(renderList.concat(list));
+
+  const handleSort = (key) => {
+    handleSortSelection(key);
+    resetQueryState();
+  };
 
   return (
     <Fragment>
@@ -45,36 +51,23 @@ const Movies = ({ renderList, genreName, genreId }) => {
                   </Span>
                 </div>
               </div>
-              <RecommendationsGrid>
-                {cleanedItems?.map(({ id, title, backdrop_path }) => (
-                  <RecommendedWrapper key={id}>
-                    <motion.div
-                      whileHover={{
-                        scale: 1.05,
-                        transition: { duration: 0.1 }
-                      }}
-                      whileTap={{ scale: 0.95 }}>
-                      <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref>
-                        <RecommendedImg className='relative text-center'>
-                          <Image
-                            src={
-                              backdrop_path
-                                ? `https://image.tmdb.org/t/p/w780${backdrop_path}`
-                                : "/Images/DefaultBackdrop.png"
-                            }
-                            alt='movie-poster'
-                            fill
-                            style={{ objectFit: "cover" }}
-                            placeholder='blur'
-                            blurDataURL={blurPlaceholder}
-                          />
-                        </RecommendedImg>
-                      </Link>
-                    </motion.div>
-                    <InfoTitle className='mt-3 mb-0 text-center'>{title}</InfoTitle>
-                  </RecommendedWrapper>
-                ))}
-              </RecommendationsGrid>
+
+              <div className='flex justify-end mb-8'>
+                <Select
+                  options={movieSortOptions}
+                  activeKey={sortBy || "default"}
+                  triggerText={getActiveSortKey({
+                    options: movieSortOptions,
+                    sortBy,
+                    defaultKey: "default"
+                  })}
+                  baseSizeOptions
+                  label='Sort By:'
+                  handleChange={handleSort}
+                />
+              </div>
+
+              <MoviesTemplate movies={cleanedItems} />
             </Fragment>
           ) : (
             <PlaceholderText height='large'>No Movies For Now</PlaceholderText>
@@ -91,10 +84,11 @@ export const getServerSideProps = async (ctx) => {
   try {
     const genreId = ctx.query.item.split("-")[0];
     const genreName = ctx.query.item.split("-").slice(1).join(" ");
+    const sortBy = ctx.query.sortBy;
 
     const [response, nextPage] = await Promise.all([
-      fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 1 }), fetchOptions()),
-      fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 2 }), fetchOptions())
+      fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 1, sortBy }), fetchOptions()),
+      fetch(apiEndpoints.movie.movieGenre({ genreId, pageQuery: 2, sortBy }), fetchOptions())
     ]);
 
     if (!response.ok) throw new Error("error fetching movies");

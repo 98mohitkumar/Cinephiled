@@ -1,29 +1,35 @@
 import DominantColor from "components/DominantColor/DominantColor";
+import TVTemplate from "components/MediaTemplate/TVTemplate";
 import MetaWrapper from "components/MetaWrapper";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
-import {
-  RecommendationsGrid,
-  RecommendedImg,
-  RecommendedWrapper,
-  InfoTitle
-} from "components/Recommendations/RecommendationsStyles";
-import { motion } from "framer-motion";
-import { apiEndpoints, blurPlaceholder } from "globals/constants";
+import Select from "components/Select/Select";
+import { apiEndpoints, sortOptions } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
-import Image from "next/image";
-import Link from "next/link";
+import useSort from "hooks/useSort";
 import { Fragment } from "react";
+import { getActiveSortKey } from "src/utils/getSortedItems";
 import { fetchOptions, getCleanTitle, removeDuplicates } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents/index";
 
 const TvShows = ({ renderList, genreName, genreId }) => {
-  const { list } = useInfiniteQuery({
+  const { sortBy, handleSortSelection } = useSort({ shallow: false });
+
+  const {
+    tmdbOptions: { tv: tvSortOptions }
+  } = sortOptions;
+
+  const { list, resetQueryState } = useInfiniteQuery({
     initialPage: 3,
-    getEndpoint: ({ page }) => apiEndpoints.tv.tvGenre({ genreId, pageQuery: page })
+    getEndpoint: ({ page }) => apiEndpoints.tv.tvGenre({ genreId, pageQuery: page, sortBy })
   });
 
   const { cleanedItems } = removeDuplicates(renderList.concat(list));
+
+  const handleSort = (key) => {
+    handleSortSelection(key);
+    resetQueryState();
+  };
 
   return (
     <Fragment>
@@ -45,36 +51,23 @@ const TvShows = ({ renderList, genreName, genreId }) => {
                   </Span>
                 </div>
               </div>
-              <RecommendationsGrid>
-                {cleanedItems.map(({ id, name, backdrop_path }) => (
-                  <RecommendedWrapper key={id}>
-                    <motion.div
-                      whileHover={{
-                        scale: 1.05,
-                        transition: { duration: 0.1 }
-                      }}
-                      whileTap={{ scale: 0.95 }}>
-                      <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref>
-                        <RecommendedImg className='relative text-center'>
-                          <Image
-                            src={
-                              backdrop_path
-                                ? `https://image.tmdb.org/t/p/w780${backdrop_path}`
-                                : "/Images/DefaultBackdrop.png"
-                            }
-                            alt='movie-poster'
-                            fill
-                            style={{ objectFit: "cover" }}
-                            placeholder='blur'
-                            blurDataURL={blurPlaceholder}
-                          />
-                        </RecommendedImg>
-                      </Link>
-                    </motion.div>
-                    <InfoTitle className='my-3 text-center'>{name}</InfoTitle>
-                  </RecommendedWrapper>
-                ))}
-              </RecommendationsGrid>
+
+              <div className='flex justify-end mb-8'>
+                <Select
+                  options={tvSortOptions}
+                  activeKey={sortBy || "default"}
+                  triggerText={getActiveSortKey({
+                    options: tvSortOptions,
+                    sortBy,
+                    defaultKey: "default"
+                  })}
+                  baseSizeOptions
+                  label='Sort By:'
+                  handleChange={handleSort}
+                />
+              </div>
+
+              <TVTemplate TV={cleanedItems} />
             </Fragment>
           ) : (
             <PlaceholderText height='large'>No TV Shows For Now</PlaceholderText>
@@ -90,13 +83,13 @@ export default TvShows;
 export const getServerSideProps = async (ctx) => {
   try {
     const param = ctx.query.item.split("-");
-
     const genreId = param[0];
-    const genreName = param.slice(1, param.length).join("-").replace("&", " & ");
+    const genreName = param.slice(1, param.length).join("-");
+    const sortBy = ctx.query.sortBy;
 
     const [response, nextPage] = await Promise.all([
-      fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 1 }), fetchOptions()),
-      fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 2 }), fetchOptions())
+      fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 1, sortBy }), fetchOptions()),
+      fetch(apiEndpoints.tv.tvGenre({ genreId, pageQuery: 2, sortBy }), fetchOptions())
     ]);
 
     if (!response.ok) throw new Error("error fetching tv shows");
