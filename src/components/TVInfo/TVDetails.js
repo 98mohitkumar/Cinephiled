@@ -118,7 +118,7 @@ const TVDetails = ({ tvData }) => {
               <UserActions
                 mediaType='tv'
                 mediaId={id}
-                mediaDetails={{ name: title, poster: posterPath, releaseYear, airDate }}
+                mediaDetails={{ name: title, poster: posterPath, releaseYear, airDate, rating }}
               />
             </div>
             <SocialMediaLinks
