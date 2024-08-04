@@ -72,7 +72,8 @@ export const apiEndpoints = {
 
     movieGenreList: `${baseUrlV3}/genre/movie/list?language=en-US`,
 
-    nowPlaying: ({ region }) => `${baseUrlV3}/movie/now_playing?page=1&region=${region}`
+    nowPlaying: ({ region, pageQuery = 1 }) =>
+      `${baseUrlV3}/movie/now_playing?page=${pageQuery}&region=${region}`
   },
   tv: {
     popularTV: `${baseUrlV3}/tv/popular?language=en-US&page=1`,

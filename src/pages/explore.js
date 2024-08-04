@@ -48,25 +48,28 @@ export const getServerSideProps = async ({ req }) => {
     const explorePageData = await Promise.all([
       fetch(apiEndpoints.movie.movieGenreList, fetchOptions()),
       fetch(apiEndpoints.tv.tvGenreList, fetchOptions()),
-      fetch(apiEndpoints.movie.nowPlaying({ region }), fetchOptions())
+      fetch(apiEndpoints.movie.nowPlaying({ region, pageQuery: 1 }), fetchOptions()),
+      fetch(apiEndpoints.movie.nowPlaying({ region, pageQuery: 2 }), fetchOptions())
     ]);
 
     const error = explorePageData.some((res) => !res.ok);
 
     if (error) throw new Error("Failed to fetch genres");
 
-    const [movieGenresRes, tvGenresRes, nowPlayingRes] = explorePageData;
-    const [movieGenresList, tvGenresList, nowPlayingList] = await Promise.all([
-      movieGenresRes.json(),
-      tvGenresRes.json(),
-      nowPlayingRes.json()
-    ]);
+    const [movieGenresRes, tvGenresRes, nowPlayingRes, nowPlayingNextPage] = explorePageData;
+    const [movieGenresList, tvGenresList, nowPlayingList, nowPlayingNextPageList] =
+      await Promise.all([
+        movieGenresRes.json(),
+        tvGenresRes.json(),
+        nowPlayingRes.json(),
+        nowPlayingNextPage.json()
+      ]);
 
     return {
       props: {
         movieGenres: movieGenresList?.genres || [],
         tvGenres: tvGenresList?.genres || [],
-        nowPlaying: nowPlayingList?.results || []
+        nowPlaying: nowPlayingList?.results.concat(nowPlayingNextPageList?.results) || []
       }
     };
   } catch {
