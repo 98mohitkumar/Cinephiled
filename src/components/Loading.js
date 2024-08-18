@@ -1,4 +1,19 @@
-import { Loader } from "styles/GlobalComponents";
+import { LoaderContainer } from "styles/GlobalComponents";
+
+export const Loader = (props) => {
+  return (
+    <LoaderContainer {...props}>
+      <div className='loading-wrapper'>
+        <div className='dot'></div>
+        <div className='dot'></div>
+        <div className='dot'></div>
+        <div className='dot'></div>
+        <div className='dot'></div>
+        <div className='dot'></div>
+      </div>
+    </LoaderContainer>
+  );
+};
 
 const Loading = () => {
   return (
