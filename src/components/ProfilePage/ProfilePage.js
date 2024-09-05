@@ -1,4 +1,5 @@
 import MetaWrapper from "components/MetaWrapper";
+import PlaceholderText from "components/PlaceholderText";
 import Tabs, { LinearTabs } from "components/Tabs/Tabs";
 import { AnimatePresence, motion } from "framer-motion";
 import useTabs from "hooks/useTabs";
@@ -68,7 +69,7 @@ const Profile = () => {
 
   return (
     <Fragment>
-      <MetaWrapper title={`${userInfo?.name || userInfo?.username || ""} - Cinephiled`} />
+      <MetaWrapper title={`${userInfo?.name || userInfo?.username || "Profile"} - Cinephiled`} />
 
       {userInfo?.accountId ? (
         <div className='h-full w-full grow'>
@@ -167,7 +168,13 @@ const Profile = () => {
             </AnimatePresence>
           </div>
         </div>
-      ) : null}
+      ) : (
+        <PlaceholderText height='large'>
+          Profile is not available at the moment
+          <br />
+          please try again later.
+        </PlaceholderText>
+      )}
     </Fragment>
   );
 };

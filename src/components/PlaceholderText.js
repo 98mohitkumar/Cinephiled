@@ -1,6 +1,6 @@
 import { NoDataText } from "styles/GlobalComponents";
 
-const PlaceholderText = ({ className, height = "small", children }) => {
+const PlaceholderText = ({ className = "", height = "small", children }) => {
   return (
     <div
       className={`${

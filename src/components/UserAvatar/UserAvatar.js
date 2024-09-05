@@ -2,6 +2,7 @@ import { useLogout } from "api/auth";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { Fragment, useEffect, useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { useUserContext } from "Store/UserContext";
@@ -9,6 +10,7 @@ import { Avatar, DefaultAvatar, Popup, PopupOption } from "./UserAvatarStyles";
 
 const UserAvatar = () => {
   const { logout } = useLogout();
+  const { status } = useSession();
   const router = useRouter();
   const { userInfo } = useUserContext();
   const [showPopup, setShowPopup] = useState(false);
@@ -37,6 +39,8 @@ const UserAvatar = () => {
       window.removeEventListener("scroll", hidePopup);
     };
   });
+
+  if (!userInfo?.accountId && (status === "loading" || status === "authenticated")) return null;
 
   return (
     <Fragment>
