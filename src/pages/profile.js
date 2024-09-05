@@ -1,5 +1,6 @@
 import { useLogout } from "api/auth";
 import ProfilePage from "components/ProfilePage/ProfilePage";
+import Router from "next/router";
 import { getSession } from "next-auth/react";
 
 const Profile = ({ isValidSession }) => {
@@ -15,11 +16,23 @@ const Profile = ({ isValidSession }) => {
 
 Profile.getInitialProps = async (ctx) => {
   const data = await getSession(ctx);
-  const hasTokenExpired = new Date() > new Date(data?.expires);
-  const hasValidToken = data?.user?.accessToken && data?.user?.accountId;
+
+  // if no session, redirect to login
+  if (!data) {
+    if (typeof window === "undefined") {
+      ctx.res.writeHead(302, { location: "/login" });
+      ctx.res.end();
+      return { signedIn: false };
+    } else {
+      Router.push("/login");
+      return { signedIn: false };
+    }
+  }
+
+  const isValidSession = data?.user?.accessToken && data?.user?.accountId;
 
   return {
-    isValidSession: hasValidToken && !hasTokenExpired
+    isValidSession: isValidSession
   };
 };
 
