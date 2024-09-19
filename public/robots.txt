@@ -12,6 +12,7 @@ Disallow: /*.svg$
 Disallow: /en/
 Disallow: /m/
 Disallow: /collection/
+Disallow: /_next/
 
 # Allow these images
 Allow: /logo192.png
