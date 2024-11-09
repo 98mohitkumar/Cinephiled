@@ -20,7 +20,7 @@ const RatingTag = ({ rating }) => {
         secondary='#424242'
         className='h-9 w-9 sm:h-10 sm:w-10'
       />
-      <P className='font-montserrat max-sm:text-tiny' weight='semiBold' size='small'>
+      <P className='font-montserrat' weight='semiBold' size='tiny-to-small'>
         {getRating(rating)}
       </P>
     </div>

@@ -6,7 +6,18 @@ type PProps = ComponentPropsWithoutRef<"p"> & {
   children: ReactNode;
   tag?: ElementType;
   weight?: "light" | "regular" | "medium" | "semiBold" | "bold";
-  size?: "large" | "default" | "small" | "tiny" | "micro";
+  size?:
+    | "large"
+    | "default"
+    | "small"
+    | "tiny"
+    | "micro"
+    | "small-to-p"
+    | "tiny-to-p"
+    | "micro-to-p"
+    | "tiny-to-small"
+    | "micro-to-small"
+    | "micro-to-tiny";
 };
 
 const P = forwardRef<HTMLElement, PProps>(({ className, children, tag: Element = "p", size = "default", weight = "regular", ...props }, ref) => (
@@ -25,7 +36,13 @@ const P = forwardRef<HTMLElement, PProps>(({ className, children, tag: Element =
         "text-p": matches(size, "default"),
         "text-small": matches(size, "small"),
         "text-tiny": matches(size, "tiny"),
-        "text-micro": matches(size, "micro")
+        "text-micro": matches(size, "micro"),
+        "text-small-to-p": matches(size, "small-to-p"),
+        "text-tiny-to-p": matches(size, "tiny-to-p"),
+        "text-micro-to-p": matches(size, "micro-to-p"),
+        "text-tiny-to-small": matches(size, "tiny-to-small"),
+        "text-micro-to-small": matches(size, "micro-to-small"),
+        "text-micro-to-tiny": matches(size, "micro-to-tiny")
       },
       className
     )}

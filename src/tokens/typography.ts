@@ -53,6 +53,42 @@ const fontSizes = {
       size: { minSize: 18, maxSize: 20 },
       lineHeight: { minHeight: 24, maxHeight: 28 },
       letterSpacing: { minSpacing: -0.05, maxSpacing: -0.05 }
+    },
+    {
+      key: "small-to-p",
+      size: { minSize: 14, maxSize: 16 },
+      lineHeight: { minHeight: 21, maxHeight: 24 },
+      letterSpacing: { minSpacing: 0.1, maxSpacing: 0 }
+    },
+    {
+      key: "tiny-to-p",
+      size: { minSize: 12, maxSize: 16 },
+      lineHeight: { minHeight: 18, maxHeight: 24 },
+      letterSpacing: { minSpacing: 0.15, maxSpacing: 0 }
+    },
+    {
+      key: "micro-to-p",
+      size: { minSize: 10, maxSize: 16 },
+      lineHeight: { minHeight: 16, maxHeight: 24 },
+      letterSpacing: { minSpacing: 0.25, maxSpacing: 0 }
+    },
+    {
+      key: "tiny-to-small",
+      size: { minSize: 12, maxSize: 14 },
+      lineHeight: { minHeight: 18, maxHeight: 21 },
+      letterSpacing: { minSpacing: 0.15, maxSpacing: 0.1 }
+    },
+    {
+      key: "micro-to-small",
+      size: { minSize: 10, maxSize: 16 },
+      lineHeight: { minHeight: 16, maxHeight: 24 },
+      letterSpacing: { minSpacing: 0.25, maxSpacing: 0 }
+    },
+    {
+      key: "micro-to-tiny",
+      size: { minSize: 10, maxSize: 12 },
+      lineHeight: { minHeight: 16, maxHeight: 18 },
+      letterSpacing: { minSpacing: 0.25, maxSpacing: 0 }
     }
   ]
 } as const;
