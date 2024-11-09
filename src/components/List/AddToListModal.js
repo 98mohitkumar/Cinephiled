@@ -1,11 +1,11 @@
-import { getListItemStatus, updateListItems } from "api/user";
-import Modal, { useModal } from "components/Modal/Modal";
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import Toast, { useToast } from "components/Toast/Toast";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import { MdOutlineFormatListBulleted } from "react-icons/md";
+import { getListItemStatus, updateListItems } from "apiEndpoints/user";
+import Modal, { useModal } from "components/Modal/Modal";
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import Toast, { useToast } from "components/Toast/Toast";
 import { useListsContext } from "Store/ListsContext";
 import { useUserContext } from "Store/UserContext";
 import { Button } from "styles/GlobalComponents";
@@ -50,8 +50,8 @@ const ListSlice = ({ mediaId, list, mediaType, CTA }) => {
   return (
     <Fragment>
       <div
-        className={`flex items-center justify-between flex-wrap gap-2 ps-4 pe-6 py-3 border-b border-neutral-600 last:border-b-0 cursor-pointer hover:bg-neutral-700 transition-colors ${
-          loading ? "opacity-50 pointer-events-none" : ""
+        className={`py-3 flex cursor-pointer flex-wrap items-center justify-between gap-2 border-b border-neutral-600 pe-6 ps-4 transition-colors last:border-b-0 hover:bg-neutral-700 ${
+          loading ? "pointer-events-none opacity-50" : ""
         }`}
         onClick={selectectionHandler}>
         {loading ? (
@@ -59,11 +59,7 @@ const ListSlice = ({ mediaId, list, mediaType, CTA }) => {
         ) : (
           <Fragment>
             <p className='font-medium'>{list?.name}</p>
-            {isAdded ? (
-              <span className='text-red-500 text-base'>Remove</span>
-            ) : (
-              <span className='text-green-500 text-base'>Add</span>
-            )}
+            {isAdded ? <span className='text-base text-red-500'>Remove</span> : <span className='text-green-500 text-base'>Add</span>}
           </Fragment>
         )}
       </div>
@@ -160,42 +156,30 @@ const AddToListModal = ({ mediaId, mediaType }) => {
 
   return (
     <Fragment>
-      <Modal
-        isOpen={isModalVisible}
-        closeModal={isWaiting ? () => {} : closeModalHandler}
-        width='max-w-lg'
-        align='items-center'>
+      <Modal isOpen={isModalVisible} closeModal={isWaiting ? () => {} : closeModalHandler} width='max-w-lg' align='items-center'>
         <div className={isWaiting ? "pointer-events-none" : ""}>
           <h4 className='text-2xl mb-4 font-semibold'>Add to list</h4>
 
           {lists?.length > 0 ? (
-            <div className='border border-neutral-700 max-h-72 overflow-y-auto rounded-lg'>
+            <div className='max-h-72 overflow-y-auto rounded-lg border border-neutral-700'>
               {lists?.map((list) => (
-                <ListSlice
-                  key={list.id}
-                  mediaId={mediaId}
-                  list={list}
-                  mediaType={mediaType}
-                  CTA={listSelectionHandler}
-                />
+                <ListSlice key={list.id} mediaId={mediaId} list={list} mediaType={mediaType} CTA={listSelectionHandler} />
               ))}
             </div>
           ) : (
-            <div className='grid place-items-center py-3 gap-2'>
+            <div className='py-3 grid place-items-center gap-2'>
               <p className='text-xl'>You don&apos;t have any lists yet.</p>
               <Link href='/lists?create=true'>
-                <p className='block text-lg underline text-cyan-400 hover:text-cyan-600 transition-colors'>
-                  Create a list
-                </p>
+                <p className='text-lg text-cyan-400 hover:text-cyan-600 block underline transition-colors'>Create a list</p>
               </Link>
             </div>
           )}
 
-          <div className='mt-6 flex gap-3'>
+          <div className='gap-3 mt-6 flex'>
             <Button
               as={motion.button}
               whileTap={{ scale: 0.95 }}
-              className='w-full secondary'
+              className='secondary w-full'
               onClick={closeModalHandler}
               loading={+isWaiting}
               type='button'>
@@ -203,13 +187,7 @@ const AddToListModal = ({ mediaId, mediaType }) => {
             </Button>
 
             {lists?.length > 0 && (
-              <Button
-                as={motion.button}
-                whileTap={{ scale: 0.95 }}
-                className='w-full'
-                onClick={saveListHandler}
-                loading={+isWaiting}
-                type='button'>
+              <Button as={motion.button} whileTap={{ scale: 0.95 }} className='w-full' onClick={saveListHandler} loading={+isWaiting} type='button'>
                 Save
               </Button>
             )}
@@ -217,11 +195,7 @@ const AddToListModal = ({ mediaId, mediaType }) => {
         </div>
       </Modal>
 
-      <Button
-        className='w-full gap-3'
-        as={motion.button}
-        whileTap={{ scale: 0.95 }}
-        onClick={openModalHandler}>
+      <Button className='gap-3 w-full' as={motion.button} whileTap={{ scale: 0.95 }} onClick={openModalHandler}>
         <MdOutlineFormatListBulleted size={22} />
         <span className='font-semibold'>Add to list</span>
       </Button>

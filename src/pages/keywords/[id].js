@@ -1,3 +1,7 @@
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { Fragment } from "react";
 import MetaWrapper from "components/MetaWrapper";
 import PlaceholderText from "components/PlaceholderText";
 import {
@@ -9,13 +13,9 @@ import {
   QueryDescription,
   SearchResultsContainer
 } from "components/SearchTab/SearchTabStyles";
-import { motion } from "framer-motion";
 import { apiEndpoints, blurPlaceholder } from "globals/constants";
-import Image from "next/image";
-import Link from "next/link";
-import { Fragment } from "react";
-import { fetchOptions, getCleanTitle, getReleaseDate } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents";
+import { fetchOptions, getCleanTitle, getReleaseDate } from "utils/helper";
 
 const Keyword = ({ results, name, id }) => {
   return (
@@ -37,11 +37,7 @@ const Keyword = ({ results, name, id }) => {
                     <QueryContainer>
                       <QueryImg className='relative text-center'>
                         <Image
-                          src={
-                            poster_path
-                              ? `https://image.tmdb.org/t/p/w185${poster_path}`
-                              : "/Images/DefaultImage.png"
-                          }
+                          src={poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"}
                           alt='movie-poster'
                           fill
                           style={{ objectFit: "cover" }}

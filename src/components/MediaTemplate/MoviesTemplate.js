@@ -1,21 +1,23 @@
-import RatingTag from "components/RatingTag/RatingTag";
 import { motion } from "framer-motion";
-import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { getCleanTitle, getReleaseDate } from "src/utils/helper";
-import {
-  CardsContainerGrid,
-  Cards,
-  CardImg,
-  CardInfo,
-  InfoTitle,
-  ReleaseDate
-} from "./TemplateStyles";
+import { Cards, CardImg, CardInfo, InfoTitle, ReleaseDate } from "./TemplateStyles";
+import { Grid } from "components/Layout/helpers";
+import RatingTag from "components/RatingTag/RatingTag";
+import { blurPlaceholder } from "globals/constants";
+import defaultImage from "images/DefaultImage.png";
+import { getCleanTitle, getReleaseDate } from "utils/helper";
 
 const MoviesTemplate = ({ movies, creditsPage = false }) => {
   return (
-    <CardsContainerGrid>
+    <Grid
+      colConfig={{
+        xxs: 2,
+        xs: 3,
+        md: 4,
+        lg: 5,
+        "2xl": "desktopAutoFitMedia"
+      }}>
       {movies.length > 0
         ? movies.map(({ id, title, poster_path, vote_average, release_date, job }) => (
             <Cards key={id}>
@@ -29,11 +31,7 @@ const MoviesTemplate = ({ movies, creditsPage = false }) => {
                   <div className='relative'>
                     <CardImg>
                       <Image
-                        src={
-                          poster_path
-                            ? `https://image.tmdb.org/t/p/w500${poster_path}`
-                            : "/Images/DefaultImage.png"
-                        }
+                        src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : defaultImage}
                         alt='movie-poster'
                         fill
                         style={{ objectFit: "cover" }}
@@ -49,16 +47,12 @@ const MoviesTemplate = ({ movies, creditsPage = false }) => {
               <CardInfo>
                 <InfoTitle className={creditsPage ? "leading-6" : ""}>{title}</InfoTitle>
                 <ReleaseDate>{getReleaseDate(release_date)}</ReleaseDate>
-                {creditsPage && job?.length > 0 ? (
-                  <p className='text-neutral-400 text-base font-medium'>
-                    {[...new Set(job)].join(", ")}
-                  </p>
-                ) : null}
+                {creditsPage && job?.length > 0 ? <p className='text-base font-medium text-neutral-400'>{[...new Set(job)].join(", ")}</p> : null}
               </CardInfo>
             </Cards>
           ))
         : null}
-    </CardsContainerGrid>
+    </Grid>
   );
 };
 

@@ -1,10 +1,10 @@
-import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
-import { Banner } from "./HeroStyles";
+import { heroBanner } from "./HeroStyles";
+import { blurPlaceholder } from "globals/constants";
 
 const BackdropBanner = ({ posters }) => {
   return (
-    <Banner>
+    <div css={heroBanner}>
       {posters.map(({ src, id }, index) => (
         <div key={`${id}-${index}`} className='relative aspect-[0.666]'>
           <Image
@@ -18,7 +18,7 @@ const BackdropBanner = ({ posters }) => {
           />
         </div>
       ))}
-    </Banner>
+    </div>
   );
 };
 

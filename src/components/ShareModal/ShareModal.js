@@ -1,11 +1,11 @@
-import Modal from "components/Modal/Modal";
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import Toast, { useToast } from "components/Toast/Toast";
 import { motion } from "framer-motion";
 import { Fragment } from "react";
 import { IoCopy } from "react-icons/io5";
-import { copyToClipboard } from "src/utils/helper";
+import Modal from "components/Modal/Modal";
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import Toast, { useToast } from "components/Toast/Toast";
 import { Button } from "styles/GlobalComponents";
+import { copyToClipboard } from "utils/helper";
 
 const ShareModal = ({ title, url, isModalOpen, closeModal }) => {
   const { isToastVisible, showToast, toastMessage } = useToast();
@@ -34,37 +34,27 @@ const ShareModal = ({ title, url, isModalOpen, closeModal }) => {
 
           <div className='mt-6'>
             <div>
-              <label
-                htmlFor='list-URL'
-                className='block mb-2 text-base font-medium text-neutral-200'>
+              <label htmlFor='list-URL' className='text-base mb-2 block font-medium text-neutral-200'>
                 URL
               </label>
-              <div className='flex gap-3'>
+              <div className='gap-3 flex'>
                 <input
                   type='text'
                   name='URL'
                   id='list-URL'
                   defaultValue={typeof window !== "undefined" ? window.location.href : ""}
                   readOnly
-                  className='border text-base rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-500 placeholder-neutral-400 text-white focus:border'
+                  className='text-base p-2.5 block w-full rounded-lg border border-neutral-500 bg-neutral-700 text-white placeholder-neutral-400 focus:border'
                 />
 
-                <Button
-                  as={motion.button}
-                  whileTap={{ scale: 0.95 }}
-                  className='mediaCTA w-[50px] shrink-0'
-                  onClick={copyButtonHandler}>
+                <Button as={motion.button} whileTap={{ scale: 0.95 }} className='mediaCTA w-[50px] shrink-0' onClick={copyButtonHandler}>
                   <IoCopy size={20} />
                 </Button>
               </div>
             </div>
           </div>
 
-          <Button
-            as={motion.button}
-            whileTap={{ scale: 0.95 }}
-            className='secondary w-full mt-3'
-            onClick={closeModal}>
+          <Button as={motion.button} whileTap={{ scale: 0.95 }} className='secondary mt-3 w-full' onClick={closeModal}>
             Close
           </Button>
         </div>

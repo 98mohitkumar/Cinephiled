@@ -8,7 +8,9 @@ export const SeasonWrapper = styled.div`
   overflow: hidden;
   background: white;
   cursor: pointer;
-  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14), 0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+  box-shadow:
+    0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   outline: 1px solid rgba(255, 255, 255, 0.5);
 `;
@@ -27,7 +29,7 @@ export const SeasonInfoWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     padding: 1rem;
   }
 `;
@@ -63,7 +65,7 @@ export const SeasonDetailsWrapper = styled.div`
     margin: 0rem 1rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     .divider {
       display: none;
     }
@@ -83,7 +85,7 @@ export const SeasonsOverview = styled.p`
   margin: 0;
   margin-top: 10px;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     font-size: 14.4px;
   }
 `;

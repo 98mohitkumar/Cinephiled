@@ -50,8 +50,7 @@ export const GenreBG = styled.a`
   display: grid;
   place-items: center;
   transition: letter-spacing 0.325s cubic-bezier(0.77, 0, 0.175, 1);
-  background: ${({ theme }) =>
-    `linear-gradient(200deg,${theme.colors.accent1}, ${theme.colors.accent2}, ${theme.colors.accent3})`};
+  background: ${({ theme }) => `linear-gradient(200deg,${theme.colors.accent1}, ${theme.colors.accent2}, ${theme.colors.accent3})`};
   overflow: hidden;
 
   .title {
@@ -94,8 +93,7 @@ export const PostersGrid = styled.div`
   &::after {
     content: "";
     inset: 0;
-    background: ${({ theme }) =>
-      `linear-gradient(200deg,${theme.colors.accent1}, ${theme.colors.accent2}, ${theme.colors.accent3})`};
+    background: ${({ theme }) => `linear-gradient(200deg,${theme.colors.accent1}, ${theme.colors.accent2}, ${theme.colors.accent3})`};
     opacity: 0.5;
     position: absolute;
     z-index: 1;

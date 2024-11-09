@@ -1,9 +1,9 @@
-import { apiEndpoints } from "globals/constants";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
-import { fetchOptions } from "src/utils/helper";
+import { apiEndpoints } from "globals/constants";
 import { useUserContext } from "Store/UserContext";
+import { fetchOptions } from "utils/helper";
 
 // login hook
 export const useLogin = () => {

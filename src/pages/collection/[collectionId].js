@@ -1,33 +1,16 @@
+import Image from "next/image";
+import Link from "next/link";
+import { Fragment } from "react";
 import Backdrops from "components/Backdrops/Backdrops";
 import DominantColor from "components/DominantColor/DominantColor";
 import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import MetaWrapper from "components/MetaWrapper";
-import {
-  GenreWrap,
-  Gradient,
-  HeroInfoTitle,
-  HeroInfoWrapper,
-  Overview,
-  RatingWrapper,
-  Rounded,
-  Span
-} from "components/MovieInfo/MovieDetailsStyles";
+import { GenreWrap, Gradient, HeroInfoTitle, HeroInfoWrapper, Overview, RatingWrapper, Rounded, Span } from "components/MovieInfo/MovieDetailsStyles";
 import Posters from "components/Posters/Posters";
 import { apiEndpoints, blurPlaceholder } from "globals/constants";
-import Image from "next/image";
-import Link from "next/link";
-import { Fragment } from "react";
-import { getSortedItems } from "src/utils/getSortedItems";
-import { fetchOptions, getCleanTitle, getRating } from "src/utils/helper";
-import {
-  DetailsHeroWrap,
-  HeroBg,
-  HeroBgContainer,
-  HeroDetailsContainer,
-  HeroImg,
-  HeroImgWrapper,
-  ModulesWrapper
-} from "styles/GlobalComponents";
+import { DetailsHeroWrap, HeroBg, HeroBgContainer, HeroDetailsContainer, HeroImg, HeroImgWrapper, ModulesWrapper } from "styles/GlobalComponents";
+import { getSortedItems } from "utils/getSortedItems";
+import { fetchOptions, getCleanTitle, getRating } from "utils/helper";
 
 export const Collection = ({ collectionData, movieGenresData, collectionImagesData }) => {
   const { id, name, overview, backdrop_path, poster_path, parts } = collectionData;
@@ -36,14 +19,10 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
     .map((genreId) => movieGenresData.genres.find((genre) => genre.id === genreId))
     .splice(0, 5);
 
-  const validRatedParts = parts.filter(
-    (part) => !Number.isNaN(part.vote_average) && part.vote_average > 0
-  );
+  const validRatedParts = parts.filter((part) => !Number.isNaN(part.vote_average) && part.vote_average > 0);
 
   const averageRating =
-    validRatedParts.length > 0
-      ? validRatedParts.reduce((acc, part) => acc + part.vote_average, 0) / validRatedParts.length
-      : null;
+    validRatedParts.length > 0 ? validRatedParts.reduce((acc, part) => acc + part.vote_average, 0) / validRatedParts.length : null;
 
   const posters = collectionImagesData?.posters || [];
   const backdrops = collectionImagesData?.backdrops || [];
@@ -62,13 +41,9 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
       <Fragment>
         <HeroDetailsContainer className='relative mb-auto'>
           <HeroBgContainer className='absolute'>
-            <HeroBg className='absolute text-center z-10'>
+            <HeroBg className='absolute z-10 text-center'>
               <Image
-                src={
-                  backdrop_path
-                    ? `https://image.tmdb.org/t/p/w1280${backdrop_path}`
-                    : "/Images/Hex.webp"
-                }
+                src={backdrop_path ? `https://image.tmdb.org/t/p/w1280${backdrop_path}` : "/Images/Hex.webp"}
                 alt='movie-backdrop'
                 fill
                 style={{ objectFit: "cover" }}
@@ -86,11 +61,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
             <HeroImgWrapper>
               <HeroImg className='relative text-center'>
                 <Image
-                  src={
-                    poster_path
-                      ? `https://image.tmdb.org/t/p/w500${poster_path}`
-                      : "/Images/DefaultImage.png"
-                  }
+                  src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : "/Images/DefaultImage.png"}
                   alt='movie-poster'
                   fill
                   style={{ objectFit: "cover" }}
@@ -108,28 +79,19 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
                 <div className='my-3'>
                   <GenreWrap className='font-bold'>
                     {allGenres.map((item, i) => (
-                      <Link
-                        key={item.id}
-                        href={`/genre/${
-                          item.id.toString() + "-" + item.name.replaceAll(" ", "-")
-                        }/movies`}
-                        passHref>
-                        <Rounded className={allGenres.length == i + 1 ? "sep" : ""}>
-                          {item.name}
-                        </Rounded>
+                      <Link key={item.id} href={`/genre/${item.id.toString() + "-" + item.name.replaceAll(" ", "-")}/movies`} passHref>
+                        <Rounded className={allGenres.length == i + 1 ? "sep" : ""}>{item.name}</Rounded>
                       </Link>
                     ))}
                   </GenreWrap>
                 </div>
               ) : null}
 
-              {overview ? <Overview className='font-normal my-4'>{overview}</Overview> : null}
+              {overview ? <Overview className='my-4 font-normal'>{overview}</Overview> : null}
 
               <RatingWrapper>
                 <Fragment>
-                  <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
-                    {getRating(averageRating)}
-                  </Span>
+                  <Span className='xl:text-6xl text-[calc(1.525rem_+_3.3vw)] font-bold'>{getRating(averageRating)}</Span>
                   <span> / 10</span>
                 </Fragment>
               </RatingWrapper>
@@ -148,7 +110,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
             {parts.length > 0 ? (
               <ModulesWrapper>
                 <section className='mt-8'>
-                  <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mb-5 md:mb-8 font-semibold block'>
+                  <span className='mb-5 block text-[calc(1.325rem_+_.9vw)] font-semibold leading-8 md:mb-8 lg:text-[2rem]'>
                     Movies ({parts.length})
                   </span>
 
@@ -161,7 +123,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
               <Fragment>
                 <ModulesWrapper>
                   <section className='mt-12'>
-                    <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mb-5 md:mb-8 font-semibold block'>
+                    <span className='mb-5 block text-[calc(1.325rem_+_.9vw)] font-semibold leading-8 md:mb-8 lg:text-[2rem]'>
                       Backdrops ({backdrops.length})
                     </span>
                     <Backdrops backdrops={backdrops} />
@@ -173,7 +135,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
             {posters?.length > 0 ? (
               <ModulesWrapper>
                 <section className='mt-12'>
-                  <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mb-5 md:mb-8 font-semibold block'>
+                  <span className='mb-5 block text-[calc(1.325rem_+_.9vw)] font-semibold leading-8 md:mb-8 lg:text-[2rem]'>
                     Posters ({posters?.length})
                   </span>
                 </section>

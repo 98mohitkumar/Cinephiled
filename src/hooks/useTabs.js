@@ -16,8 +16,9 @@ const useTabs = ({ tabLocation }) => {
   const [activeTabs, setActiveTabs] = useAtom(tabsAtom);
 
   const setTab = (key) => {
-    if (key === activeTabs[tabLocation]) return;
-    setActiveTabs({ ...activeTabs, [tabLocation]: key });
+    if (key !== activeTabs[tabLocation]) {
+      setActiveTabs({ ...activeTabs, [tabLocation]: key });
+    }
   };
 
   return {

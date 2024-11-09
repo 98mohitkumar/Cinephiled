@@ -1,15 +1,15 @@
-import { updateList } from "api/user";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { Fragment, useState } from "react";
+import useGetListDetails from "./useGetListDetails";
+import { updateList } from "apiEndpoints/user";
 import Loading from "components/Loading";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
 import Toast, { useToast } from "components/Toast/Toast";
 import { blurPlaceholder } from "globals/constants";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { Fragment, useState } from "react";
-import { getCleanTitle } from "src/utils/helper";
 import { Button } from "styles/GlobalComponents";
-import useGetListDetails from "./useGetListDetails";
+import { getCleanTitle } from "utils/helper";
 
 const ChooseListCover = ({ id }) => {
   const { error, listDetails, loading } = useGetListDetails({ id });
@@ -40,18 +40,13 @@ const ChooseListCover = ({ id }) => {
       ) : (
         <Fragment>
           {error ? (
-            <div className='text-lg font-medium text-red-600'>
-              Something went wrong. Please try again later.
-            </div>
+            <div className='text-lg font-medium text-red-600'>Something went wrong. Please try again later.</div>
           ) : (
             <div>
-              <div className='flex items-center justify-between gap-4 max-sm:flex-wrap mb-6'>
+              <div className='mb-6 flex items-center justify-between gap-4 max-sm:flex-wrap'>
                 <h3 className='text-2xl font-semibold'>{listDetails.name}</h3>
 
-                <Button
-                  onClick={CTAHandler}
-                  disabled={!selectedCover}
-                  className='disabled:opacity-50 disabled:cursor-not-allowed max-sm:w-full'>
+                <Button onClick={CTAHandler} disabled={!selectedCover} className='disabled:cursor-not-allowed disabled:opacity-50 max-sm:w-full'>
                   Finish
                 </Button>
               </div>
@@ -61,18 +56,12 @@ const ChooseListCover = ({ id }) => {
                   {listDetails.results.map(({ id, backdrop_path, name, title }) => (
                     <div key={id}>
                       <div
-                        className={`aspect-[1.68] relative rounded-lg overflow-hidden hover:grayscale-0 cursor-pointer transition-colors ${
-                          selectedCover === backdrop_path
-                            ? "ring-2 ring-green-700 grayscale-0"
-                            : "ring-0 grayscale"
+                        className={`relative aspect-[1.68] cursor-pointer overflow-hidden rounded-lg transition-colors hover:grayscale-0 ${
+                          selectedCover === backdrop_path ? "ring-green-700 ring-2 grayscale-0" : "ring-0 grayscale"
                         }`}
                         onClick={() => coverClickHandler(backdrop_path)}>
                         <Image
-                          src={
-                            backdrop_path
-                              ? `https://image.tmdb.org/t/p/w500${backdrop_path}`
-                              : "/Images/DefaultBackdrop.png"
-                          }
+                          src={backdrop_path ? `https://image.tmdb.org/t/p/w500${backdrop_path}` : "/Images/DefaultBackdrop.png"}
                           alt='backdrop'
                           fill
                           style={{ objectFit: "cover" }}
@@ -81,20 +70,18 @@ const ChooseListCover = ({ id }) => {
                         />
 
                         {selectedCover === backdrop_path && (
-                          <div className='absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
+                          <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50'>
                             <span className='text-green-500 text-xl font-semibold'>Selected</span>
                           </div>
                         )}
                       </div>
 
-                      <p className='text-lg font-medium mt-2 text-center'>{name || title}</p>
+                      <p className='text-lg mt-2 text-center font-medium'>{name || title}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <PlaceholderText height='large'>
-                  There are no items added to this list yet.
-                </PlaceholderText>
+                <PlaceholderText height='large'>There are no items added to this list yet.</PlaceholderText>
               )}
             </div>
           )}

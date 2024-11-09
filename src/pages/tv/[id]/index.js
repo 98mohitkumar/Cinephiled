@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import DominantColor from "components/DominantColor/DominantColor";
 import MetaWrapper from "components/MetaWrapper";
 import Recommendations from "components/Recommendations/Recommendations";
@@ -5,9 +6,8 @@ import TVDetails from "components/TVInfo/TVDetails";
 import TVFacts from "components/TVInfo/TVFacts";
 import TVTab from "components/TVInfo/TVTab";
 import { apiEndpoints } from "globals/constants";
-import { Fragment } from "react";
-import { fetchOptions, getCleanTitle, getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents";
+import { fetchOptions, getCleanTitle, getReleaseYear, mergeEpisodeCount } from "utils/helper";
 
 const TvShow = ({ tvData }) => {
   const {
@@ -74,22 +74,14 @@ const TvShow = ({ tvData }) => {
         <TVFacts facts={{ status, network, type, language }} />
 
         {/* tv tabs */}
-        <TVTab
-          cast={cast}
-          seasons={seasons}
-          reviews={reviews}
-          backdrops={backdrops}
-          posters={posters}
-        />
+        <TVTab cast={cast} seasons={seasons} reviews={reviews} backdrops={backdrops} posters={posters} />
 
         {/* recommendations */}
         {recommendations?.length > 0 ? (
           <ModulesWrapper className='relative'>
             <DominantColor image={backdropPath} tint isUsingBackdrop />
-            <div className='pt-12 relative z-10'>
-              <h2 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-bold text-white text-center mb-4 lg:mb-8'>
-                Recommendations
-              </h2>
+            <div className='relative z-10 pt-12'>
+              <h2 className='mb-4 text-center text-[calc(1.375rem_+_1.5vw)] font-bold text-white lg:mb-8 xl:text-[2.5rem]'>Recommendations</h2>
               <Recommendations data={recommendations} type='tv' />
             </div>
           </ModulesWrapper>
@@ -111,10 +103,7 @@ export const getServerSideProps = async (ctx) => {
     const [tvData, languages] = await Promise.all([tvResponse.json(), languagesResponse.json()]);
 
     const releaseYear = getReleaseYear(tvData?.first_air_date);
-    const endYear =
-      tvData?.status === "Ended" || tvData.status === "Canceled"
-        ? new Date(tvData?.last_air_date).getFullYear()
-        : "";
+    const endYear = tvData?.status === "Ended" || tvData.status === "Canceled" ? new Date(tvData?.last_air_date).getFullYear() : "";
 
     const language = languages.find((item) => item.iso_639_1 === tvData.original_language);
 
@@ -122,14 +111,10 @@ export const getServerSideProps = async (ctx) => {
     const network = tvData.networks?.[0] || "TBA";
     const crewData = [
       ...tvData?.created_by?.slice(0, 2),
-      ...tvData?.aggregate_credits?.crew
-        ?.filter((credit) => credit.job === "Characters")
-        .slice(0, 2)
+      ...tvData?.aggregate_credits?.crew?.filter((credit) => credit.job === "Characters").slice(0, 2)
     ];
 
-    const trailer = tvData?.videos?.results?.find(
-      (item) => item?.site === "YouTube" && item?.type === "Trailer"
-    );
+    const trailer = tvData?.videos?.results?.find((item) => item?.site === "YouTube" && item?.type === "Trailer");
 
     const imdbId = tvData?.external_ids?.imdb_id;
 
@@ -158,9 +143,7 @@ export const getServerSideProps = async (ctx) => {
           cast: {
             totalCount: tvData?.aggregate_credits?.cast?.length,
             data: mergeEpisodeCount(
-              tvData?.aggregate_credits?.cast
-                ?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
-                .flat()
+              tvData?.aggregate_credits?.cast?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role }))).flat()
             ).slice(0, 15)
           },
           seasons: tvData?.seasons,

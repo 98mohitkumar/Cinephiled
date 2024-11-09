@@ -1,28 +1,25 @@
+import Image from "next/image";
+import { Fragment } from "react";
+import { FaLink } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { NetwrokDetailsWrapper, PostersGrid } from "./ExploreStyles";
 import NetworkMediaGrid from "components/MediaTemplate/TVTemplate";
 import { PostersImg } from "components/Posters/PostersStyles";
 import Select from "components/Select/Select";
 import { apiEndpoints, blurPlaceholder, sortOptions } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useSort from "hooks/useSort";
-import Image from "next/image";
-import { Fragment } from "react";
-import { FaLink } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6";
 import { getActiveSortKey } from "src/utils/getSortedItems";
 import { ModulesWrapper } from "styles/GlobalComponents";
-import { NetwrokDetailsWrapper, PostersGrid } from "./ExploreStyles";
 
 const NetworkMedia = ({ details, media }) => {
-  const posters = media.map(({ poster_path }) =>
-    poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"
-  );
+  const posters = media.map(({ poster_path }) => (poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"));
 
   const { sortBy, handleSortSelection } = useSort({ shallow: false });
 
   const { list, resetQueryState } = useInfiniteQuery({
     initialPage: 2,
-    getEndpoint: ({ page }) =>
-      apiEndpoints.network.networkMedia({ id: details.id, pageQuery: page, sortBy })
+    getEndpoint: ({ page }) => apiEndpoints.network.networkMedia({ id: details.id, pageQuery: page, sortBy })
   });
 
   if (posters.length % 2 !== 0 && posters.length > 10) {
@@ -33,10 +30,7 @@ const NetworkMedia = ({ details, media }) => {
   const postersLength = posters?.length;
 
   if (postersLength > 10) {
-    colCount =
-      Math.ceil(postersLength / 2) % 2 === 0
-        ? Math.ceil(postersLength / 2)
-        : Math.ceil(postersLength / 2) + 1;
+    colCount = Math.ceil(postersLength / 2) % 2 === 0 ? Math.ceil(postersLength / 2) : Math.ceil(postersLength / 2) + 1;
   } else {
     colCount = postersLength;
   }
@@ -54,7 +48,7 @@ const NetworkMedia = ({ details, media }) => {
         {postersLength > 0 ? (
           <PostersGrid className={postersLength <= 10 ? "alt-grid" : ""} $colCount={colCount || 10}>
             {posters.map((poster, i) => (
-              <PostersImg key={`item -${i}`} className='relative poster-wrapper'>
+              <PostersImg key={`item -${i}`} className='poster-wrapper relative'>
                 <Image
                   src={poster}
                   alt={`${details?.name}-poster`}
@@ -69,7 +63,7 @@ const NetworkMedia = ({ details, media }) => {
           </PostersGrid>
         ) : null}
 
-        <div className='text-center network-info p-8 mb-4'>
+        <div className='network-info mb-4 p-8 text-center'>
           <div
             className='logo-wrapper m-auto'
             style={{
@@ -95,11 +89,7 @@ const NetworkMedia = ({ details, media }) => {
             {details.homepage ? (
               <div className='flex items-center'>
                 <FaLink className='me-1' size={18} />
-                <a
-                  href={details?.homepage}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='font-bold link'>
+                <a href={details?.homepage} target='_blank' rel='noopener noreferrer' className='link font-bold'>
                   Homepage
                 </a>
               </div>
@@ -109,7 +99,7 @@ const NetworkMedia = ({ details, media }) => {
       </NetwrokDetailsWrapper>
 
       <ModulesWrapper>
-        <div className='flex justify-end mb-8'>
+        <div className='mb-8 flex justify-end'>
           <Select
             options={networkMediaSortOptions}
             activeKey={sortBy || "default"}

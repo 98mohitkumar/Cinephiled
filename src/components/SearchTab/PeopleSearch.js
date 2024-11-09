@@ -1,11 +1,11 @@
+import { useRouter } from "next/router";
+import { SortBy } from "./helper";
+import { SearchResultsContainer } from "./SearchTabStyles";
 import Cast from "components/Cast/Cast";
 import PlaceholderText from "components/PlaceholderText";
 import { apiEndpoints } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
-import { useRouter } from "next/router";
-import { removeDuplicates } from "src/utils/helper";
-import { SortBy } from "./helper";
-import { SearchResultsContainer } from "./SearchTabStyles";
+import { removeDuplicates } from "utils/helper";
 
 const sortOptions = [
   {
@@ -58,10 +58,7 @@ const PeopleSearch = ({ searchQuery, peopleRes }) => {
           <SortBy sortOptions={sortOptions} />
 
           <div className='mt-7'>
-            <Cast
-              cast={{ data: sortBy ? getRenderList(cleanedItems) : cleanedItems }}
-              isSearchGrid
-            />
+            <Cast cast={{ data: sortBy ? getRenderList(cleanedItems) : cleanedItems }} isSearchGrid />
           </div>
         </section>
       ) : (

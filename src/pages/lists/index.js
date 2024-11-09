@@ -1,24 +1,20 @@
-import DominantColor from "components/DominantColor/DominantColor";
-import CreateList from "components/List/CreateList";
-import { InfoTitle } from "components/MediaTemplate/TemplateStyles";
-import MetaWrapper from "components/MetaWrapper";
-import PlaceholderText from "components/PlaceholderText";
-import {
-  RecommendationsGrid,
-  RecommendedImg,
-  RecommendedWrapper
-} from "components/Recommendations/RecommendationsStyles";
 import { AnimatePresence, motion } from "framer-motion";
-import { apiEndpoints, blurPlaceholder } from "globals/constants";
-import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { Fragment } from "react";
-import { fetchOptions, framerTabVariants, getCleanTitle } from "src/utils/helper";
+import DominantColor from "components/DominantColor/DominantColor";
+import CreateList from "components/List/CreateList";
+import { InfoTitle } from "components/MediaTemplate/TemplateStyles";
+import MetaWrapper from "components/MetaWrapper";
+import PlaceholderText from "components/PlaceholderText";
+import { RecommendationsGrid, RecommendedImg, RecommendedWrapper } from "components/Recommendations/RecommendationsStyles";
+import { apiEndpoints, blurPlaceholder } from "globals/constants";
+import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { useUserContext } from "Store/UserContext";
 import { Button, LayoutContainer } from "styles/GlobalComponents";
+import { fetchOptions, framerTabVariants, getCleanTitle } from "utils/helper";
 
 const Lists = ({ lists }) => {
   const router = useRouter();
@@ -50,42 +46,23 @@ const Lists = ({ lists }) => {
 
   return (
     <Fragment>
-      <MetaWrapper
-        title={`${create ? "Create List" : "My Lists"} - Cinephiled`}
-        description='Create and manage your lists.'
-      />
+      <MetaWrapper title={`${create ? "Create List" : "My Lists"} - Cinephiled`} description='Create and manage your lists.' />
 
-      <LayoutContainer className='relative list-wrapper grow'>
+      <LayoutContainer className='list-wrapper relative grow'>
         <DominantColor flip tint />
 
         <div className='relative z-20'>
           <AnimatePresence mode='wait'>
             {create ? (
-              <motion.div
-                key={create}
-                variants={framerTabVariants}
-                initial='hidden'
-                animate='visible'
-                exit={false}>
+              <motion.div key={create} variants={framerTabVariants} initial='hidden' animate='visible' exit={false}>
                 <CreateList />
               </motion.div>
             ) : (
-              <motion.div
-                key={`isCreateMode-${create}`}
-                variants={framerTabVariants}
-                initial={false}
-                animate='visible'
-                exit='hidden'>
-                <div className='flex justify-between items-center mb-8'>
-                  <h1 className='text-[calc(1.35rem_+_.9vw)] lg:text-[2rem] font-semibold leading-snug'>
-                    My Lists
-                  </h1>
+              <motion.div key={`isCreateMode-${create}`} variants={framerTabVariants} initial={false} animate='visible' exit='hidden'>
+                <div className='mb-8 flex items-center justify-between'>
+                  <h1 className='text-[calc(1.35rem_+_.9vw)] font-semibold leading-snug lg:text-[2rem]'>My Lists</h1>
 
-                  <Button
-                    as={motion.button}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={createListHandler}>
+                  <Button as={motion.button} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={createListHandler}>
                     Create List
                   </Button>
                 </div>
@@ -103,11 +80,7 @@ const Lists = ({ lists }) => {
                           <Link href={`lists/${id}-${getCleanTitle(name)}`} passHref>
                             <RecommendedImg className='relative text-center'>
                               <Image
-                                src={
-                                  backdrop_path
-                                    ? `https://image.tmdb.org/t/p/w780${backdrop_path}`
-                                    : "/Images/DefaultBackdrop.png"
-                                }
+                                src={backdrop_path ? `https://image.tmdb.org/t/p/w780${backdrop_path}` : "/Images/DefaultBackdrop.png"}
                                 alt='backdrop'
                                 fill
                                 style={{ objectFit: "cover" }}
@@ -123,8 +96,7 @@ const Lists = ({ lists }) => {
                   </RecommendationsGrid>
                 ) : (
                   <PlaceholderText height='large'>
-                    You don&apos;t have any lists yet. <br /> Click on the button above to create
-                    one.
+                    You don&apos;t have any lists yet. <br /> Click on the button above to create one.
                   </PlaceholderText>
                 )}
               </motion.div>
@@ -152,10 +124,7 @@ export const getServerSideProps = async (ctx) => {
     const {
       user: { accessToken, accountId }
     } = data;
-    const listsRes = await fetch(
-      apiEndpoints.lists.getLists({ accountId }),
-      fetchOptions({ token: accessToken })
-    );
+    const listsRes = await fetch(apiEndpoints.lists.getLists({ accountId }), fetchOptions({ token: accessToken }));
 
     if (!listsRes.ok) throw new Error("Failed to fetch lists");
 

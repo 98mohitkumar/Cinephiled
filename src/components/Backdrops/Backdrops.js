@@ -1,9 +1,9 @@
-import DownloadMediaButton from "components/DownloadMediaButton/DownloadMediaButton";
-import PlaceholderText from "components/PlaceholderText";
-import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import { Fragment } from "react";
 import { BackdropsImg, BackdropsImgContainer, BackdropsWrapper } from "./BackdropsStyles";
+import DownloadMediaButton from "components/DownloadMediaButton/DownloadMediaButton";
+import PlaceholderText from "components/PlaceholderText";
+import { blurPlaceholder } from "globals/constants";
 
 const Backdrops = ({ backdrops }) => {
   return (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchOptions } from "src/utils/helper";
+import { fetchOptions } from "utils/helper";
 
 const defaultValue = {
   items: []

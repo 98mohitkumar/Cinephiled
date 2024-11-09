@@ -1,8 +1,8 @@
+import { Fragment } from "react";
 import MetaWrapper from "components/MetaWrapper";
 import PersonDetails from "components/PersonDetails/PersonDetails";
 import { apiEndpoints } from "globals/constants";
-import { Fragment } from "react";
-import { fetchOptions, getCleanTitle } from "src/utils/helper";
+import { fetchOptions, getCleanTitle } from "utils/helper";
 
 const Person = ({ personDetails }) => {
   return (
@@ -11,9 +11,7 @@ const Person = ({ personDetails }) => {
         title={`${personDetails.name} - Cinephiled`}
         image={`https://image.tmdb.org/t/p/w780${personDetails?.profile_path}`}
         description={personDetails?.biography}
-        url={`https://cinephiled.vercel.app/person/${personDetails?.id}-${getCleanTitle(
-          personDetails?.name
-        )}`}
+        url={`https://cinephiled.vercel.app/person/${personDetails?.id}-${getCleanTitle(personDetails?.name)}`}
       />
 
       <PersonDetails details={personDetails} />

@@ -1,14 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
-const Select = ({
-  triggerText,
-  options,
-  handleChange,
-  activeKey,
-  baseSizeOptions = false,
-  label
-}) => {
+const Select = ({ triggerText, options, handleChange, activeKey, baseSizeOptions = false, label }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -36,37 +29,31 @@ const Select = ({
   };
 
   return (
-    <div className='flex gap-4 items-center justify-end h-full'>
-      {label && (
-        <label className='text-neutral-400 text-lg font-medium whitespace-nowrap'>{label}</label>
-      )}
-      <div className={`relative block w-full h-full dropdown-toggle min-w-32`} ref={dropdownRef}>
+    <div className='flex h-full items-center justify-end gap-4'>
+      {label && <label className='text-lg whitespace-nowrap font-medium text-neutral-400'>{label}</label>}
+      <div className={`dropdown-toggle relative block h-full w-full min-w-32`} ref={dropdownRef}>
         <div
-          className='h-full px-4 py-2 bg-neutral-600 rounded-lg text-base inline-flex items-center justify-between gap-2 
-          cursor-pointer hover:bg-neutral-700 transition-colors min-w-full w-max z-20 relative'
+          className='text-base relative z-20 inline-flex h-full w-max min-w-full cursor-pointer items-center justify-between 
+          gap-2 rounded-lg bg-neutral-600 px-4 py-2 transition-colors hover:bg-neutral-700'
           onClick={triggerHandler}>
-          <div className='capitalize font-semibold'>{triggerText}</div>
-          <div className='mt-[2px] -mr-1 pointer-events-none'>
+          <div className='font-semibold capitalize'>{triggerText}</div>
+          <div className='-mr-1 pointer-events-none mt-[2px]'>
             {showDropdown ? <MdKeyboardArrowUp size={22} /> : <MdKeyboardArrowDown size={22} />}
           </div>
         </div>
 
         <div
-          className={`absolute top-full right-0 min-w-full w-max
-          shadow-lg z-[25] mt-2 bg-neutral-600 rounded-lg overflow-hidden ${
-            showDropdown
-              ? "visible opacity-100 pointer-events-auto"
-              : "invisible opacity-0 pointer-events-none"
+          className={`absolute right-0 top-full z-[25] mt-2
+          w-max min-w-full overflow-hidden rounded-lg bg-neutral-600 shadow-lg ${
+            showDropdown ? "pointer-events-auto visible opacity-100" : "pointer-events-none invisible opacity-0"
           }`}>
-          <ul className='overflow-y-auto min-w-full w-max max-h-[190px]'>
+          <ul className='max-h-[190px] w-max min-w-full overflow-y-auto'>
             {options?.map(({ key, value, highlight }) => (
               <li
                 key={key}
-                className={`px-4 py-[6px] bg-neutral-600 hover:bg-neutral-700 transition-colors cursor-pointer [&:not(:last-child)]:border-b border-neutral-500 ${
-                  activeKey === key ? "bg-neutral-700 selected" : ""
-                } ${highlight ? "font-bold bg-neutral-700" : "font-medium"} ${
-                  baseSizeOptions ? "text-base" : "text-sm"
-                }`}
+                className={`cursor-pointer border-neutral-500 bg-neutral-600 px-4 py-[6px] transition-colors hover:bg-neutral-700 [&:not(:last-child)]:border-b ${
+                  activeKey === key ? "selected bg-neutral-700" : ""
+                } ${highlight ? "bg-neutral-700 font-bold" : "font-medium"} ${baseSizeOptions ? "text-base" : "text-sm"}`}
                 onClick={() => changeHandler(key)}>
                 {value}
               </li>

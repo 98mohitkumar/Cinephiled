@@ -1,25 +1,16 @@
-import { deleteRating, setRating } from "api/user";
-import Modal, { useModal } from "components/Modal/Modal";
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import Toast, { useToast } from "components/Toast/Toast";
 import { motion } from "framer-motion";
 import { useState, Fragment } from "react";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
-import { framerTabVariants } from "src/utils/helper";
+import { RatingStarsContainer } from "./RatingStyles";
+import { deleteRating, setRating } from "apiEndpoints/user";
+import Modal, { useModal } from "components/Modal/Modal";
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import Toast, { useToast } from "components/Toast/Toast";
 import { useMediaContext } from "Store/MediaContext";
 import { Button } from "styles/GlobalComponents";
-import { RatingStarsContainer } from "./RatingStyles";
+import { framerTabVariants } from "utils/helper";
 
-const RatingModal = ({
-  mediaType,
-  mediaId,
-  mediaName,
-  closeModal,
-  posterPath,
-  releaseDate,
-  isOpen,
-  title
-}) => {
+const RatingModal = ({ mediaType, mediaId, mediaName, closeModal, posterPath, releaseDate, isOpen, title }) => {
   const [rating, updateRating] = useState(0);
   const { ratedMovies, ratedTvShows, validateMedia } = useMediaContext();
   const { showToast, isToastVisible, toastMessage } = useToast();
@@ -120,35 +111,26 @@ const RatingModal = ({
     <Fragment>
       <Modal isOpen={isOpen} closeModal={cancelButtonHandler} align='items-center' width='max-w-lg'>
         <div>
-          <Span className='block mb-4 font-semibold'>{mediaName}</Span>
+          <Span className='mb-4 block font-semibold'>{mediaName}</Span>
 
           {savedRating && rating === 0 ? (
             <Fragment>
-              <div className='flex justify-between items-center my-4'>
-                <div className='flex gap-1 items-center'>
-                  <Span className='font-normal leading-5 block'>Your rating:</Span>
+              <div className='my-4 flex items-center justify-between'>
+                <div className='gap-1 flex items-center'>
+                  <Span className='block font-normal leading-5'>Your rating:</Span>
                   <Span className='text-xl md:text-2xl font-semibold'>{savedRating}/10</Span>
                 </div>
 
-                <div className='flex gap-3'>
-                  <Span
-                    style={{ color: "#01b4e4" }}
-                    className='text-base font-semibold rating-option'
-                    onClick={() => updateRating(savedRating)}>
+                <div className='gap-3 flex'>
+                  <Span style={{ color: "#01b4e4" }} className='text-base rating-option font-semibold' onClick={() => updateRating(savedRating)}>
                     Update
                   </Span>
-                  <Span
-                    className='text-base font-semibold rating-option text-red-600'
-                    onClick={deleteButtonHandler}>
+                  <Span className='text-base rating-option font-semibold text-red-600' onClick={deleteButtonHandler}>
                     Delete
                   </Span>
                 </div>
               </div>
-              <Button
-                className='secondary w-full'
-                onClick={closeModal}
-                as={motion.button}
-                whileTap={{ scale: 0.95 }}>
+              <Button className='secondary w-full' onClick={closeModal} as={motion.button} whileTap={{ scale: 0.95 }}>
                 Close
               </Button>
             </Fragment>
@@ -166,7 +148,7 @@ const RatingModal = ({
                 </Span>
               )}
 
-              <div className='flex items-center my-4 gap-2'>
+              <div className='my-4 flex items-center gap-2'>
                 <Span className='font-normal'>Rate :</Span>
                 <RatingStarsContainer>
                   {[...Array(10).keys()].map((i) =>
@@ -179,19 +161,11 @@ const RatingModal = ({
                 </RatingStarsContainer>
               </div>
 
-              <div className='flex justify-between items-center gap-4'>
-                <Button
-                  className='secondary w-full'
-                  onClick={cancelButtonHandler}
-                  as={motion.button}
-                  whileTap={{ scale: 0.95 }}>
+              <div className='flex items-center justify-between gap-4'>
+                <Button className='secondary w-full' onClick={cancelButtonHandler} as={motion.button} whileTap={{ scale: 0.95 }}>
                   Cancel
                 </Button>
-                <Button
-                  onClick={ratingSubmissionHandler}
-                  as={motion.button}
-                  whileTap={{ scale: 0.95 }}
-                  className='w-full'>
+                <Button onClick={ratingSubmissionHandler} as={motion.button} whileTap={{ scale: 0.95 }} className='w-full'>
                   Submit
                 </Button>
               </div>
@@ -200,30 +174,17 @@ const RatingModal = ({
         </div>
       </Modal>
 
-      <Modal
-        isOpen={isDeleteConfirmationModalVisible}
-        closeModal={closeDeleteConfirmationModal}
-        align='items-center'
-        width='max-w-lg'>
+      <Modal isOpen={isDeleteConfirmationModalVisible} closeModal={closeDeleteConfirmationModal} align='items-center' width='max-w-lg'>
         <div>
           <h5 className='mb-4'>
-            Are you sure you want to delete <span className='inline font-bold'>{mediaName}</span>{" "}
-            rating
+            Are you sure you want to delete <span className='inline font-bold'>{mediaName}</span> rating
           </h5>
 
-          <div className='flex justify-between items-center gap-4'>
-            <Button
-              className='secondary w-full'
-              onClick={closeDeleteConfirmationModal}
-              as={motion.button}
-              whileTap={{ scale: 0.95 }}>
+          <div className='flex items-center justify-between gap-4'>
+            <Button className='secondary w-full' onClick={closeDeleteConfirmationModal} as={motion.button} whileTap={{ scale: 0.95 }}>
               Keep it
             </Button>
-            <Button
-              onClick={deleteRatingHandler}
-              as={motion.button}
-              whileTap={{ scale: 0.95 }}
-              className='danger w-full'>
+            <Button onClick={deleteRatingHandler} as={motion.button} whileTap={{ scale: 0.95 }} className='danger w-full'>
               Remove it
             </Button>
           </div>

@@ -1,10 +1,10 @@
 import "styles/globals.css";
-import Layout from "components/Layout/Layout";
-import { Loader } from "components/Loading";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
 import { Fragment, useEffect, useState } from "react";
+import Layout from "components/Layout/Layout";
+import { Loader } from "components/Loading";
 import ListsContextProvider from "Store/ListsContext";
 import MediaContextProvider from "Store/MediaContext";
 import UserContextProvider from "Store/UserContext";

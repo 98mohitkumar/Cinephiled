@@ -1,17 +1,17 @@
-import { getListItemStatus, updateListItems } from "api/user";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+import { Fragment, useRef, useState } from "react";
+import useGetListDetails from "./useGetListDetails";
+import { getListItemStatus, updateListItems } from "apiEndpoints/user";
 import Loading from "components/Loading";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
 import Toast, { useToast } from "components/Toast/Toast";
-import { AnimatePresence, motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
-import Image from "next/image";
-import { Fragment, useRef, useState } from "react";
-import { framerTabVariants, getReleaseDate } from "src/utils/helper";
 import { Button } from "styles/GlobalComponents";
-import useGetListDetails from "./useGetListDetails";
+import { framerTabVariants, getReleaseDate } from "utils/helper";
 
 const AddListItems = ({ id, CTAHandler }) => {
   const [query, setQuery] = useState("");
@@ -105,19 +105,14 @@ const AddListItems = ({ id, CTAHandler }) => {
       ) : (
         <Fragment>
           {error ? (
-            <div className='text-lg font-medium text-red-600'>
-              Something went wrong. Please try again later.
-            </div>
+            <div className='text-lg font-medium text-red-600'>Something went wrong. Please try again later.</div>
           ) : (
             <div>
-              <div className='flex gap-4 justify-between items-center mb-8'>
+              <div className='mb-8 flex items-center justify-between gap-4'>
                 <h3 className='text-2xl font-semibold'>{listDetails.name}</h3>
 
                 <div className='max-sm:hidden'>
-                  <Button
-                    disabled={items?.length === 0}
-                    onClick={CTAHandler}
-                    className='disabled:opacity-50 disabled:cursor-not-allowed'>
+                  <Button disabled={items?.length === 0} onClick={CTAHandler} className='disabled:cursor-not-allowed disabled:opacity-50'>
                     Continue
                   </Button>
                 </div>
@@ -125,16 +120,14 @@ const AddListItems = ({ id, CTAHandler }) => {
 
               <div className='relative flex-grow'>
                 <div>
-                  <div className='flex gap-3 justify-between items-stretch mb-2'>
-                    <label
-                      htmlFor='addItem'
-                      className='block text-base font-medium text-neutral-200'>
+                  <div className='gap-3 mb-2 flex items-stretch justify-between'>
+                    <label htmlFor='addItem' className='text-base block font-medium text-neutral-200'>
                       Search Item
                     </label>
 
                     {query?.trim()?.length > 0 && (
                       <button
-                        className='bg-neutral-200 rounded-xl text-sm font-semibold text-center text-neutral-800 px-3 min-h-full'
+                        className='text-sm px-3 min-h-full rounded-xl bg-neutral-200 text-center font-semibold text-neutral-800'
                         onClick={closeInputHandler}>
                         Close
                       </button>
@@ -145,8 +138,8 @@ const AddListItems = ({ id, CTAHandler }) => {
                     ref={inputRef}
                     id='addItem'
                     placeholder='Search for a movie or TV show'
-                    className='border text-base rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-500
-                    placeholder-neutral-400 text-white focus:border'
+                    className='text-base p-2.5 block w-full rounded-lg border border-neutral-500 bg-neutral-700
+                    text-white placeholder-neutral-400 focus:border'
                     onChange={inputChangeHandler}
                   />
                 </div>
@@ -154,7 +147,7 @@ const AddListItems = ({ id, CTAHandler }) => {
                 <AnimatePresence mode='wait'>
                   {(searchSuggestionsLoading || searchSuggestions?.length > 0) && (
                     <motion.div
-                      className='absolute top-full mt-2 left-0 right-0 z-10 bg-neutral-800 rounded-lg overflow-hidden shadow-lg'
+                      className='absolute left-0 right-0 top-full z-10 mt-2 overflow-hidden rounded-lg bg-neutral-800 shadow-lg'
                       key='suggestions'
                       variants={framerTabVariants}
                       initial='hidden'
@@ -166,64 +159,43 @@ const AddListItems = ({ id, CTAHandler }) => {
                       ) : (
                         <Fragment>
                           {searchSuggestions.length > 0 ? (
-                            <div className='grid grid-cols-[repeat(auto-fill,minmax(295px,1fr))] p-4 gap-4 max-h-[50vh] overflow-y-auto'>
-                              {searchSuggestions.map(
-                                ({
-                                  id,
-                                  title,
-                                  name,
-                                  poster_path,
-                                  release_date,
-                                  first_air_date,
-                                  type
-                                }) => (
-                                  <div
-                                    key={id}
-                                    className='p-3 cursor-pointer bg-neutral-700 hover:bg-neutral-600 rounded-lg overflow-hidden transition-colors'
-                                    onClick={() =>
-                                      itemsHandler({
-                                        item: {
-                                          id,
-                                          poster_path,
-                                          media_type: type
-                                        },
-                                        action: "add"
-                                      })
-                                    }>
-                                    <div className='flex items-start gap-3'>
-                                      <div className='relative flex-shrink-0 aspect-[1/1.54] w-16 rounded-md overflow-hidden'>
-                                        <Image
-                                          src={
-                                            poster_path
-                                              ? `https://image.tmdb.org/t/p/w185${poster_path}`
-                                              : "/Images/DefaultImage.png"
-                                          }
-                                          alt='poster'
-                                          fill
-                                          style={{ objectFit: "cover" }}
-                                          placeholder='blur'
-                                          blurDataURL={blurPlaceholder}
-                                        />
-                                      </div>
-                                      <div className='flex-grow'>
-                                        <p
-                                          className={`text-sm font-medium mb-1 ${
-                                            type === "tv" ? "text-green-500" : "text-sky-500"
-                                          }`}>
-                                          {type === "tv" ? "TV Show" : "Movie"}
-                                        </p>
+                            <div className='grid max-h-[50vh] grid-cols-[repeat(auto-fill,minmax(295px,1fr))] gap-4 overflow-y-auto p-4'>
+                              {searchSuggestions.map(({ id, title, name, poster_path, release_date, first_air_date, type }) => (
+                                <div
+                                  key={id}
+                                  className='p-3 cursor-pointer overflow-hidden rounded-lg bg-neutral-700 transition-colors hover:bg-neutral-600'
+                                  onClick={() =>
+                                    itemsHandler({
+                                      item: {
+                                        id,
+                                        poster_path,
+                                        media_type: type
+                                      },
+                                      action: "add"
+                                    })
+                                  }>
+                                  <div className='gap-3 flex items-start'>
+                                    <div className='relative aspect-[1/1.54] w-16 flex-shrink-0 overflow-hidden rounded-md'>
+                                      <Image
+                                        src={poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"}
+                                        alt='poster'
+                                        fill
+                                        style={{ objectFit: "cover" }}
+                                        placeholder='blur'
+                                        blurDataURL={blurPlaceholder}
+                                      />
+                                    </div>
+                                    <div className='flex-grow'>
+                                      <p className={`text-sm mb-1 font-medium ${type === "tv" ? "text-green-500" : "text-sky-500"}`}>
+                                        {type === "tv" ? "TV Show" : "Movie"}
+                                      </p>
 
-                                        <p className='text-[15px] font-medium text-neutral-200 line-clamp-2'>
-                                          {title || name}
-                                        </p>
-                                        <p className='text-sm font-normal text-neutral-200'>
-                                          {getReleaseDate(release_date || first_air_date)}
-                                        </p>
-                                      </div>
+                                      <p className='line-clamp-2 text-[15px] font-medium text-neutral-200'>{title || name}</p>
+                                      <p className='text-sm font-normal text-neutral-200'>{getReleaseDate(release_date || first_air_date)}</p>
                                     </div>
                                   </div>
-                                )
-                              )}
+                                </div>
+                              ))}
                             </div>
                           ) : null}
                         </Fragment>
@@ -233,11 +205,8 @@ const AddListItems = ({ id, CTAHandler }) => {
                 </AnimatePresence>
               </div>
 
-              <div className='block sm:hidden mt-3'>
-                <Button
-                  disabled={items?.length === 0}
-                  onClick={CTAHandler}
-                  className='disabled:opacity-50 disabled:cursor-not-allowed w-full'>
+              <div className='mt-3 block sm:hidden'>
+                <Button disabled={items?.length === 0} onClick={CTAHandler} className='w-full disabled:cursor-not-allowed disabled:opacity-50'>
                   Continue
                 </Button>
               </div>
@@ -246,14 +215,10 @@ const AddListItems = ({ id, CTAHandler }) => {
                 {items?.length > 0 ? (
                   <CardsContainerGrid>
                     {items.map(({ id, poster_path, media_type }) => (
-                      <div key={id} className='text-center w-full'>
-                        <div className='relative flex-shrink-0 aspect-[1/1.54] w-full rounded-lg overflow-hidden'>
+                      <div key={id} className='w-full text-center'>
+                        <div className='relative aspect-[1/1.54] w-full flex-shrink-0 overflow-hidden rounded-lg'>
                           <Image
-                            src={
-                              poster_path
-                                ? `https://image.tmdb.org/t/p/w300${poster_path}`
-                                : "/Images/DefaultImage.png"
-                            }
+                            src={poster_path ? `https://image.tmdb.org/t/p/w300${poster_path}` : "/Images/DefaultImage.png"}
                             alt='poster'
                             fill
                             style={{ objectFit: "cover" }}
@@ -263,7 +228,7 @@ const AddListItems = ({ id, CTAHandler }) => {
                         </div>
 
                         <Button
-                          className='danger w-full mt-4'
+                          className='danger mt-4 w-full'
                           onClick={() =>
                             itemsHandler({
                               item: { id, media_type },

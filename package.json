@@ -2,32 +2,45 @@
   "name": "cinephiled",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "lint-fix": "eslint --fix --ext .js,.jsx ."
+    "lint": "next lint && prettier --check .",
+    "lint-fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
   "dependencies": {
     "@suyalcinkaya/gauge": "^0.1.0",
+    "clsx": "^2.1.1",
     "extract-colors": "^4.0.2",
     "framer-motion": "10.12.2",
+    "hex-to-rgba": "^2.0.1",
     "jotai": "^2.9.0",
-    "next": "^14.2.3",
+    "lucide-react": "^0.454.0",
+    "next": "^15.0.1",
     "next-auth": "^4.20.1",
     "next-pwa": "^5.5.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-icons": "^4.12.0",
     "react-markdown": "^8.0.3",
     "rehype-raw": "^7.0.0",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "tailwind-merge": "^2.5.2",
+    "typescript": "5.3.3"
   },
   "devDependencies": {
+    "@types/node": "20.11.16",
+    "@types/react": "18.2.53",
+    "@types/react-dom": "18.2.18",
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
     "autoprefixer": "^10.4.16",
-    "eslint": "8.4.1",
-    "eslint-config-next": "^14.2.3",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.2.3",
     "postcss": "^8.4.32",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.3",
     "tailwindcss": "^3.4.3"
   }
 }

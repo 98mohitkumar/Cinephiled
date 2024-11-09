@@ -1,19 +1,5 @@
 import styled from "styled-components";
-
-export const Container = styled.div`
-  width: 100%;
-  height: 500px;
-
-  .overflow-wrapper {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    height: 400px;
-  }
-`;
+import { spacingTokens } from "tokens/spacings";
 
 export const Button = styled.button`
   display: flex;
@@ -28,7 +14,9 @@ export const Button = styled.button`
   background: rgb(221, 221, 221);
   color: #121212;
   white-space: nowrap;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 
   &:hover {
     background-color: rgb(221, 221, 221, 0.9);
@@ -56,7 +44,7 @@ export const Button = styled.button`
 
   ${({ loading }) => loading && "pointer-events: none"};
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     font-size: 1rem;
     padding: 10px 16px;
   }
@@ -152,15 +140,15 @@ export const HeroDetailsContainer = styled.div`
   width: 100%;
   padding: 64px 4.2vw;
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
+  @media only ${({ theme }) => theme.breakpoints.lg} {
     padding: 40px 32px;
   }
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     padding: 32px;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     padding: 30px 20px;
   }
 
@@ -175,11 +163,11 @@ export const HeroBgContainer = styled.div`
   min-height: 400px;
   isolation: isolate;
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     bottom: 45%;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     bottom: 60%;
   }
 `;
@@ -227,7 +215,7 @@ export const HeroImg = styled.div`
     }
   }
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     width: 12rem;
   }
 `;
@@ -244,11 +232,11 @@ export const DetailsHeroWrap = styled.div`
     margin-top: 2rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
+  @media only ${({ theme }) => theme.breakpoints.lg} {
     grid-template-columns: 280px 1fr;
   }
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
@@ -268,7 +256,7 @@ export const FactsFlexWrapper = styled.div`
     font-weight: bold;
   }
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     font-size: 18px;
   }
 `;
@@ -293,14 +281,14 @@ export const HeroImgWrapper = styled.div`
   gap: 1.75rem 0rem;
   align-self: flex-start;
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     padding: 0rem;
     grid-template-columns: 192px;
     place-items: flex-end flex-start;
     gap: 1.5rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     gap: 1.5rem;
   }
 `;
@@ -315,13 +303,13 @@ export const SocialMediaLinksWrapper = styled.div`
   gap: 3rem;
   transition: color 0.2s ease-in-out;
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     justify-content: flex-start;
     width: fit-content;
     gap: 3rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     gap: 2.5rem;
   }
 
@@ -339,11 +327,11 @@ export const AboutCreditsWrapper = styled.div`
   gap: 100px;
   white-space: nowrap;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     width: 80%;
   }
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     flex-direction: column;
     gap: 20px;
   }
@@ -449,7 +437,7 @@ export const SeasonExpandedContainer = styled.div`
   padding: 3rem 4.2vw;
   margin-bottom: auto;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     width: 100%;
     padding: 1.25rem;
   }
@@ -462,7 +450,7 @@ export const SeasonShowcaseWrapper = styled.div`
   gap: 3rem;
   align-items: center;
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
@@ -471,7 +459,7 @@ export const SeasonShowcaseWrapper = styled.div`
   &.episodesBox:not(:last-of-type) {
     margin-bottom: 80px;
 
-    @media only ${(props) => props.theme.breakpoints.ip} {
+    @media only ${({ theme }) => theme.breakpoints.ip} {
       margin-bottom: 50px;
     }
   }
@@ -481,12 +469,14 @@ export const SeasonShowcaseImg = styled.div`
   min-width: 15rem;
   aspect-ratio: 2/3;
   border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px,
+  box-shadow:
+    rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 10px 0px,
     rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
   overflow: hidden;
   align-self: flex-start;
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     width: 12rem;
   }
 `;
@@ -495,7 +485,7 @@ export const SeasonEpisodesWrapper = styled.div`
   width: 100%;
   padding-top: 4rem;
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     padding-top: 3rem;
   }
 `;
@@ -505,7 +495,7 @@ export const SeasonCommonOverview = styled.p`
   margin-top: 10px;
   margin-bottom: 0px;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     font-size: 1rem;
   }
 
@@ -523,7 +513,9 @@ export const EpisodeImg = styled.div`
   border-radius: 12px;
   overflow: hidden;
   align-self: flex-start;
-  box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px,
+  box-shadow:
+    rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 10px 0px,
     rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
 `;
 
@@ -534,7 +526,7 @@ export const TrWrapper = styled.div`
   margin: 0.75rem 0rem;
   gap: 1rem 1.5rem;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     gap: 1rem 1.25rem;
   }
 `;
@@ -545,13 +537,13 @@ export const Pill = styled.div`
   border-radius: 20px;
   background-color: rgb(221 221 221);
   color: #121212;
-  font-family: ${(props) => props.theme.fonts.montserrat};
+  font-family: ${({ theme }) => theme.fonts.montserrat};
   font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     width: 45px;
     height: 25px;
   }
@@ -561,7 +553,7 @@ export const Pill = styled.div`
     padding-left: 12px;
     padding-right: 6px;
     line-height: 0.9;
-    font-family: ${(props) => props.theme.fonts.main};
+    font-family: ${({ theme }) => theme.fonts.manrope};
   }
 `;
 
@@ -569,7 +561,7 @@ export const EpisodeInfoWrapper = styled.div`
   padding: 2rem 4.2vw;
   margin-bottom: auto;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     padding: 6.5vw 1.25rem;
   }
 `;
@@ -581,7 +573,7 @@ export const EpisodeShowCaseWrapper = styled.div`
   gap: 3rem;
   align-items: flex-start;
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
@@ -594,29 +586,24 @@ export const EpisodeShowCaseWrapper = styled.div`
     border-radius: 12px;
     overflow: hidden;
     align-self: flex-start;
-    box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px,
+    box-shadow:
+      rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+      rgba(0, 0, 0, 0.12) 0px 1px 10px 0px,
       rgba(0, 0, 0, 0.2) 0px 2px 4px -1px;
   }
 `;
 
+// deprecated
 export const LayoutContainer = styled.section`
   width: 100%;
-  padding: 32px 4.2vw;
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 1.25rem;
-
-    &.index-page {
-      padding: 0px 20px 20px 20px;
-    }
-  }
+  padding-inline: ${spacingTokens.spacing2064};
 `;
 
 export const ModulesWrapper = styled.div`
   width: 100%;
   padding: 0px 4.2vw 32px;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     padding: 0rem 1.25rem 1.25rem;
   }
 `;

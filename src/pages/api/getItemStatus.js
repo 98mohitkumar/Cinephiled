@@ -13,10 +13,7 @@ const getItemStatus = async (req, res) => {
       }
     };
 
-    const response = await fetch(
-      apiEndpoints.lists.listItemStatus({ id, mediaType, mediaId }),
-      requestOptions
-    );
+    const response = await fetch(apiEndpoints.lists.listItemStatus({ id, mediaType, mediaId }), requestOptions);
     const data = await response.json();
 
     res.status(200).json(data);

@@ -17,7 +17,7 @@ export const Loader = (props) => {
 
 const Loading = () => {
   return (
-    <div className='min-h-[45vh] grid place-items-center'>
+    <div className='grid min-h-[45vh] place-items-center'>
       <Loader className='small' />
     </div>
   );

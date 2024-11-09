@@ -1,5 +1,5 @@
-import { MAX_WIDTH } from "globals/constants";
 import styled from "styled-components";
+import { MAX_WIDTH } from "globals/constants";
 
 export const Wrapper = styled.main`
   max-width: ${MAX_WIDTH}px;
@@ -20,8 +20,4 @@ export const Wrapper = styled.main`
     display: flex;
     flex-direction: column;
   }
-`;
-
-export const DetailsWrapper = styled.div`
-  min-height: 100vh;
 `;

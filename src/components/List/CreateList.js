@@ -1,14 +1,14 @@
-import { createList } from "api/user";
 import { AnimatePresence, motion } from "framer-motion";
-import { apiEndpoints } from "globals/constants";
 import { Fragment, useState } from "react";
-import { fetchOptions, framerTabVariants } from "src/utils/helper";
-import { useListsContext } from "Store/ListsContext";
-import { useUserContext } from "Store/UserContext";
-import { Button } from "styles/GlobalComponents";
 import AddListItems from "./AddListItems";
 import ChooseListCover from "./ChooseListCover";
 import CreateListForm from "./CreateListForm";
+import { createList } from "apiEndpoints/user";
+import { apiEndpoints } from "globals/constants";
+import { useListsContext } from "Store/ListsContext";
+import { useUserContext } from "Store/UserContext";
+import { Button } from "styles/GlobalComponents";
+import { fetchOptions, framerTabVariants } from "utils/helper";
 
 const steps = [
   { key: 1, title: "List Details" },
@@ -72,30 +72,22 @@ const CreateList = () => {
 
   return (
     <Fragment>
-      <h2 className='text-[calc(1.35rem_+_.9vw)] lg:text-[2rem] font-semibold'>Create List</h2>
+      <h2 className='text-[calc(1.35rem_+_.9vw)] font-semibold lg:text-[2rem]'>Create List</h2>
 
-      <div className='items-start gap-12 my-6'>
-        <div className='flex gap-3 mb-8 whitespace-nowrap'>
+      <div className='my-6 items-start gap-12'>
+        <div className='gap-3 mb-8 flex whitespace-nowrap'>
           {steps.map(({ key, title }, index) => (
-            <div
-              key={key}
-              className={`transition-colors ${step === key ? "text-white" : "text-neutral-500"}`}>
-              <div className='flex gap-3 items-center'>
-                <p className='font-medium text-lg max-sm:text-base'>{title}</p>
+            <div key={key} className={`transition-colors ${step === key ? "text-white" : "text-neutral-500"}`}>
+              <div className='gap-3 flex items-center'>
+                <p className='text-lg max-sm:text-base font-medium'>{title}</p>
                 {index !== steps?.length - 1 ? (
                   <svg
-                    className='w-[0.65rem] md:w-3 aspect-square text-neutral-500'
+                    className='aspect-square w-[0.65rem] text-neutral-500 md:w-3'
                     aria-hidden='true'
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'
                     viewBox='0 0 6 10'>
-                    <path
-                      stroke='currentColor'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth='2'
-                      d='m1 9 4-4-4-4'
-                    />
+                    <path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='m1 9 4-4-4-4' />
                   </svg>
                 ) : null}
               </div>
@@ -105,24 +97,12 @@ const CreateList = () => {
 
         <AnimatePresence mode='wait'>
           {step === 1 ? (
-            <motion.div
-              className='grow max-w-3xl max-md:max-w-full'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'>
+            <motion.div className='max-w-3xl grow max-md:max-w-full' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden'>
               {/* create list error */}
-              {error ? (
-                <div className='text-lg font-medium text-red-600 mb-6'>{error || "error"}</div>
-              ) : null}
+              {error ? <div className='text-lg mb-6 font-medium text-red-600'>{error || "error"}</div> : null}
 
               <CreateListForm submitHandler={formSubmitHandler}>
-                <Button
-                  type='submit'
-                  as={motion.button}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  loading={+isWaiting}>
+                <Button type='submit' as={motion.button} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} loading={+isWaiting}>
                   {isWaiting ? "Creating..." : "Continue"}
                 </Button>
               </CreateListForm>
@@ -130,28 +110,13 @@ const CreateList = () => {
           ) : null}
 
           {step === 2 ? (
-            <motion.div
-              key='add-items'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              className='w-full'>
-              <AddListItems
-                id={listId}
-                CTAHandler={() => setListData((prev) => ({ ...prev, step: 3 }))}
-              />
+            <motion.div key='add-items' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' className='w-full'>
+              <AddListItems id={listId} CTAHandler={() => setListData((prev) => ({ ...prev, step: 3 }))} />
             </motion.div>
           ) : null}
 
           {step === 3 ? (
-            <motion.div
-              key='choose-cover'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              className='w-full'>
+            <motion.div key='choose-cover' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' className='w-full'>
               <ChooseListCover id={listId} />
             </motion.div>
           ) : null}

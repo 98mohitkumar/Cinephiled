@@ -1,3 +1,4 @@
+import { Fragment, useEffect, useState } from "react";
 import DominantColor from "components/DominantColor/DominantColor";
 import MetaWrapper from "components/MetaWrapper";
 import MovieDetails from "components/MovieInfo/MovieDetails";
@@ -5,9 +6,8 @@ import MovieFacts from "components/MovieInfo/MovieFacts";
 import MovieTab from "components/MovieInfo/MovieTab";
 import Recommendations from "components/Recommendations/Recommendations";
 import { apiEndpoints } from "globals/constants";
-import { Fragment, useEffect, useState } from "react";
-import { fetchOptions, getCleanTitle, getReleaseDate, getReleaseYear } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents";
+import { fetchOptions, getCleanTitle, getReleaseDate, getReleaseYear } from "utils/helper";
 
 const Movie = ({ movieData }) => {
   const [showEaster, setShowEaster] = useState(false);
@@ -123,10 +123,8 @@ const Movie = ({ movieData }) => {
         {recommendations?.length > 0 ? (
           <ModulesWrapper className='relative'>
             <DominantColor image={backdropPath} tint isUsingBackdrop />
-            <div className='pt-12 relative z-10'>
-              <h2 className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-bold text-white text-center mb-4 lg:mb-8'>
-                Recommendations
-              </h2>
+            <div className='relative z-10 pt-12'>
+              <h2 className='mb-4 text-center text-[calc(1.375rem_+_1.5vw)] font-bold text-white lg:mb-8 xl:text-[2.5rem]'>Recommendations</h2>
 
               <Recommendations data={recommendations} type='movies' />
             </div>
@@ -146,10 +144,7 @@ export const getServerSideProps = async (ctx) => {
 
     if (!movieResponse.ok) throw new Error("error fetching details");
 
-    const [movieDetails, languages] = await Promise.all([
-      movieResponse.json(),
-      languagesResponse.json()
-    ]);
+    const [movieDetails, languages] = await Promise.all([movieResponse.json(), languagesResponse.json()]);
 
     const country = movieDetails?.production_companies[0]?.origin_country || "US";
     const releaseYear = getReleaseYear(movieDetails?.release_date);
@@ -157,9 +152,7 @@ export const getServerSideProps = async (ctx) => {
     const status = movieDetails?.status || "TBA";
     const language = languages.find((item) => item.iso_639_1 === movieDetails.original_language);
 
-    const trailers = movieDetails?.videos?.results?.find(
-      (item) => item?.site === "YouTube" && item?.type === "Trailer"
-    );
+    const trailers = movieDetails?.videos?.results?.find((item) => item?.site === "YouTube" && item?.type === "Trailer");
 
     const crewData = [
       ...movieDetails?.credits?.crew?.filter((credit) => credit?.job === "Director").slice(0, 2),

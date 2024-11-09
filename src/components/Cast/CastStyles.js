@@ -8,11 +8,11 @@ export const CastGrid = styled.div`
   justify-content: center;
   gap: clamp(20px, 3vw, 32px);
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     grid-template-columns: repeat(2, 1fr);
   }
 `;
@@ -28,9 +28,11 @@ export const CastImg = styled.div`
   border-radius: 12px;
   overflow: hidden;
 
-  @media ${(props) => props.theme.breakpoints.hover} {
+  @media ${({ theme }) => theme.breakpoints.hover} {
     &:hover {
-      box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14), 0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
+      box-shadow:
+        0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
+        0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
         0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
     }
   }

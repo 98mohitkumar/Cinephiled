@@ -1,16 +1,9 @@
 {
-  "extends": "next/core-web-vitals",
-  "parserOptions": {
-    "ecmaVersion": 2021,
-    "sourceType": "module"
-  },
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node": true
-  },
+  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
   "rules": {
-    "no-unused-vars": "error",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error",
     "no-undef": "error",
     "no-duplicate-imports": "error",
     "import/order": [

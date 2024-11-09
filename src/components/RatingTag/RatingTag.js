@@ -1,6 +1,7 @@
 import { Gauge } from "@suyalcinkaya/gauge";
-import { getRating } from "src/utils/helper";
-import { RatingTagWrapper } from "./RatingTagStyles";
+import { ratingTagWrapperStyles } from "./RatingTagStyles";
+import P from "components/Typography/P";
+import { getRating } from "utils/helper";
 
 const RatingTag = ({ rating }) => {
   const primaryColorScale = {
@@ -11,7 +12,7 @@ const RatingTag = ({ rating }) => {
   };
 
   return (
-    <RatingTagWrapper>
+    <div css={ratingTagWrapperStyles}>
       <Gauge
         value={rating ? getRating(rating) * 10 : 0}
         strokeWidth={5}
@@ -19,8 +20,10 @@ const RatingTag = ({ rating }) => {
         secondary='#424242'
         className='h-9 w-9 sm:h-10 sm:w-10'
       />
-      <p className='label'>{getRating(rating)}</p>
-    </RatingTagWrapper>
+      <P className='font-montserrat max-sm:text-tiny' weight='semiBold' size='small'>
+        {getRating(rating)}
+      </P>
+    </div>
   );
 };
 

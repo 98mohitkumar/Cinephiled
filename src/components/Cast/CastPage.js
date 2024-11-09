@@ -1,11 +1,13 @@
+import { AnimatePresence, motion } from "framer-motion";
+import { Fragment, useRef, useState } from "react";
+import Cast from "./Cast";
 import DominantColor from "components/DominantColor/DominantColor";
 import { HeroInfoTitle } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
-import { AnimatePresence, motion } from "framer-motion";
-import { Fragment, useRef, useState } from "react";
-import { framerTabVariants } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents";
-import Cast from "./Cast";
+import { framerTabVariants } from "utils/helper";
+
+// const test = 1;
 
 const CastPage = ({ media: { title, year, poster }, cast }) => {
   const [filteredCast, setFilteredCast] = useState(cast);
@@ -21,8 +23,7 @@ const CastPage = ({ media: { title, year, poster }, cast }) => {
     timeoutRef.current = setTimeout(() => {
       const searchValue = e.target.value.toLowerCase();
       const filteredCast = cast.filter(
-        ({ name, character }) =>
-          name.toLowerCase().includes(searchValue) || character.toLowerCase().includes(searchValue)
+        ({ name, character }) => name.toLowerCase().includes(searchValue) || character.toLowerCase().includes(searchValue)
       );
       setFilteredCast(filteredCast);
     }, 300);
@@ -33,19 +34,19 @@ const CastPage = ({ media: { title, year, poster }, cast }) => {
       <div className='relative mb-auto'>
         <DominantColor image={poster} flip tint />
         <ModulesWrapper className='relative z-10'>
-          <div className='text-center py-6'>
+          <div className='py-6 text-center'>
             <div className='my-5 lg:my-10'>
               <HeroInfoTitle className='!font-semibold'>
                 {title} ({year})
               </HeroInfoTitle>
             </div>
 
-            <div className='flex justify-between items-center py-2 max-sm:flex-col gap-5'>
-              <h3 className='mb-0 text-2xl md:text-3xl font-semibold'>{`Cast (${cast?.length})`}</h3>
+            <div className='gap-5 flex items-center justify-between py-2 max-sm:flex-col'>
+              <h3 className='text-2xl md:text-3xl mb-0 font-semibold'>{`Cast (${cast?.length})`}</h3>
               <input
                 type='text'
                 placeholder='Search cast'
-                className='px-4 py-2 rounded-lg bg-neutral-600 text-white focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:border-transparent min-w-[320px] text-lg max-sm:min-w-full'
+                className='text-lg min-w-[320px] rounded-lg bg-neutral-600 px-4 py-2 text-white focus:border-transparent focus:outline-none focus:ring-2 focus:ring-neutral-400 max-sm:min-w-full'
                 onChange={searchHandler}
               />
             </div>

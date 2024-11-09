@@ -1,3 +1,8 @@
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { Fragment } from "react";
+import { FaYoutube } from "react-icons/fa";
 import DominantColor from "components/DominantColor/DominantColor";
 
 import {
@@ -17,23 +22,9 @@ import {
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import TechnicalDetails from "components/TechnicalDetails/TechnicalDetails";
 import UserActions from "components/UserActions/UserActions";
-import { motion } from "framer-motion";
 import { blurPlaceholder } from "globals/constants";
-import Image from "next/image";
-import Link from "next/link";
-import { Fragment } from "react";
-import { FaYoutube } from "react-icons/fa";
-import { getCleanTitle, getRating } from "src/utils/helper";
-
-import {
-  Button,
-  DetailsHeroWrap,
-  HeroBg,
-  HeroBgContainer,
-  HeroDetailsContainer,
-  HeroImg,
-  HeroImgWrapper
-} from "styles/GlobalComponents";
+import { Button, DetailsHeroWrap, HeroBg, HeroBgContainer, HeroDetailsContainer, HeroImg, HeroImgWrapper } from "styles/GlobalComponents";
+import { getCleanTitle, getRating } from "utils/helper";
 
 const TVDetails = ({ tvData }) => {
   const {
@@ -61,13 +52,9 @@ const TVDetails = ({ tvData }) => {
     <Fragment>
       <HeroDetailsContainer className='relative mb-auto'>
         <HeroBgContainer className='absolute'>
-          <HeroBg className='absolute text-center z-10'>
+          <HeroBg className='absolute z-10 text-center'>
             <Image
-              src={
-                backdropPath
-                  ? `https://image.tmdb.org/t/p/w1280${backdropPath}`
-                  : "/Images/Hex.webp"
-              }
+              src={backdropPath ? `https://image.tmdb.org/t/p/w1280${backdropPath}` : "/Images/Hex.webp"}
               alt='tv-backdrop'
               fill
               style={{ objectFit: "cover" }}
@@ -84,11 +71,7 @@ const TVDetails = ({ tvData }) => {
           <HeroImgWrapper>
             <HeroImg className='relative text-center'>
               <Image
-                src={
-                  posterPath
-                    ? `https://image.tmdb.org/t/p/w500${posterPath}`
-                    : "/Images/DefaultImage.png"
-                }
+                src={posterPath ? `https://image.tmdb.org/t/p/w500${posterPath}` : "/Images/DefaultImage.png"}
                 alt='tv-poster'
                 fill
                 style={{ objectFit: "cover" }}
@@ -105,8 +88,8 @@ const TVDetails = ({ tvData }) => {
                   target='_blank'
                   rel='noreferrer'
                   aria-label='watch trailer'
-                  className='block mb-3'>
-                  <Button className='w-full gap-3' as={motion.button} whileTap={{ scale: 0.95 }}>
+                  className='mb-3 block'>
+                  <Button className='gap-3 w-full' as={motion.button} whileTap={{ scale: 0.95 }}>
                     <FaYoutube size='1.5rem' />
                     <Span className='font-semibold'>Watch Trailer</Span>
                   </Button>
@@ -115,11 +98,7 @@ const TVDetails = ({ tvData }) => {
 
               <TechnicalDetails imdbId={imdbId} />
 
-              <UserActions
-                mediaType='tv'
-                mediaId={id}
-                mediaDetails={{ name: title, poster: posterPath, releaseYear, airDate, rating }}
-              />
+              <UserActions mediaType='tv' mediaId={id} mediaDetails={{ name: title, poster: posterPath, releaseYear, airDate, rating }} />
             </div>
             <SocialMediaLinks
               links={socialIds}
@@ -140,10 +119,7 @@ const TVDetails = ({ tvData }) => {
               {genres.length > 0 ? (
                 <GenreWrap className='font-bold'>
                   {genres.map((item, i) => (
-                    <Link
-                      key={item.id}
-                      href={`/genre/${item.id.toString() + "-" + item.name.split(" ").join("")}/tv`}
-                      passHref>
+                    <Link key={item.id} href={`/genre/${item.id.toString() + "-" + item.name.split(" ").join("")}/tv`} passHref>
                       <Rounded className={genres.length == i + 1 && "sep"}>{item.name}</Rounded>
                     </Link>
                   ))}
@@ -160,9 +136,7 @@ const TVDetails = ({ tvData }) => {
             {rating ? (
               <RatingWrapper>
                 <Fragment>
-                  <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
-                    {getRating(rating)}
-                  </Span>
+                  <Span className='xl:text-6xl text-[calc(1.525rem_+_3.3vw)] font-bold'>{getRating(rating)}</Span>
                   <span> / 10</span>
                 </Fragment>
               </RatingWrapper>
@@ -174,7 +148,7 @@ const TVDetails = ({ tvData }) => {
                   <Credits key={item.credit_id}>
                     <Span className='block font-normal'>{item.job ?? "Creator"}</Span>
                     <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`}>
-                      <Span className='block font-bold credit'>{item.name}</Span>
+                      <Span className='credit block font-bold'>{item.name}</Span>
                     </Link>
                   </Credits>
                 ))}

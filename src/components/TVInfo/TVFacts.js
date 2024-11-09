@@ -1,19 +1,14 @@
-import {
-  FactsFieldSet,
-  FactsLegend,
-  FactsWrapper,
-  Span
-} from "components/MovieInfo/MovieDetailsStyles";
 import Link from "next/link";
-import { getCleanTitle } from "src/utils/helper";
+import { FactsFieldSet, FactsLegend, FactsWrapper, Span } from "components/MovieInfo/MovieDetailsStyles";
 import { FactsFlexWrapper } from "styles/GlobalComponents";
+import { getCleanTitle } from "utils/helper";
 
 const TVFacts = ({ facts }) => {
   const { status, language, network, type } = facts;
 
   return (
     <FactsFieldSet>
-      <FactsLegend className='font-bold text-2xl'>Facts</FactsLegend>
+      <FactsLegend className='text-2xl font-bold'>Facts</FactsLegend>
       <FactsWrapper>
         <FactsFlexWrapper>
           <Span>Status</Span>

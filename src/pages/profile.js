@@ -1,6 +1,6 @@
-import { useLogout } from "api/auth";
-import ProfilePage from "components/ProfilePage/ProfilePage";
 import { getSession } from "next-auth/react";
+import { useLogout } from "apiEndpoints/auth";
+import ProfilePage from "components/ProfilePage/ProfilePage";
 
 const Profile = ({ isValidSession }) => {
   const { logout } = useLogout();

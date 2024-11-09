@@ -35,23 +35,18 @@ export const apiEndpoints = {
     getCountryCode: (ip) => `https://ipwho.is/${ip}?fields=country_code`
   },
   search: {
-    movieSearchWithYear: ({ query, year }) =>
-      `${baseUrlV3}/search/movie?language=en-US&query=${query}&page=1&include_adult=false&year=${year}`,
+    movieSearchWithYear: ({ query, year }) => `${baseUrlV3}/search/movie?language=en-US&query=${query}&page=1&include_adult=false&year=${year}`,
 
-    movieSearch: ({ query, pageQuery = 1 }) =>
-      `${baseUrlV3}/search/movie?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
+    movieSearch: ({ query, pageQuery = 1 }) => `${baseUrlV3}/search/movie?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
 
     tvSearchWithYear: ({ query, year }) =>
       `${baseUrlV3}/search/tv?language=en-US&query=${query}&page=1&include_adult=false&first_air_date_year=${year}`,
 
-    tvSearch: ({ query, pageQuery = 1 }) =>
-      `${baseUrlV3}/search/tv?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
+    tvSearch: ({ query, pageQuery = 1 }) => `${baseUrlV3}/search/tv?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
 
-    keywordSearch: ({ query, pageQuery = 1 }) =>
-      `${baseUrlV3}/search/keyword?query=${query}&page=${pageQuery}`,
+    keywordSearch: ({ query, pageQuery = 1 }) => `${baseUrlV3}/search/keyword?query=${query}&page=${pageQuery}`,
 
-    personSearch: ({ query, pageQuery = 1 }) =>
-      `${baseUrlV3}/search/person?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
+    personSearch: ({ query, pageQuery = 1 }) => `${baseUrlV3}/search/person?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
 
     collectionSearch: ({ query, pageQuery = 1 }) =>
       `${baseUrlV3}/search/collection?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`
@@ -67,18 +62,16 @@ export const apiEndpoints = {
     movieGenre: ({ genreId, pageQuery = 1, sortBy = "popularity.desc" }) =>
       `${baseUrlV3}/discover/movie?language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}&sort_by=${sortBy}`,
 
-    getMovieCredits: ({ id }) =>
-      `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=credits`,
+    getMovieCredits: ({ id }) => `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=credits`,
 
     movieGenreList: `${baseUrlV3}/genre/movie/list?language=en-US`,
 
-    nowPlaying: ({ region, pageQuery = 1 }) =>
-      `${baseUrlV3}/movie/now_playing?page=${pageQuery}&region=${region}`
+    nowPlaying: ({ region, pageQuery = 1 }) => `${baseUrlV3}/movie/now_playing?page=${pageQuery}&region=${region}`
   },
   tv: {
-    popularTV: `${baseUrlV3}/tv/popular?language=en-US&page=1`,
+    popularTv: `${baseUrlV3}/tv/popular?language=en-US&page=1`,
 
-    trendingTV: `${baseUrlV3}/trending/tv/day?language=en-US&page=1`,
+    trendingTv: `${baseUrlV3}/trending/tv/day?language=en-US&page=1`,
 
     tvDetails: (id) =>
       `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=images,videos,aggregate_credits,reviews,recommendations,external_ids&include_image_language=en,null`,
@@ -95,8 +88,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/discover/tv?language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}
       &sort_by=${sortBy}`,
 
-    getTvCredits: ({ id }) =>
-      `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=aggregate_credits`,
+    getTvCredits: ({ id }) => `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=aggregate_credits`,
 
     tvGenreList: `${baseUrlV3}/genre/tv/list?language=en-US`
   },
@@ -104,15 +96,12 @@ export const apiEndpoints = {
     keywordDetails: (id) => `${baseUrlV3}/keyword/${id}/movies?language=en-US&include_adult=false`
   },
   person: {
-    personDetails: (id) =>
-      `${baseUrlV3}/person/${id}?language=en-US&append_to_response=combined_credits,external_ids,images`
+    personDetails: (id) => `${baseUrlV3}/person/${id}?language=en-US&append_to_response=combined_credits,external_ids,images`
   },
   watchProviders: {
-    movieWatchProviders: ({ region }) =>
-      `${baseUrlV3}/watch/providers/movie?language=en-US&watch_region=${region}`,
+    movieWatchProviders: ({ region }) => `${baseUrlV3}/watch/providers/movie?language=en-US&watch_region=${region}`,
 
-    tvWatchProviders: ({ region }) =>
-      `${baseUrlV3}/watch/providers/tv?language=en-US&watch_region=${region}`,
+    tvWatchProviders: ({ region }) => `${baseUrlV3}/watch/providers/tv?language=en-US&watch_region=${region}`,
 
     watchProviderMovies: ({ region, pageQuery, providerId, sortBy = "popularity.desc" }) =>
       `${baseUrlV3}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=${sortBy}&watch_region=${region}&with_watch_providers=${providerId}`,
@@ -129,8 +118,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${pageQuery}&sort_by=${sortBy}&with_networks=${id}`
   },
   lists: {
-    getLists: ({ accountId, pageQuery = 1 }) =>
-      `${baseUrlV4}/account/${accountId}/lists?page=${pageQuery}`,
+    getLists: ({ accountId, pageQuery = 1 }) => `${baseUrlV4}/account/${accountId}/lists?page=${pageQuery}`,
 
     getListDetails: ({ id, pageQuery = 1 }) => `${baseUrlV4}/list/${id}?page=${pageQuery}`,
 
@@ -140,8 +128,7 @@ export const apiEndpoints = {
 
     listItems: ({ id }) => `${baseUrlV4}/list/${id}/items`,
 
-    listItemStatus: ({ id, mediaId, mediaType }) =>
-      `${baseUrlV4}/list/${id}/item_status?media_id=${mediaId}&media_type=${mediaType}`
+    listItemStatus: ({ id, mediaId, mediaType }) => `${baseUrlV4}/list/${id}/item_status?media_id=${mediaId}&media_type=${mediaType}`
   },
   collection: {
     collectionDetails: (id) => `${baseUrlV3}/collection/${id}?language=en-US`,

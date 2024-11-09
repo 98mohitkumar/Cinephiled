@@ -1,10 +1,10 @@
-import { FactsFlexWrapper } from "styles/GlobalComponents";
 import { FactsFieldSet, FactsLegend, FactsWrapper, Span } from "./MovieDetailsStyles";
+import { FactsFlexWrapper } from "styles/GlobalComponents";
 
 const MovieFacts = ({ facts }) => {
   return (
     <FactsFieldSet>
-      <FactsLegend className='font-bold text-2xl'>Facts</FactsLegend>
+      <FactsLegend className='text-2xl font-bold'>Facts</FactsLegend>
       <FactsWrapper>
         <FactsFlexWrapper>
           <Span>Status</Span>

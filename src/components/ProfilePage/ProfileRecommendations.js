@@ -1,18 +1,18 @@
-import { addToWatchlist } from "api/user";
+import { motion, AnimatePresence } from "framer-motion";
+import { Fragment } from "react";
+import { BiListPlus, BiListCheck } from "react-icons/bi";
+import MediaCard from "./MediaCard";
+import { ProfileMediaTab } from "./ProfilePage";
+import { addToWatchlist } from "apiEndpoints/user";
 import Loading from "components/Loading";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
 import Toast, { useToast } from "components/Toast/Toast";
-import { motion, AnimatePresence } from "framer-motion";
-import { Fragment } from "react";
-import { BiListPlus, BiListCheck } from "react-icons/bi";
-import { framerTabVariants, removeDuplicates } from "src/utils/helper";
 import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import { Button } from "styles/GlobalComponents";
-import MediaCard from "./MediaCard";
-import { ProfileMediaTab } from "./ProfilePage";
+import { framerTabVariants, removeDuplicates } from "utils/helper";
 
 const MovieRecommendations = () => {
   const { userInfo } = useUserContext();
@@ -72,12 +72,7 @@ const MovieRecommendations = () => {
 
   return (
     <Fragment>
-      <motion.div
-        variants={framerTabVariants}
-        initial='hidden'
-        animate='visible'
-        exit='hidden'
-        transition={{ duration: 0.325 }}>
+      <motion.div variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
         {cleanedItems.length > 0 ? (
           <CardsContainerGrid>
             {cleanedItems.map((movie) => {
@@ -97,21 +92,17 @@ const MovieRecommendations = () => {
                         rating: movie?.vote_average
                       })
                     }
-                    className={`w-full secondary ${isAlreadyInWatchlist ? "danger" : null}`}>
+                    className={`secondary w-full ${isAlreadyInWatchlist ? "danger" : null}`}>
                     <AnimatePresence mode='wait' initial={false}>
                       <motion.div
-                        className='flex items-center gap-2 text-base font-semibold'
+                        className='text-base flex items-center gap-2 font-semibold'
                         key={`watchlist - ${isAlreadyInWatchlist.toString()}`}
                         variants={framerTabVariants}
                         initial='hidden'
                         animate='visible'
                         exit='hidden'
                         transition={{ duration: 0.325 }}>
-                        {isAlreadyInWatchlist ? (
-                          <BiListCheck size='22px' />
-                        ) : (
-                          <BiListPlus size='22px' />
-                        )}
+                        {isAlreadyInWatchlist ? <BiListCheck size='22px' /> : <BiListPlus size='22px' />}
 
                         {isAlreadyInWatchlist ? "Remove" : "Add"}
                       </motion.div>
@@ -187,12 +178,7 @@ const TvRecommendations = () => {
 
   return (
     <Fragment>
-      <motion.div
-        variants={framerTabVariants}
-        initial='hidden'
-        animate='visible'
-        exit='hidden'
-        transition={{ duration: 0.325 }}>
+      <motion.div variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
         {cleanedItems.length > 0 ? (
           <CardsContainerGrid>
             {cleanedItems.map((tv) => {
@@ -212,21 +198,17 @@ const TvRecommendations = () => {
                         rating: tv?.vote_average
                       })
                     }
-                    className={`w-full secondary ${isAlreadyInWatchlist ? "danger" : null}`}>
+                    className={`secondary w-full ${isAlreadyInWatchlist ? "danger" : null}`}>
                     <AnimatePresence mode='wait' initial={false}>
                       <motion.div
-                        className='flex items-center gap-2 text-base font-semibold'
+                        className='text-base flex items-center gap-2 font-semibold'
                         key={`watchlist - ${isAlreadyInWatchlist.toString()}`}
                         variants={framerTabVariants}
                         initial='hidden'
                         animate='visible'
                         exit='hidden'
                         transition={{ duration: 0.325 }}>
-                        {isAlreadyInWatchlist ? (
-                          <BiListCheck size='22px' />
-                        ) : (
-                          <BiListPlus size='22px' />
-                        )}
+                        {isAlreadyInWatchlist ? <BiListCheck size='22px' /> : <BiListPlus size='22px' />}
 
                         {isAlreadyInWatchlist ? "Remove" : "Add"}
                       </motion.div>

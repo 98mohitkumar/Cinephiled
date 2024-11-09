@@ -1,3 +1,8 @@
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
+import { Fragment } from "react";
 import DominantColor from "components/DominantColor/DominantColor";
 import DeleteListModal from "components/List/DeleteListModal";
 import EditListModal from "components/List/EditListModal";
@@ -7,14 +12,9 @@ import ManageList from "components/List/ManageList";
 import MetaWrapper from "components/MetaWrapper";
 import { Gradient } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
-import { AnimatePresence, motion } from "framer-motion";
 import { apiEndpoints, blurPlaceholder } from "globals/constants";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { getSession } from "next-auth/react";
-import { Fragment } from "react";
-import { fetchOptions, framerTabVariants, getCleanTitle, getRuntime } from "src/utils/helper";
 import { Button, LayoutContainer } from "styles/GlobalComponents";
+import { fetchOptions, framerTabVariants, getCleanTitle, getRuntime } from "utils/helper";
 
 const ListDetails = ({ title, copy }) => {
   return (
@@ -49,7 +49,7 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
         url={`https://cinephiled.vercel.app/lists/${list?.id}-${getCleanTitle(list?.name)}`}
       />
 
-      <LayoutContainer className='relative list-wrapper grow'>
+      <LayoutContainer className='list-wrapper relative grow'>
         <DominantColor flip tint isUsingBackdrop image={list.backdrop_path} />
 
         {list?.backdrop_path && (
@@ -64,7 +64,7 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
               className='-z-10'
               loading='eager'
             />
-            <Gradient className='backdrop-brightness-50 z-[-1]' />
+            <Gradient className='z-[-1] backdrop-brightness-50' />
           </div>
         )}
 
@@ -77,22 +77,15 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
                 initial='hidden'
                 animate='visible'
                 exit={false}
-                className='z-20 relative'>
+                className='relative z-20'>
                 <ManageList id={list.id} />
               </motion.div>
             ) : (
-              <motion.div
-                key={`isAddItemsMode-${manageList}`}
-                variants={framerTabVariants}
-                initial={false}
-                animate='visible'
-                exit='hidden'>
+              <motion.div key={`isAddItemsMode-${manageList}`} variants={framerTabVariants} initial={false} animate='visible' exit='hidden'>
                 <div className='relative z-20'>
                   <div className='py-4'>
-                    <div className='sm:text-center max-w-xl sm:m-auto'>
-                      <h1 className='text-[calc(1.7rem_+_1.2vw)] lg:text-[2.5rem] font-semibold leading-snug'>
-                        {list.name}
-                      </h1>
+                    <div className='max-w-xl sm:m-auto sm:text-center'>
+                      <h1 className='text-[calc(1.7rem_+_1.2vw)] font-semibold leading-snug lg:text-[2.5rem]'>{list.name}</h1>
                       {list?.description && (
                         <div className='mb-5'>
                           <span className='text-lg font-medium'>{list?.description}</span>
@@ -100,11 +93,8 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
                       )}
                     </div>
 
-                    <div className='flex max-sm:gap-x-4 gap-x-8 gap-y-2 max-sm:justify-start justify-center flex-wrap whitespace-nowrap mt-3'>
-                      <ListDetails
-                        title='Created by'
-                        copy={list?.created_by?.name || list?.created_by?.username}
-                      />
+                    <div className='mt-3 flex flex-wrap justify-center gap-x-8 gap-y-2 whitespace-nowrap max-sm:justify-start max-sm:gap-x-4'>
+                      <ListDetails title='Created by' copy={list?.created_by?.name || list?.created_by?.username} />
                       <ListDetails title='Total Items' copy={list?.total_results} />
                       <ListDetails title='Runtime' copy={getRuntime(list?.runtime)} />
                       <ListDetails title='Visibility' copy={list?.public ? "Public" : "Private"} />
@@ -112,12 +102,9 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
                   </div>
 
                   <div className='mt-8'>
-                    <div className='flex gap-3 w-full flex-wrap justify-end'>
+                    <div className='gap-3 flex w-full flex-wrap justify-end'>
                       {userCanEditList && (
-                        <Button
-                          as={motion.button}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={addItemsHandler}>
+                        <Button as={motion.button} whileTap={{ scale: 0.95 }} onClick={addItemsHandler}>
                           Manage List
                         </Button>
                       )}

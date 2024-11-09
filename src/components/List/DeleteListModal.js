@@ -1,11 +1,11 @@
-import { deleteList } from "api/user";
-import Modal, { useModal } from "components/Modal/Modal";
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import Toast, { useToast } from "components/Toast/Toast";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { FaTrash } from "react-icons/fa";
+import { deleteList } from "apiEndpoints/user";
+import Modal, { useModal } from "components/Modal/Modal";
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import Toast, { useToast } from "components/Toast/Toast";
 import { useListsContext } from "Store/ListsContext";
 import { Button } from "styles/GlobalComponents";
 
@@ -41,21 +41,11 @@ const DeleteListModal = ({ list }) => {
             Are you sure you want to delete <span className='font-bold'>{list.name}</span>?
           </p>
 
-          <div className='mt-6 flex gap-3'>
-            <Button
-              as={motion.button}
-              whileTap={{ scale: 0.95 }}
-              className='w-full secondary'
-              onClick={closeModal}
-              type='button'>
+          <div className='gap-3 mt-6 flex'>
+            <Button as={motion.button} whileTap={{ scale: 0.95 }} className='secondary w-full' onClick={closeModal} type='button'>
               Close
             </Button>
-            <Button
-              as={motion.button}
-              whileTap={{ scale: 0.95 }}
-              className='w-full danger'
-              onClick={deleteListHandler}
-              type='button'>
+            <Button as={motion.button} whileTap={{ scale: 0.95 }} className='danger w-full' onClick={deleteListHandler} type='button'>
               Delete
             </Button>
           </div>

@@ -1,14 +1,12 @@
+import { Fragment } from "react";
 import MetaWrapper from "components/MetaWrapper";
 import SearchTab from "components/SearchTab/SearchTab";
 import { apiEndpoints } from "globals/constants";
-import { Fragment } from "react";
-import { fetchOptions } from "src/utils/helper";
 import { BadQuery } from "styles/GlobalComponents";
+import { fetchOptions } from "utils/helper";
 
 const Search = ({ movieRes, tvRes, searchQuery, keywordsRes, peopleRes, collectionRes }) => {
-  const allResultsEmpty = [movieRes, tvRes, keywordsRes, peopleRes, collectionRes].every(
-    (res) => res?.results?.length === 0
-  );
+  const allResultsEmpty = [movieRes, tvRes, keywordsRes, peopleRes, collectionRes].every((res) => res?.results?.length === 0);
 
   return (
     <Fragment>
@@ -23,14 +21,7 @@ const Search = ({ movieRes, tvRes, searchQuery, keywordsRes, peopleRes, collecti
           <BadQuery>{"Bad Query :("}</BadQuery>
         </div>
       ) : (
-        <SearchTab
-          search={searchQuery}
-          movies={movieRes}
-          tv={tvRes}
-          keywords={keywordsRes}
-          people={peopleRes}
-          collections={collectionRes}
-        />
+        <SearchTab search={searchQuery} movies={movieRes} tv={tvRes} keywords={keywordsRes} people={peopleRes} collections={collectionRes} />
       )}
     </Fragment>
   );
@@ -53,11 +44,7 @@ export const getServerSideProps = async (ctx) => {
         fetch(apiEndpoints.search.collectionSearch({ query: searchQuery }), fetchOptions())
       ]);
 
-      const [keywordsRes, peopleRes, collectionRes] = await Promise.all([
-        keywordsResponse.json(),
-        peopleResponse.json(),
-        collectionResponse.json()
-      ]);
+      const [keywordsRes, peopleRes, collectionRes] = await Promise.all([keywordsResponse.json(), peopleResponse.json(), collectionResponse.json()]);
 
       return {
         keywordsRes: { results: keywordsRes.results, count: keywordsRes.total_results },
@@ -68,18 +55,10 @@ export const getServerSideProps = async (ctx) => {
 
     const fetchSearchResults = async (withYear) => {
       const searchEndpoints = withYear
-        ? [
-            apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }),
-            apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year })
-          ]
-        : [
-            apiEndpoints.search.movieSearch({ query: searchQuery }),
-            apiEndpoints.search.tvSearch({ query: searchQuery })
-          ];
+        ? [apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }), apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year })]
+        : [apiEndpoints.search.movieSearch({ query: searchQuery }), apiEndpoints.search.tvSearch({ query: searchQuery })];
 
-      const [movieResponse, tvResponse] = await Promise.all(
-        searchEndpoints.map((endpoint) => fetch(endpoint, fetchOptions()))
-      );
+      const [movieResponse, tvResponse] = await Promise.all(searchEndpoints.map((endpoint) => fetch(endpoint, fetchOptions())));
 
       if (!movieResponse.ok || !tvResponse.ok) {
         throw new Error("Error fetching data");

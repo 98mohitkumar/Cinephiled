@@ -1,10 +1,10 @@
+import Link from "next/link";
+import { Fragment } from "react";
+import { SearchResultsContainer, Keyword } from "./SearchTabStyles";
 import PlaceholderText from "components/PlaceholderText";
 import { apiEndpoints } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
-import Link from "next/link";
-import { Fragment } from "react";
-import { getCleanTitle, removeDuplicates } from "src/utils/helper";
-import { SearchResultsContainer, Keyword } from "./SearchTabStyles";
+import { getCleanTitle, removeDuplicates } from "utils/helper";
 
 const KeywordSearch = ({ searchQuery, keywords }) => {
   const { list } = useInfiniteQuery({

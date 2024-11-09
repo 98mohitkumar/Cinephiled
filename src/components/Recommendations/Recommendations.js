@@ -1,14 +1,9 @@
 import { motion } from "framer-motion";
-import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { getCleanTitle } from "src/utils/helper";
-import {
-  RecommendationsGrid,
-  RecommendedImg,
-  RecommendedWrapper,
-  InfoTitle
-} from "./RecommendationsStyles";
+import { RecommendationsGrid, RecommendedImg, RecommendedWrapper, InfoTitle } from "./RecommendationsStyles";
+import { blurPlaceholder } from "globals/constants";
+import { getCleanTitle } from "utils/helper";
 
 const Recommendations = ({ data, type }) => {
   data.splice(20);
@@ -26,11 +21,7 @@ const Recommendations = ({ data, type }) => {
             <Link href={`/${type}/${item.id}-${getCleanTitle(item?.title || item?.name)}`} passHref>
               <RecommendedImg className='relative text-center'>
                 <Image
-                  src={
-                    item.backdrop_path
-                      ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
-                      : "/Images/DefaultBackdrop.png"
-                  }
+                  src={item.backdrop_path ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}` : "/Images/DefaultBackdrop.png"}
                   alt={`${type}-poster`}
                   fill
                   style={{ objectFit: "cover" }}

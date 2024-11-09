@@ -1,3 +1,7 @@
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { Fragment } from "react";
 import Backdrops from "components/Backdrops/Backdrops";
 import Breadcrumbs from "components/Breadcrumbs/Breadcrumbs";
 import { CastGrid, CastImg, CastWrapper } from "components/Cast/CastStyles";
@@ -6,27 +10,9 @@ import MetaWrapper from "components/MetaWrapper";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import { SeasonsRelease } from "components/TVInfo/TVStyles";
-import { motion } from "framer-motion";
 import { apiEndpoints, blurPlaceholder } from "globals/constants";
-import Image from "next/image";
-import Link from "next/link";
-import { Fragment } from "react";
-import {
-  fetchOptions,
-  getCleanTitle,
-  getRating,
-  getReleaseDate,
-  getReleaseYear,
-  getRuntime
-} from "src/utils/helper";
-import {
-  EpisodeInfoWrapper,
-  EpisodeShowCaseWrapper,
-  ModulesWrapper,
-  Pill,
-  SeasonCommonOverview,
-  TrWrapper
-} from "styles/GlobalComponents";
+import { EpisodeInfoWrapper, EpisodeShowCaseWrapper, ModulesWrapper, Pill, SeasonCommonOverview, TrWrapper } from "styles/GlobalComponents";
+import { fetchOptions, getCleanTitle, getRating, getReleaseDate, getReleaseYear, getRuntime } from "utils/helper";
 
 const Episode = ({
   releaseDate,
@@ -59,9 +45,7 @@ const Episode = ({
   return (
     <Fragment>
       <MetaWrapper
-        title={`${name} (${getReleaseYear(
-          airDate
-        )}) S${seasonNumber}E${episodeNumber} - Details - cinephiled`}
+        title={`${name} (${getReleaseYear(airDate)}) S${seasonNumber}E${episodeNumber} - Details - cinephiled`}
         description={overview}
         image={`https://image.tmdb.org/t/p/w780${backdrop}`}
         url={`https://cinephiled.vercel.app/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}`}
@@ -74,18 +58,14 @@ const Episode = ({
           <EpisodeInfoWrapper className='relative z-10'>
             <Breadcrumbs links={links} />
 
-            <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-bold mb-4 pb-2'>
+            <h3 className='mb-4 pb-2 text-[calc(1.325rem_+_.9vw)] font-bold lg:text-[2rem]'>
               {name} ({getReleaseYear(releaseDate)})
             </h3>
 
             <EpisodeShowCaseWrapper>
               <div className='image-wrapper'>
                 <Image
-                  src={
-                    backdrop
-                      ? `https://image.tmdb.org/t/p/w500${backdrop}`
-                      : "/Images/DefaultBackdrop.png"
-                  }
+                  src={backdrop ? `https://image.tmdb.org/t/p/w500${backdrop}` : "/Images/DefaultBackdrop.png"}
                   alt='episde-backdrop'
                   fill
                   style={{ objectFit: "cover" }}
@@ -95,20 +75,18 @@ const Episode = ({
               </div>
 
               <div>
-                <h3 className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 m-0 font-bold'>
+                <h3 className='m-0 text-[calc(1.325rem_+_.9vw)] font-bold leading-8 lg:text-[2rem]'>
                   {episodeName} ({`S${seasonNumber}E${episodeNumber}`})
                 </h3>
 
                 <TrWrapper>
-                  <SeasonsRelease className='text-alt'>
-                    {getReleaseDate(releaseDate)}
-                  </SeasonsRelease>
+                  <SeasonsRelease className='text-alt'>{getReleaseDate(releaseDate)}</SeasonsRelease>
 
                   <Pill>
                     <p>{getRating(rating)}</p>
                   </Pill>
 
-                  <Span className='font-semibold text-lg'>{getRuntime(runtime)}</Span>
+                  <Span className='text-lg font-semibold'>{getRuntime(runtime)}</Span>
                 </TrWrapper>
 
                 <SocialMediaLinks
@@ -128,9 +106,7 @@ const Episode = ({
 
           {cast?.length > 0 ? (
             <ModulesWrapper className='relative z-10'>
-              <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-8 mb-6 font-bold block'>
-                Cast ({cast?.length})
-              </span>
+              <span className='mb-6 mt-8 block text-[calc(1.325rem_+_.9vw)] font-bold leading-8 lg:text-[2rem]'>Cast ({cast?.length})</span>
 
               <CastGrid className='justify-start'>
                 {cast.map((item) => (
@@ -145,9 +121,7 @@ const Episode = ({
                         <CastImg className='relative text-center'>
                           <Image
                             src={
-                              item?.profile_path
-                                ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}`
-                                : "/Images/DefaultAvatar.png"
+                              item?.profile_path ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}` : "/Images/DefaultAvatar.png"
                             }
                             alt='cast-image'
                             fill
@@ -160,9 +134,7 @@ const Episode = ({
                     </Link>
 
                     <div className='mt-3'>
-                      <Span className='font-bold movieCastHead line-clamp-2'>
-                        {item?.character}
-                      </Span>
+                      <Span className='movieCastHead line-clamp-2 font-bold'>{item?.character}</Span>
                       <Span className='movieCastName block'>{item?.name}</Span>
                     </div>
                   </CastWrapper>
@@ -175,9 +147,7 @@ const Episode = ({
         {posters?.length > 0 ? (
           <Fragment>
             <ModulesWrapper>
-              <span className='text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] leading-8 mt-12 mb-6 font-bold block'>
-                Backdrops ({posters.length})
-              </span>
+              <span className='mb-6 mt-12 block text-[calc(1.325rem_+_.9vw)] font-bold leading-8 lg:text-[2rem]'>Backdrops ({posters.length})</span>
               <Backdrops backdrops={posters} />
             </ModulesWrapper>
           </Fragment>

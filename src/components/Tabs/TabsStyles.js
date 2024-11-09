@@ -1,66 +1,60 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { colors } from "tokens/colors";
+import { borderRadiusTokens, zIndexTokens } from "tokens/misc";
+import { cssClamp, transition } from "utils/mixins";
 
-export const Tab = styled.div`
-  width: clamp(300px, 90vw, 630px); // fallback width, check custom styling
-  min-height: 4.5rem;
+export const tabWrapperStyles = css`
   display: grid;
-  grid-template-columns: ${({ $count }) => `repeat(${$count}, 1fr)`};
-  margin: 4rem auto;
-  border: 4px solid rgb(221, 221, 221);
-  background: rgb(221, 221, 221);
-  border-radius: 14px;
-  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14), 0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
-    0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
+  margin-inline: auto;
   position: relative;
+  grid-template-columns: ${({ $tabItemsCount }) => `repeat(${$tabItemsCount}, 1fr)`};
+  width: ${cssClamp({ minSize: 338, maxSize: 630 })}; // fallback width, check custom styling
+  border: 4px solid ${colors.neutral[200]};
+  background: ${colors.neutral[200]};
+  border-radius: ${borderRadiusTokens["2xl"]};
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  /* @media only ${({ theme }) => theme.breakpoints.ip} {
     min-height: 4rem;
     margin: 2rem auto;
-  }
+  } */
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  /* @media only ${({ theme }) => theme.breakpoints.sm} {
     min-height: 3.25rem;
-  }
+  } */
 
-  svg {
+  /* svg {
     max-width: 26px;
     max-height: 24px;
-  }
+  } */
 
   /* custom styling */
-  ${({ $styling }) => $styling}
+  /* ${({ $styling }) => $styling} */
 `;
 
-export const Slider = styled.div`
-  position: absolute;
-  width: ${({ $count }) => `${100 / $count}%`};
+export const activeHighlighter = css`
+  z-index: ${zIndexTokens[1]};
   height: 100%;
-  background: black;
-  transform: ${({ $state }) => `translateX(${$state === -1 ? 0 : $state * 100}%)`};
-  border-radius: 12px;
-  z-index: 4;
-  transition: transform 0.325s cubic-bezier(0.77, 0, 0.18, 1);
+  position: absolute;
+  background: ${colors.black};
+  border-radius: ${borderRadiusTokens.xl};
+  width: ${({ $tabItemsCount }) => `${100 / $tabItemsCount}%`};
+  transform: ${({ $activeItemIndex }) => `translateX(${$activeItemIndex <= 0 ? 0 : $activeItemIndex * 100}%)`};
+  transition: ${transition({ property: "transform", duration: 0.325, timingFunction: "ease-in-out-quart" })};
 `;
 
-export const Selection = styled.div`
-  padding: 1rem;
+export const tabItemStyles = css`
   display: grid;
   place-items: center;
-  color: ${({ $active }) => ($active ? "white" : "black")};
   font-weight: bold;
   cursor: pointer;
-  z-index: 5;
-  text-align: center;
-  transition: color 0.4s cubic-bezier(0.77, 0, 0.18, 1);
   user-select: none;
+  color: ${colors.black};
+  z-index: ${zIndexTokens[2]};
+  transition: ${transition({ property: "color", duration: 0.4, timingFunction: "ease-in-out-quart" })};
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    padding: 0.2rem;
-    font-size: 1rem;
+  &.active {
+    color: ${colors.white};
   }
-
-  /* custom styling */
-  ${({ $styling }) => $styling}
 `;
 
 export const TabContainer = styled.div`
@@ -79,7 +73,7 @@ export const TabContainer = styled.div`
   /* for firefox */
   scrollbar-width: none;
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     font-size: 1rem;
   }
 `;

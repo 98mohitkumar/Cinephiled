@@ -11,11 +11,11 @@ export const HeroInfoTitle = styled.h1`
   font-size: 2.5rem;
   margin-top: 0rem;
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
+  @media only ${({ theme }) => theme.breakpoints.lg} {
     font-size: 2rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     font-size: 1.75rem;
     line-height: 1.5;
   }
@@ -26,7 +26,7 @@ export const Span = styled.span`
   &.toast-message {
     font-size: 18px;
 
-    @media only ${(props) => props.theme.breakpoints.sm} {
+    @media only ${({ theme }) => theme.breakpoints.sm} {
       font-size: 16px;
     }
   }
@@ -35,7 +35,7 @@ export const Span = styled.span`
     font-size: 1rem;
     font-weight: 400;
 
-    @media only ${(props) => props.theme.breakpoints.sm} {
+    @media only ${({ theme }) => theme.breakpoints.sm} {
       font-size: 14px;
     }
   }
@@ -92,7 +92,7 @@ export const GenreWrap = styled.div`
   width: fit-content;
   gap: 1rem;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     order: 3;
     gap: 0.5rem 1rem;
   }
@@ -107,7 +107,7 @@ export const Rounded = styled.div`
   border-radius: 20px;
   padding: 0.05rem 0.9rem;
 
-  @media only ${(props) => props.theme.breakpoints.hover} {
+  @media only ${({ theme }) => theme.breakpoints.hover} {
     &:hover {
       color: #121212;
       background-color: white;
@@ -117,11 +117,11 @@ export const Rounded = styled.div`
     }
   }
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
+  @media only ${({ theme }) => theme.breakpoints.lg} {
     font-size: 1rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     font-weight: 500 !important;
     font-size: 20px;
     border: none;
@@ -145,7 +145,7 @@ export const Divider = styled.div`
   display: inline-block;
   background-color: white;
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     display: none;
   }
 `;
@@ -168,18 +168,18 @@ export const RtoR = styled.div`
     margin-right: 1rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
+  @media only ${({ theme }) => theme.breakpoints.lg} {
     & > span,
     & > div > span {
       font-size: 1rem;
     }
   }
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     margin: 1.25rem 0rem !important;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     margin: 0.8rem 0rem !important;
     display: grid;
     grid-template-columns: 1fr;
@@ -194,7 +194,7 @@ export const RtoR = styled.div`
 export const RatingWrapper = styled.div`
   margin: 1rem 0rem;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     & > span:first-child {
       font-size: 4.5rem !important;
       font-weight: 600 !important;
@@ -206,7 +206,7 @@ export const Overview = styled.p`
   font-size: 20px;
   font-weight: 500;
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
+  @media only ${({ theme }) => theme.breakpoints.lg} {
     font-size: 18px;
   }
 `;
@@ -218,11 +218,11 @@ export const CreditsWrapper = styled.div`
   gap: 48px;
   margin-top: 32px;
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     font-size: 18px;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     gap: 32px;
     grid-template-columns: repeat(2, 1fr);
   }
@@ -243,18 +243,18 @@ export const FactsWrapper = styled.div`
   grid-template-columns: repeat(4, max-content);
   gap: 2rem 5rem;
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     font-size: 18px;
     gap: 2rem 3rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     gap: 2rem 6rem;
     padding: 1rem;
     grid-template-columns: repeat(2, max-content);
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     gap: 2rem;
     padding: 0rem;
     grid-template-columns: repeat(2, 1fr);
@@ -268,12 +268,12 @@ export const FactsFieldSet = styled.fieldset`
   border-radius: 20px;
   max-width: max-content;
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     min-width: 100%;
     border: none;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     padding: 1rem 1.25rem;
   }
 `;
@@ -283,12 +283,12 @@ export const FactsLegend = styled.legend`
   padding: 0rem 1rem;
   float: none;
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     padding: 0rem 1rem;
     font-size: 2.5rem;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     padding: 0;
   }
 `;
@@ -296,7 +296,7 @@ export const FactsLegend = styled.legend`
 export const Tagline = styled.span`
   font-weight: 400;
 
-  @media only ${(props) => props.theme.breakpoints.lg} {
+  @media only ${({ theme }) => theme.breakpoints.lg} {
     font-size: 18px;
   }
 `;
@@ -384,7 +384,7 @@ export const LightsInOut = styled.div`
   inset: 22rem 0 0 0;
   cursor: pointer;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     inset: 24rem 0 0 0;
   }
 `;

@@ -1,8 +1,8 @@
+import { Fragment } from "react";
 import NetworkMedia from "components/Explore/NetworkMedia";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
-import { Fragment } from "react";
-import { fetchOptions, getCleanTitle } from "src/utils/helper";
+import { fetchOptions, getCleanTitle } from "utils/helper";
 
 const Network = ({ networkDetails, networkMedia }) => {
   return (
@@ -10,9 +10,7 @@ const Network = ({ networkDetails, networkMedia }) => {
       <MetaWrapper
         title={`${networkDetails?.name} - cinephiled`}
         description={`TV shows produced by ${networkDetails?.name}.`}
-        url={`https://cinephiled.vercel.app/network/${networkDetails?.id}-${getCleanTitle(
-          networkDetails?.name
-        )}`}
+        url={`https://cinephiled.vercel.app/network/${networkDetails?.id}-${getCleanTitle(networkDetails?.name)}`}
         image={`https://image.tmdb.org/t/p/original${networkDetails?.logo_path}`}
       />
 

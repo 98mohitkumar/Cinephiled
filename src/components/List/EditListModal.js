@@ -1,13 +1,13 @@
-import { updateList } from "api/user";
+import { motion } from "framer-motion";
+import { Fragment } from "react";
+import CreateListForm from "./CreateListForm";
+import useRevalidateList from "./useRevalidateList";
+import { updateList } from "apiEndpoints/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Toast, { useToast } from "components/Toast/Toast";
-import { motion } from "framer-motion";
-import { Fragment } from "react";
 import { useListsContext } from "Store/ListsContext";
 import { Button } from "styles/GlobalComponents";
-import CreateListForm from "./CreateListForm";
-import useRevalidateList from "./useRevalidateList";
 
 const EditListModal = ({ list }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
@@ -39,9 +39,7 @@ const EditListModal = ({ list }) => {
 
       // this is done so that the name of the list that appears in add to list modal is in sync
       if (listData.name !== editedList.name) {
-        updateListContext((prev) =>
-          prev.map((item) => (item.id === list.id ? { ...item, name: listData.name } : item))
-        );
+        updateListContext((prev) => prev.map((item) => (item.id === list.id ? { ...item, name: listData.name } : item)));
       }
       showToast({ message: "List updated successfully." });
     }
@@ -57,20 +55,11 @@ const EditListModal = ({ list }) => {
         <div>
           <h4 className='text-2xl mb-4 font-semibold'>Edit List</h4>
           <CreateListForm id={list?.id} submitHandler={formSubmitHandler}>
-            <div className='mt-6 flex gap-3'>
-              <Button
-                as={motion.button}
-                whileTap={{ scale: 0.95 }}
-                className='w-full secondary'
-                onClick={closeModal}
-                type='button'>
+            <div className='gap-3 mt-6 flex'>
+              <Button as={motion.button} whileTap={{ scale: 0.95 }} className='secondary w-full' onClick={closeModal} type='button'>
                 Close
               </Button>
-              <Button
-                as={motion.button}
-                whileTap={{ scale: 0.95 }}
-                className='w-full'
-                type='submit'>
+              <Button as={motion.button} whileTap={{ scale: 0.95 }} className='w-full' type='submit'>
                 Save
               </Button>
             </div>

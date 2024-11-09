@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Fragment, useState } from "react";
 import { createPortal } from "react-dom";
-import { framerTabVariants } from "src/utils/helper";
+import { framerTabVariants } from "utils/helper";
 
 export const useModal = () => {
   const [isModalVisible, setShowModal] = useState(false);
@@ -41,14 +41,11 @@ const Modal = ({ children, isOpen, closeModal, width, align }) => {
               animate='visible'
               exit='hidden'
               key='modal'
-              className={`fixed inset-0 z-[1000] bg-black bg-opacity-75 backdrop-blur-[2px] backdrop-saturate-50 flex justify-center modal-outer overflow-y-auto py-[10vh] px-4 ${
+              className={`modal-outer fixed inset-0 z-[1000] flex justify-center overflow-y-auto bg-black bg-opacity-75 px-4 py-[10vh] backdrop-blur-[2px] backdrop-saturate-50 ${
                 align || "items-start"
               }`}
               onClick={closeOnClickedOutside}>
-              <div
-                className={`rounded-xl overflow-hideen max-sm:p-4 p-6 bg-[#121212] border border-neutral-700 w-full ${
-                  width || "max-w-xl"
-                }`}>
+              <div className={`overflow-hideen w-full rounded-xl border border-neutral-700 bg-[#121212] p-6 max-sm:p-4 ${width || "max-w-xl"}`}>
                 {children}
               </div>
             </motion.div>

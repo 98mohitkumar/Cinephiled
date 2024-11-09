@@ -1,8 +1,8 @@
-import { useModal } from "components/Modal/Modal";
-import ShareModal from "components/ShareModal/ShareModal";
 import { BiLink } from "react-icons/bi";
 import { FiTwitter, FiInstagram } from "react-icons/fi";
 import { MdShare } from "react-icons/md";
+import { useModal } from "components/Modal/Modal";
+import ShareModal from "components/ShareModal/ShareModal";
 import { SocialMediaLinksWrapper } from "styles/GlobalComponents";
 
 const SocialMediaLinks = ({ links, homepage, mediaDetails, ...props }) => {
@@ -27,23 +27,13 @@ const SocialMediaLinks = ({ links, homepage, mediaDetails, ...props }) => {
   return (
     <SocialMediaLinksWrapper {...props}>
       {links?.instagram_id && (
-        <a
-          href={`https://instagram.com/${links?.instagram_id}`}
-          target='_blank'
-          className='link'
-          rel='noreferrer'
-          aria-label='instagram'>
+        <a href={`https://instagram.com/${links?.instagram_id}`} target='_blank' className='link' rel='noreferrer' aria-label='instagram'>
           <FiInstagram size='1.65rem' />
         </a>
       )}
 
       {links?.twitter_id && (
-        <a
-          href={`https://twitter.com/${links?.twitter_id}`}
-          target='_blank'
-          className='link'
-          rel='noreferrer'
-          aria-label='twitter'>
+        <a href={`https://twitter.com/${links?.twitter_id}`} target='_blank' className='link' rel='noreferrer' aria-label='twitter'>
           <FiTwitter size='1.65rem' />
         </a>
       )}

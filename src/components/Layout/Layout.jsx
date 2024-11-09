@@ -1,8 +1,9 @@
-import Footer from "components/Footer/Footer";
-import Navigation from "components/Navigation/Navigation";
 import { Manrope, Montserrat } from "next/font/google";
 import { useRouter } from "next/router";
-import { DetailsWrapper, Wrapper } from "./LayoutStyles";
+import { FlexBox } from "./helpers";
+import { Wrapper } from "./LayoutStyles";
+import Footer from "components/Footer/Footer";
+import Navigation from "components/Navigation/Navigation";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -16,20 +17,21 @@ const montserrat = Montserrat({
   variable: "--montserrat"
 });
 
+const pathsWithFooter = ["/", "/about", "/login", "/watch-providers", "/explore"];
+
 const Layout = ({ children }) => {
   const router = useRouter();
-  const footerValidPaths = ["/", "/about", "/login", "/watch-providers"];
 
   // key without query params
   const key = router.asPath.split("?")[0];
 
   return (
     <Wrapper key={key} className={`${manrope.variable} ${montserrat.variable} main-wrapper`}>
-      <DetailsWrapper className='flex flex-col justify-between'>
+      <FlexBox className='min-h-screen flex-col'>
         <Navigation />
-        <div className='grow content-wrapper'>{children}</div>
-        {footerValidPaths.includes(router.asPath) ? <Footer /> : null}
-      </DetailsWrapper>
+        <div className='content-wrapper grow'>{children}</div>
+        {pathsWithFooter.includes(router.asPath) ? <Footer /> : null}
+      </FlexBox>
     </Wrapper>
   );
 };

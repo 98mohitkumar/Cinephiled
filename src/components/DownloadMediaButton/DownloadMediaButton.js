@@ -28,7 +28,7 @@ export const DownloadMediaButton = ({ item }) => {
 
   return (
     <Button
-      className='absolute bottom-4 right-4 mediaCTA'
+      className='mediaCTA absolute bottom-4 right-4'
       aria-label='download media'
       onClick={() => download(item, `https://image.tmdb.org/t/p/original${item}`)}>
       <AiOutlineDownload color='#414141' />

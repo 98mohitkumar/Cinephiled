@@ -1,19 +1,19 @@
-import { getListItemStatus, updateList, updateListItems } from "api/user";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+import { Fragment, useEffect, useRef, useState } from "react";
+import useGetListDetails from "./useGetListDetails";
+import useRevalidateList from "./useRevalidateList";
+import { getListItemStatus, updateList, updateListItems } from "apiEndpoints/user";
 import Loading from "components/Loading";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
 import Toast, { useToast } from "components/Toast/Toast";
-import { AnimatePresence, motion } from "framer-motion";
 import { blurPlaceholder, apiEndpoints } from "globals/constants";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
-import Image from "next/image";
-import { Fragment, useEffect, useRef, useState } from "react";
-import { framerTabVariants, getReleaseDate } from "src/utils/helper";
 import { Button } from "styles/GlobalComponents";
-import useGetListDetails from "./useGetListDetails";
-import useRevalidateList from "./useRevalidateList";
+import { framerTabVariants, getReleaseDate } from "utils/helper";
 
 const ManageList = ({ id }) => {
   const [query, setQuery] = useState("");
@@ -149,21 +149,19 @@ const ManageList = ({ id }) => {
       ) : (
         <Fragment>
           {error ? (
-            <div className='text-lg font-medium text-red-600'>
-              Something went wrong. Please try again later.
-            </div>
+            <div className='text-lg font-medium text-red-600'>Something went wrong. Please try again later.</div>
           ) : (
-            <div className='mb-8 relative'>
+            <div className='relative mb-8'>
               {isWaiting ? (
-                <div className='fixed inset-0 grid place-items-center z-50 bg-gray-900/50'>
+                <div className='bg-gray-900/50 fixed inset-0 z-50 grid place-items-center'>
                   <Loading />
                 </div>
               ) : null}
 
-              <div className='flex gap-4 justify-between items-center mb-8 flex-wrap'>
+              <div className='mb-8 flex flex-wrap items-center justify-between gap-4'>
                 <h3 className='text-3xl font-semibold'>{listDetails.name}</h3>
 
-                <div className='flex gap-3 items-center max-sm:w-full'>
+                <div className='gap-3 flex items-center max-sm:w-full'>
                   <Button
                     as={motion.button}
                     whileTap={{ scale: 0.95 }}
@@ -178,7 +176,7 @@ const ManageList = ({ id }) => {
                     whileTap={{ scale: 0.95 }}
                     disabled={items?.length === 0}
                     onClick={revalidateData}
-                    className='disabled:opacity-50 disabled:cursor-not-allowed w-full'
+                    className='w-full disabled:cursor-not-allowed disabled:opacity-50'
                     loading={+isWaiting}>
                     Done
                   </Button>
@@ -193,7 +191,7 @@ const ManageList = ({ id }) => {
                     initial='hidden'
                     animate='visible'
                     exit='hidden'
-                    className={isWaiting ? "brightness-[25%] blur-sm" : ""}>
+                    className={isWaiting ? "blur-sm brightness-[25%]" : ""}>
                     <h4 className='mb-4 font-medium'>Select a cover for your list</h4>
 
                     {items.length > 0 ? (
@@ -201,18 +199,12 @@ const ManageList = ({ id }) => {
                         {items.map(({ id, backdrop_path, title, name }) => (
                           <div key={id}>
                             <div
-                              className={`aspect-[1.68] relative rounded-lg overflow-hidden hover:grayscale-0 cursor-pointer transition-colors ${
-                                selectedCover === backdrop_path
-                                  ? "ring-2 ring-green-700 grayscale-0"
-                                  : "ring-0 grayscale"
+                              className={`relative aspect-[1.68] cursor-pointer overflow-hidden rounded-lg transition-colors hover:grayscale-0 ${
+                                selectedCover === backdrop_path ? "ring-green-700 ring-2 grayscale-0" : "ring-0 grayscale"
                               }`}
                               onClick={() => coverClickHandler(backdrop_path)}>
                               <Image
-                                src={
-                                  backdrop_path
-                                    ? `https://image.tmdb.org/t/p/w500${backdrop_path}`
-                                    : "/Images/DefaultBackdrop.png"
-                                }
+                                src={backdrop_path ? `https://image.tmdb.org/t/p/w500${backdrop_path}` : "/Images/DefaultBackdrop.png"}
                                 alt='backdrop'
                                 fill
                                 style={{ objectFit: "cover" }}
@@ -221,42 +213,31 @@ const ManageList = ({ id }) => {
                               />
 
                               {selectedCover === backdrop_path && (
-                                <div className='absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
-                                  <span className='text-green-500 text-xl font-semibold'>
-                                    Selected
-                                  </span>
+                                <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50'>
+                                  <span className='text-green-500 text-xl font-semibold'>Selected</span>
                                 </div>
                               )}
                             </div>
-                            <p className='mt-2 text-lg font-medium text-center'>{title || name}</p>
+                            <p className='text-lg mt-2 text-center font-medium'>{title || name}</p>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <PlaceholderText height='large'>
-                        There are no items added to this list yet.
-                      </PlaceholderText>
+                      <PlaceholderText height='large'>There are no items added to this list yet.</PlaceholderText>
                     )}
                   </motion.section>
                 ) : (
-                  <motion.section
-                    key={`updateCover-${updateCover}`}
-                    variants={framerTabVariants}
-                    initial='hidden'
-                    animate='visible'
-                    exit='hidden'>
+                  <motion.section key={`updateCover-${updateCover}`} variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden'>
                     <div className='relative flex-grow'>
                       <div>
-                        <div className='flex gap-3 justify-between items-stretch mb-2'>
-                          <label
-                            htmlFor='addItem'
-                            className='block text-base font-medium text-neutral-200'>
+                        <div className='gap-3 mb-2 flex items-stretch justify-between'>
+                          <label htmlFor='addItem' className='text-base block font-medium text-neutral-200'>
                             Search Item
                           </label>
 
                           {query?.trim()?.length > 0 && (
                             <button
-                              className='bg-neutral-200 rounded-xl text-sm font-semibold text-center text-neutral-800 px-3 min-h-full'
+                              className='text-sm px-3 min-h-full rounded-xl bg-neutral-200 text-center font-semibold text-neutral-800'
                               onClick={closeInputHandler}>
                               Close
                             </button>
@@ -267,7 +248,7 @@ const ManageList = ({ id }) => {
                           ref={inputRef}
                           id='addItem'
                           placeholder='Search for a movie or TV show'
-                          className='border text-base rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-500 placeholder-neutral-400 text-white focus:border'
+                          className='text-base p-2.5 block w-full rounded-lg border border-neutral-500 bg-neutral-700 text-white placeholder-neutral-400 focus:border'
                           onChange={inputChangeHandler}
                         />
                       </div>
@@ -275,7 +256,7 @@ const ManageList = ({ id }) => {
                       <AnimatePresence mode='wait'>
                         {(searchSuggestionsLoading || searchSuggestions?.length > 0) && (
                           <motion.div
-                            className='absolute top-full mt-2 left-0 right-0 z-10 bg-neutral-800 rounded-lg overflow-hidden shadow-lg'
+                            className='absolute left-0 right-0 top-full z-10 mt-2 overflow-hidden rounded-lg bg-neutral-800 shadow-lg'
                             key='suggestions'
                             variants={framerTabVariants}
                             initial='hidden'
@@ -287,66 +268,44 @@ const ManageList = ({ id }) => {
                             ) : (
                               <Fragment>
                                 {searchSuggestions.length > 0 ? (
-                                  <div className='grid grid-cols-[repeat(auto-fill,minmax(295px,1fr))] p-4 gap-4 max-h-[50vh] overflow-y-auto'>
-                                    {searchSuggestions.map(
-                                      ({
-                                        id,
-                                        title,
-                                        name,
-                                        poster_path,
-                                        release_date,
-                                        first_air_date,
-                                        backdrop_path,
-                                        type
-                                      }) => (
-                                        <div
-                                          key={id}
-                                          className='p-3 cursor-pointer bg-neutral-700 hover:bg-neutral-600 rounded-lg overflow-hidden transition-colors'
-                                          onClick={() =>
-                                            itemsHandler({
-                                              item: {
-                                                id,
-                                                poster_path,
-                                                backdrop_path,
-                                                media_type: type
-                                              },
-                                              action: "add"
-                                            })
-                                          }>
-                                          <div className='flex items-start gap-3'>
-                                            <div className='relative flex-shrink-0 aspect-[1/1.54] w-16 rounded-md overflow-hidden'>
-                                              <Image
-                                                src={
-                                                  poster_path
-                                                    ? `https://image.tmdb.org/t/p/w185${poster_path}`
-                                                    : "/Images/DefaultImage.png"
-                                                }
-                                                alt='poster'
-                                                fill
-                                                style={{ objectFit: "cover" }}
-                                                placeholder='blur'
-                                                blurDataURL={blurPlaceholder}
-                                              />
-                                            </div>
-                                            <div className='flex-grow'>
-                                              <p
-                                                className={`text-sm font-medium mb-1 ${
-                                                  type === "tv" ? "text-green-500" : "text-sky-500"
-                                                }`}>
-                                                {type === "tv" ? "TV Show" : "Movie"}
-                                              </p>
+                                  <div className='grid max-h-[50vh] grid-cols-[repeat(auto-fill,minmax(295px,1fr))] gap-4 overflow-y-auto p-4'>
+                                    {searchSuggestions.map(({ id, title, name, poster_path, release_date, first_air_date, backdrop_path, type }) => (
+                                      <div
+                                        key={id}
+                                        className='p-3 cursor-pointer overflow-hidden rounded-lg bg-neutral-700 transition-colors hover:bg-neutral-600'
+                                        onClick={() =>
+                                          itemsHandler({
+                                            item: {
+                                              id,
+                                              poster_path,
+                                              backdrop_path,
+                                              media_type: type
+                                            },
+                                            action: "add"
+                                          })
+                                        }>
+                                        <div className='gap-3 flex items-start'>
+                                          <div className='relative aspect-[1/1.54] w-16 flex-shrink-0 overflow-hidden rounded-md'>
+                                            <Image
+                                              src={poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"}
+                                              alt='poster'
+                                              fill
+                                              style={{ objectFit: "cover" }}
+                                              placeholder='blur'
+                                              blurDataURL={blurPlaceholder}
+                                            />
+                                          </div>
+                                          <div className='flex-grow'>
+                                            <p className={`text-sm mb-1 font-medium ${type === "tv" ? "text-green-500" : "text-sky-500"}`}>
+                                              {type === "tv" ? "TV Show" : "Movie"}
+                                            </p>
 
-                                              <p className='text-[15px] font-medium text-neutral-200 line-clamp-2'>
-                                                {title || name}
-                                              </p>
-                                              <p className='text-sm font-normal text-neutral-200'>
-                                                {getReleaseDate(release_date || first_air_date)}
-                                              </p>
-                                            </div>
+                                            <p className='line-clamp-2 text-[15px] font-medium text-neutral-200'>{title || name}</p>
+                                            <p className='text-sm font-normal text-neutral-200'>{getReleaseDate(release_date || first_air_date)}</p>
                                           </div>
                                         </div>
-                                      )
-                                    )}
+                                      </div>
+                                    ))}
                                   </div>
                                 ) : null}
                               </Fragment>
@@ -360,14 +319,10 @@ const ManageList = ({ id }) => {
                       {items?.length > 0 ? (
                         <CardsContainerGrid>
                           {items.map(({ id, poster_path, media_type }) => (
-                            <div key={id} className='text-center w-full'>
-                              <div className='relative flex-shrink-0 aspect-[1/1.54] w-full rounded-lg overflow-hidden'>
+                            <div key={id} className='w-full text-center'>
+                              <div className='relative aspect-[1/1.54] w-full flex-shrink-0 overflow-hidden rounded-lg'>
                                 <Image
-                                  src={
-                                    poster_path
-                                      ? `https://image.tmdb.org/t/p/w300${poster_path}`
-                                      : "/Images/DefaultImage.png"
-                                  }
+                                  src={poster_path ? `https://image.tmdb.org/t/p/w300${poster_path}` : "/Images/DefaultImage.png"}
                                   alt='poster'
                                   fill
                                   style={{ objectFit: "cover" }}
@@ -379,7 +334,7 @@ const ManageList = ({ id }) => {
                               <Button
                                 as={motion.button}
                                 whileTap={{ scale: 0.95 }}
-                                className='danger w-full mt-4'
+                                className='danger mt-4 w-full'
                                 onClick={() =>
                                   itemsHandler({
                                     item: { id, media_type },

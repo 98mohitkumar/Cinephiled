@@ -1,14 +1,14 @@
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import PlaceholderText from "components/PlaceholderText";
 import { motion } from "framer-motion";
-import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useRef } from "react";
 import { BsChevronRight } from "react-icons/bs";
-import { getCleanTitle } from "src/utils/helper";
 import { CastGrid, CastImg, CastWrapper, SeeMore } from "./CastStyles";
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import PlaceholderText from "components/PlaceholderText";
+import { blurPlaceholder } from "globals/constants";
+import { getCleanTitle } from "utils/helper";
 
 const Cast = ({ cast, showFullCastLink = false, isSearchGrid = false }) => {
   const router = useRouter();
@@ -29,11 +29,7 @@ const Cast = ({ cast, showFullCastLink = false, isSearchGrid = false }) => {
                   whileTap={{ scale: 0.95 }}>
                   <CastImg className='relative text-center'>
                     <Image
-                      src={
-                        item.profile_path
-                          ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}`
-                          : "/Images/DefaultAvatar.png"
-                      }
+                      src={item.profile_path ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}` : "/Images/DefaultAvatar.png"}
                       alt='cast-image'
                       fill
                       style={{ objectFit: "cover", objectPosition: "top" }}
@@ -48,21 +44,13 @@ const Cast = ({ cast, showFullCastLink = false, isSearchGrid = false }) => {
                 {isSearchGrid ? (
                   <Fragment>
                     <Span className='movieCastHead block font-semibold'>{item.name}</Span>
-                    <Span className='movieCastName block text-neutral-400'>
-                      {item.known_for_department}
-                    </Span>
+                    <Span className='movieCastName block text-neutral-400'>{item.known_for_department}</Span>
                   </Fragment>
                 ) : (
                   <Fragment>
-                    <Span className='font-bold movieCastHead line-clamp-2'>
-                      {item?.roles?.[0]?.character ?? item?.character}
-                    </Span>
+                    <Span className='movieCastHead line-clamp-2 font-bold'>{item?.roles?.[0]?.character ?? item?.character}</Span>
                     <Span className='movieCastName block'>{item.name}</Span>
-                    {item?.episode_count ? (
-                      <Span className='movieCastName block episode-count'>
-                        {item?.episode_count} episodes
-                      </Span>
-                    ) : null}
+                    {item?.episode_count ? <Span className='movieCastName episode-count block'>{item?.episode_count} episodes</Span> : null}
                   </Fragment>
                 )}
               </div>
@@ -82,7 +70,7 @@ const Cast = ({ cast, showFullCastLink = false, isSearchGrid = false }) => {
                 <SeeMore>
                   <BsChevronRight size='22' />
                 </SeeMore>
-                <Span className='mt-3 font-bold movieCastHead block'>Full Cast</Span>
+                <Span className='mt-3 movieCastHead block font-bold'>Full Cast</Span>
               </motion.div>
             </Link>
           ) : null}

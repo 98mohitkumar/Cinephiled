@@ -1,20 +1,20 @@
-import { addToWatchlist, setFavorite } from "api/user";
-import AddToListModal from "components/List/AddToListModal";
-import { useModal } from "components/Modal/Modal";
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
-import RatingModal from "components/RatingModal/RatingModal";
-import Toast, { useToast } from "components/Toast/Toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { Fragment } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { BiListPlus, BiListCheck } from "react-icons/bi";
 import { BsStarHalf } from "react-icons/bs";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { framerTabVariants, matcher } from "src/utils/helper";
+import { addToWatchlist, setFavorite } from "apiEndpoints/user";
+import AddToListModal from "components/List/AddToListModal";
+import { useModal } from "components/Modal/Modal";
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
+import RatingModal from "components/RatingModal/RatingModal";
+import Toast, { useToast } from "components/Toast/Toast";
 import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import { Button } from "styles/GlobalComponents";
+import { framerTabVariants, matches } from "utils/helper";
 
 const UserActionButtons = ({
   watchlistHandler,
@@ -26,9 +26,9 @@ const UserActionButtons = ({
   isToastVisible
 }) => {
   return (
-    <div className='flex justify-start gap-3'>
+    <div className='gap-3 flex justify-start'>
       <Button
-        className='w-full mediaCTA'
+        className='mediaCTA w-full'
         loading={+isToastVisible}
         aria-label='watchlist button'
         as={motion.button}
@@ -48,7 +48,7 @@ const UserActionButtons = ({
       </Button>
 
       <Button
-        className='w-full mediaCTA'
+        className='mediaCTA w-full'
         aria-label='favorite button'
         onClick={favoriteHandler}
         as={motion.button}
@@ -68,7 +68,7 @@ const UserActionButtons = ({
       </Button>
 
       <Button
-        className='w-full mediaCTA'
+        className='mediaCTA w-full'
         aria-label='rating button'
         as={motion.button}
         loading={+isToastVisible}
@@ -85,7 +85,7 @@ const UserActionButtons = ({
             {savedRating ? (
               <RatingOverlay className='media-page'>
                 <AiFillStar size='16px' />
-                <p className='m-0 leading-tight font-semibold'>{savedRating}</p>
+                <p className='m-0 font-semibold leading-tight'>{savedRating}</p>
               </RatingOverlay>
             ) : (
               <BsStarHalf size='20px' />
@@ -377,20 +377,10 @@ const UserActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
         <AddToListModal mediaType={mediaType} mediaId={mediaId} />
       </div>
 
-      {matcher(mediaType, "movie") ? (
-        <UserMovieActions
-          mediaId={mediaId}
-          mediaType={mediaType}
-          mediaDetails={mediaDetails}
-          rating={rating}
-        />
+      {matches(mediaType, "movie") ? (
+        <UserMovieActions mediaId={mediaId} mediaType={mediaType} mediaDetails={mediaDetails} rating={rating} />
       ) : (
-        <UserTVActions
-          mediaId={mediaId}
-          mediaType={mediaType}
-          mediaDetails={mediaDetails}
-          rating={rating}
-        />
+        <UserTVActions mediaId={mediaId} mediaType={mediaType} mediaDetails={mediaDetails} rating={rating} />
       )}
     </Fragment>
   );

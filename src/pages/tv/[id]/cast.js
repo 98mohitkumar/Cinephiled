@@ -1,8 +1,8 @@
+import { Fragment } from "react";
 import CastPage from "components/Cast/CastPage";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
-import { Fragment } from "react";
-import { fetchOptions, getReleaseYear, mergeEpisodeCount } from "src/utils/helper";
+import { fetchOptions, getReleaseYear, mergeEpisodeCount } from "utils/helper";
 
 const Cast = ({ tvData: { id, title, year, backdrop, poster }, cast }) => {
   return (
@@ -41,11 +41,7 @@ export const getServerSideProps = async (ctx) => {
           poster: data?.poster_path,
           id: data?.id
         },
-        cast: mergeEpisodeCount(
-          data?.aggregate_credits?.cast
-            .map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role })))
-            .flat()
-        )
+        cast: mergeEpisodeCount(data?.aggregate_credits?.cast.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role }))).flat())
       }
     };
   } catch {

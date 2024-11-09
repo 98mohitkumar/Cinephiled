@@ -1,15 +1,15 @@
+import { AnimatePresence, motion } from "framer-motion";
+import { Fragment } from "react";
+import MediaCard from "./MediaCard";
+import { ProfileMediaTab } from "./ProfilePage";
 import Loading from "components/Loading";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { useModal } from "components/Modal/Modal";
 import PlaceholderText from "components/PlaceholderText";
 import RatingModal from "components/RatingModal/RatingModal";
-import { AnimatePresence, motion } from "framer-motion";
-import { Fragment } from "react";
-import { framerTabVariants, getReleaseYear } from "src/utils/helper";
 import { useMediaContext } from "Store/MediaContext";
 import { Button } from "styles/GlobalComponents";
-import MediaCard from "./MediaCard";
-import { ProfileMediaTab } from "./ProfilePage";
+import { framerTabVariants, getReleaseYear } from "utils/helper";
 
 const RatingCTA = ({ mediaData }) => {
   const { isModalVisible, openModal, closeModal } = useModal();
@@ -28,11 +28,7 @@ const RatingCTA = ({ mediaData }) => {
         mediaName={`${name} (${getReleaseYear(releaseDate)})`}
       />
 
-      <Button
-        as={motion.button}
-        whileTap={{ scale: 0.95 }}
-        onClick={openModal}
-        className='w-full !font-semibold'>
+      <Button as={motion.button} whileTap={{ scale: 0.95 }} onClick={openModal} className='w-full !font-semibold'>
         Edit Rating
       </Button>
     </Fragment>
@@ -60,11 +56,7 @@ const Ratings = () => {
                   {ratedMovies.length > 0 ? (
                     <CardsContainerGrid className='xl-row-gap'>
                       {ratedMovies.map((movie) => (
-                        <MediaCard
-                          key={movie?.id}
-                          data={movie}
-                          link='movies'
-                          rating={movie?.rating ?? false}>
+                        <MediaCard key={movie?.id} data={movie} link='movies' rating={movie?.rating ?? false}>
                           <RatingCTA
                             mediaData={{
                               id: movie?.id,

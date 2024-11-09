@@ -1,0 +1,115 @@
+import { cssClamp } from "../utils/mixins";
+import { pixelsPerRem } from "./misc";
+
+// https://utopia.fyi/type/calculator/?c=370,18,1.2,1280,20,1.25,5,3,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12
+const fontSizes = {
+  static: [
+    { key: "h1Static", size: 61.04, lineHeight: 68, letterSpacing: -0.4 },
+    { key: "h2Static", size: 48.83, lineHeight: 56, letterSpacing: -0.3 },
+    { key: "h3Static", size: 39.06, lineHeight: 44, letterSpacing: -0.25 },
+    { key: "h4Static", size: 31.25, lineHeight: 38, letterSpacing: -0.2 },
+    { key: "h5Static", size: 25, lineHeight: 32, letterSpacing: -0.1 },
+    { key: "h6Static", size: 20, lineHeight: 28, letterSpacing: -0.05 },
+
+    // base size and variations of p
+    { key: "p", size: 16, lineHeight: 24, letterSpacing: 0 },
+    { key: "small", size: 14, lineHeight: 21, letterSpacing: 0.1 },
+    { key: "tiny", size: 12, lineHeight: 18, letterSpacing: 0.15 },
+    { key: "micro", size: 10, lineHeight: 16, letterSpacing: 0.25 }
+  ],
+  responsive: [
+    {
+      key: "h1",
+      size: { minSize: 44.79, maxSize: 61.04 },
+      lineHeight: { minHeight: 52, maxHeight: 68 },
+      letterSpacing: { minSpacing: -0.3, maxSpacing: -0.4 }
+    },
+    {
+      key: "h2",
+      size: { minSize: 37.33, maxSize: 48.83 },
+      lineHeight: { minHeight: 44, maxHeight: 56 },
+      letterSpacing: { minSpacing: -0.25, maxSpacing: -0.3 }
+    },
+    {
+      key: "h3",
+      size: { minSize: 31.11, maxSize: 39.06 },
+      lineHeight: { minHeight: 38, maxHeight: 44 },
+      letterSpacing: { minSpacing: -0.2, maxSpacing: -0.25 }
+    },
+    {
+      key: "h4",
+      size: { minSize: 25.93, maxSize: 31.25 },
+      lineHeight: { minHeight: 32, maxHeight: 38 },
+      letterSpacing: { minSpacing: -0.1, maxSpacing: -0.2 }
+    },
+    {
+      key: "h5",
+      size: { minSize: 21.6, maxSize: 25 },
+      lineHeight: { minHeight: 28, maxHeight: 33 },
+      letterSpacing: { minSpacing: -0.05, maxSpacing: -0.1 }
+    },
+    {
+      key: "h6",
+      size: { minSize: 18, maxSize: 20 },
+      lineHeight: { minHeight: 24, maxHeight: 28 },
+      letterSpacing: { minSpacing: -0.05, maxSpacing: -0.05 }
+    }
+  ]
+} as const;
+
+const staticFontSizeBuilder = ({ size, lineHeight, letterSpacing }: Record<string, number>) => {
+  return [
+    `${size / pixelsPerRem}rem`,
+    {
+      lineHeight: `${lineHeight / pixelsPerRem}rem`,
+      letterSpacing: `${letterSpacing / pixelsPerRem}rem`
+    }
+  ];
+};
+
+const responsiveFontSizeBuilder = ({ minSize, maxSize, minHeight, maxHeight, minSpacing, maxSpacing }: Record<string, number>) => {
+  // clamp(min, value, max)
+  const fontSizeClamp = cssClamp({ minSize, maxSize });
+  const lineHeightClamp = cssClamp({ minSize: minHeight, maxSize: maxHeight });
+  const letterSpacingClamp = cssClamp({ minSize: minSpacing, maxSize: maxSpacing });
+
+  return [
+    fontSizeClamp,
+    {
+      lineHeight: lineHeightClamp,
+      letterSpacing: letterSpacingClamp
+    }
+  ];
+};
+
+type FontConfig = {
+  [key: string]: [
+    string,
+    {
+      lineHeight: string;
+      letterSpacing: string;
+    }
+  ];
+};
+
+const tailwindFontSizeTokens: FontConfig = {
+  ...Object.fromEntries(
+    fontSizes.static.map(({ key, size, lineHeight, letterSpacing }) => [[key], staticFontSizeBuilder({ size, lineHeight, letterSpacing })])
+  ),
+
+  ...Object.fromEntries(
+    fontSizes.responsive.map(
+      ({ key, size: { minSize, maxSize }, lineHeight: { minHeight, maxHeight }, letterSpacing: { minSpacing, maxSpacing } }) => [
+        [key],
+        responsiveFontSizeBuilder({ minSize, maxSize, minHeight, maxHeight, minSpacing, maxSpacing })
+      ]
+    )
+  )
+};
+
+const fontSizeTokens = Object.fromEntries(Object.entries(tailwindFontSizeTokens).map(([key, [size]]) => [key, size])) as Record<
+  (typeof fontSizes.static)[number]["key"] | (typeof fontSizes.responsive)[number]["key"],
+  string
+>;
+
+export { tailwindFontSizeTokens, fontSizeTokens };

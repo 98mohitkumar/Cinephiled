@@ -5,9 +5,7 @@ export const getSortedItems = ({ items, sortBy, order = "asc" }) => {
 
   switch (sortBy) {
     case "popularity":
-      return itemsToSort.sort((a, b) =>
-        order === "asc" ? a.popularity - b.popularity : b.popularity - a.popularity
-      );
+      return itemsToSort.sort((a, b) => (order === "asc" ? a.popularity - b.popularity : b.popularity - a.popularity));
 
     case "release_date":
       return itemsToSort.sort((a, b) => {
@@ -26,9 +24,7 @@ export const getSortedItems = ({ items, sortBy, order = "asc" }) => {
       });
 
     case "rating":
-      return itemsToSort.sort((a, b) =>
-        order === "asc" ? a.vote_average - b.vote_average : b.vote_average - a.vote_average
-      );
+      return itemsToSort.sort((a, b) => (order === "asc" ? a.vote_average - b.vote_average : b.vote_average - a.vote_average));
 
     default:
       return items;

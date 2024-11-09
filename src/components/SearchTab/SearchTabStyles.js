@@ -30,7 +30,7 @@ export const SearchTabSelector = styled.div`
   user-select: none;
   min-width: max-content;
 
-  @media only ${(props) => props.theme.breakpoints.md} {
+  @media only ${({ theme }) => theme.breakpoints.md} {
     font-size: 16px;
   }
 `;
@@ -46,7 +46,7 @@ export const Keyword = styled.h2`
     color: white;
   }
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     font-size: 2.5rem;
   }
 `;
@@ -69,11 +69,13 @@ export const QueryContainer = styled.div`
   display: flex;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0px 4px 5px 0px hsla(0, 0%, 0%, 0.14), 0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
+  box-shadow:
+    0px 4px 5px 0px hsla(0, 0%, 0%, 0.14),
+    0px 1px 10px 0px hsla(0, 0%, 0%, 0.12),
     0px 2px 4px -1px hsla(0, 0%, 0%, 0.2);
   outline: 1px solid rgba(255, 255, 255, 0.5);
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     margin: 1rem 0rem;
   }
 `;
@@ -89,12 +91,12 @@ export const QueryTitle = styled.span`
   font-size: 1.5rem;
   display: block;
 
-  @media only ${(props) => props.theme.breakpoints.ip} {
+  @media only ${({ theme }) => theme.breakpoints.ip} {
     font-size: 20px;
     line-height: 1.2;
   }
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     font-size: 16px;
   }
 `;
@@ -106,7 +108,7 @@ export const QueryInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     padding: 0.5rem;
   }
 `;
@@ -117,7 +119,7 @@ export const QueryReleaseDate = styled.p`
   font-weight: 500;
   margin-bottom: 0rem;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     font-size: 14px;
   }
 `;
@@ -131,7 +133,7 @@ export const QueryDescription = styled.p`
   margin-top: 10px;
   margin-bottom: 0rem;
 
-  @media only ${(props) => props.theme.breakpoints.xs} {
+  @media only ${({ theme }) => theme.breakpoints.xs} {
     font-size: 0.9rem;
     margin-top: 10px;
     padding: 0.1rem 0rem;

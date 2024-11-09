@@ -11,7 +11,7 @@ export const RatingStarsContainer = styled.div`
     height: 26px;
     cursor: pointer;
 
-    @media only ${(props) => props.theme.breakpoints.sm} {
+    @media only ${({ theme }) => theme.breakpoints.sm} {
       width: 22px;
       height: 22px;
     }

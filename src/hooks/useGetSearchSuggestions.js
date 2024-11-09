@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchSuggestions } from "src/utils/helper";
+import { fetchSuggestions } from "utils/helper";
 
 const useGetSearchSuggestions = ({ query, includePeople = false }) => {
   const [suggestions, setSuggestions] = useState([]);
@@ -15,9 +15,7 @@ const useGetSearchSuggestions = ({ query, includePeople = false }) => {
 
       fetchSuggestions({ query, controller: abortController, includePeople })
         .then(({ movieRes, tvRes, peopleRes }) => {
-          setSuggestions(
-            [...movieRes, ...tvRes, ...peopleRes].sort((a, b) => b.popularity - a.popularity)
-          );
+          setSuggestions([...movieRes, ...tvRes, ...peopleRes].sort((a, b) => b.popularity - a.popularity));
           setLoading(false);
         })
         .catch(() => {

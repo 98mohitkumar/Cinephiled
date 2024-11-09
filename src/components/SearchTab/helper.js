@@ -18,14 +18,13 @@ const Pill = ({ children, sortBy, descFirst = false }) => {
               ...router.query,
               sortBy,
               order:
-                sortBy === router.query.sortBy &&
-                router.query.order === (descFirst ? "desc" : "asc")
+                sortBy === router.query.sortBy && router.query.order === (descFirst ? "desc" : "asc")
                   ? descFirst
                     ? "asc"
                     : "desc"
                   : descFirst
-                  ? "desc"
-                  : "asc"
+                    ? "desc"
+                    : "asc"
             }
           },
           undefined,
@@ -33,10 +32,7 @@ const Pill = ({ children, sortBy, descFirst = false }) => {
         );
       }}
       className='flex items-center gap-[3.2px]'>
-      {children}{" "}
-      {sort && sort === sortBy && (
-        <Fragment>{order === "asc" ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}</Fragment>
-      )}
+      {children} {sort && sort === sortBy && <Fragment>{order === "asc" ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}</Fragment>}
     </SortPill>
   );
 };
@@ -45,13 +41,10 @@ export const SortBy = ({ sortOptions }) => {
   const router = useRouter();
 
   return (
-    <div className='flex items-center mt-4 gap-4 whitespace-nowrap'>
+    <div className='mt-4 flex items-center gap-4 whitespace-nowrap'>
       <span className='text-[clamp(16px,3vw,18px)]'>Sort by:</span>
-      <div className='flex gap-3'>
-        <SortPill
-          onClick={() => router.push(window.location.pathname, undefined, { shallow: true })}>
-          Default
-        </SortPill>
+      <div className='gap-3 flex'>
+        <SortPill onClick={() => router.push(window.location.pathname, undefined, { shallow: true })}>Default</SortPill>
         {sortOptions?.map(({ key, name, descFirst }) => (
           <Pill sortBy={key} key={key} descFirst={descFirst}>
             {name}

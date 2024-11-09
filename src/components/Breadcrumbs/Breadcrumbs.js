@@ -2,16 +2,14 @@ import Link from "next/link";
 
 const Breadcrumbs = ({ links }) => {
   return (
-    <nav className='flex mb-4' aria-label='Breadcrumb'>
-      <ol className='inline-flex items-center gap-2 flex-wrap'>
+    <nav className='mb-4 flex' aria-label='Breadcrumb'>
+      <ol className='inline-flex flex-wrap items-center gap-2'>
         {links?.map(({ href, label }, index) => (
           <li className='inline-flex items-baseline gap-2' key={index}>
             <Link href={href} passHref>
               <p
-                className={`inline-flex items-center text-sm sm:text-base font-semibold hover:text-white transition-colors ${
-                  index !== links?.length - 1
-                    ? "text-neutral-200"
-                    : "text-neutral-400 pointer-events-none"
+                className={`text-sm sm:text-base inline-flex items-center font-semibold transition-colors hover:text-white ${
+                  index !== links?.length - 1 ? "text-neutral-200" : "pointer-events-none text-neutral-400"
                 }`}>
                 {label}
               </p>
@@ -19,18 +17,12 @@ const Breadcrumbs = ({ links }) => {
 
             {index !== links?.length - 1 ? (
               <svg
-                className='w-[0.65rem] md:w-3 aspect-square text-gray-400'
+                className='text-gray-400 aspect-square w-[0.65rem] md:w-3'
                 aria-hidden='true'
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
                 viewBox='0 0 6 10'>
-                <path
-                  stroke='currentColor'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='m1 9 4-4-4-4'
-                />
+                <path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='m1 9 4-4-4-4' />
               </svg>
             ) : null}
           </li>

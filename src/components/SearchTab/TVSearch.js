@@ -1,11 +1,7 @@
-import PlaceholderText from "components/PlaceholderText";
 import { motion } from "framer-motion";
-import { blurPlaceholder, apiEndpoints } from "globals/constants";
-import useInfiniteQuery from "hooks/useInfiniteQuery";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { removeDuplicates, getReleaseDate, getCleanTitle } from "src/utils/helper";
 import { SortBy } from "./helper";
 import {
   SearchResultsContainer,
@@ -16,6 +12,10 @@ import {
   QueryReleaseDate,
   QueryDescription
 } from "./SearchTabStyles";
+import PlaceholderText from "components/PlaceholderText";
+import { blurPlaceholder, apiEndpoints } from "globals/constants";
+import useInfiniteQuery from "hooks/useInfiniteQuery";
+import { removeDuplicates, getReleaseDate, getCleanTitle } from "utils/helper";
 
 export const sortOptions = [
   {
@@ -70,37 +70,31 @@ const TVSearch = ({ searchQuery, tvRes }) => {
         <section>
           <SortBy sortOptions={sortOptions} />
 
-          {(sortBy ? getRenderList(cleanedItems) : cleanedItems)?.map(
-            ({ id, name, poster_path, first_air_date, overview }) => (
-              <motion.div whileTap={{ scale: 0.98 }} key={id}>
-                <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref>
-                  <QueryContainer>
-                    <QueryImg className='relative text-center'>
-                      <Image
-                        src={
-                          poster_path
-                            ? `https://image.tmdb.org/t/p/w185${poster_path}`
-                            : "/Images/DefaultImage.png"
-                        }
-                        alt='TV-poster'
-                        fill
-                        style={{ objectFit: "cover" }}
-                        placeholder='blur'
-                        blurDataURL={blurPlaceholder}
-                      />
-                    </QueryImg>
-                    <QueryInfoWrapper>
-                      <div>
-                        <QueryTitle>{name}</QueryTitle>
-                        <QueryReleaseDate>{getReleaseDate(first_air_date)}</QueryReleaseDate>
-                      </div>
-                      <QueryDescription>{overview}</QueryDescription>
-                    </QueryInfoWrapper>
-                  </QueryContainer>
-                </Link>
-              </motion.div>
-            )
-          )}
+          {(sortBy ? getRenderList(cleanedItems) : cleanedItems)?.map(({ id, name, poster_path, first_air_date, overview }) => (
+            <motion.div whileTap={{ scale: 0.98 }} key={id}>
+              <Link href={`/tv/${id}-${getCleanTitle(name)}`} passHref>
+                <QueryContainer>
+                  <QueryImg className='relative text-center'>
+                    <Image
+                      src={poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"}
+                      alt='TV-poster'
+                      fill
+                      style={{ objectFit: "cover" }}
+                      placeholder='blur'
+                      blurDataURL={blurPlaceholder}
+                    />
+                  </QueryImg>
+                  <QueryInfoWrapper>
+                    <div>
+                      <QueryTitle>{name}</QueryTitle>
+                      <QueryReleaseDate>{getReleaseDate(first_air_date)}</QueryReleaseDate>
+                    </div>
+                    <QueryDescription>{overview}</QueryDescription>
+                  </QueryInfoWrapper>
+                </QueryContainer>
+              </Link>
+            </motion.div>
+          ))}
         </section>
       ) : (
         <PlaceholderText height='large'>No TV show results found for this query.</PlaceholderText>

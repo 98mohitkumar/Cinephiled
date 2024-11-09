@@ -1,7 +1,7 @@
-import { apiEndpoints } from "globals/constants";
 import { createContext, useContext, useEffect, useState } from "react";
-import { fetchOptions } from "src/utils/helper";
 import { useUserContext } from "./UserContext";
+import { apiEndpoints } from "globals/constants";
+import { fetchOptions } from "utils/helper";
 
 const ListsContext = createContext({
   lists: [],
@@ -58,11 +58,7 @@ const ListsContextProvider = ({ children }) => {
     };
   }, [userInfo?.accessToken, userInfo?.accountId]);
 
-  return (
-    <ListsContext.Provider value={{ lists, updateList: setLists }}>
-      {children}
-    </ListsContext.Provider>
-  );
+  return <ListsContext.Provider value={{ lists, updateList: setLists }}>{children}</ListsContext.Provider>;
 };
 
 export default ListsContextProvider;

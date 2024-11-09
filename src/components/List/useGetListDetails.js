@@ -1,7 +1,7 @@
-import { apiEndpoints } from "globals/constants";
 import { useEffect, useState } from "react";
-import { fetchOptions } from "src/utils/helper";
+import { apiEndpoints } from "globals/constants";
 import { useUserContext } from "Store/UserContext";
+import { fetchOptions } from "utils/helper";
 
 const useGetListDetails = ({ id, order }) => {
   const { userInfo } = useUserContext();
@@ -16,9 +16,7 @@ const useGetListDetails = ({ id, order }) => {
 
     const fetchListDetails = async () => {
       const res = await fetch(
-        order
-          ? `${apiEndpoints.lists.getListDetails({ id })}&sort_by=original_order.desc`
-          : apiEndpoints.lists.getListDetails({ id }),
+        order ? `${apiEndpoints.lists.getListDetails({ id })}&sort_by=original_order.desc` : apiEndpoints.lists.getListDetails({ id }),
         fetchOptions({
           token: userInfo.accessToken,
           signal: abortController.signal

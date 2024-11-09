@@ -1,10 +1,10 @@
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import PlaceholderText from "components/PlaceholderText";
 import { Fragment } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
-import { getReleaseDate } from "src/utils/helper";
 import { Review, ReviewAuthorImg, ReviewAuthorWrap, ReviewsWrap } from "./ReviewsStyles";
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import PlaceholderText from "components/PlaceholderText";
+import { getReleaseDate } from "utils/helper";
 
 const Reviews = ({ reviews }) => {
   return (
@@ -16,9 +16,7 @@ const Reviews = ({ reviews }) => {
               <ReviewAuthorImg id={item.id} />
               <div>
                 <Span className='font-bold'>{item.author}</Span>
-                <Span className='text-sm opacity-80 block font-normal'>
-                  {getReleaseDate(item.updated_at)}
-                </Span>
+                <Span className='text-sm block font-normal opacity-80'>{getReleaseDate(item.updated_at)}</Span>
               </div>
             </ReviewAuthorWrap>
 

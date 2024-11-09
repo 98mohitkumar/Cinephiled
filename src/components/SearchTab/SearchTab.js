@@ -1,17 +1,17 @@
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import { ActiveTabIndicator } from "components/Tabs/TabsStyles";
 import { motion, AnimatePresence } from "framer-motion";
-import useTabs from "hooks/useTabs";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef } from "react";
-import { framerTabVariants } from "src/utils/helper";
-import { ModulesWrapper } from "styles/GlobalComponents";
 import CollectionsSearch from "./CollectionsSearch";
 import KeywordSearch from "./KeywordSearch";
 import MoviesSearch from "./MoviesSearch";
 import PeopleSearch from "./PeopleSearch";
 import { SearchTabSelector, SearchTabWrapper } from "./SearchTabStyles";
 import TVSearch from "./TVSearch";
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import { ActiveTabIndicator } from "components/Tabs/TabsStyles";
+import useTabs from "hooks/useTabs";
+import { ModulesWrapper } from "styles/GlobalComponents";
+import { framerTabVariants } from "utils/helper";
 
 const SearchTab = ({ movies, tv, search, keywords, people, collections }) => {
   const router = useRouter();
@@ -69,7 +69,7 @@ const SearchTab = ({ movies, tv, search, keywords, people, collections }) => {
               $count={tabList.length}
               $active={key === activeTab}
               onClick={() => tabSelectionHandler(key)}
-              className={key === activeTab && "relative active"}>
+              className={key === activeTab && "active relative"}>
               {name}
               {key === activeTab && <ActiveTabIndicator />}
             </SearchTabSelector>
@@ -80,57 +80,37 @@ const SearchTab = ({ movies, tv, search, keywords, people, collections }) => {
       <ModulesWrapper>
         <AnimatePresence mode='wait'>
           {activeTab === "movies" && (
-            <motion.div
-              key='movies'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              transition={{ duration: 0.325 }}>
+            <motion.div key='movies' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
               {movies?.count > 0 ? (
-                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center text-pretty'>
+                <Span className='block text-pretty text-center text-[calc(1.325rem_+_.9vw)] font-medium lg:text-[2rem]'>
                   Movies matching : {search}
                 </Span>
               ) : null}
-              <p className='text-center mt-2 mb-0'>
-                <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year.
-                Example: <b>&#39;Avatar y:2009&#39;.</b>
+              <p className='mb-0 mt-2 text-center'>
+                <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year. Example: <b>&#39;Avatar y:2009&#39;.</b>
               </p>
               <MoviesSearch searchQuery={search} movieRes={movies} />
             </motion.div>
           )}
 
           {activeTab === "tv" && (
-            <motion.div
-              key='tv'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              transition={{ duration: 0.325 }}>
+            <motion.div key='tv' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
               {tv?.count > 0 && (
-                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center text-pretty'>
+                <Span className='block text-pretty text-center text-[calc(1.325rem_+_.9vw)] font-medium lg:text-[2rem]'>
                   TV shows matching : {search}
                 </Span>
               )}
-              <p className='text-center mt-2 mb-0'>
-                <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year.
-                Example: <b>&#39;Sherlock y:2010&#39;</b>.
+              <p className='mb-0 mt-2 text-center'>
+                <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year. Example: <b>&#39;Sherlock y:2010&#39;</b>.
               </p>
               <TVSearch searchQuery={search} tvRes={tv} />
             </motion.div>
           )}
 
           {activeTab === "people" && (
-            <motion.div
-              key='people'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              transition={{ duration: 0.325 }}>
+            <motion.div key='people' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
               {people?.count > 0 && (
-                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center text-pretty'>
+                <Span className='block text-pretty text-center text-[calc(1.325rem_+_.9vw)] font-medium lg:text-[2rem]'>
                   People matching : {search}
                 </Span>
               )}
@@ -139,15 +119,9 @@ const SearchTab = ({ movies, tv, search, keywords, people, collections }) => {
           )}
 
           {activeTab === "keywords" && (
-            <motion.div
-              key='keywords'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              transition={{ duration: 0.325 }}>
+            <motion.div key='keywords' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
               {keywords?.count > 0 && (
-                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center text-pretty'>
+                <Span className='block text-pretty text-center text-[calc(1.325rem_+_.9vw)] font-medium lg:text-[2rem]'>
                   Keywords matching : {search}
                 </Span>
               )}
@@ -164,7 +138,7 @@ const SearchTab = ({ movies, tv, search, keywords, people, collections }) => {
               exit='hidden'
               transition={{ duration: 0.325 }}>
               {collections?.count > 0 && (
-                <Span className='block text-[calc(1.325rem_+_.9vw)] lg:text-[2rem] font-medium text-center text-pretty'>
+                <Span className='block text-pretty text-center text-[calc(1.325rem_+_.9vw)] font-medium lg:text-[2rem]'>
                   Collections matching : {search}
                 </Span>
               )}

@@ -1,8 +1,8 @@
+import { Fragment } from "react";
 import CastPage from "components/Cast/CastPage";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
-import { Fragment } from "react";
-import { fetchOptions, getReleaseYear } from "src/utils/helper";
+import { fetchOptions, getReleaseYear } from "utils/helper";
 
 const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast }) => {
   return (

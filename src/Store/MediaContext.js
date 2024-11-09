@@ -1,6 +1,6 @@
-import { getFavorites, getRated, getRecommendations, getWatchlist } from "api/user";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useUserContext } from "./UserContext";
+import { getFavorites, getRated, getRecommendations, getWatchlist } from "apiEndpoints/user";
 
 const defaultState = {
   favoriteMovies: [],
@@ -91,9 +91,7 @@ const MediaContextProvider = ({ children }) => {
     if (userInfo?.accountId) {
       setState((prev) => ({ ...prev, isLoading: true }));
 
-      const fetchPromises = allEndpoints.map((media) =>
-        fetchData({ ...media, signal: abortController.signal })
-      );
+      const fetchPromises = allEndpoints.map((media) => fetchData({ ...media, signal: abortController.signal }));
 
       Promise.all(fetchPromises)
         .then(() => {
@@ -125,11 +123,7 @@ const MediaContextProvider = ({ children }) => {
     }
   }, []);
 
-  return (
-    <MediaContext.Provider value={{ ...state, renderKey, validateMedia }}>
-      {children}
-    </MediaContext.Provider>
-  );
+  return <MediaContext.Provider value={{ ...state, renderKey, validateMedia }}>{children}</MediaContext.Provider>;
 };
 
 export default MediaContextProvider;

@@ -1,6 +1,6 @@
-import { apiEndpoints } from "globals/constants";
 import { getSession } from "next-auth/react";
-import { fetchOptions } from "src/utils/helper";
+import { apiEndpoints } from "globals/constants";
+import { fetchOptions } from "utils/helper";
 
 // GET requsts
 

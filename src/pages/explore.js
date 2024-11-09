@@ -1,13 +1,13 @@
-import { getCountryCode } from "api/user";
+import { Fragment } from "react";
+import { getCountryCode } from "apiEndpoints/user";
 import DominantColor from "components/DominantColor/DominantColor";
 import Genres from "components/Explore/Genres";
 import NowPlayingMovies from "components/Explore/NowPlayingMovies";
 import StreamingProvides from "components/Explore/Providers";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
-import { Fragment } from "react";
-import { fetchOptions } from "src/utils/helper";
 import { LayoutContainer } from "styles/GlobalComponents";
+import { fetchOptions } from "utils/helper";
 
 const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
   return (
@@ -23,11 +23,11 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
           <DominantColor flip tint />
 
           {/* genres for movies and tv shows */}
-          <LayoutContainer className='mb-auto relative z-20 !pr-0'>
+          <LayoutContainer className='relative z-20 mb-auto !pr-0'>
             <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
           </LayoutContainer>
 
-          <LayoutContainer className='mt-8 relative z-20'>
+          <LayoutContainer className='relative z-20 mt-8'>
             <StreamingProvides />
           </LayoutContainer>
         </section>
@@ -57,13 +57,12 @@ export const getServerSideProps = async ({ req }) => {
     if (error) throw new Error("Failed to fetch genres");
 
     const [movieGenresRes, tvGenresRes, nowPlayingRes, nowPlayingNextPage] = explorePageData;
-    const [movieGenresList, tvGenresList, nowPlayingList, nowPlayingNextPageList] =
-      await Promise.all([
-        movieGenresRes.json(),
-        tvGenresRes.json(),
-        nowPlayingRes.json(),
-        nowPlayingNextPage.json()
-      ]);
+    const [movieGenresList, tvGenresList, nowPlayingList, nowPlayingNextPageList] = await Promise.all([
+      movieGenresRes.json(),
+      tvGenresRes.json(),
+      nowPlayingRes.json(),
+      nowPlayingNextPage.json()
+    ]);
 
     return {
       props: {

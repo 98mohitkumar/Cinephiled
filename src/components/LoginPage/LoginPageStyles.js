@@ -11,7 +11,7 @@ export const LoginContainer = styled.div`
   background-color: rgb(18 18 18 /0.95);
   position: relative;
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     padding: 0rem 1.25rem;
   }
 
@@ -44,15 +44,17 @@ export const LoginCard = styled.div`
   border-radius: 12px;
   border: 1px solid rgba(80, 80, 80, 0.45);
   background: rgba(18, 18, 18);
-  box-shadow: 0px 12px 17px 2px hsla(0, 0%, 0%, 0.14), 0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
+  box-shadow:
+    0px 12px 17px 2px hsla(0, 0%, 0%, 0.14),
+    0px 5px 22px 4px hsla(0, 0%, 0%, 0.12),
     0px 7px 8px -4px hsla(0, 0%, 0%, 0.2);
 
-  @media only ${(props) => props.theme.breakpoints.sm} {
+  @media only ${({ theme }) => theme.breakpoints.sm} {
     padding: 1.25rem;
   }
 
   .signup {
-    color: ${(props) => props.theme.colors.accent2};
+    color: ${({ theme }) => theme.colors.accent2};
 
     &:hover {
       text-decoration: underline;
@@ -81,8 +83,12 @@ export const LoginCard = styled.div`
       box-shadow: 0 0 0 30px #121212 inset !important;
       -webkit-box-shadow: 0 0 0 30px #121212 inset !important;
       -webkit-text-fill-color: white !important;
-      transition: color ease-out, background-color ease-out;
-      -webkit-transition: color ease-out, background-color ease-out;
+      transition:
+        color ease-out,
+        background-color ease-out;
+      -webkit-transition:
+        color ease-out,
+        background-color ease-out;
       transition-delay: 9999s;
       -webkit-transition-delay: 9999s;
     }

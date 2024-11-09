@@ -1,13 +1,13 @@
-import { useLogin } from "api/auth";
-import MetaWrapper from "components/MetaWrapper";
-import posters from "images/posters.webp";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
-import logo from "public/logo512.png";
 import { Fragment, useEffect } from "react";
-import { AboutBackground, Button } from "styles/GlobalComponents";
 import { Integration, LoginCard, LoginContainer, LoginText } from "./LoginPageStyles";
+import { useLogin } from "apiEndpoints/auth";
+import MetaWrapper from "components/MetaWrapper";
+import posters from "images/posters.webp";
+import logo from "public/logo512.png";
+import { AboutBackground, Button } from "styles/GlobalComponents";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -41,21 +41,11 @@ const LoginPage = () => {
 
   return (
     <Fragment>
-      <MetaWrapper
-        title='Login - Cinephiled'
-        description='Cinephiled login page'
-        url='https://cinephiled.vercel.app/login'
-      />
-      <LoginContainer className='mb-auto login-container'>
+      <MetaWrapper title='Login - Cinephiled' description='Cinephiled login page' url='https://cinephiled.vercel.app/login' />
+      <LoginContainer className='login-container mb-auto'>
         <div className='bg-wrapper'>
           <AboutBackground className='loginPage'>
-            <Image
-              src={posters}
-              fill
-              alt='about-login-background'
-              style={{ objectFit: "cover" }}
-              priority
-            />
+            <Image src={posters} fill alt='about-login-background' style={{ objectFit: "cover" }} priority />
           </AboutBackground>
         </div>
 
@@ -64,7 +54,7 @@ const LoginPage = () => {
           <Integration>
             <Image src={logo} width={85} height={50} alt='cinephiled-logo' priority />
 
-            <p className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] m-0'>+</p>
+            <p className='m-0 text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem]'>+</p>
 
             <Image
               src='https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg'
@@ -77,9 +67,9 @@ const LoginPage = () => {
 
           <div className='flex w-full justify-center'>
             <div>
-              <LoginText className='block mb-4'>
-                To unlock powerful features such as rating, favoriting, adding to watchlist, and
-                creating custom lists, please log in with your TMDB account.
+              <LoginText className='mb-4 block'>
+                To unlock powerful features such as rating, favoriting, adding to watchlist, and creating custom lists, please log in with your TMDB
+                account.
               </LoginText>
 
               <div className='flex flex-col items-center'>
@@ -87,7 +77,7 @@ const LoginPage = () => {
                   {isWaiting ? "Authenticating..." : "Login with TMDB"}
                 </Button>
 
-                {error && <p className='text-red-500 m-0 pt-3'>{errorMessage}</p>}
+                {error && <p className='pt-3 m-0 text-red-500'>{errorMessage}</p>}
               </div>
             </div>
           </div>

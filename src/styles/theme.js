@@ -1,6 +1,6 @@
-import { ThemeProvider } from 'styled-components';
-import theme from 'theme/default';
-import GlobalStyles from './globals';
+import { ThemeProvider } from "styled-components";
+import GlobalStyles from "./globals";
+import theme from "theme/default";
 
 const Theme = ({ children }) => {
   return (

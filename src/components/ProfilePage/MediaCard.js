@@ -1,12 +1,12 @@
-import { CardImg, Cards } from "components/MediaTemplate/TemplateStyles";
-import RatingTag from "components/RatingTag/RatingTag";
 import { motion } from "framer-motion";
-import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillStar } from "react-icons/ai";
-import { getCleanTitle } from "src/utils/helper";
 import { RatingOverlay } from "./ProfilePageStyles";
+import { CardImg, Cards } from "components/MediaTemplate/TemplateStyles";
+import RatingTag from "components/RatingTag/RatingTag";
+import { blurPlaceholder } from "globals/constants";
+import { getCleanTitle } from "utils/helper";
 
 const MediaCard = ({ data, link, children, rating }) => {
   return (

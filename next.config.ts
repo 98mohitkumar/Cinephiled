@@ -1,3 +1,6 @@
+import { NextConfig } from "next";
+
+/* eslint-disable @typescript-eslint/no-var-requires */
 const withPWA = require("next-pwa")({
   dest: "public",
   register: true,
@@ -19,7 +22,7 @@ const cspHeader = `
     upgrade-insecure-requests;
   `;
 
-const nextConfig = {
+const nextConfig: NextConfig = {
   async headers() {
     return [
       {

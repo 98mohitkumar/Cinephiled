@@ -1,7 +1,7 @@
-import Loading from "components/Loading";
-import { sortOptions } from "globals/constants";
 import { Fragment } from "react";
 import useGetListDetails from "./useGetListDetails";
+import Loading from "components/Loading";
+import { sortOptions } from "globals/constants";
 
 const CreateListForm = ({ submitHandler, id, children }) => {
   const { error, listDetails: storedValues, loading } = useGetListDetails({ id });
@@ -11,9 +11,7 @@ const CreateListForm = ({ submitHandler, id, children }) => {
   return (
     <Fragment>
       {error ? (
-        <div className='text-lg font-medium text-red-600'>
-          Something went wrong. Please try again later.
-        </div>
+        <div className='text-lg font-medium text-red-600'>Something went wrong. Please try again later.</div>
       ) : (
         <Fragment>
           {loading ? (
@@ -21,9 +19,7 @@ const CreateListForm = ({ submitHandler, id, children }) => {
           ) : (
             <form onSubmit={submitHandler}>
               <div className='mb-5'>
-                <label
-                  htmlFor='listName'
-                  className='block mb-2 text-base font-medium text-neutral-200'>
+                <label htmlFor='listName' className='text-base mb-2 block font-medium text-neutral-200'>
                   Name
                 </label>
                 <input
@@ -33,15 +29,13 @@ const CreateListForm = ({ submitHandler, id, children }) => {
                   required
                   defaultValue={storedValues?.name}
                   placeholder="e.g. 'My Favorite Movies'"
-                  className='border text-base rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-500
-         placeholder-neutral-400 text-white focus:border'
+                  className='text-base p-2.5 block w-full rounded-lg border border-neutral-500 bg-neutral-700
+         text-white placeholder-neutral-400 focus:border'
                 />
               </div>
 
               <div className='mb-5'>
-                <label
-                  htmlFor='listDescription'
-                  className='block mb-2 text-base font-medium text-neutral-200'>
+                <label htmlFor='listDescription' className='text-base mb-2 block font-medium text-neutral-200'>
                   Description
                 </label>
                 <textarea
@@ -51,40 +45,36 @@ const CreateListForm = ({ submitHandler, id, children }) => {
                   id='listDescription'
                   defaultValue={storedValues?.description}
                   placeholder="e.g. 'My favorite movies of all time'"
-                  className='border text-base rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-500
-         placeholder-neutral-400 text-white'
+                  className='text-base p-2.5 block w-full rounded-lg border border-neutral-500 bg-neutral-700
+         text-white placeholder-neutral-400'
                 />
               </div>
 
               <div className='mb-5'>
-                <label
-                  htmlFor='publicList'
-                  className='block mb-2 text-base font-medium text-neutral-200'>
+                <label htmlFor='publicList' className='text-base mb-2 block font-medium text-neutral-200'>
                   Public List?
                 </label>
                 <select
                   id='publicList'
                   name='public'
                   defaultValue={storedValues?.public}
-                  className='border text-base rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-500
-         placeholder-neutral-400 text-white'>
+                  className='text-base p-2.5 block w-full rounded-lg border border-neutral-500 bg-neutral-700
+         text-white placeholder-neutral-400'>
                   <option value={true}>Yes</option>
                   <option value={false}>No</option>
                 </select>
               </div>
 
               <div className='mb-5'>
-                <label
-                  htmlFor='sortBy'
-                  className='block mb-2 text-base font-medium text-neutral-200'>
+                <label htmlFor='sortBy' className='text-base mb-2 block font-medium text-neutral-200'>
                   Sort By
                 </label>
                 <select
                   id='sortBy'
                   name='sort_by'
                   defaultValue={storedValues?.sort_by}
-                  className='border text-base rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-500
-         placeholder-neutral-400 text-white'>
+                  className='text-base p-2.5 block w-full rounded-lg border border-neutral-500 bg-neutral-700
+         text-white placeholder-neutral-400'>
                   {listOptions.map(({ name, value }) => (
                     <option key={value} value={value}>
                       {name}

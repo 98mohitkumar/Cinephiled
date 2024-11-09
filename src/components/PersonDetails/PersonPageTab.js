@@ -1,30 +1,25 @@
+import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/router";
+import { Fragment } from "react";
 import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import TVTemplate from "components/MediaTemplate/TVTemplate";
 import PlaceholderText from "components/PlaceholderText";
 import Select from "components/Select/Select";
-import Tabs from "components/Tabs/Tabs";
-import { AnimatePresence, motion } from "framer-motion";
+import { Tabs } from "components/Tabs/Tabs";
 import { sortOptions } from "globals/constants";
 import useTabs from "hooks/useTabs";
-import { useRouter } from "next/router";
-import { Fragment } from "react";
 import { getActiveSortKey, getSortedItems } from "src/utils/getSortedItems";
-import { framerTabVariants } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents";
+import { framerTabVariants } from "utils/helper";
 
 const groupCredits = (credits) => {
   const groupedCredits = [];
   const clonedCredits = structuredClone(credits);
 
   clonedCredits.forEach((credit) => {
-    const existingCreditIndex = groupedCredits.findIndex(
-      (groupedCredit) => groupedCredit.id === credit.id
-    );
+    const existingCreditIndex = groupedCredits.findIndex((groupedCredit) => groupedCredit.id === credit.id);
     if (existingCreditIndex >= 0) {
-      groupedCredits[existingCreditIndex].job = [
-        groupedCredits[existingCreditIndex].job,
-        credit.job
-      ].flat();
+      groupedCredits[existingCreditIndex].job = [groupedCredits[existingCreditIndex].job, credit.job].flat();
     } else {
       groupedCredits.push({ ...credit, job: [credit.job] });
     }
@@ -38,15 +33,9 @@ const tabList = [
   { key: "tv", name: `TV Shows` }
 ];
 
-const SortSelections = ({
-  handleDepartmentSelect,
-  handleSortSelect,
-  departmentList,
-  currentSelectedDepartment,
-  sortBy
-}) => {
+const SortSelections = ({ handleDepartmentSelect, handleSortSelect, departmentList, currentSelectedDepartment, sortBy }) => {
   return (
-    <div className='mb-8 flex gap-4 justify-end flex-wrap'>
+    <div className='mb-8 flex flex-wrap justify-end gap-4'>
       <Select
         options={[
           { key: "all", value: "All" },
@@ -85,16 +74,12 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
   const { department: currentSelectedDepartment, sortBy, id } = query;
 
   const departmentList = Array.from(
-    activeTab === "movies"
-      ? new Set(movieCredits.map((item) => item.department))
-      : new Set(tvCredits.map((item) => item.department))
+    activeTab === "movies" ? new Set(movieCredits.map((item) => item.department)) : new Set(tvCredits.map((item) => item.department))
   );
 
   const creditsToRender = groupCredits(
     (activeTab === "movies" ? movieCredits : tvCredits).filter((item) =>
-      currentSelectedDepartment
-        ? item.department.toLowerCase() === currentSelectedDepartment
-        : item.department
+      currentSelectedDepartment ? item.department.toLowerCase() === currentSelectedDepartment : item.department
     )
   );
 
@@ -162,13 +147,7 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
       <ModulesWrapper>
         <AnimatePresence initial={false} mode='wait'>
           {activeTab === "movies" && (
-            <motion.div
-              key='movies'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              transition={{ duration: 0.325 }}>
+            <motion.div key='movies' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
               <SortSelections
                 handleDepartmentSelect={handleSelect}
                 handleSortSelect={handleSortSelect}
@@ -186,13 +165,7 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
           )}
 
           {activeTab === "tv" && (
-            <motion.div
-              key='tv'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              transition={{ duration: 0.325 }}>
+            <motion.div key='tv' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
               <SortSelections
                 handleDepartmentSelect={handleSelect}
                 handleSortSelect={handleSortSelect}
@@ -201,11 +174,7 @@ const PersonPageTab = ({ movieCredits, tvCredits }) => {
                 sortBy={sortBy}
               />
 
-              {sortedItems?.length > 0 ? (
-                <TVTemplate TV={sortedItems} creditsPage />
-              ) : (
-                <PlaceholderText>No TV Show credits yet</PlaceholderText>
-              )}
+              {sortedItems?.length > 0 ? <TVTemplate TV={sortedItems} creditsPage /> : <PlaceholderText>No TV Show credits yet</PlaceholderText>}
             </motion.div>
           )}
         </AnimatePresence>

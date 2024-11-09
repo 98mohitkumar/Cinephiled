@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import DominantColor from "components/DominantColor/DominantColor";
 import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import MetaWrapper from "components/MetaWrapper";
@@ -7,10 +8,9 @@ import Select from "components/Select/Select";
 import { apiEndpoints, sortOptions } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useSort from "hooks/useSort";
-import { Fragment } from "react";
 import { getActiveSortKey } from "src/utils/getSortedItems";
-import { fetchOptions, getCleanTitle, removeDuplicates } from "src/utils/helper";
 import { ModulesWrapper } from "styles/GlobalComponents/index";
+import { fetchOptions, getCleanTitle, removeDuplicates } from "utils/helper";
 
 const Movies = ({ renderList, genreName, genreId }) => {
   const { sortBy, handleSortSelection } = useSort({ shallow: false });
@@ -44,15 +44,13 @@ const Movies = ({ renderList, genreName, genreId }) => {
         <ModulesWrapper className='relative z-10'>
           {renderList?.length > 0 ? (
             <Fragment>
-              <div className='text-center py-6'>
+              <div className='py-6 text-center'>
                 <div className='my-5 lg:my-10'>
-                  <Span className='text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] leading-12 block font-semibold'>
-                    {genreName} Movies
-                  </Span>
+                  <Span className='leading-12 block text-[calc(1.375rem_+_1.5vw)] font-semibold xl:text-[2.5rem]'>{genreName} Movies</Span>
                 </div>
               </div>
 
-              <div className='flex justify-end mb-8'>
+              <div className='mb-8 flex justify-end'>
                 <Select
                   options={movieSortOptions}
                   activeKey={sortBy || "default"}

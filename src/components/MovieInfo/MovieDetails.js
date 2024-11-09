@@ -1,24 +1,8 @@
-import CollectionCard from "components/CollectionCard/CollectionCard";
-import DominantColor from "components/DominantColor/DominantColor";
-import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
-import TechnicalDetails from "components/TechnicalDetails/TechnicalDetails";
-import UserActions from "components/UserActions/UserActions";
 import { motion } from "framer-motion";
-import { blurPlaceholder } from "globals/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { FaYoutube } from "react-icons/fa";
-import { getCleanTitle, getRating, getRuntime } from "src/utils/helper";
-import {
-  Button,
-  DetailsHeroWrap,
-  HeroBg,
-  HeroBgContainer,
-  HeroDetailsContainer,
-  HeroImg,
-  HeroImgWrapper
-} from "styles/GlobalComponents";
 import {
   Divider,
   Rounded,
@@ -39,6 +23,14 @@ import {
   Gradient,
   MovieEaster
 } from "./MovieDetailsStyles";
+import CollectionCard from "components/CollectionCard/CollectionCard";
+import DominantColor from "components/DominantColor/DominantColor";
+import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
+import TechnicalDetails from "components/TechnicalDetails/TechnicalDetails";
+import UserActions from "components/UserActions/UserActions";
+import { blurPlaceholder } from "globals/constants";
+import { Button, DetailsHeroWrap, HeroBg, HeroBgContainer, HeroDetailsContainer, HeroImg, HeroImgWrapper } from "styles/GlobalComponents";
+import { getCleanTitle, getRating, getRuntime } from "utils/helper";
 
 const MovieDetails = ({ movieDetails, easter }) => {
   const {
@@ -70,13 +62,9 @@ const MovieDetails = ({ movieDetails, easter }) => {
     <Fragment>
       <HeroDetailsContainer className='relative mb-auto'>
         <HeroBgContainer className='absolute'>
-          <HeroBg className='absolute text-center z-10'>
+          <HeroBg className='absolute z-10 text-center'>
             <Image
-              src={
-                backdropPath
-                  ? `https://image.tmdb.org/t/p/w1280${backdropPath}`
-                  : "/Images/Hex.webp"
-              }
+              src={backdropPath ? `https://image.tmdb.org/t/p/w1280${backdropPath}` : "/Images/Hex.webp"}
               alt='movie-backdrop'
               fill
               style={{ objectFit: "cover" }}
@@ -94,11 +82,7 @@ const MovieDetails = ({ movieDetails, easter }) => {
           <HeroImgWrapper>
             <HeroImg className='relative text-center'>
               <Image
-                src={
-                  moviePoster
-                    ? `https://image.tmdb.org/t/p/w500${moviePoster}`
-                    : "/Images/DefaultImage.png"
-                }
+                src={moviePoster ? `https://image.tmdb.org/t/p/w500${moviePoster}` : "/Images/DefaultImage.png"}
                 alt='movie-poster'
                 fill
                 style={{ objectFit: "cover" }}
@@ -116,7 +100,7 @@ const MovieDetails = ({ movieDetails, easter }) => {
                   rel='noreferrer'
                   aria-label='watch trailer'
                   className='mb-3 block'>
-                  <Button className='w-full gap-3' as={motion.button} whileTap={{ scale: 0.95 }}>
+                  <Button className='gap-3 w-full' as={motion.button} whileTap={{ scale: 0.95 }}>
                     <FaYoutube size='1.5rem' />
                     <Span className='font-semibold'>Watch Trailer</Span>
                   </Button>
@@ -163,12 +147,7 @@ const MovieDetails = ({ movieDetails, easter }) => {
                 <GenreWrap className='font-bold'>
                   <Divider />
                   {genres.map((item, i) => (
-                    <Link
-                      key={item.id}
-                      href={`/genre/${
-                        item.id.toString() + "-" + item.name.replaceAll(" ", "-")
-                      }/movies`}
-                      passHref>
+                    <Link key={item.id} href={`/genre/${item.id.toString() + "-" + item.name.replaceAll(" ", "-")}/movies`} passHref>
                       <Rounded className={genres.length == i + 1 ? "sep" : ""}>{item.name}</Rounded>
                     </Link>
                   ))}
@@ -187,9 +166,7 @@ const MovieDetails = ({ movieDetails, easter }) => {
             {rating ? (
               <RatingWrapper>
                 <Fragment>
-                  <Span className='text-[calc(1.525rem_+_3.3vw)] xl:text-6xl font-bold'>
-                    {getRating(rating)}
-                  </Span>
+                  <Span className='xl:text-6xl text-[calc(1.525rem_+_3.3vw)] font-bold'>{getRating(rating)}</Span>
                   <span> / 10</span>
                 </Fragment>
               </RatingWrapper>
@@ -200,7 +177,7 @@ const MovieDetails = ({ movieDetails, easter }) => {
                   <Credits key={item.credit_id}>
                     <Span className='block font-normal'>{item.job}</Span>
                     <Link href={`/person/${item.id}-${getCleanTitle(item.name)}`}>
-                      <Span className='block font-bold credit'>{item.name}</Span>
+                      <Span className='credit block font-bold'>{item.name}</Span>
                     </Link>
                   </Credits>
                 ))}

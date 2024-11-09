@@ -1,33 +1,11 @@
-import BackdropBanner from "components/Hero/BackdropBanner";
+import { Fragment } from "react";
 import Hero from "components/Hero/Hero";
-import IndexTab from "components/IndexTab/IndexTab";
+import HomePageTabs from "components/HomePageTabs/HomePageTabs";
 import MetaWrapper from "components/MetaWrapper";
 import { apiEndpoints } from "globals/constants";
-import { Fragment } from "react";
-import { fetchOptions, removeDuplicates } from "src/utils/helper";
-import { Error404 } from "styles/GlobalComponents";
+import { fetchOptions, removeDuplicates } from "utils/helper";
 
-export default function Home({
-  popularMovies,
-  popularTv,
-  trendingMovies,
-  trendingTv,
-  error,
-  posters
-}) {
-  if (error) {
-    return (
-      <div className='grid place-items-center min-h-[75vh]'>
-        <Error404 className='index-page'>
-          404
-          <p className='text-2xl text-center'>
-            Please check your internet connection or try again later.
-          </p>
-        </Error404>
-      </div>
-    );
-  }
-
+export default function Home({ popularMovies, popularTv, trendingMovies, trendingTv, posters }) {
   return (
     <Fragment>
       <MetaWrapper
@@ -37,14 +15,18 @@ export default function Home({
       />
 
       {/* hero section */}
-      <Hero banner={<BackdropBanner posters={posters} />} />
+      <Hero posters={posters} />
 
       {/* index tabs */}
-      <IndexTab
-        moviesData={popularMovies}
-        TVData={popularTv}
-        trendingMovies={trendingMovies}
-        trendingTv={trendingTv}
+      <HomePageTabs
+        moviesData={{
+          popular: popularMovies,
+          trending: trendingMovies
+        }}
+        tvData={{
+          popular: popularTv,
+          trending: trendingTv
+        }}
       />
     </Fragment>
   );
@@ -54,9 +36,9 @@ export async function getStaticProps() {
   try {
     const indexPageMedia = await Promise.all([
       fetch(apiEndpoints.movie.popularMovies, fetchOptions()),
-      fetch(apiEndpoints.tv.popularTV, fetchOptions()),
+      fetch(apiEndpoints.tv.popularTv, fetchOptions()),
       fetch(apiEndpoints.movie.trendingMovies, fetchOptions()),
-      fetch(apiEndpoints.tv.trendingTV, fetchOptions())
+      fetch(apiEndpoints.tv.trendingTv, fetchOptions())
     ]);
 
     const error = indexPageMedia.some((res) => !res.ok);
@@ -73,10 +55,12 @@ export async function getStaticProps() {
     ]);
 
     const { cleanedItems: posters } = removeDuplicates(
-      [...popularMovies.results, ...trendingMovies.results, ...trendingTv.results].map((item) => ({
-        src: item.poster_path,
-        id: item.id
-      }))
+      [...popularMovies.results, ...trendingMovies.results, ...trendingTv.results]
+        .filter((item) => item.poster_path)
+        .map((item) => ({
+          src: item.poster_path,
+          id: item.id
+        }))
     );
 
     const extraSet = [...posters].splice(0, 20).map((item) => ({
@@ -97,7 +81,7 @@ export async function getStaticProps() {
     };
   } catch {
     return {
-      props: { error: true }
+      notFound: true
     };
   }
 }
