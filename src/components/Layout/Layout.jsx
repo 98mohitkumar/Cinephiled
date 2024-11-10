@@ -29,7 +29,7 @@ const Layout = ({ children }) => {
     <Wrapper key={key} className={`${manrope.variable} ${montserrat.variable} main-wrapper`}>
       <FlexBox className='min-h-screen flex-col'>
         <Navigation />
-        <div className='content-wrapper grow'>{children}</div>
+        <div className='content-wrapper'>{children}</div>
         {pathsWithFooter.includes(router.asPath) ? <Footer /> : null}
       </FlexBox>
     </Wrapper>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { spacingTokens } from "tokens/spacings";
+import { cssClamp } from "utils/mixins";
 
 export const Button = styled.button`
   display: flex;
@@ -56,6 +57,7 @@ export const Button = styled.button`
   }
 `;
 
+// redundant
 export const AboutBackground = styled.div`
   position: absolute;
   inset: 0;
@@ -85,23 +87,6 @@ export const AboutBackground = styled.div`
     to {
       transform: scale(1);
     }
-  }
-`;
-
-export const AboutContainer = styled.div`
-  padding: 0rem 5vw;
-  background-color: rgb(18 18 18 /0.95);
-  flex-grow: 1;
-  position: relative;
-
-  .bg-wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    inset: 0;
-    margin: auto;
-    overflow: hidden;
-    z-index: -1;
   }
 `;
 
@@ -315,25 +300,6 @@ export const SocialMediaLinksWrapper = styled.div`
 
   a.link:hover {
     color: ${({ theme }) => theme.colors.accent2};
-  }
-`;
-
-export const AboutCreditsWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-  margin-bottom: 26px;
-  gap: 100px;
-  white-space: nowrap;
-
-  @media only ${({ theme }) => theme.breakpoints.xs} {
-    width: 80%;
-  }
-
-  @media only ${({ theme }) => theme.breakpoints.sm} {
-    flex-direction: column;
-    gap: 20px;
   }
 `;
 
@@ -593,7 +559,7 @@ export const EpisodeShowCaseWrapper = styled.div`
   }
 `;
 
-// deprecated
+// redundant
 export const LayoutContainer = styled.section`
   width: 100%;
   padding-inline: ${spacingTokens.spacing2064};
@@ -606,4 +572,11 @@ export const ModulesWrapper = styled.div`
   @media only ${({ theme }) => theme.breakpoints.xs} {
     padding: 0rem 1.25rem 1.25rem;
   }
+`;
+
+export const TMDBCredit = styled.div`
+  width: ${cssClamp({ minSize: 48, maxSize: 64 })};
+  aspect-ratio: 100/43;
+  background: url("https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg")
+    no-repeat center center / contain;
 `;

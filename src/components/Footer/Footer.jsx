@@ -1,10 +1,11 @@
 import { Github, Linkedin } from "lucide-react";
-import { FooterAttribute, footerWrapper, footerLink } from "./FooterStyles";
+import { footerWrapper, footerLink } from "./FooterStyles";
 import { FlexBox, LayoutContainer } from "components/Layout/helpers";
 import H4 from "components/Typography/H4";
+import { TMDBCredit } from "styles/GlobalComponents";
 
 const footerLinks = [
-  { label: "TMDB link", href: "https://www.themoviedb.org", icon: <FooterAttribute /> },
+  { label: "TMDB link", href: "https://www.themoviedb.org", icon: <TMDBCredit /> },
   {
     label: "github link",
     href: "https://github.com/98mohitkumar",

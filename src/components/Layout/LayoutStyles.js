@@ -16,8 +16,14 @@ export const Wrapper = styled.main`
     }
   }
 
-  .content-wrapper:has(.login-container, .about-container, .list-wrapper) {
+  .content-wrapper {
     display: flex;
     flex-direction: column;
+    min-height: 100%;
+    flex-grow: 1;
+  }
+
+  .content-wrapper > * {
+    flex-grow: 1;
   }
 `;

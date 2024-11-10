@@ -28,7 +28,7 @@ const GlobalStyles = createGlobalStyle`
   body {
     background: ${colors.black};
     color: ${colors.white};
-    font-size: ${fontSizeTokens.p}
+    font-size: ${fontSizeTokens.p};
   }
   
   .main-wrapper {

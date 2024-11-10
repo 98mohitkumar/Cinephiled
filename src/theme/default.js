@@ -1,14 +1,14 @@
 import { colors } from "tokens/colors";
 
 const theme = {
-  // Temp fonts
+  // Temp fonts (redundant)
   fonts: {
     manrope: "var(--manrope)",
     montserrat: "var(--montserrat)"
   },
-  // Colors for layout
+  // Colors for layout (redundant)
   colors,
-  // Breakpoints for responsive design
+  // Breakpoints for responsive design (redundant)
   breakpoints: {
     xs: "screen and (max-width: 450px)",
     sm: "screen and (max-width: 640px)",

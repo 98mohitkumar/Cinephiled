@@ -6,7 +6,7 @@ import ProfileRecommendations from "./ProfileRecommendations";
 import Ratings from "./Ratings";
 import Watchlist from "./Watchlist";
 import MetaWrapper from "components/MetaWrapper";
-import Tabs, { LinearTabs } from "components/Tabs/Tabs";
+import { Tabs, LinearTabs } from "components/Tabs/Tabs";
 import useTabs from "hooks/useTabs";
 import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
