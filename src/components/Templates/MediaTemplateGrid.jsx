@@ -8,7 +8,7 @@ import P from "components/Typography/P";
 import { blurPlaceholder } from "globals/constants";
 import { getCleanTitle, getReleaseDate, getTMDBImage } from "utils/helper";
 
-const TemplateGrid = ({ media, mediaType }) => {
+const MediaTemplateGrid = ({ media, mediaType }) => {
   return (
     <Grid
       colConfig={{
@@ -53,4 +53,4 @@ const TemplateGrid = ({ media, mediaType }) => {
   );
 };
 
-export default TemplateGrid;
+export default MediaTemplateGrid;
