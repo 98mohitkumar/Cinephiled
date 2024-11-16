@@ -5,7 +5,7 @@ import { LayoutContainer } from "components/Layout/helpers";
 import MetaWrapper from "components/MetaWrapper";
 import { TabItem, Tabs } from "components/Tabs/Tabs";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
-import H2 from "components/UI/Typography/H2";
+import H1 from "components/UI/Typography/H1";
 import { apiEndpoints } from "globals/constants";
 import useTabs from "hooks/useTabs";
 import { fetchOptions, removeDuplicates, framerTabVariants, matches } from "utils/helper";
@@ -16,9 +16,9 @@ const tabList = [
 ];
 
 const SectionTitle = ({ title }) => (
-  <H2 className='mb-2432 text-center text-white' weight='semibold'>
+  <H1 tag='h2' className='mb-2432 text-center text-white'>
     {title}
-  </H2>
+  </H1>
 );
 
 export default function Home({ popularMovies, popularTv, trendingMovies, trendingTv, posters }) {

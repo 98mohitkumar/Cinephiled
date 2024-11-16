@@ -2,7 +2,7 @@ import { useKeenSlider } from "keen-slider/react";
 import Link from "next/link";
 import { Fragment } from "react";
 import { genreCardStyles } from "./ExploreStyles";
-import H4 from "components/UI/Typography/H4";
+import H3 from "components/UI/Typography/H3";
 import "keen-slider/keen-slider.min.css";
 import H5 from "components/UI/Typography/H5";
 import { breakpoints } from "tokens/misc";
@@ -54,9 +54,9 @@ const GenreSection = ({ genres, mediaType }) => {
 
   return (
     <Fragment>
-      <H4 weight='medium' className='mb-16'>
+      <H3 weight='semibold' className='mb-16'>
         {matches(mediaType, "movie") ? "Movie" : "TV"} Genres
-      </H4>
+      </H3>
 
       <div ref={sliderRef} className='keen-slider'>
         {genres.map((genre) => (

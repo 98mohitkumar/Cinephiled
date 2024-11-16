@@ -6,7 +6,7 @@ import WatchProviders from "components/Explore/WatchProviders";
 import { LayoutContainer } from "components/Layout/helpers";
 import MetaWrapper from "components/MetaWrapper";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
-import H2 from "components/UI/Typography/H2";
+import H1 from "components/UI/Typography/H1";
 import { apiEndpoints } from "globals/constants";
 import { fetchOptions } from "utils/helper";
 
@@ -36,9 +36,9 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
         {/* movies that are currently in theatres */}
         {nowPlaying.length > 0 ? (
           <LayoutContainer className='py-2440'>
-            <H2 className='mb-2432 text-center text-white' weight='semibold'>
+            <H1 tag='h2' className='mb-2432 text-center text-white'>
               Movies playing in theaters
-            </H2>
+            </H1>
             <MediaTemplateGrid mediaType='movie' media={nowPlaying} />
           </LayoutContainer>
         ) : null}
