@@ -10,7 +10,7 @@ import WatchProvidersImage from "images/watch-providers.webp";
 const WatchProviders = () => {
   return (
     <Fragment>
-      <H2 className='mb-2432 text-center text-white' weight='semiBold'>
+      <H2 className='mb-2432 text-center text-white' weight='semibold'>
         Watch Providers
       </H2>
 
@@ -26,7 +26,7 @@ const WatchProviders = () => {
           </P>
 
           <Link href='/watch-providers' className='mt-1620 inline-block'>
-            <Button weight='semiBold'>Explore Providers</Button>
+            <Button weight='semibold'>Explore Providers</Button>
           </Link>
         </GridCol>
       </Grid>

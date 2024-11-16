@@ -66,7 +66,7 @@ const GenreSection = ({ genres, mediaType }) => {
             passHref
             legacyBehavior>
             <a className='keen-slider__slide' css={genreCardStyles}>
-              <H5 className='z-2 text-center' weight='semiBold'>
+              <H5 className='z-2 text-center' weight='semibold'>
                 {genre.name}
               </H5>
             </a>

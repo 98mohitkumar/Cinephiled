@@ -5,7 +5,7 @@ type PProps = ComponentPropsWithoutRef<"p"> & {
   className?: string;
   children: ReactNode;
   tag?: ElementType;
-  weight?: "light" | "regular" | "medium" | "semiBold" | "bold";
+  weight?: "light" | "regular" | "medium" | "semibold" | "bold";
   size?:
     | "large"
     | "default"
@@ -28,7 +28,7 @@ const P = forwardRef<HTMLElement, PProps>(({ className, children, tag: Element =
         "font-light": matches(weight, "light"),
         "font-regular": matches(weight, "regular"),
         "font-medium": matches(weight, "medium"),
-        "font-semibold": matches(weight, "semiBold"),
+        "font-semibold": matches(weight, "semibold"),
         "font-bold": matches(weight, "bold")
       },
       {

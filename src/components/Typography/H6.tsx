@@ -5,7 +5,7 @@ type H6Props = ComponentPropsWithoutRef<"h6"> & {
   className?: string;
   children: ReactNode;
   tag?: ElementType;
-  weight?: "light" | "regular" | "medium" | "semiBold" | "bold";
+  weight?: "light" | "regular" | "medium" | "semibold" | "bold";
 };
 
 const H6 = forwardRef<HTMLElement, H6Props>(({ className, children, tag: Element = "h6", weight = "bold", ...props }, ref) => (
@@ -17,7 +17,7 @@ const H6 = forwardRef<HTMLElement, H6Props>(({ className, children, tag: Element
         "font-light": matches(weight, "light"),
         "font-normal": matches(weight, "regular"),
         "font-medium": matches(weight, "medium"),
-        "font-semibold": matches(weight, "semiBold"),
+        "font-semibold": matches(weight, "semibold"),
         "font-bold": matches(weight, "bold")
       },
       className

@@ -135,7 +135,7 @@ const Navigation = () => {
                 <Link href={link} key={text}>
                   <P
                     className={`navlink ${matches(router.asPath, link) ? "active" : ""} px-20 py-16 text-h4Static`}
-                    weight='semiBold'
+                    weight='semibold'
                     onClick={hamburgerHandler}>
                     {text}
                   </P>

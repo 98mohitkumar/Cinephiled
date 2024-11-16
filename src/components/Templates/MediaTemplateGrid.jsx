@@ -42,7 +42,7 @@ const MediaTemplateGrid = ({ media, mediaType }) => {
             </Link>
           </motion.div>
           <div className='mt-24 pe-10'>
-            <H6 weight='semiBold'>{title || name}</H6>
+            <H6 weight='semibold'>{title || name}</H6>
             <P className='mt-4 text-neutral-400' weight='medium' size='small-to-p'>
               {getReleaseDate(release_date || first_air_date)}
             </P>

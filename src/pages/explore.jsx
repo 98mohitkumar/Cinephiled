@@ -36,7 +36,7 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
         {/* movies that are currently in theatres */}
         {nowPlaying.length > 0 ? (
           <LayoutContainer className='py-2440'>
-            <H2 className='mb-2432 text-center text-white' weight='semiBold'>
+            <H2 className='mb-2432 text-center text-white' weight='semibold'>
               Movies playing in theaters
             </H2>
             <MediaTemplateGrid mediaType='movie' media={nowPlaying} />

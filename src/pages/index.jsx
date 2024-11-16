@@ -16,7 +16,7 @@ const tabList = [
 ];
 
 const SectionTitle = ({ title }) => (
-  <H2 className='mb-2432 text-center text-white' weight='semiBold'>
+  <H2 className='mb-2432 text-center text-white' weight='semibold'>
     {title}
   </H2>
 );
