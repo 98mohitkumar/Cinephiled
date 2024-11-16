@@ -31,6 +31,7 @@ export const getSortedItems = ({ items, sortBy, order = "asc" }) => {
   }
 };
 
+// redundant function (check if it's being used)
 export const getActiveSortKey = ({ options, sortBy, defaultKey = "default" }) => {
   const sortKey = options?.find((item) => item.key === sortBy);
   return sortKey?.value || defaultKey;

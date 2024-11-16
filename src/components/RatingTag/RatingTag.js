@@ -1,6 +1,6 @@
 import { Gauge } from "@suyalcinkaya/gauge";
 import { ratingTagWrapperStyles } from "./RatingTagStyles";
-import P from "components/Typography/P";
+import P from "components/UI/Typography/P";
 import { getRating } from "utils/helper";
 
 const RatingTag = ({ rating }) => {

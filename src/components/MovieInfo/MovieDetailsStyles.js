@@ -21,6 +21,7 @@ export const HeroInfoTitle = styled.h1`
   }
 `;
 
+// redundant
 export const Span = styled.span`
   &.movieCastHead,
   &.toast-message {

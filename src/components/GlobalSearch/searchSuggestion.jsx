@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { searchItem } from "./GlobalSearchStyles";
 import { FlexBox } from "components/Layout/helpers";
-import H6 from "components/Typography/H6";
-import P from "components/Typography/P";
+import H6 from "components/UI/Typography/H6";
+import P from "components/UI/Typography/P";
 // import H5 from "components/Typography/H5";
 import { getCleanTitle, getReleaseDate, getReleaseYear } from "utils/helper";
 

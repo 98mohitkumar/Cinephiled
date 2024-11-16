@@ -10,6 +10,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
   "dependencies": {
+    "@radix-ui/react-select": "^2.1.2",
     "@suyalcinkaya/gauge": "^0.1.0",
     "clsx": "^2.1.1",
     "extract-colors": "^4.0.2",

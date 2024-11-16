@@ -1,30 +1,31 @@
 import { Fragment } from "react";
 import DominantColor from "components/DominantColor/DominantColor";
-import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
+import { LayoutContainer } from "components/Layout/helpers";
 import MetaWrapper from "components/MetaWrapper";
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
-import Select from "components/Select/Select";
+import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select/Select";
+import H2 from "components/UI/Typography/H2";
+import P from "components/UI/Typography/P";
 import { apiEndpoints, sortOptions } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useSort from "hooks/useSort";
-import { getActiveSortKey } from "src/utils/getSortedItems";
-import { ModulesWrapper } from "styles/GlobalComponents/index";
 import { fetchOptions, getCleanTitle, removeDuplicates } from "utils/helper";
 
 const Movies = ({ renderList, genreName, genreId }) => {
-  const { sortBy, handleSortSelection } = useSort({ shallow: false });
-
   const {
     tmdbOptions: { movie: movieSortOptions }
   } = sortOptions;
+  const defaultSortOption = movieSortOptions.find((option) => option?.isDefault)?.value;
+  const { sortBy, handleSortSelection } = useSort({ shallow: false, defaultSortOption });
 
   const { list, resetQueryState } = useInfiniteQuery({
     initialPage: 3,
-    getEndpoint: ({ page }) => apiEndpoints.movie.movieGenre({ genreId, pageQuery: page, sortBy })
+    getEndpoint: ({ page }) => apiEndpoints.movie.movieGenre({ genreId, pageQuery: page, sortBy: sortBy || defaultSortOption })
   });
 
   const { cleanedItems } = removeDuplicates(renderList.concat(list));
+  const currentSortOption = sortBy || defaultSortOption;
 
   const handleSort = (key) => {
     handleSortSelection(key);
@@ -39,39 +40,41 @@ const Movies = ({ renderList, genreName, genreId }) => {
         url={`https://cinephiled.vercel.app/genre/${genreId}-${getCleanTitle(genreName)}/movies`}
       />
 
-      <div className='relative'>
+      <section className='relative'>
         <DominantColor flip tint />
-        <ModulesWrapper className='relative z-10'>
-          {renderList?.length > 0 ? (
+        <LayoutContainer className='relative z-5 pb-24 pt-4864'>
+          <H2 className='mb-2432 text-center text-white' weight='semibold'>
+            {genreName} Movies
+          </H2>
+
+          {cleanedItems?.length > 0 ? (
             <Fragment>
-              <div className='py-6 text-center'>
-                <div className='my-5 lg:my-10'>
-                  <Span className='leading-12 block text-[calc(1.375rem_+_1.5vw)] font-semibold xl:text-[2.5rem]'>{genreName} Movies</Span>
-                </div>
+              <div className='mb-2432 flex items-center justify-end gap-10'>
+                <P weight='medium' size='large' className='text-neutral-300'>
+                  Sort By:
+                </P>
+
+                <Select defaultValue={currentSortOption} onValueChange={handleSort}>
+                  <SelectTrigger className='w-fit min-w-[220px]'>
+                    <SelectValue placeholder='Sort By:' />
+                  </SelectTrigger>
+                  <SelectContent position='popper' align='end'>
+                    {movieSortOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
-              <div className='mb-8 flex justify-end'>
-                <Select
-                  options={movieSortOptions}
-                  activeKey={sortBy || "default"}
-                  triggerText={getActiveSortKey({
-                    options: movieSortOptions,
-                    sortBy,
-                    defaultKey: "default"
-                  })}
-                  baseSizeOptions
-                  label='Sort By:'
-                  handleChange={handleSort}
-                />
-              </div>
-
-              <MoviesTemplate movies={cleanedItems} />
+              <MediaTemplateGrid mediaType='movie' media={cleanedItems} />
             </Fragment>
           ) : (
             <PlaceholderText height='large'>No Movies For Now</PlaceholderText>
           )}
-        </ModulesWrapper>
-      </div>
+        </LayoutContainer>
+      </section>
     </Fragment>
   );
 };

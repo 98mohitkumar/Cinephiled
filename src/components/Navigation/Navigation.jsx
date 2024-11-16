@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { HamburgerIcon, hamburgerMenu, headerStyles, Logo, navBarStyles, navLinksStyles, searchOverlayBackdrop } from "./NavigationStyles";
 import GlobalSearch from "components/GlobalSearch/GlobalSearch";
 import { FlexBox, LayoutContainer } from "components/Layout/helpers";
-import P from "components/Typography/P";
+import P from "components/UI/Typography/P";
 import UserAvatar from "components/UserAvatar/UserAvatar";
 import { matches } from "utils/helper";
 

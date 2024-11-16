@@ -1,31 +1,31 @@
 import { Fragment } from "react";
 import DominantColor from "components/DominantColor/DominantColor";
-import TVTemplate from "components/MediaTemplate/TVTemplate";
+import { LayoutContainer } from "components/Layout/helpers";
 import MetaWrapper from "components/MetaWrapper";
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
-import Select from "components/Select/Select";
+import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select/Select";
+import H2 from "components/UI/Typography/H2";
+import P from "components/UI/Typography/P";
 import { apiEndpoints, sortOptions } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useSort from "hooks/useSort";
-import { getActiveSortKey } from "src/utils/getSortedItems";
-import { ModulesWrapper } from "styles/GlobalComponents/index";
 import { fetchOptions, getCleanTitle, removeDuplicates } from "utils/helper";
 
 const TvShows = ({ renderList, genreName, genreId }) => {
-  const { sortBy, handleSortSelection } = useSort({ shallow: false });
-
   const {
     tmdbOptions: { tv: tvSortOptions }
   } = sortOptions;
+  const defaultSortOption = tvSortOptions.find((option) => option?.isDefault)?.value;
+  const { sortBy, handleSortSelection } = useSort({ shallow: false, defaultSortOption });
 
   const { list, resetQueryState } = useInfiniteQuery({
     initialPage: 3,
-    getEndpoint: ({ page }) => apiEndpoints.tv.tvGenre({ genreId, pageQuery: page, sortBy })
+    getEndpoint: ({ page }) => apiEndpoints.tv.tvGenre({ genreId, pageQuery: page, sortBy: sortBy || defaultSortOption })
   });
 
   const { cleanedItems } = removeDuplicates(renderList.concat(list));
-
+  const currentSortOption = sortBy || defaultSortOption;
   const handleSort = (key) => {
     handleSortSelection(key);
     resetQueryState();
@@ -41,36 +41,38 @@ const TvShows = ({ renderList, genreName, genreId }) => {
 
       <div className='relative'>
         <DominantColor flip tint />
-        <ModulesWrapper className='relative z-10'>
-          {renderList?.length > 0 ? (
+        <LayoutContainer className='relative z-5 pb-24 pt-4864'>
+          <H2 className='mb-2432 text-center text-white' weight='semibold'>
+            {genreName} TV Shows
+          </H2>
+
+          {cleanedItems?.length > 0 ? (
             <Fragment>
-              <div className='py-6 text-center'>
-                <div className='my-5 lg:my-10'>
-                  <Span className='leading-12 block text-[calc(1.375rem_+_1.5vw)] font-semibold xl:text-[2.5rem]'>{genreName} TV Shows</Span>
-                </div>
+              <div className='mb-2432 flex items-center justify-end gap-10'>
+                <P weight='medium' size='large' className='text-neutral-300'>
+                  Sort By:
+                </P>
+
+                <Select defaultValue={currentSortOption} onValueChange={handleSort}>
+                  <SelectTrigger className='w-fit min-w-[220px]'>
+                    <SelectValue placeholder='Sort By:' />
+                  </SelectTrigger>
+                  <SelectContent position='popper' align='end'>
+                    {tvSortOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
-              <div className='mb-8 flex justify-end'>
-                <Select
-                  options={tvSortOptions}
-                  activeKey={sortBy || "default"}
-                  triggerText={getActiveSortKey({
-                    options: tvSortOptions,
-                    sortBy,
-                    defaultKey: "default"
-                  })}
-                  baseSizeOptions
-                  label='Sort By:'
-                  handleChange={handleSort}
-                />
-              </div>
-
-              <TVTemplate TV={cleanedItems} />
+              <MediaTemplateGrid mediaType='tv' media={cleanedItems} />
             </Fragment>
           ) : (
-            <PlaceholderText height='large'>No TV Shows For Now</PlaceholderText>
+            <PlaceholderText height='large'>No Movies For Now</PlaceholderText>
           )}
-        </ModulesWrapper>
+        </LayoutContainer>
       </div>
     </Fragment>
   );

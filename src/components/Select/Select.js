@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
+// redundant
 const Select = ({ triggerText, options, handleChange, activeKey, baseSizeOptions = false, label }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);

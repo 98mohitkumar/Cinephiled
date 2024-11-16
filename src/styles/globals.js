@@ -29,6 +29,7 @@ const GlobalStyles = createGlobalStyle`
     background: ${colors.black};
     color: ${colors.white};
     font-size: ${fontSizeTokens.p};
+    font-family: "Manrope", sans-serif;
   }
   
   .main-wrapper {

@@ -6,6 +6,7 @@ import RatingTag from "components/RatingTag/RatingTag";
 import { blurPlaceholder } from "globals/constants";
 import { getCleanTitle, getReleaseDate } from "utils/helper";
 
+// redundant
 const TVTemplate = ({ TV, creditsPage = false }) => {
   return (
     <CardsContainerGrid>

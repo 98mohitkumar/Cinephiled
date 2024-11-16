@@ -6,7 +6,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { popupOption, avatar, popup } from "./UserAvatarStyles";
 import { useLogout } from "apiEndpoints/auth";
 import { FlexBox } from "components/Layout/helpers";
-import P from "components/Typography/P";
+import P from "components/UI/Typography/P";
 import { useUserContext } from "Store/UserContext";
 
 const UserAvatar = () => {

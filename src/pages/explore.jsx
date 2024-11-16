@@ -6,7 +6,7 @@ import WatchProviders from "components/Explore/WatchProviders";
 import { LayoutContainer } from "components/Layout/helpers";
 import MetaWrapper from "components/MetaWrapper";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
-import H2 from "components/Typography/H2";
+import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "globals/constants";
 import { fetchOptions } from "utils/helper";
 

@@ -8,6 +8,7 @@ import { blurPlaceholder } from "globals/constants";
 import defaultImage from "images/DefaultImage.png";
 import { getCleanTitle, getReleaseDate } from "utils/helper";
 
+// redundant
 const MoviesTemplate = ({ movies, creditsPage = false }) => {
   return (
     <Grid

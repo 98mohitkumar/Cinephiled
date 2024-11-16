@@ -2,9 +2,9 @@ import { useKeenSlider } from "keen-slider/react";
 import Link from "next/link";
 import { Fragment } from "react";
 import { genreCardStyles } from "./ExploreStyles";
-import H4 from "components/Typography/H4";
+import H4 from "components/UI/Typography/H4";
 import "keen-slider/keen-slider.min.css";
-import H5 from "components/Typography/H5";
+import H5 from "components/UI/Typography/H5";
 import { breakpoints } from "tokens/misc";
 import { getCleanTitle, matches } from "utils/helper";
 

@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import Button from "components/Button/Button";
 import { Grid, GridCol } from "components/Layout/helpers";
-import H2 from "components/Typography/H2";
-import P from "components/Typography/P";
+import Button from "components/UI/Button/Button";
+import H2 from "components/UI/Typography/H2";
+import P from "components/UI/Typography/P";
 import WatchProvidersImage from "images/watch-providers.webp";
 
 const WatchProviders = () => {

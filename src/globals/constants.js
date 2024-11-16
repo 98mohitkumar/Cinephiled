@@ -155,20 +155,20 @@ export const sortOptions = {
   ],
   tmdbOptions: {
     movie: [
-      { key: "default", value: "Default (Popularity Desc)" },
-      { key: "vote_average.asc", value: "Rating Ascending" },
-      { key: "vote_average.desc", value: "Rating Descending" },
-      { key: "popularity.asc", value: "Popularity Ascending" },
-      { key: "primary_release_date.asc", value: "Release Date Ascending" },
-      { key: "primary_release_date.desc", value: "Release Date Descending" }
+      { value: "vote_average.asc", label: "Rating Ascending" },
+      { value: "vote_average.desc", label: "Rating Descending" },
+      { value: "popularity.asc", label: "Popularity Ascending" },
+      { value: "popularity.desc", label: "Popularity Descending", isDefault: true },
+      { value: "primary_release_date.asc", label: "Release Date Ascending" },
+      { value: "primary_release_date.desc", label: "Release Date Descending" }
     ],
     tv: [
-      { key: "default", value: "Default (Popularity Desc)" },
-      { key: "vote_average.asc", value: "Rating Ascending" },
-      { key: "vote_average.desc", value: "Rating Descending" },
-      { key: "popularity.asc", value: "Popularity Ascending" },
-      { key: "first_air_date.asc", value: "Release Date Ascending" },
-      { key: "first_air_date.desc", value: "Release Date Descending" }
+      { value: "vote_average.asc", label: "Rating Ascending" },
+      { value: "vote_average.desc", label: "Rating Descending" },
+      { value: "popularity.asc", label: "Popularity Ascending" },
+      { value: "popularity.desc", label: "Popularity Descending", isDefault: true },
+      { value: "first_air_date.asc", label: "Release Date Ascending" },
+      { value: "first_air_date.desc", label: "Release Date Descending" }
     ]
   },
   listOptions: [

@@ -1,7 +1,7 @@
 import { Github, Linkedin } from "lucide-react";
 import { footerWrapper, footerLink } from "./FooterStyles";
 import { FlexBox, LayoutContainer } from "components/Layout/helpers";
-import H4 from "components/Typography/H4";
+import H4 from "components/UI/Typography/H4";
 import { TMDBCredit } from "styles/GlobalComponents";
 
 const footerLinks = [

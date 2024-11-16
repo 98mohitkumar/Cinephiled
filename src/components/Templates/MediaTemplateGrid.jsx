@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Grid } from "components/Layout/helpers";
 import RatingTag from "components/RatingTag/RatingTag";
-import H6 from "components/Typography/H6";
-import P from "components/Typography/P";
+import H6 from "components/UI/Typography/H6";
+import P from "components/UI/Typography/P";
 import { blurPlaceholder } from "globals/constants";
 import { getCleanTitle, getReleaseDate, getTMDBImage } from "utils/helper";
 

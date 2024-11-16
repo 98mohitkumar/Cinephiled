@@ -235,21 +235,14 @@ type BackdropSize = "w300" | "w780" | "w1280" | "original";
 type LogoSize = "w45" | "w92" | "w154" | "w185" | "w300" | "w500" | "original";
 type PosterSize = "w92" | "w154" | "w185" | "w342" | "w500" | "w780" | "original";
 
-type TMDBImageArgs = {
+type TMDBImageArgs<T extends keyof typeof defaultImages> = {
   path: string;
-  type: keyof typeof defaultImages;
-  size?:
-    | {
-        backdrop?: BackdropSize;
-        logo?: LogoSize;
-        poster?: PosterSize;
-        profile?: PosterSize;
-      }[keyof typeof defaultImages]
-    | string;
+  type: T;
+  size?: T extends "backdrop" ? BackdropSize : T extends "logo" ? LogoSize : T extends "poster" | "profile" ? PosterSize : never;
 };
 
-export const getTMDBImage = ({ path, type, size = "w500" }: TMDBImageArgs) => {
+export const getTMDBImage = <T extends keyof typeof defaultImages>({ path, type, size }: TMDBImageArgs<T>) => {
   if (!path) return defaultImages[type];
 
-  return `https://image.tmdb.org/t/p/${size}${path}`;
+  return `https://image.tmdb.org/t/p/${size || "w500"}${path}`;
 };

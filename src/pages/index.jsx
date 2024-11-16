@@ -5,7 +5,7 @@ import { LayoutContainer } from "components/Layout/helpers";
 import MetaWrapper from "components/MetaWrapper";
 import { TabItem, Tabs } from "components/Tabs/Tabs";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
-import H2 from "components/Typography/H2";
+import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "globals/constants";
 import useTabs from "hooks/useTabs";
 import { fetchOptions, removeDuplicates, framerTabVariants, matches } from "utils/helper";

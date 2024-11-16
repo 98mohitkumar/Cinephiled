@@ -566,6 +566,7 @@ export const LayoutContainer = styled.section`
   padding-inline: ${spacingTokens.spacing2064};
 `;
 
+// redundant
 export const ModulesWrapper = styled.div`
   width: 100%;
   padding: 0px 4.2vw 32px;

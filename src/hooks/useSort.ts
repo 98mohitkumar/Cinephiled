@@ -1,17 +1,23 @@
+import { ParsedUrlQuery } from "querystring";
 import { useRouter } from "next/router";
 
-const useSort = ({ shallow = false }) => {
+type UseSortProps = {
+  shallow?: boolean;
+  defaultSortOption: string;
+};
+
+const useSort = ({ shallow = false, defaultSortOption }: UseSortProps) => {
   const router = useRouter();
   const { sortBy } = router.query;
 
-  const handleSortSelection = (key) => {
-    const keyToCompare = sortBy || "default";
+  const handleSortSelection = (key: string) => {
+    const keyToCompare = sortBy || defaultSortOption;
 
     if (key === keyToCompare) return;
 
-    let newQuery;
+    let newQuery: ParsedUrlQuery;
 
-    if (key === "default") {
+    if (key === defaultSortOption) {
       newQuery = {
         ...router.query
       };
