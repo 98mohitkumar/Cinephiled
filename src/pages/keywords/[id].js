@@ -33,7 +33,7 @@ const Keyword = ({ results, name, id }) => {
               <p className='text-xl md:text-2xl font-medium'>Results Matching : {name}</p>
               {results.map(({ id, title, poster_path, overview, release_date }) => (
                 <motion.div whileTap={{ scale: 0.98 }} key={id}>
-                  <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref>
+                  <Link href={`/movie/${id}-${getCleanTitle(title)}`} passHref>
                     <QueryContainer>
                       <QueryImg className='relative text-center'>
                         <Image

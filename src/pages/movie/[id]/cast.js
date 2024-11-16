@@ -11,7 +11,7 @@ const Cast = ({ movieData: { id, title, year, backdrop, poster }, cast }) => {
         title={`${title} (${year}) - Cast - cinephiled`}
         description={`${title} cast`}
         image={`https://image.tmdb.org/t/p/w780${backdrop}`}
-        url={`https://cinephiled.vercel.app/movies/${id}/cast`}
+        url={`https://cinephiled.vercel.app/movie/${id}/cast`}
       />
 
       <CastPage cast={cast} media={{ title, year, poster }} />

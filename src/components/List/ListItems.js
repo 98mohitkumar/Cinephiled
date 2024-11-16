@@ -39,7 +39,7 @@ const ListItems = ({ listItems, id }) => {
                   transition: { duration: 0.1 }
                 }}
                 whileTap={{ scale: 0.95 }}>
-                <Link href={`/${media_type === "tv" ? "tv" : "movies"}/${id}-${getCleanTitle(title || name)}`} passHref>
+                <Link href={`/${media_type === "tv" ? "tv" : "movie"}/${id}-${getCleanTitle(title || name)}`} passHref>
                   <div className='relative'>
                     <CardImg>
                       <Image

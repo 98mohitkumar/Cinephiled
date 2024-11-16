@@ -73,7 +73,7 @@ const Movie = ({ movieData }) => {
         title={`${title} (${releaseYear}) - Cinephiled`}
         image={`https://image.tmdb.org/t/p/w780${backdropPath}`}
         description={overview}
-        url={`https://cinephiled.vercel.app/movies/${id}-${getCleanTitle(title)}`}
+        url={`https://cinephiled.vercel.app/movie/${id}-${getCleanTitle(title)}`}
       />
 
       <Fragment>
@@ -126,7 +126,7 @@ const Movie = ({ movieData }) => {
             <div className='relative z-10 pt-12'>
               <h2 className='mb-4 text-center text-[calc(1.375rem_+_1.5vw)] font-bold text-white lg:mb-8 xl:text-[2.5rem]'>Recommendations</h2>
 
-              <Recommendations data={recommendations} type='movies' />
+              <Recommendations data={recommendations} type='movie' />
             </div>
           </ModulesWrapper>
         ) : null}

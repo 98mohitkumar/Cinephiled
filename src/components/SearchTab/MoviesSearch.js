@@ -61,7 +61,7 @@ const MoviesSearch = ({ searchQuery, movieRes }) => {
           <SortBy sortOptions={sortOptions} />
           {(sortBy ? getRenderList(cleanedItems) : cleanedItems)?.map(({ id, title, poster_path, overview, release_date }) => (
             <motion.div whileTap={{ scale: 0.98 }} key={id}>
-              <Link href={`/movies/${id}-${getCleanTitle(title)}`}>
+              <Link href={`/movie/${id}-${getCleanTitle(title)}`}>
                 <QueryContainer>
                   <QueryImg className='relative text-center'>
                     <Image

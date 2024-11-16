@@ -27,7 +27,7 @@ const MoviesTemplate = ({ movies, creditsPage = false }) => {
                   transition: { duration: 0.1 }
                 }}
                 whileTap={{ scale: 0.95 }}>
-                <Link href={`/movies/${id}-${getCleanTitle(title)}`} passHref>
+                <Link href={`/movie/${id}-${getCleanTitle(title)}`} passHref>
                   <div className='relative'>
                     <CardImg>
                       <Image

@@ -1,5 +1,5 @@
 User-agent: *
-Disallow: /movies/
+Disallow: /movie/
 Disallow: /tv/
 Disallow: /person/
 Disallow: /*.jpg$
