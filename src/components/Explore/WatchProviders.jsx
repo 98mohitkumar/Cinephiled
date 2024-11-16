@@ -26,7 +26,7 @@ const WatchProviders = () => {
           </P>
 
           <Link href='/watch-providers' className='mt-1620 inline-block'>
-            <Button weight='semibold'>Explore Providers</Button>
+            <Button weight='semiBold'>Explore Providers</Button>
           </Link>
         </GridCol>
       </Grid>

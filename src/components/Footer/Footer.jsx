@@ -23,7 +23,7 @@ const Footer = () => {
     <LayoutContainer className='py-20' css={footerWrapper}>
       <FlexBox tag='footer' className='items-center justify-between'>
         <H4 weight='medium'>Cinephiled</H4>
-        <FlexBox className='items-center justify-between gap-2064'>
+        <FlexBox className='items-center justify-between gap-3264'>
           {footerLinks.map(({ label, href, icon }) => (
             <a css={footerLink} key={label} href={href} target='_blank' rel='noreferrer' aria-label={label}>
               {icon}

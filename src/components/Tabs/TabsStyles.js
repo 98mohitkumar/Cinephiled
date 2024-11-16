@@ -1,34 +1,21 @@
 import styled, { css } from "styled-components";
 import { colors } from "tokens/colors";
 import { borderRadiusTokens, zIndexTokens } from "tokens/misc";
-import { cssClamp, transition } from "utils/mixins";
+import { cssClamp, mediaQuery, transition } from "utils/mixins";
 
 export const tabWrapperStyles = css`
   display: grid;
   margin-inline: auto;
   position: relative;
   grid-template-columns: ${({ $tabItemsCount }) => `repeat(${$tabItemsCount}, 1fr)`};
-  width: ${cssClamp({ minSize: 338, maxSize: 630 })}; // fallback width, check custom styling
+  width: ${cssClamp({ minSize: 400, maxSize: 630 })};
   border: 4px solid ${colors.neutral[200]};
   background: ${colors.neutral[200]};
   border-radius: ${borderRadiusTokens["2xl"]};
 
-  /* @media only ${({ theme }) => theme.breakpoints.ip} {
-    min-height: 4rem;
-    margin: 2rem auto;
-  } */
-
-  /* @media only ${({ theme }) => theme.breakpoints.sm} {
-    min-height: 3.25rem;
-  } */
-
-  /* svg {
-    max-width: 26px;
-    max-height: 24px;
-  } */
-
-  /* custom styling */
-  /* ${({ $styling }) => $styling} */
+  ${mediaQuery({ breakpoint: "xs", type: "max" })} {
+    width: 100%;
+  }
 `;
 
 export const activeHighlighter = css`

@@ -19,7 +19,7 @@ export const Tabs = ({ tabItemsCount, activeItemIndex, children, ...props }) => 
 
 export const TabItem = ({ children, className, ...props }) => {
   return (
-    <div role='button' css={tabItemStyles} className={cn("p-16 text-h6 max-sm:py-10", className)} {...props}>
+    <div role='button' css={tabItemStyles} className={cn("p-16 text-h6 max-sm:py-12", className)} {...props}>
       {children}
     </div>
   );

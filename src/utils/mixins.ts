@@ -1,10 +1,17 @@
 import { maxViewportWidth, minViewportWidth, pixelsPerRem, breakpoints, transitionTimings } from "../tokens/misc";
 
+type CssClampArgs = {
+  minSize: number;
+  maxSize: number;
+  minViewport?: number;
+  maxViewport?: number;
+};
+
 // ---- css clamp ---- //
-export const cssClamp = ({ minSize, maxSize }: { minSize: number; maxSize: number }) => {
+export const cssClamp = ({ minSize, maxSize, minViewport = minViewportWidth, maxViewport = maxViewportWidth }: CssClampArgs) => {
   // screen sizes in rems
-  const minScreenWidth = minViewportWidth / pixelsPerRem;
-  const maxScreenWidth = maxViewportWidth / pixelsPerRem;
+  const minScreenWidth = minViewport / pixelsPerRem;
+  const maxScreenWidth = maxViewport / pixelsPerRem;
 
   // min and max sizes in rems
   const minValue = minSize / pixelsPerRem;

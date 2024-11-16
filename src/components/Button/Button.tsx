@@ -6,7 +6,7 @@ type ButtonProps = ComponentPropsWithoutRef<"button"> &
   Omit<MotionProps, "variants"> & {
     variant?: "primary" | "secondary";
     size?: "small" | "default" | "large";
-    weight?: "normal" | "medium" | "semibold" | "bold";
+    weight?: "normal" | "medium" | "semiBold" | "bold";
   };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -29,7 +29,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {
             "font-normal": matches(weight, "normal"),
             "font-medium": matches(weight, "medium"),
-            "font-semibold": matches(weight, "semibold"),
+            "font-semiBold": matches(weight, "semiBold"),
             "font-bold": matches(weight, "bold")
           },
           className
