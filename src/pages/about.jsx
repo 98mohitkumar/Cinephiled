@@ -33,7 +33,7 @@ const About = () => {
               favorites, rate, create custom lists and get personalized recommendations.
               <br />
               <br />
-              <b className='text-accentPrimary'>Tech Stack</b> - Next.js, Tailwind CSS and Next Auth.
+              <b className='text-accentPrimary'>Tech Stack</b> - Next.js, Framer Motion, Tailwind CSS and Next Auth.
               <br />
               <br />
               I welcome any feedback or suggestions! Feel free to reach out using the social links below. <br />
@@ -43,7 +43,7 @@ const About = () => {
 
             <div className='mt-48'>
               <H2 className='mb-12'>Credits</H2>
-              <FlexBox className='items-center justify-center gap-2096 whitespace-nowrap max-xs:flex-col'>
+              <FlexBox className='items-center justify-center gap-2096 whitespace-nowrap max-xs:flex-col xs:-me-32'>
                 <a href='https://www.themoviedb.org' target='_blank' rel='noreferrer'>
                   <TMDBCredit />
                 </a>
