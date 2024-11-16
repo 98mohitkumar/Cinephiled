@@ -42,6 +42,12 @@ const GenreSection = ({ genres, mediaType }) => {
           perView: 5.75,
           spacing: 20
         }
+      },
+      [`(min-width: 1800px)`]: {
+        slides: {
+          perView: 6.75,
+          spacing: 20
+        }
       }
     }
   });
