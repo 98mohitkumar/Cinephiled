@@ -5,7 +5,7 @@ import MetaWrapper from "components/MetaWrapper";
 import PlaceholderText from "components/PlaceholderText";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select/Select";
-import H2 from "components/UI/Typography/H2";
+import H1 from "components/UI/Typography/H1";
 import P from "components/UI/Typography/P";
 import { apiEndpoints, sortOptions } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
@@ -42,9 +42,9 @@ const TvShows = ({ renderList, genreName, genreId }) => {
       <div className='relative'>
         <DominantColor flip tint />
         <LayoutContainer className='relative z-5 pb-24 pt-4864'>
-          <H2 className='mb-2432 text-center text-white' weight='semibold'>
+          <H1 className='mb-3240 text-center text-white' weight='semibold'>
             {genreName} TV Shows
-          </H2>
+          </H1>
 
           {cleanedItems?.length > 0 ? (
             <Fragment>

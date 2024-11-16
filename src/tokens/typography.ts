@@ -1,7 +1,7 @@
 import { cssClamp } from "../utils/mixins";
 import { pixelsPerRem } from "./misc";
 
-// https://utopia.fyi/type/calculator/?c=370,18,1.2,1280,20,1.25,5,3,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12
+// https://utopia.fyi/type/calculator/?c=370,18,1.125,1280,20,1.25,5,3,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12
 const fontSizes = {
   static: [
     { key: "h1Static", size: 61.04, lineHeight: 68, letterSpacing: -0.4 },
@@ -20,32 +20,32 @@ const fontSizes = {
   responsive: [
     {
       key: "h1",
-      size: { minSize: 44.79, maxSize: 61.04 },
-      lineHeight: { minHeight: 52, maxHeight: 68 },
-      letterSpacing: { minSpacing: -0.3, maxSpacing: -0.4 }
+      size: { minSize: 32.44, maxSize: 61.04 },
+      lineHeight: { minHeight: 43.28, maxHeight: 68 },
+      letterSpacing: { minSpacing: -0.28, maxSpacing: -0.4 }
     },
     {
       key: "h2",
-      size: { minSize: 37.33, maxSize: 48.83 },
-      lineHeight: { minHeight: 44, maxHeight: 56 },
-      letterSpacing: { minSpacing: -0.25, maxSpacing: -0.3 }
+      size: { minSize: 28.83, maxSize: 48.83 },
+      lineHeight: { minHeight: 36.95, maxHeight: 56 },
+      letterSpacing: { minSpacing: -0.22, maxSpacing: -0.3 }
     },
     {
       key: "h3",
-      size: { minSize: 31.11, maxSize: 39.06 },
-      lineHeight: { minHeight: 38, maxHeight: 44 },
+      size: { minSize: 25.63, maxSize: 39.06 },
+      lineHeight: { minHeight: 32.88, maxHeight: 44 },
       letterSpacing: { minSpacing: -0.2, maxSpacing: -0.25 }
     },
     {
       key: "h4",
-      size: { minSize: 25.93, maxSize: 31.25 },
-      lineHeight: { minHeight: 32, maxHeight: 38 },
-      letterSpacing: { minSpacing: -0.1, maxSpacing: -0.2 }
+      size: { minSize: 22.78, maxSize: 31.25 },
+      lineHeight: { minHeight: 27.96, maxHeight: 38 },
+      letterSpacing: { minSpacing: -0.08, maxSpacing: -0.2 }
     },
     {
       key: "h5",
-      size: { minSize: 21.6, maxSize: 25 },
-      lineHeight: { minHeight: 28, maxHeight: 33 },
+      size: { minSize: 20.25, maxSize: 25 },
+      lineHeight: { minHeight: 25.2, maxHeight: 33 },
       letterSpacing: { minSpacing: -0.05, maxSpacing: -0.1 }
     },
     {
