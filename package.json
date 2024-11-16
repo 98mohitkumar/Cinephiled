@@ -16,6 +16,7 @@
     "framer-motion": "10.12.2",
     "hex-to-rgba": "^2.0.1",
     "jotai": "^2.9.0",
+    "keen-slider": "^6.8.6",
     "lucide-react": "^0.454.0",
     "next": "^15.0.1",
     "next-auth": "^4.20.1",

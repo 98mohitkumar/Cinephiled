@@ -1,5 +1,9 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { colors } from "tokens/colors";
+import { borderRadiusTokens } from "tokens/misc";
+import { hoverMediaQuery, transition } from "utils/mixins";
 
+// redundant
 export const PseudoTrack = styled.div`
   background-color: rgba(255, 255, 255, 0.2);
   height: 2px;
@@ -14,52 +18,20 @@ export const PseudoTrack = styled.div`
   }
 `;
 
-export const OverFlowWrapper = styled.div`
-  display: flex;
-  gap: 1.25rem;
-  padding-bottom: 1rem;
-  max-width: 100%;
-  overflow-x: auto;
-  padding-right: 1.5rem;
-
-  &::-webkit-scrollbar-track {
-    margin-inline: 16vw;
-  }
-
-  @media only ${({ theme }) => theme.breakpoints.xl} {
-    padding-bottom: 0px;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* for firefox */
-    scrollbar-width: none;
-  }
-`;
-
-export const GenreBG = styled.a`
-  min-width: 180px;
-  width: calc(100% / 6);
-  flex-shrink: 0;
-  flex-grow: 1;
-  border-radius: 8px;
+export const genreCardStyles = css`
+  border-radius: ${borderRadiusTokens.lg};
   padding: 24px;
   aspect-ratio: 1/0.5;
   position: relative;
   display: grid;
   place-items: center;
-  transition: letter-spacing 0.325s cubic-bezier(0.77, 0, 0.175, 1);
-  background: ${({ theme }) => `linear-gradient(200deg,${theme.colors.accent1}, ${theme.colors.accent2}, ${theme.colors.accent3})`};
+  transition: ${transition({
+    property: "filter",
+    duration: 0.325,
+    timingFunction: "in-out"
+  })};
+  background: ${`linear-gradient(200deg,${colors.accentTertiary}, ${colors.accentPrimary}, ${colors.accentSecondary})`};
   overflow: hidden;
-
-  .title {
-    text-align: center;
-    z-index: 2;
-    font-weight: 600;
-    color: white;
-    font-size: clamp(1.15rem, 1.6vw, 1.75rem);
-  }
 
   &::after {
     content: "";
@@ -70,8 +42,10 @@ export const GenreBG = styled.a`
     z-index: 1;
   }
 
-  &:hover {
-    letter-spacing: 2px;
+  ${hoverMediaQuery()} {
+    &:hover {
+      filter: saturate(0);
+    }
   }
 `;
 

@@ -2,11 +2,12 @@ import { Fragment } from "react";
 import { getCountryCode } from "apiEndpoints/user";
 import DominantColor from "components/DominantColor/DominantColor";
 import Genres from "components/Explore/Genres";
-import NowPlayingMovies from "components/Explore/NowPlayingMovies";
-import StreamingProvides from "components/Explore/Providers";
+import WatchProviders from "components/Explore/WatchProviders";
+import { LayoutContainer } from "components/Layout/helpers";
 import MetaWrapper from "components/MetaWrapper";
+import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
+import H2 from "components/Typography/H2";
 import { apiEndpoints } from "globals/constants";
-import { LayoutContainer } from "styles/GlobalComponents";
 import { fetchOptions } from "utils/helper";
 
 const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
@@ -23,17 +24,24 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
           <DominantColor flip tint />
 
           {/* genres for movies and tv shows */}
-          <LayoutContainer className='relative z-20 mb-auto !pr-0'>
+          <LayoutContainer className='relative z-5 py-2440 pe-4'>
             <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
           </LayoutContainer>
 
-          <LayoutContainer className='relative z-20 mt-8'>
-            <StreamingProvides />
+          <LayoutContainer className='relative z-5 py-4864'>
+            <WatchProviders />
           </LayoutContainer>
         </section>
 
         {/* movies that are currently in theatres */}
-        {nowPlaying.length > 0 ? <NowPlayingMovies nowPlaying={nowPlaying} /> : null}
+        {nowPlaying.length > 0 ? (
+          <LayoutContainer className='py-2440'>
+            <H2 className='mb-2432 text-center text-white' weight='semiBold'>
+              Movies playing in theaters
+            </H2>
+            <MediaTemplateGrid mediaType='movie' media={nowPlaying} />
+          </LayoutContainer>
+        ) : null}
       </Fragment>
     </Fragment>
   );

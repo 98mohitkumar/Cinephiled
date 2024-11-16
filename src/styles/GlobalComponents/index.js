@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { spacingTokens } from "tokens/spacings";
 import { cssClamp } from "utils/mixins";
 
+// redundant
 export const Button = styled.button`
   display: flex;
   justify-content: center;

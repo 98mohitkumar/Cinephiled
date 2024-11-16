@@ -52,9 +52,9 @@ export const FlexBox = forwardRef<HTMLElement, FlexBoxProps>(({ children, wrap, 
 FlexBox.displayName = "FlexBox";
 
 // -------- Grid -------- //
-type ColCount = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+type ColCount = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | number;
 
-type ColumnWidthProp = {
+type ColumnCountProp = {
   xxs?: ColCount;
   xs?: ColCount;
   sm?: ColCount;
@@ -64,14 +64,13 @@ type ColumnWidthProp = {
   "2xl"?: ColCount | string;
 };
 
-type GridProps = {
+type GridProps = ComponentPropsWithoutRef<"div"> & {
   children: ReactNode;
-  className?: string;
   tag?: ElementType;
-  colConfig?: ColumnWidthProp;
+  colConfig?: ColumnCountProp;
 };
 
-const getGridCols = ({ xxs, xs, sm, md, lg, xl, "2xl": twoXl }: ColumnWidthProp) => {
+const getGridCols = ({ xxs, xs, sm, md, lg, xl, "2xl": twoXl }: ColumnCountProp) => {
   const colXxsString = xxs ? `grid-cols-${xxs}` : "";
   const colXsString = xs ? `xs:grid-cols-${xs}` : "";
   const colSmString = sm ? `sm:grid-cols-${sm}` : "";
@@ -96,3 +95,49 @@ export const Grid = forwardRef<HTMLElement, GridProps>(({ children, className, c
 });
 
 Grid.displayName = "Grid";
+
+// -------- GridCol -------- //
+
+type GridColSize = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | number | "full";
+
+type ColSizeConfig = {
+  xxs?: GridColSize;
+  xs?: GridColSize;
+  sm?: GridColSize;
+  md?: GridColSize;
+  lg?: GridColSize;
+  xl?: GridColSize;
+  "2xl"?: GridColSize;
+};
+
+type GridColProps = ComponentPropsWithoutRef<"div"> & {
+  children: ReactNode;
+  tag?: ElementType;
+  colSizeConfig?: ColSizeConfig;
+};
+
+const getColSpan = ({ xxs, xs, sm, md, lg, xl, "2xl": twoXl }: ColSizeConfig) => {
+  const colXxsString = xxs ? `col-span-${xxs}` : "";
+  const colXsString = xs ? `xs:col-span-${xs}` : "";
+  const colSmString = sm ? `sm:col-span-${sm}` : "";
+  const colMdString = md ? `md:col-span-${md}` : "";
+  const colLgString = lg ? `lg:col-span-${lg}` : "";
+  const colXlString = xl ? `xl:col-span-${xl}` : "";
+  const col2xlString = twoXl ? `2xl:col-span-${twoXl}` : "";
+
+  return [colXxsString, colXsString, colSmString, colMdString, colLgString, colXlString, col2xlString].join(" ");
+};
+
+export const GridCol = forwardRef<HTMLElement, GridColProps>(({ children, className, colSizeConfig, tag: Tag = "div", ...props }, ref) => {
+  const Element = Tag as React.ElementType;
+
+  const colSpanClasses = colSizeConfig ? getColSpan(colSizeConfig) : "col-span-full";
+
+  return (
+    <Element ref={ref} className={cn(colSpanClasses, className)} {...props}>
+      {children}
+    </Element>
+  );
+});
+
+GridCol.displayName = "GridCol";
