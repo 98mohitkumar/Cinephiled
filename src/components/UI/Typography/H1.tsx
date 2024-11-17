@@ -8,7 +8,7 @@ type H1Props = ComponentPropsWithoutRef<"h1"> & {
   weight?: "light" | "regular" | "medium" | "semibold" | "bold";
 };
 
-const H1 = forwardRef<HTMLElement, H1Props>(({ className, children, tag: Element = "h1", weight = "semibold", ...props }, ref) => (
+const H1 = forwardRef<HTMLElement, H1Props>(({ className, children, tag: Element = "h1", weight = "bold", ...props }, ref) => (
   <Element
     ref={ref}
     className={cn(

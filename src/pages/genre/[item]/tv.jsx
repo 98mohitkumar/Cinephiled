@@ -42,9 +42,7 @@ const TvShows = ({ renderList, genreName, genreId }) => {
       <div className='relative'>
         <DominantColor flip tint />
         <LayoutContainer className='relative z-5 pb-24 pt-4864'>
-          <H1 className='mb-3240 text-center text-white' weight='semibold'>
-            {genreName} TV Shows
-          </H1>
+          <H1 className='mb-3240 text-center text-white'>{genreName} TV Shows</H1>
 
           {cleanedItems?.length > 0 ? (
             <Fragment>
