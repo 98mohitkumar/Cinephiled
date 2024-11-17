@@ -24,12 +24,12 @@ export const apiEndpoints = {
 
     setRating: ({ mediaType, mediaId }: { mediaType: string; mediaId: string }) => `${baseUrlV3}/${mediaType}/${mediaId}/rating`,
 
-    getRated: ({ mediaType, accountId, pageQuery = 1 }: { mediaType: string; accountId: string; pageQuery: number }) =>
+    getRated: ({ mediaType, accountId, pageQuery = 1 }: { mediaType: string; accountId: string; pageQuery?: number }) =>
       `${baseUrlV3}/account/${accountId}/rated/${mediaType}?language=en-US&sort_by=created_at.desc&page=${pageQuery}`,
 
     deleteRating: ({ mediaType, mediaId }: { mediaType: string; mediaId: string }) => `${baseUrlV3}/${mediaType}/${mediaId}/rating`,
 
-    getRecommendations: ({ mediaType, accountId, pageQuery = 1 }: { mediaType: string; accountId: string; pageQuery: number }) =>
+    getRecommendations: ({ mediaType, accountId, pageQuery = 1 }: { mediaType: string; accountId: string; pageQuery?: number }) =>
       `${baseUrlV4}/account/${accountId}/${mediaType}/recommendations?page=${pageQuery}&language=en-US`,
 
     getCountryCode: (ip: string) => `https://ipwho.is/${ip}?fields=country_code`
@@ -38,18 +38,19 @@ export const apiEndpoints = {
     movieSearchWithYear: ({ query, year }: { query: string; year: string }) =>
       `${baseUrlV3}/search/movie?language=en-US&query=${query}&page=1&include_adult=false&year=${year}`,
 
-    movieSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery: number }) =>
+    movieSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery?: number }) =>
       `${baseUrlV3}/search/movie?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
 
     tvSearchWithYear: ({ query, year }: { query: string; year: string }) =>
       `${baseUrlV3}/search/tv?language=en-US&query=${query}&page=1&include_adult=false&first_air_date_year=${year}`,
 
-    tvSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery: number }) =>
+    tvSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery?: number }) =>
       `${baseUrlV3}/search/tv?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
 
-    keywordSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery: number }) => `${baseUrlV3}/search/keyword?query=${query}&page=${pageQuery}`,
+    keywordSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery?: number }) =>
+      `${baseUrlV3}/search/keyword?query=${query}&page=${pageQuery}`,
 
-    personSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery: number }) =>
+    personSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery?: number }) =>
       `${baseUrlV3}/search/person?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
 
     collectionSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery: number }) =>
@@ -63,7 +64,7 @@ export const apiEndpoints = {
     movieDetails: (id: string) =>
       `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=images,videos,credits,reviews,recommendations,external_ids&include_image_language=en,null`,
 
-    movieGenre: ({ genreId, pageQuery = 1, sortBy = "popularity.desc" }: { genreId: string; pageQuery: number; sortBy: string }) =>
+    movieGenre: ({ genreId, pageQuery = 1, sortBy = "popularity.desc" }: { genreId: string; pageQuery?: number; sortBy: string }) =>
       `${baseUrlV3}/discover/movie?language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}&sort_by=${sortBy}`,
 
     getMovieCredits: ({ id }: { id: string }) => `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=credits`,
@@ -139,13 +140,14 @@ export const apiEndpoints = {
   network: {
     networkDetails: (id: string) => `${baseUrlV3}/network/${id}?append_to_response=images`,
 
-    networkMedia: ({ id, pageQuery = 1, sortBy = "popularity.desc" }: { id: string; pageQuery: number; sortBy: string }) =>
+    networkMedia: ({ id, pageQuery = 1, sortBy = "popularity.desc" }: { id: string; pageQuery?: number; sortBy: string }) =>
       `${baseUrlV3}/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${pageQuery}&sort_by=${sortBy}&with_networks=${id}`
   },
   lists: {
-    getLists: ({ accountId, pageQuery = 1 }: { accountId: string; pageQuery: number }) => `${baseUrlV4}/account/${accountId}/lists?page=${pageQuery}`,
+    getLists: ({ accountId, pageQuery = 1 }: { accountId: string; pageQuery?: number }) =>
+      `${baseUrlV4}/account/${accountId}/lists?page=${pageQuery}`,
 
-    getListDetails: ({ id, pageQuery = 1 }: { id: string; pageQuery: number }) => `${baseUrlV4}/list/${id}?page=${pageQuery}`,
+    getListDetails: ({ id, pageQuery = 1 }: { id: string; pageQuery?: number }) => `${baseUrlV4}/list/${id}?page=${pageQuery}`,
 
     createList: `${baseUrlV4}/list`,
 
