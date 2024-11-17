@@ -6,14 +6,9 @@ import MetaWrapper from "components/MetaWrapper";
 import { TabItem, Tabs } from "components/Tabs/Tabs";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import H1 from "components/UI/Typography/H1";
-import { apiEndpoints } from "globals/constants";
+import { apiEndpoints, mediaTypeTabList } from "globals/constants";
 import useTabs from "hooks/useTabs";
 import { fetchOptions, removeDuplicates, framerTabVariants, matches } from "utils/helper";
-
-const tabList = [
-  { key: "movies", title: `Movies` },
-  { key: "tv", title: `TV Shows` }
-];
 
 const SectionTitle = ({ title }) => (
   <H1 tag='h2' className='mb-2432 text-center text-white'>
@@ -24,7 +19,7 @@ const SectionTitle = ({ title }) => (
 export default function Home({ popularMovies, popularTv, trendingMovies, trendingTv, posters }) {
   const { activeTab, setTab } = useTabs({ tabLocation: "indexTab" });
 
-  const activeIndex = tabList.findIndex((tab) => matches(tab.key, activeTab));
+  const activeTabIndex = mediaTypeTabList.findIndex((tab) => matches(tab.key, activeTab));
 
   return (
     <Fragment>
@@ -39,8 +34,8 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
 
       {/* movies and tv shows tabs */}
       <LayoutContainer className='py-2440'>
-        <Tabs tabItemsCount={tabList.length} activeItemIndex={activeIndex}>
-          {tabList.map(({ key, title }) => (
+        <Tabs tabItemsCount={mediaTypeTabList.length} activeItemIndex={activeTabIndex}>
+          {mediaTypeTabList.map(({ key, title }) => (
             <TabItem key={key} onClick={() => setTab(key)} className={matches(activeTab, key) ? "active" : ""}>
               {title}
             </TabItem>

@@ -35,7 +35,8 @@ const config: Config = {
     transitionTimingFunction: transitionTimings,
     extend: {
       gridTemplateColumns: {
-        desktopAutoFitMedia: "repeat(auto-fill, minmax(200px, 1fr))"
+        desktopAutoFitMedia: "repeat(auto-fill, minmax(200px, 1fr))",
+        watchProviders: "repeat(auto-fill, minmax(min(65px, 20vw), 1fr))"
       },
       aspectRatio: {
         poster: "2/3",
