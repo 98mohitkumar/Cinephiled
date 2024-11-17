@@ -126,7 +126,7 @@ const Navigation = () => {
             exit={{ translateY: "-100vh" }}
             transition={{
               type: "tween",
-              duration: 0.9,
+              duration: 0.75,
               ease: [0.77, 0, 0.175, 1]
             }}
             className='block sm:hidden'>
