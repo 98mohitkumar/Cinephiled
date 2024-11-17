@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import useGetListDetails from "./useGetListDetails";
 import { updateList } from "apiEndpoints/user";
-import Loading from "components/Loading";
+import Loading from "components/Loader/Loader";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
 import Toast, { useToast } from "components/Toast/Toast";

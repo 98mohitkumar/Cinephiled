@@ -4,11 +4,10 @@ import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
 import { Fragment, useEffect, useState } from "react";
 import Layout from "components/Layout/Layout";
-import { Loader } from "components/Loading";
+import { Loader } from "components/Loader/Loader";
 import ListsContextProvider from "Store/ListsContext";
 import MediaContextProvider from "Store/MediaContext";
 import UserContextProvider from "Store/UserContext";
-// import { LoaderContainer } from "styles/GlobalComponents";
 import Theme from "styles/theme";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {

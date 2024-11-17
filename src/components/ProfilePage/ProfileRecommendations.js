@@ -4,7 +4,7 @@ import { BiListPlus, BiListCheck } from "react-icons/bi";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
 import { addToWatchlist } from "apiEndpoints/user";
-import Loading from "components/Loading";
+import Loading from "components/Loader/Loader";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";

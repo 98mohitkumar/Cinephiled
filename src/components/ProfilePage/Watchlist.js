@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
 import { addToWatchlist } from "apiEndpoints/user";
-import Loading from "components/Loading";
+import Loading from "components/Loader/Loader";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import Modal, { useModal } from "components/Modal/Modal";
 import PlaceholderText from "components/PlaceholderText";

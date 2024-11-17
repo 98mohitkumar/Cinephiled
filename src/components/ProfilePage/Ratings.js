@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Fragment } from "react";
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
-import Loading from "components/Loading";
+import Loading from "components/Loader/Loader";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { useModal } from "components/Modal/Modal";
 import PlaceholderText from "components/PlaceholderText";

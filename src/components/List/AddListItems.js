@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Fragment, useRef, useState } from "react";
 import useGetListDetails from "./useGetListDetails";
 import { getListItemStatus, updateListItems } from "apiEndpoints/user";
-import Loading from "components/Loading";
+import Loading from "components/Loader/Loader";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
