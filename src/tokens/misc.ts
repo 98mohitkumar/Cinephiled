@@ -1,5 +1,5 @@
 // These sizings are used in clamp() function
-export const minViewportWidth = 375;
+export const minViewportWidth = 480;
 export const maxViewportWidth = 1280;
 export const pixelsPerRem = 16;
 

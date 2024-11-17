@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "c
 import H1 from "components/UI/Typography/H1";
 import { apiEndpoints, blurPlaceholder, mediaTypeTabList } from "globals/constants";
 import useTabs from "hooks/useTabs";
-import { fetchOptions, framerTabVariants, getCleanTitle, matches } from "utils/helper";
+import { fetchOptions, framerTabVariants, getCleanTitle, getTMDBImage, matches } from "utils/helper";
 
 const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, defaultRegion }) => {
   const router = useRouter();
@@ -102,7 +102,7 @@ const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, 
                     <div className='block h-full w-full'>
                       <motion.div className='aspect-square w-full overflow-hidden rounded-lg' whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                         <Image
-                          src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                          src={getTMDBImage({ path: provider.logo_path, type: "logo", size: "original" })}
                           alt={provider.provider_name}
                           width={200}
                           height={200}

@@ -1,7 +1,7 @@
 import { cssClamp } from "../utils/mixins";
 import { pixelsPerRem } from "./misc";
 
-// https://utopia.fyi/type/calculator/?c=370,18,1.125,1280,20,1.2,5,3,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12
+// https://utopia.fyi/type/calculator/?c=480,18,1.125,1280,20,1.2,5,3,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12
 const fontSizes = {
   static: [
     { key: "h1Static", size: 49.77, lineHeight: 64, letterSpacing: -0.4 },

@@ -8,7 +8,7 @@ export const tabWrapperStyles = css`
   margin-inline: auto;
   position: relative;
   grid-template-columns: ${({ $tabItemsCount }) => `repeat(${$tabItemsCount}, 1fr)`};
-  width: ${cssClamp({ minSize: 400, maxSize: 630 })};
+  width: ${cssClamp({ minSize: 450, maxSize: 630 })};
   border: 4px solid ${colors.neutral[200]};
   background: ${colors.neutral[200]};
   border-radius: ${borderRadiusTokens["2xl"]};
