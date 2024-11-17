@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { NoDataText } from "styles/GlobalComponents";
+import H4 from "./UI/Typography/H4";
 import { cn, matches } from "utils/helper";
 
 type PlaceholderTextProps = {
@@ -12,14 +12,14 @@ const PlaceholderText = ({ className, height = "small", children }: PlaceholderT
   return (
     <div
       className={cn(
-        "grid place-items-center",
+        "grid select-none place-items-center",
         {
           "min-h-[20vh]": matches(height, "small"),
           "min-h-[45vh]": matches(height, "large")
         },
         className
       )}>
-      <NoDataText className='text-center font-semibold'>{children}</NoDataText>
+      <H4 className='text-center text-neutral-500'>{children}</H4>
     </div>
   );
 };

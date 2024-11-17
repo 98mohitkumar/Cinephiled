@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Fragment } from "react";
 import { colorOverlayStyles } from "./DominantColorStyles";
 import { usePalette } from "hooks/usePalette";
-import { getTMDBImage } from "utils/helper";
+import { cn, getTMDBImage } from "utils/helper";
 
 const DominantColor = ({ image, tint = false, flip = false, isUsingBackdrop = false, className = "" }) => {
   const imageType = {
@@ -22,7 +22,7 @@ const DominantColor = ({ image, tint = false, flip = false, isUsingBackdrop = fa
             opacity: tint ? 0.4 : 1,
             transition: { duration: 2.5, ease: [0.77, 0, 0.175, 1] }
           }}
-          className={`absolute ${tint ? "tint" : ""} ${className}`}
+          className={cn("absolute", { tint: tint }, className)}
           $flip={+flip}
           $palette={palette}
         />

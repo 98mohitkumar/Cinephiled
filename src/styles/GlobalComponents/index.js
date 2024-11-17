@@ -247,11 +247,6 @@ export const FactsFlexWrapper = styled.div`
   }
 `;
 
-export const NoDataText = styled.p`
-  font-size: clamp(1.25rem, 2.8vw, 2rem);
-  color: rgb(163 163 163);
-`;
-
 export const BadQuery = styled.h1`
   font-weight: bold;
   font-size: calc(2rem + 4vw);

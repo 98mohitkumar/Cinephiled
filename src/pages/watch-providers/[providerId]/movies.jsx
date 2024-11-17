@@ -1,35 +1,37 @@
 import { Fragment } from "react";
 import DominantColor from "components/DominantColor/DominantColor";
-import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
+import { LayoutContainer } from "components/Layout/helpers";
 import MetaWrapper from "components/MetaWrapper";
 import PlaceholderText from "components/PlaceholderText";
-import Select from "components/Select/Select";
+import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select/Select";
+import H1 from "components/UI/Typography/H1";
+import P from "components/UI/Typography/P";
 import { apiEndpoints, sortOptions } from "globals/constants";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useSort from "hooks/useSort";
-import { getActiveSortKey } from "src/utils/getSortedItems";
-import { LayoutContainer } from "styles/GlobalComponents";
 import { fetchOptions, removeDuplicates } from "utils/helper";
 
 const ProviderMovies = ({ media, region, providerName, providerId }) => {
-  const { sortBy, handleSortSelection } = useSort({ shallow: false });
-
   const {
     tmdbOptions: { movie: movieSortOptions }
   } = sortOptions;
+  const defaultSortOption = movieSortOptions.find((option) => option?.isDefault)?.value;
+  const { sortBy, handleSortSelection } = useSort({ shallow: false, defaultSortOption });
 
   const { list, resetQueryState } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) =>
       apiEndpoints.watchProviders.watchProviderMovies({
         providerId,
-        region: region?.iso_3166_1,
+        region: region,
         pageQuery: page,
         sortBy
       })
   });
 
   const { cleanedItems: renderList } = removeDuplicates(media.concat(list));
+  const currentSortOption = sortBy || defaultSortOption;
 
   const handleSort = (key) => {
     handleSortSelection(key);
@@ -39,47 +41,52 @@ const ProviderMovies = ({ media, region, providerName, providerId }) => {
   return (
     <Fragment>
       <MetaWrapper
-        title={`Movies - ${providerName} (${region?.iso_3166_1}) - Cinephiled`}
-        description={`Explore a comprehensive list of Movies available on ${providerName} in ${region?.iso_3166_1}`}
+        title={`Movies - ${providerName} (${region}) - Cinephiled`}
+        description={`Explore a comprehensive list of Movies available on ${providerName} in ${region}`}
         url={`https://cinephiled.vercel.app/watch-providers/${providerId}-${providerName}/movies`}
       />
 
-      <LayoutContainer className='relative z-20'>
+      <LayoutContainer className='relative py-4064'>
         <DominantColor tint flip />
 
-        <div className='relative z-20'>
+        <section className='relative z-5'>
+          <H1 className='mx-auto max-w-screen-lg text-center text-neutral-400'>
+            Movies available on
+            <span className='text-white'>
+              {" "}
+              {providerName}&nbsp;({region})
+            </span>
+          </H1>
+
           {renderList?.length > 0 ? (
             <Fragment>
-              <div className='my-5 pb-6 text-center lg:my-10'>
-                <h1 className='text-zinc-400 w-full text-[calc(1.375rem_+_1.5vw)] font-semibold xl:text-[2.25rem]'>
-                  Movies available on <br className='hidden max-sm:block' />
-                  <span className='font-semibold text-neutral-50'>
-                    {providerName} ({region?.iso_3166_1})
-                  </span>
-                </h1>
+              <div className='mb-2432 mt-3240 flex items-center justify-end gap-10'>
+                <P weight='medium' size='large' className='text-neutral-300'>
+                  Sort By:
+                </P>
+
+                <Select defaultValue={currentSortOption} onValueChange={handleSort}>
+                  <SelectTrigger className='w-fit min-w-[250px]'>
+                    <SelectValue placeholder='Sort By:' />
+                  </SelectTrigger>
+                  <SelectContent position='popper' align='end'>
+                    {movieSortOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
-              <div className='mb-8 flex justify-end'>
-                <Select
-                  options={movieSortOptions}
-                  activeKey={sortBy || "default"}
-                  triggerText={getActiveSortKey({
-                    options: movieSortOptions,
-                    sortBy,
-                    defaultKey: "default"
-                  })}
-                  baseSizeOptions
-                  label='Sort By:'
-                  handleChange={handleSort}
-                />
-              </div>
-
-              <MoviesTemplate movies={renderList} />
+              <MediaTemplateGrid media={renderList} mediaType='movie' />
             </Fragment>
           ) : (
-            <PlaceholderText height='large'>No Movies available on {providerName} in this region</PlaceholderText>
+            <PlaceholderText height='large'>
+              No Movies are available on {providerName}&nbsp;({region})
+            </PlaceholderText>
           )}
-        </div>
+        </section>
       </LayoutContainer>
     </Fragment>
   );
@@ -111,7 +118,7 @@ export const getServerSideProps = async (ctx) => {
         providerId: providerId.split("-")[0],
         media: providerMoviesData.results || [],
         providerName: providerId.split("-").slice(1).join(" "),
-        region: regionsData?.results?.find(({ iso_3166_1 }) => iso_3166_1 === (watchregion || "US")) || {}
+        region: regionsData?.results?.find(({ iso_3166_1 }) => iso_3166_1 === (watchregion || "US"))?.iso_3166_1 || ""
       }
     };
   } catch {

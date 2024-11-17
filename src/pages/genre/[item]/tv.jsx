@@ -52,7 +52,7 @@ const TvShows = ({ renderList, genreName, genreId }) => {
                 </P>
 
                 <Select defaultValue={currentSortOption} onValueChange={handleSort}>
-                  <SelectTrigger className='w-fit min-w-[220px]'>
+                  <SelectTrigger className='w-fit min-w-[250px]'>
                     <SelectValue placeholder='Sort By:' />
                   </SelectTrigger>
                   <SelectContent position='popper' align='end'>
@@ -68,7 +68,7 @@ const TvShows = ({ renderList, genreName, genreId }) => {
               <MediaTemplateGrid mediaType='tv' media={cleanedItems} />
             </Fragment>
           ) : (
-            <PlaceholderText height='large'>No Movies For Now</PlaceholderText>
+            <PlaceholderText height='large'>No TV Shows are available for this genre</PlaceholderText>
           )}
         </LayoutContainer>
       </div>
