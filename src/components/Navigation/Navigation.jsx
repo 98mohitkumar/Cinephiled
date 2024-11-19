@@ -85,7 +85,7 @@ const Navigation = () => {
             </div>
           </Link>
 
-          <FlexBox className='-mr-32 items-center max-sm:hidden' css={navLinksStyles}>
+          <FlexBox className='-mr-2432 items-center max-sm:hidden' css={navLinksStyles}>
             {navLinks.map(({ text, link }) => (
               <Link href={link} key={text}>
                 <P size='large' weight='medium' className={`link ${matches(router.asPath, link) ? "active" : ""}`} aria-label={`go to ${text} page`}>
