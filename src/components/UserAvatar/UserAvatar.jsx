@@ -54,7 +54,7 @@ const UserAvatar = () => {
                   duration: 0.45,
                   ease: [0.77, 0, 0.175, 1]
                 }}
-                className='drop-shadow-md'>
+                className='drop-shadow-xl'>
                 <Link href='/profile' passHref>
                   <div css={popupOption} className='border-b border-neutral-700 font-semibold' role='button'>
                     {userInfo?.name || userInfo?.username}

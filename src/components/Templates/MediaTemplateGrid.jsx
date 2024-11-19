@@ -33,7 +33,7 @@ const MediaTemplateGrid = ({ media, mediaType }) => {
                   alt={title || name}
                   fill
                   style={{ objectFit: "cover" }}
-                  className='rounded-xl'
+                  className='rounded-xl shadow-xl'
                   placeholder='blur'
                   blurDataURL={blurPlaceholder}
                 />

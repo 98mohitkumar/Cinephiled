@@ -27,8 +27,8 @@ export const genreCardStyles = css`
   place-items: center;
   transition: ${transition({
     property: "filter",
-    duration: 0.325,
-    timingFunction: "in-out"
+    duration: 0.25,
+    timingFunction: "linear"
   })};
   background: ${`linear-gradient(200deg,${colors.accentTertiary}, ${colors.accentPrimary}, ${colors.accentSecondary})`};
   overflow: hidden;
