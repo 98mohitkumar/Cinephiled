@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import MetaWrapper from "components/MetaWrapper";
+
 import PlaceholderText from "components/PlaceholderText";
 import {
   QueryContainer,
@@ -13,7 +13,9 @@ import {
   QueryDescription,
   SearchResultsContainer
 } from "components/SearchTab/SearchTabStyles";
-import { apiEndpoints, blurPlaceholder } from "globals/constants";
+import MetaWrapper from "components/Shared/MetaWrapper";
+import { apiEndpoints } from "data/apiEndpoints";
+import { blurPlaceholder } from "data/global";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import { fetchOptions, getCleanTitle, getReleaseDate } from "utils/helper";
 

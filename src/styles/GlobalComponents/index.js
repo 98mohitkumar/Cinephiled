@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { spacingTokens } from "tokens/spacings";
+
+import { theme } from "theme/theme";
 import { cssClamp } from "utils/mixins";
 
 // redundant
@@ -463,7 +464,7 @@ export const EpisodeShowCaseWrapper = styled.div`
 // redundant
 export const LayoutContainer = styled.section`
   width: 100%;
-  padding-inline: ${spacingTokens.spacing2064};
+  padding-inline: ${theme.spacings.spacing2064};
 `;
 
 // redundant

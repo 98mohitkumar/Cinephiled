@@ -1,5 +1,6 @@
 import { css } from "styled-components";
-import { colors } from "tokens/colors";
+
+import { theme } from "theme/theme";
 import { cssClamp, hoverMediaQuery, transition } from "utils/mixins";
 
 export const footerWrapper = css`
@@ -15,10 +16,10 @@ export const footerWrapper = css`
     height: 1px;
     background: ${`linear-gradient(
     90deg,
-    ${colors.accentTertiary},
-    ${colors.accentPrimary},
-    ${colors.accentSecondary},
-    ${colors.accentTertiary}
+    ${theme.colors.accentTertiary},
+    ${theme.colors.accentPrimary},
+    ${theme.colors.accentSecondary},
+    ${theme.colors.accentTertiary}
   )`};
   }
 `;
@@ -29,7 +30,7 @@ export const footerLink = css`
 
   ${hoverMediaQuery()} {
     &:hover {
-      color: ${colors.accentPrimary};
+      color: ${theme.colors.accentPrimary};
     }
   }
 

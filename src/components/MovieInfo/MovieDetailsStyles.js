@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 
+// redundant
 export const HeroInfoWrapper = styled.div`
   color: white;
   height: 100%;
@@ -84,6 +85,7 @@ export const ReleaseDateWrapper = styled.div`
   gap: 1rem;
 `;
 
+// redundant
 export const GenreWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -103,6 +105,7 @@ export const GenreWrap = styled.div`
   }
 `;
 
+// redundant
 export const Rounded = styled.div`
   border: 2px solid white;
   border-radius: 20px;
@@ -151,11 +154,13 @@ export const Divider = styled.div`
   }
 `;
 
+// redundant
 export const Gradient = styled.div`
   position: absolute;
-  background: linear-gradient(0deg, #121212 14%, rgba(21, 21, 21, 0.5) 100%);
+  /* background: linear-gradient(90deg, #121212 10%, transparent 100%); */
+  background: radial-gradient(ellipse at top, transparent 0%, #121212 70%);
   inset: 0;
-  bottom: -10px;
+  bottom: -5px;
 `;
 
 export const RtoR = styled.div`
@@ -192,6 +197,7 @@ export const RtoR = styled.div`
   }
 `;
 
+// redundant
 export const RatingWrapper = styled.div`
   margin: 1rem 0rem;
 
@@ -203,6 +209,7 @@ export const RatingWrapper = styled.div`
   }
 `;
 
+// redundant
 export const Overview = styled.p`
   font-size: 20px;
   font-weight: 500;

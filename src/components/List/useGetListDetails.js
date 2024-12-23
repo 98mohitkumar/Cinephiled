@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { apiEndpoints } from "globals/constants";
+
+import { apiEndpoints } from "data/apiEndpoints";
 import { useUserContext } from "Store/UserContext";
 import { fetchOptions } from "utils/helper";
 

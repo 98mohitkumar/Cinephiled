@@ -1,6 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { useUserContext } from "./UserContext";
+
 import { getFavorites, getRated, getRecommendations, getWatchlist } from "apiEndpoints/user";
+
+import { useUserContext } from "./UserContext";
 
 const defaultState = {
   favoriteMovies: [],

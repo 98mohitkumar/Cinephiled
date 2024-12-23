@@ -1,10 +1,13 @@
 import Image from "next/image";
 import { Fragment } from "react";
-import { BackdropsImg, BackdropsImgContainer, BackdropsWrapper } from "./BackdropsStyles";
+
 import DownloadMediaButton from "components/DownloadMediaButton/DownloadMediaButton";
 import PlaceholderText from "components/PlaceholderText";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder } from "data/global";
 
+import { BackdropsImg, BackdropsImgContainer, BackdropsWrapper } from "./BackdropsStyles";
+
+// redundant
 const Backdrops = ({ backdrops }) => {
   return (
     <Fragment>

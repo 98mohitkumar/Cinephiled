@@ -1,10 +1,12 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { CardsContainerGrid, Cards, CardImg, CardInfo, InfoTitle, ReleaseDate } from "./TemplateStyles";
+
 import RatingTag from "components/RatingTag/RatingTag";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder } from "data/global";
 import { getCleanTitle, getReleaseDate } from "utils/helper";
+
+import { CardsContainerGrid, Cards, CardImg, CardInfo, InfoTitle, ReleaseDate } from "./TemplateStyles";
 
 // redundant
 const TVTemplate = ({ TV, creditsPage = false }) => {

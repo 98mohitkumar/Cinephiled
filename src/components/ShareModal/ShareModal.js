@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Fragment } from "react";
 import { IoCopy } from "react-icons/io5";
+
 import Modal from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Toast, { useToast } from "components/Toast/Toast";

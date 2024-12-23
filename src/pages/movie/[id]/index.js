@@ -1,11 +1,12 @@
 import { Fragment, useEffect, useState } from "react";
-import DominantColor from "components/DominantColor/DominantColor";
-import MetaWrapper from "components/MetaWrapper";
+
 import MovieDetails from "components/MovieInfo/MovieDetails";
 import MovieFacts from "components/MovieInfo/MovieFacts";
 import MovieTab from "components/MovieInfo/MovieTab";
 import Recommendations from "components/Recommendations/Recommendations";
-import { apiEndpoints } from "globals/constants";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
+import MetaWrapper from "components/Shared/MetaWrapper";
+import { apiEndpoints } from "data/apiEndpoints";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import { fetchOptions, getCleanTitle, getReleaseDate, getReleaseYear } from "utils/helper";
 

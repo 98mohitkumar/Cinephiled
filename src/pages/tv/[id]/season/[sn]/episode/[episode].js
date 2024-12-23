@@ -1,16 +1,18 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
+
 import Backdrops from "components/Backdrops/Backdrops";
 import Breadcrumbs from "components/Breadcrumbs/Breadcrumbs";
 import { CastGrid, CastImg, CastWrapper } from "components/Cast/CastStyles";
-import DominantColor from "components/DominantColor/DominantColor";
-import MetaWrapper from "components/MetaWrapper";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
+import MetaWrapper from "components/Shared/MetaWrapper";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import { SeasonsRelease } from "components/TVInfo/TVStyles";
-import { apiEndpoints, blurPlaceholder } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
+import { blurPlaceholder } from "data/global";
 import { EpisodeInfoWrapper, EpisodeShowCaseWrapper, ModulesWrapper, Pill, SeasonCommonOverview, TrWrapper } from "styles/GlobalComponents";
 import { fetchOptions, getCleanTitle, getRating, getReleaseDate, getReleaseYear, getRuntime } from "utils/helper";
 

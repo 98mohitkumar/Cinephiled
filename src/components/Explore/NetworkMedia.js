@@ -2,15 +2,18 @@ import Image from "next/image";
 import { Fragment } from "react";
 import { FaLink } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-import { NetwrokDetailsWrapper, PostersGrid } from "./ExploreStyles";
+
 import NetworkMediaGrid from "components/MediaTemplate/TVTemplate";
 import { PostersImg } from "components/Posters/PostersStyles";
 import Select from "components/Select/Select";
-import { apiEndpoints, blurPlaceholder, sortOptions } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
+import { blurPlaceholder, sortOptions } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useSort from "hooks/useSort";
 import { getActiveSortKey } from "src/utils/getSortedItems";
 import { ModulesWrapper } from "styles/GlobalComponents";
+
+import { NetwrokDetailsWrapper, PostersGrid } from "./ExploreStyles";
 
 const NetworkMedia = ({ details, media }) => {
   const posters = media.map(({ poster_path }) => (poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"));

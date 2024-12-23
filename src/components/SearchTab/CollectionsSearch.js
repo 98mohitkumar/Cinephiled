@@ -1,8 +1,9 @@
-import { SearchResultsContainer } from "./SearchTabStyles";
 import PlaceholderText from "components/PlaceholderText";
 import Recommendations from "components/Recommendations/Recommendations";
-import { apiEndpoints } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
+
+import { SearchResultsContainer } from "./SearchTabStyles";
 
 const CollectionsSearch = ({ collections, searchQuery }) => {
   const { list } = useInfiniteQuery({

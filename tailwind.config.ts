@@ -1,11 +1,12 @@
 import { type Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
-import { colors } from "./src/tokens/colors";
-import { borderRadiusTokens, breakpoints, transitionTimings, zIndexTokens } from "./src/tokens/misc";
-import { tailwindSpacingTokens } from "./src/tokens/spacings";
-import { tailwindFontSizeTokens } from "./src/tokens/typography";
 
-const variants = ["xs", "sm", "md", "lg", "xl", "2xl"];
+import { colors } from "./src/theme/tokens/colors";
+import { borderRadiusTokens, breakpoints, transitionTimings, zIndexTokens } from "./src/theme/tokens/misc";
+import { tailwindSpacingTokens } from "./src/theme/tokens/spacings";
+import { tailwindFontSizeTokens } from "./src/theme/tokens/typography";
+
+const variants = Object.keys(breakpoints);
 
 const config: Config = {
   content: [
@@ -26,8 +27,8 @@ const config: Config = {
     fontSize: tailwindFontSizeTokens,
     colors,
     fontFamily: {
-      manrope: "var(--manrope)",
-      montserrat: "var(--montserrat)"
+      manrope: ["var(--manrope)"],
+      montserrat: ["var(--montserrat)"]
     },
     borderRadius: borderRadiusTokens,
     screens: breakpoints,
@@ -35,12 +36,29 @@ const config: Config = {
     transitionTimingFunction: transitionTimings,
     extend: {
       gridTemplateColumns: {
-        desktopAutoFitMedia: "repeat(auto-fill, minmax(200px, 1fr))",
-        watchProviders: "repeat(auto-fill, minmax(min(55px, 20vw), 1fr))"
+        desktopAutoFillMedia: "repeat(auto-fill, minmax(225px, 1fr))",
+        watchProviders: "repeat(auto-fill, minmax(min(55px, 20vw), 1fr))",
+        customHeroDetailsGrid: "16rem 1fr",
+        "16": "repeat(16, minmax(0, 1fr))"
+      },
+      gridColumn: {
+        "span-13": "span 13 / span 13",
+        "span-14": "span 14 / span 14",
+        "span-15": "span 15 / span 15",
+        "span-16": "span 16 / span 16"
       },
       aspectRatio: {
         poster: "2/3",
         backdrop: "16/9"
+      },
+      height: {
+        halfScreen: "50vh"
+      },
+      maxHeight: {
+        halfScreen: "50vh"
+      },
+      minHeight: {
+        halfScreen: "50vh"
       }
     }
   },

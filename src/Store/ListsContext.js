@@ -1,7 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useUserContext } from "./UserContext";
-import { apiEndpoints } from "globals/constants";
+
+import { apiEndpoints } from "data/apiEndpoints";
 import { fetchOptions } from "utils/helper";
+
+import { useUserContext } from "./UserContext";
 
 const ListsContext = createContext({
   lists: [],

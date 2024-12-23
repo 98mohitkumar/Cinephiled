@@ -1,13 +1,15 @@
-import { motion, AnimatePresence } from "framer-motion";
 import { UserRound } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef, useState } from "react";
-import { popupOption, avatar, popup } from "./UserAvatarStyles";
+
 import { useLogout } from "apiEndpoints/auth";
-import { FlexBox } from "components/Layout/helpers";
+import FlexBox from "components/UI/FlexBox";
 import P from "components/UI/Typography/P";
 import { useUserContext } from "Store/UserContext";
+
+import { popupOption, avatar, popup } from "./UserAvatarStyles";
 
 const UserAvatar = () => {
   const router = useRouter();

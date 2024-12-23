@@ -1,9 +1,9 @@
 import * as hexToRgba from "hex-to-rgba";
 import styled, { css } from "styled-components";
-import { MAX_WIDTH } from "globals/constants";
-import { colors } from "tokens/colors";
-import { spacingTokens } from "tokens/spacings";
-import { hoverMediaQuery, mediaQuery, transition } from "utils/mixins";
+
+import { MAX_WIDTH } from "data/global";
+import { theme } from "theme/theme";
+import { cssClamp, hoverMediaQuery, transition } from "utils/mixins";
 
 export const headerStyles = css`
   top: 0;
@@ -22,7 +22,7 @@ export const headerStyles = css`
 `;
 
 export const navBarStyles = css`
-  background-color: ${hexToRgba(colors.black, 0.95)};
+  background-color: ${hexToRgba(theme.colors.black, 0.95)};
 
   &::after {
     content: "";
@@ -34,39 +34,35 @@ export const navBarStyles = css`
     height: 1.5px;
     background: ${`linear-gradient(
     90deg,
-    ${colors.accentTertiary},
-    ${colors.accentPrimary},
-    ${colors.accentSecondary},
-    ${colors.accentTertiary}
+    ${theme.colors.accentTertiary},
+    ${theme.colors.accentPrimary},
+    ${theme.colors.accentSecondary},
+    ${theme.colors.accentTertiary}
   )`};
   }
 `;
 
 export const Logo = styled.div`
-  min-width: 50px;
-  min-height: 30px;
+  min-width: ${cssClamp({ minSize: 42, maxSize: 50 })};
+  aspect-ratio: 1.69;
   background: url("/navLogo.png") no-repeat center center / contain;
-
-  ${mediaQuery({ breakpoint: "sm", type: "max" })} {
-    min-height: 24px;
-  }
 `;
 
 export const navLinksStyles = css`
   .link {
     color: white;
-    padding: ${spacingTokens.spacing16} ${spacingTokens.spacing32};
+    padding: ${theme.spacings.spacing16} ${theme.spacings.spacing32};
     transition: ${transition({ property: "color", duration: 0.35, timingFunction: "in-out" })};
 
     ${hoverMediaQuery()} {
       &:hover {
-        color: ${colors.accentPrimary};
+        color: ${theme.colors.accentPrimary};
       }
     }
   }
 
   .active {
-    color: ${colors.accentPrimary};
+    color: ${theme.colors.accentPrimary};
   }
 `;
 
@@ -78,7 +74,7 @@ export const HamburgerIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: ${spacingTokens.spacing8};
+  margin-left: ${theme.spacings.spacing8};
 
   &::after,
   &::before {
@@ -87,7 +83,7 @@ export const HamburgerIcon = styled.div`
     height: 2px;
     position: absolute;
     margin: auto;
-    background: ${colors.neutral[200]};
+    background: ${theme.colors.neutral[200]};
     transition: ${transition({ property: "all", duration: 0.3, timingFunction: "ease-in-expo", delay: 0.2 })};
   }
 
@@ -116,15 +112,15 @@ export const hamburgerMenu = css`
   width: 100vw;
   height: 100vh;
   position: fixed;
-  top: 56px;
+  top: var(--header-height);
   left: 0;
   margin: auto;
-  background-color: ${hexToRgba(colors.black, 0.95)};
+  background-color: ${hexToRgba(theme.colors.black, 0.95)};
   backdrop-filter: blur(3px);
   z-index: -1;
 
   .active {
-    color: ${colors.accentPrimary};
+    color: ${theme.colors.accentPrimary};
   }
 `;
 
@@ -134,6 +130,6 @@ export const searchOverlayBackdrop = css`
   position: fixed;
   max-width: ${MAX_WIDTH}px;
   margin: auto;
-  background: ${hexToRgba(colors.black, 0.9)};
+  background: ${hexToRgba(theme.colors.black, 0.9)};
   backdrop-filter: blur(3px);
 `;

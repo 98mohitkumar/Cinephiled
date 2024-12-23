@@ -1,17 +1,19 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Fragment } from "react";
-import Favorites from "./Favorites";
-import { Banner, ProfileAvatar, ProfileStats } from "./ProfilePageStyles";
-import ProfileRecommendations from "./ProfileRecommendations";
-import Ratings from "./Ratings";
-import Watchlist from "./Watchlist";
-import MetaWrapper from "components/MetaWrapper";
-import { Tabs, LinearTabs } from "components/Tabs/Tabs";
+
+import MetaWrapper from "components/Shared/MetaWrapper";
+import { Tabs, LinearTabs } from "components/Shared/Tabs/Tabs";
 import useTabs from "hooks/useTabs";
 import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import { framerTabVariants } from "utils/helper";
+
+import Favorites from "./Favorites";
+import { Banner, ProfileAvatar, ProfileStats } from "./ProfilePageStyles";
+import ProfileRecommendations from "./ProfileRecommendations";
+import Ratings from "./Ratings";
+import Watchlist from "./Watchlist";
 
 const tabList = [
   { key: "movies", name: "Movies" },

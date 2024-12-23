@@ -1,18 +1,20 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Fragment } from "react";
-import { TabIcon, TabSelectionTitle, tabStyling } from "./MovieTabStyles";
+
 import Backdrops from "components/Backdrops/Backdrops";
 import Cast from "components/Cast/Cast";
 import Posters from "components/Posters/Posters";
 import Reviews from "components/Reviews/Reviews";
+import { Tabs } from "components/Shared/Tabs/Tabs";
 import BackdropsSvg from "components/Svg/backdrops";
 import CastSvg from "components/Svg/cast";
 import PostersSvg from "components/Svg/posters";
 import ReviewsSvg from "components/Svg/reviews";
-import { Tabs } from "components/Tabs/Tabs";
 import useTabs from "hooks/useTabs";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import { framerTabVariants } from "utils/helper";
+
+import { TabIcon, TabSelectionTitle, tabStyling } from "./MovieTabStyles";
 
 const tabList = [
   {

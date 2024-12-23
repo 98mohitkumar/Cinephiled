@@ -1,16 +1,18 @@
 import Image from "next/image";
 import { Fragment, useEffect, useRef, useState } from "react";
-import { Bio, Details } from "./PersonDetailsStyles";
-import PersonPageTab from "./PersonPageTab";
-import DominantColor from "components/DominantColor/DominantColor";
+
 import DownloadMediaButton from "components/DownloadMediaButton/DownloadMediaButton";
 import { PseudoTrack } from "components/Explore/ExploreStyles";
 import { HeroInfoTitle, HeroInfoWrapper, Span } from "components/MovieInfo/MovieDetailsStyles";
 import { PostersImg, PostersWrapper } from "components/Posters/PostersStyles";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder } from "data/global";
 import { DetailsHeroWrap, HeroDetailsContainer, HeroImg, HeroImgWrapper } from "styles/GlobalComponents";
 import { getGender } from "utils/helper";
+
+import { Bio, Details } from "./PersonDetailsStyles";
+import PersonPageTab from "./PersonPageTab";
 
 const PersonDetails = ({ details }) => {
   const [isOverflowing, setIsOverflowing] = useState(false);

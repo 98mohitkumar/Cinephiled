@@ -1,18 +1,20 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { Fragment } from "react";
-import DominantColor from "components/DominantColor/DominantColor";
+
 import DeleteListModal from "components/List/DeleteListModal";
 import EditListModal from "components/List/EditListModal";
 import ListItems from "components/List/ListItems";
 import ListShareButton from "components/List/ListShareButton";
 import ManageList from "components/List/ManageList";
-import MetaWrapper from "components/MetaWrapper";
 import { Gradient } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
-import { apiEndpoints, blurPlaceholder } from "globals/constants";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
+import MetaWrapper from "components/Shared/MetaWrapper";
+import { apiEndpoints } from "data/apiEndpoints";
+import { blurPlaceholder } from "data/global";
 import { Button, LayoutContainer } from "styles/GlobalComponents";
 import { fetchOptions, framerTabVariants, getCleanTitle, getRuntime } from "utils/helper";
 

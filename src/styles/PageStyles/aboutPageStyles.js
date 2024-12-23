@@ -1,7 +1,7 @@
 import hexToRgba from "hex-to-rgba";
 import { css, keyframes } from "styled-components";
-import { colors } from "tokens/colors";
-import { transitionTimings, zIndexTokens } from "tokens/misc";
+
+import { theme } from "theme/theme";
 
 const aboutAnimation = keyframes`
   from {
@@ -21,8 +21,8 @@ export const pageBackgroundStyles = css`
 
   .background {
     filter: brightness(50%);
-    z-index: ${zIndexTokens[1]};
-    animation: ${aboutAnimation} 2s ${transitionTimings["ease-in-out-quart"]} forwards;
+    z-index: ${theme.zIndex[1]};
+    animation: ${aboutAnimation} 2s ${theme.transitionTimings["ease-in-out-quart"]} forwards;
   }
 
   &::before {
@@ -31,7 +31,7 @@ export const pageBackgroundStyles = css`
     height: 100%;
     width: 100%;
     position: absolute;
-    z-index: ${zIndexTokens[2]};
-    background: ${hexToRgba(colors.black, 0.9)};
+    z-index: ${theme.zIndex[2]};
+    background: ${hexToRgba(theme.colors.black, 0.9)};
   }
 `;

@@ -1,8 +1,7 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { Fragment } from "react";
 import { BiListPlus, BiListCheck } from "react-icons/bi";
-import MediaCard from "./MediaCard";
-import { ProfileMediaTab } from "./ProfilePage";
+
 import { addToWatchlist } from "apiEndpoints/user";
 import Loading from "components/Loader/Loader";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
@@ -13,6 +12,9 @@ import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import { Button } from "styles/GlobalComponents";
 import { framerTabVariants, removeDuplicates } from "utils/helper";
+
+import MediaCard from "./MediaCard";
+import { ProfileMediaTab } from "./ProfilePage";
 
 const MovieRecommendations = () => {
   const { userInfo } = useUserContext();

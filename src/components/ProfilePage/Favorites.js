@@ -1,7 +1,6 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { Fragment } from "react";
-import MediaCard from "./MediaCard";
-import { ProfileMediaTab } from "./ProfilePage";
+
 import { setFavorite } from "apiEndpoints/user";
 import Loading from "components/Loader/Loader";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
@@ -10,6 +9,9 @@ import PlaceholderText from "components/PlaceholderText";
 import { useMediaContext } from "Store/MediaContext";
 import { Button } from "styles/GlobalComponents";
 import { framerTabVariants, getReleaseYear } from "utils/helper";
+
+import MediaCard from "./MediaCard";
+import { ProfileMediaTab } from "./ProfilePage";
 
 export const FavoritesCTA = ({ clickHandler, mediaData }) => {
   const { isModalVisible, openModal, closeModal } = useModal();

@@ -1,6 +1,7 @@
 import { useSession, signOut } from "next-auth/react";
 import { useState, createContext, useEffect, useContext } from "react";
-import { apiEndpoints } from "globals/constants";
+
+import { apiEndpoints } from "data/apiEndpoints";
 import { fetchOptions } from "utils/helper";
 
 const UserContext = createContext({

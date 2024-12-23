@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
-import H4 from "./UI/Typography/H4";
+
 import { cn, matches } from "utils/helper";
+
+import H4 from "./UI/Typography/H4";
 
 type PlaceholderTextProps = {
   className?: string;

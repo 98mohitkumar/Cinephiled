@@ -1,7 +1,8 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { FaTrash } from "react-icons/fa";
+
 import { deleteList } from "apiEndpoints/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";

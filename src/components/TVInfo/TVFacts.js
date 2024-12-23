@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { FactsFieldSet, FactsLegend, FactsWrapper, Span } from "components/MovieInfo/MovieDetailsStyles";
 import { FactsFlexWrapper } from "styles/GlobalComponents";
 import { getCleanTitle } from "utils/helper";

@@ -1,14 +1,16 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useRef } from "react";
 import { BsChevronRight } from "react-icons/bs";
-import { CastGrid, CastImg, CastWrapper, SeeMore } from "./CastStyles";
+
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder } from "data/global";
 import { getCleanTitle } from "utils/helper";
+
+import { CastGrid, CastImg, CastWrapper, SeeMore } from "./CastStyles";
 
 const Cast = ({ cast, showFullCastLink = false, isSearchGrid = false }) => {
   const router = useRouter();

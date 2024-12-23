@@ -1,16 +1,18 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { Fragment } from "react";
-import DominantColor from "components/DominantColor/DominantColor";
+
 import CreateList from "components/List/CreateList";
 import { InfoTitle } from "components/MediaTemplate/TemplateStyles";
-import MetaWrapper from "components/MetaWrapper";
 import PlaceholderText from "components/PlaceholderText";
 import { RecommendationsGrid, RecommendedImg, RecommendedWrapper } from "components/Recommendations/RecommendationsStyles";
-import { apiEndpoints, blurPlaceholder } from "globals/constants";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
+import MetaWrapper from "components/Shared/MetaWrapper";
+import { apiEndpoints } from "data/apiEndpoints";
+import { blurPlaceholder } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { useUserContext } from "Store/UserContext";
 import { Button, LayoutContainer } from "styles/GlobalComponents";

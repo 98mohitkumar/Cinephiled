@@ -1,11 +1,13 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
+
 import { CardImg, CardInfo, Cards, CardsContainerGrid, InfoTitle, ReleaseDate } from "components/MediaTemplate/TemplateStyles";
 import PlaceholderText from "components/PlaceholderText";
 import RatingTag from "components/RatingTag/RatingTag";
-import { blurPlaceholder, apiEndpoints } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
+import { blurPlaceholder } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { useUserContext } from "Store/UserContext";
 import { getCleanTitle, getReleaseDate } from "utils/helper";

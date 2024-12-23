@@ -9,11 +9,12 @@
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "parent", "sibling", "index"],
+        "groups": ["type", "builtin", "external", "internal", "parent", "sibling", "index"],
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true
-        }
+        },
+        "newlines-between": "always"
       }
     ]
   }

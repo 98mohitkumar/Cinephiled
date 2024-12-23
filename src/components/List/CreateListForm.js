@@ -1,7 +1,9 @@
 import { Fragment } from "react";
-import useGetListDetails from "./useGetListDetails";
+
 import Loading from "components/Loader/Loader";
-import { sortOptions } from "globals/constants";
+import { sortOptions } from "data/apiEndpoints";
+
+import useGetListDetails from "./useGetListDetails";
 
 const CreateListForm = ({ submitHandler, id, children }) => {
   const { error, listDetails: storedValues, loading } = useGetListDetails({ id });

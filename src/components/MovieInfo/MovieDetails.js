@@ -1,8 +1,18 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { FaYoutube } from "react-icons/fa";
+
+import CollectionCard from "components/CollectionCard/CollectionCard";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
+import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
+import TechnicalDetails from "components/TechnicalDetails/TechnicalDetails";
+import UserActions from "components/UserActions/UserActions";
+import { blurPlaceholder } from "data/global";
+import { Button, DetailsHeroWrap, HeroBg, HeroBgContainer, HeroDetailsContainer, HeroImg, HeroImgWrapper } from "styles/GlobalComponents";
+import { getCleanTitle, getRating, getRuntime } from "utils/helper";
+
 import {
   Divider,
   Rounded,
@@ -23,14 +33,6 @@ import {
   Gradient,
   MovieEaster
 } from "./MovieDetailsStyles";
-import CollectionCard from "components/CollectionCard/CollectionCard";
-import DominantColor from "components/DominantColor/DominantColor";
-import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
-import TechnicalDetails from "components/TechnicalDetails/TechnicalDetails";
-import UserActions from "components/UserActions/UserActions";
-import { blurPlaceholder } from "globals/constants";
-import { Button, DetailsHeroWrap, HeroBg, HeroBgContainer, HeroDetailsContainer, HeroImg, HeroImgWrapper } from "styles/GlobalComponents";
-import { getCleanTitle, getRating, getRuntime } from "utils/helper";
 
 const MovieDetails = ({ movieDetails, easter }) => {
   const {

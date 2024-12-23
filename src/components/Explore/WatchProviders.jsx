@@ -1,18 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { Grid, GridCol } from "components/Layout/helpers";
-import Button from "components/UI/Button/Button";
-import H1 from "components/UI/Typography/H1";
+
+import Button from "components/UI/Button";
+import { Grid, GridCol } from "components/UI/Grid";
+import H2 from "components/UI/Typography/H2";
 import P from "components/UI/Typography/P";
 import WatchProvidersImage from "images/watch-providers.webp";
 
 const WatchProviders = () => {
   return (
     <Fragment>
-      <H1 tag='h2' className='mb-2432 text-center text-white'>
-        Watch Providers
-      </H1>
+      <H2 className='mb-2432 text-center text-white'>Watch Providers</H2>
 
       <Grid className='items-center gap-0 overflow-hidden rounded-xl border border-neutral-700' colConfig={{ xs: 1, lg: 12 }}>
         <GridCol colSizeConfig={{ xs: 1, lg: 7, xl: 8 }} className='h-full'>

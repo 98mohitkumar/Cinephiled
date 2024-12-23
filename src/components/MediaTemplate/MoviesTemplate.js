@@ -1,12 +1,14 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Cards, CardImg, CardInfo, InfoTitle, ReleaseDate } from "./TemplateStyles";
-import { Grid } from "components/Layout/helpers";
+
 import RatingTag from "components/RatingTag/RatingTag";
-import { blurPlaceholder } from "globals/constants";
+import { Grid } from "components/UI/Grid";
+import { blurPlaceholder } from "data/global";
 import defaultImage from "images/DefaultImage.png";
 import { getCleanTitle, getReleaseDate } from "utils/helper";
+
+import { Cards, CardImg, CardInfo, InfoTitle, ReleaseDate } from "./TemplateStyles";
 
 // redundant
 const MoviesTemplate = ({ movies, creditsPage = false }) => {
@@ -17,7 +19,7 @@ const MoviesTemplate = ({ movies, creditsPage = false }) => {
         xs: 3,
         md: 4,
         lg: 5,
-        "2xl": "desktopAutoFitMedia"
+        "2xl": "desktopAutoFillMedia"
       }}>
       {movies.length > 0
         ? movies.map(({ id, title, poster_path, vote_average, release_date, job }) => (

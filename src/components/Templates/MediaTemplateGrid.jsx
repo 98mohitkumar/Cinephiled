@@ -1,25 +1,27 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Grid } from "components/Layout/helpers";
+
 import RatingTag from "components/RatingTag/RatingTag";
+import { Grid, GridCol } from "components/UI/Grid";
 import H6 from "components/UI/Typography/H6";
 import P from "components/UI/Typography/P";
-import { blurPlaceholder } from "globals/constants";
-import { getCleanTitle, getReleaseDate, getTMDBImage } from "utils/helper";
+import { blurPlaceholder } from "data/global";
+import { getCleanTitle, getReleaseDate } from "utils/helper";
+import { getTMDBImage } from "utils/imageHelper";
 
 const MediaTemplateGrid = ({ media, mediaType }) => {
   return (
     <Grid
       colConfig={{
         xxs: 2,
-        xs: 3,
-        md: 4,
-        lg: 5,
-        "2xl": "desktopAutoFitMedia"
+        sm: 3,
+        lg: 4,
+        xl: 5,
+        "2xl": "desktopAutoFillMedia"
       }}>
       {media.map(({ id, title, name, poster_path, vote_average, release_date, first_air_date }) => (
-        <div key={id}>
+        <GridCol key={id}>
           <motion.div
             whileHover={{
               scale: 1.05,
@@ -47,7 +49,7 @@ const MediaTemplateGrid = ({ media, mediaType }) => {
               {getReleaseDate(release_date || first_air_date)}
             </P>
           </div>
-        </div>
+        </GridCol>
       ))}
     </Grid>
   );

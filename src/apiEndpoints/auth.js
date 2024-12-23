@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
-import { apiEndpoints } from "globals/constants";
+
+import { apiEndpoints } from "data/apiEndpoints";
 import { useUserContext } from "Store/UserContext";
 import { fetchOptions } from "utils/helper";
 

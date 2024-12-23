@@ -19,11 +19,11 @@
       "images/*": ["public/Images/*"],
       "styles/*": ["src/styles/*"],
       "theme/*": ["src/theme/*"],
-      "globals/*": ["src/globals/*"],
+      "data/*": ["src/data/*"],
       "hooks/*": ["src/hooks/*"],
       "apiEndpoints/*": ["src/apiEndpoints/*"],
       "Store/*": ["src/Store/*"],
-      "tokens/*": ["src/tokens/*"],
+      "tokens/*": ["src/theme/tokens/*"],
       "utils/*": ["src/utils/*"]
     }
   },

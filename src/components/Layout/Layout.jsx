@@ -1,9 +1,11 @@
 import { Manrope, Montserrat } from "next/font/google";
 import { useRouter } from "next/router";
-import { FlexBox } from "./helpers";
-import { Wrapper } from "./LayoutStyles";
+
 import Footer from "components/Footer/Footer";
 import Navigation from "components/Navigation/Navigation";
+import FlexBox from "components/UI/FlexBox";
+
+import { Wrapper } from "./LayoutStyles";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -17,8 +19,6 @@ const montserrat = Montserrat({
   variable: "--montserrat"
 });
 
-const pathsWithFooter = ["/", "/about", "/login", "/watch-providers", "/explore"];
-
 const Layout = ({ children }) => {
   const router = useRouter();
 
@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
       <FlexBox className='min-h-screen flex-col'>
         <Navigation />
         <div className='content-wrapper'>{children}</div>
-        {pathsWithFooter.includes(router.asPath) ? <Footer /> : null}
+        <Footer />
       </FlexBox>
     </Wrapper>
   );

@@ -1,7 +1,6 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Fragment } from "react";
-import MediaCard from "./MediaCard";
-import { ProfileMediaTab } from "./ProfilePage";
+
 import Loading from "components/Loader/Loader";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { useModal } from "components/Modal/Modal";
@@ -10,6 +9,9 @@ import RatingModal from "components/RatingModal/RatingModal";
 import { useMediaContext } from "Store/MediaContext";
 import { Button } from "styles/GlobalComponents";
 import { framerTabVariants, getReleaseYear } from "utils/helper";
+
+import MediaCard from "./MediaCard";
+import { ProfileMediaTab } from "./ProfilePage";
 
 const RatingCTA = ({ mediaData }) => {
   const { isModalVisible, openModal, closeModal } = useModal();

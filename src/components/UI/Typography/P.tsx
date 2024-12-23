@@ -1,11 +1,12 @@
 import { forwardRef, ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
+
 import { cn, matches } from "utils/helper";
 
 type PProps = ComponentPropsWithoutRef<"p"> & {
   className?: string;
   children: ReactNode;
   tag?: ElementType;
-  weight?: "light" | "regular" | "medium" | "semibold" | "bold";
+  weight?: "light" | "normal" | "medium" | "semibold" | "bold";
   size?:
     | "large"
     | "default"
@@ -20,13 +21,13 @@ type PProps = ComponentPropsWithoutRef<"p"> & {
     | "micro-to-tiny";
 };
 
-const P = forwardRef<HTMLElement, PProps>(({ className, children, tag: Element = "p", size = "default", weight = "regular", ...props }, ref) => (
+const P = forwardRef<HTMLElement, PProps>(({ className, children, tag: Element = "p", size = "default", weight = "normal", ...props }, ref) => (
   <Element
     ref={ref}
     className={cn(
       {
         "font-light": matches(weight, "light"),
-        "font-regular": matches(weight, "regular"),
+        "font-normal": matches(weight, "normal"),
         "font-medium": matches(weight, "medium"),
         "font-semibold": matches(weight, "semibold"),
         "font-bold": matches(weight, "bold")

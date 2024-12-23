@@ -1,7 +1,8 @@
 import { Fragment } from "react";
-import MetaWrapper from "components/MetaWrapper";
+
 import SearchTab from "components/SearchTab/SearchTab";
-import { apiEndpoints } from "globals/constants";
+import MetaWrapper from "components/Shared/MetaWrapper";
+import { apiEndpoints } from "data/apiEndpoints";
 import { BadQuery } from "styles/GlobalComponents";
 import { fetchOptions } from "utils/helper";
 

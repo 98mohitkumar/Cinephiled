@@ -1,6 +1,7 @@
 import { BiLink } from "react-icons/bi";
 import { FiTwitter, FiInstagram } from "react-icons/fi";
 import { MdShare } from "react-icons/md";
+
 import { useModal } from "components/Modal/Modal";
 import ShareModal from "components/ShareModal/ShareModal";
 import { SocialMediaLinksWrapper } from "styles/GlobalComponents";

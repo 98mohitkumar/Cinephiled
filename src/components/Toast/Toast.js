@@ -1,6 +1,7 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+
 import { ToastWrapper } from "./ToastStyles";
 
 export const useToast = () => {

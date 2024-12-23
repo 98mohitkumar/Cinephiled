@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { MAX_WIDTH } from "globals/constants";
+
+import { MAX_WIDTH } from "data/global";
 
 export const Wrapper = styled.main`
   max-width: ${MAX_WIDTH}px;

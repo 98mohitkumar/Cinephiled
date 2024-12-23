@@ -1,4 +1,4 @@
-import { apiEndpoints } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
 import { fetchOptions } from "utils/helper";
 
 const getTechnicalDetails = async (req, res) => {

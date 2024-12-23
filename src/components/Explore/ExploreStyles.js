@@ -1,8 +1,7 @@
 import styled, { css } from "styled-components";
-import { colors } from "tokens/colors";
-import { borderRadiusTokens } from "tokens/misc";
-import { hoverMediaQuery, transition } from "utils/mixins";
 
+import { theme } from "theme/theme";
+import { hoverMediaQuery, transition } from "utils/mixins";
 // redundant
 export const PseudoTrack = styled.div`
   background-color: rgba(255, 255, 255, 0.2);
@@ -19,7 +18,7 @@ export const PseudoTrack = styled.div`
 `;
 
 export const genreCardStyles = css`
-  border-radius: ${borderRadiusTokens.lg};
+  border-radius: ${theme.borderRadius.lg};
   padding: 24px;
   aspect-ratio: 1/0.5;
   position: relative;
@@ -30,7 +29,7 @@ export const genreCardStyles = css`
     duration: 0.25,
     timingFunction: "linear"
   })};
-  background: ${`linear-gradient(200deg,${colors.accentTertiary}, ${colors.accentPrimary}, ${colors.accentSecondary})`};
+  background: ${`linear-gradient(200deg,${theme.colors.accentTertiary}, ${theme.colors.accentPrimary}, ${theme.colors.accentSecondary})`};
   overflow: hidden;
 
   &::after {

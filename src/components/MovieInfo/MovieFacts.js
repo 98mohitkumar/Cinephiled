@@ -1,5 +1,6 @@
-import { FactsFieldSet, FactsLegend, FactsWrapper, Span } from "./MovieDetailsStyles";
 import { FactsFlexWrapper } from "styles/GlobalComponents";
+
+import { FactsFieldSet, FactsLegend, FactsWrapper, Span } from "./MovieDetailsStyles";
 
 const MovieFacts = ({ facts }) => {
   return (

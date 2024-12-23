@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
-import { colors } from "tokens/colors";
-import { fontSizeTokens } from "tokens/typography";
+
+import { theme } from "theme/theme";
 
 const GlobalStyles = createGlobalStyle`
   ::-webkit-scrollbar {
@@ -9,35 +9,32 @@ const GlobalStyles = createGlobalStyle`
   }
 
   ::-webkit-scrollbar-track {
-    background: ${colors.black}; 
+    background: ${theme.colors.black}; 
   }
 
   ::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    background: ${colors.neutral[400]};
+    background: ${theme.colors.neutral[400]};
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background:  ${colors.neutral[500]};
+    background:  ${theme.colors.neutral[500]};
   }
 
   html {
     -webkit-tap-highlight-color: transparent; 
   }
 
-  body {
-    background: ${colors.black};
-    color: ${colors.white};
-    font-size: ${fontSizeTokens.p};
-    font-family: "Manrope", sans-serif;
-  }
-  
-  .main-wrapper {
-    font-family: ${({ theme }) => theme.fonts.manrope};
+  :root {
+    --manrope: "Manrope", "Manrope Fallback";
+    --montserrat: "Montserrat", "Montserrat Fallback";
   }
 
-  li {
-    list-style: none;
+  body {
+    background: ${theme.colors.black};
+    color: ${theme.colors.white};
+    font-size: ${theme.fontSize.p};
+    font-family: var(--manrope);
   }
 `;
 

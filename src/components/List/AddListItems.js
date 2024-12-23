@@ -1,17 +1,19 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { Fragment, useRef, useState } from "react";
-import useGetListDetails from "./useGetListDetails";
+
 import { getListItemStatus, updateListItems } from "apiEndpoints/user";
 import Loading from "components/Loader/Loader";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
 import Toast, { useToast } from "components/Toast/Toast";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder } from "data/global";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
 import { Button } from "styles/GlobalComponents";
 import { framerTabVariants, getReleaseDate } from "utils/helper";
+
+import useGetListDetails from "./useGetListDetails";
 
 const AddListItems = ({ id, CTAHandler }) => {
   const [query, setQuery] = useState("");

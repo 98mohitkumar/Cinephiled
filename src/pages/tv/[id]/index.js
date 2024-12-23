@@ -1,11 +1,12 @@
 import { Fragment } from "react";
-import DominantColor from "components/DominantColor/DominantColor";
-import MetaWrapper from "components/MetaWrapper";
+
 import Recommendations from "components/Recommendations/Recommendations";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
+import MetaWrapper from "components/Shared/MetaWrapper";
 import TVDetails from "components/TVInfo/TVDetails";
 import TVFacts from "components/TVInfo/TVFacts";
 import TVTab from "components/TVInfo/TVTab";
-import { apiEndpoints } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import { fetchOptions, getCleanTitle, getReleaseYear, mergeEpisodeCount } from "utils/helper";
 

@@ -1,4 +1,5 @@
 import { AiOutlineDownload } from "react-icons/ai";
+
 import { Button } from "styles/GlobalComponents";
 
 export const DownloadMediaButton = ({ item }) => {

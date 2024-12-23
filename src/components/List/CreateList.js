@@ -1,14 +1,16 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Fragment, useState } from "react";
-import AddListItems from "./AddListItems";
-import ChooseListCover from "./ChooseListCover";
-import CreateListForm from "./CreateListForm";
+
 import { createList } from "apiEndpoints/user";
-import { apiEndpoints } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
 import { useListsContext } from "Store/ListsContext";
 import { useUserContext } from "Store/UserContext";
 import { Button } from "styles/GlobalComponents";
 import { fetchOptions, framerTabVariants } from "utils/helper";
+
+import AddListItems from "./AddListItems";
+import ChooseListCover from "./ChooseListCover";
+import CreateListForm from "./CreateListForm";
 
 const steps = [
   { key: 1, title: "List Details" },

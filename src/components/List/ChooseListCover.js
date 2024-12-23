@@ -1,15 +1,17 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
-import useGetListDetails from "./useGetListDetails";
+
 import { updateList } from "apiEndpoints/user";
 import Loading from "components/Loader/Loader";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
 import Toast, { useToast } from "components/Toast/Toast";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder } from "data/global";
 import { Button } from "styles/GlobalComponents";
 import { getCleanTitle } from "utils/helper";
+
+import useGetListDetails from "./useGetListDetails";
 
 const ChooseListCover = ({ id }) => {
   const { error, listDetails, loading } = useGetListDetails({ id });

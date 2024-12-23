@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
-import { SortBy } from "./helper";
-import { SearchResultsContainer } from "./SearchTabStyles";
+
 import Cast from "components/Cast/Cast";
 import PlaceholderText from "components/PlaceholderText";
-import { apiEndpoints } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { removeDuplicates } from "utils/helper";
+
+import { SortBy } from "./helper";
+import { SearchResultsContainer } from "./SearchTabStyles";
 
 const sortOptions = [
   {

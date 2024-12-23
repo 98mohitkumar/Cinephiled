@@ -1,13 +1,15 @@
 import { Fragment } from "react";
-import DominantColor from "components/DominantColor/DominantColor";
-import { LayoutContainer } from "components/Layout/helpers";
-import MetaWrapper from "components/MetaWrapper";
+
 import PlaceholderText from "components/PlaceholderText";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
+import MetaWrapper from "components/Shared/MetaWrapper";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select/Select";
+import LayoutContainer from "components/UI/LayoutContainer";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select";
 import H1 from "components/UI/Typography/H1";
 import P from "components/UI/Typography/P";
-import { apiEndpoints, sortOptions } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
+import { sortOptions } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useSort from "hooks/useSort";
 import { fetchOptions, removeDuplicates } from "utils/helper";

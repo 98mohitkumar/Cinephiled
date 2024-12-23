@@ -1,4 +1,4 @@
-import { maxViewportWidth, minViewportWidth, pixelsPerRem, breakpoints, transitionTimings } from "../tokens/misc";
+import { maxViewportWidth, minViewportWidth, pixelsPerRem, breakpoints, transitionTimings } from "../theme/tokens/misc";
 
 type CssClampArgs = {
   minSize: number;
@@ -9,19 +9,18 @@ type CssClampArgs = {
 
 // ---- css clamp ---- //
 export const cssClamp = ({ minSize, maxSize, minViewport = minViewportWidth, maxViewport = maxViewportWidth }: CssClampArgs) => {
-  // screen sizes in rems
-  const minScreenWidth = minViewport / pixelsPerRem;
-  const maxScreenWidth = maxViewport / pixelsPerRem;
+  const rem = (value: number) => value / pixelsPerRem;
 
-  // min and max sizes in rems
-  const minValue = minSize / pixelsPerRem;
-  const maxValue = maxSize / pixelsPerRem;
+  const minScreenWidth = rem(minViewport);
+  const maxScreenWidth = rem(maxViewport);
 
-  // interpolation slope and y-axis intersection
+  const minValue = rem(minSize);
+  const maxValue = rem(maxSize);
+
   const slope = (maxValue - minValue) / (maxScreenWidth - minScreenWidth);
-  const yAxisIntersection = -minScreenWidth * slope + minValue;
+  const yAxisIntersection = minValue - slope * minScreenWidth;
 
-  return `clamp(${minValue}rem, ${yAxisIntersection.toFixed(5)}rem + ${(slope * 100).toFixed(5)}vw, ${maxValue}rem)`;
+  return `clamp(${Math.min(minValue, maxValue)}rem, calc(${yAxisIntersection.toFixed(5)}rem + ${(slope * 100).toFixed(5)}vw), ${Math.max(maxValue, minValue)}rem)`;
 };
 
 // ---- media queries ---- //

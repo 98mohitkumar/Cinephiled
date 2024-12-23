@@ -1,12 +1,13 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
+
 import MoviesTemplate from "components/MediaTemplate/MoviesTemplate";
 import TVTemplate from "components/MediaTemplate/TVTemplate";
 import PlaceholderText from "components/PlaceholderText";
 import Select from "components/Select/Select";
-import { Tabs } from "components/Tabs/Tabs";
-import { sortOptions } from "globals/constants";
+import { Tabs } from "components/Shared/Tabs/Tabs";
+import { sortOptions } from "data/apiEndpoints";
 import useTabs from "hooks/useTabs";
 import { getActiveSortKey, getSortedItems } from "src/utils/getSortedItems";
 import { ModulesWrapper } from "styles/GlobalComponents";

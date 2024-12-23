@@ -2,12 +2,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { Fragment, useEffect } from "react";
-import { Integration, LoginCard, LoginContainer, LoginText } from "./LoginPageStyles";
+
 import { useLogin } from "apiEndpoints/auth";
-import MetaWrapper from "components/MetaWrapper";
+import MetaWrapper from "components/Shared/MetaWrapper";
 import posters from "images/posters.webp";
 import logo from "public/logo512.png";
 import { AboutBackground, Button } from "styles/GlobalComponents";
+
+import { Integration, LoginCard, LoginContainer, LoginText } from "./LoginPageStyles";
 
 const LoginPage = () => {
   const router = useRouter();

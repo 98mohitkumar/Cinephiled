@@ -1,11 +1,13 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Fragment, useRef, useState } from "react";
-import Cast from "./Cast";
-import DominantColor from "components/DominantColor/DominantColor";
+
 import { HeroInfoTitle } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
 import { ModulesWrapper } from "styles/GlobalComponents";
 import { framerTabVariants } from "utils/helper";
+
+import Cast from "./Cast";
 
 // const test = 1;
 

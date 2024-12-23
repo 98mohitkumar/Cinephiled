@@ -1,17 +1,19 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef } from "react";
+
+import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import { ActiveTabIndicator } from "components/Shared/Tabs/TabsStyles";
+import useTabs from "hooks/useTabs";
+import { ModulesWrapper } from "styles/GlobalComponents";
+import { framerTabVariants } from "utils/helper";
+
 import CollectionsSearch from "./CollectionsSearch";
 import KeywordSearch from "./KeywordSearch";
 import MoviesSearch from "./MoviesSearch";
 import PeopleSearch from "./PeopleSearch";
 import { SearchTabSelector, SearchTabWrapper } from "./SearchTabStyles";
 import TVSearch from "./TVSearch";
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import { ActiveTabIndicator } from "components/Tabs/TabsStyles";
-import useTabs from "hooks/useTabs";
-import { ModulesWrapper } from "styles/GlobalComponents";
-import { framerTabVariants } from "utils/helper";
 
 const SearchTab = ({ movies, tv, search, keywords, people, collections }) => {
   const router = useRouter();

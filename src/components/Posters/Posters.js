@@ -1,10 +1,13 @@
 import Image from "next/image";
 import { Fragment } from "react";
-import { PostersImg, PostersWrapper } from "./PostersStyles";
+
 import DownloadMediaButton from "components/DownloadMediaButton/DownloadMediaButton";
 import PlaceholderText from "components/PlaceholderText";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder } from "data/global";
 
+import { PostersImg, PostersWrapper } from "./PostersStyles";
+
+// redundant
 const Posters = ({ posters }) => {
   return (
     <Fragment>

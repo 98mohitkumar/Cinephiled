@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
 import { Fragment, useEffect, useState } from "react";
+
 import Layout from "components/Layout/Layout";
 import { Loader } from "components/Loader/Loader";
 import ListsContextProvider from "Store/ListsContext";

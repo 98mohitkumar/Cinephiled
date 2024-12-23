@@ -1,7 +1,8 @@
 import { Fragment } from "react";
-import MetaWrapper from "components/MetaWrapper";
+
 import PersonDetails from "components/PersonDetails/PersonDetails";
-import { apiEndpoints } from "globals/constants";
+import MetaWrapper from "components/Shared/MetaWrapper";
+import { apiEndpoints } from "data/apiEndpoints";
 import { fetchOptions, getCleanTitle } from "utils/helper";
 
 const Person = ({ personDetails }) => {

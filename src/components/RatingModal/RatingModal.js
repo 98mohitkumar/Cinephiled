@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useState, Fragment } from "react";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
-import { RatingStarsContainer } from "./RatingStyles";
+
 import { deleteRating, setRating } from "apiEndpoints/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
@@ -9,6 +9,8 @@ import Toast, { useToast } from "components/Toast/Toast";
 import { useMediaContext } from "Store/MediaContext";
 import { Button } from "styles/GlobalComponents";
 import { framerTabVariants } from "utils/helper";
+
+import { RatingStarsContainer } from "./RatingStyles";
 
 const RatingModal = ({ mediaType, mediaId, mediaName, closeModal, posterPath, releaseDate, isOpen, title }) => {
   const [rating, updateRating] = useState(0);

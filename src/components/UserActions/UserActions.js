@@ -1,9 +1,10 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { Fragment } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { BiListPlus, BiListCheck } from "react-icons/bi";
 import { BsStarHalf } from "react-icons/bs";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+
 import { addToWatchlist, setFavorite } from "apiEndpoints/user";
 import AddToListModal from "components/List/AddToListModal";
 import { useModal } from "components/Modal/Modal";

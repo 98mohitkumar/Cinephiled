@@ -1,6 +1,7 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Fragment, useState } from "react";
 import { createPortal } from "react-dom";
+
 import { framerTabVariants } from "utils/helper";
 
 export const useModal = () => {

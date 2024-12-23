@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { Fragment } from "react";
-import { FlexBox, LayoutContainer } from "components/Layout/helpers";
-import MetaWrapper from "components/MetaWrapper";
+
+import MetaWrapper from "components/Shared/MetaWrapper";
+import FlexBox from "components/UI/FlexBox";
+import LayoutContainer from "components/UI/LayoutContainer";
 import H1 from "components/UI/Typography/H1";
 import H2 from "components/UI/Typography/H2";
 import P from "components/UI/Typography/P";

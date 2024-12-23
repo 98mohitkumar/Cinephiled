@@ -1,8 +1,7 @@
 import hexToRgba from "hex-to-rgba";
 import { css } from "styled-components";
-import { colors } from "tokens/colors";
-import { spacingTokens } from "tokens/spacings";
-import { fontSizeTokens } from "tokens/typography";
+
+import { theme } from "theme/theme";
 import { hoverMediaQuery, mediaQuery } from "utils/mixins";
 
 export const avatar = css`
@@ -27,25 +26,25 @@ export const popup = css`
   min-width: 160px;
   border-radius: 8px;
   overflow: hidden;
-  background-color: ${hexToRgba(colors.black, 0.8)};
+  background-color: ${hexToRgba(theme.colors.black, 0.8)};
   backdrop-filter: blur(2px);
-  border: 1px solid ${colors.neutral[800]};
+  border: 1px solid ${theme.colors.neutral[800]};
 `;
 
 export const popupOption = css`
-  padding: ${spacingTokens.spacing12} ${spacingTokens.spacing20};
+  padding: ${theme.spacings.spacing12} ${theme.spacings.spacing20};
   text-align: center;
   white-space: nowrap;
-  font-size: ${fontSizeTokens.p};
+  font-size: ${theme.fontSize.p};
   transition: all 0.4s ease-in-out;
 
   ${hoverMediaQuery()} {
     &.logout:hover {
-      background-color: ${hexToRgba(colors.red[900], 0.4)};
+      background-color: ${hexToRgba(theme.colors.red[900], 0.4)};
     }
 
     &:hover {
-      background-color: ${colors.neutral[800]};
+      background-color: ${theme.colors.neutral[800]};
     }
   }
 `;

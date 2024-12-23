@@ -1,9 +1,8 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { FaYoutube } from "react-icons/fa";
-import DominantColor from "components/DominantColor/DominantColor";
 
 import {
   Credits,
@@ -19,10 +18,11 @@ import {
   Span,
   Tagline
 } from "components/MovieInfo/MovieDetailsStyles";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import TechnicalDetails from "components/TechnicalDetails/TechnicalDetails";
 import UserActions from "components/UserActions/UserActions";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder } from "data/global";
 import { Button, DetailsHeroWrap, HeroBg, HeroBgContainer, HeroDetailsContainer, HeroImg, HeroImgWrapper } from "styles/GlobalComponents";
 import { getCleanTitle, getRating } from "utils/helper";
 

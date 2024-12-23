@@ -1,12 +1,14 @@
+import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
 import Link from "next/link";
 import { Fragment } from "react";
-import { genreCardStyles } from "./ExploreStyles";
+
 import H3 from "components/UI/Typography/H3";
-import "keen-slider/keen-slider.min.css";
 import H5 from "components/UI/Typography/H5";
-import { breakpoints } from "tokens/misc";
+import { theme } from "theme/theme";
 import { getCleanTitle, matches } from "utils/helper";
+
+import { genreCardStyles } from "./ExploreStyles";
 
 const GenreSection = ({ genres, mediaType }) => {
   const [sliderRef] = useKeenSlider({
@@ -19,31 +21,31 @@ const GenreSection = ({ genres, mediaType }) => {
           spacing: 16
         }
       },
-      [`(min-width: ${breakpoints.sm})`]: {
+      [`(min-width: ${theme.breakpoints.sm})`]: {
         slides: {
           perView: 2.75,
           spacing: 16
         }
       },
-      [`(min-width: ${breakpoints.lg})`]: {
+      [`(min-width: ${theme.breakpoints.lg})`]: {
         slides: {
           perView: 3.75,
           spacing: 20
         }
       },
-      [`(min-width: ${breakpoints.xl})`]: {
+      [`(min-width: ${theme.breakpoints.xl})`]: {
         slides: {
           perView: 4.75,
           spacing: 20
         }
       },
-      [`(min-width: ${breakpoints["2xl"]})`]: {
+      [`(min-width: ${theme.breakpoints["2xl"]})`]: {
         slides: {
           perView: 5.75,
           spacing: 20
         }
       },
-      [`(min-width: 1800px)`]: {
+      [`(min-width: ${theme.breakpoints["3xl"]})`]: {
         slides: {
           perView: 6.75,
           spacing: 20

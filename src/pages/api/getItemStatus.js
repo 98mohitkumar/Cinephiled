@@ -1,4 +1,4 @@
-import { apiEndpoints } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
 
 const getItemStatus = async (req, res) => {
   try {

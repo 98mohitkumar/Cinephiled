@@ -1,12 +1,14 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillStar } from "react-icons/ai";
-import { RatingOverlay } from "./ProfilePageStyles";
+
 import { CardImg, Cards } from "components/MediaTemplate/TemplateStyles";
 import RatingTag from "components/RatingTag/RatingTag";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder } from "data/global";
 import { getCleanTitle } from "utils/helper";
+
+import { RatingOverlay } from "./ProfilePageStyles";
 
 const MediaCard = ({ data, link, children, rating }) => {
   return (

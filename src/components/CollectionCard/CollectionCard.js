@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { blurPlaceholder } from "globals/constants";
+
+import { blurPlaceholder } from "data/global";
 import { getCleanTitle } from "utils/helper";
 
 const CollectionCard = ({ collection }) => {

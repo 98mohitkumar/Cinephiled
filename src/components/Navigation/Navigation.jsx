@@ -1,14 +1,17 @@
-import { motion, AnimatePresence } from "framer-motion";
 import { Search } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { HamburgerIcon, hamburgerMenu, headerStyles, Logo, navBarStyles, navLinksStyles, searchOverlayBackdrop } from "./NavigationStyles";
-import GlobalSearch from "components/GlobalSearch/GlobalSearch";
-import { FlexBox, LayoutContainer } from "components/Layout/helpers";
+
+import GlobalSearch from "components/Shared/GlobalSearch/GlobalSearch";
+import FlexBox from "components/UI/FlexBox";
+import LayoutContainer from "components/UI/LayoutContainer";
 import P from "components/UI/Typography/P";
 import UserAvatar from "components/UserAvatar/UserAvatar";
 import { matches } from "utils/helper";
+
+import { HamburgerIcon, hamburgerMenu, headerStyles, Logo, navBarStyles, navLinksStyles, searchOverlayBackdrop } from "./NavigationStyles";
 
 const navLinks = [
   { text: "Home", link: "/" },
@@ -22,9 +25,10 @@ const Navigation = () => {
   const lastScroll = useRef();
   const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
+  // const navHeight = useRef(0);
 
   useEffect(() => {
-    const navHandler = () => {
+    const navShowStateHandler = () => {
       if (window.scrollY > 100 && window.scrollY > lastScroll.current) {
         navRef.current?.classList.add("hide-nav");
         navRef.current?.classList.remove("show-nav");
@@ -36,8 +40,22 @@ const Navigation = () => {
       lastScroll.current = window.scrollY;
     };
 
-    window.addEventListener("scroll", navHandler);
-    return () => window.removeEventListener("scroll", navHandler);
+    // const navHeightHandler = () => {
+    //   if (navHeight.current === navRef.current?.clientHeight) return;
+
+    //   navHeight.current = navRef.current?.clientHeight;
+    //   document.body.style.setProperty("--header-height", `${navHeight.current}px`);
+    // };
+
+    window.addEventListener("scroll", navShowStateHandler);
+    // window.addEventListener("resize", navHeightHandler);
+
+    // navHeightHandler();
+
+    return () => {
+      window.removeEventListener("scroll", navShowStateHandler);
+      // window.removeEventListener("resize", navHeightHandler);
+    };
   }, []);
 
   const hamburgerHandler = () => {
@@ -80,7 +98,7 @@ const Navigation = () => {
       <LayoutContainer className='py-4' css={navBarStyles}>
         <FlexBox tag='nav' className='w-full items-center justify-between'>
           <Link href='/'>
-            <div className='py-12' aria-label='cinephiled logo' role='link'>
+            <div aria-label='cinephiled logo' role='link'>
               <Logo />
             </div>
           </Link>

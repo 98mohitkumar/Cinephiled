@@ -1,20 +1,18 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { Fragment } from "react";
-import Hero from "components/Hero/Hero";
-import { LayoutContainer } from "components/Layout/helpers";
-import MetaWrapper from "components/MetaWrapper";
-import { TabItem, Tabs } from "components/Tabs/Tabs";
+
+import Hero from "components/pages/HomePage/Hero/Hero";
+import MetaWrapper from "components/Shared/MetaWrapper";
+import { TabItem, Tabs } from "components/Shared/Tabs/Tabs";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
-import H1 from "components/UI/Typography/H1";
-import { apiEndpoints, mediaTypeTabList } from "globals/constants";
+import LayoutContainer from "components/UI/LayoutContainer";
+import H2 from "components/UI/Typography/H2";
+import { apiEndpoints } from "data/apiEndpoints";
+import { mediaTypeTabList } from "data/global";
 import useTabs from "hooks/useTabs";
 import { fetchOptions, removeDuplicates, framerTabVariants, matches } from "utils/helper";
 
-const SectionTitle = ({ title }) => (
-  <H1 tag='h2' className='mb-2432 text-center text-white'>
-    {title}
-  </H1>
-);
+const SectionTitle = ({ title }) => <H2 className='mb-2432 text-center text-white'>{title}</H2>;
 
 export default function Home({ popularMovies, popularTv, trendingMovies, trendingTv, posters }) {
   const { activeTab, setTab } = useTabs({ tabLocation: "indexTab" });
@@ -23,11 +21,7 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
 
   return (
     <Fragment>
-      <MetaWrapper
-        title='Cinephiled'
-        description='Cinephiled - A progressive web app (PWA) to preview any movie or tv show with reviews, ratings, description and posters. Acting as a TMDB client, Cinephiled gives you access to login into your TMDB account and add movies or tv shows to your watchlist, set as favorites, rate and get personalized recommendations.'
-        url='https://cinephiled.vercel.app'
-      />
+      <MetaWrapper />
 
       {/* hero section (memoized) */}
       <Hero posters={posters} />
@@ -139,7 +133,7 @@ export async function getStaticProps() {
         error,
         posters: posters.concat(extraSet).sort((a, b) => a.id - b.id)
       },
-      revalidate: 3600
+      revalidate: 60 * 60 * 24
     };
   } catch {
     return {

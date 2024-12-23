@@ -1,13 +1,15 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Fragment } from "react";
-import CreateListForm from "./CreateListForm";
-import useRevalidateList from "./useRevalidateList";
+
 import { updateList } from "apiEndpoints/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Toast, { useToast } from "components/Toast/Toast";
 import { useListsContext } from "Store/ListsContext";
 import { Button } from "styles/GlobalComponents";
+
+import CreateListForm from "./CreateListForm";
+import useRevalidateList from "./useRevalidateList";
 
 const EditListModal = ({ list }) => {
   const { openModal, isModalVisible, closeModal } = useModal();

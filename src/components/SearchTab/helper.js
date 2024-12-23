@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+
 import { SortPill } from "./SearchTabStyles";
 
 const Pill = ({ children, sortBy, descFirst = false }) => {

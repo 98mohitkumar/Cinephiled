@@ -1,5 +1,6 @@
 import { css } from "styled-components";
-import { transitionTimings } from "tokens/misc";
+
+import { theme } from "theme/theme";
 
 export const loaderStyles = css`
   position: fixed;
@@ -49,7 +50,7 @@ export const loaderStyles = css`
     display: grid;
     grid-template-areas: "stack";
     position: relative;
-    animation: spin infinite 1.75s ${transitionTimings["ease-in-out-back"]};
+    animation: spin infinite 1.75s ${theme.transitionTimings["ease-in-out-back"]};
     grid-area: stack;
   }
 

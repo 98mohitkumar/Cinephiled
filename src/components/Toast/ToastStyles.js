@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { colors } from "tokens/colors";
+
+import { theme } from "theme/theme";
 
 export const ToastWrapper = styled.div`
   padding: 15px 34px;
   background-color: #ebebeb;
-  color: ${colors.black};
+  color: ${theme.colors.black};
   position: fixed;
   inset: 0;
   top: auto;

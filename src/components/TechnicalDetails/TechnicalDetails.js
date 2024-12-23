@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Fragment } from "react";
 import { FaChevronRight } from "react-icons/fa6";
+
 import Modal, { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import useGetTechncialDetails from "hooks/useGetTechnicalDetails";

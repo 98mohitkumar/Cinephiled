@@ -1,19 +1,22 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { Fragment, useEffect, useRef, useState } from "react";
-import useGetListDetails from "./useGetListDetails";
-import useRevalidateList from "./useRevalidateList";
+
 import { getListItemStatus, updateList, updateListItems } from "apiEndpoints/user";
 import Loading from "components/Loader/Loader";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
 import Toast, { useToast } from "components/Toast/Toast";
-import { blurPlaceholder, apiEndpoints } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
+import { blurPlaceholder } from "data/global";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { Button } from "styles/GlobalComponents";
 import { framerTabVariants, getReleaseDate } from "utils/helper";
+
+import useGetListDetails from "./useGetListDetails";
+import useRevalidateList from "./useRevalidateList";
 
 const ManageList = ({ id }) => {
   const [query, setQuery] = useState("");

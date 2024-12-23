@@ -1,7 +1,14 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
+import PlaceholderText from "components/PlaceholderText";
+import { apiEndpoints } from "data/apiEndpoints";
+import { blurPlaceholder } from "data/global";
+import useInfiniteQuery from "hooks/useInfiniteQuery";
+import { getCleanTitle, getReleaseDate, removeDuplicates } from "utils/helper";
+
 import { SortBy } from "./helper";
 import {
   SearchResultsContainer,
@@ -13,10 +20,6 @@ import {
   QueryDescription
 } from "./SearchTabStyles";
 import { sortOptions } from "./TVSearch";
-import PlaceholderText from "components/PlaceholderText";
-import { blurPlaceholder, apiEndpoints } from "globals/constants";
-import useInfiniteQuery from "hooks/useInfiniteQuery";
-import { getCleanTitle, getReleaseDate, removeDuplicates } from "utils/helper";
 
 const MoviesSearch = ({ searchQuery, movieRes }) => {
   const { list } = useInfiniteQuery({

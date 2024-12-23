@@ -1,20 +1,23 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
+
 import { getCountryCode } from "apiEndpoints/user";
-import DominantColor from "components/DominantColor/DominantColor";
-import { LayoutContainer } from "components/Layout/helpers";
-import MetaWrapper from "components/MetaWrapper";
 import PlaceholderText from "components/PlaceholderText";
-import { TabItem, Tabs } from "components/Tabs/Tabs";
-import Input from "components/UI/Input/Input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select/Select";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
+import MetaWrapper from "components/Shared/MetaWrapper";
+import { TabItem, Tabs } from "components/Shared/Tabs/Tabs";
+import Input from "components/UI/Input";
+import LayoutContainer from "components/UI/LayoutContainer";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select";
 import H1 from "components/UI/Typography/H1";
-import { apiEndpoints, blurPlaceholder, mediaTypeTabList } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
+import { blurPlaceholder, mediaTypeTabList } from "data/global";
 import useTabs from "hooks/useTabs";
-import { fetchOptions, framerTabVariants, getCleanTitle, getTMDBImage, matches } from "utils/helper";
+import { fetchOptions, framerTabVariants, getCleanTitle, matches } from "utils/helper";
+import { getTMDBImage } from "utils/imageHelper";
 
 const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, defaultRegion }) => {
   const router = useRouter();

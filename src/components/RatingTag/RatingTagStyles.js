@@ -1,12 +1,13 @@
 import { css } from "styled-components";
-import { colors } from "tokens/colors";
+
+import { theme } from "theme/theme";
 
 export const ratingTagWrapperStyles = css`
   width: 44px;
   aspect-ratio: 1/1;
   position: absolute;
   border-radius: 50%;
-  background-color: ${colors.black};
+  background-color: ${theme.colors.black};
   display: grid;
   place-items: center;
   right: 14px;

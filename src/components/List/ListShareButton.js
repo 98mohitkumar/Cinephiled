@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Fragment } from "react";
 import { MdShare } from "react-icons/md";
+
 import { useModal } from "components/Modal/Modal";
 import ShareModal from "components/ShareModal/ShareModal";
 import { Button } from "styles/GlobalComponents";

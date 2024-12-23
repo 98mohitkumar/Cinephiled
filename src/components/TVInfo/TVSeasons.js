@@ -1,12 +1,14 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import { SeasonDetailsWrapper, SeasonsOverview, SeasonImg, SeasonInfoWrapper, SeasonsRelease, SeasonTitle, SeasonWrapper } from "./TVStyles";
+
 import PlaceholderText from "components/PlaceholderText";
-import { blurPlaceholder } from "globals/constants";
+import { blurPlaceholder } from "data/global";
 import { getReleaseDate } from "utils/helper";
+
+import { SeasonDetailsWrapper, SeasonsOverview, SeasonImg, SeasonInfoWrapper, SeasonsRelease, SeasonTitle, SeasonWrapper } from "./TVStyles";
 
 const TVSeasons = ({ seasons }) => {
   const router = useRouter();

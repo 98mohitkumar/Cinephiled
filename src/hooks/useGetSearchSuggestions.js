@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { fetchSuggestions } from "utils/helper";
 
 const useGetSearchSuggestions = ({ query, includePeople = false }) => {

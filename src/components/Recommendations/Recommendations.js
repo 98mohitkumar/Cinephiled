@@ -1,9 +1,11 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { RecommendationsGrid, RecommendedImg, RecommendedWrapper, InfoTitle } from "./RecommendationsStyles";
-import { blurPlaceholder } from "globals/constants";
+
+import { blurPlaceholder } from "data/global";
 import { getCleanTitle } from "utils/helper";
+
+import { RecommendationsGrid, RecommendedImg, RecommendedWrapper, InfoTitle } from "./RecommendationsStyles";
 
 const Recommendations = ({ data, type }) => {
   data.splice(20);
