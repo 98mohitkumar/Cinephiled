@@ -5,12 +5,11 @@ import { FaLocationDot } from "react-icons/fa6";
 
 import NetworkMediaGrid from "components/MediaTemplate/TVTemplate";
 import { PostersImg } from "components/Posters/PostersStyles";
-import Select from "components/Select/Select";
+// import Select from "components/Select/Select";
 import { apiEndpoints } from "data/apiEndpoints";
-import { blurPlaceholder, sortOptions } from "data/global";
+import { blurPlaceholder } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useSort from "hooks/useSort";
-import { getActiveSortKey } from "src/utils/getSortedItems";
 import { ModulesWrapper } from "styles/GlobalComponents";
 
 import { NetwrokDetailsWrapper, PostersGrid } from "./ExploreStyles";
@@ -18,9 +17,9 @@ import { NetwrokDetailsWrapper, PostersGrid } from "./ExploreStyles";
 const NetworkMedia = ({ details, media }) => {
   const posters = media.map(({ poster_path }) => (poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"));
 
-  const { sortBy, handleSortSelection } = useSort({ shallow: false });
+  const { sortBy } = useSort({ shallow: false });
 
-  const { list, resetQueryState } = useInfiniteQuery({
+  const { list } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) => apiEndpoints.network.networkMedia({ id: details.id, pageQuery: page, sortBy })
   });
@@ -38,12 +37,12 @@ const NetworkMedia = ({ details, media }) => {
     colCount = postersLength;
   }
 
-  const networkMediaSortOptions = sortOptions.tmdbOptions.tv;
+  // const networkMediaSortOptions = sortOptions.tmdbOptions.tv;
 
-  const handleSort = (key) => {
-    handleSortSelection(key);
-    resetQueryState();
-  };
+  // const handleSort = (key) => {
+  //   handleSortSelection(key);
+  //   resetQueryState();
+  // };
 
   return (
     <Fragment>
@@ -102,7 +101,7 @@ const NetworkMedia = ({ details, media }) => {
       </NetwrokDetailsWrapper>
 
       <ModulesWrapper>
-        <div className='mb-8 flex justify-end'>
+        {/* <div className='mb-8 flex justify-end'>
           <Select
             options={networkMediaSortOptions}
             activeKey={sortBy || "default"}
@@ -115,7 +114,7 @@ const NetworkMedia = ({ details, media }) => {
             label='Sort By:'
             handleChange={handleSort}
           />
-        </div>
+        </div> */}
 
         <NetworkMediaGrid TV={media.concat(list)} />
       </ModulesWrapper>
