@@ -92,37 +92,6 @@ export const AboutBackground = styled.div`
   }
 `;
 
-export const Error404 = styled.h1`
-  font-weight: bold;
-  font-size: 10rem;
-
-  text-align: center;
-  background: ${(props) => `linear-gradient(
-    90deg,
-    ${props.theme.colors.accent2},
-    ${props.theme.colors.accent3}
-  )`};
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: hue-rotate(45deg);
-  -webkit-filter: hue-rotate(45deg);
-  animation: textGradient 4s alternate-reverse linear infinite;
-
-  @keyframes textGradient {
-    to {
-      filter: hue-rotate(360deg);
-      -webkit-filter: hue-rotate(360deg);
-    }
-  }
-
-  &:not(.index-page) {
-    min-height: 80vh;
-    display: grid;
-    place-items: center;
-  }
-`;
-
 export const HeroDetailsContainer = styled.div`
   width: 100%;
   padding: 64px 4.2vw;

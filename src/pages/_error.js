@@ -1,7 +1,14 @@
-import { Error404 } from "styles/GlobalComponents";
+import H1 from "components/UI/Typography/H1";
+import { Error404 } from "styles/PageStyles/404PageStyles";
 
 function Error({ statusCode }) {
-  return <Error404>{statusCode || 500}</Error404>;
+  return (
+    <div className='grid min-h-[75vh] place-items-center'>
+      <H1 css={Error404} weight='bold'>
+        {statusCode || 500}
+      </H1>
+    </div>
+  );
 }
 
 Error.getInitialProps = ({ res, err }) => {
