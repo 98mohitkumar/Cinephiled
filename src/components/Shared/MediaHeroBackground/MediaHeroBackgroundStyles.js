@@ -51,6 +51,7 @@ export const heroBackgroundStyles = css`
     content: "";
     z-index: 1;
     inset: 0;
+    bottom: -10px;
     position: absolute;
     background: linear-gradient(0deg, #121212, transparent 25%);
   }
