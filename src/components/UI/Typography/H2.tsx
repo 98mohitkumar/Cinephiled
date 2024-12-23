@@ -1,15 +1,15 @@
-import React, { forwardRef, ElementType, ReactNode, ComponentPropsWithoutRef } from "react";
+import React, { ComponentPropsWithRef, ElementType, ReactNode } from "react";
 
 import { cn, matches } from "utils/helper";
 
-type H2Props = ComponentPropsWithoutRef<"h2"> & {
+type H2Props = ComponentPropsWithRef<"h2"> & {
   className?: string;
   children: ReactNode;
   tag?: ElementType;
   weight?: "light" | "normal" | "medium" | "semibold" | "bold";
 };
 
-const H2 = forwardRef<HTMLElement, H2Props>(({ className, children, tag: Element = "h2", weight = "bold", ...props }, ref) => (
+const H2 = ({ className, children, tag: Element = "h2", weight = "bold", ref, ...props }: H2Props) => (
   <Element
     ref={ref}
     className={cn(
@@ -26,8 +26,6 @@ const H2 = forwardRef<HTMLElement, H2Props>(({ className, children, tag: Element
     {...props}>
     {children}
   </Element>
-));
-
-H2.displayName = "H2";
+);
 
 export default H2;

@@ -1,10 +1,10 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { ComponentPropsWithRef } from "react";
 
 import { cn } from "utils/helper";
 
-type InputProps = ComponentPropsWithoutRef<"input">;
+type InputProps = ComponentPropsWithRef<"input">;
 
-const Input = forwardRef<HTMLInputElement, InputProps>(({ className, type, ...props }, ref) => {
+const Input = ({ className, type, ref, ...props }: InputProps) => {
   return (
     <input
       type={type}
@@ -20,8 +20,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ className, type, ...pr
       {...props}
     />
   );
-});
-
-Input.displayName = "Input";
+};
 
 export default Input;

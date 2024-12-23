@@ -1,8 +1,8 @@
-import { forwardRef, ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
+import React, { ComponentPropsWithRef, ElementType, ReactNode } from "react";
 
 import { cn, matches } from "utils/helper";
 
-type PProps = ComponentPropsWithoutRef<"p"> & {
+type PProps = ComponentPropsWithRef<"p"> & {
   className?: string;
   children: ReactNode;
   tag?: ElementType;
@@ -21,7 +21,7 @@ type PProps = ComponentPropsWithoutRef<"p"> & {
     | "micro-to-tiny";
 };
 
-const P = forwardRef<HTMLElement, PProps>(({ className, children, tag: Element = "p", size = "default", weight = "normal", ...props }, ref) => (
+const P = ({ className, children, tag: Element = "p", size = "default", weight = "normal", ref, ...props }: PProps) => (
   <Element
     ref={ref}
     className={cn(
@@ -50,8 +50,6 @@ const P = forwardRef<HTMLElement, PProps>(({ className, children, tag: Element =
     {...props}>
     {children}
   </Element>
-));
-
-P.displayName = "P";
+);
 
 export default P;

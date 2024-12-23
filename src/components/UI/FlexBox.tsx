@@ -1,13 +1,13 @@
-import React, { ComponentPropsWithoutRef, forwardRef, ReactNode, ElementType } from "react";
+import React, { ComponentPropsWithRef, ReactNode, ElementType } from "react";
 
 import { cn } from "utils/helper";
 
-type FlexBoxProps = ComponentPropsWithoutRef<"div"> & {
+type FlexBoxProps = ComponentPropsWithRef<"div"> & {
   children: ReactNode;
   tag: ElementType;
 };
 
-const FlexBox = forwardRef<HTMLElement, FlexBoxProps>(({ children, tag: Tag = "div", className, ...props }, ref) => {
+const FlexBox = ({ children, tag: Tag = "div", className, ref, ...props }: FlexBoxProps) => {
   const Element = Tag as React.ElementType;
 
   return (
@@ -15,8 +15,6 @@ const FlexBox = forwardRef<HTMLElement, FlexBoxProps>(({ children, tag: Tag = "d
       {children}
     </Element>
   );
-});
-
-FlexBox.displayName = "FlexBox";
+};
 
 export default FlexBox;

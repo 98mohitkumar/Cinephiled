@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, forwardRef, ReactNode, ElementType } from "react";
+import React, { ComponentPropsWithRef, ReactNode, ElementType } from "react";
 
 import { cn } from "utils/helper";
 
@@ -17,7 +17,7 @@ type ColumnCountProp = {
   "5xl"?: ColCount;
 };
 
-type GridProps = ComponentPropsWithoutRef<"div"> & {
+type GridProps = ComponentPropsWithRef<"div"> & {
   children: ReactNode;
   tag?: ElementType;
   colConfig?: ColumnCountProp;
@@ -39,7 +39,7 @@ const getGridCols = ({ xxs, xs, sm, md, lg, xl, "2xl": twoXl, "3xl": threeXl, "4
   );
 };
 
-export const Grid = forwardRef<HTMLElement, GridProps>(({ children, className, colConfig, tag: Tag = "div", ...props }, ref) => {
+export const Grid = ({ children, className, colConfig, tag: Tag = "div", ref, ...props }: GridProps) => {
   const Element = Tag as React.ElementType;
 
   const colClasses = colConfig ? getGridCols(colConfig) : "grid-cols-12";
@@ -49,9 +49,7 @@ export const Grid = forwardRef<HTMLElement, GridProps>(({ children, className, c
       {children}
     </Element>
   );
-});
-
-Grid.displayName = "Grid";
+};
 
 // -------- GridCol -------- //
 
@@ -70,7 +68,7 @@ type ColSizeConfig = {
   "5xl"?: GridColSize;
 };
 
-type GridColProps = ComponentPropsWithoutRef<"div"> & {
+type GridColProps = ComponentPropsWithRef<"div"> & {
   children: ReactNode;
   tag?: ElementType;
   colSizeConfig: ColSizeConfig;
@@ -92,7 +90,7 @@ const getColSpan = ({ xxs, xs, sm, md, lg, xl, "2xl": twoXl, "3xl": threeXl, "4x
   );
 };
 
-export const GridCol = forwardRef<HTMLElement, GridColProps>(({ children, className, colSizeConfig, tag: Tag = "div", ...props }, ref) => {
+export const GridCol = ({ children, className, colSizeConfig, tag: Tag = "div", ref, ...props }: GridColProps) => {
   const Element = Tag as React.ElementType;
 
   const colSpanClasses = colSizeConfig ? getColSpan(colSizeConfig) : null;
@@ -102,6 +100,4 @@ export const GridCol = forwardRef<HTMLElement, GridColProps>(({ children, classN
       {children}
     </Element>
   );
-});
-
-GridCol.displayName = "GridCol";
+};
