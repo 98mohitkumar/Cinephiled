@@ -17,11 +17,15 @@ const Button = ({ children, className, variant = "primary", size = "default", we
     whileTap={{ scale: 0.95 }}
     className={cn(
       "grid place-items-center",
-      "transition-colors ease-in-out disabled:pointer-events-none disabled:cursor-not-allowed",
+      "disabled:pointer-events-none disabled:bg-neutral-700 disabled:text-neutral-400",
+      "transition-colors ease-in-out",
       {
         "bg-neutral-200 text-black": matches(variant, "primary"),
         "bg-neutral-700 text-white": matches(variant, "secondary"),
-        "border border-neutral-600 bg-black text-white": matches(variant, "outline")
+        "border border-neutral-600 bg-black text-white disabled:border-neutral-600 disabled:bg-black disabled:text-neutral-400": matches(
+          variant,
+          "outline"
+        )
       },
       {
         "h-9 rounded-md px-12 text-small": matches(size, "small"),

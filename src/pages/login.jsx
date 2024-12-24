@@ -1,7 +1,7 @@
 import Router from "next/router";
 import { getSession } from "next-auth/react";
 
-import LoginPage from "components/LoginPage/LoginPage";
+import LoginPage from "components/pages/LoginPage";
 
 const Login = () => {
   return <LoginPage />;

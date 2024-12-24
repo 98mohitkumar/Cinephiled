@@ -19,22 +19,27 @@ export const useLogin = () => {
     setIsWaiting(true);
     clearError();
 
-    // generate temporary token (validity: 15 mins)
-    const requestTokenRes = await fetch(
-      apiEndpoints.auth.requestToken,
-      fetchOptions({
-        method: "POST",
-        body: { redirect_to: `${window.location.href}?approved=true` }
-      })
-    );
+    try {
+      // generate temporary token (validity: 15 mins)
+      const requestTokenRes = await fetch(
+        apiEndpoints.auth.requestToken,
+        fetchOptions({
+          method: "POST",
+          body: { redirect_to: `${window.location.href}?approved=true` }
+        })
+      );
 
-    const requestTokenData = await requestTokenRes.json();
-    const { request_token, success } = requestTokenData;
+      const requestTokenData = await requestTokenRes.json();
+      const { request_token, success } = requestTokenData;
 
-    if (request_token && success) {
-      sessionStorage.setItem("request_token", request_token);
-      window.open(`https://www.themoviedb.org/auth/access?request_token=${request_token}`, "_self");
-    } else {
+      if (request_token && success) {
+        sessionStorage.setItem("request_token", request_token);
+        window.open(`https://www.themoviedb.org/auth/access?request_token=${request_token}`, "_self");
+      } else {
+        setIsWaiting(false);
+        setError({ error: true, message: "Server Error, Try again later" });
+      }
+    } catch (error) {
       setIsWaiting(false);
       setError({ error: true, message: "Server Error, Try again later" });
     }
