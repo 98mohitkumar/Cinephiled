@@ -7,7 +7,6 @@ import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import LayoutContainer from "components/UI/LayoutContainer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select";
 import H1 from "components/UI/Typography/H1";
-import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
 import { sortOptions } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
@@ -63,10 +62,6 @@ const ProviderMovies = ({ media, region, providerName, providerId }) => {
           {renderList?.length > 0 ? (
             <Fragment>
               <div className='mb-2432 mt-3240 flex items-center justify-end gap-10'>
-                <P weight='medium' size='large' className='text-neutral-300'>
-                  Sort By:
-                </P>
-
                 <Select defaultValue={currentSortOption} onValueChange={handleSort}>
                   <SelectTrigger className='w-fit min-w-[250px]'>
                     <SelectValue placeholder='Sort By:' />

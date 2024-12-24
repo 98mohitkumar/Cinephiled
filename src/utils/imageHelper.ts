@@ -21,8 +21,6 @@ type TMDBImageArgs<T extends keyof typeof defaultImages> = {
 
 export const getTMDBImage = <T extends keyof typeof defaultImages>({ path, type, size, fallback }: TMDBImageArgs<T>) => {
   if (!path) {
-    console.info({ path, fallback });
-
     return fallback || defaultImages[type];
   }
 

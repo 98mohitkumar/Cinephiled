@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-import NetworkMedia from "components/Explore/NetworkMedia";
+import NetworkPage from "components/pages/Network/NetworkPage";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import { apiEndpoints } from "data/apiEndpoints";
 import { fetchOptions, getCleanTitle } from "utils/helper";
@@ -15,7 +15,7 @@ const Network = ({ networkDetails, networkMedia }) => {
         image={`https://image.tmdb.org/t/p/original${networkDetails?.logo_path}`}
       />
 
-      <NetworkMedia media={networkMedia} details={networkDetails} />
+      <NetworkPage media={networkMedia} details={networkDetails} />
     </Fragment>
   );
 };
