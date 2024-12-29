@@ -60,8 +60,8 @@ const SearchSuggestion = ({ data, type, className, ...props }) => {
 
           <P
             weight='semibold'
-            size='tiny-to-p'
-            className='border-background whitespace-nowrap rounded-md border border-neutral-500 bg-neutral-200 px-8 py-4 text-black/80 drop-shadow-sm'>
+            size='small'
+            className='whitespace-nowrap rounded-2xl border border-neutral-400 bg-neutral-300 px-12 py-2 text-black/75 drop-shadow-sm'>
             {suggestedItem.type}
           </P>
         </FlexBox>

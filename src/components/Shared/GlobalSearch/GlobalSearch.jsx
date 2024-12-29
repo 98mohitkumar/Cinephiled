@@ -69,7 +69,7 @@ const GlobalSearch = () => {
   };
 
   return (
-    <form css={formStyles} onSubmit={searchHandler} className='flex items-center justify-center gap-16'>
+    <form css={formStyles} onSubmit={searchHandler} className='flex items-center justify-center gap-16 px-20'>
       <div className='relative mb-64 w-full'>
         <div className='border-animated flex items-end justify-between pb-6'>
           <input

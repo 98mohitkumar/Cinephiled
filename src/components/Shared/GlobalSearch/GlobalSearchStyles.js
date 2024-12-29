@@ -2,10 +2,10 @@ import hexToRgba from "hex-to-rgba";
 import { css } from "styled-components";
 
 import { theme } from "theme/theme";
-import { cssClamp, hoverMediaQuery, mediaQuery } from "utils/mixins";
+import { hoverMediaQuery, mediaQuery } from "utils/mixins";
 
 export const formStyles = css`
-  width: ${cssClamp({ minSize: 360, maxSize: 800 })};
+  width: min(100%, 840px);
   margin: auto;
 
   .border-animated {
