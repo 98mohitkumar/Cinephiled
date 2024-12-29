@@ -68,7 +68,7 @@ const MoviesSearch = ({ searchQuery, movieRes }) => {
                 <QueryContainer>
                   <QueryImg className='relative text-center'>
                     <Image
-                      src={poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"}
+                      src={poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/images/DefaultImage.png"}
                       alt='movie-poster'
                       fill
                       style={{ objectFit: "cover" }}

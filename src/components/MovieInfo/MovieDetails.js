@@ -66,7 +66,7 @@ const MovieDetails = ({ movieDetails, easter }) => {
         <HeroBgContainer className='absolute'>
           <HeroBg className='absolute z-10 text-center'>
             <Image
-              src={backdropPath ? `https://image.tmdb.org/t/p/w1280${backdropPath}` : "/Images/Hex.webp"}
+              src={backdropPath ? `https://image.tmdb.org/t/p/w1280${backdropPath}` : "/images/Hex.webp"}
               alt='movie-backdrop'
               fill
               style={{ objectFit: "cover" }}
@@ -84,7 +84,7 @@ const MovieDetails = ({ movieDetails, easter }) => {
           <HeroImgWrapper>
             <HeroImg className='relative text-center'>
               <Image
-                src={moviePoster ? `https://image.tmdb.org/t/p/w500${moviePoster}` : "/Images/DefaultImage.png"}
+                src={moviePoster ? `https://image.tmdb.org/t/p/w500${moviePoster}` : "/images/DefaultImage.png"}
                 alt='movie-poster'
                 fill
                 style={{ objectFit: "cover" }}

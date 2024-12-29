@@ -4,4 +4,4 @@
 
 ## Previews
 
-![](/public/Images/ShowCase.webp)
+![](/public/images/ShowCase.webp)

@@ -12,7 +12,7 @@ const CollectionCard = ({ collection }) => {
           <div className='relative aspect-[300/169] min-w-44 md:min-w-52 lg:min-w-72'>
             <div className='absolute -inset-1 z-10 bg-gradient-to-l from-neutral-300 to-transparent' />
             <Image
-              src={collection.backdrop_path ? `https://image.tmdb.org/t/p/w500${collection.backdrop_path}` : "/Images/DefaultBackdrop.png"}
+              src={collection.backdrop_path ? `https://image.tmdb.org/t/p/w500${collection.backdrop_path}` : "/images/DefaultBackdrop.png"}
               alt='collection-poster'
               fill
               style={{ objectFit: "cover", zIndex: 1 }}

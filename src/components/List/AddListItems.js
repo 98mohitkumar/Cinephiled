@@ -179,7 +179,7 @@ const AddListItems = ({ id, CTAHandler }) => {
                                   <div className='gap-3 flex items-start'>
                                     <div className='relative aspect-[1/1.54] w-16 flex-shrink-0 overflow-hidden rounded-md'>
                                       <Image
-                                        src={poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"}
+                                        src={poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/images/DefaultImage.png"}
                                         alt='poster'
                                         fill
                                         style={{ objectFit: "cover" }}
@@ -220,7 +220,7 @@ const AddListItems = ({ id, CTAHandler }) => {
                       <div key={id} className='w-full text-center'>
                         <div className='relative aspect-[1/1.54] w-full flex-shrink-0 overflow-hidden rounded-lg'>
                           <Image
-                            src={poster_path ? `https://image.tmdb.org/t/p/w300${poster_path}` : "/Images/DefaultImage.png"}
+                            src={poster_path ? `https://image.tmdb.org/t/p/w300${poster_path}` : "/images/DefaultImage.png"}
                             alt='poster'
                             fill
                             style={{ objectFit: "cover" }}

@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "components/*": ["src/components/*"],
-      "images/*": ["public/Images/*"],
+      "images/*": ["public/images/*"],
       "styles/*": ["src/styles/*"],
       "theme/*": ["src/theme/*"],
       "data/*": ["src/data/*"],

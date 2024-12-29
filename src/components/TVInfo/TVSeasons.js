@@ -23,7 +23,7 @@ const TVSeasons = ({ seasons }) => {
               <SeasonWrapper>
                 <SeasonImg>
                   <Image
-                    src={poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/Images/DefaultImage.png"}
+                    src={poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : "/images/DefaultImage.png"}
                     alt='TV-season-poster'
                     fill
                     style={{ objectFit: "cover" }}

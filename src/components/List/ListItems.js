@@ -45,7 +45,7 @@ const ListItems = ({ listItems, id }) => {
                   <div className='relative'>
                     <CardImg>
                       <Image
-                        src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : "/Images/DefaultImage.png"}
+                        src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : "/images/DefaultImage.png"}
                         alt='movie-poster'
                         fill
                         style={{ objectFit: "cover" }}

@@ -54,7 +54,7 @@ const TVDetails = ({ tvData }) => {
         <HeroBgContainer className='absolute'>
           <HeroBg className='absolute z-10 text-center'>
             <Image
-              src={backdropPath ? `https://image.tmdb.org/t/p/w1280${backdropPath}` : "/Images/Hex.webp"}
+              src={backdropPath ? `https://image.tmdb.org/t/p/w1280${backdropPath}` : "/images/Hex.webp"}
               alt='tv-backdrop'
               fill
               style={{ objectFit: "cover" }}
@@ -71,7 +71,7 @@ const TVDetails = ({ tvData }) => {
           <HeroImgWrapper>
             <HeroImg className='relative text-center'>
               <Image
-                src={posterPath ? `https://image.tmdb.org/t/p/w500${posterPath}` : "/Images/DefaultImage.png"}
+                src={posterPath ? `https://image.tmdb.org/t/p/w500${posterPath}` : "/images/DefaultImage.png"}
                 alt='tv-poster'
                 fill
                 style={{ objectFit: "cover" }}

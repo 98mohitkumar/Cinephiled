@@ -67,7 +67,7 @@ const Episode = ({
             <EpisodeShowCaseWrapper>
               <div className='image-wrapper'>
                 <Image
-                  src={backdrop ? `https://image.tmdb.org/t/p/w500${backdrop}` : "/Images/DefaultBackdrop.png"}
+                  src={backdrop ? `https://image.tmdb.org/t/p/w500${backdrop}` : "/images/DefaultBackdrop.png"}
                   alt='episde-backdrop'
                   fill
                   style={{ objectFit: "cover" }}
@@ -123,7 +123,7 @@ const Episode = ({
                         <CastImg className='relative text-center'>
                           <Image
                             src={
-                              item?.profile_path ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}` : "/Images/DefaultAvatar.png"
+                              item?.profile_path ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}` : "/images/DefaultAvatar.png"
                             }
                             alt='cast-image'
                             fill

@@ -31,7 +31,7 @@ const Cast = ({ cast, showFullCastLink = false, isSearchGrid = false }) => {
                   whileTap={{ scale: 0.95 }}>
                   <CastImg className='relative text-center'>
                     <Image
-                      src={item.profile_path ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}` : "/Images/DefaultAvatar.png"}
+                      src={item.profile_path ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}` : "/images/DefaultAvatar.png"}
                       alt='cast-image'
                       fill
                       style={{ objectFit: "cover", objectPosition: "top" }}

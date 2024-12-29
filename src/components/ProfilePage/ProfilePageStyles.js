@@ -14,7 +14,7 @@ export const Banner = styled.div`
     inset: 0;
     margin: auto;
     z-index: 5;
-    background: url("/Images/profileBG.jpg") no-repeat center 75% / cover;
+    background: url("/images/profileBG.jpg") no-repeat center 75% / cover;
     filter: brightness(60%);
   }
 

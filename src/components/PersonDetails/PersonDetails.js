@@ -74,7 +74,7 @@ const PersonDetails = ({ details }) => {
             <HeroImgWrapper>
               <HeroImg className='no-shadow relative text-center'>
                 <Image
-                  src={details?.profile_path ? `https://image.tmdb.org/t/p/w500${details?.profile_path}` : "/Images/DefaultImage.png"}
+                  src={details?.profile_path ? `https://image.tmdb.org/t/p/w500${details?.profile_path}` : "/images/DefaultImage.png"}
                   alt='cast-image'
                   fill
                   style={{ objectFit: "cover" }}

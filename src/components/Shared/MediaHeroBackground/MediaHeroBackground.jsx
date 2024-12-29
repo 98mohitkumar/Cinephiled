@@ -12,7 +12,7 @@ const MediaHeroBackground = ({ backdropPath, posterPath, alt }) => {
         loading='eager'
         className='image'
         sizes='100vw'
-        src={getTMDBImage({ path: backdropPath, type: "backdrop", size: "w1280", fallback: "/Images/transparent.png" })}
+        src={getTMDBImage({ path: backdropPath, type: "backdrop", size: "w1280", fallback: "/images/transparent.png" })}
         srcSet={getSrcSet({
           type: "backdrop",
           path: backdropPath,

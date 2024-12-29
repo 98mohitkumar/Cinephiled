@@ -77,7 +77,7 @@ const Seasons = ({
             <SeasonShowcaseWrapper>
               <SeasonShowcaseImg className='relative text-center'>
                 <Image
-                  src={seasonPoster ? `https://image.tmdb.org/t/p/w500${seasonPoster}` : "/Images/DefaultImage.png"}
+                  src={seasonPoster ? `https://image.tmdb.org/t/p/w500${seasonPoster}` : "/images/DefaultImage.png"}
                   alt='TV-season-poster'
                   fill
                   style={{ objectFit: "cover" }}
@@ -123,7 +123,7 @@ const Seasons = ({
                   <SeasonShowcaseWrapper key={item.id} className='episodesBox'>
                     <EpisodeImg className='relative text-center'>
                       <Image
-                        src={item.still_path ? `https://image.tmdb.org/t/p/w300${item.still_path}` : "/Images/DefaultBackdrop.png"}
+                        src={item.still_path ? `https://image.tmdb.org/t/p/w300${item.still_path}` : "/images/DefaultBackdrop.png"}
                         alt='TV-season-episode-poster'
                         fill
                         style={{ objectFit: "cover" }}
@@ -180,7 +180,7 @@ const Seasons = ({
                         <CastImg className='relative text-center'>
                           <Image
                             src={
-                              item.profile_path ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}` : "/Images/DefaultAvatar.png"
+                              item.profile_path ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.profile_path}` : "/images/DefaultAvatar.png"
                             }
                             alt='cast-image'
                             fill

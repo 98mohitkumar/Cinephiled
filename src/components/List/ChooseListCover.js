@@ -63,7 +63,7 @@ const ChooseListCover = ({ id }) => {
                         }`}
                         onClick={() => coverClickHandler(backdrop_path)}>
                         <Image
-                          src={backdrop_path ? `https://image.tmdb.org/t/p/w500${backdrop_path}` : "/Images/DefaultBackdrop.png"}
+                          src={backdrop_path ? `https://image.tmdb.org/t/p/w500${backdrop_path}` : "/images/DefaultBackdrop.png"}
                           alt='backdrop'
                           fill
                           style={{ objectFit: "cover" }}

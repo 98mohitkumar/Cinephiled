@@ -312,7 +312,7 @@ export const Tagline = styled.span`
 export const Light = styled.div`
   width: 40px;
   height: 40px;
-  background: url(/Images/lightsOut.png) no-repeat center center / 40%;
+  background: url(/images/lightsOut.png) no-repeat center center / 40%;
   background-color: white;
   border-radius: 20px;
   margin-top: 1rem;
@@ -365,7 +365,7 @@ export const LightsInOut = styled.div`
   height: 70px;
   margin: 0 auto;
   border-radius: 50px;
-  background: url(/Images/lightsIn.png) no-repeat center center / 50%;
+  background: url(/images/lightsIn.png) no-repeat center center / 50%;
   background-color: #313131;
   ${({ $show }) =>
     $show
