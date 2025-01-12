@@ -17,9 +17,9 @@ const Keyword = ({ results, name, id }) => {
         url={`https://cinephiled.vercel.app/keywords/${id}`}
       />
 
-      <LayoutContainer className='py-4864'>
+      <LayoutContainer className='py-2440'>
         <H3 tag='p' weight='semibold' className='mb-2440'>
-          Movies matching the keyword : {name}
+          Movies matching : {name}
         </H3>
 
         {results?.length > 0 ? (
