@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import FlexBox from "components/UI/FlexBox";
 import H6 from "components/UI/Typography/H6";
 import P from "components/UI/Typography/P";
-import { getCleanTitle, getReleaseDate, getReleaseYear } from "utils/helper";
+import { cn, getCleanTitle, getReleaseDate, getReleaseYear, matches } from "utils/helper";
 
 import { searchItem } from "./GlobalSearchStyles";
 
@@ -61,7 +61,13 @@ const SearchSuggestion = ({ data, type, className, ...props }) => {
           <P
             weight='semibold'
             size='small'
-            className='whitespace-nowrap rounded-2xl border border-neutral-400 bg-neutral-300 px-12 py-2 text-black/75 drop-shadow-sm'>
+            className={cn(
+              "grid w-20 shrink-0 place-items-center whitespace-nowrap rounded-2xl py-2",
+              "border border-cyan-800 bg-cyan-100 text-cyan-800",
+              {
+                "border-green-800 bg-green-100 text-green-800": matches(type, "tv")
+              }
+            )}>
             {suggestedItem.type}
           </P>
         </FlexBox>

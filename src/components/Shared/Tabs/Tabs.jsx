@@ -1,16 +1,13 @@
 import { useEffect, useRef } from "react";
 
-import { cn } from "utils/helper";
+import P from "components/UI/Typography/P";
+import { cn, matches } from "utils/helper";
 
-import { ActiveTabIndicator, tabItemStyles, activeHighlighter, tabWrapperStyles, TabContainer, TabSelector } from "./TabsStyles";
+import { ActiveTabIndicator, tabItemStyles, activeHighlighter, tabWrapperStyles, TabContainer } from "./TabsStyles";
 
 export const Tabs = ({ tabItemsCount, activeItemIndex, children, ...props }) => {
   return (
-    <div
-      css={tabWrapperStyles}
-      $tabItemsCount={tabItemsCount}
-      //  $styling={styling?.tabStyling}
-      {...props}>
+    <div css={tabWrapperStyles} $tabItemsCount={tabItemsCount} {...props}>
       <div css={activeHighlighter} $activeItemIndex={activeItemIndex} $tabItemsCount={tabItemsCount} />
 
       {/* tab items */}
@@ -31,23 +28,35 @@ export const LinearTabs = ({ tabList, currentTab, setTab }) => {
   const tabContainerRef = useRef(null);
 
   useEffect(() => {
-    if (currentTab === "recommendations" && tabContainerRef?.current && window.innerWidth < 550) {
-      tabContainerRef.current.scrollLeft = 200;
+    // find active tab node and scroll to it
+    const activeTab = tabContainerRef.current.querySelector(".active");
+    if (activeTab) {
+      tabContainerRef.current.scrollLeft = activeTab.offsetLeft - 150;
     }
   }, [currentTab]);
 
   return (
-    <TabContainer ref={tabContainerRef}>
+    <TabContainer ref={tabContainerRef} className={cn("mx-auto overflow-x-auto", "flex items-center", "border-b border-neutral-500")}>
       {tabList.map(({ key, name }) => (
-        <TabSelector
+        <div
           key={key}
-          $count={tabList.length}
-          $active={key === currentTab}
+          style={{ width: `${100 / tabList.length}%` }}
+          className={cn(
+            `min-w-max`,
+            "px-32 py-16 text-neutral-400 transition-colors",
+            "grid place-items-center",
+            "cursor-pointer whitespace-nowrap",
+            {
+              "active relative text-white": matches(key, currentTab)
+            }
+          )}
           onClick={() => setTab(key)}
-          className={key === currentTab && "relative"}>
-          {name}
-          {key === currentTab && <ActiveTabIndicator />}
-        </TabSelector>
+          role='button'>
+          <P weight='semibold' size='large'>
+            {name}
+          </P>
+          {matches(key, currentTab) && <ActiveTabIndicator />}
+        </div>
       ))}
     </TabContainer>
   );

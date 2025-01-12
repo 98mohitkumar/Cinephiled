@@ -2,11 +2,10 @@ import Link from "next/link";
 import { Fragment } from "react";
 
 import PlaceholderText from "components/PlaceholderText";
+import H1 from "components/UI/Typography/H1";
 import { apiEndpoints } from "data/apiEndpoints";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { getCleanTitle, removeDuplicates } from "utils/helper";
-
-import { SearchResultsContainer, Keyword } from "./SearchTabStyles";
 
 const KeywordSearch = ({ searchQuery, keywords }) => {
   const { list } = useInfiniteQuery({
@@ -23,13 +22,15 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
   return (
     <Fragment>
       {cleanedItems?.length > 0 ? (
-        <SearchResultsContainer className='max-sm:pt-6'>
+        <div className='mx-auto flex max-w-screen-xl flex-col items-start gap-16'>
           {cleanedItems.map((item) => (
             <Link key={item.id} href={`/keywords/${item.id}-${getCleanTitle(item.name)}`} passHref>
-              <Keyword className='leading-tight'>{item.name}</Keyword>
+              <H1 as='span' weight='medium' className='transition-colors can-hover:text-neutral-500'>
+                {item.name}
+              </H1>
             </Link>
           ))}
-        </SearchResultsContainer>
+        </div>
       ) : (
         <PlaceholderText height='large'>No Keywords found for this query.</PlaceholderText>
       )}

@@ -35,17 +35,11 @@ export const apiEndpoints = {
     getCountryCode: (ip: string) => `https://ipwho.is/${ip}?fields=country_code`
   },
   search: {
-    movieSearchWithYear: ({ query, year }: { query: string; year: string }) =>
-      `${baseUrlV3}/search/movie?language=en-US&query=${query}&page=1&include_adult=false&year=${year}`,
+    movieSearch: ({ query, pageQuery = 1, year = "" }: { query: string; pageQuery?: number; sortBy?: string; year?: string }) =>
+      `${baseUrlV3}/search/movie?language=en-US&query=${query}&page=${pageQuery}&year=${year}&include_adult=false`,
 
-    movieSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery?: number }) =>
-      `${baseUrlV3}/search/movie?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
-
-    tvSearchWithYear: ({ query, year }: { query: string; year: string }) =>
-      `${baseUrlV3}/search/tv?language=en-US&query=${query}&page=1&include_adult=false&first_air_date_year=${year}`,
-
-    tvSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery?: number }) =>
-      `${baseUrlV3}/search/tv?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
+    tvSearch: ({ query, pageQuery = 1, year = "" }: { query: string; pageQuery?: number; sortBy?: string; year?: string }) =>
+      `${baseUrlV3}/search/tv?language=en-US&query=${query}&page=${pageQuery}&year=${year}&include_adult=false`,
 
     keywordSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery?: number }) =>
       `${baseUrlV3}/search/keyword?query=${query}&page=${pageQuery}`,

@@ -37,6 +37,7 @@ const config: Config = {
     extend: {
       gridTemplateColumns: {
         desktopAutoFillMedia: "repeat(auto-fill, minmax(225px, 1fr))",
+        peopleGrid: "repeat(auto-fill, minmax(160px, 1fr))",
         watchProviders: "repeat(auto-fill, minmax(min(55px, 20vw), 1fr))",
         customHeroDetailsGrid: "16rem 1fr",
         "16": "repeat(16, minmax(0, 1fr))"
@@ -49,7 +50,8 @@ const config: Config = {
       },
       aspectRatio: {
         poster: "2/3",
-        backdrop: "16/9"
+        backdrop: "16/9",
+        profile: "2/2.5"
       },
       height: {
         halfScreen: "50vh"

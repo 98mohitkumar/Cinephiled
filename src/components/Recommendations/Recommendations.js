@@ -7,6 +7,7 @@ import { getCleanTitle } from "utils/helper";
 
 import { RecommendationsGrid, RecommendedImg, RecommendedWrapper, InfoTitle } from "./RecommendationsStyles";
 
+// redundant
 const Recommendations = ({ data, type }) => {
   data.splice(20);
 

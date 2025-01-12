@@ -21,35 +21,34 @@ const MediaTemplateGrid = ({ media, mediaType }) => {
         "2xl": "desktopAutoFillMedia"
       }}>
       {media.map(({ id, title, name, poster_path, vote_average, release_date, first_air_date }) => (
-        <GridCol key={id}>
-          <motion.div
-            whileHover={{
-              scale: 1.05,
-              transition: { duration: 0.1 }
-            }}
-            whileTap={{ scale: 0.95 }}>
-            <Link href={`/${mediaType}/${id}-${getCleanTitle(title || name)}`} passHref>
+        <Link href={`/${mediaType}/${id}-${getCleanTitle(title || name)}`} passHref key={id}>
+          <GridCol>
+            <motion.div
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.1 }
+              }}
+              whileTap={{ scale: 0.95 }}>
               <div className='relative aspect-poster'>
                 <Image
                   src={getTMDBImage({ path: poster_path, type: "poster" })}
                   alt={title || name}
                   fill
-                  style={{ objectFit: "cover" }}
-                  className='rounded-xl shadow-xl'
+                  className='rounded-xl object-cover shadow-xl'
                   placeholder='blur'
                   blurDataURL={blurPlaceholder}
                 />
                 <RatingTag rating={vote_average} />
               </div>
-            </Link>
-          </motion.div>
-          <div className='mt-24 pe-10'>
-            <H6 weight='semibold'>{title || name}</H6>
-            <P className='mt-4 text-neutral-400' weight='medium' size='small-to-p'>
-              {getReleaseDate(release_date || first_air_date)}
-            </P>
-          </div>
-        </GridCol>
+            </motion.div>
+            <div className='mt-24 pe-10'>
+              <H6 weight='medium'>{title || name}</H6>
+              <P className='text-neutral-400' weight='medium' size='small-to-p'>
+                {getReleaseDate(release_date || first_air_date)}
+              </P>
+            </div>
+          </GridCol>
+        </Link>
       ))}
     </Grid>
   );

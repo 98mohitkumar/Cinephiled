@@ -2,7 +2,24 @@ import React, { ComponentPropsWithRef, ReactNode, ElementType } from "react";
 
 import { cn } from "utils/helper";
 
-type ColCount = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 16 | "desktopAutoFillMedia" | "watchProviders" | "customHeroDetailsGrid";
+type ColCount =
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 16
+  | "desktopAutoFillMedia"
+  | "watchProviders"
+  | "customHeroDetailsGrid"
+  | "peopleGrid";
 
 type ColumnCountProp = {
   xxs?: ColCount;

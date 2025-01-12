@@ -217,6 +217,7 @@ export const FactsFlexWrapper = styled.div`
   }
 `;
 
+// redundant
 export const BadQuery = styled.h1`
   font-weight: bold;
   font-size: calc(2rem + 4vw);

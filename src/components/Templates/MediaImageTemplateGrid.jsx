@@ -28,10 +28,7 @@ const MediaImageTemplateGrid = ({ items, type = "backdrops" }) => {
                 src={getTMDBImage({ path: item.file_path, type, size })}
                 alt={type}
                 fill
-                style={{
-                  objectFit: "cover"
-                }}
-                className='rounded-xl shadow-xl'
+                className='rounded-xl object-cover shadow-xl'
                 placeholder='blur'
                 blurDataURL={blurPlaceholder}
               />

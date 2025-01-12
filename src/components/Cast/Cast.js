@@ -42,7 +42,7 @@ const Cast = ({ cast, showFullCastLink = false, isSearchGrid = false }) => {
                 </motion.div>
               </Link>
 
-              <div className='mt-3'>
+              <div className='mt-12'>
                 {isSearchGrid ? (
                   <Fragment>
                     <Span className='movieCastHead block font-semibold'>{item.name}</Span>

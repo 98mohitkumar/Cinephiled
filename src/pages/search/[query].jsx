@@ -2,13 +2,12 @@ import { Fragment } from "react";
 
 import SearchTab from "components/SearchTab/SearchTab";
 import MetaWrapper from "components/Shared/MetaWrapper";
+import LayoutContainer from "components/UI/LayoutContainer";
+import H1 from "components/UI/Typography/H1";
 import { apiEndpoints } from "data/apiEndpoints";
-import { BadQuery } from "styles/GlobalComponents";
 import { fetchOptions } from "utils/helper";
 
-const Search = ({ movieRes, tvRes, searchQuery, keywordsRes, peopleRes, collectionRes }) => {
-  const allResultsEmpty = [movieRes, tvRes, keywordsRes, peopleRes, collectionRes].every((res) => res?.results?.length === 0);
-
+const Search = ({ movies, tv, searchQuery, keywords, people, collections, allResultsEmpty, year }) => {
   return (
     <Fragment>
       <MetaWrapper
@@ -17,13 +16,15 @@ const Search = ({ movieRes, tvRes, searchQuery, keywordsRes, peopleRes, collecti
         url={`https://cinephiled.vercel.app/search/${searchQuery}`}
       />
 
-      {allResultsEmpty ? (
-        <div className='fixed inset-0 flex items-center justify-center'>
-          <BadQuery>{"Bad Query :("}</BadQuery>
-        </div>
-      ) : (
-        <SearchTab search={searchQuery} movies={movieRes} tv={tvRes} keywords={keywordsRes} people={peopleRes} collections={collectionRes} />
-      )}
+      <LayoutContainer className='py-4864'>
+        {allResultsEmpty ? (
+          <H1 tag='p' weight='semibold' className='absolute inset-0 grid select-none place-items-center text-neutral-400'>
+            {"Bad Query :("}
+          </H1>
+        ) : (
+          <SearchTab searchQuery={searchQuery} movies={movies} tv={tv} keywords={keywords} people={people} collections={collections} year={year} />
+        )}
+      </LayoutContainer>
     </Fragment>
   );
 };
@@ -31,7 +32,7 @@ const Search = ({ movieRes, tvRes, searchQuery, keywordsRes, peopleRes, collecti
 export const getServerSideProps = async (ctx) => {
   try {
     let searchQuery = ctx.query.query.replaceAll("+", " ");
-    let year = "";
+    let year = null;
 
     if (searchQuery.includes("y:")) {
       year = searchQuery.slice(-4);
@@ -48,16 +49,17 @@ export const getServerSideProps = async (ctx) => {
       const [keywordsRes, peopleRes, collectionRes] = await Promise.all([keywordsResponse.json(), peopleResponse.json(), collectionResponse.json()]);
 
       return {
-        keywordsRes: { results: keywordsRes.results, count: keywordsRes.total_results },
-        peopleRes: { results: peopleRes.results, count: peopleRes.total_results },
-        collectionRes: { results: collectionRes.results, count: collectionRes.total_results }
+        keywords: { results: keywordsRes.results, count: keywordsRes.total_results },
+        people: { results: peopleRes.results, count: peopleRes.total_results },
+        collections: { results: collectionRes.results, count: collectionRes.total_results }
       };
     };
 
-    const fetchSearchResults = async (withYear) => {
-      const searchEndpoints = withYear
-        ? [apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }), apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year })]
-        : [apiEndpoints.search.movieSearch({ query: searchQuery }), apiEndpoints.search.tvSearch({ query: searchQuery })];
+    const fetchSearchResults = async () => {
+      const searchEndpoints = [
+        apiEndpoints.search.movieSearch({ query: searchQuery, year }),
+        apiEndpoints.search.tvSearch({ query: searchQuery, year })
+      ];
 
       const [movieResponse, tvResponse] = await Promise.all(searchEndpoints.map((endpoint) => fetch(endpoint, fetchOptions())));
 
@@ -68,21 +70,24 @@ export const getServerSideProps = async (ctx) => {
       const [movieRes, tvRes] = await Promise.all([movieResponse.json(), tvResponse.json()]);
 
       return {
-        movieRes: { results: movieRes.results, count: movieRes.total_results },
-        tvRes: { results: tvRes.results, count: tvRes.total_results }
+        movies: { results: movieRes.results, count: movieRes.total_results },
+        tv: { results: tvRes.results, count: tvRes.total_results }
       };
     };
 
-    const [commonData, searchData] = await Promise.all([
-      fetchCommonData(),
-      year.trim().length > 0 ? fetchSearchResults(true) : fetchSearchResults(false)
-    ]);
+    const [commonData, searchData] = await Promise.all([fetchCommonData(), fetchSearchResults()]);
+
+    const allResultsEmpty = [searchData.movies, searchData.tv, commonData.keywords, commonData.people, commonData.collections].every(
+      (res) => res?.results?.length === 0
+    );
 
     return {
       props: {
         ...searchData,
         ...commonData,
-        searchQuery
+        searchQuery,
+        allResultsEmpty,
+        year
       }
     };
   } catch {
