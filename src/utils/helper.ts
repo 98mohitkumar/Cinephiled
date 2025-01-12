@@ -166,33 +166,27 @@ export const fetchSuggestions = async ({
     people.push(...peopleRes.results.map((item: { id: string }) => ({ ...item, type: "person" })));
   }
 
-  const fetchSearchResults = async (withYear: boolean) => {
-    const searchEndpoints = withYear
-      ? [apiEndpoints.search.movieSearchWithYear({ query: searchQuery, year }), apiEndpoints.search.tvSearchWithYear({ query: searchQuery, year })]
-      : [apiEndpoints.search.movieSearch({ query: searchQuery }), apiEndpoints.search.tvSearch({ query: searchQuery })];
+  const searchEndpoints = [apiEndpoints.search.movieSearch({ query: searchQuery, year }), apiEndpoints.search.tvSearch({ query: searchQuery, year })];
 
-    const [movieResponse, tvResponse] = await Promise.all(
-      searchEndpoints.map((endpoint) =>
-        fetch(endpoint, {
-          ...fetchOptions({ signal: controller.signal })
-        })
-      )
-    );
+  const [movieResponse, tvResponse] = await Promise.all(
+    searchEndpoints.map((endpoint) =>
+      fetch(endpoint, {
+        ...fetchOptions({ signal: controller.signal })
+      })
+    )
+  );
 
-    if (!movieResponse.ok || !tvResponse.ok) {
-      throw new Error("Error fetching data");
-    }
+  if (!movieResponse.ok || !tvResponse.ok) {
+    throw new Error("Error fetching data");
+  }
 
-    const [movieRes, tvRes] = await Promise.all([movieResponse.json(), tvResponse.json()]);
+  const [movieRes, tvRes] = await Promise.all([movieResponse.json(), tvResponse.json()]);
 
-    return {
-      movieRes: movieRes.results.map((item: { id: string }) => ({ ...item, type: "movie" })) || [],
-      tvRes: tvRes.results.map((item: { id: string }) => ({ ...item, type: "tv" })) || [],
-      peopleRes: people
-    };
+  return {
+    movieRes: movieRes.results.map((item: { id: string }) => ({ ...item, type: "movie" })) || [],
+    tvRes: tvRes.results.map((item: { id: string }) => ({ ...item, type: "tv" })) || [],
+    peopleRes: people
   };
-
-  return year.trim().length > 0 ? fetchSearchResults(true) : fetchSearchResults(false);
 };
 
 export const copyToClipboard = async ({ text, nodeId }: { text: string; nodeId: string }) => {
