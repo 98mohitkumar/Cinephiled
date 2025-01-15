@@ -22,6 +22,7 @@ export const pageWrapperStyles = css`
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  flex: 1;
 
   .background {
     filter: brightness(50%);

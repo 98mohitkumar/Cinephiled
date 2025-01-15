@@ -1,12 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import DominantColor from "components/Shared/DominantColor/DominantColor";
+import { cn } from "utils/helper";
 import { getSrcSet, getTMDBImage } from "utils/imageHelper";
 
 import { heroBackgroundStyles } from "./MediaHeroBackgroundStyles";
 
 const MediaHeroBackground = ({ backdropPath, posterPath, alt }) => {
   return (
-    <div css={heroBackgroundStyles}>
+    <div css={heroBackgroundStyles} className={cn({ "no-backdrop": !backdropPath })}>
       <img
         alt={alt}
         loading='eager'

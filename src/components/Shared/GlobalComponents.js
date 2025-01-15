@@ -8,6 +8,14 @@ import { hoverMediaQuery, transition, cssClamp, mediaQuery } from "utils/mixins"
 export const mediaDetailsWrapper = css`
   min-height: ${cssClamp({ minSize: 400, maxSize: 700, minViewport: breakpointAsNumber("lg"), maxViewport: breakpointAsNumber("3xl") })};
 
+  &.no-min-height {
+    min-height: unset;
+  }
+
+  &.blank {
+    min-height: ${cssClamp({ minSize: 300, maxSize: 450 })};
+  }
+
   ${mediaQuery({ type: "max", breakpoint: "lg" })} {
     min-height: auto;
   }

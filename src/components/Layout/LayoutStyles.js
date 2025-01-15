@@ -23,8 +23,4 @@ export const Wrapper = styled.main`
     min-height: 100%;
     flex-grow: 1;
   }
-
-  .content-wrapper > * {
-    flex-grow: 1;
-  }
 `;

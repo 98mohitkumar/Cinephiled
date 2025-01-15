@@ -65,6 +65,21 @@ export const heroBackgroundStyles = css`
 
     &:before {
       --gradient-direction: 0deg;
+      left: 0;
+      bottom: -10px;
+    }
+  }
+
+  // this is the alternate UI when there is no backdrop available
+  &.no-backdrop {
+    --gradient-direction: 0deg;
+
+    margin-left: unset;
+    aspect-ratio: unset;
+    width: 100%;
+
+    ${mediaQuery({ type: "max", breakpoint: "lg" })} {
+      position: absolute;
     }
   }
 `;
