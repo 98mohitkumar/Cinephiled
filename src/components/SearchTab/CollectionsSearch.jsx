@@ -30,9 +30,9 @@ const CollectionsSearch = ({ collections, searchQuery }) => {
         <Grid
           colConfig={{
             xxs: 2,
-            sm: 3,
+            md: 3,
             lg: 4,
-            xl: 5,
+            "2xl": 5,
             "4xl": 6
           }}>
           {renderList.map((collection) => (

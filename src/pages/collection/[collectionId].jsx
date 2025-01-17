@@ -27,7 +27,7 @@ const LAYOUT_TYPES = {
 export const Collection = ({ collectionData, movieGenresData, collectionImagesData }) => {
   const { id, name, overview, backdrop_path, poster_path, parts } = collectionData;
   const allGenres = Array.from(new Set(parts.map((part) => part.genre_ids).flat()))
-    .map((genreId) => movieGenresData.genres.find((genre) => genre.id === genreId))
+    .map((genreId) => movieGenresData.genres.find((genre) => matches(genre.id, genreId)))
     .splice(0, 5);
 
   const posters = collectionImagesData?.posters || [];
