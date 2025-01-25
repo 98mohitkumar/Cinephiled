@@ -59,9 +59,13 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
               "max-lg:-mt-3248 max-lg:py-0 lg:min-h-[60vh]": Boolean(list?.backdrop_path)
             })}>
             <div className='w-full md:max-w-2xl'>
-              <div className='mb-2024'>
-                <H1 className='mb-12 text-pretty'>{list.name}</H1>
-                {list?.description && <P size='large'>{list?.description}</P>}
+              <div className='mb-1624'>
+                <H1 className='text-pretty'>{list.name}</H1>
+                {list?.description && (
+                  <P size='large' className='mt-6'>
+                    {list?.description}
+                  </P>
+                )}
               </div>
 
               <Grid className='w-fit grid-cols-1 gap-x-32 gap-y-8 whitespace-nowrap xs:grid-cols-2'>
@@ -71,7 +75,7 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
                 <ListDetails title='Visibility' copy={list?.public ? "Public" : "Private"} />
               </Grid>
 
-              <div className='mt-2432 w-fit'>
+              <div className='mt-1624 w-fit'>
                 <FlexBox className='w-full flex-wrap gap-10'>
                   {/* list controls, only visible to list owner */}
                   {userCanEditList ? (
