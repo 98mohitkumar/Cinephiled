@@ -3,7 +3,7 @@ import { Error404 } from "styles/PageStyles/404PageStyles";
 
 function Error({ statusCode }) {
   return (
-    <div className='grid min-h-[75vh] place-items-center'>
+    <div className='grid grow place-items-center'>
       <H1 css={Error404} weight='bold'>
         {statusCode || 500}
       </H1>

@@ -14,7 +14,7 @@ const PlaceholderText = ({ className, height = "small", children }: PlaceholderT
   return (
     <div
       className={cn(
-        "grid select-none place-items-center",
+        "mx-auto grid max-w-screen-sm select-none place-items-center text-pretty",
         {
           "min-h-[20vh]": matches(height, "small"),
           "min-h-[45vh]": matches(height, "large")

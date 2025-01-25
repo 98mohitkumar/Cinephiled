@@ -68,7 +68,7 @@ const PersonDetails = ({ details }) => {
   return (
     <div className='mb-auto'>
       <HeroDetailsContainer className='person-details relative mb-auto'>
-        <DominantColor tint flip image={combinedCredits[0]?.poster_path} />
+        <DominantColor tint image={combinedCredits[0]?.poster_path} />
         <div className='relative z-10'>
           <DetailsHeroWrap style={{ minHeight: "auto" }} className='pb-0'>
             <HeroImgWrapper>

@@ -104,7 +104,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
         <LayoutContainer className='py-3248'>
           <H3 className='mb-1620'>Movies</H3>
 
-          <MediaTemplateGrid media={sortedByReleaseDate} mediaType='movie' />
+          <MediaTemplateGrid media={sortedByReleaseDate} />
         </LayoutContainer>
       ) : null}
 

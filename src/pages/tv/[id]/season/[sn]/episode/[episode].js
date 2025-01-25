@@ -55,7 +55,7 @@ const Episode = ({
 
       <Fragment>
         <div className='relative mb-auto'>
-          <DominantColor image={backdrop} tint isUsingBackdrop flip />
+          <DominantColor image={backdrop} tint isUsingBackdrop />
 
           <EpisodeInfoWrapper className='relative z-10'>
             <Breadcrumbs links={links} />

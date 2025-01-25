@@ -41,7 +41,7 @@ const TvShows = ({ renderList, genreName, genreId }) => {
       />
 
       <div className='relative'>
-        <DominantColor flip tint />
+        <DominantColor tint />
         <LayoutContainer className='relative z-5 pb-24 pt-4864'>
           <H1 className='mb-3240 text-center text-white'>{genreName} TV Shows</H1>
 
@@ -62,7 +62,7 @@ const TvShows = ({ renderList, genreName, genreId }) => {
                 </Select>
               </div>
 
-              <MediaTemplateGrid mediaType='tv' media={cleanedItems} />
+              <MediaTemplateGrid media={cleanedItems} />
             </Fragment>
           ) : (
             <PlaceholderText height='large'>No TV Shows are available for this genre</PlaceholderText>

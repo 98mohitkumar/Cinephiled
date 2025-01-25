@@ -19,7 +19,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
 
   return (
     <Fragment>
-      <Modal isOpen={isModalVisible} closeModal={closeModal} align='items-center' width='max-w-lg'>
+      <Modal isOpen={isModalVisible} closeModal={closeModal} width='max-w-lg'>
         <div>
           <h5 className='m-0'>
             Are you sure you want to remove <span className='inline font-bold'>{`${name} (${getReleaseYear(releaseDate)})`}</span> from your watchlist

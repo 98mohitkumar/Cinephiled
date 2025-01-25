@@ -1,7 +1,9 @@
-import { loaderStyles } from "./LoaderStyles";
+import { cn } from "utils/helper";
+
+import { loaderStyles, loadingSpinner } from "./LoaderStyles";
 
 // https://uiverse.io/StealthWorm/chatty-zebra-11
-export const Loader = (props) => {
+const Loader = (props) => {
   return (
     <div css={loaderStyles} {...props}>
       <div className='loader'>
@@ -27,7 +29,16 @@ export const Loader = (props) => {
   );
 };
 
-// redundant check (<Loading />) and .small class in above component
-const Loading = () => null;
+export default Loader;
 
-export default Loading;
+export const LoadingSpinner = ({ className }) => {
+  return (
+    <div className='grid-center h-40 w-full'>
+      <div css={loadingSpinner} className={cn("text-neutral-300", className)}>
+        {Array.from({ length: 10 }).map((_, index) => (
+          <div key={index} />
+        ))}
+      </div>
+    </div>
+  );
+};

@@ -22,7 +22,7 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
 
       <Fragment>
         <section className='relative'>
-          <DominantColor flip tint />
+          <DominantColor tint />
 
           {/* genres for movies and tv shows */}
           <LayoutContainer className='relative z-5 py-2440 pe-4'>
@@ -38,7 +38,7 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
         {nowPlaying.length > 0 ? (
           <LayoutContainer className='py-2440'>
             <H2 className='mb-2432 text-center text-white'>Movies playing in theaters</H2>
-            <MediaTemplateGrid mediaType='movie' media={nowPlaying} />
+            <MediaTemplateGrid media={nowPlaying} />
           </LayoutContainer>
         ) : null}
       </Fragment>

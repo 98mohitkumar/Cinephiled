@@ -60,7 +60,7 @@ const ListSlice = ({ mediaId, list, mediaType, CTA }) => {
         ) : (
           <Fragment>
             <p className='font-medium'>{list?.name}</p>
-            {isAdded ? <span className='text-base text-red-500'>Remove</span> : <span className='text-green-500 text-base'>Add</span>}
+            {isAdded ? <span className='text-base text-red-500'>Remove</span> : <span className='text-base text-green-500'>Add</span>}
           </Fragment>
         )}
       </div>
@@ -157,7 +157,7 @@ const AddToListModal = ({ mediaId, mediaType }) => {
 
   return (
     <Fragment>
-      <Modal isOpen={isModalVisible} closeModal={isWaiting ? () => {} : closeModalHandler} width='max-w-lg' align='items-center'>
+      <Modal isOpen={isModalVisible} closeModal={isWaiting ? () => {} : closeModalHandler} width='max-w-lg'>
         <div className={isWaiting ? "pointer-events-none" : ""}>
           <h4 className='text-2xl mb-4 font-semibold'>Add to list</h4>
 
@@ -171,7 +171,7 @@ const AddToListModal = ({ mediaId, mediaType }) => {
             <div className='py-3 grid place-items-center gap-2'>
               <p className='text-xl'>You don&apos;t have any lists yet.</p>
               <Link href='/lists?create=true'>
-                <p className='text-lg text-cyan-400 hover:text-cyan-600 block underline transition-colors'>Create a list</p>
+                <p className='text-lg block text-cyan-400 underline transition-colors hover:text-cyan-600'>Create a list</p>
               </Link>
             </div>
           )}

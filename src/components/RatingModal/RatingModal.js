@@ -111,7 +111,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal, posterPath, re
 
   return (
     <Fragment>
-      <Modal isOpen={isOpen} closeModal={cancelButtonHandler} align='items-center' width='max-w-lg'>
+      <Modal isOpen={isOpen} closeModal={cancelButtonHandler} width='max-w-lg'>
         <div>
           <Span className='mb-4 block font-semibold'>{mediaName}</Span>
 
@@ -176,7 +176,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal, posterPath, re
         </div>
       </Modal>
 
-      <Modal isOpen={isDeleteConfirmationModalVisible} closeModal={closeDeleteConfirmationModal} align='items-center' width='max-w-lg'>
+      <Modal isOpen={isDeleteConfirmationModalVisible} closeModal={closeDeleteConfirmationModal} width='max-w-lg'>
         <div>
           <h5 className='mb-4'>
             Are you sure you want to delete <span className='inline font-bold'>{mediaName}</span> rating

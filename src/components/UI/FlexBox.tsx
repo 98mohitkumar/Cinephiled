@@ -4,7 +4,7 @@ import { cn } from "utils/helper";
 
 type FlexBoxProps = ComponentPropsWithRef<"div"> & {
   children: ReactNode;
-  tag: ElementType;
+  tag?: ElementType;
 };
 
 const FlexBox = ({ children, tag: Tag = "div", className, ref, ...props }: FlexBoxProps) => {

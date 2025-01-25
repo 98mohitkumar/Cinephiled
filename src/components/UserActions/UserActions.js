@@ -6,9 +6,9 @@ import { BsStarHalf } from "react-icons/bs";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 import { addToWatchlist, setFavorite } from "apiEndpoints/user";
-import AddToListModal from "components/List/AddToListModal";
 import { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
+import AddToListModal from "components/pages/List/AddToListModal";
 import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
 import RatingModal from "components/RatingModal/RatingModal";
 import Toast, { useToast } from "components/Toast/Toast";

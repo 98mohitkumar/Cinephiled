@@ -10,7 +10,7 @@ import { blurPlaceholder } from "data/global";
 import { getCleanTitle, getReleaseDate } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
-const MediaTemplateGrid = ({ media, mediaType }) => {
+const MediaTemplateGrid = ({ media }) => {
   return (
     <Grid
       colConfig={{
@@ -19,10 +19,11 @@ const MediaTemplateGrid = ({ media, mediaType }) => {
         lg: 4,
         xl: 5,
         "2xl": "desktopAutoFillMedia"
-      }}>
-      {media.map(({ id, title, name, poster_path, vote_average, release_date, first_air_date }) => (
-        <Link href={`/${mediaType}/${id}-${getCleanTitle(title || name)}`} passHref key={id}>
-          <GridCol>
+      }}
+      className='items-start'>
+      {media.map(({ id, title, name, poster_path, vote_average, release_date, first_air_date, media_type }) => (
+        <Link href={`/${media_type}/${id}-${getCleanTitle(title || name)}`} passHref key={id}>
+          <GridCol title={title || name}>
             <motion.div
               whileHover={{
                 scale: 1.05,

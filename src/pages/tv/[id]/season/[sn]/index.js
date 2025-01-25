@@ -67,7 +67,7 @@ const Seasons = ({
 
       <Fragment>
         <div className='relative mb-auto'>
-          <DominantColor image={seasonPoster} tint flip />
+          <DominantColor image={seasonPoster} tint />
           <SeasonExpandedContainer className='relative z-10'>
             <Breadcrumbs links={links} />
 

@@ -1,64 +1,47 @@
-import { motion } from "motion/react";
+import { Copy } from "lucide-react";
 import { Fragment } from "react";
-import { IoCopy } from "react-icons/io5";
+import { toast } from "sonner";
 
 import Modal from "components/Modal/Modal";
-import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import Toast, { useToast } from "components/Toast/Toast";
-import { Button } from "styles/GlobalComponents";
+import Button from "components/UI/Button";
+import FlexBox from "components/UI/FlexBox";
+import Input, { InputLabel } from "components/UI/Input";
+import H4 from "components/UI/Typography/H4";
 import { copyToClipboard } from "utils/helper";
 
-const ShareModal = ({ title, url, isModalOpen, closeModal }) => {
-  const { isToastVisible, showToast, toastMessage } = useToast();
-
+const ShareModal = ({ url, isModalOpen, closeModal }) => {
   const copyButtonHandler = () => {
     copyToClipboard({ nodeId: "list-URL", text: url })
       .then(() => {
         closeModal();
-        showToast({ message: "Copied to clipboard!" });
+        toast.success("Link has been copied to your clipboard!");
       })
       .catch(() => {
         closeModal();
-        showToast({ message: "Copying to clipboard is not supported." });
+        toast.warning("Copying to clipboard is not supported, Please copy manually.");
       });
   };
 
   return (
     <Fragment>
-      <Toast isToastVisible={isToastVisible}>
-        <Span className='toast-message'>{toastMessage}</Span>
-      </Toast>
+      <Modal closeModal={closeModal} isOpen={isModalOpen} width='max-w-lg'>
+        <H4 weight='semibold'>Share</H4>
 
-      <Modal closeModal={closeModal} isOpen={isModalOpen} align='items-center' width='max-w-lg'>
-        <div>
-          <h4 className='text-xl mb-4 font-semibold'>Share {title}</h4>
+        <div className='my-16'>
+          <InputLabel htmlFor='list-URL'>URL</InputLabel>
 
-          <div className='mt-6'>
-            <div>
-              <label htmlFor='list-URL' className='text-base mb-2 block font-medium text-neutral-200'>
-                URL
-              </label>
-              <div className='gap-3 flex'>
-                <input
-                  type='text'
-                  name='URL'
-                  id='list-URL'
-                  defaultValue={typeof window !== "undefined" ? window.location.href : ""}
-                  readOnly
-                  className='text-base p-2.5 block w-full rounded-lg border border-neutral-500 bg-neutral-700 text-white placeholder-neutral-400 focus:border'
-                />
+          <FlexBox className='gap-12'>
+            <Input type='text' name='URL' id='list-URL' defaultValue={typeof window !== "undefined" ? window.location.href : ""} readOnly fullWidth />
 
-                <Button as={motion.button} whileTap={{ scale: 0.95 }} className='mediaCTA w-[50px] shrink-0' onClick={copyButtonHandler}>
-                  <IoCopy size={20} />
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <Button as={motion.button} whileTap={{ scale: 0.95 }} className='secondary mt-3 w-full' onClick={closeModal}>
-            Close
-          </Button>
+            <Button className='shrink-0' onClick={copyButtonHandler}>
+              <Copy size={20} />
+            </Button>
+          </FlexBox>
         </div>
+
+        <Button variant='outline' className='w-full' onClick={closeModal}>
+          Close
+        </Button>
       </Modal>
     </Fragment>
   );

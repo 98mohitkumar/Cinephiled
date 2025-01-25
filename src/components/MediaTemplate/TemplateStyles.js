@@ -29,6 +29,7 @@ export const Cards = styled.div`
   align-self: flex-start;
 `;
 
+// redundant
 export const CardImg = styled.div`
   position: relative;
   text-align: center;
@@ -63,6 +64,7 @@ export const CardInfo = styled.div`
   }
 `;
 
+// redundant
 export const InfoTitle = styled.h2`
   font-size: 18px;
   font-weight: 600;

@@ -140,7 +140,7 @@ const NetworkPage = ({ details, media }) => {
           </Select>
         </div>
 
-        <MediaTemplateGrid mediaType='tv' media={renderList} />
+        <MediaTemplateGrid media={renderList} />
       </LayoutContainer>
     </div>
   );

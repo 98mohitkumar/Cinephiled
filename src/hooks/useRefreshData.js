@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-const useRevalidateList = (
+const useRefreshData = (
   { withQuery } = {
     withQuery: false
   }
@@ -8,7 +8,7 @@ const useRevalidateList = (
   const router = useRouter();
 
   const revalidateData = () => {
-    router.push(
+    router.replace(
       {
         pathname: router.pathname,
         query: withQuery
@@ -25,4 +25,4 @@ const useRevalidateList = (
   return { revalidateData };
 };
 
-export default useRevalidateList;
+export default useRefreshData;

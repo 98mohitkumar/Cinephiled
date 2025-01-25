@@ -22,6 +22,7 @@ const CastPage = ({ media: { title, year, poster }, cast }) => {
       return;
     }
 
+    // todo: use throttle here
     timeoutRef.current = setTimeout(() => {
       const searchValue = e.target.value.toLowerCase();
       const filteredCast = cast.filter(
@@ -34,7 +35,7 @@ const CastPage = ({ media: { title, year, poster }, cast }) => {
   return (
     <Fragment>
       <div className='relative mb-auto'>
-        <DominantColor image={poster} flip tint />
+        <DominantColor image={poster} tint />
         <ModulesWrapper className='relative z-10'>
           <div className='py-6 text-center'>
             <div className='my-5 lg:my-10'>

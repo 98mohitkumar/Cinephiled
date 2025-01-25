@@ -5,7 +5,8 @@ import { SessionProvider } from "next-auth/react";
 import { Fragment, useEffect, useState } from "react";
 
 import Layout from "components/Layout/Layout";
-import { Loader } from "components/Loader/Loader";
+import Loader from "components/Loader/Loader";
+import Toast from "components/Shared/Toast";
 import ListsContextProvider from "Store/ListsContext";
 import MediaContextProvider from "Store/MediaContext";
 import UserContextProvider from "Store/UserContext";
@@ -62,6 +63,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           </UserContextProvider>
         </SessionProvider>
       </Theme>
+
+      <Toast />
     </Fragment>
   );
 }

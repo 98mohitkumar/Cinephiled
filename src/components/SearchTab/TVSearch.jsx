@@ -21,7 +21,7 @@ const TVSearch = ({ searchQuery, tv, year }) => {
   return (
     <Fragment>
       {cleanedItems?.length > 0 ? (
-        <MediaTemplateGrid media={cleanedItems} mediaType='tv' />
+        <MediaTemplateGrid media={cleanedItems} />
       ) : (
         <PlaceholderText height='large'>No TV Shows found for this query.</PlaceholderText>
       )}

@@ -74,7 +74,8 @@ const config: Config = {
       // apply hover styles if the device has hover capabilities
       addVariant("can-hover", "@media (hover: hover) and (pointer: fine) { &:hover }");
       addVariant("group-can-hover", "@media (hover: hover) and (pointer: fine) { :merge(.group):hover & }");
-    })
+    }),
+    require("tailwindcss-animate")
   ]
 };
 

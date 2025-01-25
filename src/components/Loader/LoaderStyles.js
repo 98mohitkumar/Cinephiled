@@ -53,11 +53,6 @@ export const loaderStyles = css`
   display: grid;
   place-items: center;
 
-  &.small {
-    position: static;
-    background: transparent;
-  }
-
   .loader {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -137,5 +132,101 @@ export const loaderStyles = css`
     height: 12px;
     background-color: ${theme.colors.black};
     border-radius: 50%;
+  }
+`;
+
+const spinner = keyframes`
+    0%,
+    10%,
+    20%,
+    30%,
+    50%,
+    60%,
+    70%,
+    80%,
+    90%,
+    100% {
+      transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1%));
+    }
+
+    50% {
+      transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1.5%));
+    }
+`;
+
+export const loadingSpinner = css`
+  width: 80px;
+  aspect-ratio: 1;
+  position: relative;
+  display: grid;
+  place-items: center;
+
+  & div {
+    width: 6%;
+    height: 20%;
+    position: absolute;
+    background-color: currentColor;
+    transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1%));
+    animation: ${spinner} 1s calc(var(--delay) * 1s) infinite ease;
+  }
+
+  & div:nth-child(1) {
+    --delay: 0.1;
+    --rotation: 36;
+    --translation: 150;
+  }
+
+  & div:nth-child(2) {
+    --delay: 0.2;
+    --rotation: 72;
+    --translation: 150;
+  }
+
+  & div:nth-child(3) {
+    --delay: 0.3;
+    --rotation: 108;
+    --translation: 150;
+  }
+
+  & div:nth-child(4) {
+    --delay: 0.4;
+    --rotation: 144;
+    --translation: 150;
+  }
+
+  & div:nth-child(5) {
+    --delay: 0.5;
+    --rotation: 180;
+    --translation: 150;
+  }
+
+  & div:nth-child(6) {
+    --delay: 0.6;
+    --rotation: 216;
+    --translation: 150;
+  }
+
+  & div:nth-child(7) {
+    --delay: 0.7;
+    --rotation: 252;
+    --translation: 150;
+  }
+
+  & div:nth-child(8) {
+    --delay: 0.8;
+    --rotation: 288;
+    --translation: 150;
+  }
+
+  & div:nth-child(9) {
+    --delay: 0.9;
+    --rotation: 324;
+    --translation: 150;
+  }
+
+  & div:nth-child(10) {
+    --delay: 1;
+    --rotation: 360;
+    --translation: 150;
   }
 `;

@@ -24,7 +24,7 @@ export const heroBackgroundStyles = css`
     content: "";
     z-index: 1;
     inset: 0;
-    left: -25px;
+    left: -20px;
     position: absolute;
     background: linear-gradient(
       var(--gradient-direction),
@@ -51,7 +51,7 @@ export const heroBackgroundStyles = css`
     content: "";
     z-index: 1;
     inset: 0;
-    bottom: -10px;
+    bottom: -2px;
     position: absolute;
     background: linear-gradient(0deg, #121212, transparent 25%);
   }

@@ -38,7 +38,7 @@ export const sortOptions = {
     { name: "Rating Descending", value: "vote_average.desc" },
     { name: "Release Date Ascending", value: "release_date.asc" },
     { name: "Release Date Descending", value: "release_date.desc" },
-    { name: "Title (A-Z)", value: "title.asc" },
+    { name: "Title (A-Z)", value: "title.asc", isDefault: true },
     { name: "Title (Z-A)", value: "title.desc" }
   ]
 } as const;

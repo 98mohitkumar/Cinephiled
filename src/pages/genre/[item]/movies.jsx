@@ -42,7 +42,7 @@ const Movies = ({ renderList, genreName, genreId }) => {
       />
 
       <section className='relative'>
-        <DominantColor flip tint />
+        <DominantColor tint />
         <LayoutContainer className='relative z-5 pb-24 pt-4864'>
           <H1 className='mb-3240 text-center text-white'>{genreName} Movies</H1>
 
@@ -63,7 +63,7 @@ const Movies = ({ renderList, genreName, genreId }) => {
                 </Select>
               </div>
 
-              <MediaTemplateGrid mediaType='movie' media={cleanedItems} />
+              <MediaTemplateGrid media={cleanedItems} />
             </Fragment>
           ) : (
             <PlaceholderText height='large'>No Movies are available for this genre</PlaceholderText>

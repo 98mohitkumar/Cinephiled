@@ -65,7 +65,8 @@ const SearchSuggestion = ({ data, type, className, ...props }) => {
               "grid w-20 shrink-0 place-items-center whitespace-nowrap rounded-2xl py-2",
               "border border-cyan-800 bg-cyan-100 text-cyan-800",
               {
-                "border-green-800 bg-green-100 text-green-800": matches(type, "tv")
+                "border-green-800 bg-green-100 text-green-800": matches(type, "tv"),
+                "border-amber-800 bg-amber-100 text-amber-800": matches(type, "person")
               }
             )}>
             {suggestedItem.type}

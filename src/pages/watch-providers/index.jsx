@@ -55,7 +55,7 @@ const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, 
       />
 
       <LayoutContainer className='relative py-4064'>
-        <DominantColor tint flip />
+        <DominantColor tint />
 
         <section className='relative z-5'>
           <div className='mb-3248 text-center'>

@@ -1,10 +1,9 @@
-import { motion } from "motion/react";
+import { Share2 } from "lucide-react";
 import { Fragment } from "react";
-import { MdShare } from "react-icons/md";
 
 import { useModal } from "components/Modal/Modal";
 import ShareModal from "components/ShareModal/ShareModal";
-import { Button } from "styles/GlobalComponents";
+import Button from "components/UI/Button";
 
 const ListShareButton = ({ list }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
@@ -27,10 +26,11 @@ const ListShareButton = ({ list }) => {
 
   return (
     <Fragment>
-      <Button as={motion.button} whileTap={{ scale: 0.95 }} onClick={shareHandler}>
-        <MdShare size={20} />
+      <Button onClick={shareHandler} title='Share List'>
+        <Share2 size={20} />
       </Button>
 
+      {/* share modal (fallback for browsers that don't support navigator.share) */}
       <ShareModal title={list?.name} isModalOpen={isModalVisible} closeModal={closeModal} />
     </Fragment>
   );

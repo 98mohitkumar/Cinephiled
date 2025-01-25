@@ -41,7 +41,7 @@ const PeopleSearch = ({ searchQuery, people }) => {
                     transition: { duration: 0.1 }
                   }}
                   whileTap={{ scale: 0.95 }}>
-                  <div className='aspect-profile relative'>
+                  <div className='relative aspect-profile'>
                     <Image
                       src={getTMDBImage({ path: person.profile_path, type: "profile", size: "w500" })}
                       alt={person.name}

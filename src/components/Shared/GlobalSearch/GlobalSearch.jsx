@@ -1,7 +1,9 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/router";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useCallback, useRef, useState } from "react";
+import { throttle } from "throttle-debounce";
 
+import { LoadingSpinner } from "components/Loader/Loader";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
 import { framerTabVariants, matches } from "utils/helper";
 
@@ -17,17 +19,15 @@ const GlobalSearch = () => {
     includePeople: true
   });
 
-  const searchInputTimeout = useRef(null);
-
   const isValidInput = query.length > 0 && query.trim().length > 0;
 
-  const inputChangeHandler = (e) => {
-    clearTimeout(searchInputTimeout);
-
-    searchInputTimeout.current = setTimeout(() => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const throttledInputChangeHandler = useCallback(
+    throttle(1000, (e) => {
       setQuery(e.target.value);
-    }, 300);
-  };
+    }),
+    []
+  );
 
   const searchHandler = async (event) => {
     event.preventDefault();
@@ -80,7 +80,7 @@ const GlobalSearch = () => {
             id='inputData'
             ref={userInputRef}
             autoComplete='off'
-            onChange={inputChangeHandler}
+            onChange={throttledInputChangeHandler}
             onKeyDown={(e) => keyHandler(e, null, true)}
           />
 
@@ -111,8 +111,8 @@ const GlobalSearch = () => {
               transition={{ duration: 0.325 }}>
               <div className='suggestions mt-8 drop-shadow-md'>
                 {loading ? (
-                  <div className='grid min-h-20 place-items-center'>
-                    <span className='text-h6 font-medium text-neutral-700'>Loading Suggestions....</span>
+                  <div className='grid-center min-h-48'>
+                    <LoadingSpinner className='text-neutral-900' />
                   </div>
                 ) : (
                   <Fragment>

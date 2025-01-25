@@ -19,6 +19,7 @@ export const RecommendationsGrid = styled.div`
   }
 `;
 
+// redundant
 export const RecommendedWrapper = styled.div`
   width: 100%;
   align-self: flex-start;

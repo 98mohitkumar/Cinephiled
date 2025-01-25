@@ -48,7 +48,7 @@ const ProviderMovies = ({ media, region, providerName, providerId }) => {
       />
 
       <LayoutContainer className='relative py-4064'>
-        <DominantColor tint flip />
+        <DominantColor tint />
 
         <section className='relative z-5'>
           <H1 className='mx-auto max-w-screen-lg text-center text-neutral-400'>
@@ -76,7 +76,7 @@ const ProviderMovies = ({ media, region, providerName, providerId }) => {
                 </Select>
               </div>
 
-              <MediaTemplateGrid media={renderList} mediaType='movie' />
+              <MediaTemplateGrid media={renderList} />
             </Fragment>
           ) : (
             <PlaceholderText height='large'>

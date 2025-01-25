@@ -23,7 +23,7 @@ const Keyword = ({ results, name, id }) => {
         </H3>
 
         {results?.length > 0 ? (
-          <MediaTemplateGrid mediaType='movie' media={results} />
+          <MediaTemplateGrid media={results} />
         ) : (
           <PlaceholderText height='large'>No Movie results for this keyword.</PlaceholderText>
         )}

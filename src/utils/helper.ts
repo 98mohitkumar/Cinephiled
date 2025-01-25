@@ -10,6 +10,7 @@ type FetchOptionsArgs = {
   body?: unknown;
   token?: string | null;
   signal?: AbortSignal | null;
+  cache?: RequestCache;
 };
 
 type Options = {

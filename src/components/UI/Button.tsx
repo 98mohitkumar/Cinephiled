@@ -5,18 +5,31 @@ import { cn, matches } from "utils/helper";
 
 type ButtonProps = ComponentPropsWithRef<"button"> &
   Omit<MotionProps, "variants"> & {
-    variant?: "primary" | "secondary" | "outline";
+    variant?: "primary" | "secondary" | "outline" | "danger";
     size?: "small" | "default" | "large";
     weight?: "normal" | "medium" | "semibold" | "bold";
+    shape?: "pill" | "square";
+    fullWidth?: boolean;
   };
 
-const Button = ({ children, className, variant = "primary", size = "default", weight = "medium", ref, ...props }: ButtonProps) => (
+const Button = ({
+  children,
+  className,
+  variant = "primary",
+  size = "default",
+  weight = "medium",
+  ref,
+  type = "button",
+  shape = "square",
+  fullWidth = false,
+  ...props
+}: ButtonProps) => (
   <motion.button
     ref={ref}
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
     className={cn(
-      "grid place-items-center",
+      "grid min-w-max place-items-center leading-4",
       "disabled:pointer-events-none disabled:bg-neutral-700 disabled:text-neutral-400",
       "transition-colors ease-in-out",
       {
@@ -25,10 +38,11 @@ const Button = ({ children, className, variant = "primary", size = "default", we
         "border border-neutral-600 bg-black text-white disabled:border-neutral-600 disabled:bg-black disabled:text-neutral-400": matches(
           variant,
           "outline"
-        )
+        ),
+        "border border-red-800 bg-red-950 text-white": matches(variant, "danger")
       },
       {
-        "h-9 rounded-md px-12 text-small": matches(size, "small"),
+        "h-9 rounded-md px-12 text-small leading-3": matches(size, "small"),
         "h-10 rounded-lg px-16 text-p": matches(size, "default"),
         "h-11 rounded-lg px-24 text-p": matches(size, "large")
       },
@@ -38,8 +52,13 @@ const Button = ({ children, className, variant = "primary", size = "default", we
         "font-semibold": matches(weight, "semibold"),
         "font-bold": matches(weight, "bold")
       },
+      {
+        "rounded-3xl": matches(shape, "pill"),
+        "w-full": matches(fullWidth, true)
+      },
       className
     )}
+    type={type}
     {...props}>
     {children}
   </motion.button>

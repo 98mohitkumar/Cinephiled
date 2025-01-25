@@ -4,7 +4,7 @@ import { apiEndpoints } from "data/apiEndpoints";
 import { useUserContext } from "Store/UserContext";
 import { fetchOptions } from "utils/helper";
 
-const useGetListDetails = ({ id, order }) => {
+const useGetListDetails = ({ id, descendingOrder = false }) => {
   const { userInfo } = useUserContext();
   const [{ error, listDetails, loading }, setDetails] = useState({
     error: false,
@@ -17,7 +17,7 @@ const useGetListDetails = ({ id, order }) => {
 
     const fetchListDetails = async () => {
       const res = await fetch(
-        order ? `${apiEndpoints.lists.getListDetails({ id })}&sort_by=original_order.desc` : apiEndpoints.lists.getListDetails({ id }),
+        descendingOrder ? `${apiEndpoints.lists.getListDetails({ id })}&sort_by=original_order.desc` : apiEndpoints.lists.getListDetails({ id }),
         fetchOptions({
           token: userInfo.accessToken,
           signal: abortController.signal
@@ -44,7 +44,7 @@ const useGetListDetails = ({ id, order }) => {
       abortController.abort("unmounted");
       setDetails({ error: false, listDetails: {}, loading: true });
     };
-  }, [id, order, userInfo.accessToken]);
+  }, [descendingOrder, id, userInfo.accessToken]);
 
   return { error, listDetails, loading };
 };

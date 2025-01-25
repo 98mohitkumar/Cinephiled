@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 
 import { ToastWrapper } from "./ToastStyles";
 
+// redundant
 export const useToast = () => {
   const [toast, setToast] = useState({ message: "", isVisible: false });
   const timeoutRef = useRef(null);
@@ -29,6 +30,7 @@ export const useToast = () => {
   };
 };
 
+// redundant
 const Toast = ({ children, isToastVisible }) => {
   if (typeof window === "undefined") return null;
 

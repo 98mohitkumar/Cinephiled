@@ -18,7 +18,7 @@ const Search = ({ movies, tv, searchQuery, keywords, people, collections, allRes
 
       <LayoutContainer className='pb-4864 pt-2440'>
         {allResultsEmpty ? (
-          <H1 tag='p' weight='semibold' className='absolute inset-0 grid select-none place-items-center text-neutral-400'>
+          <H1 tag='p' weight='semibold' className='absolute inset-0 -z-1 grid select-none place-items-center text-neutral-400'>
             {"Bad Query :("}
           </H1>
         ) : (
