@@ -7,7 +7,8 @@ export const heroBackgroundStyles = css`
 
   z-index: -2;
   inset: 0;
-  max-height: 100%;
+  height: 100%;
+  max-height: 600px;
   min-width: 70%;
   position: absolute;
   margin-left: auto;

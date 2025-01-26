@@ -56,7 +56,7 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
 
           <LayoutContainer
             className={cn("relative z-5 flex items-center py-2448", {
-              "max-lg:-mt-3248 max-lg:py-0 lg:min-h-[60vh]": Boolean(list?.backdrop_path)
+              "max-lg:-mt-3248 max-lg:py-0 lg:min-h-[560px]": Boolean(list?.backdrop_path)
             })}>
             <div className='w-full md:max-w-2xl'>
               <div className='mb-1624'>
