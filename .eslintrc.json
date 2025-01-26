@@ -10,7 +10,6 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "no-duplicate-imports": "error",
     "import/order": [
@@ -24,5 +23,13 @@
         "newlines-between": "always"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {
+        "no-undef": "error" // Apply this rule only to JS/JSX files
+      }
+    }
+  ]
 }

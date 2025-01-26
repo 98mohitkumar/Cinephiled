@@ -62,7 +62,7 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
               <div className='mb-1624'>
                 <H1 className='text-pretty'>{list.name}</H1>
                 {list?.description && (
-                  <P size='large' className='mt-6'>
+                  <P size='large' className='mt-12'>
                     {list?.description}
                   </P>
                 )}

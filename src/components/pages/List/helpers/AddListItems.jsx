@@ -1,6 +1,7 @@
 import { CircleX, Plus } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
+import { useNavigationGuard } from "next-navigation-guard";
 import { Fragment, useCallback, useRef, useState } from "react";
 import { toast } from "sonner";
 import { throttle } from "throttle-debounce";
@@ -26,6 +27,11 @@ const AddListItems = ({ id }) => {
   const [query, setQuery] = useState("");
   const { revalidateData } = useRefreshData();
   const { openModal, closeModal, isModalVisible } = useModal();
+  useNavigationGuard({
+    enabled: items.length > 0,
+    confirm: () => window.confirm("You have unsaved changes. Are you sure you wish to leave this page?")
+  });
+
   const { searchSuggestions, loading: searchSuggestionsLoading } = useGetSearchSuggestions({
     query
   });
@@ -71,12 +77,11 @@ const AddListItems = ({ id }) => {
 
     // add item to the list
     setItems((prevState) => [item, ...prevState]);
+    toast.success("Item added.", { description: "Item has been added, please save your changes." });
   };
 
   // save items to the list handler
   const saveItemsHandler = async () => {
-    console.info(items);
-
     const { success } = await updateListItems({
       id,
       method: "POST",
@@ -248,92 +253,17 @@ const AddListItems = ({ id }) => {
             )}
           </div>
 
-          <FlexBox className='gap-16'>
-            <Button variant='outline' onClick={closeModalHandler} type='button' className='w-1/2'>
+          <FlexBox className='justify-end gap-16'>
+            <Button variant='outline' onClick={closeModalHandler} type='button' title='Close add items modal'>
               Close
             </Button>
-            <Button className='w-1/2' onClick={saveItemsHandler}>
+            <Button onClick={saveItemsHandler} disabled={matches(items.length, 0)} title='Save items to list'>
               Save Changes
             </Button>
           </FlexBox>
         </div>
       </Modal>
     </Fragment>
-
-    // <LayoutContainer className='relative z-5 py-2448'>
-    //   <FlexBox className='mb-32 flex flex-wrap items-center justify-between gap-x-64 gap-y-16'>
-    //     <Button onClick={revalidateData} variant='primary' className='flex items-center gap-10' shape='pill'>
-    //       <MoveLeft size={20} />
-    //       Back to list
-    //     </Button>
-    //     <H2 weight='semibold' className='whitespace-nowrap'>
-    //       {listDetails.name}
-    //     </H2>
-    //   </FlexBox>
-
-    //   <div className='relative'>
-    //     <div>
-    //       <InputLabel htmlFor='addItem'>Search Item</InputLabel>
-    //       <Input
-    //         type='text'
-    //         ref={inputRef}
-    //         id='addItem'
-    //         placeholder='Search for a movie or TV show'
-    //         onChange={throttledInputChangeHandler}
-    //         fullWidth
-    //         suffix={
-    //           isValidQuery ? (
-    //             <CircleX
-    //               className='text-neutral-100 transition-colors hover:text-neutral-400'
-    //               size='22px'
-    //               onClick={closeInputHandler}
-    //               role='button'
-    //             />
-    //           ) : null
-    //         }
-    //       />
-    //     </div>
-    //   </div>
-
-    //   {/*  list items */}
-    //   <Grid
-    //     colConfig={{
-    //       xxs: 2,
-    //       sm: 3,
-    //       lg: 4,
-    //       xl: 5,
-    //       "2xl": "desktopAutoFillMedia"
-    //     }}
-    //     className='mt-32 items-start'>
-    //     {items.map(({ id, title, name, poster_path, media_type }) => (
-    //       <GridCol title={title || name} key={id}>
-    //         <div className='relative aspect-poster'>
-    //           <Image
-    //             src={getTMDBImage({ path: poster_path, type: "poster" })}
-    //             alt={title || name || `${media_type}-poster`}
-    //             fill
-    //             className='rounded-xl object-cover shadow-xl'
-    //             placeholder='blur'
-    //             blurDataURL={blurPlaceholder}
-    //           />
-    //         </div>
-
-    //         <Button
-    //           fullWidth
-    //           variant='danger'
-    //           className='mt-12'
-    //           onClick={() =>
-    //             itemsHandler({
-    //               item: { id, media_type },
-    //               action: "remove"
-    //             })
-    //           }>
-    //           Remove
-    //         </Button>
-    //       </GridCol>
-    //     ))}
-    //   </Grid>
-    // </LayoutContainer>
   );
 };
 

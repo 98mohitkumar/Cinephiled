@@ -21,6 +21,7 @@
     "motion": "^11.14.4",
     "next": "^15.1.0",
     "next-auth": "^4.20.1",
+    "next-navigation-guard": "^0.1.2",
     "next-pwa": "^5.5.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

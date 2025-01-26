@@ -12,6 +12,7 @@ export const ratingTagWrapperStyles = css`
   place-items: center;
   right: 14px;
   bottom: -22px;
+  z-index: ${theme.zIndex[10]};
 
   & > * {
     grid-area: 1 / 1;

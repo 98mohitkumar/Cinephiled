@@ -2,6 +2,7 @@ import "styles/globals.css";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
+import { NavigationGuardProvider } from "next-navigation-guard";
 import { Fragment, useEffect, useState } from "react";
 
 import Layout from "components/Layout/Layout";
@@ -51,16 +52,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
       <Theme>
         <SessionProvider session={session} refetchOnWindowFocus={false}>
-          <UserContextProvider>
-            <ListsContextProvider>
-              <MediaContextProvider>
-                {isLoading ? <Loader /> : null}
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </MediaContextProvider>
-            </ListsContextProvider>
-          </UserContextProvider>
+          <NavigationGuardProvider>
+            <UserContextProvider>
+              <ListsContextProvider>
+                <MediaContextProvider>
+                  {isLoading ? <Loader /> : null}
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </MediaContextProvider>
+              </ListsContextProvider>
+            </UserContextProvider>
+          </NavigationGuardProvider>
         </SessionProvider>
       </Theme>
 

@@ -4590,6 +4590,11 @@ next-auth@^4.20.1:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
+next-navigation-guard@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/next-navigation-guard/-/next-navigation-guard-0.1.2.tgz#33d810e37a933ae27f88eaa79549606a99c1a74a"
+  integrity sha512-gh+hUMqnI9a/iQ3sxCd7aagQB0NTioe7kj7UJagVfWh+GWfyr4mErlBy2yNZk0VyXebtW86I3cP6lcwraIFhYA==
+
 next-pwa@^5.5.6:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/next-pwa/-/next-pwa-5.6.0.tgz#f7b1960c4fdd7be4253eb9b41b612ac773392bf4"

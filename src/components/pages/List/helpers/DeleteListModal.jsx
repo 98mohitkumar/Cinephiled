@@ -44,7 +44,7 @@ const DeleteListModal = ({ list }) => {
 
           <div className='mt-16'>
             <P>
-              Are you sure you want to delete <strong>{list.name}</strong>?
+              Are you sure you want to delete <strong>{list.name}</strong>? This action cannot be undone.
             </P>
 
             <FlexBox className='mt-16 gap-16'>

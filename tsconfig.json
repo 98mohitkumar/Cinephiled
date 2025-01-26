@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2021",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -15,18 +19,47 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "components/*": ["src/components/*"],
-      "images/*": ["public/images/*"],
-      "styles/*": ["src/styles/*"],
-      "theme/*": ["src/theme/*"],
-      "data/*": ["src/data/*"],
-      "hooks/*": ["src/hooks/*"],
-      "apiEndpoints/*": ["src/apiEndpoints/*"],
-      "Store/*": ["src/Store/*"],
-      "tokens/*": ["src/theme/tokens/*"],
-      "utils/*": ["src/utils/*"]
+      "components/*": [
+        "src/components/*"
+      ],
+      "images/*": [
+        "public/images/*"
+      ],
+      "styles/*": [
+        "src/styles/*"
+      ],
+      "theme/*": [
+        "src/theme/*"
+      ],
+      "data/*": [
+        "src/data/*"
+      ],
+      "hooks/*": [
+        "src/hooks/*"
+      ],
+      "apiEndpoints/*": [
+        "src/apiEndpoints/*"
+      ],
+      "Store/*": [
+        "src/Store/*"
+      ],
+      "tokens/*": [
+        "src/theme/tokens/*"
+      ],
+      "utils/*": [
+        "src/utils/*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "styled.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "styled.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
