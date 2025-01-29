@@ -5,13 +5,12 @@ export const MAX_WIDTH = 2560;
 
 export const sortOptions = {
   localOptions: [
-    { key: "default", value: "Default" },
-    { key: "rating.asc", value: "Rating Ascending" },
-    { key: "rating.desc", value: "Rating Descending" },
-    { key: "popularity.asc", value: "Popularity Ascending" },
-    { key: "popularity.desc", value: "Popularity Descending" },
-    { key: "release_date.asc", value: "Release Date Ascending" },
-    { key: "release_date.desc", value: "Release Date Descending" }
+    { value: "vote_average.asc", label: "Rating Ascending" },
+    { value: "vote_average.desc", label: "Rating Descending" },
+    { value: "popularity.asc", label: "Popularity Ascending" },
+    { value: "popularity.desc", label: "Popularity Descending", isDefault: true },
+    { value: "release_date.asc", label: "Release Date Ascending" },
+    { value: "release_date.desc", label: "Release Date Descending" }
   ],
   tmdbOptions: {
     movie: [

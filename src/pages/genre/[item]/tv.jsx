@@ -4,6 +4,7 @@ import PlaceholderText from "components/PlaceholderText";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
+import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select";
 import H1 from "components/UI/Typography/H1";
@@ -22,11 +23,11 @@ const TvShows = ({ renderList, genreName, genreId }) => {
 
   const { list, resetQueryState } = useInfiniteQuery({
     initialPage: 3,
-    getEndpoint: ({ page }) => apiEndpoints.tv.tvGenre({ genreId, pageQuery: page, sortBy: sortBy || defaultSortOption })
+    getEndpoint: ({ page }) => apiEndpoints.tv.tvGenre({ genreId, pageQuery: page, sortBy: sortBy })
   });
 
   const { cleanedItems } = removeDuplicates(renderList.concat(list));
-  const currentSortOption = sortBy || defaultSortOption;
+
   const handleSort = (key) => {
     handleSortSelection(key);
     resetQueryState();
@@ -47,8 +48,8 @@ const TvShows = ({ renderList, genreName, genreId }) => {
 
           {cleanedItems?.length > 0 ? (
             <Fragment>
-              <div className='mb-2432 flex items-center justify-end gap-10'>
-                <Select defaultValue={currentSortOption} onValueChange={handleSort}>
+              <FlexBox className='mb-2432 items-center justify-end gap-10'>
+                <Select defaultValue={sortBy} onValueChange={handleSort}>
                   <SelectTrigger className='w-fit min-w-[250px]'>
                     <SelectValue placeholder='Sort By:' />
                   </SelectTrigger>
@@ -60,7 +61,7 @@ const TvShows = ({ renderList, genreName, genreId }) => {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+              </FlexBox>
 
               <MediaTemplateGrid media={cleanedItems} />
             </Fragment>

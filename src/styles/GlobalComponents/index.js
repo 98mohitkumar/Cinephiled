@@ -176,6 +176,7 @@ export const HeroImg = styled.div`
   }
 `;
 
+// redundant
 export const DetailsHeroWrap = styled.div`
   display: grid;
   grid-template-columns: 17rem 1fr;
@@ -224,6 +225,7 @@ export const BadQuery = styled.h1`
   text-align: center;
 `;
 
+// redundant
 export const HeroImgWrapper = styled.div`
   width: 100%;
   height: max-content;
@@ -244,6 +246,8 @@ export const HeroImgWrapper = styled.div`
     gap: 1.5rem;
   }
 `;
+
+// redundant
 export const SocialMediaLinksWrapper = styled.div`
   width: 17rem;
   height: 45px;

@@ -32,7 +32,6 @@ const ProviderTV = ({ media, region, providerName, providerId }) => {
   });
 
   const { cleanedItems: renderList } = removeDuplicates(media.concat(list));
-  const currentSortOption = sortBy || defaultSortOption;
 
   const handleSort = (key) => {
     handleSortSelection(key);
@@ -62,7 +61,7 @@ const ProviderTV = ({ media, region, providerName, providerId }) => {
           {renderList?.length > 0 ? (
             <Fragment>
               <div className='mb-2432 mt-3240 flex items-center justify-end gap-10'>
-                <Select defaultValue={currentSortOption} onValueChange={handleSort}>
+                <Select defaultValue={sortBy} onValueChange={handleSort}>
                   <SelectTrigger className='w-fit min-w-[250px]'>
                     <SelectValue placeholder='Sort By:' />
                   </SelectTrigger>

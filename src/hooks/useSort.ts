@@ -5,29 +5,30 @@ import { useRouter } from "next/router";
 type UseSortProps = {
   shallow?: boolean;
   defaultSortOption: string;
+  key?: string;
 };
 
-const useSort = ({ shallow = false, defaultSortOption }: UseSortProps) => {
+const useSort = ({ shallow = false, defaultSortOption, key = "sortBy" }: UseSortProps) => {
   const router = useRouter();
-  const { sortBy } = router.query;
+  const { [key]: sortBy } = router.query;
 
-  const handleSortSelection = (key: string) => {
+  const handleSortSelection = (value: string) => {
     const keyToCompare = sortBy || defaultSortOption;
 
-    if (key === keyToCompare) return;
+    if (value === keyToCompare) return;
 
     let newQuery: ParsedUrlQuery;
 
-    if (key === defaultSortOption) {
+    if (value === defaultSortOption) {
       newQuery = {
         ...router.query
       };
 
-      delete newQuery.sortBy;
+      delete newQuery[key];
     } else {
       newQuery = {
         ...router.query,
-        sortBy: key
+        [key]: value
       };
     }
 
@@ -38,7 +39,7 @@ const useSort = ({ shallow = false, defaultSortOption }: UseSortProps) => {
     }, 100);
   };
 
-  return { handleSortSelection, sortBy };
+  return { handleSortSelection, sortBy: sortBy || defaultSortOption };
 };
 
 export default useSort;

@@ -11,11 +11,20 @@ const defaultImages = {
 type BackdropSize = "w300" | "w780" | "w1280" | "original";
 type LogoSize = "w45" | "w92" | "w154" | "w185" | "w300" | "w500" | "original";
 type PosterSize = "w92" | "w154" | "w185" | "w342" | "w500" | "w780" | "original";
+type ProfileSize = "w45" | "w185" | "h632" | "original";
 
 type TMDBImageArgs<T extends keyof typeof defaultImages> = {
   path: string;
   type: T;
-  size?: T extends "backdrop" ? BackdropSize : T extends "logo" ? LogoSize : T extends "poster" | "profile" ? PosterSize : never;
+  size?: T extends "backdrop"
+    ? BackdropSize
+    : T extends "logo"
+      ? LogoSize
+      : T extends "poster"
+        ? PosterSize
+        : T extends "profile"
+          ? ProfileSize
+          : never;
   fallback?: string | StaticImageData;
 };
 
@@ -29,7 +38,15 @@ export const getTMDBImage = <T extends keyof typeof defaultImages>({ path, type,
 
 type ImageSizesProp<T extends keyof typeof defaultImages> = {
   screenWidth: number;
-  imageSize: T extends "backdrop" ? BackdropSize : T extends "logo" ? LogoSize : T extends "poster" | "profile" ? PosterSize : never;
+  imageSize: T extends "backdrop"
+    ? BackdropSize
+    : T extends "logo"
+      ? LogoSize
+      : T extends "poster"
+        ? PosterSize
+        : T extends "profile"
+          ? ProfileSize
+          : never;
 }[];
 
 export const getSrcSet = <T extends keyof typeof defaultImages>({

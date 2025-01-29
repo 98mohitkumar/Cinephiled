@@ -5,7 +5,7 @@ import { pixelsPerRem } from "./misc";
 // https://utopia.fyi/type/calculator/?c=480,16,1.1625,1280,16,1.25,6,2,&s=0.75%7C0.5%7C0.25,1.5%7C2%7C3%7C4%7C6,s-l&g=s,l,xl,12
 const fontSizes = {
   static: [
-    { key: "h1Static", size: 60, lineHeight: 64, letterSpacing: -0.4 },
+    { key: "h1Static", size: 60, lineHeight: 64, letterSpacing: -0.5 },
     { key: "h2Static", size: 48, lineHeight: 52, letterSpacing: -0.35 },
     { key: "h3Static", size: 40, lineHeight: 44, letterSpacing: -0.2 },
     { key: "h4Static", size: 32, lineHeight: 40, letterSpacing: -0.15 },

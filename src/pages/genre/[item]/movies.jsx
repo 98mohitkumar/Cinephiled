@@ -22,11 +22,10 @@ const Movies = ({ renderList, genreName, genreId }) => {
 
   const { list, resetQueryState } = useInfiniteQuery({
     initialPage: 3,
-    getEndpoint: ({ page }) => apiEndpoints.movie.movieGenre({ genreId, pageQuery: page, sortBy: sortBy || defaultSortOption })
+    getEndpoint: ({ page }) => apiEndpoints.movie.movieGenre({ genreId, pageQuery: page, sortBy: sortBy })
   });
 
   const { cleanedItems } = removeDuplicates(renderList.concat(list));
-  const currentSortOption = sortBy || defaultSortOption;
 
   const handleSort = (key) => {
     handleSortSelection(key);
@@ -49,7 +48,7 @@ const Movies = ({ renderList, genreName, genreId }) => {
           {cleanedItems?.length > 0 ? (
             <Fragment>
               <div className='mb-2432 flex items-center justify-end gap-10'>
-                <Select defaultValue={currentSortOption} onValueChange={handleSort}>
+                <Select defaultValue={sortBy} onValueChange={handleSort}>
                   <SelectTrigger className='w-fit min-w-[250px]'>
                     <SelectValue placeholder='Sort By:' />
                   </SelectTrigger>

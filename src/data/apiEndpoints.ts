@@ -96,7 +96,8 @@ export const apiEndpoints = {
     keywordDetails: (id: string) => `${baseUrlV3}/keyword/${id}/movies?language=en-US&include_adult=false`
   },
   person: {
-    personDetails: (id: string) => `${baseUrlV3}/person/${id}?language=en-US&append_to_response=combined_credits,external_ids,images`
+    personDetails: (id: string) =>
+      `${baseUrlV3}/person/${id}?language=en-US&append_to_response=combined_credits,external_ids,images,movie_credits,tv_credits`
   },
   watchProviders: {
     movieWatchProviders: ({ region }: { region: string }) => `${baseUrlV3}/watch/providers/movie?language=en-US&watch_region=${region}`,

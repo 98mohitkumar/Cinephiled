@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 
-import PersonDetails from "components/PersonDetails/PersonDetails";
+import PersonDetails from "components/pages/Person/PersonDetails";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import { apiEndpoints } from "data/apiEndpoints";
-import { fetchOptions, getCleanTitle } from "utils/helper";
+import { fetchOptions, getCleanTitle, removeDuplicates } from "utils/helper";
 
 const Person = ({ personDetails }) => {
   return (
@@ -15,7 +15,7 @@ const Person = ({ personDetails }) => {
         url={`https://cinephiled.vercel.app/person/${personDetails?.id}-${getCleanTitle(personDetails?.name)}`}
       />
 
-      <PersonDetails details={personDetails} />
+      <PersonDetails personDetails={personDetails} />
     </Fragment>
   );
 };
@@ -30,6 +30,12 @@ export const getServerSideProps = async (ctx) => {
     }
 
     const personDetails = await response.json();
+
+    const totalCredits = removeDuplicates(Object.values(personDetails?.combined_credits).flat()).cleanedItems.length || 0;
+
+    personDetails.totalCredits = totalCredits;
+    delete personDetails.combined_credits;
+
     return {
       props: {
         personDetails

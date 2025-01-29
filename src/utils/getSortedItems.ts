@@ -6,7 +6,7 @@ type SortByArgs = {
     title: string;
     vote_average: number;
   }>;
-  sortBy: "popularity" | "release_date" | "title" | "rating";
+  sortBy: "popularity" | "release_date" | "title" | "vote_average";
   order: "asc" | "desc";
 };
 
@@ -35,16 +35,10 @@ export const getSortedItems = ({ items, sortBy, order = "asc" }: SortByArgs) => 
         }
       });
 
-    case "rating":
+    case "vote_average":
       return itemsToSort.sort((a, b) => (order === "asc" ? a.vote_average - b.vote_average : b.vote_average - a.vote_average));
 
     default:
       return items;
   }
 };
-
-// redundant function (check if it's being used)
-// export const getActiveSortKey = ({ options, sortBy, defaultKey = "default" }) => {
-//   const sortKey = options?.find((item) => item.key === sortBy);
-//   return sortKey?.value || defaultKey;
-// };

@@ -25,7 +25,6 @@ const NetworkPage = ({ details, media }) => {
     getEndpoint: ({ page }) => apiEndpoints.network.networkMedia({ id: details.id, pageQuery: page, sortBy })
   });
 
-  const currentSortOption = sortBy || defaultSortOption;
   const handleSort = (key) => {
     handleSortSelection(key);
     resetQueryState();
@@ -126,7 +125,7 @@ const NetworkPage = ({ details, media }) => {
 
       <LayoutContainer className='py-24'>
         <div className='mb-2432 flex items-center justify-end gap-10'>
-          <Select defaultValue={currentSortOption} onValueChange={handleSort}>
+          <Select defaultValue={sortBy} onValueChange={handleSort}>
             <SelectTrigger className='w-fit min-w-[250px]'>
               <SelectValue placeholder='Sort By:' />
             </SelectTrigger>
