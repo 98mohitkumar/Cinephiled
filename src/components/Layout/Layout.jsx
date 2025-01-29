@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
   const key = router.asPath.split("?")[0];
 
   return (
-    <Wrapper key={key} className={`${manrope.variable} ${montserrat.variable} main-wrapper`}>
+    <Wrapper key={key} className={`${manrope.variable} ${montserrat.variable} main-wrapper`} data-vaul-drawer-wrapper>
       <FlexBox className='min-h-screen flex-col'>
         <Navigation />
         <div className='content-wrapper'>{children}</div>

@@ -1,17 +1,21 @@
+import { ListFilter } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 
 import PlaceholderText from "components/PlaceholderText";
+import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "components/Shared/drawer";
 import { TabItem, Tabs } from "components/Shared/Tabs/Tabs";
+import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select";
+import P from "components/UI/Typography/P";
 import { mediaTypeTabList, sortOptions } from "data/global";
 import useSort from "hooks/useSort";
 import useTabs from "hooks/useTabs";
 import { getSortedItems } from "utils/getSortedItems";
 import { framerTabVariants, matches } from "utils/helper";
 
+import MediaFilters from "./MediaFilters";
 import PersonPageTabMediaTemplate from "./PersonPageTabMediaTemplate";
 
 const PersonPageTab = ({ movieCredits, tvCredits, movieDepartmentList, tvDepartmentList }) => {
@@ -60,35 +64,53 @@ const PersonPageTab = ({ movieCredits, tvCredits, movieDepartmentList, tvDepartm
         ))}
       </Tabs>
 
-      <FlexBox className='mt-32 justify-end gap-16'>
-        <Select value={sortBy} onValueChange={handleSortSelection}>
-          <SelectTrigger className='w-fit min-w-[250px]'>
-            <SelectValue placeholder='Sort By:' />
-          </SelectTrigger>
-          <SelectContent position='popper' align='end'>
-            {localOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <FlexBox className='mt-40 justify-end'>
+        <FlexBox className='justify-end gap-16 max-md:hidden'>
+          <MediaFilters
+            sortBy={sortBy}
+            handleSortSelection={handleSortSelection}
+            localOptions={localOptions}
+            department={department}
+            handleFilterSelection={handleFilterSelection}
+            departmentList={departmentList}
+          />
+        </FlexBox>
 
-        <Select value={department} onValueChange={handleFilterSelection}>
-          <SelectTrigger className='w-fit min-w-[250px]'>
-            <SelectValue placeholder='Filter By Department' />
-          </SelectTrigger>
-          <SelectContent position='popper' align='end'>
-            {departmentList.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Drawer>
+          <DrawerTrigger asChild className=''>
+            <Button variant='secondary' size='large' className='hidden items-center gap-6 max-md:flex'>
+              <ListFilter size={18} />
+              Apply Filters
+            </Button>
+          </DrawerTrigger>
+
+          <DrawerContent className='min-h-96'>
+            <div className='mx-auto w-full max-w-sm'>
+              <DrawerHeader>
+                <DrawerTitle>Filters</DrawerTitle>
+              </DrawerHeader>
+
+              <P className='mt-16 px-16 text-neutral-400'>
+                Sort and filter movie and TV show credits by department or other criteria to quickly find what you&apos;re looking for.
+              </P>
+
+              <DrawerFooter>
+                <MediaFilters
+                  sortBy={sortBy}
+                  handleSortSelection={handleSortSelection}
+                  localOptions={localOptions}
+                  department={department}
+                  handleFilterSelection={handleFilterSelection}
+                  departmentList={departmentList}
+                  className='w-full'
+                />
+              </DrawerFooter>
+            </div>
+          </DrawerContent>
+        </Drawer>
       </FlexBox>
 
-      <div className='mt-32'>
+      <div className='mt-2032'>
         <AnimatePresence initial={false} mode='wait'>
           {matches(activeTab, "movies") && (
             <motion.div key='movies' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>

@@ -34,7 +34,7 @@ const Button = ({
       "transition-colors ease-in-out",
       {
         "bg-neutral-200 text-black": matches(variant, "primary"),
-        "bg-neutral-700 text-white": matches(variant, "secondary"),
+        "border border-neutral-600 bg-neutral-700 text-white": matches(variant, "secondary"),
         "border border-neutral-600 bg-black text-white disabled:border-neutral-600 disabled:bg-black disabled:text-neutral-400": matches(
           variant,
           "outline"
