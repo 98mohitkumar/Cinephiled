@@ -4,13 +4,14 @@ import PersonDetails from "components/pages/Person/PersonDetails";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import { apiEndpoints } from "data/apiEndpoints";
 import { fetchOptions, getCleanTitle, removeDuplicates } from "utils/helper";
+import { getTMDBImage } from "utils/imageHelper";
 
 const Person = ({ personDetails }) => {
   return (
     <Fragment>
       <MetaWrapper
         title={`${personDetails.name} - Cinephiled`}
-        image={`https://image.tmdb.org/t/p/w780${personDetails?.profile_path}`}
+        image={getTMDBImage({ path: personDetails?.profile_path, type: "profile", size: "w780" })}
         description={personDetails?.biography}
         url={`https://cinephiled.vercel.app/person/${personDetails?.id}-${getCleanTitle(personDetails?.name)}`}
       />

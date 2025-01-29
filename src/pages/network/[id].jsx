@@ -4,6 +4,7 @@ import NetworkPage from "components/pages/Network/NetworkPage";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import { apiEndpoints } from "data/apiEndpoints";
 import { fetchOptions, getCleanTitle } from "utils/helper";
+import { getTMDBImage } from "utils/imageHelper";
 
 const Network = ({ networkDetails, networkMedia }) => {
   return (
@@ -12,7 +13,7 @@ const Network = ({ networkDetails, networkMedia }) => {
         title={`${networkDetails?.name} - cinephiled`}
         description={`TV shows produced by ${networkDetails?.name}.`}
         url={`https://cinephiled.vercel.app/network/${networkDetails?.id}-${getCleanTitle(networkDetails?.name)}`}
-        image={`https://image.tmdb.org/t/p/original${networkDetails?.logo_path}`}
+        image={getTMDBImage({ path: networkDetails?.logo_path, type: "logo", size: "original" })}
       />
 
       <NetworkPage media={networkMedia} details={networkDetails} />

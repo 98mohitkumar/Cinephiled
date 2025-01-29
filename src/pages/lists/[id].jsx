@@ -16,6 +16,7 @@ import H1 from "components/UI/Typography/H1";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
 import { cn, fetchOptions, getCleanTitle, getRuntime } from "utils/helper";
+import { getTMDBImage } from "utils/imageHelper";
 
 const ListDetails = ({ title, copy }) => {
   return (
@@ -46,7 +47,7 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
       <MetaWrapper
         title={`${list.name} - Cinephiled`}
         description={list?.description || ""}
-        image={`https://image.tmdb.org/t/p/w1280${list?.backdrop_path}`}
+        image={getTMDBImage({ path: list?.backdrop_path, type: "backdrop", size: "w1280" })}
         url={`https://cinephiled.vercel.app/lists/${list?.id}-${getCleanTitle(list?.name)}`}
       />
 
