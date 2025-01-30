@@ -10,7 +10,7 @@ import { blurPlaceholder } from "data/global";
 import { getCleanTitle, getReleaseDate } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
-const MediaTemplateGrid = ({ media }) => {
+const MediaTemplateGrid = ({ media, showRating = true, extraInfoCallback = null }) => {
   return (
     <Grid
       colConfig={{
@@ -21,9 +21,9 @@ const MediaTemplateGrid = ({ media }) => {
         "2xl": "desktopAutoFillMedia"
       }}
       className='items-start'>
-      {media.map(({ id, title, name, poster_path, vote_average, release_date, first_air_date, media_type }) => (
-        <Link href={`/${media_type}/${id}-${getCleanTitle(title || name)}`} passHref key={id}>
-          <GridCol title={title || name}>
+      {media.map(({ id, title, name, poster_path, vote_average, release_date, first_air_date, media_type }, index) => (
+        <GridCol title={title || name} key={id}>
+          <Link href={`/${media_type}/${id}-${getCleanTitle(title || name)}`} passHref>
             <motion.div
               whileHover={{
                 scale: 1.05,
@@ -39,9 +39,14 @@ const MediaTemplateGrid = ({ media }) => {
                   placeholder='blur'
                   blurDataURL={blurPlaceholder}
                 />
-                <RatingTag rating={vote_average} />
+                {showRating ? <RatingTag rating={vote_average} /> : null}
               </div>
             </motion.div>
+          </Link>
+
+          {extraInfoCallback ? (
+            extraInfoCallback(media[index])
+          ) : (
             <div className='mt-24 pe-10'>
               <H6 weight='medium' className='text-balance'>
                 {title || name}
@@ -50,8 +55,8 @@ const MediaTemplateGrid = ({ media }) => {
                 {getReleaseDate(release_date || first_air_date)}
               </P>
             </div>
-          </GridCol>
-        </Link>
+          )}
+        </GridCol>
       ))}
     </Grid>
   );
