@@ -75,7 +75,7 @@ export const getServerSideProps = async ({ req }) => {
       props: {
         movieGenres: movieGenresList?.genres || [],
         tvGenres: tvGenresList?.genres || [],
-        nowPlaying: nowPlayingList?.results.concat(nowPlayingNextPageList?.results) || []
+        nowPlaying: nowPlayingList?.results.concat(nowPlayingNextPageList?.results).map((item) => ({ ...item, media_type: "movie" })) || []
       }
     };
   } catch {
