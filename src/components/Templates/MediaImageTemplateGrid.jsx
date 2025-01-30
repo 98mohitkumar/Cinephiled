@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Fragment } from "react";
 
-// import { BackdropsImg, BackdropsImgContainer, BackdropsWrapper } from "./BackdropsStyles";
 import DownloadMediaButton from "components/DownloadMediaButton/DownloadMediaButton";
 import PlaceholderText from "components/PlaceholderText";
 import { Grid, GridCol } from "components/UI/Grid";
