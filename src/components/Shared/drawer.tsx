@@ -26,7 +26,7 @@ const DrawerContent = ({ className, children, ref, ...props }: ComponentPropsWit
     <DrawerOverlay />
     <DrawerPrimitive.Content
       ref={ref}
-      className={cn("fixed inset-x-0 bottom-0 z-modal mt-96 flex h-auto flex-col rounded-t-2xl border border-neutral-700 bg-black", className)}
+      className={cn("fixed inset-x-[1px] bottom-0 z-modal mt-96 flex h-auto flex-col rounded-t-2xl border border-neutral-700 bg-black", className)}
       {...props}>
       <div className='mx-auto mt-16 h-1.5 w-[100px] rounded-full bg-neutral-700' />
       {children}

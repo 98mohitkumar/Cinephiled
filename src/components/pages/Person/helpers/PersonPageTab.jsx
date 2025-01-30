@@ -1,7 +1,7 @@
 import { ListFilter } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/router";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 import PlaceholderText from "components/PlaceholderText";
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "components/Shared/drawer";
@@ -17,6 +17,41 @@ import { framerTabVariants, matches } from "utils/helper";
 
 import MediaFilters from "./MediaFilters";
 import PersonPageTabMediaTemplate from "./PersonPageTabMediaTemplate";
+
+const MobileFilterDrawer = (props) => {
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+  return (
+    <Drawer open={isDrawerOpen} onClose={() => setDrawerOpen(false)}>
+      <DrawerTrigger asChild className=''>
+        <Button variant='secondary' size='large' className='hidden items-center gap-6 max-md:flex' onClick={() => setDrawerOpen(true)}>
+          <ListFilter size={18} />
+          Apply Filters
+        </Button>
+      </DrawerTrigger>
+
+      <DrawerContent className='min-h-96'>
+        <div className='mx-auto w-full max-w-sm'>
+          <DrawerHeader>
+            <DrawerTitle>Filters</DrawerTitle>
+          </DrawerHeader>
+
+          <P className='mt-16 px-16 text-neutral-400'>
+            Sort and filter movie and TV show credits by department or other criteria to quickly find what you&apos;re looking for.
+          </P>
+
+          <DrawerFooter>
+            <MediaFilters className='w-full' {...props} />
+
+            <Button onClick={() => setDrawerOpen(false)} fullWidth weight='semibold' size='large'>
+              Apply Filters
+            </Button>
+          </DrawerFooter>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  );
+};
 
 const PersonPageTab = ({ movieCredits, tvCredits, movieDepartmentList, tvDepartmentList }) => {
   const router = useRouter();
@@ -76,38 +111,14 @@ const PersonPageTab = ({ movieCredits, tvCredits, movieDepartmentList, tvDepartm
           />
         </FlexBox>
 
-        <Drawer>
-          <DrawerTrigger asChild className=''>
-            <Button variant='secondary' size='large' className='hidden items-center gap-6 max-md:flex'>
-              <ListFilter size={18} />
-              Apply Filters
-            </Button>
-          </DrawerTrigger>
-
-          <DrawerContent className='min-h-96'>
-            <div className='mx-auto w-full max-w-sm'>
-              <DrawerHeader>
-                <DrawerTitle>Filters</DrawerTitle>
-              </DrawerHeader>
-
-              <P className='mt-16 px-16 text-neutral-400'>
-                Sort and filter movie and TV show credits by department or other criteria to quickly find what you&apos;re looking for.
-              </P>
-
-              <DrawerFooter>
-                <MediaFilters
-                  sortBy={sortBy}
-                  handleSortSelection={handleSortSelection}
-                  localOptions={localOptions}
-                  department={department}
-                  handleFilterSelection={handleFilterSelection}
-                  departmentList={departmentList}
-                  className='w-full'
-                />
-              </DrawerFooter>
-            </div>
-          </DrawerContent>
-        </Drawer>
+        <MobileFilterDrawer
+          sortBy={sortBy}
+          handleSortSelection={handleSortSelection}
+          localOptions={localOptions}
+          department={department}
+          handleFilterSelection={handleFilterSelection}
+          departmentList={departmentList}
+        />
       </FlexBox>
 
       <div className='mt-2032'>
