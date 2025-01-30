@@ -43,7 +43,7 @@ const PeopleSearch = ({ searchQuery, people }) => {
                   whileTap={{ scale: 0.95 }}>
                   <div className='relative aspect-profile'>
                     <Image
-                      src={getTMDBImage({ path: person.profile_path, type: "profile", size: "w500" })}
+                      src={getTMDBImage({ path: person.profile_path, type: "profile", size: "w342" })}
                       alt={person.name}
                       fill
                       className='rounded-xl object-cover object-top shadow-xl'
