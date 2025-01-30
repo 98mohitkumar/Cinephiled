@@ -41,7 +41,7 @@ const AddListItems = ({ id }) => {
   const inputRef = useRef(null);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const throttledInputChangeHandler = useCallback(
-    throttle(1000, (e) => {
+    throttle(750, (e) => {
       setQuery(e.target.value);
     }),
     []
