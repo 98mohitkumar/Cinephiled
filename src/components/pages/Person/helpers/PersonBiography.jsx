@@ -11,7 +11,7 @@ const PersonBiography = ({ biography }) => {
 
   if (matches(biographyParagraphs?.length, 1)) {
     return (
-      <P size='large' className='mt-16 flex max-w-screen-xl'>
+      <P size='large' className='mt-16 flex max-w-screen-xl break-words'>
         {biography}
       </P>
     );
