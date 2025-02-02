@@ -5,11 +5,8 @@ import { HeroInfoTitle } from "components/MovieInfo/MovieDetailsStyles";
 import PlaceholderText from "components/PlaceholderText";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import { ModulesWrapper } from "styles/GlobalComponents";
-import { framerTabVariants } from "utils/helper";
 
 import Cast from "./Cast";
-
-// const test = 1;
 
 const CastPage = ({ media: { title, year, poster }, cast }) => {
   const [filteredCast, setFilteredCast] = useState(cast);
@@ -59,13 +56,7 @@ const CastPage = ({ media: { title, year, poster }, cast }) => {
             {filteredCast?.length > 0 ? (
               <Cast cast={{ data: filteredCast }} />
             ) : (
-              <motion.div
-                key='no-results'
-                variants={framerTabVariants}
-                initial='hidden'
-                animate='visible'
-                exit='hidden'
-                transition={{ duration: 0.325 }}>
+              <motion.div key='no-results'>
                 <PlaceholderText height='large'>No results found</PlaceholderText>
               </motion.div>
             )}

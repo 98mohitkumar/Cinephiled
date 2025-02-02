@@ -2,13 +2,13 @@ import { motion } from "motion/react";
 import { useState, Fragment } from "react";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 
-import { deleteRating, setRating } from "apiEndpoints/user";
+import { deleteRating, setRating } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Toast, { useToast } from "components/Toast/Toast";
+import { opacityMotionTransition } from "data/global";
 import { useMediaContext } from "Store/MediaContext";
 import { Button } from "styles/GlobalComponents";
-import { framerTabVariants } from "utils/helper";
 
 import { RatingStarsContainer } from "./RatingStyles";
 
@@ -139,13 +139,7 @@ const RatingModal = ({ mediaType, mediaId, mediaName, closeModal, posterPath, re
           ) : (
             <Fragment>
               {rating > 0 && (
-                <Span
-                  as={motion.span}
-                  className='font-normal'
-                  variants={framerTabVariants}
-                  initial='hidden'
-                  animate='visible'
-                  transition={{ duration: 0.325 }}>
+                <Span as={motion.span} className='font-normal' {...opacityMotionTransition}>
                   Your rating : <strong>{rating}/10</strong>
                 </Span>
               )}

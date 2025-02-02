@@ -8,10 +8,10 @@ import LayoutContainer from "components/UI/LayoutContainer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select";
 import H1 from "components/UI/Typography/H1";
 import { apiEndpoints } from "data/apiEndpoints";
-import { sortOptions } from "data/global";
+import { ROUTES, siteInfo, sortOptions } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useSort from "hooks/useSort";
-import { fetchOptions, removeDuplicates } from "utils/helper";
+import { fetchOptions, getNiceName, removeDuplicates } from "utils/helper";
 
 const ProviderMovies = ({ media, region, providerName, providerId }) => {
   const {
@@ -43,7 +43,7 @@ const ProviderMovies = ({ media, region, providerName, providerId }) => {
       <MetaWrapper
         title={`Movies - ${providerName} (${region}) - Cinephiled`}
         description={`Explore a comprehensive list of Movies available on ${providerName} in ${region}`}
-        url={`https://cinephiled.vercel.app/watch-providers/${providerId}-${providerName}/movies`}
+        url={`${siteInfo.url}/${ROUTES.watchProviders}/${getNiceName({ id: providerId, name: providerName })}/movies`}
       />
 
       <LayoutContainer className='relative py-4064'>
@@ -75,7 +75,7 @@ const ProviderMovies = ({ media, region, providerName, providerId }) => {
                 </Select>
               </div>
 
-              <MediaTemplateGrid media={renderList} />
+              <MediaTemplateGrid media={renderList} mediaType='movie' />
             </Fragment>
           ) : (
             <PlaceholderText height='large'>

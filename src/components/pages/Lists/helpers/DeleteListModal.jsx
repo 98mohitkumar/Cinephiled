@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { toast } from "sonner";
 
-import { deleteList } from "apiEndpoints/user";
+import { deleteList } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";

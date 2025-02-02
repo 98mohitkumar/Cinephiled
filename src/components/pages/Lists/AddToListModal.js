@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import { MdOutlineFormatListBulleted } from "react-icons/md";
 
-import { getListItemStatus, updateListItems } from "apiEndpoints/user";
+import { getListItemStatus, updateListItems } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import Toast, { useToast } from "components/Toast/Toast";

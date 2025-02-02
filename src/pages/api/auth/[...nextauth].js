@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { tmdbAuth } from "apiEndpoints/auth";
+import { tmdbAuth } from "apiRoutes/auth";
 
 export default NextAuth({
   providers: [

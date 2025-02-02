@@ -2,7 +2,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { Fragment, useState } from "react";
 import { createPortal } from "react-dom";
 
-import { cn, framerTabVariants } from "utils/helper";
+import { opacityMotionTransition } from "data/global";
+import { cn } from "utils/helper";
 
 export const useModal = () => {
   const [isModalVisible, setShowModal] = useState(false);
@@ -37,10 +38,7 @@ const Modal = ({ children, isOpen, closeModal, width = null, align = null, close
         <AnimatePresence mode='wait'>
           {isOpen && (
             <motion.div
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
+              {...opacityMotionTransition}
               key='modal'
               className={cn(
                 "fixed inset-0 z-modal",

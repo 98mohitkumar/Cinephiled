@@ -11,22 +11,24 @@ const useGetSearchSuggestions = ({ query, includePeople = false }) => {
 
     if (query.trim().length === 0) {
       setSuggestions([]);
+      setLoading(false);
     } else {
       setLoading(true);
 
       fetchSuggestions({ query, controller: abortController, includePeople })
         .then(({ movieRes, tvRes, peopleRes }) => {
           setSuggestions([...movieRes, ...tvRes, ...peopleRes].sort((a, b) => b.popularity - a.popularity));
-          setLoading(false);
         })
         .catch(() => {
           setSuggestions([]);
+        })
+        .finally(() => {
           setLoading(false);
         });
     }
 
     return () => {
-      setSuggestions([]);
+      setLoading(false);
       abortController.abort("unmounted");
     };
   }, [includePeople, query]);

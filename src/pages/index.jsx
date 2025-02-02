@@ -8,9 +8,9 @@ import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
-import { mediaTypeTabList } from "data/global";
+import { mediaTypeTabList, opacityMotionTransition } from "data/global";
 import useTabs from "hooks/useTabs";
-import { fetchOptions, removeDuplicates, framerTabVariants, matches } from "utils/helper";
+import { fetchOptions, removeDuplicates, matches } from "utils/helper";
 
 const SectionTitle = ({ title }) => <H2 className='mb-2432 text-center text-white'>{title}</H2>;
 
@@ -38,14 +38,7 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
 
         <AnimatePresence initial={false} mode='wait'>
           {matches(activeTab, "movies") && (
-            <motion.div
-              key='movies'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              transition={{ duration: 0.325 }}
-              className='mt-3264'>
+            <motion.div key='movies' {...opacityMotionTransition} className='mt-3264'>
               {/* Trending Movies */}
               <section>
                 <SectionTitle title='Trending Today' />
@@ -61,14 +54,7 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
           )}
 
           {matches(activeTab, "tv") && (
-            <motion.div
-              key='tv'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              transition={{ duration: 0.325 }}
-              className='mt-3264'>
+            <motion.div key='tv' {...opacityMotionTransition} className='mt-3264'>
               {/* Trending TV */}
               <section>
                 <SectionTitle title='Trending Today' />

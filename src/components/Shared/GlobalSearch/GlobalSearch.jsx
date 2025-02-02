@@ -1,11 +1,13 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useRef, useState } from "react";
-import { throttle } from "throttle-debounce";
+import { debounce } from "throttle-debounce";
 
 import { LoadingSpinner } from "components/Loader/Loader";
+import P from "components/UI/Typography/P";
+import { ROUTES, opacityMotionTransition } from "data/global";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
-import { framerTabVariants, matches } from "utils/helper";
+import { matches } from "utils/helper";
 
 import { searchCTA, formStyles, userInput } from "./GlobalSearchStyles";
 import SearchSuggestion from "./searchSuggestion";
@@ -14,7 +16,7 @@ const GlobalSearch = () => {
   const router = useRouter();
   const userInputRef = useRef("");
   const [query, setQuery] = useState("");
-  const { searchSuggestions, loading } = useGetSearchSuggestions({
+  const { searchSuggestions, loading: isFetching } = useGetSearchSuggestions({
     query,
     includePeople: true
   });
@@ -22,9 +24,9 @@ const GlobalSearch = () => {
   const isValidInput = query.length > 0 && query.trim().length > 0;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const throttledInputChangeHandler = useCallback(
-    throttle(750, (e) => {
-      setQuery(e.target.value);
+  const inputChangeHandler = useCallback(
+    debounce(500, () => {
+      setQuery(userInputRef.current.value);
     }),
     []
   );
@@ -33,8 +35,8 @@ const GlobalSearch = () => {
     event.preventDefault();
 
     if (isValidInput) {
-      router.push(`/search/${query.replaceAll(" ", "+")}`);
-      userInputRef.current = "";
+      router.push(`/${ROUTES.search}/${query.replaceAll(" ", "+")}`);
+      userInputRef.current.value = "";
     }
   };
 
@@ -80,7 +82,7 @@ const GlobalSearch = () => {
             id='inputData'
             ref={userInputRef}
             autoComplete='off'
-            onChange={throttledInputChangeHandler}
+            onChange={inputChangeHandler}
             onKeyDown={(e) => keyHandler(e, null, true)}
           />
 
@@ -101,20 +103,14 @@ const GlobalSearch = () => {
         </div>
 
         <AnimatePresence mode='wait'>
-          {(searchSuggestions?.length > 0 || loading) && (
-            <motion.div
-              key='suggestions'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              transition={{ duration: 0.325 }}>
+          {isValidInput && (
+            <motion.div key='suggestions' {...opacityMotionTransition}>
               <div className='suggestions mt-8 drop-shadow-md'>
-                {loading ? (
+                {isFetching ? (
                   <div className='grid-center min-h-48'>
                     <LoadingSpinner className='text-neutral-900' />
                   </div>
-                ) : (
+                ) : searchSuggestions.length > 0 ? (
                   <Fragment>
                     {searchSuggestions.map((item, index) => (
                       <SearchSuggestion
@@ -126,6 +122,12 @@ const GlobalSearch = () => {
                       />
                     ))}
                   </Fragment>
+                ) : (
+                  <div className='grid-center min-h-48'>
+                    <P className='text-black' size='large' weight='medium'>
+                      No results found
+                    </P>
+                  </div>
                 )}
               </div>
             </motion.div>

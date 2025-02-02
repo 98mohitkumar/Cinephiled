@@ -1,9 +1,10 @@
 import { Fragment } from "react";
 
-import NetworkPage from "components/pages/Network/NetworkPage";
+import NetworkPage from "components/pages/Networks/NetworkPage";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import { apiEndpoints } from "data/apiEndpoints";
-import { fetchOptions, getCleanTitle } from "utils/helper";
+import { ROUTES, siteInfo } from "data/global";
+import { fetchOptions, getNiceName } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const Network = ({ networkDetails, networkMedia }) => {
@@ -12,7 +13,7 @@ const Network = ({ networkDetails, networkMedia }) => {
       <MetaWrapper
         title={`${networkDetails?.name} - cinephiled`}
         description={`TV shows produced by ${networkDetails?.name}.`}
-        url={`https://cinephiled.vercel.app/network/${networkDetails?.id}-${getCleanTitle(networkDetails?.name)}`}
+        url={`${siteInfo.url}/${ROUTES.networks}/${getNiceName({ id: networkDetails?.id, name: networkDetails?.name })}`}
         image={getTMDBImage({ path: networkDetails?.logo_path, type: "logo", size: "original" })}
       />
 

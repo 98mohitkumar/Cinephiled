@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-import { getCountryCode } from "apiEndpoints/user";
+import { getCountryCode } from "apiRoutes/user";
 import Genres from "components/Explore/Genres";
 import WatchProviders from "components/Explore/WatchProviders";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
@@ -9,6 +9,7 @@ import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
+import { ROUTES, siteInfo } from "data/global";
 import { fetchOptions } from "utils/helper";
 
 const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
@@ -17,7 +18,7 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
       <MetaWrapper
         title='Explore - Cinephiled'
         description="Embark on a cinematic journey through diverse genres of movies and TV shows. Uncover the latest releases and discover what's currently captivating audiences in theaters near you."
-        url='https://cinephiled.vercel.app/explore'
+        url={`${siteInfo.url}/${ROUTES.explore}`}
       />
 
       <Fragment>
@@ -38,7 +39,7 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
         {nowPlaying.length > 0 ? (
           <LayoutContainer className='py-2440'>
             <H2 className='mb-2432 text-center text-white'>Movies playing in theaters</H2>
-            <MediaTemplateGrid media={nowPlaying} />
+            <MediaTemplateGrid media={nowPlaying} mediaType='movie' />
           </LayoutContainer>
         ) : null}
       </Fragment>
@@ -75,7 +76,7 @@ export const getServerSideProps = async ({ req }) => {
       props: {
         movieGenres: movieGenresList?.genres || [],
         tvGenres: tvGenresList?.genres || [],
-        nowPlaying: nowPlayingList?.results.concat(nowPlayingNextPageList?.results).map((item) => ({ ...item, media_type: "movie" })) || []
+        nowPlaying: nowPlayingList?.results.concat(nowPlayingNextPageList?.results) || []
       }
     };
   } catch {

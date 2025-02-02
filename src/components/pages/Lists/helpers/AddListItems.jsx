@@ -6,7 +6,7 @@ import { Fragment, useCallback, useRef, useState } from "react";
 import { toast } from "sonner";
 import { throttle } from "throttle-debounce";
 
-import { getListItemStatus, updateListItems } from "apiEndpoints/user";
+import { getListItemStatus, updateListItems } from "apiRoutes/user";
 import { LoadingSpinner } from "components/Loader/Loader";
 import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
@@ -15,10 +15,10 @@ import { Grid, GridCol } from "components/UI/Grid";
 import Input, { InputLabel } from "components/UI/Input";
 import H4 from "components/UI/Typography/H4";
 import P from "components/UI/Typography/P";
-import { blurPlaceholder } from "data/global";
+import { blurPlaceholder, opacityMotionTransition } from "data/global";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
 import useRefreshData from "hooks/useRefreshData";
-import { cn, framerTabVariants, getReleaseDate, matches } from "utils/helper";
+import { cn, getReleaseDate, matches } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const AddListItems = ({ id }) => {
@@ -41,8 +41,8 @@ const AddListItems = ({ id }) => {
   const inputRef = useRef(null);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const throttledInputChangeHandler = useCallback(
-    throttle(750, (e) => {
-      setQuery(e.target.value);
+    throttle(750, () => {
+      setQuery(inputRef.current.value);
     }),
     []
   );
@@ -111,7 +111,7 @@ const AddListItems = ({ id }) => {
 
   return (
     <Fragment>
-      <Button className='flex items-center gap-8' onClick={openModal}>
+      <Button className='flex items-center gap-8' onClick={openModal} weight='medium'>
         <Plus size={16} />
         Add Items
       </Button>
@@ -150,11 +150,7 @@ const AddListItems = ({ id }) => {
                 <motion.div
                   key='suggestions'
                   className='absolute left-0 right-0 top-full z-10 mt-12 overflow-hidden rounded-lg bg-neutral-800 shadow-lg'
-                  variants={framerTabVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='hidden'
-                  transition={{ duration: 0.2 }}>
+                  {...opacityMotionTransition}>
                   {searchSuggestionsLoading ? (
                     <div className='grid-center min-h-96'>
                       <LoadingSpinner />

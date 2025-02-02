@@ -5,12 +5,13 @@ import { Fragment } from "react";
 
 import H3 from "components/UI/Typography/H3";
 import H5 from "components/UI/Typography/H5";
+import { ROUTES } from "data/global";
 import { theme } from "theme/theme";
-import { getCleanTitle, matches } from "utils/helper";
+import { getNiceName, matches } from "utils/helper";
 
 import { genreCardStyles } from "./ExploreStyles";
 
-const GenreSection = ({ genres, mediaType }) => {
+const GenreSection = ({ genres, genreType }) => {
   const [sliderRef] = useKeenSlider({
     renderMode: "performance",
     dragSpeed: 1.4,
@@ -57,16 +58,12 @@ const GenreSection = ({ genres, mediaType }) => {
   return (
     <Fragment>
       <H3 weight='semibold' className='mb-16'>
-        {matches(mediaType, "movie") ? "Movie" : "TV"} Genres
+        {matches(genreType, "movies") ? "Movie" : "TV"} Genres
       </H3>
 
       <div ref={sliderRef} className='keen-slider'>
         {genres.map((genre) => (
-          <Link
-            key={genre.id}
-            href={`/genre/${genre.id}-${getCleanTitle(genre.name)}/${mediaType === "movie" ? "movies" : "tv"}`}
-            passHref
-            legacyBehavior>
+          <Link key={genre.id} href={`/${ROUTES.genres}/${getNiceName({ id: genre.id, name: genre.name })}/${genreType}`} passHref legacyBehavior>
             <a className='keen-slider__slide' css={genreCardStyles}>
               <H5 className='z-2 text-center' weight='semibold'>
                 {genre.name}
@@ -83,11 +80,11 @@ const Genres = ({ movieGenres, tvGenres }) => {
   return (
     <Fragment>
       <div className='mb-2448'>
-        <GenreSection genres={movieGenres} mediaType='movie' />
+        <GenreSection genres={movieGenres} genreType='movies' />
       </div>
 
       <div>
-        <GenreSection genres={tvGenres} mediaType='tv' />
+        <GenreSection genres={tvGenres} genreType='tv' />
       </div>
     </Fragment>
   );

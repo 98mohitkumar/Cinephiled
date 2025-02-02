@@ -4,8 +4,9 @@ import { Fragment, useEffect, useRef } from "react";
 import { LinearTabs } from "components/Shared/Tabs/Tabs";
 import H4 from "components/UI/Typography/H4";
 import P from "components/UI/Typography/P";
+import { opacityMotionTransition } from "data/global";
 import useTabs from "hooks/useTabs";
-import { framerTabVariants, matches } from "utils/helper";
+import { matches } from "utils/helper";
 
 import CollectionsSearch from "./CollectionsSearch";
 import KeywordSearch from "./KeywordSearch";
@@ -62,7 +63,7 @@ const SearchTab = ({ movies, tv, searchQuery, keywords, people, collections, yea
       <div className='mt-2440'>
         <AnimatePresence mode='wait'>
           {matches(activeTab, "movies") && (
-            <motion.div key='movies' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+            <motion.div key='movies' {...opacityMotionTransition}>
               <div className='mb-3240 text-center'>
                 <H4 tag='p' weight='semibold'>
                   Movies Matching : {searchQuery}
@@ -76,7 +77,7 @@ const SearchTab = ({ movies, tv, searchQuery, keywords, people, collections, yea
           )}
 
           {matches(activeTab, "tv") && (
-            <motion.div key='tv' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+            <motion.div key='tv' {...opacityMotionTransition}>
               <div className='mb-3240 text-center'>
                 <H4 tag='p' weight='semibold'>
                   TV Shows Matching : {searchQuery}
@@ -90,7 +91,7 @@ const SearchTab = ({ movies, tv, searchQuery, keywords, people, collections, yea
           )}
 
           {matches(activeTab, "people") && (
-            <motion.div key='people' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+            <motion.div key='people' {...opacityMotionTransition}>
               {people?.count > 0 && (
                 <H4 tag='p' weight='semibold' className='mb-3240 text-center'>
                   People Matching : {searchQuery}
@@ -101,13 +102,7 @@ const SearchTab = ({ movies, tv, searchQuery, keywords, people, collections, yea
           )}
 
           {matches(activeTab, "collections") && (
-            <motion.div
-              key='collections'
-              variants={framerTabVariants}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-              transition={{ duration: 0.325 }}>
+            <motion.div key='collections' {...opacityMotionTransition}>
               {collections?.count > 0 && (
                 <H4 tag='p' weight='semibold' className='mb-3240 text-center'>
                   Collections Matching : {searchQuery}
@@ -118,7 +113,7 @@ const SearchTab = ({ movies, tv, searchQuery, keywords, people, collections, yea
           )}
 
           {matches(activeTab, "keywords") && (
-            <motion.div key='keywords' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+            <motion.div key='keywords' {...opacityMotionTransition}>
               {keywords?.count > 0 && (
                 <H4 tag='p' weight='semibold' className='mb-3240 text-center'>
                   Keywords Matching : {searchQuery}

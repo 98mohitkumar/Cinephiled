@@ -42,6 +42,34 @@ export const sortOptions = {
   ]
 } as const;
 
+export const ROUTES = {
+  movies: "movies",
+  tv: "tv",
+  person: "person",
+  collections: "collections",
+  networks: "networks",
+  lists: "lists",
+  genres: "genres",
+  keywords: "keywords",
+  search: "search",
+  watchProviders: "watch-providers",
+  about: "about",
+  explore: "explore",
+  login: "login",
+  profile: "profile"
+} as const;
+
+export const opacityMotionTransition = {
+  variants: {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 }
+  },
+  initial: "hidden",
+  animate: "visible",
+  exit: "hidden",
+  transition: { duration: 0.325 }
+} as const;
+
 export const mediaTypeTabList = [
   { key: "movies", title: `Movies` },
   { key: "tv", title: `TV Shows` }

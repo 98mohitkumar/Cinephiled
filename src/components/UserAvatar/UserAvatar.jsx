@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef, useState } from "react";
 
-import { useLogout } from "apiEndpoints/auth";
+import { useLogout } from "apiRoutes/auth";
 import FlexBox from "components/UI/FlexBox";
 import P from "components/UI/Typography/P";
+import { ROUTES } from "data/global";
 import { useUserContext } from "Store/UserContext";
 
 import { popupOption, avatar, popup } from "./UserAvatarStyles";
@@ -57,7 +58,7 @@ const UserAvatar = () => {
                   ease: [0.77, 0, 0.175, 1]
                 }}
                 className='drop-shadow-xl'>
-                <Link href='/profile' passHref>
+                <Link href={`/${ROUTES.profile}`} passHref>
                   <div css={popupOption} className='border-b border-neutral-700 font-semibold' role='button'>
                     {userInfo?.name || userInfo?.username}
                     <P weight='light' size='tiny' className='text-neutral-400'>
@@ -65,7 +66,7 @@ const UserAvatar = () => {
                     </P>
                   </div>
                 </Link>
-                <Link href='/lists' passHref>
+                <Link href={`/${ROUTES.lists}`} passHref>
                   <div role='button' css={popupOption} className='border-b border-neutral-700'>
                     Lists
                   </div>
@@ -79,13 +80,13 @@ const UserAvatar = () => {
         </FlexBox>
       ) : (
         <Fragment>
-          <Link href='/login' className='hidden sm:block'>
+          <Link href={`/${ROUTES.login}`} className='hidden sm:block'>
             <P size='large' weight='medium' className={`link ${router.asPath === "/login" ? "active" : ""}`} aria-label='Login'>
               Login
             </P>
           </Link>
 
-          <Link href='/login' className='block p-8 sm:hidden'>
+          <Link href={`/${ROUTES.login}`} className='block p-8 sm:hidden'>
             <div className='link' aria-label='Login'>
               <UserRound size={28} />
             </div>

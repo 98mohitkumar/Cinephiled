@@ -3,13 +3,14 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { Fragment, useEffect } from "react";
 
-import { useLogin } from "apiEndpoints/auth";
+import { useLogin } from "apiRoutes/auth";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H3 from "components/UI/Typography/H3";
 import P from "components/UI/Typography/P";
+import { ROUTES, siteInfo } from "data/global";
 import posters from "images/posters.webp";
 import logo from "public/logo512.png";
 
@@ -47,7 +48,7 @@ const LoginPage = () => {
 
   return (
     <Fragment>
-      <MetaWrapper title='Login - Cinephiled' description='Cinephiled login page' url='https://cinephiled.vercel.app/login' />
+      <MetaWrapper title='Login - Cinephiled' description='Cinephiled login page' url={`${siteInfo.url}/${ROUTES.login}`} />
 
       <div css={pageWrapperStyles}>
         <Image src={posters} fill alt='login-page-background' style={{ objectFit: "cover" }} priority className='background' />

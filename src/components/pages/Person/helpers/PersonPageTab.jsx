@@ -9,11 +9,11 @@ import { TabItem, Tabs } from "components/Shared/Tabs/Tabs";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import P from "components/UI/Typography/P";
-import { mediaTypeTabList, sortOptions } from "data/global";
+import { mediaTypeTabList, opacityMotionTransition, sortOptions } from "data/global";
 import useSort from "hooks/useSort";
 import useTabs from "hooks/useTabs";
 import { getSortedItems } from "utils/getSortedItems";
-import { framerTabVariants, matches } from "utils/helper";
+import { matches } from "utils/helper";
 
 import MediaFilters from "./MediaFilters";
 import PersonPageTabMediaTemplate from "./PersonPageTabMediaTemplate";
@@ -124,7 +124,7 @@ const PersonPageTab = ({ movieCredits, tvCredits, movieDepartmentList, tvDepartm
       <div className='mt-2032'>
         <AnimatePresence initial={false} mode='wait'>
           {matches(activeTab, "movies") && (
-            <motion.div key='movies' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+            <motion.div key='movies' {...opacityMotionTransition}>
               {movieCredits?.length > 0 ? (
                 <PersonPageTabMediaTemplate media={items} />
               ) : (
@@ -134,7 +134,7 @@ const PersonPageTab = ({ movieCredits, tvCredits, movieDepartmentList, tvDepartm
           )}
 
           {matches(activeTab, "tv") && (
-            <motion.div key='tv' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+            <motion.div key='tv' {...opacityMotionTransition}>
               {tvCredits?.length > 0 ? (
                 <PersonPageTabMediaTemplate media={items} />
               ) : (

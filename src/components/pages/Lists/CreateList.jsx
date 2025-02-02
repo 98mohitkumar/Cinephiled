@@ -2,15 +2,16 @@ import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { toast } from "sonner";
 
-import { createList } from "apiEndpoints/user";
+import { createList } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
-import ListBaseForm from "components/pages/List/helpers/ListBaseForm";
+import ListBaseForm from "components/pages/Lists/helpers/ListBaseForm";
 import Button from "components/UI/Button";
 import H4 from "components/UI/Typography/H4";
 import { apiEndpoints } from "data/apiEndpoints";
+import { ROUTES } from "data/global";
 import { useListsContext } from "Store/ListsContext";
 import { useUserContext } from "Store/UserContext";
-import { fetchOptions, getCleanTitle } from "utils/helper";
+import { fetchOptions, getNiceName } from "utils/helper";
 
 export const CreateList = () => {
   const router = useRouter();
@@ -54,7 +55,7 @@ export const CreateList = () => {
       const listDetails = await res.json();
       updateList((prev) => [listDetails, ...prev]);
 
-      router.push(`/lists/${listDetails.id}-${getCleanTitle(listDetails.name)}`);
+      router.push(`/${ROUTES.lists}/${getNiceName({ id: listDetails.id, name: listDetails.name })}`);
 
       toast.success("List created successfully", { description: "List has been created successfully." });
     } else {

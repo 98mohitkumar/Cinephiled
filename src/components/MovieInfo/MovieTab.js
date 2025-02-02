@@ -12,7 +12,6 @@ import PostersSvg from "components/Svg/posters";
 import ReviewsSvg from "components/Svg/reviews";
 import useTabs from "hooks/useTabs";
 import { ModulesWrapper } from "styles/GlobalComponents";
-import { framerTabVariants } from "utils/helper";
 
 import { TabIcon, TabSelectionTitle, tabStyling } from "./MovieTabStyles";
 
@@ -55,7 +54,7 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
 
       <AnimatePresence mode='wait' initial={false}>
         {activeTab === "cast" && (
-          <motion.div key='cast' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+          <motion.div key='cast'>
             <ModulesWrapper>
               <Cast cast={cast} showFullCastLink />
             </ModulesWrapper>
@@ -63,7 +62,7 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
         )}
 
         {activeTab === "reviews" && (
-          <motion.div key='reviews' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+          <motion.div key='reviews'>
             <ModulesWrapper>
               <Reviews reviews={reviews} />
             </ModulesWrapper>
@@ -71,7 +70,7 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
         )}
 
         {activeTab === "backdrops" && (
-          <motion.div key='backdrops' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+          <motion.div key='backdrops'>
             <ModulesWrapper>
               <Backdrops backdrops={backdrops} />
             </ModulesWrapper>
@@ -79,7 +78,7 @@ const MovieTab = ({ cast, reviews, posters, backdrops }) => {
         )}
 
         {activeTab === "posters" && (
-          <motion.div key='posters' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+          <motion.div key='posters'>
             <ModulesWrapper>
               <Posters posters={posters} />
             </ModulesWrapper>

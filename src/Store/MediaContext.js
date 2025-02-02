@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
-import { getFavorites, getRated, getRecommendations, getWatchlist } from "apiEndpoints/user";
+import { getFavorites, getRated, getRecommendations, getWatchlist } from "apiRoutes/user";
 
 import { useUserContext } from "./UserContext";
 

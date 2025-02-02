@@ -1,28 +1,24 @@
 import { CircleX, EllipsisVertical } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import Image from "next/image";
-import Link from "next/link";
 import { useNavigationGuard } from "next-navigation-guard";
 import { Fragment, useState } from "react";
 import { toast } from "sonner";
 
-import { updateList, updateListItems } from "apiEndpoints/user";
+import { updateList, updateListItems } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
-import RatingTag from "components/RatingTag/RatingTag";
+import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
-import { Grid, GridCol } from "components/UI/Grid";
 import { Popover, PopoverClose, PopoverContent, PopoverTrigger } from "components/UI/Popover";
 import H4 from "components/UI/Typography/H4";
 import H6 from "components/UI/Typography/H6";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
-import { blurPlaceholder } from "data/global";
+import { opacityMotionTransition } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useRefreshData from "hooks/useRefreshData";
 import { useUserContext } from "Store/UserContext";
-import { cn, framerTabVariants, getCleanTitle, getReleaseDate, matches } from "utils/helper";
-import { getTMDBImage } from "utils/imageHelper";
+import { cn, getReleaseDate, matches } from "utils/helper";
 
 const ListItems = ({ listItems, id, userCanEditList }) => {
   const { revalidateData } = useRefreshData();
@@ -113,87 +109,54 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
 
   return (
     <Fragment>
-      <Grid
-        colConfig={{
-          xxs: 2,
-          sm: 3,
-          lg: 4,
-          xl: 5,
-          "2xl": "desktopAutoFillMedia"
-        }}
-        className='items-start'>
-        {renderList.map(({ id, title, name, poster_path, vote_average, release_date, first_air_date, media_type, backdrop_path }) => (
-          <GridCol title={title || name} key={id}>
-            <Link href={`/${media_type}/${id}-${getCleanTitle(title || name)}`} passHref>
-              <motion.div
-                whileHover={{
-                  scale: 1.05,
-                  transition: { duration: 0.1 }
-                }}
-                whileTap={{ scale: 0.95 }}>
-                <div className='relative aspect-poster'>
-                  <Image
-                    src={getTMDBImage({ path: poster_path, type: "poster" })}
-                    alt={title || name}
-                    fill
-                    className='rounded-xl object-cover shadow-xl'
-                    placeholder='blur'
-                    blurDataURL={blurPlaceholder}
-                  />
-                  <RatingTag rating={vote_average} />
-                </div>
-              </motion.div>
-            </Link>
+      <MediaTemplateGrid
+        media={renderList}
+        gridType='poster'
+        extraInfoCallback={({ id, title, name, release_date, first_air_date, media_type, backdrop_path }) => (
+          <div className={cn("mt-24 pe-10", { "mt-32 pe-0": userCanEditList })}>
+            <FlexBox className='items-start justify-between gap-16'>
+              <H6 weight='medium' className='text-balance'>
+                {title || name}
+              </H6>
 
-            <div className={cn("mt-24 pe-10", { "mt-32 pe-0": userCanEditList })}>
-              <FlexBox className='items-start justify-between gap-16'>
-                <H6 weight='medium' className='text-balance'>
-                  {title || name}
-                </H6>
+              {userCanEditList ? (
+                <Popover modal>
+                  <PopoverTrigger className='grid-center mt-2 aspect-square w-8 shrink-0 rounded-full border border-transparent bg-neutral-700 transition-colors aria-expanded:border-neutral-100 can-hover:bg-neutral-600'>
+                    <EllipsisVertical size={16} />
+                  </PopoverTrigger>
 
-                {userCanEditList ? (
-                  <Popover modal>
-                    <PopoverTrigger className='grid-center mt-2 aspect-square w-8 shrink-0 rounded-full border border-transparent bg-neutral-700 transition-colors aria-expanded:border-neutral-100 can-hover:bg-neutral-600'>
-                      <EllipsisVertical size={16} />
-                    </PopoverTrigger>
+                  <PopoverContent align='end' className='text-center'>
+                    <PopoverClose
+                      className='block w-full'
+                      onClick={() => itemsLocalStateHandler({ item: { id, media_type, name: title || name }, action: "add" })}>
+                      <P
+                        className='border-b border-neutral-600 px-16 py-10 text-red-500 transition-colors can-hover:bg-red-950/75'
+                        weight='medium'
+                        size='small-to-p'>
+                        Remove from list
+                      </P>
+                    </PopoverClose>
 
-                    <PopoverContent align='end' className='text-center'>
-                      <PopoverClose
-                        className='block w-full'
-                        onClick={() => itemsLocalStateHandler({ item: { id, media_type, name: title || name }, action: "add" })}>
-                        <P
-                          className='border-b border-neutral-600 px-16 py-10 text-red-500 transition-colors can-hover:bg-red-950/75'
-                          weight='medium'
-                          size='small-to-p'>
-                          Remove from list
-                        </P>
-                      </PopoverClose>
-
-                      <PopoverClose className='block w-full' onClick={() => updateBackdropsHandler(backdrop_path)}>
-                        <P className='px-16 py-10 text-neutral-200 transition-colors can-hover:bg-neutral-700' weight='medium' size='small-to-p'>
-                          Use as cover image
-                        </P>
-                      </PopoverClose>
-                    </PopoverContent>
-                  </Popover>
-                ) : null}
-              </FlexBox>
-              <P className='text-neutral-400' weight='medium' size='small-to-p'>
-                {getReleaseDate(release_date || first_air_date)}
-              </P>
-            </div>
-          </GridCol>
-        ))}
-      </Grid>
+                    <PopoverClose className='block w-full' onClick={() => updateBackdropsHandler(backdrop_path)}>
+                      <P className='px-16 py-10 text-neutral-200 transition-colors can-hover:bg-neutral-700' weight='medium' size='small-to-p'>
+                        Use as cover image
+                      </P>
+                    </PopoverClose>
+                  </PopoverContent>
+                </Popover>
+              ) : null}
+            </FlexBox>
+            <P className='text-neutral-400' weight='medium' size='small-to-p'>
+              {getReleaseDate(release_date || first_air_date)}
+            </P>
+          </div>
+        )}
+      />
 
       <AnimatePresence mode='wait'>
         {itemsToRemove?.length > 0 && (
           <motion.div
-            variants={framerTabVariants}
-            initial='hidden'
-            animate='visible'
-            exit='hidden'
-            transition={{ duration: 0.5 }}
+            {...opacityMotionTransition}
             className='grid-center fixed bottom-0 left-0 right-0 z-100 w-full bg-gradient-to-t from-neutral-950 to-transparent py-48'>
             <Button variant='danger' size='large' onClick={openModal}>
               Remove {itemsToRemove.length} Items

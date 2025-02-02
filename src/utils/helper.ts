@@ -125,11 +125,7 @@ export const removeDuplicates = (items: Array<{ id: string }>) => {
   return { cleanedItems };
 };
 
-export const framerTabVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 }
-};
-
+// redundant
 export const getCleanTitle = (title: string): string => {
   if (!title) return "";
 
@@ -170,11 +166,7 @@ export const fetchSuggestions = async ({
   const searchEndpoints = [apiEndpoints.search.movieSearch({ query: searchQuery, year }), apiEndpoints.search.tvSearch({ query: searchQuery, year })];
 
   const [movieResponse, tvResponse] = await Promise.all(
-    searchEndpoints.map((endpoint) =>
-      fetch(endpoint, {
-        ...fetchOptions({ signal: controller.signal })
-      })
-    )
+    searchEndpoints.map((endpoint) => fetch(endpoint, fetchOptions({ signal: controller.signal })))
   );
 
   if (!movieResponse.ok || !tvResponse.ok) {
@@ -223,4 +215,11 @@ export const cn = (...classNames: ClassValue[]) => {
 export const breakpointAsNumber = (breakpoint: keyof typeof theme.breakpoints) => {
   const breakpointValue = theme.breakpoints[breakpoint];
   return parseInt(breakpointValue.replace("px", ""));
+};
+
+export const getNiceName = ({ id, name }: { id: string; name: string }) => {
+  if (!id || !name) return "";
+
+  const stringWithHyphens = name.replace(/[^\w\d\u0080-\uFFFF]+/g, "-");
+  return `${id}-${stringWithHyphens.replace(/[-\s]+$/, "")}`;
 };

@@ -2,7 +2,7 @@ import { Settings } from "lucide-react";
 import { Fragment } from "react";
 import { toast } from "sonner";
 
-import { updateList } from "apiEndpoints/user";
+import { updateList } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";

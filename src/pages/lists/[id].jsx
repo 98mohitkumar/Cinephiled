@@ -1,11 +1,11 @@
 import { getSession } from "next-auth/react";
 import { Fragment } from "react";
 
-import AddListItems from "components/pages/List/helpers/AddListItems";
-import DeleteListModal from "components/pages/List/helpers/DeleteListModal";
-import EditListModal from "components/pages/List/helpers/EditListModal";
-import ListItems from "components/pages/List/helpers/ListItems";
-import ListShareButton from "components/pages/List/helpers/ListShareButton";
+import AddListItems from "components/pages/Lists/helpers/AddListItems";
+import DeleteListModal from "components/pages/Lists/helpers/DeleteListModal";
+import EditListModal from "components/pages/Lists/helpers/EditListModal";
+import ListItems from "components/pages/Lists/helpers/ListItems";
+import ListShareButton from "components/pages/Lists/helpers/ListShareButton";
 import PlaceholderText from "components/PlaceholderText";
 import MediaHeroBackground from "components/Shared/MediaHeroBackground/MediaHeroBackground";
 import MetaWrapper from "components/Shared/MetaWrapper";
@@ -15,7 +15,8 @@ import LayoutContainer from "components/UI/LayoutContainer";
 import H1 from "components/UI/Typography/H1";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
-import { cn, fetchOptions, getCleanTitle, getRuntime } from "utils/helper";
+import { ROUTES, siteInfo } from "data/global";
+import { cn, fetchOptions, getNiceName, getRuntime } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const ListDetails = ({ title, copy }) => {
@@ -48,7 +49,7 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
         title={`${list.name} - Cinephiled`}
         description={list?.description || ""}
         image={getTMDBImage({ path: list?.backdrop_path, type: "backdrop", size: "w1280" })}
-        url={`https://cinephiled.vercel.app/lists/${list?.id}-${getCleanTitle(list?.name)}`}
+        url={`${siteInfo.url}/${ROUTES.lists}/${getNiceName({ id: list?.id, name: list?.name })}`}
       />
 
       <section>

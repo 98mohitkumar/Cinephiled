@@ -4,8 +4,9 @@ import { Fragment } from "react";
 import PlaceholderText from "components/PlaceholderText";
 import H1 from "components/UI/Typography/H1";
 import { apiEndpoints } from "data/apiEndpoints";
+import { ROUTES } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
-import { getCleanTitle, removeDuplicates } from "utils/helper";
+import { getNiceName, removeDuplicates } from "utils/helper";
 
 const KeywordSearch = ({ searchQuery, keywords }) => {
   const { list } = useInfiniteQuery({
@@ -24,7 +25,7 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
       {cleanedItems?.length > 0 ? (
         <div className='mx-auto flex max-w-screen-xl flex-col items-start gap-16'>
           {cleanedItems.map((item) => (
-            <Link key={item.id} href={`/keywords/${item.id}-${getCleanTitle(item.name)}`} passHref>
+            <Link key={item.id} href={`/${ROUTES.keywords}/${getNiceName({ id: item.id, name: item.name })}`} passHref>
               <H1 as='span' weight='medium' className='transition-colors can-hover:text-neutral-500'>
                 {item.name}
               </H1>

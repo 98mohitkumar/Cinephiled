@@ -7,6 +7,7 @@ import LayoutContainer from "components/UI/LayoutContainer";
 import H1 from "components/UI/Typography/H1";
 import H2 from "components/UI/Typography/H2";
 import P from "components/UI/Typography/P";
+import { ROUTES, siteInfo } from "data/global";
 import aboutBackground from "images/ShowCase.webp";
 import { TMDBCredit } from "styles/GlobalComponents";
 import { pageBackgroundStyles } from "styles/PageStyles/aboutPageStyles";
@@ -17,7 +18,7 @@ const About = () => {
       <MetaWrapper
         title=' About - Cinephiled'
         description='Cinephiled - A progressive web app (PWA) to preview any movie or tv show with reviews, ratings, description and posters. Acting as a TMDB client, Cinephiled gives you access to login into your TMDB account and add movies or tv shows to your watchlist, set as favorites, rate and get personalized recommendations.'
-        url='https://cinephiled.vercel.app/about'
+        url={`${siteInfo.url}/${ROUTES.about}`}
       />
 
       <div css={pageBackgroundStyles}>

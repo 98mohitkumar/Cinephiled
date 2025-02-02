@@ -1,9 +1,11 @@
 import { css } from "styled-components";
 
 import { theme } from "theme/theme";
+import { cssClamp } from "utils/mixins";
 
 export const ratingTagWrapperStyles = css`
-  width: 44px;
+  width: ${cssClamp({ maxSize: 44, minSize: 40 })};
+  padding: 5px;
   aspect-ratio: 1/1;
   position: absolute;
   border-radius: 50%;

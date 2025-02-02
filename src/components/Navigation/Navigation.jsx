@@ -9,14 +9,15 @@ import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
 import P from "components/UI/Typography/P";
 import UserAvatar from "components/UserAvatar/UserAvatar";
+import { ROUTES } from "data/global";
 import { matches } from "utils/helper";
 
 import { HamburgerIcon, hamburgerMenu, headerStyles, Logo, navBarStyles, navLinksStyles, searchOverlayBackdrop } from "./NavigationStyles";
 
 const navLinks = [
   { text: "Home", link: "/" },
-  { text: "Explore", link: "/explore" },
-  { text: "About", link: "/about" }
+  { text: "Explore", link: `/${ROUTES.explore}` },
+  { text: "About", link: `/${ROUTES.about}` }
 ];
 
 const Navigation = () => {

@@ -5,17 +5,18 @@ import { BiListPlus, BiListCheck } from "react-icons/bi";
 import { BsStarHalf } from "react-icons/bs";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
-import { addToWatchlist, setFavorite } from "apiEndpoints/user";
+import { addToWatchlist, setFavorite } from "apiRoutes/user";
 import { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
-import AddToListModal from "components/pages/List/AddToListModal";
+import AddToListModal from "components/pages/Lists/AddToListModal";
 import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
 import RatingModal from "components/RatingModal/RatingModal";
 import Toast, { useToast } from "components/Toast/Toast";
+import { opacityMotionTransition } from "data/global";
 import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import { Button } from "styles/GlobalComponents";
-import { framerTabVariants, matches } from "utils/helper";
+import { matches } from "utils/helper";
 
 const UserActionButtons = ({
   watchlistHandler,
@@ -36,13 +37,7 @@ const UserActionButtons = ({
         whileTap={{ scale: 0.95 }}
         onClick={watchlistHandler}>
         <AnimatePresence mode='wait' initial={false}>
-          <motion.div
-            key={`watchlist - ${isAddedToWatchlist.toString()}`}
-            variants={framerTabVariants}
-            initial='hidden'
-            animate='visible'
-            exit='hidden'
-            transition={{ duration: 0.325 }}>
+          <motion.div key={`watchlist - ${isAddedToWatchlist.toString()}`} {...opacityMotionTransition}>
             {isAddedToWatchlist ? <BiListCheck size='22px' /> : <BiListPlus size='22px' />}
           </motion.div>
         </AnimatePresence>
@@ -56,13 +51,7 @@ const UserActionButtons = ({
         loading={+isToastVisible}
         whileTap={{ scale: 0.95 }}>
         <AnimatePresence mode='wait' initial={false}>
-          <motion.div
-            key={`favorite - ${isAddedToFavorites.toString()}`}
-            variants={framerTabVariants}
-            initial='hidden'
-            animate='visible'
-            exit='hidden'
-            transition={{ duration: 0.325 }}>
+          <motion.div key={`favorite - ${isAddedToFavorites.toString()}`} {...opacityMotionTransition}>
             {isAddedToFavorites ? <FaHeart size='20px' /> : <FaRegHeart size='20px' />}
           </motion.div>
         </AnimatePresence>
@@ -76,13 +65,7 @@ const UserActionButtons = ({
         whileTap={{ scale: 0.95 }}
         onClick={ratingModalHandler}>
         <AnimatePresence mode='wait' initial={false}>
-          <motion.div
-            key={`rating - ${savedRating.toString()}`}
-            variants={framerTabVariants}
-            initial='hidden'
-            animate='visible'
-            exit='hidden'
-            transition={{ duration: 0.325 }}>
+          <motion.div key={`rating - ${savedRating.toString()}`} {...opacityMotionTransition}>
             {savedRating ? (
               <RatingOverlay className='media-page'>
                 <AiFillStar size='16px' />

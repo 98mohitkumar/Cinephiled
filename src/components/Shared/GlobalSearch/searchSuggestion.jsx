@@ -4,7 +4,8 @@ import { Fragment } from "react";
 import FlexBox from "components/UI/FlexBox";
 import H6 from "components/UI/Typography/H6";
 import P from "components/UI/Typography/P";
-import { cn, getCleanTitle, getReleaseDate, getReleaseYear, matches } from "utils/helper";
+import { ROUTES } from "data/global";
+import { cn, getNiceName, getReleaseDate, getReleaseYear, matches } from "utils/helper";
 
 import { searchItem } from "./GlobalSearchStyles";
 
@@ -48,7 +49,10 @@ const SearchSuggestion = ({ data, type, className, ...props }) => {
 
   return (
     <Fragment>
-      <Link href={`/${type}/${data.id}-${getCleanTitle(suggestedItem.title)}`} passHref legacyBehavior>
+      <Link
+        href={`/${matches(type, "movie") ? ROUTES.movies : ROUTES.tv}/${getNiceName({ id: data.id, name: suggestedItem.title })}`}
+        passHref
+        legacyBehavior>
         <FlexBox
           tag='a'
           className={`search-suggestion w-full items-center justify-between gap-24 px-12 py-8 ${className}`}

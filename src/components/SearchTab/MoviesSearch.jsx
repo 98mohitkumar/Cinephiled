@@ -21,7 +21,7 @@ const MoviesSearch = ({ searchQuery, movies, year }) => {
   return (
     <Fragment>
       {cleanedItems?.length > 0 ? (
-        <MediaTemplateGrid media={cleanedItems} />
+        <MediaTemplateGrid media={cleanedItems} mediaType='movie' />
       ) : (
         <PlaceholderText height='large'>No Movies found for this query.</PlaceholderText>
       )}

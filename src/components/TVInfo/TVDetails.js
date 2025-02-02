@@ -22,9 +22,9 @@ import DominantColor from "components/Shared/DominantColor/DominantColor";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import TechnicalDetails from "components/TechnicalDetails/TechnicalDetails";
 import UserActions from "components/UserActions/UserActions";
-import { blurPlaceholder } from "data/global";
+import { ROUTES, blurPlaceholder } from "data/global";
 import { Button, DetailsHeroWrap, HeroBg, HeroBgContainer, HeroDetailsContainer, HeroImg, HeroImgWrapper } from "styles/GlobalComponents";
-import { getCleanTitle, getRating } from "utils/helper";
+import { getCleanTitle, getNiceName, getRating } from "utils/helper";
 
 const TVDetails = ({ tvData }) => {
   const {
@@ -119,7 +119,7 @@ const TVDetails = ({ tvData }) => {
               {genres.length > 0 ? (
                 <GenreWrap className='font-bold'>
                   {genres.map((item, i) => (
-                    <Link key={item.id} href={`/genre/${item.id.toString() + "-" + item.name.split(" ").join("")}/tv`} passHref>
+                    <Link key={item.id} href={`/${ROUTES.genres}/${getNiceName({ id: item.id, name: item.name })}/tv`} passHref>
                       <Rounded className={genres.length == i + 1 && "sep"}>{item.name}</Rounded>
                     </Link>
                   ))}

@@ -6,9 +6,10 @@ import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import { useModal } from "components/Modal/Modal";
 import PlaceholderText from "components/PlaceholderText";
 import RatingModal from "components/RatingModal/RatingModal";
+import { opacityMotionTransition } from "data/global";
 import { useMediaContext } from "Store/MediaContext";
 import { Button } from "styles/GlobalComponents";
-import { framerTabVariants, getReleaseYear } from "utils/helper";
+import { getReleaseYear } from "utils/helper";
 
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
@@ -48,13 +49,7 @@ const Ratings = () => {
           {(tabState) => (
             <AnimatePresence mode='wait' initial={false}>
               {tabState === "movies" && (
-                <motion.div
-                  key={`${renderKey}-movies`}
-                  variants={framerTabVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='hidden'
-                  transition={{ duration: 0.325 }}>
+                <motion.div key={`${renderKey}-movies`} {...opacityMotionTransition}>
                   {ratedMovies.length > 0 ? (
                     <CardsContainerGrid className='xl-row-gap'>
                       {ratedMovies.map((movie) => (
@@ -78,13 +73,7 @@ const Ratings = () => {
               )}
 
               {tabState === "tv" && (
-                <motion.div
-                  key={`${renderKey}-tv`}
-                  variants={framerTabVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='hidden'
-                  transition={{ duration: 0.325 }}>
+                <motion.div key={`${renderKey}-tv`} {...opacityMotionTransition}>
                   {ratedTvShows.length > 0 ? (
                     <CardsContainerGrid className='xl-row-gap'>
                       {ratedTvShows.map((tv) => (

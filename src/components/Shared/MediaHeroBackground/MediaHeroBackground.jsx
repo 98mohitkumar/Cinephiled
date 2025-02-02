@@ -2,7 +2,8 @@
 import { AnimatePresence, motion } from "motion/react";
 
 import DominantColor from "components/Shared/DominantColor/DominantColor";
-import { cn, framerTabVariants } from "utils/helper";
+import { opacityMotionTransition } from "data/global";
+import { cn } from "utils/helper";
 import { getSrcSet, getTMDBImage } from "utils/imageHelper";
 
 import { heroBackgroundStyles } from "./MediaHeroBackgroundStyles";
@@ -10,15 +11,7 @@ import { heroBackgroundStyles } from "./MediaHeroBackgroundStyles";
 const MediaHeroBackground = ({ backdropPath, posterPath, alt }) => {
   return (
     <AnimatePresence mode='wait'>
-      <motion.div
-        css={heroBackgroundStyles}
-        className={cn({ "no-backdrop": !backdropPath })}
-        key={backdropPath}
-        variants={framerTabVariants}
-        initial='hidden'
-        animate='visible'
-        exit={false}
-        transition={{ duration: 0.325 }}>
+      <motion.div css={heroBackgroundStyles} className={cn({ "no-backdrop": !backdropPath })} key={backdropPath} {...opacityMotionTransition}>
         <img
           alt={alt}
           loading='eager'

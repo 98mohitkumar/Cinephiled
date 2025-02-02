@@ -9,9 +9,9 @@ import DominantColor from "components/Shared/DominantColor/DominantColor";
 import SocialMediaLinks from "components/SocialMediaLinks/SocialMediaLinks";
 import TechnicalDetails from "components/TechnicalDetails/TechnicalDetails";
 import UserActions from "components/UserActions/UserActions";
-import { blurPlaceholder } from "data/global";
+import { ROUTES, blurPlaceholder } from "data/global";
 import { Button, DetailsHeroWrap, HeroBg, HeroBgContainer, HeroDetailsContainer, HeroImg, HeroImgWrapper } from "styles/GlobalComponents";
-import { getCleanTitle, getRating, getRuntime } from "utils/helper";
+import { getCleanTitle, getNiceName, getRating, getRuntime } from "utils/helper";
 
 import {
   Divider,
@@ -149,7 +149,7 @@ const MovieDetails = ({ movieDetails, easter }) => {
                 <GenreWrap className='font-bold'>
                   <Divider />
                   {genres.map((item, i) => (
-                    <Link key={item.id} href={`/genre/${item.id.toString() + "-" + item.name.replaceAll(" ", "-")}/movies`} passHref>
+                    <Link key={item.id} href={`/${ROUTES.genres}/${getNiceName({ id: item.id, name: item.name })}/movies`} passHref>
                       <Rounded className={genres.length == i + 1 ? "sep" : ""}>{item.name}</Rounded>
                     </Link>
                   ))}

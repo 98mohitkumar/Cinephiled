@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 
-import { getCountryCode } from "apiEndpoints/user";
+import { getCountryCode } from "apiRoutes/user";
 import PlaceholderText from "components/PlaceholderText";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import MetaWrapper from "components/Shared/MetaWrapper";
@@ -14,9 +14,9 @@ import LayoutContainer from "components/UI/LayoutContainer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select";
 import H1 from "components/UI/Typography/H1";
 import { apiEndpoints } from "data/apiEndpoints";
-import { blurPlaceholder, mediaTypeTabList } from "data/global";
+import { ROUTES, blurPlaceholder, mediaTypeTabList, opacityMotionTransition, siteInfo } from "data/global";
 import useTabs from "hooks/useTabs";
-import { fetchOptions, framerTabVariants, getCleanTitle, matches } from "utils/helper";
+import { fetchOptions, getNiceName, matches } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, defaultRegion }) => {
@@ -37,9 +37,9 @@ const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, 
 
   const handleSelectChange = (key) => {
     if (key === defaultRegion) {
-      router.replace(`/watch-providers`);
+      router.replace(`/${ROUTES.watchProviders}`);
     } else {
-      router.replace(`/watch-providers?region=${key}`, null, { shallow: false });
+      router.replace(`/${ROUTES.watchProviders}?region=${key}`, null, { shallow: false });
     }
   };
 
@@ -50,7 +50,7 @@ const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, 
       <MetaWrapper
         title='Watch Providers - Cinephiled'
         description='Explore a comprehensive list of OTT/streaming providers, both locally and globally, to elevate your entertainment experience. Discover a diverse range of options available in your country and around the world, ensuring you never miss out on the latest and greatest in streaming content.'
-        url='https://cinephiled.vercel.app/watch-providers'
+        url={`${siteInfo.url}/${ROUTES.watchProviders}`}
         image='https://raw.githubusercontent.com/98mohitkumar/Cinephiled/main/public/images/watch-providers.webp'
       />
 
@@ -89,19 +89,11 @@ const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, 
 
           <AnimatePresence mode='wait'>
             {currentRenderList?.length > 0 ? (
-              <motion.div
-                key={activeTab}
-                variants={framerTabVariants}
-                initial='hidden'
-                animate='visible'
-                exit='hidden'
-                className='mt-3248 grid grid-cols-watchProviders gap-2432'>
+              <motion.div key={activeTab} {...opacityMotionTransition} className='mt-3248 grid grid-cols-watchProviders gap-2432'>
                 {currentRenderList.map((provider) => (
                   <Link
                     key={provider.provider_id}
-                    href={`/watch-providers/${provider.provider_id}-${getCleanTitle(
-                      provider.provider_name
-                    )}/${activeTab}?watchregion=${selectedRegion || defaultRegion}`}>
+                    href={`/${ROUTES.watchProviders}/${getNiceName({ id: provider.provider_id, name: provider.provider_name })}/${activeTab}?watchregion=${selectedRegion || defaultRegion}`}>
                     <div className='block h-full w-full'>
                       <motion.div className='aspect-square w-full overflow-hidden rounded-lg' whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                         <Image

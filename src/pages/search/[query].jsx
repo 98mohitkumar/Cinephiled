@@ -5,6 +5,7 @@ import MetaWrapper from "components/Shared/MetaWrapper";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H1 from "components/UI/Typography/H1";
 import { apiEndpoints } from "data/apiEndpoints";
+import { ROUTES, siteInfo } from "data/global";
 import { fetchOptions } from "utils/helper";
 
 const Search = ({ movies, tv, searchQuery, keywords, people, collections, allResultsEmpty, year }) => {
@@ -13,7 +14,7 @@ const Search = ({ movies, tv, searchQuery, keywords, people, collections, allRes
       <MetaWrapper
         title={`${searchQuery} - Search`}
         description={`Search results matching : ${searchQuery}`}
-        url={`https://cinephiled.vercel.app/search/${searchQuery}`}
+        url={`${siteInfo.url}/${ROUTES.search}/${searchQuery}`}
       />
 
       <LayoutContainer className='pb-4864 pt-2440'>

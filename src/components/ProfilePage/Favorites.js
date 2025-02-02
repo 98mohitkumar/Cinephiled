@@ -1,14 +1,15 @@
 import { motion, AnimatePresence } from "motion/react";
 import { Fragment } from "react";
 
-import { setFavorite } from "apiEndpoints/user";
+import { setFavorite } from "apiRoutes/user";
 import Loading from "components/Loader/Loader";
 import { CardsContainerGrid } from "components/MediaTemplate/TemplateStyles";
 import Modal, { useModal } from "components/Modal/Modal";
 import PlaceholderText from "components/PlaceholderText";
+import { opacityMotionTransition } from "data/global";
 import { useMediaContext } from "Store/MediaContext";
 import { Button } from "styles/GlobalComponents";
-import { framerTabVariants, getReleaseYear } from "utils/helper";
+import { getReleaseYear } from "utils/helper";
 
 import MediaCard from "./MediaCard";
 import { ProfileMediaTab } from "./ProfilePage";
@@ -78,13 +79,7 @@ const Favorites = () => {
           {(tabState) => (
             <AnimatePresence mode='wait' initial={false}>
               {tabState === "movies" && (
-                <motion.div
-                  key={`${renderKey}-movies`}
-                  variants={framerTabVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='hidden'
-                  transition={{ duration: 0.325 }}>
+                <motion.div key={`${renderKey}-movies`} {...opacityMotionTransition}>
                   {favoriteMovies.length > 0 ? (
                     <CardsContainerGrid className='xl-row-gap'>
                       {favoriteMovies.map((movie) => (
@@ -106,13 +101,7 @@ const Favorites = () => {
               )}
 
               {tabState === "tv" && (
-                <motion.div
-                  key={`${renderKey}-tv`}
-                  variants={framerTabVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='hidden'
-                  transition={{ duration: 0.325 }}>
+                <motion.div key={`${renderKey}-tv`} {...opacityMotionTransition}>
                   {favoriteTvShows.length > 0 ? (
                     <CardsContainerGrid className='xl-row-gap'>
                       {favoriteTvShows.map((tv) => (

@@ -15,8 +15,8 @@ const RatingTag = ({ rating }) => {
 
   return (
     <div css={ratingTagWrapperStyles}>
-      <Gauge value={rating ? getRating(rating) * 10 : 0} strokeWidth={5} primary={primaryColorScale} secondary='#424242' className='h-9 w-9' />
-      <P className='font-montserrat' weight='medium' size='tiny'>
+      <Gauge value={rating ? getRating(rating) * 10 : 0} strokeWidth={5} primary={primaryColorScale} secondary='#424242' className='h-full w-full' />
+      <P className='font-montserrat' weight='medium' size='micro-to-tiny'>
         {getRating(rating)}
       </P>
     </div>

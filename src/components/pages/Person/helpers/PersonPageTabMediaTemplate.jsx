@@ -21,7 +21,7 @@ const extraInfoCallback = (media) => {
 };
 
 const PersonPageTabMediaTemplate = ({ media }) => {
-  return <MediaTemplateGrid media={media} extraInfoCallback={extraInfoCallback} />;
+  return <MediaTemplateGrid media={media} extraInfoCallback={extraInfoCallback} gridType='poster' />;
 };
 
 export default PersonPageTabMediaTemplate;

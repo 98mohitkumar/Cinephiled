@@ -36,7 +36,7 @@ const config: Config = {
     transitionTimingFunction: transitionTimings,
     extend: {
       gridTemplateColumns: {
-        desktopAutoFillMedia: "repeat(auto-fill, minmax(225px, 1fr))",
+        desktopAutoFillMedia: "repeat(auto-fill, minmax(200px, 1fr))",
         peopleGrid: "repeat(auto-fill, minmax(160px, 1fr))",
         watchProviders: "repeat(auto-fill, minmax(min(55px, 20vw), 1fr))",
         customHeroDetailsGrid: "16rem 1fr",

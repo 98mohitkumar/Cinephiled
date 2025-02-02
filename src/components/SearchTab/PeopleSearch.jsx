@@ -7,9 +7,9 @@ import PlaceholderText from "components/PlaceholderText";
 import { Grid, GridCol } from "components/UI/Grid";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
-import { blurPlaceholder } from "data/global";
+import { ROUTES, blurPlaceholder } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
-import { getCleanTitle, removeDuplicates } from "utils/helper";
+import { getNiceName, removeDuplicates } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const PeopleSearch = ({ searchQuery, people }) => {
@@ -33,7 +33,7 @@ const PeopleSearch = ({ searchQuery, people }) => {
             sm: "peopleGrid"
           }}>
           {cleanedItems.map((person) => (
-            <Link href={`/person/${person.id}-${getCleanTitle(person.name)}`} passHref key={person.id}>
+            <Link href={`/${ROUTES.person}/${getNiceName({ id: person.id, name: person.name })}`} passHref key={person.id}>
               <GridCol>
                 <motion.div
                   whileHover={{

@@ -13,9 +13,9 @@ import H1 from "components/UI/Typography/H1";
 import H3 from "components/UI/Typography/H3";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
-import { blurPlaceholder, siteInfo } from "data/global";
+import { ROUTES, blurPlaceholder, siteInfo } from "data/global";
 import { getSortedItems } from "utils/getSortedItems";
-import { cn, fetchOptions, getCleanTitle, matches } from "utils/helper";
+import { cn, fetchOptions, getNiceName, matches } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const LAYOUT_TYPES = {
@@ -51,7 +51,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
         title={`${name} - Cinephiled`}
         description={overview}
         image={getTMDBImage({ type: "backdrop", path: backdrop_path, size: "w1280" })}
-        url={`${siteInfo.url}/collection/${id}-${getCleanTitle(name)}`}
+        url={`${siteInfo.url}/${ROUTES.collections}/${getNiceName({ id, name })}`}
       />
 
       <section className='relative'>
@@ -86,7 +86,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
             {allGenres.length > 0 ? (
               <FlexBox className='mb-16 flex-wrap items-center gap-10'>
                 {allGenres.map((item) => (
-                  <Link key={item.id} href={`/genre/${item.id.toString() + "-" + getCleanTitle(item.name)}/movies`} passHref>
+                  <Link key={item.id} href={`/${ROUTES.genres}/${getNiceName({ id: item.id, name: item.name })}/movies`} passHref>
                     <GenreTag>
                       <P weight='medium'>{item.name}</P>
                     </GenreTag>
@@ -104,7 +104,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
         <LayoutContainer className='py-3248'>
           <H3 className='mb-1620'>Movies</H3>
 
-          <MediaTemplateGrid media={sortedByReleaseDate} />
+          <MediaTemplateGrid media={sortedByReleaseDate} mediaType='movie' />
         </LayoutContainer>
       ) : null}
 

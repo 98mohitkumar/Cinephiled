@@ -6,7 +6,8 @@ import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H3 from "components/UI/Typography/H3";
 import { apiEndpoints } from "data/apiEndpoints";
-import { fetchOptions } from "utils/helper";
+import { ROUTES, siteInfo } from "data/global";
+import { fetchOptions, getNiceName } from "utils/helper";
 
 const Keyword = ({ results, name, id }) => {
   return (
@@ -14,7 +15,7 @@ const Keyword = ({ results, name, id }) => {
       <MetaWrapper
         title={`${name} - Movies`}
         description={`Movies matching the keyword : ${name}`}
-        url={`https://cinephiled.vercel.app/keywords/${id}`}
+        url={`${siteInfo.url}/${ROUTES.keywords}/${getNiceName({ id, name })}`}
       />
 
       <LayoutContainer className='py-2440'>
@@ -23,7 +24,7 @@ const Keyword = ({ results, name, id }) => {
         </H3>
 
         {results?.length > 0 ? (
-          <MediaTemplateGrid media={results} />
+          <MediaTemplateGrid media={results} mediaType='movie' />
         ) : (
           <PlaceholderText height='large'>No Movie results for this keyword.</PlaceholderText>
         )}

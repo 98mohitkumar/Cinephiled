@@ -12,9 +12,9 @@ import CastSvg from "components/Svg/cast";
 import PostersSvg from "components/Svg/posters";
 import ReviewsSvg from "components/Svg/reviews";
 import SeasonsSvg from "components/Svg/seasons";
+import { opacityMotionTransition } from "data/global";
 import useTabs from "hooks/useTabs";
 import { ModulesWrapper } from "styles/GlobalComponents";
-import { framerTabVariants } from "utils/helper";
 
 import TVSeasons from "./TVSeasons";
 
@@ -62,7 +62,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
 
       <AnimatePresence mode='wait' initial={false}>
         {activeTab === "cast" && (
-          <motion.div key='cast' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+          <motion.div key='cast' {...opacityMotionTransition}>
             <ModulesWrapper>
               <Cast cast={cast} showFullCastLink />
             </ModulesWrapper>
@@ -70,7 +70,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
         )}
 
         {activeTab === "seasons" && (
-          <motion.div key='seasons' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+          <motion.div key='seasons' {...opacityMotionTransition}>
             <ModulesWrapper>
               <TVSeasons seasons={seasons} />
             </ModulesWrapper>
@@ -78,7 +78,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
         )}
 
         {activeTab === "reviews" && (
-          <motion.div key='cast' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+          <motion.div key='cast' {...opacityMotionTransition}>
             <ModulesWrapper>
               <Reviews reviews={reviews} />
             </ModulesWrapper>
@@ -86,7 +86,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
         )}
 
         {activeTab === "backdrops" && (
-          <motion.div key='backdrops' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+          <motion.div key='backdrops' {...opacityMotionTransition}>
             <ModulesWrapper>
               <Backdrops backdrops={backdrops} />
             </ModulesWrapper>
@@ -94,7 +94,7 @@ const TVTab = ({ cast, seasons, reviews, posters, backdrops }) => {
         )}
 
         {activeTab === "posters" && (
-          <motion.div key='posters' variants={framerTabVariants} initial='hidden' animate='visible' exit='hidden' transition={{ duration: 0.325 }}>
+          <motion.div key='posters' {...opacityMotionTransition}>
             <ModulesWrapper>
               <Posters posters={posters} />
             </ModulesWrapper>

@@ -3,11 +3,11 @@ import { Fragment } from "react";
 
 import MetaWrapper from "components/Shared/MetaWrapper";
 import { Tabs, LinearTabs } from "components/Shared/Tabs/Tabs";
+import { opacityMotionTransition } from "data/global";
 import useTabs from "hooks/useTabs";
 import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import { ModulesWrapper } from "styles/GlobalComponents";
-import { framerTabVariants } from "utils/helper";
 
 import Favorites from "./Favorites";
 import { Banner, ProfileAvatar, ProfileStats } from "./ProfilePageStyles";
@@ -98,13 +98,7 @@ const Profile = () => {
             <AnimatePresence mode='wait' initial={false}>
               {/* Watchlist */}
               {activeTab === "watchlist" && (
-                <motion.div
-                  key='watchlist'
-                  variants={framerTabVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='hidden'
-                  transition={{ duration: 0.325 }}>
+                <motion.div key='watchlist' {...opacityMotionTransition}>
                   <ModulesWrapper>
                     <Watchlist />
                   </ModulesWrapper>
@@ -113,13 +107,7 @@ const Profile = () => {
 
               {/* ratings  */}
               {activeTab === "ratings" && (
-                <motion.div
-                  key='ratings'
-                  variants={framerTabVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='hidden'
-                  transition={{ duration: 0.325 }}>
+                <motion.div {...opacityMotionTransition}>
                   <ModulesWrapper>
                     <Ratings />
                   </ModulesWrapper>
@@ -128,13 +116,7 @@ const Profile = () => {
 
               {/* favorites  */}
               {activeTab === "favorites" && (
-                <motion.div
-                  key='favorites'
-                  variants={framerTabVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='hidden'
-                  transition={{ duration: 0.325 }}>
+                <motion.div {...opacityMotionTransition}>
                   <ModulesWrapper>
                     <Favorites />
                   </ModulesWrapper>
@@ -143,13 +125,7 @@ const Profile = () => {
 
               {/* recommendations */}
               {activeTab === "recommendations" && (
-                <motion.div
-                  key='recommendations'
-                  variants={framerTabVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='hidden'
-                  transition={{ duration: 0.325 }}>
+                <motion.div {...opacityMotionTransition}>
                   <ModulesWrapper>
                     <ProfileRecommendations />
                   </ModulesWrapper>

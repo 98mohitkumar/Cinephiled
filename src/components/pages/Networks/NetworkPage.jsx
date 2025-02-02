@@ -11,6 +11,7 @@ import { apiEndpoints } from "data/apiEndpoints";
 import { blurPlaceholder, sortOptions } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useSort from "hooks/useSort";
+import { getTMDBImage } from "utils/imageHelper";
 
 import { NetwrokDetailsWrapper, PostersGrid } from "./NetworkPageStyles";
 
@@ -53,6 +54,8 @@ const NetworkPage = ({ details, media }) => {
 
   const renderList = media.concat(list);
 
+  console.log(details);
+
   return (
     <div>
       <div css={NetwrokDetailsWrapper}>
@@ -82,7 +85,7 @@ const NetworkPage = ({ details, media }) => {
               "--aspectRatio": details?.images?.logos?.[0]?.aspect_ratio
             }}>
             <Image
-              src={`https://image.tmdb.org/t/p/w300_filter(negate,000,111)${details?.images?.logos?.[0]?.file_path}`}
+              src={`${getTMDBImage({ path: details?.images?.logos?.[0]?.file_path, type: "logo", size: "w300_filter(negate,000,111)" })}`}
               alt={`${details?.name}-poster`}
               fill
               style={{ objectFit: "cover" }}
@@ -139,7 +142,7 @@ const NetworkPage = ({ details, media }) => {
           </Select>
         </div>
 
-        <MediaTemplateGrid media={renderList} />
+        <MediaTemplateGrid media={renderList} mediaType='tv' />
       </LayoutContainer>
     </div>
   );
