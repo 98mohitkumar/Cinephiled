@@ -54,8 +54,6 @@ const NetworkPage = ({ details, media }) => {
 
   const renderList = media.concat(list);
 
-  console.log(details);
-
   return (
     <div>
       <div css={NetwrokDetailsWrapper}>
