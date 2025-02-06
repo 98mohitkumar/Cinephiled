@@ -22,17 +22,13 @@ const CollectionsSearch = ({ collections, searchQuery }) => {
   return (
     <Fragment>
       {renderList?.length > 0 ? (
-        <MediaTemplateGrid
-          media={renderList}
-          gridType='backdrop'
-          showRating={false}
-          mediaType={ROUTES.collections}
-          extraInfoCallback={(list) => (
+        <MediaTemplateGrid media={renderList} gridType='backdrop' showRating={false} mediaType={ROUTES.collections}>
+          {(list) => (
             <H6 weight='medium' className='mt-12 text-pretty text-center'>
               {list.name}
             </H6>
           )}
-        />
+        </MediaTemplateGrid>
       ) : (
         <PlaceholderText height='large'>No results found for this query.</PlaceholderText>
       )}

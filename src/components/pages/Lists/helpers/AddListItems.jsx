@@ -117,147 +117,145 @@ const AddListItems = ({ id }) => {
       </Button>
 
       <Modal isOpen={isModalVisible} closeOnClickedOutside={false} width='max-w-4xl'>
-        <div>
-          <H4 weight='semibold' className='mb-16'>
-            Add Items to List
-          </H4>
+        <H4 weight='semibold' className='mb-16'>
+          Add Items to List
+        </H4>
 
-          <div className='relative mb-24'>
-            <div>
-              <InputLabel htmlFor='addItem'>Search Item</InputLabel>
-              <Input
-                type='text'
-                ref={inputRef}
-                id='addItem'
-                placeholder='Search for a movie or TV show'
-                onChange={throttledInputChangeHandler}
-                fullWidth
-                suffix={
-                  isValidQuery ? (
-                    <CircleX
-                      className='text-neutral-100 transition-colors hover:text-neutral-400'
-                      size='22px'
-                      onClick={closeInputHandler}
-                      role='button'
-                    />
-                  ) : null
-                }
-              />
-            </div>
-
-            <AnimatePresence mode='wait'>
-              {searchSuggestionsLoading || searchSuggestions?.length > 0 ? (
-                <motion.div
-                  key='suggestions'
-                  className='absolute left-0 right-0 top-full z-10 mt-12 overflow-hidden rounded-lg bg-neutral-800 shadow-lg'
-                  {...opacityMotionTransition}>
-                  {searchSuggestionsLoading ? (
-                    <div className='grid-center min-h-96'>
-                      <LoadingSpinner />
-                    </div>
-                  ) : (
-                    <Fragment>
-                      {searchSuggestions.length > 0 ? (
-                        <Grid
-                          className='grid max-h-96 gap-12 overflow-y-auto p-12'
-                          colConfig={{
-                            sm: 2,
-                            lg: 3
-                          }}>
-                          {searchSuggestions.map(({ id, title, name, poster_path, release_date, first_air_date, type }) => (
-                            <div
-                              key={id}
-                              className='cursor-pointer overflow-hidden rounded-lg bg-neutral-700 p-12 transition-colors hover:bg-neutral-600'
-                              onClick={() =>
-                                addItemHandler({
-                                  id,
-                                  poster_path,
-                                  media_type: type
-                                })
-                              }>
-                              <FlexBox className='items-start gap-12'>
-                                <div className='relative aspect-poster w-16 shrink-0'>
-                                  <Image
-                                    fill
-                                    placeholder='blur'
-                                    alt={`${title || name}-poster`}
-                                    blurDataURL={blurPlaceholder}
-                                    src={getTMDBImage({ type: "poster", path: poster_path, size: "w185" })}
-                                    className='rounded-md object-cover'
-                                  />
-                                </div>
-                                <div className='grow'>
-                                  <P weight='medium' size='small' className={cn("mb-4 text-cyan-500", { "text-green-500": matches(type, "tv") })}>
-                                    {type === "tv" ? "TV Show" : "Movie"}
-                                  </P>
-
-                                  <P weight='medium' className='line-clamp-2'>
-                                    {title || name}
-                                  </P>
-                                  <P weight='medium' size='small' className='text-neutral-300'>
-                                    {getReleaseDate(release_date || first_air_date)}
-                                  </P>
-                                </div>
-                              </FlexBox>
-                            </div>
-                          ))}
-                        </Grid>
-                      ) : null}
-                    </Fragment>
-                  )}
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
+        <div className='relative mb-24'>
+          <div>
+            <InputLabel htmlFor='addItem'>Search Item</InputLabel>
+            <Input
+              type='text'
+              ref={inputRef}
+              id='addItem'
+              placeholder='Search for a movie or TV show'
+              onChange={throttledInputChangeHandler}
+              fullWidth
+              suffix={
+                isValidQuery ? (
+                  <CircleX
+                    className='text-neutral-100 transition-colors hover:text-neutral-400'
+                    size='22px'
+                    onClick={closeInputHandler}
+                    role='button'
+                  />
+                ) : null
+              }
+            />
           </div>
 
-          <div className='mb-24'>
-            {items?.length > 0 ? (
-              <Grid
-                colConfig={{
-                  xxs: 2,
-                  sm: 3,
-                  md: 4
-                }}
-                className='min-h-96 items-start'>
-                {items.map(({ id, title, name, poster_path, media_type }) => (
-                  <GridCol title={title || name} key={id}>
-                    <div className='relative aspect-poster'>
-                      <Image
-                        src={getTMDBImage({ path: poster_path, type: "poster" })}
-                        alt={title || name || `${media_type}-poster`}
-                        fill
-                        className='rounded-xl object-cover shadow-xl'
-                        placeholder='blur'
-                        blurDataURL={blurPlaceholder}
-                      />
-                    </div>
+          <AnimatePresence mode='wait'>
+            {searchSuggestionsLoading || searchSuggestions?.length > 0 ? (
+              <motion.div
+                key='suggestions'
+                className='absolute left-0 right-0 top-full z-10 mt-12 overflow-hidden rounded-lg bg-neutral-800 shadow-lg'
+                {...opacityMotionTransition}>
+                {searchSuggestionsLoading ? (
+                  <div className='grid-center min-h-96'>
+                    <LoadingSpinner />
+                  </div>
+                ) : (
+                  <Fragment>
+                    {searchSuggestions.length > 0 ? (
+                      <Grid
+                        className='grid max-h-96 gap-12 overflow-y-auto p-12'
+                        colConfig={{
+                          sm: 2,
+                          lg: 3
+                        }}>
+                        {searchSuggestions.map(({ id, title, name, poster_path, release_date, first_air_date, type }) => (
+                          <div
+                            key={id}
+                            className='cursor-pointer overflow-hidden rounded-lg bg-neutral-700 p-12 transition-colors hover:bg-neutral-600'
+                            onClick={() =>
+                              addItemHandler({
+                                id,
+                                poster_path,
+                                media_type: type
+                              })
+                            }>
+                            <FlexBox className='items-start gap-12'>
+                              <div className='relative aspect-poster w-16 shrink-0'>
+                                <Image
+                                  fill
+                                  placeholder='blur'
+                                  alt={`${title || name}-poster`}
+                                  blurDataURL={blurPlaceholder}
+                                  src={getTMDBImage({ type: "poster", path: poster_path, size: "w185" })}
+                                  className='rounded-sm object-cover'
+                                />
+                              </div>
+                              <div className='grow'>
+                                <P weight='medium' size='small' className={cn("mb-4 text-cyan-500", { "text-green-500": matches(type, "tv") })}>
+                                  {type === "tv" ? "TV Show" : "Movie"}
+                                </P>
 
-                    <Button fullWidth variant='danger' className='mt-12' onClick={() => removeItemHandler(id)}>
-                      Remove
-                    </Button>
-                  </GridCol>
-                ))}
-              </Grid>
-            ) : (
-              <div className='grid-center min-h-96 text-center'>
-                <P className='text-balance text-neutral-300'>
-                  Search for a movie or TV show above to add items to your list.
-                  <span className='my-12 block' />
-                  <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year. Example: <b>&#39;Avatar y:2009&#39;</b>
-                </P>
-              </div>
-            )}
-          </div>
-
-          <FlexBox className='justify-end gap-16'>
-            <Button variant='outline' onClick={closeModalHandler} type='button' title='Close add items modal'>
-              Close
-            </Button>
-            <Button onClick={saveItemsHandler} disabled={matches(items.length, 0)} title='Save items to list'>
-              Save Changes
-            </Button>
-          </FlexBox>
+                                <P weight='medium' className='line-clamp-2'>
+                                  {title || name}
+                                </P>
+                                <P weight='medium' size='small' className='text-neutral-300'>
+                                  {getReleaseDate(release_date || first_air_date)}
+                                </P>
+                              </div>
+                            </FlexBox>
+                          </div>
+                        ))}
+                      </Grid>
+                    ) : null}
+                  </Fragment>
+                )}
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
         </div>
+
+        <div className='mb-24'>
+          {items?.length > 0 ? (
+            <Grid
+              colConfig={{
+                xxs: 2,
+                sm: 3,
+                md: 4
+              }}
+              className='min-h-96 items-start'>
+              {items.map(({ id, title, name, poster_path, media_type }) => (
+                <GridCol title={title || name} key={id}>
+                  <div className='relative aspect-poster'>
+                    <Image
+                      src={getTMDBImage({ path: poster_path, type: "poster" })}
+                      alt={title || name || `${media_type}-poster`}
+                      fill
+                      className='rounded-lg object-cover shadow-xl'
+                      placeholder='blur'
+                      blurDataURL={blurPlaceholder}
+                    />
+                  </div>
+
+                  <Button fullWidth variant='danger' className='mt-12' onClick={() => removeItemHandler(id)}>
+                    Remove
+                  </Button>
+                </GridCol>
+              ))}
+            </Grid>
+          ) : (
+            <div className='grid-center min-h-96 text-center'>
+              <P className='text-balance text-neutral-300'>
+                Search for a movie or TV show above to add items to your list.
+                <span className='my-12 block' />
+                <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year. Example: <b>&#39;Avatar y:2009&#39;</b>
+              </P>
+            </div>
+          )}
+        </div>
+
+        <FlexBox className='justify-end gap-16'>
+          <Button variant='outline' onClick={closeModalHandler} type='button' title='Close add items modal'>
+            Close
+          </Button>
+          <Button onClick={saveItemsHandler} disabled={matches(items.length, 0)} title='Save items to list'>
+            Save Changes
+          </Button>
+        </FlexBox>
       </Modal>
     </Fragment>
   );

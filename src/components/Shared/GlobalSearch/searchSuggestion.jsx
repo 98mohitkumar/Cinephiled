@@ -47,12 +47,22 @@ const getSuggestedItem = ({ data, type }) => {
 const SearchSuggestion = ({ data, type, className, ...props }) => {
   const suggestedItem = getSuggestedItem({ data, type });
 
+  const getMediaRoute = (type) => {
+    switch (type) {
+      case "movie":
+        return ROUTES.movies;
+      case "tv":
+        return ROUTES.tv;
+      case "person":
+        return ROUTES.person;
+      default:
+        return ROUTES.movies;
+    }
+  };
+
   return (
     <Fragment>
-      <Link
-        href={`/${matches(type, "movie") ? ROUTES.movies : ROUTES.tv}/${getNiceName({ id: data.id, name: suggestedItem.title })}`}
-        passHref
-        legacyBehavior>
+      <Link href={`/${getMediaRoute(type)}/${getNiceName({ id: data.id, name: suggestedItem.title })}`} passHref legacyBehavior>
         <FlexBox
           tag='a'
           className={`search-suggestion w-full items-center justify-between gap-24 px-12 py-8 ${className}`}

@@ -1,6 +1,7 @@
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 import { Fragment } from "react";
 
+import { authOptions } from "api/auth/[...nextauth]";
 import AddListItems from "components/pages/Lists/helpers/AddListItems";
 import DeleteListModal from "components/pages/Lists/helpers/DeleteListModal";
 import EditListModal from "components/pages/Lists/helpers/EditListModal";
@@ -117,7 +118,7 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
 export const getServerSideProps = async (ctx) => {
   try {
     const { id } = ctx.query;
-    const data = await getSession(ctx);
+    const data = await getServerSession(ctx.req, ctx.res, authOptions);
 
     const res = await fetch(apiEndpoints.lists.getListDetails({ id }), fetchOptions());
     if (!res.ok) throw new Error("Failed to fetch list details");

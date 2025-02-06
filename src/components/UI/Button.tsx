@@ -8,7 +8,6 @@ type ButtonProps = ComponentPropsWithRef<"button"> &
     variant?: "primary" | "secondary" | "outline" | "danger";
     size?: "small" | "default" | "large";
     weight?: "normal" | "medium" | "semibold" | "bold";
-    shape?: "pill" | "square";
     fullWidth?: boolean;
   };
 
@@ -20,16 +19,15 @@ const Button = ({
   weight = "medium",
   ref,
   type = "button",
-  shape = "square",
   fullWidth = false,
   ...props
 }: ButtonProps) => (
   <motion.button
     ref={ref}
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
+    whileHover={{ scale: 1.04 }}
+    whileTap={{ scale: 0.96 }}
     className={cn(
-      "grid min-w-max place-items-center leading-4",
+      "grid min-w-max place-items-center overflow-clip leading-4",
       "disabled:pointer-events-none disabled:bg-neutral-700 disabled:text-neutral-400",
       "transition-colors ease-in-out",
       {
@@ -53,7 +51,6 @@ const Button = ({
         "font-bold": matches(weight, "bold")
       },
       {
-        "rounded-3xl": matches(shape, "pill"),
         "w-full": matches(fullWidth, true)
       },
       className

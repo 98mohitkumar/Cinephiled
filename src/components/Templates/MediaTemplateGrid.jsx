@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
 import RatingTag from "components/RatingTag/RatingTag";
 import { Grid, GridCol } from "components/UI/Grid";
@@ -10,7 +11,15 @@ import { ROUTES, blurPlaceholder } from "data/global";
 import { cn, getNiceName, getReleaseDate, matches } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
-const MediaTemplateGrid = ({ media, showRating = true, extraInfoCallback = null, mediaType = "movies", gridType = "poster", imageSize = "w500" }) => {
+const MediaTemplateGrid = ({
+  media,
+  showRating = true,
+  children = null,
+  mediaType = "movies",
+  gridType = "poster",
+  imageSize = "w500",
+  className = ""
+}) => {
   const gridConfig = matches(gridType, "poster")
     ? {
         xxs: 2,
@@ -43,7 +52,7 @@ const MediaTemplateGrid = ({ media, showRating = true, extraInfoCallback = null,
   };
 
   return (
-    <Grid colConfig={gridConfig} className='items-start'>
+    <Grid colConfig={gridConfig} className={cn("items-start", className)}>
       {media.map(({ id, title, name, poster_path, vote_average, release_date, first_air_date, media_type, backdrop_path }, index) => (
         <GridCol title={title || name} key={id}>
           <Link href={`/${getMediaRoute(media_type || mediaType)}/${getNiceName({ id, name: title || name })}`} passHref>
@@ -67,8 +76,8 @@ const MediaTemplateGrid = ({ media, showRating = true, extraInfoCallback = null,
             </motion.div>
           </Link>
 
-          {extraInfoCallback ? (
-            extraInfoCallback(media[index])
+          {children ? (
+            children(media[index])
           ) : (
             <div className='mt-24 pe-10'>
               <H6 weight='medium' className='text-balance'>

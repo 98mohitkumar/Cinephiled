@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import { tmdbAuth } from "apiRoutes/auth";
 
-export default NextAuth({
+export const authOptions = {
   providers: [
     CredentialsProvider({
       id: "tmdb",
@@ -34,4 +34,6 @@ export default NextAuth({
     signIn: "/login"
   },
   secret: process.env.NEXTAUTH_SECRET
-});
+};
+
+export default NextAuth(authOptions);

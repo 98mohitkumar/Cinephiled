@@ -118,9 +118,15 @@ export const getGender = (gender: number) => {
 };
 
 export const removeDuplicates = (items: Array<{ id: string }>) => {
-  const uniqueIds = new Set();
+  const uniqueItemsMap = new Map();
 
-  const cleanedItems = items.map((item) => (uniqueIds.has(item.id) ? null : (uniqueIds.add(item.id), item))).filter(Boolean);
+  items.forEach((item) => {
+    if (!uniqueItemsMap.has(item.id)) {
+      uniqueItemsMap.set(item.id, item);
+    }
+  });
+
+  const cleanedItems = Array.from(uniqueItemsMap.values());
 
   return { cleanedItems };
 };

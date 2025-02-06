@@ -1,5 +1,6 @@
 import { css } from "styled-components";
 
+import { theme } from "theme/theme";
 import { mediaQuery } from "utils/mixins";
 
 export const heroBackgroundStyles = css`
@@ -54,7 +55,7 @@ export const heroBackgroundStyles = css`
     inset: 0;
     bottom: -2px;
     position: absolute;
-    background: linear-gradient(0deg, #121212, transparent 25%);
+    background: ${`linear-gradient(0deg, ${theme.colors.black}, transparent 25%)`};
   }
 
   ${mediaQuery({ type: "max", breakpoint: "lg" })} {

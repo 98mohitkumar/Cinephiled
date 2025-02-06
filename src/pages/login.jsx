@@ -1,26 +1,28 @@
-import Router from "next/router";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 
+import { authOptions } from "api/auth/[...nextauth]";
 import LoginPage from "components/pages/LoginPage";
 
 const Login = () => {
   return <LoginPage />;
 };
 
-Login.getInitialProps = async (ctx) => {
-  const data = await getSession(ctx);
+export const getServerSideProps = async (ctx) => {
+  const data = await getServerSession(ctx.req, ctx.res, authOptions);
 
   if (data) {
-    if (typeof window === "undefined") {
-      ctx.res.writeHead(302, { location: "/profile" });
-      ctx.res.end();
-      return { signedIn: true };
-    } else {
-      Router.push("/profile");
-      return { signedIn: true };
-    }
+    return {
+      redirect: {
+        destination: "/profile",
+        permanent: false
+      }
+    };
   } else {
-    return { signedIn: false };
+    return {
+      props: {
+        signedIn: false
+      }
+    };
   }
 };
 

@@ -6,6 +6,7 @@ import { createList } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import ListBaseForm from "components/pages/Lists/helpers/ListBaseForm";
 import Button from "components/UI/Button";
+import FlexBox from "components/UI/FlexBox";
 import H4 from "components/UI/Typography/H4";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES } from "data/global";
@@ -78,9 +79,15 @@ export const CreateList = () => {
         </H4>
 
         <ListBaseForm submitHandler={createListHandler}>
-          <Button type='submit' disabled={submitting}>
-            {submitting ? "Creating..." : "Create List"}
-          </Button>
+          <FlexBox className='gap-16'>
+            <Button onClick={closeModal} disabled={submitting} type='button' className='w-1/2' variant='outline'>
+              Close
+            </Button>
+
+            <Button type='submit' disabled={submitting} className='w-1/2'>
+              {submitting ? "Creating..." : "Create List"}
+            </Button>
+          </FlexBox>
         </ListBaseForm>
       </Modal>
     </Fragment>

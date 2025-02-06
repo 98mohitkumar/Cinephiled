@@ -1,6 +1,7 @@
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 import { Fragment } from "react";
 
+import { authOptions } from "api/auth/[...nextauth]";
 import { CreateList } from "components/pages/Lists/CreateList";
 import PlaceholderText from "components/PlaceholderText";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
@@ -43,17 +44,13 @@ const Lists = ({ lists }) => {
           </FlexBox>
 
           {renderList?.length > 0 ? (
-            <MediaTemplateGrid
-              media={renderList}
-              gridType='backdrop'
-              showRating={false}
-              mediaType={ROUTES.lists}
-              extraInfoCallback={(list) => (
+            <MediaTemplateGrid media={renderList} gridType='backdrop' showRating={false} mediaType={ROUTES.lists}>
+              {(list) => (
                 <H6 weight='medium' className='mt-12 text-center'>
                   {list.name}
                 </H6>
               )}
-            />
+            </MediaTemplateGrid>
           ) : (
             <PlaceholderText height='large'>
               It looks like you haven&apos;t created any lists yet. Start by clicking &quot;Create List&quot; above!
@@ -66,7 +63,7 @@ const Lists = ({ lists }) => {
 };
 
 export const getServerSideProps = async (ctx) => {
-  const data = await getSession(ctx);
+  const data = await getServerSession(ctx.req, ctx.res, authOptions);
 
   if (!data) {
     return {

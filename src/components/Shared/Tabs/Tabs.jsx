@@ -18,7 +18,7 @@ export const Tabs = ({ tabItemsCount, activeItemIndex, children, ...props }) => 
 
 export const TabItem = ({ children, className, ...props }) => {
   return (
-    <div role='button' css={tabItemStyles} className={cn("p-16 text-h6 max-sm:py-12", className)} {...props}>
+    <div role='button' css={tabItemStyles} className={cn("text-h6", className)} {...props}>
       {children}
     </div>
   );
@@ -43,7 +43,7 @@ export const LinearTabs = ({ tabList, currentTab, setTab }) => {
           style={{ width: `${100 / tabList.length}%` }}
           className={cn(
             `min-w-max`,
-            "px-32 py-16 text-neutral-400 transition-colors",
+            "px-32 py-16 text-neutral-400 transition-colors can-hover:text-white",
             "grid place-items-center",
             "cursor-pointer whitespace-nowrap",
             {

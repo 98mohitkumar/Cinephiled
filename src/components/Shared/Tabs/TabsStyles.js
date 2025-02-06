@@ -1,6 +1,7 @@
 import styled, { css, keyframes } from "styled-components";
 
 import { theme } from "theme/theme";
+import { breakpointAsNumber } from "utils/helper";
 import { cssClamp, mediaQuery, transition } from "utils/mixins";
 
 export const tabWrapperStyles = css`
@@ -8,7 +9,8 @@ export const tabWrapperStyles = css`
   margin-inline: auto;
   position: relative;
   grid-template-columns: ${({ $tabItemsCount }) => `repeat(${$tabItemsCount}, 1fr)`};
-  width: ${cssClamp({ minSize: 450, maxSize: 630 })};
+  width: ${({ $tabItemsCount }) =>
+    cssClamp({ minSize: 210 * $tabItemsCount, maxSize: 320 * $tabItemsCount, maxViewport: breakpointAsNumber("3xl") })};
   border: 4px solid ${theme.colors.neutral[200]};
   background: ${theme.colors.neutral[200]};
   border-radius: ${theme.borderRadius["2xl"]};
@@ -38,6 +40,7 @@ export const tabItemStyles = css`
   color: ${theme.colors.black};
   z-index: ${theme.zIndex[2]};
   transition: ${transition({ property: "color", duration: 0.4, timingFunction: "ease-in-out-quart" })};
+  padding: ${cssClamp({ minSize: 12, maxSize: 16, maxViewport: breakpointAsNumber("3xl") })};
 
   &.active {
     color: ${theme.colors.white};
@@ -74,5 +77,5 @@ export const ActiveTabIndicator = styled.div`
   background: ${theme.colors.accentPrimary};
   z-index: 4;
   border-radius: 4px 4px 0px 0px;
-  animation: ${tabAnimationKeyframes} 0.45s ${theme.transitionTimings["ease-in-out-quart"]} forwards;
+  animation: ${tabAnimationKeyframes} 0.25s ${theme.transitionTimings["ease-in-out-quart"]} forwards;
 `;

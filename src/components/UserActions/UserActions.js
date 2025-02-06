@@ -9,7 +9,6 @@ import { addToWatchlist, setFavorite } from "apiRoutes/user";
 import { useModal } from "components/Modal/Modal";
 import { Span } from "components/MovieInfo/MovieDetailsStyles";
 import AddToListModal from "components/pages/Lists/AddToListModal";
-import { RatingOverlay } from "components/ProfilePage/ProfilePageStyles";
 import RatingModal from "components/RatingModal/RatingModal";
 import Toast, { useToast } from "components/Toast/Toast";
 import { opacityMotionTransition } from "data/global";
@@ -67,10 +66,10 @@ const UserActionButtons = ({
         <AnimatePresence mode='wait' initial={false}>
           <motion.div key={`rating - ${savedRating.toString()}`} {...opacityMotionTransition}>
             {savedRating ? (
-              <RatingOverlay className='media-page'>
+              <>
                 <AiFillStar size='16px' />
                 <p className='m-0 font-semibold leading-tight'>{savedRating}</p>
-              </RatingOverlay>
+              </>
             ) : (
               <BsStarHalf size='20px' />
             )}

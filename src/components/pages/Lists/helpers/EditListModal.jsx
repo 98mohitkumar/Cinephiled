@@ -67,22 +67,20 @@ const EditListModal = ({ list }) => {
       </Button>
 
       <Modal closeModal={closeModal} isOpen={isModalVisible}>
-        <div>
-          <H4 weight='semibold' className='mb-16'>
-            Edit List Details
-          </H4>
+        <H4 weight='semibold' className='mb-16'>
+          Edit List Details
+        </H4>
 
-          <ListBaseForm id={list?.id} submitHandler={formSubmitHandler}>
-            <FlexBox className='gap-16'>
-              <Button variant='outline' onClick={closeModal} type='button' className='w-1/2'>
-                Close
-              </Button>
-              <Button type='submit' className='w-1/2'>
-                Update
-              </Button>
-            </FlexBox>
-          </ListBaseForm>
-        </div>
+        <ListBaseForm id={list?.id} submitHandler={formSubmitHandler}>
+          <FlexBox className='gap-16'>
+            <Button variant='outline' onClick={closeModal} type='button' className='w-1/2'>
+              Close
+            </Button>
+            <Button type='submit' className='w-1/2'>
+              Update
+            </Button>
+          </FlexBox>
+        </ListBaseForm>
       </Modal>
     </Fragment>
   );

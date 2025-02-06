@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// redundant
 export const CardsContainerGrid = styled.div`
   width: 100%;
   display: grid;
@@ -24,6 +25,7 @@ export const CardsContainerGrid = styled.div`
   }
 `;
 
+// redundant
 export const Cards = styled.div`
   width: 100%;
   align-self: flex-start;
@@ -56,6 +58,7 @@ export const CardImg = styled.div`
   }
 `;
 
+// redundant
 export const CardInfo = styled.div`
   margin-top: 26px;
 
@@ -75,6 +78,7 @@ export const InfoTitle = styled.h2`
   }
 `;
 
+// redundant
 export const ReleaseDate = styled.p`
   font-weight: 500;
   margin: 0;

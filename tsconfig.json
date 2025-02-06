@@ -24,7 +24,8 @@
       "apiRoutes/*": ["src/apiRoutes/*"],
       "Store/*": ["src/Store/*"],
       "tokens/*": ["src/theme/tokens/*"],
-      "utils/*": ["src/utils/*"]
+      "utils/*": ["src/utils/*"],
+      "api/*": ["src/pages/api/*"]
     }
   },
   "include": ["next-env.d.ts", "styled.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],

@@ -39,24 +39,20 @@ const DeleteListModal = ({ list }) => {
       </Button>
 
       <Modal closeModal={closeModal} isOpen={isModalVisible} width='max-w-lg'>
-        <div>
-          <H4 weight='semibold'>Delete List</H4>
+        <H4 weight='semibold'>Delete List</H4>
 
-          <div className='mt-16'>
-            <P>
-              Are you sure you want to delete <strong>{list.name}</strong>? This action cannot be undone.
-            </P>
+        <P className='my-16'>
+          Are you sure you want to delete <strong>{list.name}</strong>? This action cannot be undone.
+        </P>
 
-            <FlexBox className='mt-16 gap-16'>
-              <Button onClick={closeModal} type='button' className='w-1/2' variant='outline'>
-                Close
-              </Button>
-              <Button variant='danger' onClick={deleteListHandler} type='button' className='w-1/2'>
-                Delete
-              </Button>
-            </FlexBox>
-          </div>
-        </div>
+        <FlexBox className=' gap-16'>
+          <Button onClick={closeModal} type='button' className='w-1/2' variant='outline'>
+            Close
+          </Button>
+          <Button variant='danger' onClick={deleteListHandler} type='button' className='w-1/2'>
+            Delete
+          </Button>
+        </FlexBox>
       </Modal>
     </Fragment>
   );

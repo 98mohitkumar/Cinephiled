@@ -1,7 +1,8 @@
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 
+import { authOptions } from "api/auth/[...nextauth]";
 import { useLogout } from "apiRoutes/auth";
-import ProfilePage from "components/ProfilePage/ProfilePage";
+import ProfilePage from "components/pages/ProfilePage/ProfilePage";
 
 const Profile = ({ isValidSession }) => {
   const { logout } = useLogout();
@@ -14,13 +15,15 @@ const Profile = ({ isValidSession }) => {
   return <ProfilePage />;
 };
 
-Profile.getInitialProps = async (ctx) => {
-  const data = await getSession(ctx);
+export const getServerSideProps = async (ctx) => {
+  const data = await getServerSession(ctx.req, ctx.res, authOptions);
   const hasTokenExpired = new Date() > new Date(data?.expires);
   const hasValidToken = data?.user?.accessToken && data?.user?.accountId;
 
   return {
-    isValidSession: hasValidToken && !hasTokenExpired
+    props: {
+      isValidSession: hasValidToken && !hasTokenExpired
+    }
   };
 };
 

@@ -84,7 +84,7 @@ export const getRecommendations = async ({ mediaType, pageQuery, accountId, toke
 export const getListItemStatus = async ({ listId, mediaType, mediaId, signal }) => {
   const {
     user: { accessToken }
-  } = await getSession();
+  } = await getSession({ broadcast: false });
 
   const res = await fetch(
     "/api/getItemStatus",
@@ -133,7 +133,7 @@ export const getCountryCode = async (ip) => {
 export const setFavorite = async ({ mediaType, mediaId, favoriteState }) => {
   const {
     user: { accountId, accessToken }
-  } = await getSession();
+  } = await getSession({ broadcast: false });
 
   if (accountId) {
     const favorite = await fetch(
@@ -164,7 +164,7 @@ export const setFavorite = async ({ mediaType, mediaId, favoriteState }) => {
 export const addToWatchlist = async ({ mediaType, mediaId, watchlistState }) => {
   const {
     user: { accountId, accessToken }
-  } = await getSession();
+  } = await getSession({ broadcast: false });
 
   if (accountId) {
     const watchlist = await fetch(
@@ -195,7 +195,7 @@ export const addToWatchlist = async ({ mediaType, mediaId, watchlistState }) => 
 export const setRating = async ({ mediaType, mediaId, rating }) => {
   const {
     user: { accountId, accessToken }
-  } = await getSession();
+  } = await getSession({ broadcast: false });
 
   if (accountId) {
     const rated = await fetch(
@@ -225,7 +225,7 @@ export const setRating = async ({ mediaType, mediaId, rating }) => {
 export const createList = async ({ listData }) => {
   const {
     user: { accessToken }
-  } = await getSession();
+  } = await getSession({ broadcast: false });
 
   const res = await fetch(
     apiEndpoints.lists.createList,
@@ -245,7 +245,7 @@ export const createList = async ({ listData }) => {
 export const updateListItems = async ({ id, itemsData, method }) => {
   const {
     user: { accessToken }
-  } = await getSession();
+  } = await getSession({ broadcast: false });
 
   const res = await fetch(
     apiEndpoints.lists.listItems({ id: id }),
@@ -266,7 +266,7 @@ export const updateListItems = async ({ id, itemsData, method }) => {
 export const updateList = async ({ id, listData }) => {
   const {
     user: { accessToken }
-  } = await getSession();
+  } = await getSession({ broadcast: false });
 
   const res = await fetch(
     apiEndpoints.lists.updateList({ id: id }),
@@ -287,7 +287,7 @@ export const updateList = async ({ id, listData }) => {
 export const deleteRating = async ({ mediaType, mediaId }) => {
   const {
     user: { accountId, accessToken }
-  } = await getSession();
+  } = await getSession({ broadcast: false });
 
   if (accountId) {
     const deleted = await fetch(
@@ -314,7 +314,7 @@ export const deleteRating = async ({ mediaType, mediaId }) => {
 export const deleteList = async ({ id }) => {
   const {
     user: { accessToken }
-  } = await getSession();
+  } = await getSession({ broadcast: false });
 
   const res = await fetch(
     apiEndpoints.lists.updateList({ id: id }),
