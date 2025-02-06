@@ -61,8 +61,8 @@ const UserAvatar = () => {
                 <Link href={`/${ROUTES.profile}`} passHref>
                   <div css={popupOption} className='border-b border-neutral-700 font-semibold' role='button'>
                     {userInfo?.name || userInfo?.username}
-                    <P weight='light' size='tiny' className='text-neutral-400'>
-                      view profile
+                    <P size='tiny' className='text-neutral-400'>
+                      View Profile
                     </P>
                   </div>
                 </Link>

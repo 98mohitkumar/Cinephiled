@@ -22,7 +22,7 @@ const RatingCTA = ({ mediaData }) => {
     <Fragment>
       <RatingModal {...mediaData} isOpen={isModalVisible} closeModal={closeModal} />
 
-      <Button className='mt-24 flex justify-between' onClick={openModal} fullWidth>
+      <Button className='mt-24 flex justify-between' onClick={openModal} fullWidth weight='medium'>
         Edit Rating
         {mediaData?.rating ? (
           <P
