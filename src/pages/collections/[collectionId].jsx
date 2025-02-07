@@ -59,9 +59,10 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
         <LayoutContainer
           className={cn("flex items-center gap-32 lg:py-4864", {
             "no-min-height py-2464 max-lg:flex-col max-lg:items-start": matches(LAYOUT_TYPE, LAYOUT_TYPES.poster),
-            blank: matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
+            "blank py-2464": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
           })}
           css={mediaDetailsWrapper}>
+          {/* poster image, if there is a poster path */}
           <div
             className={cn("relative hidden aspect-poster min-w-64", {
               block: matches(LAYOUT_TYPE, LAYOUT_TYPES.poster)
