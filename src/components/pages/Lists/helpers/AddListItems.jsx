@@ -75,6 +75,12 @@ const AddListItems = ({ id }) => {
       return;
     }
 
+    // check for duplicate items in local state
+    if (items.some(({ id }) => id === item.id)) {
+      toast.warning("Item already exists.", { description: "Item already added to the list." });
+      return;
+    }
+
     // add item to the list
     setItems((prevState) => [item, ...prevState]);
     toast.success("Item added.", { description: "Item has been added, please save your changes." });
@@ -217,7 +223,7 @@ const AddListItems = ({ id }) => {
                 sm: 3,
                 md: 4
               }}
-              className='min-h-96 items-start'>
+              className='min-h-96 items-start gap-16'>
               {items.map(({ id, title, name, poster_path, media_type }) => (
                 <GridCol title={title || name} key={id}>
                   <div className='relative aspect-poster'>

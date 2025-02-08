@@ -51,8 +51,6 @@ const EditListModal = ({ list }) => {
       // show success toast
       toast.success("List has been updated successfully.");
     } else {
-      closeModal();
-
       // show error toast
       toast.error("An error occurred", {
         description: "An error occurred while updating the list details, please try again later."

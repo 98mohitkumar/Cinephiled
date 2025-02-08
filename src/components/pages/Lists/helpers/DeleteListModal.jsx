@@ -23,7 +23,7 @@ const DeleteListModal = ({ list }) => {
       updateList((prev) => prev.filter((item) => item.id !== list.id));
       closeModal();
       toast.success("List has been deleted successfully.");
-      router.push("/lists");
+      router.push("/lists", undefined, { shallow: false });
     } else {
       closeModal();
       toast.error("An error occurred", {
