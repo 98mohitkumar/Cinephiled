@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Fragment } from "react";
 
-import DownloadMediaButton from "components/DownloadMediaButton/DownloadMediaButton";
 import PlaceholderText from "components/PlaceholderText";
+import DownloadMediaButton from "components/Shared/DownloadMediaButton";
 import { Grid, GridCol } from "components/UI/Grid";
 import { blurPlaceholder } from "data/global";
 import { cn, matches } from "utils/helper";

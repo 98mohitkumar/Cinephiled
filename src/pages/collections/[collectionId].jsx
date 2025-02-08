@@ -80,7 +80,8 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
           <div
             className={cn("w-full max-w-full", {
               "lg:max-w-md xl:max-w-xl 2xl:max-w-2xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.standard),
-              "lg:max-w-2xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.poster) || matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
+              "lg:max-w-2xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.poster),
+              "lg:max-w-3xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
             })}>
             <H1 className='mb-16 text-pretty'>{name}</H1>
 

@@ -1,4 +1,5 @@
 export const read_access_token = process.env.NEXT_PUBLIC_READ_ACCESS_TOKEN;
+export const CORS_PROXY = process.env.NEXT_PUBLIC_CORS_PROXY;
 
 const baseUrlV3 = "https://api.themoviedb.org/3";
 const baseUrlV4 = "https://api.themoviedb.org/4";

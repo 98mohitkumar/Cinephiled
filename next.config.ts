@@ -9,8 +9,8 @@ const withPWA = require("next-pwa")({
 });
 
 const cspHeader = `
-    default-src *;
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.clarity.ms/;
+    default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+    script-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
     style-src 'self' 'unsafe-inline';
     img-src * data:;
     font-src 'self' data:;

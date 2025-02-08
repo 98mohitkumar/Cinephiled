@@ -4,8 +4,8 @@ import { Instagram, Link2, Twitter } from "lucide-react";
 import Image from "next/image";
 import { useMemo } from "react";
 
-import DownloadMediaButton from "components/DownloadMediaButton/DownloadMediaButton";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
+import DownloadMediaButton from "components/Shared/DownloadMediaButton";
 import FlexBox from "components/UI/FlexBox";
 import { Grid } from "components/UI/Grid";
 import LayoutContainer from "components/UI/LayoutContainer";

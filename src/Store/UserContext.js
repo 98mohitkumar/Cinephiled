@@ -1,3 +1,4 @@
+import LogRocket from "logrocket";
 import { useSession, signOut } from "next-auth/react";
 import { useState, createContext, useEffect, useContext } from "react";
 
@@ -22,6 +23,17 @@ export const useUserContext = () => {
 export default function UserContextProvider({ children }) {
   const { status, data } = useSession();
   const [userInfo, setUserInfo] = useState({});
+
+  // identify user in LogRocket
+  useEffect(() => {
+    if (userInfo?.accountId && userInfo?.name) {
+      LogRocket.identify(userInfo?.username, {
+        id: userInfo?.accountId,
+        name: userInfo?.name,
+        username: userInfo?.username
+      });
+    }
+  }, [userInfo?.accountId, userInfo?.name, userInfo?.username]);
 
   useEffect(() => {
     const getUserInfo = async () => {

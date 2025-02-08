@@ -12,6 +12,8 @@ import ListsContextProvider from "Store/ListsContext";
 import MediaContextProvider from "Store/MediaContext";
 import UserContextProvider from "Store/UserContext";
 import Theme from "styles/theme";
+import ErrorBoundary from "utils/ErrorBoundary";
+import "utils/logging";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
@@ -51,20 +53,22 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       </Head>
 
       <Theme>
-        <SessionProvider session={session} refetchOnWindowFocus={false}>
-          <NavigationGuardProvider>
-            <UserContextProvider>
-              <ListsContextProvider>
-                <MediaContextProvider>
-                  {isLoading ? <Loader /> : null}
-                  <Layout>
-                    <Component {...pageProps} />
-                  </Layout>
-                </MediaContextProvider>
-              </ListsContextProvider>
-            </UserContextProvider>
-          </NavigationGuardProvider>
-        </SessionProvider>
+        <ErrorBoundary>
+          <SessionProvider session={session} refetchOnWindowFocus={false}>
+            <NavigationGuardProvider>
+              <UserContextProvider>
+                <ListsContextProvider>
+                  <MediaContextProvider>
+                    {isLoading ? <Loader /> : null}
+                    <Layout>
+                      <Component {...pageProps} />
+                    </Layout>
+                  </MediaContextProvider>
+                </ListsContextProvider>
+              </UserContextProvider>
+            </NavigationGuardProvider>
+          </SessionProvider>
+        </ErrorBoundary>
       </Theme>
 
       <Toast />

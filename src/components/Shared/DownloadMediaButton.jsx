@@ -1,6 +1,7 @@
-import { AiOutlineDownload } from "react-icons/ai";
+import { Download } from "lucide-react";
 
-import { Button } from "styles/GlobalComponents";
+import Button from "components/UI/Button";
+import { CORS_PROXY } from "data/apiEndpoints";
 
 export const DownloadMediaButton = ({ item }) => {
   const download = (id, url) => {
@@ -29,10 +30,11 @@ export const DownloadMediaButton = ({ item }) => {
 
   return (
     <Button
-      className='mediaCTA absolute bottom-4 right-4'
+      size='small'
+      className='absolute bottom-4 right-4 shadow-sm'
       aria-label='download media'
-      onClick={() => download(item, `https://image.tmdb.org/t/p/original${item}`)}>
-      <AiOutlineDownload color='#414141' />
+      onClick={() => download(item, `${CORS_PROXY}?q=https://image.tmdb.org/t/p/original${item}`)}>
+      <Download size={14} className='text-neutral-800' />
     </Button>
   );
 };
