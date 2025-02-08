@@ -32,7 +32,7 @@ export const fetchOptions = (args?: FetchOptionsArgs): Options => {
     headers: {
       accept: "application/json",
       "content-type": "application/json;charset=utf-8",
-      authorization: `Bearer ${token ?? read_access_token}`
+      authorization: `Bearer ${token || read_access_token}`
     }
   };
 

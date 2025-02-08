@@ -17,7 +17,7 @@ import H1 from "components/UI/Typography/H1";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo } from "data/global";
-import { cn, fetchOptions, getNiceName, getRuntime } from "utils/helper";
+import { cn, fetchOptions, getNiceName, getRuntime, matches } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const ListDetails = ({ title, copy }) => {
@@ -119,11 +119,26 @@ export const getServerSideProps = async (ctx) => {
   try {
     const { id } = ctx.query;
     const data = await getServerSession(ctx.req, ctx.res, authOptions);
+    let token = null;
 
-    const res = await fetch(apiEndpoints.lists.getListDetails({ id }), fetchOptions());
-    if (!res.ok) throw new Error("Failed to fetch list details");
+    // user is logged in
+    if (data?.user?.accountId) {
+      token = data?.user?.accessToken;
+    }
+
+    const res = await fetch(apiEndpoints.lists.getListDetails({ id }), fetchOptions({ token }));
+
+    // accessing someone else's private list
+    if (matches(res.status, 401)) {
+      return {
+        props: {
+          isListAccessible: false
+        }
+      };
+    }
 
     const list = await res.json();
+
     const userCanEditList = data?.user?.accountId === list?.created_by?.id;
     const isListAccessible = list?.public || userCanEditList;
 
