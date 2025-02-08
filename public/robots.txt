@@ -1,7 +1,8 @@
 User-agent: *
-Disallow: /movie/
+Disallow: /movies/
 Disallow: /tv/
 Disallow: /person/
+Disallow: /collections/
 Disallow: /*.jpg$
 Disallow: /*.jpeg$
 Disallow: /*.png$
@@ -11,7 +12,6 @@ Disallow: /*.webp$
 Disallow: /*.svg$
 Disallow: /en/
 Disallow: /m/
-Disallow: /collection/
 
 # Allow these images
 Allow: /logo192.png
