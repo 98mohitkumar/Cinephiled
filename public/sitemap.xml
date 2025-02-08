@@ -7,241 +7,364 @@
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
 
-<url>
-  <loc>https://cinephiled.vercel.app/</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/explore</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/about</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/login</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/28-Action/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/12-Adventure/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/16-Animation/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/35-Comedy/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/80-Crime/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/99-Documentary/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/18-Drama/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10751-Family/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/14-Fantasy/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/36-History/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/27-Horror/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10402-Music/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/9648-Mystery/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10749-Romance/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/878-Science-Fiction/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10770-TV-Movie/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/53-Thriller/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10752-War/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/37-Western/movies</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10759-Action-Adventure/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/16-Animation/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/35-Comedy/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/80-Crime/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/99-Documentary/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/18-Drama/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10751-Family/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10762-Kids/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/9648-Mystery/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10763-News/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10764-Reality/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10765-Sci-Fi-Fantasy/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10766-Soap/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10767-Talk/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/10768-War-Politics/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/genre/37-Western/tv</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/watch-providers</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/watch-providers/8-Netflix/movies?watchregion=GB</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/watch-providers/337-Disney-Plus/movies?watchregion=GB</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/watch-providers/9-Amazon-Prime-Video/movies?watchregion=GB</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/watch-providers/350-Apple-TV-Plus/movies?watchregion=GB</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/watch-providers/2-Apple-TV/movies?watchregion=GB</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/watch-providers/283-Crunchyroll/movies?watchregion=GB</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://cinephiled.vercel.app/watch-providers/10-Amazon-Video/movies?watchregion=GB</loc>
-  <lastmod>2024-05-14T19:41:04+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-
-
+  <url>
+    <loc>https://cinephiled.vercel.app/</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/explore</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/about</loc>
+    <lastmod>2025-02-08T09:26:13+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/login</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/28-Action/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/12-Adventure/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/16-Animation/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/35-Comedy/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/80-Crime/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/99-Documentary/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/18-Drama/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10751-Family/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/14-Fantasy/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/36-History/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/27-Horror/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10402-Music/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/9648-Mystery/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10749-Romance/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/878-Science-Fiction/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10770-TV-Movie/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/53-Thriller/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10752-War/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/37-Western/movies</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10759-Action-Adventure/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/16-Animation/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/35-Comedy/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/80-Crime/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/99-Documentary/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/18-Drama/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10751-Family/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10762-Kids/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/9648-Mystery/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10763-News/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10764-Reality/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10765-Sci-Fi-Fantasy/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10766-Soap/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10767-Talk/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/10768-War-Politics/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/genres/37-Western/tv</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/8-Netflix/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/337-Disney-Plus/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/9-Amazon-Prime-Video/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/350-Apple-TV-Plus/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/2-Apple-TV/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/35-Rakuten-TV/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/283-Crunchyroll/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/10-Amazon-Video/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/531-Paramount-Plus/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/103-Channel-4/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/29-Sky-Go/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/1968-Crunchyroll-Amazon-Channel/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/38-BBC-iPlayer/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/11-MUBI/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/3-Google-Play-Movies/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/224-BFI-Player/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/130-Sky-Store/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/68-Microsoft-Store/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/613-Freevee/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/189-Curzon-Home-Cinema/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/41-ITVX/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/192-YouTube/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/99-Shudder/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/529-ARROW/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/596-Arrow-Video-Amazon-Channel/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/100-GuideDoc/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/175-Netflix-Kids/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/188-YouTube-Premium/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/287-BFI-Player-Amazon-Channel/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/333-My5/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/197-BritBox-Amazon-Channel/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://cinephiled.vercel.app/watch-providers/201-MUBI-Amazon-Channel/movies?watchregion=GB</loc>
+    <lastmod>2025-02-08T09:26:48+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
 </urlset>
