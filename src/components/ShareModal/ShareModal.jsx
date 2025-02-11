@@ -9,9 +9,9 @@ import Input, { InputLabel } from "components/UI/Input";
 import H4 from "components/UI/Typography/H4";
 import { copyToClipboard } from "utils/helper";
 
-const ShareModal = ({ url, isModalOpen, closeModal }) => {
+const ShareModal = ({ isModalOpen, closeModal }) => {
   const copyButtonHandler = () => {
-    copyToClipboard({ nodeId: "list-URL", text: url })
+    copyToClipboard({ nodeId: "list-URL" })
       .then(() => {
         closeModal();
         toast.success("Link has been copied to your clipboard!");

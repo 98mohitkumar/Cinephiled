@@ -1,44 +1,50 @@
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import FlexBox from "components/UI/FlexBox";
 import P from "components/UI/Typography/P";
-import { cn, matches } from "utils/helper";
+import { cn } from "utils/helper";
 
 const PersonBiography = ({ biography }) => {
   const biographyParagraphs = biography.split("\n\n");
   const [isBioCollapsed, setIsBioCollapsed] = useState(true);
+  const [shouldShowReadMore, setShouldShowReadMore] = useState(false);
+  const bioRef = useRef(null);
 
-  if (matches(biographyParagraphs?.length, 1)) {
-    return (
-      <P size='large' className='mt-16 flex max-w-screen-xl break-words'>
-        {biography}
-      </P>
-    );
-  }
+  useEffect(() => {
+    if (bioRef.current) {
+      // Check if the content overflows
+      setShouldShowReadMore(bioRef.current.scrollHeight > bioRef.current.clientHeight);
+    }
+  }, []);
 
   return (
-    <div className='max-w-screen-xl'>
-      <FlexBox className='mt-16 flex-col gap-16'>
+    <>
+      <div ref={bioRef} className={cn("mt-16 space-y-4", isBioCollapsed ? "line-clamp-5" : "")}>
         {biographyParagraphs.map((paragraph, index) => (
-          <P key={index} size='large' className={cn(matches(index, 0) ? "line-clamp-5" : "hidden", isBioCollapsed ? "" : "line-clamp-none block")}>
+          <P key={index} size='large'>
             {paragraph}
           </P>
         ))}
-      </FlexBox>
+      </div>
 
-      <FlexBox className={cn("mt-6 items-center justify-end", isBioCollapsed ? "" : "hidden")}>
-        <P
-          tag='a'
-          className='flex items-center gap-6 text-cyan-400 transition-colors can-hover:text-cyan-300 can-hover:underline'
-          weight='medium'
-          href='#'
-          onClick={(e) => (e.preventDefault(), setIsBioCollapsed(false))}>
-          Read More
-          <ChevronDown size={24} />
-        </P>
-      </FlexBox>
-    </div>
+      {shouldShowReadMore && isBioCollapsed && (
+        <FlexBox className='mt-6 items-center justify-end'>
+          <P
+            tag='a'
+            className='flex items-center gap-6 text-cyan-400 transition-colors can-hover:text-cyan-300 can-hover:underline'
+            weight='medium'
+            href='#'
+            onClick={(e) => {
+              e.preventDefault();
+              setIsBioCollapsed(false);
+            }}>
+            Read More
+            <ChevronDown size={24} />
+          </P>
+        </FlexBox>
+      )}
+    </>
   );
 };
 

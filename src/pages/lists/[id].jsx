@@ -6,10 +6,10 @@ import AddListItems from "components/pages/Lists/helpers/AddListItems";
 import DeleteListModal from "components/pages/Lists/helpers/DeleteListModal";
 import EditListModal from "components/pages/Lists/helpers/EditListModal";
 import ListItems from "components/pages/Lists/helpers/ListItems";
-import ListShareButton from "components/pages/Lists/helpers/ListShareButton";
 import PlaceholderText from "components/PlaceholderText";
 import MediaHeroBackground from "components/Shared/MediaHeroBackground/MediaHeroBackground";
 import MetaWrapper from "components/Shared/MetaWrapper";
+import ShareButton from "components/Shared/ShareButton";
 import FlexBox from "components/UI/FlexBox";
 import { Grid } from "components/UI/Grid";
 import LayoutContainer from "components/UI/LayoutContainer";
@@ -89,14 +89,7 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
                     </Fragment>
                   ) : null}
 
-                  {list.public && (
-                    <ListShareButton
-                      list={{
-                        name: list?.name,
-                        description: list?.description
-                      }}
-                    />
-                  )}
+                  {list.public && <ShareButton title={list?.name} text={list?.description} />}
                 </FlexBox>
               </div>
             </div>

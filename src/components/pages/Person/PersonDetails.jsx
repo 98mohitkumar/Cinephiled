@@ -6,6 +6,7 @@ import { useMemo } from "react";
 
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import DownloadMediaButton from "components/Shared/DownloadMediaButton";
+import ShareButton from "components/Shared/ShareButton";
 import FlexBox from "components/UI/FlexBox";
 import { Grid } from "components/UI/Grid";
 import LayoutContainer from "components/UI/LayoutContainer";
@@ -27,7 +28,7 @@ const getAge = ({ birthday, deathday, alive }) => {
     const age = Math.floor((today - new Date(birthday)) / (1000 * 3600 * 24 * 30.4375 * 12));
     return age;
   } else {
-    const diedAt = Math.floor((new Date(birthday) - new Date(deathday)) / (1000 * 3600 * 24 * 30.4375 * 12));
+    const diedAt = Math.floor((new Date(deathday) - new Date(birthday)) / (1000 * 3600 * 24 * 30.4375 * 12));
     return diedAt;
   }
 };
@@ -53,6 +54,14 @@ const getCredits = ({ credits, mediaType, unique = true }) => {
   }
 
   return combinedCredits;
+};
+
+const getLocaleDateString = (date) => {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
 };
 
 const PersonDetails = ({ personDetails }) => {
@@ -127,60 +136,46 @@ const PersonDetails = ({ personDetails }) => {
 
   const personFacts = [
     {
-      title: "Gender",
-      copy: getGender(personDetails.gender)
-    },
-    ...(personDetails.birthday && !personDetails.deathday
-      ? [
-          {
-            title: "Age",
-            copy: getAge({ birthday: personDetails.birthday, alive: true })
-          }
-        ]
-      : []),
-    ...(personDetails.birthday
-      ? [
-          {
-            title: "Birthday",
-            copy: new Date(personDetails.birthday).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric"
-            })
-          }
-        ]
-      : []),
-    ...(personDetails?.deathday
-      ? [
-          {
-            title: "Death Day",
-            copy: new Date(personDetails.deathday).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric"
-            })
-          }
-        ]
-      : []),
-    ...(personDetails?.deathday
-      ? [
-          {
-            title: "Died at",
-            copy: getAge({ deathday: personDetails.deathday, alive: false })
-          }
-        ]
-      : []),
-    {
-      title: "Place of Birth",
-      copy: personDetails.place_of_birth
-    },
-    {
       title: "Known For",
       copy: personDetails.known_for_department
     },
     {
       title: "Known Credits",
       copy: personDetails.totalCredits
+    },
+    {
+      title: "Gender",
+      copy: getGender(personDetails.gender)
+    },
+    ...(personDetails.birthday
+      ? [
+          {
+            title: "Birthday",
+            copy: (
+              <>
+                {getLocaleDateString(personDetails.birthday)}{" "}
+                {personDetails.deathday ? "" : `(${getAge({ birthday: personDetails.birthday, alive: true })} years old)`}
+              </>
+            )
+          }
+        ]
+      : []),
+    ...(personDetails?.deathday
+      ? [
+          {
+            title: "Day of Death",
+            copy: (
+              <>
+                {getLocaleDateString(personDetails.deathday)} (
+                {getAge({ deathday: personDetails.deathday, birthday: personDetails.birthday, alive: false })} years old)
+              </>
+            )
+          }
+        ]
+      : []),
+    {
+      title: "Place of Birth",
+      copy: personDetails.place_of_birth
     }
   ];
 
@@ -190,7 +185,7 @@ const PersonDetails = ({ personDetails }) => {
           {
             title: "Instagram",
             url: `https://instagram.com/${external_ids.instagram_id}`,
-            icon: <Instagram size={36} />
+            icon: <Instagram size={32} />
           }
         ]
       : []),
@@ -199,7 +194,7 @@ const PersonDetails = ({ personDetails }) => {
           {
             title: "Twitter",
             url: `https://twitter.com/${external_ids.twitter_id}`,
-            icon: <Twitter size={36} />
+            icon: <Twitter size={32} />
           }
         ]
       : []),
@@ -208,7 +203,7 @@ const PersonDetails = ({ personDetails }) => {
           {
             title: "Website",
             url: personDetails.homepage,
-            icon: <Link2 size={36} />
+            icon: <Link2 size={32} />
           }
         ]
       : [])
@@ -218,50 +213,55 @@ const PersonDetails = ({ personDetails }) => {
     <section className='relative grow'>
       <DominantColor tint image={personDetails?.profile_path} />
 
-      <LayoutContainer className='relative z-10 py-4864'>
+      <LayoutContainer className='relative z-10 py-3264'>
         <div>
-          <H1 className='text-pretty'>{personDetails.name}</H1>
+          <div className='max-w-screen-xl'>
+            <H1 className='text-pretty'>{personDetails.name}</H1>
 
-          {personDetails.biography ? <PersonBiography biography={personDetails.biography} /> : null}
+            {personDetails.biography ? <PersonBiography biography={personDetails.biography} /> : null}
 
-          {socialMediaLinks.some((link) => Boolean(link.url)) ? (
-            <div className='mt-3248'>
-              <H4 weight='semibold'>Social Media</H4>
+            {socialMediaLinks.some((link) => Boolean(link.url)) ? (
+              <div className='mt-3248'>
+                <H4 weight='semibold'>Social Media</H4>
 
-              <FlexBox className='mt-12 items-center gap-4048'>
-                {socialMediaLinks.map((item, i) => (
-                  <a
-                    key={i}
-                    href={item.url}
-                    target='_blank'
-                    rel='noreferrer'
-                    title={item.title}
-                    className='transition-colors can-hover:text-cyan-300'>
-                    {item.icon}
-                  </a>
-                ))}
-              </FlexBox>
-            </div>
-          ) : null}
-
-          <Grid
-            className='mt-3248 max-w-screen-md'
-            colConfig={{
-              xxs: 2,
-              md: 3
-            }}>
-            {personFacts.map((item, i) => (
-              <div key={i}>
-                <P size='large' weight='semibold'>
-                  {item.title}
-                </P>
-
-                <P className='text-pretty' weight='light'>
-                  {item.copy}
-                </P>
+                <FlexBox className='mt-12 items-center gap-4048'>
+                  {socialMediaLinks.map((item, i) => (
+                    <a
+                      key={i}
+                      href={item.url}
+                      target='_blank'
+                      rel='noreferrer'
+                      title={item.title}
+                      className='transition-colors can-hover:text-cyan-300'>
+                      {item.icon}
+                    </a>
+                  ))}{" "}
+                  <div className='border-l border-neutral-400 ps-4048'>
+                    <ShareButton title={personDetails.name} text={personDetails?.biography} className='rounded-full' />
+                  </div>
+                </FlexBox>
               </div>
-            ))}
-          </Grid>
+            ) : null}
+
+            <Grid
+              className='mt-3248 gap-x-2448'
+              colConfig={{
+                xxs: 2,
+                md: 3
+              }}>
+              {personFacts.map((item, i) => (
+                <div key={i}>
+                  <P size='large' weight='bold'>
+                    {item.title}
+                  </P>
+
+                  <P className='text-balance' weight='normal'>
+                    {item.copy}
+                  </P>
+                </div>
+              ))}
+            </Grid>
+          </div>
 
           <div ref={sliderRef} className='keen-slider my-4864'>
             {images?.profiles.map((item) => (
