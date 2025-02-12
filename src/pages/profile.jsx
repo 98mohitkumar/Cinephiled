@@ -22,7 +22,7 @@ export const getServerSideProps = async (ctx) => {
 
   return {
     props: {
-      isValidSession: hasValidToken && !hasTokenExpired
+      isValidSession: Boolean(hasValidToken && !hasTokenExpired)
     }
   };
 };

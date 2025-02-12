@@ -27,7 +27,9 @@ const ListBaseForm = ({ submitHandler, id, children }) => {
           ) : (
             <form onSubmit={submitHandler} className='flex flex-col gap-16'>
               <div>
-                <InputLabel required>List Name</InputLabel>
+                <InputLabel htmlFor='listName' required>
+                  List Name
+                </InputLabel>
                 <Input
                   type='text'
                   name='name'
@@ -40,7 +42,7 @@ const ListBaseForm = ({ submitHandler, id, children }) => {
               </div>
 
               <div>
-                <InputLabel>Description</InputLabel>
+                <InputLabel htmlFor='listDescription'>Description</InputLabel>
                 <textarea
                   rows={3}
                   name='description'
