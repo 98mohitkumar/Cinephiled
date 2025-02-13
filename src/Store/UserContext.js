@@ -6,7 +6,25 @@ import { apiEndpoints } from "data/apiEndpoints";
 import { fetchOptions } from "utils/helper";
 
 const UserContext = createContext({
-  userInfo: {},
+  userInfo: {
+    avatar: {
+      gravatar: {
+        hash: ""
+      },
+      tmdb: {
+        avatar_path: null
+      }
+    },
+    id: "",
+    iso_639_1: "",
+    iso_3166_1: "",
+    name: "",
+    include_adult: false,
+    username: "",
+    accountId: "",
+    accessToken: "",
+    status: ""
+  },
   setUserInfo: () => {}
 });
 
