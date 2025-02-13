@@ -77,8 +77,8 @@ const GlobalSearch = () => {
           <input
             type='text'
             css={userInput}
-            className='heroSearchInput px-8 pt-10 text-h5'
-            placeholder='Search for a movie or tv show'
+            className='heroSearchInput px-8 pt-10 text-h6'
+            placeholder='Search for a movie, tv show, person...'
             id='inputData'
             ref={userInputRef}
             autoComplete='off'
