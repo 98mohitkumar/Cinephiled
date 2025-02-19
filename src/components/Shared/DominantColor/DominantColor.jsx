@@ -10,7 +10,7 @@ import { colorOverlayStyles, tintedColorOverlayStyles } from "./DominantColorSty
 const DominantColor = ({ image, tint = false, isUsingBackdrop = false, angle, className = "" }) => {
   const imageType = {
     type: isUsingBackdrop ? "backdrop" : "poster",
-    size: isUsingBackdrop ? "w300" : "w342"
+    size: isUsingBackdrop ? "w780" : "w500"
   };
 
   const { palette, done } = usePalette(image ? getTMDBImage({ path: image, type: imageType.type, size: imageType.size }) : "");

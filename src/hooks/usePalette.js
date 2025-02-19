@@ -1,6 +1,8 @@
 import { extractColorsFromSrc } from "extract-colors";
 import { useEffect, useState } from "react";
 
+import { CORS_PROXY } from "data/apiEndpoints";
+
 export function usePalette(src) {
   const [palette, setPalette] = useState({ palette: [], done: false });
 
@@ -10,7 +12,7 @@ export function usePalette(src) {
       return;
     }
 
-    extractColorsFromSrc(src, {
+    extractColorsFromSrc(`${CORS_PROXY}?q=${src}`, {
       crossOrigin: "anonymous"
     })
       .then((colors) => {

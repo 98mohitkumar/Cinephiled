@@ -1,9 +1,11 @@
 import Link from "next/link";
 
+import FlexBox from "components/UI/FlexBox";
+
 const Breadcrumbs = ({ links }) => {
   return (
-    <nav className='mb-4 flex' aria-label='Breadcrumb'>
-      <ol className='inline-flex flex-wrap items-center gap-2'>
+    <nav className='mb-16' aria-label='Breadcrumb'>
+      <FlexBox tag='ol' className='flex-wrap items-center gap-8'>
         {links?.map(({ href, label }, index) => (
           <li className='inline-flex items-baseline gap-2' key={index}>
             <Link href={href} passHref>
@@ -27,7 +29,7 @@ const Breadcrumbs = ({ links }) => {
             ) : null}
           </li>
         ))}
-      </ol>
+      </FlexBox>
     </nav>
   );
 };

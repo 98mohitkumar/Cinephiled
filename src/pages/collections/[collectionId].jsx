@@ -13,16 +13,10 @@ import H1 from "components/UI/Typography/H1";
 import H3 from "components/UI/Typography/H3";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
-import { ROUTES, blurPlaceholder, siteInfo } from "data/global";
+import { LAYOUT_TYPES, ROUTES, blurPlaceholder, siteInfo } from "data/global";
 import { getSortedItems } from "utils/getSortedItems";
 import { cn, fetchOptions, getNiceName, matches } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
-
-const LAYOUT_TYPES = {
-  standard: "standard",
-  poster: "poster",
-  blank: "blank"
-};
 
 export const Collection = ({ collectionData, movieGenresData, collectionImagesData }) => {
   const { id, name, overview, backdrop_path, poster_path, parts } = collectionData;
@@ -57,7 +51,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
       <section className='relative'>
         <MediaHeroBackground backdropPath={backdrop_path} posterPath={poster_path} alt='collection-backdrop' />
         <LayoutContainer
-          className={cn("flex items-center gap-32 lg:py-4864", {
+          className={cn("flex items-center gap-32 max-lg:pb-3248 lg:py-4864", {
             "no-min-height py-2464 max-lg:flex-col max-lg:items-start": matches(LAYOUT_TYPE, LAYOUT_TYPES.poster),
             "blank py-2464": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
           })}

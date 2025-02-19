@@ -10,7 +10,7 @@ export const heroBackgroundStyles = css`
   inset: 0;
   height: 100%;
   max-height: 600px;
-  min-width: 70%;
+  min-width: 50%;
   position: absolute;
   margin-left: auto;
   aspect-ratio: 16 / 9;

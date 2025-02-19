@@ -36,3 +36,9 @@ export const GenreTag = styled.div`
     }
   }
 `;
+
+export const ratingTag = css`
+  padding: ${theme.spacings.spacing4} ${theme.spacings.spacing16};
+  border-radius: ${theme.borderRadius["3xl"]};
+  background-color: ${theme.colors.neutral[100]};
+`;

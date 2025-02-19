@@ -224,7 +224,7 @@ const PersonDetails = ({ personDetails }) => {
               <div className='mt-3248'>
                 <H4 weight='semibold'>Social Media</H4>
 
-                <FlexBox className='mt-12 items-center gap-4048'>
+                <FlexBox className='mt-12 items-center gap-32'>
                   {socialMediaLinks.map((item, i) => (
                     <a
                       key={i}
@@ -236,7 +236,7 @@ const PersonDetails = ({ personDetails }) => {
                       {item.icon}
                     </a>
                   ))}{" "}
-                  <div className='border-l border-neutral-400 ps-4048'>
+                  <div className='border-l border-neutral-400 ps-32'>
                     <ShareButton title={personDetails.name} text={personDetails?.biography} className='rounded-full' />
                   </div>
                 </FlexBox>

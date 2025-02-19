@@ -82,3 +82,9 @@ export const siteInfo = {
   url: "https://cinephiled.vercel.app",
   image: "https://i.imgur.com/bnT3bYL.jpeg"
 } as const;
+
+export const LAYOUT_TYPES = {
+  standard: "standard",
+  poster: "poster",
+  blank: "blank"
+};

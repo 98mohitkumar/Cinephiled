@@ -5,7 +5,7 @@ import { useModal } from "components/Modal/Modal";
 import ShareModal from "components/ShareModal/ShareModal";
 import Button from "components/UI/Button";
 
-const ShareButton = ({ title, text, url, ...props }) => {
+const ShareButton = ({ title, text, url, iconSize = 20, ...props }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
 
   const shareHandler = (e) => {
@@ -27,7 +27,7 @@ const ShareButton = ({ title, text, url, ...props }) => {
   return (
     <Fragment>
       <Button onClick={shareHandler} title='share button' {...props}>
-        <Share2 size={20} />
+        <Share2 size={iconSize} />
       </Button>
 
       {/* share modal (fallback for browsers that don't support navigator.share) */}
