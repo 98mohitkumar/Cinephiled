@@ -30,13 +30,10 @@ const Episode = ({
   episodeName,
   runtime,
   backdrops,
-  res,
   director,
   writers,
   tvData: { id, name, airDate }
 }) => {
-  console.info({ res, director, writers });
-
   let LAYOUT_TYPE = LAYOUT_TYPES.standard;
 
   if (backdrop) {
