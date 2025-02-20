@@ -7,7 +7,7 @@ const fontSizes = {
   static: [
     { key: "h1Static", size: 60, lineHeight: 64, letterSpacing: -0.5 },
     { key: "h2Static", size: 48, lineHeight: 52, letterSpacing: -0.35 },
-    { key: "h3Static", size: 40, lineHeight: 44, letterSpacing: -0.2 },
+    { key: "h3Static", size: 40, lineHeight: 48, letterSpacing: -0.2 },
     { key: "h4Static", size: 32, lineHeight: 40, letterSpacing: -0.15 },
     { key: "h5Static", size: 24, lineHeight: 32, letterSpacing: -0.05 },
     { key: "h6Static", size: 20, lineHeight: 30, letterSpacing: 0 },
@@ -34,7 +34,7 @@ const fontSizes = {
     {
       key: "h3",
       size: { minSize: 28, maxSize: 40 },
-      lineHeight: { minHeight: 36, maxHeight: 44 },
+      lineHeight: { minHeight: 36, maxHeight: 48 },
       letterSpacing: { minSpacing: -0.1, maxSpacing: -0.2 }
     },
     {

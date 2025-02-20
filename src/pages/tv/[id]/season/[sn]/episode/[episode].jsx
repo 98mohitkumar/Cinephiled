@@ -108,8 +108,8 @@ const Episode = ({
 
               {overview ? <P size='large'>{overview}</P> : null}
 
-              <FlexBox className='mt-48 flex-wrap items-center gap-x-4864 gap-y-24'>
-                {director?.id && director?.name ? (
+              {director?.id && director?.name ? (
+                <FlexBox className='mt-48 flex-wrap items-center gap-x-4864 gap-y-24'>
                   <div>
                     <P size='large' weight='semibold'>
                       Director
@@ -121,26 +121,26 @@ const Episode = ({
                       </P>
                     </Link>
                   </div>
-                ) : null}
 
-                {writers?.length > 0
-                  ? writers.map((writer) => (
-                      <div key={writer.id}>
-                        <P size='large' weight='semibold'>
-                          Writer
-                        </P>
-
-                        <Link href={`/${ROUTES.person}/${getNiceName({ id: writer?.id, name: writer?.name })}`}>
-                          <P
-                            weight='medium'
-                            className='text-neutral-300 underline transition-colors can-hover:text-neutral-100 can-hover:no-underline'>
-                            {writer?.name}
+                  {writers?.length > 0
+                    ? writers.map((writer) => (
+                        <div key={writer.id}>
+                          <P size='large' weight='semibold'>
+                            Writer
                           </P>
-                        </Link>
-                      </div>
-                    ))
-                  : null}
-              </FlexBox>
+
+                          <Link href={`/${ROUTES.person}/${getNiceName({ id: writer?.id, name: writer?.name })}`}>
+                            <P
+                              weight='medium'
+                              className='text-neutral-300 underline transition-colors can-hover:text-neutral-100 can-hover:no-underline'>
+                              {writer?.name}
+                            </P>
+                          </Link>
+                        </div>
+                      ))
+                    : null}
+                </FlexBox>
+              ) : null}
             </div>
           </div>
         </LayoutContainer>
@@ -191,8 +191,8 @@ export const getServerSideProps = async (ctx) => {
 
     const { cast, guest_stars } = res?.credits;
 
-    const director = res?.credits?.crew?.find((item) => item.job === "Director");
-    const writers = res?.credits?.crew?.filter((item) => item.job === "Writer").slice(0, 2);
+    const director = res?.credits?.crew?.find((item) => item.job === "Director") || null;
+    const writers = res?.credits?.crew?.filter((item) => item.job === "Writer").slice(0, 2) || [];
 
     return {
       props: {
