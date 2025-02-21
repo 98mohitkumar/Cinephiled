@@ -28,6 +28,9 @@ const MetaWrapper = ({ title, description, image, url, children }) => {
       <meta property='og:image' content={metaImage} key='og_image' />
       <meta property='twitter:image' content={metaImage} key='twitter_image' />
 
+      {/* twitter card */}
+      <meta name='twitter:card' content='summary_large_image' key='twitter_card' />
+
       {children}
     </Head>
   );

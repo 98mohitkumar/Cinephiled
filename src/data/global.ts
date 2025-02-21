@@ -45,6 +45,8 @@ export const sortOptions = {
 export const ROUTES = {
   movies: "movies",
   tv: "tv",
+  seasons: "seasons",
+  episodes: "episodes",
   person: "person",
   collections: "collections",
   networks: "networks",

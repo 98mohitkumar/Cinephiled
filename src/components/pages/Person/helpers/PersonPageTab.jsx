@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 
 import PlaceholderText from "components/PlaceholderText";
-import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "components/Shared/drawer";
+import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "components/Shared/Drawer";
 import { TabItem, Tabs } from "components/Shared/Tabs/Tabs";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";

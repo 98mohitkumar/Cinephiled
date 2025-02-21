@@ -9,6 +9,7 @@ type ButtonProps = ComponentPropsWithRef<"button"> &
     size?: "small" | "default" | "large";
     weight?: "normal" | "medium" | "semibold" | "bold";
     fullWidth?: boolean;
+    shape?: "rounded" | "circle";
   };
 
 const Button = ({
@@ -20,6 +21,7 @@ const Button = ({
   ref,
   type = "button",
   fullWidth = false,
+  shape = "rounded",
   ...props
 }: ButtonProps) => (
   <motion.button
@@ -52,6 +54,9 @@ const Button = ({
       },
       {
         "w-full": matches(fullWidth, true)
+      },
+      {
+        "aspect-square rounded-full px-0": matches(shape, "circle")
       },
       className
     )}

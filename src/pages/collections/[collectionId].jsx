@@ -96,6 +96,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
         </LayoutContainer>
       </section>
 
+      {/* parts */}
       {parts.length > 0 ? (
         <LayoutContainer className='py-3248'>
           <H3 className='mb-1620'>Movies</H3>
@@ -104,6 +105,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
         </LayoutContainer>
       ) : null}
 
+      {/* posters */}
       {posters?.length > 0 ? (
         <LayoutContainer className='py-3248'>
           <H3 className='mb-1620'>Posters</H3>
@@ -111,6 +113,7 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
         </LayoutContainer>
       ) : null}
 
+      {/* backdrops */}
       {backdrops?.length > 0 ? (
         <LayoutContainer className='py-3248'>
           <H3 className='mb-1620'>Backdrops</H3>

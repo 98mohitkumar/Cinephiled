@@ -6,7 +6,6 @@ import { useMemo } from "react";
 
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import DownloadMediaButton from "components/Shared/DownloadMediaButton";
-import ShareButton from "components/Shared/ShareButton";
 import FlexBox from "components/UI/FlexBox";
 import { Grid } from "components/UI/Grid";
 import LayoutContainer from "components/UI/LayoutContainer";
@@ -185,7 +184,7 @@ const PersonDetails = ({ personDetails }) => {
           {
             title: "Instagram",
             url: `https://instagram.com/${external_ids.instagram_id}`,
-            icon: <Instagram size={32} />
+            icon: <Instagram size={36} />
           }
         ]
       : []),
@@ -194,7 +193,7 @@ const PersonDetails = ({ personDetails }) => {
           {
             title: "Twitter",
             url: `https://twitter.com/${external_ids.twitter_id}`,
-            icon: <Twitter size={32} />
+            icon: <Twitter size={36} />
           }
         ]
       : []),
@@ -203,7 +202,7 @@ const PersonDetails = ({ personDetails }) => {
           {
             title: "Website",
             url: personDetails.homepage,
-            icon: <Link2 size={32} />
+            icon: <Link2 size={36} />
           }
         ]
       : [])
@@ -213,57 +212,58 @@ const PersonDetails = ({ personDetails }) => {
     <section className='relative grow'>
       <DominantColor tint image={personDetails?.profile_path} />
 
-      <LayoutContainer className='relative z-10 py-3264'>
-        <div>
-          <div className='max-w-screen-xl'>
-            <H1 className='text-pretty'>{personDetails.name}</H1>
+      <div className='relative z-10'>
+        <LayoutContainer className='py-3264'>
+          <div>
+            <div className='max-w-screen-xl'>
+              <H1 className='text-pretty'>{personDetails.name}</H1>
 
-            {personDetails.biography ? <PersonBiography biography={personDetails.biography} /> : null}
+              {personDetails.biography ? <PersonBiography biography={personDetails.biography} /> : null}
 
-            {socialMediaLinks.some((link) => Boolean(link.url)) ? (
-              <div className='mt-3248'>
-                <H4 weight='semibold'>Social Media</H4>
+              {socialMediaLinks.some((link) => Boolean(link.url)) ? (
+                <div className='mt-3248'>
+                  <H4 weight='semibold'>Social Media</H4>
 
-                <FlexBox className='mt-12 items-center gap-32'>
-                  {socialMediaLinks.map((item, i) => (
-                    <a
-                      key={i}
-                      href={item.url}
-                      target='_blank'
-                      rel='noreferrer'
-                      title={item.title}
-                      className='transition-colors can-hover:text-cyan-300'>
-                      {item.icon}
-                    </a>
-                  ))}{" "}
-                  <div className='border-l border-neutral-400 ps-32'>
-                    <ShareButton title={personDetails.name} text={personDetails?.biography} className='rounded-full' />
-                  </div>
-                </FlexBox>
-              </div>
-            ) : null}
-
-            <Grid
-              className='mt-3248 gap-x-2448'
-              colConfig={{
-                xxs: 2,
-                md: 3
-              }}>
-              {personFacts.map((item, i) => (
-                <div key={i}>
-                  <P size='large' weight='bold'>
-                    {item.title}
-                  </P>
-
-                  <P className='text-balance' weight='normal'>
-                    {item.copy}
-                  </P>
+                  <FlexBox className='mt-12 items-center gap-32'>
+                    {socialMediaLinks.map((item, i) => (
+                      <a
+                        key={i}
+                        href={item.url}
+                        target='_blank'
+                        rel='noreferrer'
+                        title={item.title}
+                        className='transition-colors can-hover:text-cyan-300'>
+                        {item.icon}
+                      </a>
+                    ))}
+                  </FlexBox>
                 </div>
-              ))}
-            </Grid>
-          </div>
+              ) : null}
 
-          <div ref={sliderRef} className='keen-slider my-4864'>
+              <Grid
+                className='mt-3248 gap-x-2448'
+                colConfig={{
+                  xxs: 2,
+                  md: 3
+                }}>
+                {personFacts.map((item, i) => (
+                  <div key={i}>
+                    <P size='large' weight='bold'>
+                      {item.title}
+                    </P>
+
+                    <P className='text-balance' weight='normal'>
+                      {item.copy}
+                    </P>
+                  </div>
+                ))}
+              </Grid>
+            </div>
+          </div>
+        </LayoutContainer>
+
+        <LayoutContainer className='py-2448 pe-4'>
+          <div ref={sliderRef} className='keen-slider'>
             {images?.profiles.map((item) => (
               <div className='keen-slider__slide relative aspect-poster' key={item.file_path}>
                 <Image
@@ -278,17 +278,17 @@ const PersonDetails = ({ personDetails }) => {
               </div>
             ))}
           </div>
-        </div>
+        </LayoutContainer>
 
-        <div className='pt-2440'>
+        <LayoutContainer className='py-3264'>
           <PersonPageTab
             movieCredits={allMovieCredits}
             tvCredits={allTvCredits}
             movieDepartmentList={movieDepartmentList}
             tvDepartmentList={tvDepartmentList}
           />
-        </div>
-      </LayoutContainer>
+        </LayoutContainer>
+      </div>
     </section>
   );
 };

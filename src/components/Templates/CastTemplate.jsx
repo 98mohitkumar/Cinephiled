@@ -12,7 +12,7 @@ import { theme } from "theme/theme";
 import { getCleanTitle } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
-export const CaseCarousel = ({ cast }) => {
+export const CastCarousel = ({ cast, children }) => {
   const [sliderRef] = useKeenSlider({
     renderMode: "performance",
     dragSpeed: 1.4,
@@ -91,14 +91,18 @@ export const CaseCarousel = ({ cast }) => {
                 />
               </motion.div>
 
-              <div className='mt-12'>
-                <P size='large' weight='semibold' className='line-clamp-1' title={item.character}>
-                  {item.character}
-                </P>
-                <P className='text-neutral-400' title={item.name}>
-                  {item.name}
-                </P>
-              </div>
+              {children ? (
+                children(item)
+              ) : (
+                <div className='mt-12'>
+                  <P size='large' weight='semibold' className='line-clamp-1' title={item.character}>
+                    {item.character}
+                  </P>
+                  <P className='text-neutral-400' title={item.name}>
+                    {item.name}
+                  </P>
+                </div>
+              )}
             </Link>
           </div>
         ))}
