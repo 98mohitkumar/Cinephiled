@@ -3,8 +3,6 @@ import { NextConfig } from "next";
 /* eslint-disable @typescript-eslint/no-var-requires */
 const withPWA = require("@ducanh2912/next-pwa").default({
   dest: "public",
-  cacheOnFrontEndNav: true,
-  aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
   register: true,
   workboxOptions: {
