@@ -6,9 +6,10 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   reloadOnOnline: true,
   register: true,
   workboxOptions: {
-    disableDevLogs: true
+    disableDevLogs: true,
+    exclude: [/dynamic-css-manifest\.json$/]
   },
-  disable: process.env.NODE_ENV === "development"
+  disable: process.env.NODE_ENV !== "production"
 });
 
 const cspHeader = `
