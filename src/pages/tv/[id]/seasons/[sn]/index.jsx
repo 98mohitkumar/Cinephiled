@@ -35,14 +35,11 @@ const Seasons = ({
   seasonNumber,
   seasonName,
   seasonPoster,
-  res,
   tvData: { id, name, airDate }
 }) => {
   const router = useRouter();
   const routeRef = useRef(router.asPath);
   const totalRuntime = episodes?.reduce((acc, item) => acc + item.runtime, 0);
-
-  console.info(res);
 
   const seasonBackdrops = episodes?.filter((item) => item.still_path).map((item) => item.still_path) || [];
   const randomBackdrop = seasonBackdrops[Math.floor(Math.random() * seasonBackdrops.length)] || null;
@@ -170,59 +167,6 @@ const Seasons = ({
           ) : null}
         </div>
       </div>
-
-      {/* <Fragment>
-        <div className='relative mb-auto'>
-          <SeasonExpandedContainer className='relative z-10'>
-            {episodes?.length > 0 && (
-              <SeasonEpisodesWrapper>
-                <span className='mb-6 block text-[calc(1.325rem_+_.9vw)] font-bold leading-8 lg:text-[2rem]'>Episodes ({episodes?.length})</span>
-
-                {episodes?.map((item, i) => (
-                  <SeasonShowcaseWrapper key={item.id} className='episodesBox'>
-                    <EpisodeImg className='relative text-center'>
-                      <Image
-                        src={item.still_path ? `https://image.tmdb.org/t/p/w300${item.still_path}` : "/images/DefaultBackdrop.png"}
-                        alt='TV-season-episode-poster'
-                        fill
-                        style={{ objectFit: "cover" }}
-                        placeholder='blur'
-                        blurDataURL={blurPlaceholder}
-                      />
-                    </EpisodeImg>
-
-                    <div className='self-start'>
-                      <h3 className='text-[calc(1.325rem_+_.9vw)] font-bold leading-8 lg:text-[2rem]'>
-                        {item.episode_number || i + 1}. {item.name}
-                      </h3>
-
-                      <TrWrapper className='flex-wrap'>
-                        <SeasonsRelease className='text-alt'>{getReleaseDate(item.air_date)}</SeasonsRelease>
-                        <Pill>
-                          <p>{getRating(item.vote_average)}</p>
-                        </Pill>
-
-                         <Span className='text-lg font-semibold'>{getRuntime(item.runtime)}</Span> 
-
-                        {new Date(getReleaseDate(item.air_date)) < new Date() ? (
-                          <Link href={`${routeRef.current}/episode/${item.episode_number}`}>
-                            <Pill className='info text-[15px]'>
-                              Episode Details
-                              <BiChevronRight size='22' />
-                            </Pill>
-                          </Link>
-                        ) : null}
-                      </TrWrapper>
-
-                      {item?.overview ? <SeasonCommonOverview className='clamp'>{item.overview}</SeasonCommonOverview> : null}
-                    </div>
-                  </SeasonShowcaseWrapper>
-                ))}
-              </SeasonEpisodesWrapper>
-            )}
-          </SeasonExpandedContainer>
-        </div>
-      </Fragment> */}
     </Fragment>
   );
 };
@@ -240,7 +184,6 @@ export const getServerSideProps = async (ctx) => {
 
     return {
       props: {
-        res,
         releaseDate: res?.air_date,
         overview: res?.overview,
         cast: mergeEpisodeCount(res?.aggregate_credits?.cast?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role }))).flat()),

@@ -169,7 +169,6 @@ export const getServerSideProps = async (ctx) => {
 
     return {
       props: {
-        res,
         releaseDate: res?.air_date,
         overview: res?.overview,
         cast: cast.concat(guest_stars) || [],
