@@ -8,8 +8,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   workboxOptions: {
     disableDevLogs: true,
     exclude: [/dynamic-css-manifest\.json$/]
-  },
-  disable: process.env.NODE_ENV !== "production"
+  }
 });
 
 const cspHeader = `
