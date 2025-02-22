@@ -102,7 +102,7 @@ const Seasons = ({
 
               <FlexBox className='flex-col gap-4864 md:max-w-screen-xl'>
                 {episodes?.map((item) => (
-                  <FlexBox key={item.id} className='w-full gap-2032 max-md:flex-col'>
+                  <FlexBox key={item.id} className='w-full gap-x-2032 gap-y-1620 max-md:flex-col'>
                     <div className='relative aspect-backdrop w-full shrink-0 xs:w-80 lg:w-96'>
                       <Image
                         src={getTMDBImage({ path: item.still_path, type: "backdrop", size: "w780" })}
@@ -121,7 +121,7 @@ const Seasons = ({
 
                       <TVStats releaseDate={item.air_date} totalRuntime={item.runtime} rating={item.vote_average} isSmall />
 
-                      <P className='line-clamp-2'>{item.overview}</P>
+                      {item.overview ? <P className='line-clamp-2'>{item.overview}</P> : null}
 
                       <Link href={`${routeRef.current}/${ROUTES.episodes}/${item.episode_number}`}>
                         <Button variant='primary' size='small' weight='semibold' className='mt-16 flex items-center gap-8 rounded-full px-16'>
