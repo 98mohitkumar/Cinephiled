@@ -42,7 +42,7 @@ const Modal = ({ children, isOpen, closeModal, closeOnClickedOutside = true, cla
               key='modal'
               className={cn(
                 "fixed inset-0 z-modal",
-                "modal-outer px-16 py-[10vh]",
+                "modal-outer px-16 py-48",
                 "flex items-center justify-center",
                 "overflow-y-auto bg-black bg-opacity-75 backdrop-blur-sm backdrop-saturate-50"
               )}
