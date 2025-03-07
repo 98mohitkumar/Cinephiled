@@ -23,7 +23,6 @@ const MediaHeroBackground = ({ backdropPath, posterPath, alt }) => {
             type: "backdrop",
             path: backdropPath,
             imageSizes: [
-              { screenWidth: 1440, imageSize: "original" },
               { screenWidth: 1280, imageSize: "w1280" },
               { screenWidth: 786, imageSize: "w780" }
             ]
