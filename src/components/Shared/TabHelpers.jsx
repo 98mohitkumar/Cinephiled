@@ -67,8 +67,8 @@ export const OverviewTabContent = ({ overviewData, cast, mediaType }) => {
     <FlexBox className='flex-col items-start gap-x-32 gap-y-40 2xl:flex-row'>
       <Overview
         overviewData={overviewData}
-        className={cn("w-full max-w-full shrink-0 2xl:max-w-96", {
-          "top-6 2xl:sticky 2xl:max-w-80": matches(mediaType, "tv") || noCollection
+        className={cn("top-6 w-full max-w-full shrink-0 2xl:sticky 2xl:max-w-96", {
+          "2xl:max-w-80": matches(mediaType, "tv") || noCollection
         })}
         mediaType={mediaType}
       />
