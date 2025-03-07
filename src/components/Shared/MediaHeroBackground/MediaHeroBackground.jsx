@@ -14,6 +14,7 @@ const MediaHeroBackground = ({ backdropPath, posterPath, alt }) => {
       <motion.div css={heroBackgroundStyles} className={cn({ "no-backdrop": !backdropPath })} key={backdropPath} {...opacityMotionTransition}>
         <img
           alt={alt}
+          fetchPriority='high'
           loading='eager'
           className='image'
           sizes='100vw'
@@ -23,14 +24,8 @@ const MediaHeroBackground = ({ backdropPath, posterPath, alt }) => {
             path: backdropPath,
             imageSizes: [
               { screenWidth: 1440, imageSize: "original" },
-              {
-                screenWidth: 1280,
-                imageSize: "w1280"
-              },
-              {
-                screenWidth: 786,
-                imageSize: "w780"
-              }
+              { screenWidth: 1280, imageSize: "w1280" },
+              { screenWidth: 786, imageSize: "w780" }
             ]
           })}
         />

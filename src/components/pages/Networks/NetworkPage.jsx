@@ -67,7 +67,7 @@ const NetworkPage = ({ details, media }) => {
                   alt={`${details?.name}-poster`}
                   style={{ objectFit: "cover" }}
                   placeholder='blur'
-                  loading='eager'
+                  priority
                   blurDataURL={blurPlaceholder}
                   className='rounded-lg'
                 />
@@ -77,11 +77,7 @@ const NetworkPage = ({ details, media }) => {
         ) : null}
 
         <div className='relative z-10 p-32 text-center'>
-          <div
-            className='logo-wrapper m-auto'
-            style={{
-              "--aspectRatio": details?.images?.logos?.[0]?.aspect_ratio
-            }}>
+          <div className='logo-wrapper m-auto' style={{ "--aspectRatio": details?.images?.logos?.[0]?.aspect_ratio }}>
             <Image
               src={`${getTMDBImage({ path: details?.images?.logos?.[0]?.file_path, type: "logo", size: "w300_filter(negate,000,111)" })}`}
               alt={`${details?.name}-poster`}
