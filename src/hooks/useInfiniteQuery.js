@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import { fetchOptions } from "src/utils/helper";
+
 import { useUserContext } from "Store/UserContext";
+import { fetchOptions } from "utils/helper";
 
 const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint }) => {
   const [pageToFetch, setPageToFetch] = useState(initialPage);
@@ -23,10 +24,7 @@ const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint }) =>
     async (page) => {
       setIsLoading(true);
       try {
-        const res = await fetch(
-          getEndpoint({ page }),
-          fetchOptions({ token: useUserToken ? accessToken : null })
-        );
+        const res = await fetch(getEndpoint({ page }), fetchOptions({ token: useUserToken ? accessToken : null }));
 
         if (!res.ok) {
           throw new Error("Cannot fetch data");
@@ -45,11 +43,7 @@ const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint }) =>
   );
 
   const handleScroll = useCallback(() => {
-    if (
-      window.innerHeight + window.scrollY >= document.body.offsetHeight - 700 &&
-      !isLoading &&
-      !isEmptyPage
-    ) {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 700 && !isLoading && !isEmptyPage) {
       clearTimeout(fetchTimeOut.current);
 
       fetchTimeOut.current = setTimeout(() => {

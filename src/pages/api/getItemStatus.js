@@ -1,4 +1,4 @@
-import { apiEndpoints } from "globals/constants";
+import { apiEndpoints } from "data/apiEndpoints";
 
 const getItemStatus = async (req, res) => {
   try {
@@ -13,10 +13,7 @@ const getItemStatus = async (req, res) => {
       }
     };
 
-    const response = await fetch(
-      apiEndpoints.lists.listItemStatus({ id, mediaType, mediaId }),
-      requestOptions
-    );
+    const response = await fetch(apiEndpoints.lists.listItemStatus({ id, mediaType, mediaId }), requestOptions);
     const data = await response.json();
 
     res.status(200).json(data);

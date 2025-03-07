@@ -1,27 +1,36 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node": true
-  },
   "rules": {
-    "no-unused-vars": "error",
-    "no-undef": "error",
+    "@typescript-eslint/no-unused-vars": "error",
     "no-duplicate-imports": "error",
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "parent", "sibling", "index"],
+        "groups": ["type", "builtin", "external", "internal", "parent", "sibling", "index"],
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true
-        }
+        },
+        "newlines-between": "always"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {
+        "no-undef": "error" // Apply this rule only to JS/JSX files
+      }
+    }
+  ],
+  "ignorePatterns": ["public/*", "node_modules/*", ".next/*"]
 }

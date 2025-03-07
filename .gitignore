@@ -36,3 +36,7 @@ yarn-error.log*
 # pwa
 public/sw.js
 public/workbox-*.js
+
+# pwa
+public/sw.js
+public/workbox-*.js

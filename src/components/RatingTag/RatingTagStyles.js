@@ -1,35 +1,22 @@
-import styled from "styled-components";
+import { css } from "styled-components";
 
-export const RatingTagWrapper = styled.div`
+import { theme } from "theme/theme";
+import { cssClamp } from "utils/mixins";
+
+export const ratingTagWrapperStyles = css`
+  width: ${cssClamp({ maxSize: 44, minSize: 40 })};
+  padding: 5px;
+  aspect-ratio: 1/1;
   position: absolute;
-  height: 48px;
-  width: 48px;
   border-radius: 50%;
-  background-color: #121212;
-  /* background-color: red; */
+  background-color: ${theme.colors.black};
   display: grid;
   place-items: center;
-  right: 16px;
+  right: 14px;
   bottom: -22px;
+  z-index: ${theme.zIndex[10]};
 
   & > * {
     grid-area: 1 / 1;
-  }
-
-  .label {
-    font-family: ${(props) => props.theme.fonts.montserrat};
-    font-weight: 600;
-    font-size: 0.9rem;
-  }
-
-  @media only ${(props) => props.theme.breakpoints.sm} {
-    height: 42px;
-    width: 42px;
-    right: 12px;
-    bottom: -22px;
-
-    .label {
-      font-size: 0.75rem;
-    }
   }
 `;

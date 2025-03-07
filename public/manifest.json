@@ -1,12 +1,13 @@
 {
   "name": "Cinephiled",
   "short_name": "Cinephiled",
+  "description": "Cinephiled - A progressive web app (PWA) to preview any movie or tv show with reviews, ratings, description and posters. Acting as a TMDB client, Cinephiled gives you access to login into your TMDB account and add movies or tv shows to your watchlist, set as favorites, rate and get personalized recommendations.",
   "theme_color": "#121212",
   "background_color": "#121212",
   "display": "standalone",
+  "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
-
   "icons": [
     {
       "src": "maskable.png",
@@ -18,5 +19,6 @@
     { "src": "logo256.png", "sizes": "256x256", "type": "image/png" },
     { "src": "logo384.png", "sizes": "384x384", "type": "image/png" },
     { "src": "logo512.png", "sizes": "512x512", "type": "image/png" }
-  ]
+  ],
+  "categories": ["entertainment", "movies"]
 }

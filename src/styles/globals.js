@@ -1,62 +1,41 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyles = createGlobalStyle`
+import { theme } from "theme/theme";
 
+const GlobalStyles = createGlobalStyle`
   ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+    width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0);
+    background: ${theme.colors.black}; 
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #909090;
     border-radius: 8px;
+    background: ${theme.colors.neutral[400]};
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #606060;
+    background:  ${theme.colors.neutral[500]};
   }
 
   html {
-    @media screen and (hover: none) and (pointer: coarse) {
-      -webkit-tap-highlight-color: transparent; 
-    }
+    -webkit-tap-highlight-color: transparent; 
+  }
+
+  :root {
+    --manrope: "Manrope", "Manrope Fallback";
+    --montserrat: "Montserrat", "Montserrat Fallback";
   }
 
   body {
-    font-size: 1.25rem;
-    background: ${(props) => props.theme.colors.background};
-    color: #ddd;
+    background: ${theme.colors.black};
+    color: ${theme.colors.white};
+    font-size: ${theme.fontSize.p};
+    font-family: var(--manrope);
   }
-
-  .main-wrapper{
-    font-family: ${(props) => props.theme.fonts.main};
-  }
-
-  h1,h2,h3,h4,h5,h6,button {
-    font-family: ${(props) => props.theme.fonts.main};
-  }
-
-  p{
-    font-size: 1rem;
-  }
-
-  a {
-    text-decoration: none;
-    color: #ddd;
-
-    &:hover {
-      color: #ddd
-    }
-  }
-
-  li{
-    list-style: none;
-  }
-
 `;
 
 export default GlobalStyles;

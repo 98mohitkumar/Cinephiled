@@ -1,10 +1,13 @@
-import { apiEndpoints } from "globals/constants";
 import { createContext, useContext, useEffect, useState } from "react";
-import { fetchOptions } from "src/utils/helper";
+
+import { apiEndpoints } from "data/apiEndpoints";
+import { fetchOptions } from "utils/helper";
+
 import { useUserContext } from "./UserContext";
 
 const ListsContext = createContext({
   lists: [],
+  loading: true,
   updateList: () => {}
 });
 
@@ -20,12 +23,14 @@ export const useListsContext = () => {
 
 const ListsContextProvider = ({ children }) => {
   const [lists, setLists] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { userInfo } = useUserContext();
 
   useEffect(() => {
     const abortController = new AbortController();
 
     const fetchAllLists = async ({ page }) => {
+      setLoading(true);
       try {
         const res = await fetch(
           apiEndpoints.lists.getLists({ accountId: userInfo?.accountId, pageQuery: page }),
@@ -45,6 +50,8 @@ const ListsContextProvider = ({ children }) => {
         }
       } catch {
         setLists([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -58,11 +65,7 @@ const ListsContextProvider = ({ children }) => {
     };
   }, [userInfo?.accessToken, userInfo?.accountId]);
 
-  return (
-    <ListsContext.Provider value={{ lists, updateList: setLists }}>
-      {children}
-    </ListsContext.Provider>
-  );
+  return <ListsContext.Provider value={{ lists, updateList: setLists, loading }}>{children}</ListsContext.Provider>;
 };
 
 export default ListsContextProvider;

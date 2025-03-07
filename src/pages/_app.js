@@ -1,15 +1,19 @@
 import "styles/globals.css";
-import Layout from "components/Layout/Layout";
-import { Loader } from "components/Loading";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
+import { NavigationGuardProvider } from "next-navigation-guard";
 import { Fragment, useEffect, useState } from "react";
+
+import Layout from "components/Layout/Layout";
+import Loader from "components/Loader/Loader";
+import Toast from "components/Shared/Toast";
 import ListsContextProvider from "Store/ListsContext";
 import MediaContextProvider from "Store/MediaContext";
 import UserContextProvider from "Store/UserContext";
-// import { LoaderContainer } from "styles/GlobalComponents";
-import Theme from "styles/theme";
+import GlobalStyles from "styles/globals";
+import ErrorBoundary from "utils/ErrorBoundary";
+import "utils/logging";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
@@ -48,20 +52,25 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         <title>Cinephiled</title>
       </Head>
 
-      <Theme>
+      <GlobalStyles />
+      <ErrorBoundary>
         <SessionProvider session={session} refetchOnWindowFocus={false}>
-          <UserContextProvider>
-            <ListsContextProvider>
-              <MediaContextProvider>
-                {isLoading ? <Loader /> : null}
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </MediaContextProvider>
-            </ListsContextProvider>
-          </UserContextProvider>
+          <NavigationGuardProvider>
+            <UserContextProvider>
+              <ListsContextProvider>
+                <MediaContextProvider>
+                  {isLoading ? <Loader /> : null}
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </MediaContextProvider>
+              </ListsContextProvider>
+            </UserContextProvider>
+          </NavigationGuardProvider>
         </SessionProvider>
-      </Theme>
+      </ErrorBoundary>
+
+      <Toast />
     </Fragment>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchSuggestions } from "src/utils/helper";
+
+import { fetchSuggestions } from "utils/helper";
 
 const useGetSearchSuggestions = ({ query, includePeople = false }) => {
   const [suggestions, setSuggestions] = useState([]);
@@ -10,24 +11,24 @@ const useGetSearchSuggestions = ({ query, includePeople = false }) => {
 
     if (query.trim().length === 0) {
       setSuggestions([]);
+      setLoading(false);
     } else {
       setLoading(true);
 
       fetchSuggestions({ query, controller: abortController, includePeople })
         .then(({ movieRes, tvRes, peopleRes }) => {
-          setSuggestions(
-            [...movieRes, ...tvRes, ...peopleRes].sort((a, b) => b.popularity - a.popularity)
-          );
-          setLoading(false);
+          setSuggestions([...movieRes, ...tvRes, ...peopleRes].sort((a, b) => b.popularity - a.popularity));
         })
         .catch(() => {
           setSuggestions([]);
+        })
+        .finally(() => {
           setLoading(false);
         });
     }
 
     return () => {
-      setSuggestions([]);
+      setLoading(false);
       abortController.abort("unmounted");
     };
   }, [includePeople, query]);

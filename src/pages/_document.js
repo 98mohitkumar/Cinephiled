@@ -1,5 +1,4 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
-import Script from "next/script";
 import { ServerStyleSheet } from "styled-components";
 
 export default class MyDocument extends Document {
@@ -40,19 +39,6 @@ export default class MyDocument extends Document {
           <meta name='keywords' content='Cinema, Tv, Movies'></meta>
           <meta property='og:type' content='website' />
           <meta property='twitter:card' content='summary_large_image' />
-
-          <meta
-            name='google-site-verification'
-            content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION}
-          />
-
-          <Script id='ms-clarity' strategy='beforeInteractive'>
-            {`(function(c,l,a,r,i,t,y){
-              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-              })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_MS_CLARITY_TAG}");`}
-          </Script>
         </Head>
         <body>
           <Main />
