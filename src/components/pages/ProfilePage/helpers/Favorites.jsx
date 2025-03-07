@@ -44,7 +44,7 @@ export const FavoritesCTA = ({ clickHandler, mediaData }) => {
         </FlexBox>
       </Modal>
 
-      <Button variant='danger' onClick={openModal} fullWidth className='mt-32'>
+      <Button variant='danger' onClick={openModal} fullWidth className='mt-2432'>
         Remove
       </Button>
     </Fragment>
@@ -56,24 +56,14 @@ const Favorites = () => {
   const { favoriteMovies, favoriteTvShows, isLoading, renderKey, validateMedia } = useMediaContext();
 
   const filterMedia = async ({ id, type }) => {
-    const response = await setFavorite({
-      mediaType: type,
-      mediaId: id,
-      favoriteState: false
-    });
+    const response = await setFavorite({ mediaType: type, mediaId: id, favoriteState: false });
 
     if (response?.success) {
-      validateMedia({
-        state: "removed",
-        id,
-        key: matches(type, "movie") ? "favoriteMovies" : "favoriteTvShows"
-      });
+      validateMedia({ state: "removed", id, key: matches(type, "movie") ? "favoriteMovies" : "favoriteTvShows" });
 
       toast.success("Item has been removed from favorites");
     } else {
-      toast.error("An error occurred", {
-        description: "An error occurred while removing the item from favorites, please try again later."
-      });
+      toast.error("An error occurred", { description: "An error occurred while removing the item from favorites, please try again later." });
     }
   };
 
@@ -92,10 +82,7 @@ const Favorites = () => {
                       {(movie) => (
                         <FavoritesCTA
                           clickHandler={() => filterMedia({ id: movie?.id, type: "movie" })}
-                          mediaData={{
-                            name: movie?.title,
-                            releaseDate: movie?.release_date
-                          }}
+                          mediaData={{ name: movie?.title, releaseDate: movie?.release_date }}
                         />
                       )}
                     </MediaTemplateGrid>
@@ -112,10 +99,7 @@ const Favorites = () => {
                       {(tv) => (
                         <FavoritesCTA
                           clickHandler={() => filterMedia({ id: tv?.id, type: "tv" })}
-                          mediaData={{
-                            name: tv?.name,
-                            releaseDate: tv?.first_air_date
-                          }}
+                          mediaData={{ name: tv?.name, releaseDate: tv?.first_air_date }}
                         />
                       )}
                     </MediaTemplateGrid>

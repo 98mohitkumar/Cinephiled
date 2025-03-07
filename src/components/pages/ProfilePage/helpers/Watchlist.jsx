@@ -44,7 +44,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
         </FlexBox>
       </Modal>
 
-      <Button variant='danger' onClick={openModal} fullWidth className='mt-32'>
+      <Button variant='danger' onClick={openModal} fullWidth className='mt-2432'>
         Remove
       </Button>
     </Fragment>
@@ -56,24 +56,14 @@ const Watchlist = () => {
   const { moviesWatchlist, tvShowsWatchlist, isLoading, renderKey, validateMedia } = useMediaContext();
 
   const filterMedia = async ({ id, type }) => {
-    const response = await addToWatchlist({
-      mediaType: type,
-      mediaId: id,
-      watchlistState: false
-    });
+    const response = await addToWatchlist({ mediaType: type, mediaId: id, watchlistState: false });
 
     if (response?.success) {
-      validateMedia({
-        state: "removed",
-        id,
-        key: type === "movie" ? "moviesWatchlist" : "tvShowsWatchlist"
-      });
+      validateMedia({ state: "removed", id, key: type === "movie" ? "moviesWatchlist" : "tvShowsWatchlist" });
 
       toast.success("Item has been removed from watchlist");
     } else {
-      toast.error("An error occurred", {
-        description: "An error occurred while removing the item from watchlist, please try again later."
-      });
+      toast.error("An error occurred", { description: "An error occurred while removing the item from watchlist, please try again later." });
     }
   };
 
@@ -92,10 +82,7 @@ const Watchlist = () => {
                       {(movie) => (
                         <WatchlistCTA
                           clickHandler={() => filterMedia({ id: movie?.id, type: "movie" })}
-                          mediaData={{
-                            name: movie?.title,
-                            releaseDate: movie?.release_date
-                          }}
+                          mediaData={{ name: movie?.title, releaseDate: movie?.release_date }}
                         />
                       )}
                     </MediaTemplateGrid>
@@ -112,10 +99,7 @@ const Watchlist = () => {
                       {(tv) => (
                         <WatchlistCTA
                           clickHandler={() => filterMedia({ id: tv?.id, type: "tv" })}
-                          mediaData={{
-                            name: tv?.name,
-                            releaseDate: tv?.first_air_date
-                          }}
+                          mediaData={{ name: tv?.name, releaseDate: tv?.first_air_date }}
                         />
                       )}
                     </MediaTemplateGrid>

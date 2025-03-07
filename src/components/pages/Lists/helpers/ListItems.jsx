@@ -113,7 +113,7 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
     <Fragment>
       <MediaTemplateGrid media={renderList} gridType='poster'>
         {({ id, title, name, release_date, first_air_date, media_type, backdrop_path }) => (
-          <div className={cn("mt-24 pe-10", { "mt-32 pe-0": userCanEditList })}>
+          <div className={cn("mt-2024", { "mt-2432": userCanEditList })}>
             <FlexBox className='items-start justify-between gap-16'>
               <H6 weight='medium' className='line-clamp-2 text-pretty'>
                 {title || name}

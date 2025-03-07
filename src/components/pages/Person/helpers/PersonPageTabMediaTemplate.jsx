@@ -7,7 +7,7 @@ const PersonPageTabMediaTemplate = ({ media }) => {
   return (
     <MediaTemplateGrid media={media} gridType='poster'>
       {(media) => (
-        <div className='mt-24'>
+        <div className='mt-2024'>
           <H6 weight='medium' className='line-clamp-2 text-pretty'>
             {media?.title || media?.name}
           </H6>
