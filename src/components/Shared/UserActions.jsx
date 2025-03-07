@@ -10,22 +10,22 @@ import AddToListModal from "components/pages/Lists/AddToListModal";
 import RatingModal from "components/RatingModal/RatingModal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
-import P from "components/UI/Typography/P";
 import { opacityMotionTransition } from "data/global";
 import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import { matches } from "utils/helper";
 
 export const suggestLogin = () => {
-  toast.info(
-    <P size='small' className='font-manrope'>
-      Please{" "}
-      <Link href='/login' className='font-bold underline'>
-        login
-      </Link>{" "}
-      first to use this feature
-    </P>
-  );
+  toast.info("Login Required", {
+    description: "Please login first to use this feature",
+    cancel: {
+      label: (
+        <Link href='/login' className='font-medium'>
+          Login
+        </Link>
+      )
+    }
+  });
 };
 
 const UserActionButtons = ({ watchlistHandler, favoriteHandler, ratingModalHandler, isAddedToWatchlist, isAddedToFavorites, savedRating }) => {
