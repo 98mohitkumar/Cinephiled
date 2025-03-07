@@ -57,7 +57,7 @@ export const apiEndpoints = {
     trendingMovies: `${baseUrlV3}/trending/movie/day?language=en-US&page=1`,
 
     movieDetails: (id: string) =>
-      `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=images,videos,credits,reviews,recommendations,external_ids&include_image_language=en,null`,
+      `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=images,videos,credits,reviews,recommendations,external_ids&include_image_language=en,ja,ko,null`,
 
     movieGenre: ({ genreId, pageQuery = 1, sortBy = "popularity.desc" }: { genreId: string; pageQuery?: number; sortBy: string }) =>
       `${baseUrlV3}/discover/movie?language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}&sort_by=${sortBy}`,
@@ -75,12 +75,12 @@ export const apiEndpoints = {
     trendingTv: `${baseUrlV3}/trending/tv/day?language=en-US&page=1`,
 
     tvDetails: (id: string) =>
-      `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=images,videos,aggregate_credits,reviews,recommendations,external_ids&include_image_language=en,null`,
+      `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=images,videos,aggregate_credits,reviews,recommendations,external_ids&include_image_language=en,ja,ko,null`,
 
     tvDetailsNoAppend: (id: string) => `${baseUrlV3}/tv/${id}?language=en-US`,
 
     tvSeasonDetails: ({ id, seasonNumber }: { id: string; seasonNumber: number }) =>
-      `${baseUrlV3}/tv/${id}/season/${seasonNumber}?language=en-US&append_to_response=aggregate_credits,images&include_image_language=en,null`,
+      `${baseUrlV3}/tv/${id}/season/${seasonNumber}?language=en-US&append_to_response=aggregate_credits,videos,images&include_image_language=en,null`,
 
     episodeDetails: ({ id, seasonNumber, episodeNumber }: { id: string; seasonNumber: number; episodeNumber: number }) =>
       `${baseUrlV3}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?language=en-US&append_to_response=images,credits&include_image_language=en,null`,

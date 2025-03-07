@@ -8,6 +8,8 @@ import { Fragment, useRef } from "react";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import { mediaDetailsWrapper } from "components/Shared/GlobalComponents";
 import MetaWrapper from "components/Shared/MetaWrapper";
+import ShareButton from "components/Shared/ShareButton";
+import TrailerModal from "components/Shared/TrailerModal";
 import TVStats from "components/Shared/TVStats";
 import { CastCarousel } from "components/Templates/CastTemplate";
 import MediaImageTemplateGrid from "components/Templates/MediaImageTemplateGrid";
@@ -20,7 +22,7 @@ import H4 from "components/UI/Typography/H4";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
 import { LAYOUT_TYPES, ROUTES, blurPlaceholder, siteInfo } from "data/global";
-import { getReleaseYear, mergeEpisodeCount, fetchOptions, cn, matches, getNiceName } from "utils/helper";
+import { getReleaseYear, mergeEpisodeCount, fetchOptions, cn, matches, getNiceName, getHasEpisodeReleased, getYouTubeTrailer } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const MediaHeroBackground = dynamic(() => import("components/Shared/MediaHeroBackground/MediaHeroBackground"), { ssr: false });
@@ -35,6 +37,7 @@ const Seasons = ({
   seasonNumber,
   seasonName,
   seasonPoster,
+  trailer,
   tvData: { id, name, airDate }
 }) => {
   const router = useRouter();
@@ -57,7 +60,7 @@ const Seasons = ({
       <MetaWrapper
         title={`${name}: ${seasonName} (${getReleaseYear(releaseDate)}) - cinephiled`}
         description={overview}
-        image={getTMDBImage({ path: randomBackdrop, type: "backdrop", size: "original" })}
+        image={getTMDBImage({ path: randomBackdrop, type: "backdrop", size: "w1280" })}
         url={`${siteInfo.url}/${ROUTES.tv}/${getNiceName({ id, name })}/seasons/${seasonNumber}`}
       />
 
@@ -65,27 +68,39 @@ const Seasons = ({
         <MediaHeroBackground backdropPath={randomBackdrop} posterPath={randomBackdrop} alt='episode-backdrop' />
 
         <LayoutContainer
-          className={cn("flex items-center gap-32 max-lg:pb-3248 lg:py-4864", {
+          className={cn("flex items-center gap-32 above-lg:py-4864 max-lg:pb-3248", {
             "blank py-2464": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
           })}
           css={mediaDetailsWrapper}>
           <div
             className={cn("w-full max-w-full", {
-              "lg:max-w-md xl:max-w-xl 2xl:max-w-2xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.standard),
-              "lg:max-w-3xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
+              "above-lg:max-w-md xl:max-w-xl 2xl:max-w-2xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.standard),
+              "above-lg:max-w-3xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
             })}>
-            <H4 className={cn("mb-16 text-pretty", matches(LAYOUT_TYPE, LAYOUT_TYPES.blank) ? "text-neutral-300" : "text-neutral-400")}>
+            <P
+              weight='semibold'
+              size='large'
+              className={cn("text-pretty", matches(LAYOUT_TYPE, LAYOUT_TYPES.blank) ? "text-neutral-300" : "text-neutral-400")}>
               {name} ({getReleaseYear(airDate)})
-            </H4>
+            </P>
 
             <div>
-              <H2 tag='h1' className='mb-16 text-pretty'>
+              <H2 tag='h1' className='mb-8 text-balance'>
                 {seasonName}
               </H2>
 
               <TVStats releaseDate={releaseDate} totalRuntime={totalRuntime} rating={rating} size='large' />
 
-              {overview ? <P size='large'>{overview}</P> : null}
+              {overview ? (
+                <P size='large' className='text-pretty'>
+                  {overview}
+                </P>
+              ) : null}
+
+              <FlexBox className='mt-2032 items-center gap-8'>
+                <TrailerModal trailer={trailer} />
+                <ShareButton shape='circle' iconSize={16} size='small' title={name} text={overview} />
+              </FlexBox>
             </div>
           </div>
         </LayoutContainer>
@@ -102,8 +117,8 @@ const Seasons = ({
 
               <FlexBox className='flex-col gap-4864 md:max-w-screen-xl'>
                 {episodes?.map((item) => (
-                  <FlexBox key={item.id} className='w-full gap-x-2032 gap-y-1620 max-md:flex-col'>
-                    <div className='relative aspect-backdrop w-full shrink-0 xs:w-80 lg:w-96'>
+                  <FlexBox key={item.id} className='w-full gap-x-2032 gap-y-12 max-md:flex-col'>
+                    <div className='relative aspect-backdrop w-full shrink-0 above-xs:w-80 lg:w-96'>
                       <Image
                         src={getTMDBImage({ path: item.still_path, type: "backdrop", size: "w780" })}
                         alt={item.name}
@@ -115,7 +130,7 @@ const Seasons = ({
                     </div>
 
                     <div className='self-start'>
-                      <H4 className='mb-16 text-pretty'>
+                      <H4 className='mb-10 text-pretty'>
                         {item.episode_number}. {item.name}
                       </H4>
 
@@ -123,12 +138,14 @@ const Seasons = ({
 
                       {item.overview ? <P className='line-clamp-2'>{item.overview}</P> : null}
 
-                      <Link href={`${routeRef.current}/${ROUTES.episodes}/${item.episode_number}`}>
-                        <Button variant='primary' size='small' weight='semibold' className='mt-16 flex items-center gap-8 rounded-full px-16'>
-                          Episode Details
-                          <MoveRight size={16} />
-                        </Button>
-                      </Link>
+                      {getHasEpisodeReleased(item.air_date) ? (
+                        <Link href={`${routeRef.current}/${ROUTES.episodes}/${item.episode_number}`} className='mt-12 inline-block'>
+                          <Button variant='primary' size='small' weight='semibold' className='flex items-center gap-8 rounded-full px-16'>
+                            Episode Details
+                            <MoveRight size={16} />
+                          </Button>
+                        </Link>
+                      ) : null}
                     </div>
                   </FlexBox>
                 ))}
@@ -143,7 +160,7 @@ const Seasons = ({
               <CastCarousel cast={cast}>
                 {(item) => (
                   <div className='mt-12'>
-                    <P size='large' weight='semibold' className='line-clamp-1' title={item.character}>
+                    <P weight='bold' className='line-clamp-2' title={item.character}>
                       {item.character}
                     </P>
                     <P className='text-neutral-400' title={item.name}>
@@ -182,6 +199,8 @@ export const getServerSideProps = async (ctx) => {
 
     const [res, tvData] = await Promise.all([response.json(), tvRes.json()]);
 
+    const trailer = getYouTubeTrailer(res?.videos?.results);
+
     return {
       props: {
         releaseDate: res?.air_date,
@@ -193,6 +212,7 @@ export const getServerSideProps = async (ctx) => {
         seasonNumber: res?.season_number,
         rating: res?.vote_average,
         episodes: res?.episodes,
+        trailer,
         tvData: {
           id: ctx.query.id,
           name: tvData?.name,

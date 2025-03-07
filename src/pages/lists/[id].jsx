@@ -6,14 +6,14 @@ import AddListItems from "components/pages/Lists/helpers/AddListItems";
 import DeleteListModal from "components/pages/Lists/helpers/DeleteListModal";
 import EditListModal from "components/pages/Lists/helpers/EditListModal";
 import ListItems from "components/pages/Lists/helpers/ListItems";
-import PlaceholderText from "components/PlaceholderText";
 import MediaHeroBackground from "components/Shared/MediaHeroBackground/MediaHeroBackground";
 import MetaWrapper from "components/Shared/MetaWrapper";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import ShareButton from "components/Shared/ShareButton";
 import FlexBox from "components/UI/FlexBox";
 import { Grid } from "components/UI/Grid";
 import LayoutContainer from "components/UI/LayoutContainer";
-import H1 from "components/UI/Typography/H1";
+import H2 from "components/UI/Typography/H2";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo } from "data/global";
@@ -59,11 +59,13 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
 
           <LayoutContainer
             className={cn("relative z-5 flex items-center py-2448", {
-              "max-lg:-mt-3248 max-lg:py-0 lg:min-h-[560px]": Boolean(list?.backdrop_path)
+              "above-lg:min-h-[560px] max-lg:-mt-3248 max-lg:py-0": Boolean(list?.backdrop_path)
             })}>
-            <div className='w-full md:max-w-2xl'>
+            <div className='w-full above-md:max-w-2xl'>
               <div className='mb-1624'>
-                <H1 className='text-pretty'>{list.name}</H1>
+                <H2 tag='h1' className='text-pretty'>
+                  {list.name}
+                </H2>
                 {list?.description && (
                   <P size='large' className='mt-12'>
                     {list?.description}
@@ -71,7 +73,7 @@ const List = ({ list, isListAccessible, userCanEditList }) => {
                 )}
               </div>
 
-              <Grid className='w-fit grid-cols-1 gap-x-32 gap-y-8 whitespace-nowrap xs:grid-cols-2'>
+              <Grid className='w-fit gap-x-32 gap-y-8 whitespace-nowrap' colConfig={{ xxs: 1, xs: 2 }}>
                 <ListDetails title='Created by' copy={list?.created_by?.name || list?.created_by?.username} />
                 <ListDetails title='Total Items' copy={list?.total_results} />
                 {Boolean(list?.runtime) ? <ListDetails title='Runtime' copy={getRuntime(list?.runtime)} /> : null}

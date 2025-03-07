@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { toast } from "sonner";
 
-import { deleteList } from "apiRoutes/user";
+import { useDeleteList } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
@@ -15,6 +15,7 @@ const DeleteListModal = ({ list }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
   const router = useRouter();
   const { updateList } = useListsContext();
+  const { deleteList } = useDeleteList();
 
   const deleteListHandler = async () => {
     const { success } = await deleteList({ id: list.id });
@@ -38,7 +39,7 @@ const DeleteListModal = ({ list }) => {
         <Trash size={20} className='text-red-500' />
       </Button>
 
-      <Modal closeModal={closeModal} isOpen={isModalVisible} width='max-w-lg'>
+      <Modal closeModal={closeModal} isOpen={isModalVisible} className='max-w-lg'>
         <H4 weight='semibold'>Delete List</H4>
 
         <P className='my-16'>

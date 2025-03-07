@@ -112,7 +112,7 @@ export const hamburgerMenu = css`
   width: 100vw;
   height: 100vh;
   position: fixed;
-  top: var(--header-height);
+  top: 0;
   left: 0;
   margin: auto;
   background-color: ${hexToRgba(theme.colors.black, 0.95)};

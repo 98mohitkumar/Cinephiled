@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-import PlaceholderText from "components/PlaceholderText";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import { apiEndpoints } from "data/apiEndpoints";
 import useInfiniteQuery from "hooks/useInfiniteQuery";

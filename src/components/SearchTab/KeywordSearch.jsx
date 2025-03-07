@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Fragment } from "react";
 
-import PlaceholderText from "components/PlaceholderText";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import H1 from "components/UI/Typography/H1";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES } from "data/global";

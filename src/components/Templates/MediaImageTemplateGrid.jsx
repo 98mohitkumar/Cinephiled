@@ -1,16 +1,16 @@
 import Image from "next/image";
 import { Fragment } from "react";
 
-import PlaceholderText from "components/PlaceholderText";
 import DownloadMediaButton from "components/Shared/DownloadMediaButton";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import { Grid, GridCol } from "components/UI/Grid";
 import { blurPlaceholder } from "data/global";
 import { cn, matches } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const MediaImageTemplateGrid = ({ items, type = "backdrops" }) => {
-  const gridConfig = matches(type, "backdrops") ? { xxs: 1, md: 2, lg: 3, "3xl": 4 } : { xxs: 2, md: 3, lg: 4, "2xl": 5, "3xl": 6 };
-  const size = matches(type, "backdrops") ? "w1280" : "w500";
+  const gridConfig = matches(type, "backdrops") ? { xxs: 1, sm: 2, lg: 3, "3xl": 4 } : { xxs: 2, md: 3, lg: 4, "2xl": 5, "3xl": 6, "5xl": 7 };
+  const size = matches(type, "backdrops") ? "w780" : "w500";
 
   return (
     <Fragment>

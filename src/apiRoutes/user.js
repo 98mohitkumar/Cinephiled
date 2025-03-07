@@ -1,6 +1,7 @@
-import { getSession } from "next-auth/react";
+import { useCallback } from "react";
 
 import { apiEndpoints } from "data/apiEndpoints";
+import { useUserContext } from "Store/UserContext";
 import { fetchOptions } from "utils/helper";
 
 // GET requsts
@@ -81,34 +82,39 @@ export const getRecommendations = async ({ mediaType, pageQuery, accountId, toke
   }
 };
 
-export const getListItemStatus = async ({ listId, mediaType, mediaId, signal }) => {
-  const {
-    user: { accessToken }
-  } = await getSession({ broadcast: false });
+export const useGetListItemStatus = ({ listId, mediaType, mediaId }) => {
+  const { userInfo } = useUserContext();
 
-  const res = await fetch(
-    "/api/getItemStatus",
-    fetchOptions({
-      token: accessToken,
-      method: "POST",
-      body: {
-        id: listId,
-        mediaType,
-        mediaId
-      },
-      signal
-    })
+  const getListItemStatus = useCallback(
+    async ({ signal }) => {
+      const res = await fetch(
+        "/api/getItemStatus",
+        fetchOptions({
+          token: userInfo.accessToken,
+          method: "POST",
+          body: {
+            id: listId,
+            mediaType,
+            mediaId
+          },
+          signal
+        })
+      );
+
+      if (res.ok) {
+        return await res.json();
+      } else {
+        return {
+          success: false
+        };
+      }
+    },
+    [listId, mediaId, mediaType, userInfo?.accessToken]
   );
 
-  if (res.ok) {
-    const data = await res.json();
-
-    return data;
-  } else {
-    return {
-      success: false
-    };
-  }
+  return {
+    getListItemStatus
+  };
 };
 
 export const getCountryCode = async (ip) => {
@@ -130,19 +136,17 @@ export const getCountryCode = async (ip) => {
 
 // POST requests
 
-export const setFavorite = async ({ mediaType, mediaId, favoriteState }) => {
-  const {
-    user: { accountId, accessToken }
-  } = await getSession({ broadcast: false });
+export const useSetFavorite = () => {
+  const { userInfo } = useUserContext();
 
-  if (accountId) {
+  const setFavorite = async ({ mediaType, mediaId, favoriteState }) => {
     const favorite = await fetch(
       apiEndpoints.user.setFavorite({
-        accountId: accountId
+        accountId: userInfo.accountId
       }),
       fetchOptions({
         method: "POST",
-        token: accessToken,
+        token: userInfo.accessToken,
         body: {
           media_type: mediaType,
           media_id: mediaId,
@@ -158,22 +162,24 @@ export const setFavorite = async ({ mediaType, mediaId, favoriteState }) => {
         success: false
       };
     }
-  }
+  };
+
+  return {
+    setFavorite
+  };
 };
 
-export const addToWatchlist = async ({ mediaType, mediaId, watchlistState }) => {
-  const {
-    user: { accountId, accessToken }
-  } = await getSession({ broadcast: false });
+export const useAddToWatchlist = () => {
+  const { userInfo } = useUserContext();
 
-  if (accountId) {
+  const addToWatchlist = async ({ mediaType, mediaId, watchlistState }) => {
     const watchlist = await fetch(
       apiEndpoints.user.addToWatchlist({
-        accountId: accountId
+        accountId: userInfo.accountId
       }),
       fetchOptions({
         method: "POST",
-        token: accessToken,
+        token: userInfo.accessToken,
         body: {
           media_type: mediaType,
           media_id: mediaId,
@@ -189,15 +195,15 @@ export const addToWatchlist = async ({ mediaType, mediaId, watchlistState }) => 
         success: false
       };
     }
-  }
+  };
+
+  return { addToWatchlist };
 };
 
-export const setRating = async ({ mediaType, mediaId, rating }) => {
-  const {
-    user: { accountId, accessToken }
-  } = await getSession({ broadcast: false });
+export const useSetRating = () => {
+  const { userInfo } = useUserContext();
 
-  if (accountId) {
+  const setRating = async ({ mediaType, mediaId, rating }) => {
     const rated = await fetch(
       apiEndpoints.user.setRating({
         mediaType,
@@ -205,7 +211,7 @@ export const setRating = async ({ mediaType, mediaId, rating }) => {
       }),
       fetchOptions({
         method: "POST",
-        token: accessToken,
+        token: userInfo.accessToken,
         body: {
           value: rating
         }
@@ -219,77 +225,90 @@ export const setRating = async ({ mediaType, mediaId, rating }) => {
         success: false
       };
     }
-  }
-};
-
-export const createList = async ({ listData }) => {
-  const {
-    user: { accessToken }
-  } = await getSession({ broadcast: false });
-
-  const res = await fetch(
-    apiEndpoints.lists.createList,
-    fetchOptions({
-      method: "POST",
-      body: listData,
-      token: accessToken
-    })
-  );
+  };
 
   return {
-    success: res.ok,
-    response: res
+    setRating
   };
 };
 
-export const updateListItems = async ({ id, itemsData, method }) => {
-  const {
-    user: { accessToken }
-  } = await getSession({ broadcast: false });
+export const useCreateList = () => {
+  const { userInfo } = useUserContext();
 
-  const res = await fetch(
-    apiEndpoints.lists.listItems({ id: id }),
-    fetchOptions({
-      method,
-      body: itemsData,
-      token: accessToken
-    })
-  );
+  const createList = async ({ listData }) => {
+    const res = await fetch(
+      apiEndpoints.lists.createList,
+      fetchOptions({
+        method: "POST",
+        body: listData,
+        token: userInfo.accessToken
+      })
+    );
+
+    return {
+      success: res.ok,
+      response: res
+    };
+  };
 
   return {
-    success: res.ok
+    createList
+  };
+};
+
+export const useUpdateListItems = () => {
+  const { userInfo } = useUserContext();
+
+  const updateListItems = async ({ id, itemsData, method }) => {
+    const res = await fetch(
+      apiEndpoints.lists.listItems({ id: id }),
+      fetchOptions({
+        method,
+        body: itemsData,
+        token: userInfo.accessToken
+      })
+    );
+
+    return {
+      success: res.ok
+    };
+  };
+
+  return {
+    updateListItems
   };
 };
 
 // PUT requests
 
-export const updateList = async ({ id, listData }) => {
-  const {
-    user: { accessToken }
-  } = await getSession({ broadcast: false });
+export const useUpdateList = () => {
+  const { userInfo } = useUserContext();
 
-  const res = await fetch(
-    apiEndpoints.lists.updateList({ id: id }),
-    fetchOptions({
-      method: "PUT",
-      body: listData,
-      token: accessToken
-    })
-  );
+  const updateList = async ({ id, listData }) => {
+    const res = await fetch(
+      apiEndpoints.lists.updateList({ id: id }),
+      fetchOptions({
+        method: "PUT",
+        body: listData,
+        token: userInfo.accessToken
+      })
+    );
+
+    return {
+      success: res.ok
+    };
+  };
 
   return {
-    success: res.ok
+    updateList
   };
 };
 
 // DELETE requests
+export const useDeleteRating = () => {
+  const { userInfo } = useUserContext();
 
-export const deleteRating = async ({ mediaType, mediaId }) => {
-  const {
-    user: { accountId, accessToken }
-  } = await getSession({ broadcast: false });
-
-  if (accountId) {
+  const deleteRating = async ({ mediaType, mediaId }) => {
     const deleted = await fetch(
       apiEndpoints.user.deleteRating({
         mediaType,
@@ -297,7 +316,7 @@ export const deleteRating = async ({ mediaType, mediaId }) => {
       }),
       fetchOptions({
         method: "DELETE",
-        token: accessToken
+        token: userInfo.accessToken
       })
     );
 
@@ -308,23 +327,31 @@ export const deleteRating = async ({ mediaType, mediaId }) => {
         success: false
       };
     }
-  }
-};
-
-export const deleteList = async ({ id }) => {
-  const {
-    user: { accessToken }
-  } = await getSession({ broadcast: false });
-
-  const res = await fetch(
-    apiEndpoints.lists.updateList({ id: id }),
-    fetchOptions({
-      method: "DELETE",
-      token: accessToken
-    })
-  );
+  };
 
   return {
-    success: res.ok
+    deleteRating
+  };
+};
+
+export const useDeleteList = () => {
+  const { userInfo } = useUserContext();
+
+  const deleteList = async ({ id }) => {
+    const res = await fetch(
+      apiEndpoints.lists.updateList({ id: id }),
+      fetchOptions({
+        method: "DELETE",
+        token: userInfo.accessToken
+      })
+    );
+
+    return {
+      success: res.ok
+    };
+  };
+
+  return {
+    deleteList
   };
 };

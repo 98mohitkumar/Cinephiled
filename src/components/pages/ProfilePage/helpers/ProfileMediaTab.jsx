@@ -16,7 +16,7 @@ export const ProfileMediaTab = ({ children }) => {
     <Fragment>
       <Tabs tabItemsCount={mediaTypeTabList.length} activeItemIndex={activeTabIndex} className='mb-3248'>
         {mediaTypeTabList.map(({ key, title }) => (
-          <TabItem key={key} onClick={() => setTab(key)} className={matches(activeTab, key) ? "active" : ""}>
+          <TabItem key={key} onClick={() => setTab(key)} className={matches(activeTab, key) ? "active" : ""} title={title}>
             {title}
           </TabItem>
         ))}

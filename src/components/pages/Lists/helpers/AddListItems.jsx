@@ -122,7 +122,7 @@ const AddListItems = ({ id }) => {
         Add Items
       </Button>
 
-      <Modal isOpen={isModalVisible} closeOnClickedOutside={false} width='max-w-4xl'>
+      <Modal isOpen={isModalVisible} closeOnClickedOutside={false} className='max-w-4xl'>
         <H4 weight='semibold' className='mb-16'>
           Add Items to List
         </H4>
@@ -163,50 +163,56 @@ const AddListItems = ({ id }) => {
                 ) : (
                   <Fragment>
                     {searchSuggestions.length > 0 ? (
-                      <Grid
-                        className='grid max-h-96 gap-12 overflow-y-auto p-12'
-                        colConfig={{
-                          sm: 2,
-                          lg: 3
-                        }}>
-                        {searchSuggestions.map(({ id, title, name, poster_path, release_date, first_air_date, type }) => (
-                          <div
-                            key={id}
-                            className='cursor-pointer overflow-hidden rounded-lg bg-neutral-700 p-12 transition-colors hover:bg-neutral-600'
-                            onClick={() =>
-                              addItemHandler({
-                                id,
-                                poster_path,
-                                media_type: type
-                              })
-                            }>
-                            <FlexBox className='items-start gap-12'>
-                              <div className='relative aspect-poster w-16 shrink-0'>
-                                <Image
-                                  fill
-                                  placeholder='blur'
-                                  alt={`${title || name}-poster`}
-                                  blurDataURL={blurPlaceholder}
-                                  src={getTMDBImage({ type: "poster", path: poster_path, size: "w185" })}
-                                  className='rounded-sm object-cover'
-                                />
-                              </div>
-                              <div className='grow'>
-                                <P weight='medium' size='small' className={cn("mb-4 text-cyan-500", { "text-green-500": matches(type, "tv") })}>
-                                  {type === "tv" ? "TV Show" : "Movie"}
-                                </P>
+                      <Fragment>
+                        <P className='text-balance py-8 text-center text-neutral-300'>
+                          <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year. Example: <b>&#39;Avatar y:2009&#39;</b>
+                        </P>
 
-                                <P weight='medium' className='line-clamp-2'>
-                                  {title || name}
-                                </P>
-                                <P weight='medium' size='small' className='text-neutral-300'>
-                                  {getReleaseDate(release_date || first_air_date)}
-                                </P>
-                              </div>
-                            </FlexBox>
-                          </div>
-                        ))}
-                      </Grid>
+                        <Grid
+                          className='grid max-h-96 gap-12 overflow-y-auto p-12'
+                          colConfig={{
+                            sm: 2,
+                            lg: 3
+                          }}>
+                          {searchSuggestions.map(({ id, title, name, poster_path, release_date, first_air_date, type }) => (
+                            <div
+                              key={id}
+                              className='cursor-pointer overflow-hidden rounded-lg bg-neutral-700 p-12 transition-colors hover:bg-neutral-600'
+                              onClick={() =>
+                                addItemHandler({
+                                  id,
+                                  poster_path,
+                                  media_type: type
+                                })
+                              }>
+                              <FlexBox className='items-start gap-12'>
+                                <div className='relative aspect-poster w-16 shrink-0'>
+                                  <Image
+                                    fill
+                                    placeholder='blur'
+                                    alt={`${title || name}-poster`}
+                                    blurDataURL={blurPlaceholder}
+                                    src={getTMDBImage({ type: "poster", path: poster_path, size: "w185" })}
+                                    className='rounded-sm object-cover'
+                                  />
+                                </div>
+                                <div className='grow'>
+                                  <P weight='medium' size='small' className={cn("mb-4 text-cyan-500", { "text-green-500": matches(type, "tv") })}>
+                                    {type === "tv" ? "TV Show" : "Movie"}
+                                  </P>
+
+                                  <P weight='medium' className='line-clamp-2'>
+                                    {title || name}
+                                  </P>
+                                  <P weight='medium' size='small' className='text-neutral-300'>
+                                    {getReleaseDate(release_date || first_air_date)}
+                                  </P>
+                                </div>
+                              </FlexBox>
+                            </div>
+                          ))}
+                        </Grid>
+                      </Fragment>
                     ) : null}
                   </Fragment>
                 )}

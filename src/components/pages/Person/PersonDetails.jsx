@@ -1,16 +1,16 @@
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
-import { Instagram, Link2, Twitter } from "lucide-react";
+import { Instagram, Link, Twitter } from "lucide-react";
 import Image from "next/image";
 import { useMemo } from "react";
 
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import DownloadMediaButton from "components/Shared/DownloadMediaButton";
+import ShareButton from "components/Shared/ShareButton";
 import FlexBox from "components/UI/FlexBox";
 import { Grid } from "components/UI/Grid";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H1 from "components/UI/Typography/H1";
-import H4 from "components/UI/Typography/H4";
 import P from "components/UI/Typography/P";
 import { blurPlaceholder } from "data/global";
 import { theme } from "theme/theme";
@@ -40,9 +40,14 @@ const getCredits = ({ credits, mediaType, unique = true }) => {
   if (unique) {
     const uniqueAndMergedCredits = combinedCredits.reduce((acc, item) => {
       const existingCreditIndex = acc.findIndex((credit) => credit.id === item.id);
-      if (existingCreditIndex >= 0) {
-        acc[existingCreditIndex].job = [acc[existingCreditIndex].job, item.job].flat();
-        acc[existingCreditIndex].department = [acc[existingCreditIndex].department, item.department].flat();
+
+      if (existingCreditIndex > -1) {
+        if (!acc[existingCreditIndex].job.includes(item.job)) {
+          acc[existingCreditIndex].job = [acc[existingCreditIndex].job, item.job].flat();
+        }
+        if (!acc[existingCreditIndex].department.includes(item.department)) {
+          acc[existingCreditIndex].department = [acc[existingCreditIndex].department, item.department].flat();
+        }
       } else {
         acc.push({ ...item, job: [item.job], media_type: mediaType });
       }
@@ -172,10 +177,14 @@ const PersonDetails = ({ personDetails }) => {
           }
         ]
       : []),
-    {
-      title: "Place of Birth",
-      copy: personDetails.place_of_birth
-    }
+    ...(personDetails?.place_of_birth
+      ? [
+          {
+            title: "Place of Birth",
+            copy: personDetails.place_of_birth
+          }
+        ]
+      : [])
   ];
 
   const socialMediaLinks = [
@@ -202,7 +211,7 @@ const PersonDetails = ({ personDetails }) => {
           {
             title: "Website",
             url: personDetails.homepage,
-            icon: <Link2 size={36} />
+            icon: <Link size={36} />
           }
         ]
       : [])
@@ -220,12 +229,24 @@ const PersonDetails = ({ personDetails }) => {
 
               {personDetails.biography ? <PersonBiography biography={personDetails.biography} /> : null}
 
-              {socialMediaLinks.some((link) => Boolean(link.url)) ? (
-                <div className='mt-3248'>
-                  <H4 weight='semibold'>Social Media</H4>
+              <Grid
+                className='mt-3248 gap-x-2448'
+                colConfig={{
+                  xxs: 2,
+                  md: 3
+                }}>
+                {personFacts.map((item, i) => (
+                  <div key={i}>
+                    <P weight='bold'>{item.title}</P>
 
-                  <FlexBox className='mt-12 items-center gap-32'>
-                    {socialMediaLinks.map((item, i) => (
+                    <P className='text-balance text-neutral-200'>{item.copy}</P>
+                  </div>
+                ))}
+              </Grid>
+
+              <FlexBox className='mt-32 items-center gap-32'>
+                {socialMediaLinks.some((link) => Boolean(link.url))
+                  ? socialMediaLinks.map((item, i) => (
                       <a
                         key={i}
                         href={item.url}
@@ -235,29 +256,11 @@ const PersonDetails = ({ personDetails }) => {
                         className='transition-colors can-hover:text-cyan-300'>
                         {item.icon}
                       </a>
-                    ))}
-                  </FlexBox>
-                </div>
-              ) : null}
+                    ))
+                  : null}
 
-              <Grid
-                className='mt-3248 gap-x-2448'
-                colConfig={{
-                  xxs: 2,
-                  md: 3
-                }}>
-                {personFacts.map((item, i) => (
-                  <div key={i}>
-                    <P size='large' weight='bold'>
-                      {item.title}
-                    </P>
-
-                    <P className='text-balance' weight='normal'>
-                      {item.copy}
-                    </P>
-                  </div>
-                ))}
-              </Grid>
+                <ShareButton shape='circle' iconSize={16} size='small' title={personDetails?.name || ""} text={personDetails?.biography || ""} />
+              </FlexBox>
             </div>
           </div>
         </LayoutContainer>

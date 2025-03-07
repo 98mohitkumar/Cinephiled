@@ -49,8 +49,8 @@ export const mergeEpisodeCount = (cast: Array<{ id: string; episode_count: numbe
   casting.forEach((item) => {
     const existing = mergedCast.findIndex((castItem) => castItem.id === item.id);
     if (existing > -1) {
-      const existingEpisodeCount = mergedCast[existing].episode_count ?? 0;
-      const currentEpisodeCount = item.episode_count ?? 0;
+      const existingEpisodeCount = mergedCast[existing].episode_count || 0;
+      const currentEpisodeCount = item.episode_count || 0;
       mergedCast[existing].episode_count = existingEpisodeCount + currentEpisodeCount;
     } else {
       mergedCast.push(item);
@@ -129,14 +129,6 @@ export const removeDuplicates = (items: Array<{ id: string }>) => {
   const cleanedItems = Array.from(uniqueItemsMap.values());
 
   return { cleanedItems };
-};
-
-// redundant
-export const getCleanTitle = (title: string): string => {
-  if (!title) return "";
-
-  const stringWithHyphens = title.replace(/[^\w\d\u0080-\uFFFF]+/g, "-");
-  return stringWithHyphens.replace(/[-\s]+$/, "");
 };
 
 export const fetchSuggestions = async ({
@@ -220,7 +212,7 @@ export const cn = (...classNames: ClassValue[]) => {
 
 export const breakpointAsNumber = (breakpoint: keyof typeof theme.breakpoints) => {
   const breakpointValue = theme.breakpoints[breakpoint];
-  return parseInt(breakpointValue.replace("px", ""));
+  return parseInt(breakpointValue.replace("rem", ""));
 };
 
 export const getNiceName = ({ id, name }: { id: string; name: string }) => {
@@ -228,4 +220,51 @@ export const getNiceName = ({ id, name }: { id: string; name: string }) => {
 
   const stringWithHyphens = name.replace(/[^\w\d\u0080-\uFFFF]+/g, "-");
   return `${id}-${stringWithHyphens.replace(/[-\s]+$/, "")}`;
+};
+
+export const getHasEpisodeReleased = (date: string) => {
+  const today = new Date();
+  const releaseDate = new Date(date);
+  return releaseDate < today;
+};
+
+export const mergeCrewData = (crewData: Array<{ id: number; job: string; name: string }>) => {
+  const mergedCrew: Array<{ id: number; job: string; name: string }> = [];
+
+  crewData.forEach((item) => {
+    const existing = mergedCrew.findIndex((crewItem) => crewItem.id === item.id);
+    if (existing > -1) {
+      const existingJob = mergedCrew[existing].job || "";
+      const currentJob = item.job || "";
+      mergedCrew[existing].job = existingJob + ", " + currentJob;
+    } else {
+      mergedCrew.push(item);
+    }
+  });
+
+  return mergedCrew;
+};
+
+export const getYouTubeTrailer = (videos: Array<{ id: string; site: string; type: string; published_at: string }>) => {
+  return (
+    videos
+      ?.filter((item) => matches(item?.site, "YouTube") && matches(item?.type, "Trailer"))
+      ?.sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime())
+      ?.at(0) || null
+  );
+};
+
+export const formatCurrency = ({ value, currency }: { value: number; currency: string }) => {
+  return value.toLocaleString("en-US", {
+    style: "currency",
+    currency: currency || "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
+};
+
+export const isEmptyObject = (obj: object) => {
+  if (!obj) return true;
+
+  return Object.keys(obj).length === 0;
 };

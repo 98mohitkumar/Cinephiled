@@ -30,7 +30,7 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
       <LayoutContainer className='py-2440'>
         <Tabs tabItemsCount={mediaTypeTabList.length} activeItemIndex={activeTabIndex}>
           {mediaTypeTabList.map(({ key, title }) => (
-            <TabItem key={key} onClick={() => setTab(key)} className={matches(activeTab, key) ? "active" : ""}>
+            <TabItem title={title} key={key} onClick={() => setTab(key)} className={matches(activeTab, key) ? "active" : ""}>
               {title}
             </TabItem>
           ))}

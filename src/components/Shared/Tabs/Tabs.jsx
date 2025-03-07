@@ -40,6 +40,7 @@ export const LinearTabs = ({ tabList, currentTab, setTab }) => {
       {tabList.map(({ key, name }) => (
         <div
           key={key}
+          title={name}
           style={{ width: `${100 / tabList.length}%` }}
           className={cn(
             `min-w-max`,

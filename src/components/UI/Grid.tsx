@@ -19,7 +19,8 @@ type ColCount =
   | "desktopAutoFillMedia"
   | "watchProviders"
   | "customHeroDetailsGrid"
-  | "peopleGrid";
+  | "peopleGrid"
+  | "desktopAutoFillMediaBackdrop";
 
 type ColumnCountProp = {
   xxs?: ColCount;

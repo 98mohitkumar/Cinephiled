@@ -21,7 +21,7 @@ export const useModal = () => {
   return { isModalVisible, openModal, closeModal };
 };
 
-const Modal = ({ children, isOpen, closeModal, width = null, align = null, closeOnClickedOutside = true }) => {
+const Modal = ({ children, isOpen, closeModal, closeOnClickedOutside = true, className }) => {
   const closeOnClickedOutsideHandler = (e) => {
     if (e.target.classList.contains("modal-outer") && closeOnClickedOutside) {
       closeModal();
@@ -44,8 +44,7 @@ const Modal = ({ children, isOpen, closeModal, width = null, align = null, close
                 "fixed inset-0 z-modal",
                 "modal-outer px-16 py-[10vh]",
                 "flex items-center justify-center",
-                "overflow-y-auto bg-black bg-opacity-75 backdrop-blur-sm backdrop-saturate-50",
-                align
+                "overflow-y-auto bg-black bg-opacity-75 backdrop-blur-sm backdrop-saturate-50"
               )}
               onClick={closeOnClickedOutsideHandler}>
               <motion.div
@@ -57,7 +56,7 @@ const Modal = ({ children, isOpen, closeModal, width = null, align = null, close
                     scale: 1
                   }
                 }}
-                className={cn("my-auto w-full max-w-xl p-1624", "rounded-xl border border-neutral-700 bg-black", width)}>
+                className={cn("my-auto w-full max-w-xl p-1624", "rounded-xl border border-neutral-700 bg-black", className)}>
                 {children}
               </motion.div>
             </motion.div>

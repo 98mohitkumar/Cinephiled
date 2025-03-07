@@ -11,6 +11,21 @@ import { ROUTES, blurPlaceholder } from "data/global";
 import { cn, getNiceName, getReleaseDate, matches } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
+const getMediaRoute = (type) => {
+  switch (type) {
+    case "movie":
+      return ROUTES.movies;
+    case "tv":
+      return ROUTES.tv;
+    case "collections":
+      return ROUTES.collections;
+    case "lists":
+      return ROUTES.lists;
+    default:
+      return ROUTES.movies;
+  }
+};
+
 const MediaTemplateGrid = ({
   media,
   showRating = true,
@@ -31,25 +46,8 @@ const MediaTemplateGrid = ({
     : {
         xxs: 2,
         md: 3,
-        lg: 4,
-        "2xl": 5,
-        "4xl": 6
+        xl: "desktopAutoFillMediaBackdrop"
       };
-
-  const getMediaRoute = (type) => {
-    switch (type) {
-      case "movie":
-        return ROUTES.movies;
-      case "tv":
-        return ROUTES.tv;
-      case "collections":
-        return ROUTES.collections;
-      case "lists":
-        return ROUTES.lists;
-      default:
-        return ROUTES.movies;
-    }
-  };
 
   return (
     <Grid colConfig={gridConfig} className={cn("items-start", className)}>
@@ -79,8 +77,8 @@ const MediaTemplateGrid = ({
           {children ? (
             children(media[index])
           ) : (
-            <div className='mt-24 pe-10'>
-              <H6 weight='medium' className='text-balance'>
+            <div className='mt-24'>
+              <H6 weight='semibold' className='line-clamp-2 text-pretty'>
                 {title || name}
               </H6>
               <P className='text-neutral-400' weight='medium' size='small-to-p'>

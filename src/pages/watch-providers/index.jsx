@@ -5,14 +5,15 @@ import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 
 import { getCountryCode } from "apiRoutes/user";
-import PlaceholderText from "components/PlaceholderText";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import MetaWrapper from "components/Shared/MetaWrapper";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import { TabItem, Tabs } from "components/Shared/Tabs/Tabs";
+import FlexBox from "components/UI/FlexBox";
 import Input from "components/UI/Input";
 import LayoutContainer from "components/UI/LayoutContainer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select";
-import H1 from "components/UI/Typography/H1";
+import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, blurPlaceholder, mediaTypeTabList, opacityMotionTransition, siteInfo } from "data/global";
 import useTabs from "hooks/useTabs";
@@ -59,8 +60,10 @@ const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, 
 
         <section className='relative z-5'>
           <div className='mb-3248 text-center'>
-            <div className='mb-2440 flex flex-wrap items-center justify-end gap-16'>
-              <Input type='text' placeholder='Search watch providers' onChange={searchHandler} className='shrink-0 max-sm:w-full sm:w-64' />
+            <FlexBox className='mb-2440 flex-wrap items-center justify-end gap-16'>
+              <div className='shrink-0 max-sm:w-full'>
+                <Input type='text' placeholder='Search watch providers' onChange={searchHandler} fullWidth />
+              </div>
 
               <Select defaultValue={selectedRegion || defaultRegion} onValueChange={handleSelectChange}>
                 <SelectTrigger className='w-fit min-w-[250px] shrink-0 max-sm:min-w-full'>
@@ -74,14 +77,16 @@ const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, 
                   ))}
                 </SelectContent>
               </Select>
-            </div>
+            </FlexBox>
 
-            <H1 className='mx-auto max-w-screen-lg'>Watch Providers {currentRegionName ? `available in ${currentRegionName}` : ""}</H1>
+            <H2 tag='h1' className='mx-auto max-w-screen-lg text-pretty'>
+              Watch Providers {currentRegionName ? `available in ${currentRegionName}` : ""}
+            </H2>
           </div>
 
           <Tabs tabItemsCount={mediaTypeTabList.length} activeItemIndex={activeTabIndex}>
             {mediaTypeTabList.map(({ key, title }) => (
-              <TabItem key={key} onClick={() => setTab(key)} className={matches(activeTab, key) ? "active" : ""}>
+              <TabItem key={key} onClick={() => setTab(key)} className={matches(activeTab, key) ? "active" : ""} title={title}>
                 {title}
               </TabItem>
             ))}

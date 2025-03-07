@@ -24,7 +24,7 @@ const ShareModal = ({ isModalOpen, closeModal }) => {
 
   return (
     <Fragment>
-      <Modal closeModal={closeModal} isOpen={isModalOpen} width='max-w-lg'>
+      <Modal closeModal={closeModal} isOpen={isModalOpen} className='max-w-lg'>
         <H4 weight='semibold'>Share</H4>
 
         <div className='my-16'>

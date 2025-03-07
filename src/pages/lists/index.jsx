@@ -3,9 +3,9 @@ import { Fragment } from "react";
 
 import { authOptions } from "api/auth/[...nextauth]";
 import { CreateList } from "components/pages/Lists/CreateList";
-import PlaceholderText from "components/PlaceholderText";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import MetaWrapper from "components/Shared/MetaWrapper";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";

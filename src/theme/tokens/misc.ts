@@ -1,31 +1,44 @@
-// These sizings are used in clamp() function
-export const minViewportWidth = 480;
-export const maxViewportWidth = 1280;
+// These sizings are used in clamp() function, viewport values are in rem
+export const minViewportWidth = 30; // 480px
+export const maxViewportWidth = 80; // 1280px
 export const pixelsPerRem = 16;
 
 // Media querie breakpoints
 export const breakpoints = {
-  xs: "480px",
-  sm: "640px",
-  md: "768px",
-  lg: "1024px",
-  xl: "1280px",
-  "2xl": "1536px",
-  "3xl": "1920px",
-  "4xl": "2160px",
-  "5xl": "2560px"
+  xs: "30rem", // 480px
+  "above-xs": "30.0625rem", // 481px
+  sm: "40rem", // 640px
+  "above-sm": "40.0625rem", // 641px
+  md: "48rem", // 768px
+  "above-md": "48.0625rem", // 769px
+  lg: "64rem", // 1024px
+  "above-lg": "64.0625rem", // 1025px
+  xl: "80rem", // 1280px
+  "above-xl": "80.0625rem", // 1281px
+  "2xl": "96rem", // 1536px
+  "above-2xl": "96.0625rem", // 1537px
+  "3xl": "120rem", // 1920px
+  "above-3xl": "120.0625rem", // 1921px
+  "4xl": "135rem", // 2160px
+  "above-4xl": "135.0625rem", // 2161px
+  "5xl": "160rem" // 2560px
 } as const;
+
+export const tailwindMaxBreakpoints = Object.fromEntries(Object.entries(breakpoints).map(([key, value]) => [`max-${key}`, { max: value }])) as Record<
+  `max-${keyof typeof breakpoints}`,
+  { max: string }
+>;
 
 // border radius tokens
 export const borderRadiusTokens = {
   none: "0px",
-  xs: "0.125rem", // 2px
-  sm: "0.25rem", // 4px
-  md: "0.375rem", // 6px
-  lg: "0.5rem", // 8px
-  xl: "0.75rem", // 12px
-  "2xl": "1rem", // 16px
-  "3xl": "1.5rem", // 24px
+  xs: "2px",
+  sm: "4px",
+  md: "6px",
+  lg: "8px",
+  xl: "12px",
+  "2xl": "16px",
+  "3xl": "24px",
   full: "9999px"
 } as const;
 

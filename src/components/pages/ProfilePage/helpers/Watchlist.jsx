@@ -2,10 +2,10 @@ import { motion, AnimatePresence } from "motion/react";
 import { Fragment } from "react";
 import { toast } from "sonner";
 
-import { addToWatchlist } from "apiRoutes/user";
+import { useAddToWatchlist } from "apiRoutes/user";
 import { LoadingSpinner } from "components/Loader/Loader";
 import Modal, { useModal } from "components/Modal/Modal";
-import PlaceholderText from "components/PlaceholderText";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
@@ -22,7 +22,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
 
   return (
     <Fragment>
-      <Modal isOpen={isModalVisible} closeModal={closeModal} width='max-w-lg'>
+      <Modal isOpen={isModalVisible} closeModal={closeModal} className='max-w-lg'>
         <P size='large'>
           Are you sure you want to remove <strong>{`${name} (${getReleaseYear(releaseDate)})`}</strong> from your watchlist?
         </P>
@@ -52,6 +52,7 @@ export const WatchlistCTA = ({ clickHandler, mediaData }) => {
 };
 
 const Watchlist = () => {
+  const { addToWatchlist } = useAddToWatchlist();
   const { moviesWatchlist, tvShowsWatchlist, isLoading, renderKey, validateMedia } = useMediaContext();
 
   const filterMedia = async ({ id, type }) => {

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 
+import DominantColor from "components/Shared/DominantColor/DominantColor";
 import { GenreTag, mediaDetailsWrapper } from "components/Shared/GlobalComponents";
 import MediaHeroBackground from "components/Shared/MediaHeroBackground/MediaHeroBackground";
 import MetaWrapper from "components/Shared/MetaWrapper";
@@ -9,7 +10,7 @@ import MediaImageTemplateGrid from "components/Templates/MediaImageTemplateGrid"
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
-import H1 from "components/UI/Typography/H1";
+import H2 from "components/UI/Typography/H2";
 import H3 from "components/UI/Typography/H3";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
@@ -51,8 +52,8 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
       <section className='relative'>
         <MediaHeroBackground backdropPath={backdrop_path} posterPath={poster_path} alt='collection-backdrop' />
         <LayoutContainer
-          className={cn("flex items-center gap-32 max-lg:pb-3248 lg:py-4864", {
-            "no-min-height py-2464 max-lg:flex-col max-lg:items-start": matches(LAYOUT_TYPE, LAYOUT_TYPES.poster),
+          className={cn("flex items-center above-lg:py-4864 max-lg:pb-3248", {
+            "no-min-height items-start gap-3240 py-2464 max-lg:flex-col": matches(LAYOUT_TYPE, LAYOUT_TYPES.poster),
             "blank py-2464": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
           })}
           css={mediaDetailsWrapper}>
@@ -73,11 +74,13 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
 
           <div
             className={cn("w-full max-w-full", {
-              "lg:max-w-md xl:max-w-xl 2xl:max-w-2xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.standard),
-              "lg:max-w-2xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.poster),
-              "lg:max-w-3xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
+              "above-lg:max-w-md xl:max-w-xl 2xl:max-w-2xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.standard),
+              "above-lg:max-w-2xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.poster),
+              "above-lg:max-w-3xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
             })}>
-            <H1 className='mb-16 text-pretty'>{name}</H1>
+            <H2 tag='h1' className='mb-16 text-pretty'>
+              {name}
+            </H2>
 
             {allGenres.length > 0 ? (
               <FlexBox className='mb-16 flex-wrap items-center gap-10'>
@@ -91,35 +94,45 @@ export const Collection = ({ collectionData, movieGenresData, collectionImagesDa
               </FlexBox>
             ) : null}
 
-            {overview ? <P size='large'>{overview}</P> : null}
+            {overview ? (
+              <P size='large' className='text-pretty'>
+                {overview}
+              </P>
+            ) : null}
           </div>
         </LayoutContainer>
       </section>
 
-      {/* parts */}
-      {parts.length > 0 ? (
-        <LayoutContainer className='py-3248'>
-          <H3 className='mb-1620'>Movies</H3>
+      <section className='relative'>
+        <DominantColor image={backdrop_path || poster_path} tint isUsingBackdrop={!!backdrop_path} angle='0deg' />
 
-          <MediaTemplateGrid media={sortedByReleaseDate} mediaType='movie' />
-        </LayoutContainer>
-      ) : null}
+        <div className='relative z-10'>
+          {/* parts */}
+          {parts.length > 0 ? (
+            <LayoutContainer className='py-3248'>
+              <H3 className='mb-1620'>Movies</H3>
 
-      {/* posters */}
-      {posters?.length > 0 ? (
-        <LayoutContainer className='py-3248'>
-          <H3 className='mb-1620'>Posters</H3>
-          <MediaImageTemplateGrid items={posters} type='posters' />
-        </LayoutContainer>
-      ) : null}
+              <MediaTemplateGrid media={sortedByReleaseDate} mediaType='movie' />
+            </LayoutContainer>
+          ) : null}
 
-      {/* backdrops */}
-      {backdrops?.length > 0 ? (
-        <LayoutContainer className='py-3248'>
-          <H3 className='mb-1620'>Backdrops</H3>
-          <MediaImageTemplateGrid items={backdrops} type='backdrops' />
-        </LayoutContainer>
-      ) : null}
+          {/* posters */}
+          {posters?.length > 0 ? (
+            <LayoutContainer className='py-3248'>
+              <H3 className='mb-1620'>Posters</H3>
+              <MediaImageTemplateGrid items={posters} type='posters' />
+            </LayoutContainer>
+          ) : null}
+
+          {/* backdrops */}
+          {backdrops?.length > 0 ? (
+            <LayoutContainer className='py-3248'>
+              <H3 className='mb-1620'>Backdrops</H3>
+              <MediaImageTemplateGrid items={backdrops} type='backdrops' />
+            </LayoutContainer>
+          ) : null}
+        </div>
+      </section>
     </Fragment>
   );
 };

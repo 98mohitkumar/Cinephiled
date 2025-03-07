@@ -10,7 +10,7 @@ import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H3 from "components/UI/Typography/H3";
 import P from "components/UI/Typography/P";
-import { ROUTES, siteInfo } from "data/global";
+import { ROUTES, blurPlaceholder, siteInfo } from "data/global";
 import posters from "images/posters.webp";
 import logo from "public/logo512.png";
 
@@ -51,14 +51,32 @@ const LoginPage = () => {
       <MetaWrapper title='Login - Cinephiled' description='Cinephiled login page' url={`${siteInfo.url}/${ROUTES.login}`} />
 
       <div css={pageWrapperStyles}>
-        <Image src={posters} fill alt='login-page-background' style={{ objectFit: "cover" }} priority className='background' />
+        <Image
+          src={posters}
+          fill
+          alt='login-page-background'
+          style={{ objectFit: "cover" }}
+          priority
+          className='background'
+          placeholder='blur'
+          blurDataURL={blurPlaceholder}
+        />
 
         <LayoutContainer className='relative z-10 grid place-items-center'>
           <FlexBox
             className='flex-col items-center justify-center gap-1624 overflow-hidden rounded-xl border border-neutral-700 bg-black p-2032 shadow-xl'
             css={LoginCardStyles}>
             <FlexBox className='items-center justify-center gap-24'>
-              <Image src={logo} width={85} height={50} alt='cinephiled-logo' priority className='h-14 object-cover' />
+              <Image
+                src={logo}
+                width={85}
+                height={50}
+                alt='cinephiled-logo'
+                priority
+                className='h-14 object-cover'
+                placeholder='blur'
+                blurDataURL={blurPlaceholder}
+              />
 
               <H3 tag='p' weight='semibold'>
                 +

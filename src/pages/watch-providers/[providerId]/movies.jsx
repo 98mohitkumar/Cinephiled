@@ -1,12 +1,12 @@
 import { Fragment } from "react";
 
-import PlaceholderText from "components/PlaceholderText";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import MetaWrapper from "components/Shared/MetaWrapper";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import LayoutContainer from "components/UI/LayoutContainer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select";
-import H1 from "components/UI/Typography/H1";
+import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo, sortOptions } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
@@ -50,17 +50,17 @@ const ProviderMovies = ({ media, region, providerName, providerId }) => {
         <DominantColor tint />
 
         <section className='relative z-5'>
-          <H1 className='mx-auto max-w-screen-lg text-center text-neutral-400'>
+          <H2 tag='h1' className='mx-auto max-w-screen-lg text-center text-neutral-400'>
             Movies available on
             <span className='text-white'>
               {" "}
               {providerName}&nbsp;({region})
             </span>
-          </H1>
+          </H2>
 
           {renderList?.length > 0 ? (
             <Fragment>
-              <div className='mb-2432 mt-3240 flex items-center justify-end gap-10'>
+              <div className='my-2432 flex items-center justify-end gap-10'>
                 <Select defaultValue={sortBy} onValueChange={handleSort}>
                   <SelectTrigger className='w-fit min-w-[250px]'>
                     <SelectValue placeholder='Sort By:' />

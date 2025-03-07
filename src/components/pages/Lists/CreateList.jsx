@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { createList } from "apiRoutes/user";
+import { useCreateList } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import ListBaseForm from "components/pages/Lists/helpers/ListBaseForm";
 import Button from "components/UI/Button";
@@ -12,10 +12,11 @@ import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES } from "data/global";
 import { useListsContext } from "Store/ListsContext";
 import { useUserContext } from "Store/UserContext";
-import { fetchOptions, getNiceName } from "utils/helper";
+import { fetchOptions, getNiceName, matches } from "utils/helper";
 
 export const CreateList = () => {
   const router = useRouter();
+  const { createList } = useCreateList();
   const { userInfo } = useUserContext();
   const [submitting, setSubmitting] = useState(false);
   const { updateList } = useListsContext();
@@ -67,20 +68,40 @@ export const CreateList = () => {
     }
   };
 
+  const openModalHandler = () => {
+    router.replace({ query: { create: "true" } }, undefined, { shallow: true });
+  };
+
+  const closeModalHandler = () => {
+    router.replace({ query: {} }, undefined, { shallow: true });
+  };
+
+  const isModalOpen = matches(router.query?.create, "true");
+
+  useEffect(() => {
+    if (isModalOpen) {
+      openModal();
+    } else {
+      closeModal();
+    }
+
+    return () => {};
+  }, [closeModal, isModalOpen, openModal]);
+
   return (
     <Fragment>
-      <Button onClick={openModal} size='large'>
+      <Button onClick={openModalHandler} size='large'>
         Create List
       </Button>
 
-      <Modal isOpen={isModalVisible} closeModal={closeModal}>
+      <Modal isOpen={isModalVisible} closeModal={closeModalHandler}>
         <H4 weight='semibold' className='mb-16'>
           Create List
         </H4>
 
         <ListBaseForm submitHandler={createListHandler}>
           <FlexBox className='gap-16'>
-            <Button onClick={closeModal} disabled={submitting} type='button' className='w-1/2' variant='outline'>
+            <Button onClick={closeModalHandler} disabled={submitting} type='button' className='w-1/2' variant='outline'>
               Close
             </Button>
 

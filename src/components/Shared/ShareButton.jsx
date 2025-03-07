@@ -4,8 +4,9 @@ import { Fragment } from "react";
 import { useModal } from "components/Modal/Modal";
 import ShareModal from "components/ShareModal/ShareModal";
 import Button from "components/UI/Button";
+import { matches } from "utils/helper";
 
-const ShareButton = ({ title, text, url, iconSize = 20, ...props }) => {
+const ShareButton = ({ title, text, url, iconSize = 20, variant = "", ...props }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
 
   const shareHandler = (e) => {
@@ -26,9 +27,13 @@ const ShareButton = ({ title, text, url, iconSize = 20, ...props }) => {
 
   return (
     <Fragment>
-      <Button onClick={shareHandler} title='share button' {...props}>
-        <Share2 size={iconSize} />
-      </Button>
+      {matches(variant, "icon") ? (
+        <Share2 size={iconSize} onClick={shareHandler} title='Share link' role='button' {...props} />
+      ) : (
+        <Button onClick={shareHandler} title='Share link' {...props}>
+          <Share2 size={iconSize} color='currentColor' />
+        </Button>
+      )}
 
       {/* share modal (fallback for browsers that don't support navigator.share) */}
       <ShareModal isModalOpen={isModalVisible} closeModal={closeModal} />

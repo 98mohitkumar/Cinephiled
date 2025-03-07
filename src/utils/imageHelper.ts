@@ -1,9 +1,13 @@
 import { StaticImageData } from "next/image";
 
+import defaultProfile from "images/DefaultAvatar.png";
+import defaultBackdrop from "images/DefaultBackdrop.png";
+import defaultPoster from "images/DefaultImage.png";
+
 const defaultImages = {
-  poster: "/images/DefaultImage.png",
-  profile: "/images/DefaultAvatar.png",
-  backdrop: "/images/DefaultBackdrop.png",
+  poster: defaultPoster,
+  profile: defaultProfile,
+  backdrop: defaultBackdrop,
   logo: ""
 } as const;
 

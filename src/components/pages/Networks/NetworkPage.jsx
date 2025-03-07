@@ -1,7 +1,7 @@
 import { Link2, MapPin } from "lucide-react";
 import Image from "next/image";
 
-import PlaceholderText from "components/PlaceholderText";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
@@ -88,6 +88,8 @@ const NetworkPage = ({ details, media }) => {
               fill
               style={{ objectFit: "cover" }}
               loading='eager'
+              placeholder='blur'
+              blurDataURL={blurPlaceholder}
             />
           </div>
 

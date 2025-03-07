@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 
 import { getCountryCode } from "apiRoutes/user";
-import Genres from "components/Explore/Genres";
-import WatchProviders from "components/Explore/WatchProviders";
+import Genres from "components/pages/Explore/Genres";
+import WatchProviders from "components/pages/Explore/WatchProviders";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";

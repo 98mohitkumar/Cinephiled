@@ -1,15 +1,15 @@
 import Image from "next/image";
 import { Fragment } from "react";
 
+import { TMDBCredit } from "components/Shared/GlobalComponents";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H1 from "components/UI/Typography/H1";
 import H2 from "components/UI/Typography/H2";
 import P from "components/UI/Typography/P";
-import { ROUTES, siteInfo } from "data/global";
+import { ROUTES, blurPlaceholder, siteInfo } from "data/global";
 import aboutBackground from "images/ShowCase.webp";
-import { TMDBCredit } from "styles/GlobalComponents";
 import { pageBackgroundStyles } from "styles/PageStyles/aboutPageStyles";
 
 const About = () => {
@@ -22,7 +22,16 @@ const About = () => {
       />
 
       <div css={pageBackgroundStyles}>
-        <Image src={aboutBackground} fill alt='about-cinephiled-background' style={{ objectFit: "cover" }} priority className='background' />
+        <Image
+          src={aboutBackground}
+          fill
+          alt='about-cinephiled-background'
+          style={{ objectFit: "cover" }}
+          priority
+          className='background'
+          placeholder='blur'
+          blurDataURL={blurPlaceholder}
+        />
 
         <LayoutContainer className='relative z-5 flex items-center justify-center py-32 text-center'>
           <div className='max-w-6xl'>
@@ -41,12 +50,12 @@ const About = () => {
               <br />
               I welcome any feedback or suggestions! Feel free to reach out using the social links below. <br />
               <br />
-              P.S. There&apos;s a hidden easter egg in one of the 2016 horror movies. Can you find it?
+              <b>P.S.</b> Legend has it there&apos;s a hidden Easter egg lurking in a horror film. Dare to find it?
             </P>
 
             <div className='mt-48'>
               <H2 className='mb-12'>Credits</H2>
-              <FlexBox className='items-center justify-center gap-2096 whitespace-nowrap max-xs:flex-col xs:-me-32'>
+              <FlexBox className='items-center justify-center gap-x-4896 gap-y-2096 whitespace-nowrap above-xs:-me-32 max-xs:flex-col'>
                 <a href='https://www.themoviedb.org' target='_blank' rel='noreferrer'>
                   <TMDBCredit />
                 </a>

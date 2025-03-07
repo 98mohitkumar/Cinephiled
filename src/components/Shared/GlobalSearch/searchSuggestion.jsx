@@ -5,7 +5,7 @@ import FlexBox from "components/UI/FlexBox";
 import H6 from "components/UI/Typography/H6";
 import P from "components/UI/Typography/P";
 import { ROUTES } from "data/global";
-import { cn, getNiceName, getReleaseDate, getReleaseYear, matches } from "utils/helper";
+import { cn, getNiceName, getReleaseYear, matches } from "utils/helper";
 
 import { searchItem } from "./GlobalSearchStyles";
 
@@ -16,28 +16,28 @@ const getSuggestedItem = ({ data, type }) => {
     case "movie":
       dynamicItemData = {
         title: data.title,
-        releaseDate: getReleaseDate(data.release_date),
+        releaseYear: getReleaseYear(data.release_date),
         type: "Movie"
       };
       break;
     case "tv":
       dynamicItemData = {
         title: data.name,
-        releaseDate: getReleaseDate(data.first_air_date),
+        releaseYear: getReleaseYear(data.first_air_date),
         type: "TV Show"
       };
       break;
     case "person":
       dynamicItemData = {
         title: data.name,
-        releaseDate: null,
+        releaseYear: null,
         type: "Person"
       };
       break;
     default:
       dynamicItemData = {
         title: null,
-        releaseDate: null
+        releaseYear: null
       };
   }
 
@@ -69,7 +69,7 @@ const SearchSuggestion = ({ data, type, className, ...props }) => {
           css={searchItem}
           {...props}>
           <H6 weight='medium' className='text-black'>
-            {suggestedItem.title} {suggestedItem.releaseDate && `(${getReleaseYear(suggestedItem.releaseDate)})`}
+            {suggestedItem.title} {suggestedItem.releaseYear ? `(${suggestedItem.releaseYear})` : null}
           </H6>
 
           <P

@@ -1,12 +1,12 @@
 import { Fragment } from "react";
 
-import PlaceholderText from "components/PlaceholderText";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import MetaWrapper from "components/Shared/MetaWrapper";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import LayoutContainer from "components/UI/LayoutContainer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select";
-import H1 from "components/UI/Typography/H1";
+import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo, sortOptions } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
@@ -43,7 +43,9 @@ const Movies = ({ renderList, genreName, genreId }) => {
       <section className='relative'>
         <DominantColor tint />
         <LayoutContainer className='relative z-5 pb-24 pt-4864'>
-          <H1 className='mb-3240 text-center text-white'>{genreName} Movies</H1>
+          <H2 tag='h1' className='mb-2432 text-center text-white'>
+            {genreName} Movies
+          </H2>
 
           {cleanedItems?.length > 0 ? (
             <Fragment>

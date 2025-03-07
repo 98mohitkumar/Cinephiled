@@ -1,9 +1,9 @@
 import { Github, Linkedin } from "lucide-react";
 
+import { TMDBCredit } from "components/Shared/GlobalComponents";
 import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H4 from "components/UI/Typography/H4";
-import { TMDBCredit } from "styles/GlobalComponents";
 
 import { footerWrapper, footerLink } from "./FooterStyles";
 

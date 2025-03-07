@@ -20,7 +20,7 @@ const PersonBiography = ({ biography }) => {
 
   return (
     <>
-      <div ref={bioRef} className={cn("mt-16 space-y-4", isBioCollapsed ? "line-clamp-5" : "")}>
+      <div ref={bioRef} className={cn("mt-10 space-y-4 break-words", isBioCollapsed ? "line-clamp-5" : "")}>
         {biographyParagraphs.map((paragraph, index) => (
           <P key={index} size='large'>
             {paragraph}

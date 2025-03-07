@@ -1,22 +1,21 @@
-import Link from "next/link";
 import { Fragment } from "react";
 
+import CrewCredits from "components/Shared/CrewCredits";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import { mediaDetailsWrapper } from "components/Shared/GlobalComponents";
 import MediaHeroBackground from "components/Shared/MediaHeroBackground/MediaHeroBackground";
 import MetaWrapper from "components/Shared/MetaWrapper";
+import ShareButton from "components/Shared/ShareButton";
 import TVStats from "components/Shared/TVStats";
 import { CastCarousel } from "components/Templates/CastTemplate";
 import MediaImageTemplateGrid from "components/Templates/MediaImageTemplateGrid";
-import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H2 from "components/UI/Typography/H2";
 import H3 from "components/UI/Typography/H3";
-import H4 from "components/UI/Typography/H4";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
 import { LAYOUT_TYPES, ROUTES, siteInfo } from "data/global";
-import { cn, fetchOptions, getNiceName, getReleaseYear, matches } from "utils/helper";
+import { cn, fetchOptions, getNiceName, getReleaseYear, matches, mergeCrewData } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const Episode = ({
@@ -30,8 +29,7 @@ const Episode = ({
   episodeName,
   runtime,
   backdrops,
-  director,
-  writers,
+  crewData,
   tvData: { id, name, airDate }
 }) => {
   let LAYOUT_TYPE = LAYOUT_TYPES.standard;
@@ -55,63 +53,38 @@ const Episode = ({
         <MediaHeroBackground backdropPath={backdrop} posterPath={backdrop} alt='episode-backdrop' />
 
         <LayoutContainer
-          className={cn("flex items-center gap-32 max-lg:pb-3248 lg:py-4864", {
+          className={cn("flex items-center gap-32 above-lg:py-4864 max-lg:pb-3248", {
             "blank py-2464": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
           })}
           css={mediaDetailsWrapper}>
           <div
             className={cn("w-full max-w-full", {
-              "lg:max-w-md xl:max-w-xl 2xl:max-w-2xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.standard),
-              "lg:max-w-3xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
+              "above-lg:max-w-md xl:max-w-xl 2xl:max-w-2xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.standard),
+              "above-lg:max-w-3xl": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
             })}>
-            <H4 className={cn("mb-16 text-pretty", matches(LAYOUT_TYPE, LAYOUT_TYPES.blank) ? "text-neutral-300" : "text-neutral-400")}>
+            <P
+              weight='semibold'
+              size='large'
+              className={cn("text-pretty", matches(LAYOUT_TYPE, LAYOUT_TYPES.blank) ? "text-neutral-300" : "text-neutral-400")}>
               {name} ({getReleaseYear(airDate)})
-            </H4>
+            </P>
 
             <div>
-              <H2 tag='h1' className='mb-16 text-pretty'>
-                {episodeName} ({`S${seasonNumber}E${episodeNumber}`})
+              <H2 tag='h1' className='mb-16 text-balance'>
+                {episodeName} ({`S${seasonNumber} E${episodeNumber}`})
               </H2>
 
               <TVStats releaseDate={releaseDate} rating={rating} totalRuntime={runtime} />
 
-              {overview ? <P size='large'>{overview}</P> : null}
-
-              {/* <ShareButton className='mt-20' shape='circle' iconSize={20} size='large' /> */}
-
-              {director?.id && director?.name ? (
-                <FlexBox className='mt-3240 flex-wrap items-center gap-x-4864 gap-y-24'>
-                  <div>
-                    <P size='large' weight='semibold'>
-                      Director
-                    </P>
-
-                    <Link href={`/${ROUTES.person}/${getNiceName({ id: director?.id, name: director?.name })}`}>
-                      <P weight='medium' className='text-neutral-300 underline transition-colors can-hover:text-neutral-100 can-hover:no-underline'>
-                        {director?.name}
-                      </P>
-                    </Link>
-                  </div>
-
-                  {writers?.length > 0
-                    ? writers.map((writer) => (
-                        <div key={writer.id}>
-                          <P size='large' weight='semibold'>
-                            Writer
-                          </P>
-
-                          <Link href={`/${ROUTES.person}/${getNiceName({ id: writer?.id, name: writer?.name })}`}>
-                            <P
-                              weight='medium'
-                              className='text-neutral-300 underline transition-colors can-hover:text-neutral-100 can-hover:no-underline'>
-                              {writer?.name}
-                            </P>
-                          </Link>
-                        </div>
-                      ))
-                    : null}
-                </FlexBox>
+              {overview ? (
+                <P size='large' className='text-pretty'>
+                  {overview}
+                </P>
               ) : null}
+
+              {crewData?.length > 0 ? <CrewCredits crewData={crewData} className='mt-2032' /> : null}
+
+              <ShareButton shape='circle' iconSize={16} size='small' className='mt-16' title={name} text={overview} />
             </div>
           </div>
         </LayoutContainer>
@@ -164,8 +137,10 @@ export const getServerSideProps = async (ctx) => {
 
     const { cast, guest_stars } = res?.credits;
 
-    const director = res?.credits?.crew?.find((item) => item.job === "Director") || null;
-    const writers = res?.credits?.crew?.filter((item) => item.job === "Writer").slice(0, 2) || [];
+    const director = res?.credits?.crew?.find((item) => matches(item.job, "Director")) || {};
+    const writers = res?.credits?.crew?.filter((item) => matches(item.job, "Writer")).slice(0, 2) || [];
+
+    const crewData = mergeCrewData([{ ...director }, ...writers]);
 
     return {
       props: {
@@ -179,8 +154,7 @@ export const getServerSideProps = async (ctx) => {
         backdrop: res?.still_path,
         runtime: res?.runtime,
         backdrops: res?.images?.stills,
-        director,
-        writers,
+        crewData,
         tvData: {
           id: ctx.query.id,
           name: tvData?.name,

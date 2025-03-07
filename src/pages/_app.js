@@ -11,7 +11,7 @@ import Toast from "components/Shared/Toast";
 import ListsContextProvider from "Store/ListsContext";
 import MediaContextProvider from "Store/MediaContext";
 import UserContextProvider from "Store/UserContext";
-import Theme from "styles/theme";
+import GlobalStyles from "styles/globals";
 import ErrorBoundary from "utils/ErrorBoundary";
 import "utils/logging";
 
@@ -52,24 +52,23 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         <title>Cinephiled</title>
       </Head>
 
-      <Theme>
-        <ErrorBoundary>
-          <SessionProvider session={session} refetchOnWindowFocus={false}>
-            <NavigationGuardProvider>
-              <UserContextProvider>
-                <ListsContextProvider>
-                  <MediaContextProvider>
-                    {isLoading ? <Loader /> : null}
-                    <Layout>
-                      <Component {...pageProps} />
-                    </Layout>
-                  </MediaContextProvider>
-                </ListsContextProvider>
-              </UserContextProvider>
-            </NavigationGuardProvider>
-          </SessionProvider>
-        </ErrorBoundary>
-      </Theme>
+      <GlobalStyles />
+      <ErrorBoundary>
+        <SessionProvider session={session} refetchOnWindowFocus={false}>
+          <NavigationGuardProvider>
+            <UserContextProvider>
+              <ListsContextProvider>
+                <MediaContextProvider>
+                  {isLoading ? <Loader /> : null}
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </MediaContextProvider>
+              </ListsContextProvider>
+            </UserContextProvider>
+          </NavigationGuardProvider>
+        </SessionProvider>
+      </ErrorBoundary>
 
       <Toast />
     </Fragment>

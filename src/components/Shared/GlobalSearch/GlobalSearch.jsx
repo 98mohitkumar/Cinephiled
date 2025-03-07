@@ -108,7 +108,7 @@ const GlobalSearch = () => {
               <div className='suggestions mt-8 drop-shadow-md'>
                 {isFetching ? (
                   <div className='grid-center min-h-48'>
-                    <LoadingSpinner className='text-neutral-900' />
+                    <LoadingSpinner className='text-black' />
                   </div>
                 ) : searchSuggestions.length > 0 ? (
                   <Fragment>

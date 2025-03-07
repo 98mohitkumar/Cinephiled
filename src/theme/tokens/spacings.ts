@@ -49,7 +49,7 @@ const spacings = {
   ]
 } as const;
 
-const staticTokens = Object.fromEntries(spacings.static.map((s) => [s, `${s / 16}rem`])) as Record<(typeof spacings.static)[number], string>;
+const staticTokens = Object.fromEntries(spacings.static.map((s) => [s, `${s}px`])) as Record<(typeof spacings.static)[number], string>;
 
 const responsiveTokens = Object.fromEntries(
   spacings.responsive.map(({ min, max }) => [`${min}${max}`, cssClamp({ minSize: min, maxSize: max })])

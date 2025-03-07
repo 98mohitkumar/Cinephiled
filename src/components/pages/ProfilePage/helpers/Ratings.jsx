@@ -4,8 +4,8 @@ import { Fragment } from "react";
 
 import { LoadingSpinner } from "components/Loader/Loader";
 import { useModal } from "components/Modal/Modal";
-import PlaceholderText from "components/PlaceholderText";
 import RatingModal from "components/RatingModal/RatingModal";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import Button from "components/UI/Button";
 import P from "components/UI/Typography/P";

@@ -4,7 +4,7 @@ import { useNavigationGuard } from "next-navigation-guard";
 import { Fragment, useState } from "react";
 import { toast } from "sonner";
 
-import { updateList, updateListItems } from "apiRoutes/user";
+import { useUpdateList, useUpdateListItems } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import Button from "components/UI/Button";
@@ -22,6 +22,8 @@ import { cn, getReleaseDate, matches } from "utils/helper";
 
 const ListItems = ({ listItems, id, userCanEditList }) => {
   const { revalidateData } = useRefreshData();
+  const { updateList } = useUpdateList();
+  const { updateListItems } = useUpdateListItems();
   const [itemsToRemove, setItemsToRemove] = useState([]);
   const {
     userInfo: { accountId }
@@ -113,7 +115,7 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
         {({ id, title, name, release_date, first_air_date, media_type, backdrop_path }) => (
           <div className={cn("mt-24 pe-10", { "mt-32 pe-0": userCanEditList })}>
             <FlexBox className='items-start justify-between gap-16'>
-              <H6 weight='medium' className='text-balance'>
+              <H6 weight='medium' className='line-clamp-2 text-pretty'>
                 {title || name}
               </H6>
 
@@ -176,7 +178,7 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
           <div className='mt-16 overflow-hidden rounded-lg border border-neutral-600 bg-neutral-800'>
             {itemsToRemove.map((item) => (
               <FlexBox key={item.id} className='items-center justify-between gap-24 border-b border-neutral-600 px-16 py-12 last:border-b-0'>
-                <P weight='medium' className='line-clamp-1 text-neutral-300'>
+                <P weight='medium' className='line-clamp-2 text-neutral-300'>
                   {item.title || item.name}
                 </P>
 
@@ -187,8 +189,8 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
         ) : null}
 
         <FlexBox className='mt-24 gap-16'>
-          <Button variant='outline' onClick={closeModal} className='w-1/2' title='Cancel removing items from list'>
-            Cancel
+          <Button variant='outline' onClick={closeModal} className='w-1/2' title='Close modal'>
+            Close
           </Button>
           <Button variant='danger' onClick={removeItemsRequestHandler} className='w-1/2' title='Remove items from list'>
             Remove

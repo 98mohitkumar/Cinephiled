@@ -5,22 +5,37 @@ type CssClampArgs = {
   maxSize: number;
   minViewport?: number;
   maxViewport?: number;
+  convertToRem?: boolean;
 };
 
+export const rem = (value: number) => value / pixelsPerRem;
+export const px = (value: number) => value * pixelsPerRem;
+
+/* 
+minSize and maxSize are the values of css properties, can be in px or rem
+minViewport and maxViewport are the viewport values, that are defined in rem in tokens
+
+when convertToRem is true, the values are converted to rem while breakpoints are in already inrem, when it's false the viewport values are converted to px
+*/
+
 // ---- css clamp ---- //
-export const cssClamp = ({ minSize, maxSize, minViewport = minViewportWidth, maxViewport = maxViewportWidth }: CssClampArgs) => {
-  const rem = (value: number) => value / pixelsPerRem;
+export const cssClamp = ({
+  minSize,
+  maxSize,
+  minViewport = minViewportWidth,
+  maxViewport = maxViewportWidth,
+  convertToRem = false
+}: CssClampArgs) => {
+  const minValue = convertToRem ? rem(minSize) : minSize;
+  const maxValue = convertToRem ? rem(maxSize) : maxSize;
 
-  const minScreenWidth = rem(minViewport);
-  const maxScreenWidth = rem(maxViewport);
+  const minViewportValue = convertToRem ? minViewport : px(minViewport);
+  const maxViewportValue = convertToRem ? maxViewport : px(maxViewport);
 
-  const minValue = rem(minSize);
-  const maxValue = rem(maxSize);
+  const slope = (maxValue - minValue) / (maxViewportValue - minViewportValue);
+  const yAxisIntersection = minValue - slope * minViewportValue;
 
-  const slope = (maxValue - minValue) / (maxScreenWidth - minScreenWidth);
-  const yAxisIntersection = minValue - slope * minScreenWidth;
-
-  return `clamp(${Math.min(minValue, maxValue)}rem, calc(${yAxisIntersection.toFixed(5)}rem + ${(slope * 100).toFixed(5)}vw), ${Math.max(maxValue, minValue)}rem)`;
+  return `clamp(${Math.min(minValue, maxValue)}${convertToRem ? "rem" : "px"}, calc(${yAxisIntersection.toFixed(5)}${convertToRem ? "rem" : "px"} + ${(slope * 100).toFixed(5)}vw), ${Math.max(maxValue, minValue)}${convertToRem ? "rem" : "px"})`;
 };
 
 // ---- media queries ---- //

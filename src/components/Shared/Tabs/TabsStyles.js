@@ -9,8 +9,11 @@ export const tabWrapperStyles = css`
   margin-inline: auto;
   position: relative;
   grid-template-columns: ${({ $tabItemsCount }) => `repeat(${$tabItemsCount}, 1fr)`};
-  width: ${({ $tabItemsCount }) =>
-    cssClamp({ minSize: 210 * $tabItemsCount, maxSize: 320 * $tabItemsCount, maxViewport: breakpointAsNumber("3xl") })};
+  max-width: 100%;
+  width: min(
+    ${({ $tabItemsCount }) => cssClamp({ minSize: 210 * $tabItemsCount, maxSize: 320 * $tabItemsCount, maxViewport: breakpointAsNumber("3xl") })},
+    800px
+  );
   border: 4px solid ${theme.colors.neutral[200]};
   background: ${theme.colors.neutral[200]};
   border-radius: ${theme.borderRadius["2xl"]};
@@ -39,8 +42,12 @@ export const tabItemStyles = css`
   user-select: none;
   color: ${theme.colors.black};
   z-index: ${theme.zIndex[2]};
-  transition: ${transition({ property: "color", duration: 0.4, timingFunction: "ease-in-out-quart" })};
-  padding: ${cssClamp({ minSize: 12, maxSize: 16, maxViewport: breakpointAsNumber("3xl") })};
+  padding: ${cssClamp({ minSize: 10, maxSize: 16, maxViewport: breakpointAsNumber("3xl") })};
+
+  &,
+  & svg {
+    transition: ${transition({ property: "color", duration: 0.4, timingFunction: "ease-in-out-quart" })};
+  }
 
   &.active {
     color: ${theme.colors.white};

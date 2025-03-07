@@ -1,66 +1,77 @@
+import { cva, VariantProps } from "class-variance-authority";
 import { MotionProps, motion } from "motion/react";
 import { ComponentPropsWithRef } from "react";
 
-import { cn, matches } from "utils/helper";
+import { cn } from "utils/helper";
 
-type ButtonProps = ComponentPropsWithRef<"button"> &
-  Omit<MotionProps, "variants"> & {
-    variant?: "primary" | "secondary" | "outline" | "danger";
-    size?: "small" | "default" | "large";
-    weight?: "normal" | "medium" | "semibold" | "bold";
-    fullWidth?: boolean;
-    shape?: "rounded" | "circle";
-  };
+const buttonClasses = cva("grid min-w-max place-items-center overflow-clip leading-4 transition-colors ease-in-out", {
+  variants: {
+    variant: {
+      primary: "bg-neutral-200 text-black",
+      secondary: "border border-neutral-600 bg-neutral-700 text-white",
+      outline: "border border-neutral-600 bg-black text-white",
+      danger: "border border-red-800 bg-red-950 text-white"
+    },
+    size: {
+      small: "h-9 px-12 text-small leading-3",
+      medium: "h-10 px-16 text-p",
+      large: "h-11 px-24 text-p"
+    },
+    shape: {
+      rounded: "",
+      circle: "rounded-full aspect-square px-0",
+      pill: "rounded-3xl"
+    },
+    weight: {
+      normal: "font-normal",
+      medium: "font-medium",
+      semibold: "font-semibold",
+      bold: "font-bold"
+    },
+    fullWidth: {
+      true: "w-full"
+    },
+    disabled: {
+      true: "disabled:bg-neutral-700 disabled:text-neutral-400 border-none cursor-not-allowed"
+    }
+  },
+  compoundVariants: [
+    {
+      size: "small",
+      shape: "rounded",
+      className: "rounded-md"
+    },
+    {
+      size: ["medium", "large"],
+      shape: "rounded",
+      className: "rounded-lg"
+    },
+    {
+      size: ["small", "medium", "large"],
+      shape: "pill",
+      className: "rounded-3xl px-16"
+    }
+  ],
+  defaultVariants: {
+    variant: "primary",
+    size: "medium",
+    weight: "medium",
+    shape: "rounded",
+    fullWidth: false,
+    disabled: false
+  }
+});
 
-const Button = ({
-  children,
-  className,
-  variant = "primary",
-  size = "default",
-  weight = "medium",
-  ref,
-  type = "button",
-  fullWidth = false,
-  shape = "rounded",
-  ...props
-}: ButtonProps) => (
+type ButtonProps = ComponentPropsWithRef<"button"> & Omit<MotionProps, "variants"> & VariantProps<typeof buttonClasses>;
+
+const Button = ({ children, className, variant, size, weight, ref, type = "button", fullWidth = false, shape, disabled, ...props }: ButtonProps) => (
   <motion.button
     ref={ref}
     whileHover={{ scale: 1.04 }}
     whileTap={{ scale: 0.96 }}
-    className={cn(
-      "grid min-w-max place-items-center overflow-clip leading-4",
-      "disabled:pointer-events-none disabled:bg-neutral-700 disabled:text-neutral-400",
-      "transition-colors ease-in-out",
-      {
-        "bg-neutral-200 text-black": matches(variant, "primary"),
-        "border border-neutral-600 bg-neutral-700 text-white": matches(variant, "secondary"),
-        "border border-neutral-600 bg-black text-white disabled:border-neutral-600 disabled:bg-black disabled:text-neutral-400": matches(
-          variant,
-          "outline"
-        ),
-        "border border-red-800 bg-red-950 text-white": matches(variant, "danger")
-      },
-      {
-        "h-9 rounded-md px-12 text-small leading-3": matches(size, "small"),
-        "h-10 rounded-lg px-16 text-p": matches(size, "default"),
-        "h-11 rounded-lg px-24 text-p": matches(size, "large")
-      },
-      {
-        "font-normal": matches(weight, "normal"),
-        "font-medium": matches(weight, "medium"),
-        "font-semibold": matches(weight, "semibold"),
-        "font-bold": matches(weight, "bold")
-      },
-      {
-        "w-full": matches(fullWidth, true)
-      },
-      {
-        "aspect-square rounded-full px-0": matches(shape, "circle")
-      },
-      className
-    )}
+    className={cn(buttonClasses({ variant, size, weight, fullWidth, shape, disabled }), className)}
     type={type}
+    disabled={disabled}
     {...props}>
     {children}
   </motion.button>

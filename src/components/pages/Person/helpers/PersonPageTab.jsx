@@ -3,8 +3,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 
-import PlaceholderText from "components/PlaceholderText";
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "components/Shared/Drawer";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import { TabItem, Tabs } from "components/Shared/Tabs/Tabs";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
@@ -24,7 +24,7 @@ const MobileFilterDrawer = (props) => {
   return (
     <Drawer open={isDrawerOpen} onClose={() => setDrawerOpen(false)}>
       <DrawerTrigger asChild className=''>
-        <Button variant='secondary' size='large' className='hidden items-center gap-6 max-md:flex' onClick={() => setDrawerOpen(true)}>
+        <Button variant='secondary' size='large' className='hidden items-center gap-6 max-lg:flex' onClick={() => setDrawerOpen(true)}>
           <ListFilter size={18} />
           Apply Filters
         </Button>
@@ -100,7 +100,7 @@ const PersonPageTab = ({ movieCredits, tvCredits, movieDepartmentList, tvDepartm
       </Tabs>
 
       <FlexBox className='mt-40 justify-end'>
-        <FlexBox className='justify-end gap-16 max-md:hidden'>
+        <FlexBox className='justify-end gap-16 max-lg:hidden'>
           <MediaFilters
             sortBy={sortBy}
             handleSortSelection={handleSortSelection}

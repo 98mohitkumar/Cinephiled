@@ -2,7 +2,7 @@ import { type Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
 
 import { colors } from "./src/theme/tokens/colors";
-import { borderRadiusTokens, breakpoints, transitionTimings, zIndexTokens } from "./src/theme/tokens/misc";
+import { borderRadiusTokens, breakpoints, tailwindMaxBreakpoints, transitionTimings, zIndexTokens } from "./src/theme/tokens/misc";
 import { tailwindSpacingTokens } from "./src/theme/tokens/spacings";
 import { tailwindFontSizeTokens } from "./src/theme/tokens/typography";
 
@@ -37,6 +37,7 @@ const config: Config = {
     extend: {
       gridTemplateColumns: {
         desktopAutoFillMedia: "repeat(auto-fill, minmax(200px, 1fr))",
+        desktopAutoFillMediaBackdrop: "repeat(auto-fill, minmax(290px, 1fr))",
         peopleGrid: "repeat(auto-fill, minmax(160px, 1fr))",
         watchProviders: "repeat(auto-fill, minmax(min(55px, 20vw), 1fr))",
         customHeroDetailsGrid: "16rem 1fr",
@@ -61,7 +62,22 @@ const config: Config = {
       },
       minHeight: {
         halfScreen: "50vh"
-      }
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" }
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" }
+        }
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out"
+      },
+      screens: tailwindMaxBreakpoints
     }
   },
   plugins: [

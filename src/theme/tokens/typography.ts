@@ -5,11 +5,11 @@ import { pixelsPerRem } from "./misc";
 // https://utopia.fyi/type/calculator/?c=480,16,1.1625,1280,16,1.25,6,2,&s=0.75%7C0.5%7C0.25,1.5%7C2%7C3%7C4%7C6,s-l&g=s,l,xl,12
 const fontSizes = {
   static: [
-    { key: "h1Static", size: 60, lineHeight: 64, letterSpacing: -0.5 },
-    { key: "h2Static", size: 48, lineHeight: 52, letterSpacing: -0.35 },
-    { key: "h3Static", size: 40, lineHeight: 48, letterSpacing: -0.2 },
-    { key: "h4Static", size: 32, lineHeight: 40, letterSpacing: -0.15 },
-    { key: "h5Static", size: 24, lineHeight: 32, letterSpacing: -0.05 },
+    { key: "h1Static", size: 60, lineHeight: 70, letterSpacing: -0.5 },
+    { key: "h2Static", size: 48, lineHeight: 58, letterSpacing: -0.35 },
+    { key: "h3Static", size: 40, lineHeight: 52, letterSpacing: -0.2 },
+    { key: "h4Static", size: 32, lineHeight: 42, letterSpacing: -0.15 },
+    { key: "h5Static", size: 24, lineHeight: 34, letterSpacing: -0.05 },
     { key: "h6Static", size: 20, lineHeight: 30, letterSpacing: 0 },
 
     // base size and variations of p
@@ -22,31 +22,31 @@ const fontSizes = {
     {
       key: "h1",
       size: { minSize: 40, maxSize: 60 },
-      lineHeight: { minHeight: 44, maxHeight: 64 },
+      lineHeight: { minHeight: 48, maxHeight: 72 },
       letterSpacing: { minSpacing: -0.2, maxSpacing: -0.5 }
     },
     {
       key: "h2",
       size: { minSize: 32, maxSize: 48 },
-      lineHeight: { minHeight: 40, maxHeight: 52 },
+      lineHeight: { minHeight: 42, maxHeight: 60 },
       letterSpacing: { minSpacing: -0.15, maxSpacing: -0.35 }
     },
     {
       key: "h3",
       size: { minSize: 28, maxSize: 40 },
-      lineHeight: { minHeight: 36, maxHeight: 48 },
+      lineHeight: { minHeight: 38, maxHeight: 56 },
       letterSpacing: { minSpacing: -0.1, maxSpacing: -0.2 }
     },
     {
       key: "h4",
       size: { minSize: 24, maxSize: 32 },
-      lineHeight: { minHeight: 32, maxHeight: 40 },
+      lineHeight: { minHeight: 34, maxHeight: 48 },
       letterSpacing: { minSpacing: -0.05, maxSpacing: -0.15 }
     },
     {
       key: "h5",
       size: { minSize: 20, maxSize: 24 },
-      lineHeight: { minHeight: 28, maxHeight: 32 },
+      lineHeight: { minHeight: 28, maxHeight: 34 },
       letterSpacing: { minSpacing: 0, maxSpacing: -0.05 }
     },
     {

@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from "motion/react";
 import { Fragment } from "react";
 import { toast } from "sonner";
 
-import { addToWatchlist } from "apiRoutes/user";
+import { useAddToWatchlist } from "apiRoutes/user";
 import { LoadingSpinner } from "components/Loader/Loader";
-import PlaceholderText from "components/PlaceholderText";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import Button from "components/UI/Button";
 import { opacityMotionTransition } from "data/global";
@@ -17,6 +17,7 @@ import { ProfileMediaTab } from "./ProfileMediaTab";
 
 const MovieRecommendations = () => {
   const { userInfo } = useUserContext();
+  const { addToWatchlist } = useAddToWatchlist();
   const { movieRecommendations, moviesWatchlist, validateMedia } = useMediaContext();
   const { cleanedItems } = removeDuplicates(movieRecommendations);
 
@@ -109,6 +110,7 @@ const MovieRecommendations = () => {
 
 const TvRecommendations = () => {
   const { userInfo } = useUserContext();
+  const { addToWatchlist } = useAddToWatchlist();
   const { tvRecommendations, tvShowsWatchlist, validateMedia } = useMediaContext();
   const { cleanedItems } = removeDuplicates(tvRecommendations);
 

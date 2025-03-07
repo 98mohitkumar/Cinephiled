@@ -2,7 +2,7 @@ import { Star } from "lucide-react";
 import { useState, Fragment } from "react";
 import { toast } from "sonner";
 
-import { deleteRating, setRating } from "apiRoutes/user";
+import { useDeleteRating, useSetRating } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
@@ -16,6 +16,8 @@ import { cn, getReleaseYear, matches } from "utils/helper";
 const RatingModal = ({ mediaType, mediaId, closeModal, posterPath, releaseDate, isOpen, title, rating: savedRating = 0 }) => {
   const [rating, updateRating] = useState(0);
   const [isUpdatingRating, setIsUpdatingRating] = useState(false);
+  const { setRating } = useSetRating();
+  const { deleteRating } = useDeleteRating();
   const { ratedMovies, ratedTvShows, validateMedia } = useMediaContext();
 
   const {
@@ -115,7 +117,7 @@ const RatingModal = ({ mediaType, mediaId, closeModal, posterPath, releaseDate, 
 
   return (
     <Fragment>
-      <Modal isOpen={isOpen} closeModal={cancelButtonHandler} width='max-w-lg'>
+      <Modal isOpen={isOpen} closeModal={cancelButtonHandler} className='max-w-lg'>
         <H5 weight='semibold'>
           {title} ({getReleaseYear(releaseDate)})
         </H5>
@@ -153,8 +155,8 @@ const RatingModal = ({ mediaType, mediaId, closeModal, posterPath, releaseDate, 
                       key={i}
                       className='cursor-pointer'
                       onClick={() => updateRating(i + 1)}
-                      fill={rating > i ? "currentColor" : "none"}
-                      stroke={rating > i ? "currentColor" : theme.colors.neutral[400]}
+                      fill={rating > i ? "gold" : "none"}
+                      stroke={rating > i ? "gold" : theme.colors.neutral[400]}
                     />
                   ))}
                 </FlexBox>
@@ -185,7 +187,7 @@ const RatingModal = ({ mediaType, mediaId, closeModal, posterPath, releaseDate, 
       </Modal>
 
       {/* delete rating modal */}
-      <Modal isOpen={isDeleteConfirmationModalVisible} closeModal={closeDeleteConfirmationModal} width='max-w-lg'>
+      <Modal isOpen={isDeleteConfirmationModalVisible} closeModal={closeDeleteConfirmationModal} className='max-w-lg'>
         <H4 weight='semibold' className='mb-16'>
           Delete Rating
         </H4>

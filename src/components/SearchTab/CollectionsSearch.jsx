@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-import PlaceholderText from "components/PlaceholderText";
+import PlaceholderText from "components/Shared/PlaceholderText";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import H6 from "components/UI/Typography/H6";
 import { apiEndpoints } from "data/apiEndpoints";

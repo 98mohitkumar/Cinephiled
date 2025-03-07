@@ -17,7 +17,7 @@ export function usePalette(src) {
     })
       .then((colors) => {
         setPalette({
-          palette: colors.sort((a, b) => (b.hue - a.hue ? 1 : -1)).map(({ hex }) => hex),
+          palette: colors.sort((a, b) => b.intensity - a.intensity).map(({ hex }) => hex),
           done: true
         });
       })

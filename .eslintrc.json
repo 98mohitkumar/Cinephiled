@@ -31,5 +31,6 @@
         "no-undef": "error" // Apply this rule only to JS/JSX files
       }
     }
-  ]
+  ],
+  "ignorePatterns": ["public/*", "node_modules/*", ".next/*"]
 }

@@ -26,7 +26,6 @@ const Navigation = () => {
   const lastScroll = useRef();
   const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
-  // const navHeight = useRef(0);
 
   useEffect(() => {
     const navShowStateHandler = () => {
@@ -41,21 +40,10 @@ const Navigation = () => {
       lastScroll.current = window.scrollY;
     };
 
-    // const navHeightHandler = () => {
-    //   if (navHeight.current === navRef.current?.clientHeight) return;
-
-    //   navHeight.current = navRef.current?.clientHeight;
-    //   document.body.style.setProperty("--header-height", `${navHeight.current}px`);
-    // };
-
     window.addEventListener("scroll", navShowStateHandler);
-    // window.addEventListener("resize", navHeightHandler);
-
-    // navHeightHandler();
 
     return () => {
       window.removeEventListener("scroll", navShowStateHandler);
-      // window.removeEventListener("resize", navHeightHandler);
     };
   }, []);
 
@@ -104,7 +92,7 @@ const Navigation = () => {
             </div>
           </Link>
 
-          <FlexBox className='-mr-2432 items-center max-sm:hidden' css={navLinksStyles}>
+          <div className='-mr-2432 hidden items-center md:flex' css={navLinksStyles}>
             {navLinks.map(({ text, link }) => (
               <Link href={link} key={text}>
                 <P size='large' weight='medium' className={`link ${matches(router.asPath, link) ? "active" : ""}`} aria-label={`go to ${text} page`}>
@@ -118,9 +106,9 @@ const Navigation = () => {
             <FlexBox className='hover cursor-pointer items-center justify-center px-32 py-16 can-hover:text-accentPrimary' onClick={searchHandler}>
               <Search size={28} />
             </FlexBox>
-          </FlexBox>
+          </div>
 
-          <div className='flex items-center gap-16 sm:hidden'>
+          <div className='flex items-center gap-1648 md:hidden'>
             <FlexBox
               className='hover cursor-pointer items-center justify-center p-8 can-hover:text-accentPrimary'
               onClick={searchHandler}
@@ -145,10 +133,10 @@ const Navigation = () => {
             exit={{ translateY: "-100vh" }}
             transition={{
               type: "tween",
-              duration: 0.75,
+              duration: 0.6,
               ease: [0.77, 0, 0.175, 1]
             }}
-            className='block sm:hidden'>
+            className='block md:hidden'>
             <div className='flex h-full w-full flex-col items-center justify-center'>
               {navLinks.map(({ text, link }) => (
                 <Link href={link} key={text}>
