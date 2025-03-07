@@ -101,7 +101,7 @@ const MediaHeroTemplate = ({
           ) : null}
 
           {tagline ? (
-            <P size='large' weight='medium' className='mb-12 italic'>
+            <P size='large' weight='medium' className='mb-12 italic text-neutral-400'>
               {tagline}
             </P>
           ) : null}

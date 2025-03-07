@@ -87,9 +87,7 @@ const NetworkPage = ({ details, media }) => {
               alt={`${details?.name}-poster`}
               fill
               style={{ objectFit: "cover" }}
-              loading='eager'
-              placeholder='blur'
-              blurDataURL={blurPlaceholder}
+              priority
             />
           </div>
 

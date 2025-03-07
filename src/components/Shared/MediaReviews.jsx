@@ -6,7 +6,6 @@ import { reviewStyles } from "components/Shared/GlobalComponents";
 import FlexBox from "components/UI/FlexBox";
 import H6 from "components/UI/Typography/H6";
 import P from "components/UI/Typography/P";
-import { blurPlaceholder } from "data/global";
 import { getReleaseDate } from "utils/helper";
 
 const MediaReviews = ({ reviews }) => {
@@ -21,8 +20,6 @@ const MediaReviews = ({ reviews }) => {
               width={50}
               height={50}
               className='aspect-square min-w-[50px] max-sm:hidden'
-              placeholder='blur'
-              blurDataURL={blurPlaceholder}
             />
 
             <div css={reviewStyles}>
@@ -33,8 +30,6 @@ const MediaReviews = ({ reviews }) => {
                   width={50}
                   height={50}
                   className='aspect-square min-w-[50px] above-sm:hidden'
-                  placeholder='blur'
-                  blurDataURL={blurPlaceholder}
                 />
 
                 <div>
