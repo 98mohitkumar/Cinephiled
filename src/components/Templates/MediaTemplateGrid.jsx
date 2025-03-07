@@ -30,7 +30,7 @@ const MediaTemplateGrid = ({
   media,
   showRating = true,
   children = null,
-  mediaType = "movies",
+  mediaType = "movie",
   gridType = "poster",
   imageSize = "w500",
   className = ""

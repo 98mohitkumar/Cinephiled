@@ -103,7 +103,7 @@ const Movie = ({ movieData }) => {
           {recommendations?.length > 0 ? (
             <LayoutContainer className='py-3248'>
               <H2 className='mb-2432 text-center'>You might also like</H2>
-              <MediaTemplateGrid media={recommendations} mediaType='movies' />
+              <MediaTemplateGrid media={recommendations} mediaType='movie' />
             </LayoutContainer>
           ) : null}
         </div>

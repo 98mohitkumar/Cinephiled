@@ -42,13 +42,13 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
               {/* Trending Movies */}
               <section>
                 <SectionTitle title='Trending Today' />
-                <MediaTemplateGrid media={trendingMovies} />
+                <MediaTemplateGrid media={trendingMovies} mediaType='movie' />
               </section>
 
               {/* popular movies */}
               <section className='mt-6480'>
                 <SectionTitle title='What&#39;s Popular' />
-                <MediaTemplateGrid media={popularMovies} />
+                <MediaTemplateGrid media={popularMovies} mediaType='movie' />
               </section>
             </motion.div>
           )}
@@ -58,13 +58,13 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
               {/* Trending TV */}
               <section>
                 <SectionTitle title='Trending Today' />
-                <MediaTemplateGrid media={trendingTv} />
+                <MediaTemplateGrid media={trendingTv} mediaType='tv' />
               </section>
 
               {/* popular TV */}
               <section className='mt-6480'>
                 <SectionTitle title='What&#39;s Popular' />
-                <MediaTemplateGrid media={popularTv} />
+                <MediaTemplateGrid media={popularTv} mediaType='tv' />
               </section>
             </motion.div>
           )}
