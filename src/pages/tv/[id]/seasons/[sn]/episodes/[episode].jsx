@@ -46,7 +46,7 @@ const Episode = ({
         title={`${name} (${getReleaseYear(airDate)}) S${seasonNumber}E${episodeNumber} - cinephiled`}
         description={overview}
         image={getTMDBImage({ path: backdrop, type: "backdrop", size: "w1280" })}
-        url={`${siteInfo.url}/${ROUTES.tv}/${getNiceName({ id, name })}/seasons/${seasonNumber}/episodes/${episodeNumber}`}
+        url={`${siteInfo.url}/${ROUTES.tv}/${getNiceName({ id, name })}/${ROUTES.seasons}/${seasonNumber}/${ROUTES.episodes}/${episodeNumber}`}
       />
 
       <section className='relative'>
