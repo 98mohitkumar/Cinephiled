@@ -17,12 +17,12 @@ import { cn } from "utils/helper";
 const ListSlice = ({ mediaId, list, mediaType, CTA }) => {
   const [isAdded, setIsAdded] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { getListItemStatus } = useGetListItemStatus({ listId: list.id, mediaId, mediaType });
+  const { getListItemStatus } = useGetListItemStatus();
 
   useEffect(() => {
     setLoading(true);
     const abortController = new AbortController();
-    getListItemStatus({ signal: abortController.signal })
+    getListItemStatus({ signal: abortController.signal, listId: list.id, mediaId, mediaType })
       .then((data) => {
         setIsAdded(data.success);
       })

@@ -82,11 +82,11 @@ export const getRecommendations = async ({ mediaType, pageQuery, accountId, toke
   }
 };
 
-export const useGetListItemStatus = ({ listId, mediaType, mediaId }) => {
+export const useGetListItemStatus = () => {
   const { userInfo } = useUserContext();
 
   const getListItemStatus = useCallback(
-    async ({ signal }) => {
+    async ({ signal, listId, mediaType, mediaId }) => {
       const res = await fetch(
         "/api/getItemStatus",
         fetchOptions({
@@ -109,7 +109,7 @@ export const useGetListItemStatus = ({ listId, mediaType, mediaId }) => {
         };
       }
     },
-    [listId, mediaId, mediaType, userInfo?.accessToken]
+    [userInfo.accessToken]
   );
 
   return {

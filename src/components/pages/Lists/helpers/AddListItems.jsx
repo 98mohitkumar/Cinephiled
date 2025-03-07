@@ -6,7 +6,7 @@ import { Fragment, useCallback, useRef, useState } from "react";
 import { toast } from "sonner";
 import { throttle } from "throttle-debounce";
 
-import { getListItemStatus, updateListItems } from "apiRoutes/user";
+import { useGetListItemStatus, useUpdateListItems } from "apiRoutes/user";
 import { LoadingSpinner } from "components/Loader/Loader";
 import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
@@ -27,6 +27,9 @@ const AddListItems = ({ id }) => {
   const [query, setQuery] = useState("");
   const { revalidateData } = useRefreshData();
   const { openModal, closeModal, isModalVisible } = useModal();
+  const { getListItemStatus } = useGetListItemStatus();
+  const { updateListItems } = useUpdateListItems();
+
   useNavigationGuard({
     enabled: items.length > 0,
     confirm: () => window.confirm("You have unsaved changes. Are you sure you wish to leave this page?")
@@ -70,13 +73,7 @@ const AddListItems = ({ id }) => {
       mediaType: item.media_type
     });
 
-    if (statusRes.success) {
-      toast.warning("Item already exists.", { description: "Item already added to the list." });
-      return;
-    }
-
-    // check for duplicate items in local state
-    if (items.some(({ id }) => id === item.id)) {
+    if (statusRes.success || items.some(({ id }) => id === item.id)) {
       toast.warning("Item already exists.", { description: "Item already added to the list." });
       return;
     }

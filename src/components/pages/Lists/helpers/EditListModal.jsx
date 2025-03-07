@@ -2,7 +2,7 @@ import { Settings } from "lucide-react";
 import { Fragment } from "react";
 import { toast } from "sonner";
 
-import { updateList } from "apiRoutes/user";
+import { useUpdateList } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
@@ -16,6 +16,7 @@ const EditListModal = ({ list }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
   const { revalidateData } = useRefreshData();
   const { updateList: updateListContext, lists } = useListsContext();
+  const { updateList } = useUpdateList();
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
