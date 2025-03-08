@@ -37,7 +37,7 @@ const MediaTemplateGrid = ({
 }) => {
   const gridConfig = matches(gridType, "poster")
     ? { xxs: 2, sm: 3, lg: 4, xl: 5, "2xl": "desktopAutoFillMedia" }
-    : { xxs: 2, md: 3, xl: "desktopAutoFillMediaBackdrop" };
+    : { xxs: 1, xs: 2, lg: "desktopAutoFillMediaBackdrop" };
 
   return (
     <Grid colConfig={gridConfig} className={cn("items-start gap-y-2032", className)}>

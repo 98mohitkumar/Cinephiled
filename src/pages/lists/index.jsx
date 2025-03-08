@@ -10,12 +10,12 @@ import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H3 from "components/UI/Typography/H3";
-import H6 from "components/UI/Typography/H6";
+import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { useUserContext } from "Store/UserContext";
-import { fetchOptions } from "utils/helper";
+import { fetchOptions, getReleaseDate } from "utils/helper";
 
 const Lists = ({ lists }) => {
   const {
@@ -46,9 +46,14 @@ const Lists = ({ lists }) => {
           {renderList?.length > 0 ? (
             <MediaTemplateGrid media={renderList} gridType='backdrop' showRating={false} mediaType={ROUTES.lists}>
               {(list) => (
-                <H6 weight='medium' className='mt-12 text-center'>
-                  {list.name}
-                </H6>
+                <div className='mt-8'>
+                  <P size='large' weight='semibold'>
+                    {list.name}
+                  </P>
+                  <P size='small' weight='medium' className='mt-2 text-neutral-400'>
+                    Last updated on {getReleaseDate(list.updated_at)}
+                  </P>
+                </div>
               )}
             </MediaTemplateGrid>
           ) : (

@@ -10,7 +10,7 @@ const fontSizes = {
     { key: "h3Static", size: 40, lineHeight: 52, letterSpacing: -0.2 },
     { key: "h4Static", size: 32, lineHeight: 42, letterSpacing: -0.15 },
     { key: "h5Static", size: 24, lineHeight: 34, letterSpacing: -0.05 },
-    { key: "h6Static", size: 20, lineHeight: 30, letterSpacing: 0 },
+    { key: "h6Static", size: 18.6, lineHeight: 28, letterSpacing: 0 },
 
     // base size and variations of p
     { key: "p", size: 16, lineHeight: 24, letterSpacing: 0.05 },
@@ -49,7 +49,12 @@ const fontSizes = {
       lineHeight: { minHeight: 28, maxHeight: 34 },
       letterSpacing: { minSpacing: 0, maxSpacing: -0.05 }
     },
-    { key: "h6", size: { minSize: 17, maxSize: 20 }, lineHeight: { minHeight: 24, maxHeight: 30 }, letterSpacing: { minSpacing: 0, maxSpacing: 0 } },
+    {
+      key: "h6",
+      size: { minSize: 17, maxSize: 18.6 },
+      lineHeight: { minHeight: 24, maxHeight: 28 },
+      letterSpacing: { minSpacing: 0, maxSpacing: 0 }
+    },
     {
       key: "small-to-p",
       size: { minSize: 14, maxSize: 16 },

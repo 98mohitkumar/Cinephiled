@@ -37,7 +37,7 @@ const config: Config = {
     extend: {
       gridTemplateColumns: {
         desktopAutoFillMedia: "repeat(auto-fill, minmax(200px, 1fr))",
-        desktopAutoFillMediaBackdrop: "repeat(auto-fill, minmax(290px, 1fr))",
+        desktopAutoFillMediaBackdrop: "repeat(auto-fill, minmax(300px, 1fr))",
         peopleGrid: "repeat(auto-fill, minmax(160px, 1fr))",
         watchProviders: "repeat(auto-fill, minmax(min(55px, 20vw), 1fr))",
         customHeroDetailsGrid: "16rem 1fr",
