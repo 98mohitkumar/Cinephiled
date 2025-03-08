@@ -6,7 +6,7 @@ import { getRating, getReleaseDate, getRuntime } from "utils/helper";
 
 const TVStats = ({ releaseDate, totalRuntime, rating, isSmall = false }) => {
   return (
-    <FlexBox className='mb-10 items-center gap-10'>
+    <FlexBox className='mb-6 items-center gap-10 above-md:mb-10'>
       <P size={isSmall ? "default" : "large"} weight='medium' className='text-neutral-300'>
         {getReleaseDate(releaseDate)}
       </P>

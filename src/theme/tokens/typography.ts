@@ -49,12 +49,7 @@ const fontSizes = {
       lineHeight: { minHeight: 28, maxHeight: 34 },
       letterSpacing: { minSpacing: 0, maxSpacing: -0.05 }
     },
-    {
-      key: "h6",
-      size: { minSize: 18, maxSize: 20 },
-      lineHeight: { minHeight: 27, maxHeight: 30 },
-      letterSpacing: { minSpacing: 0, maxSpacing: 0 }
-    },
+    { key: "h6", size: { minSize: 17, maxSize: 20 }, lineHeight: { minHeight: 24, maxHeight: 30 }, letterSpacing: { minSpacing: 0, maxSpacing: 0 } },
     {
       key: "small-to-p",
       size: { minSize: 14, maxSize: 16 },
@@ -95,13 +90,7 @@ const fontSizes = {
 } as const;
 
 const staticFontSizeBuilder = ({ size, lineHeight, letterSpacing }: Record<string, number>) => {
-  return [
-    `${size / pixelsPerRem}rem`,
-    {
-      lineHeight: `${lineHeight / pixelsPerRem}rem`,
-      letterSpacing: `${letterSpacing / pixelsPerRem}rem`
-    }
-  ];
+  return [`${size / pixelsPerRem}rem`, { lineHeight: `${lineHeight / pixelsPerRem}rem`, letterSpacing: `${letterSpacing / pixelsPerRem}rem` }];
 };
 
 const responsiveFontSizeBuilder = ({ minSize, maxSize, minHeight, maxHeight, minSpacing, maxSpacing }: Record<string, number>) => {
@@ -110,24 +99,10 @@ const responsiveFontSizeBuilder = ({ minSize, maxSize, minHeight, maxHeight, min
   const lineHeightClamp = cssClamp({ minSize: minHeight, maxSize: maxHeight });
   const letterSpacingClamp = cssClamp({ minSize: minSpacing, maxSize: maxSpacing });
 
-  return [
-    fontSizeClamp,
-    {
-      lineHeight: lineHeightClamp,
-      letterSpacing: letterSpacingClamp
-    }
-  ];
+  return [fontSizeClamp, { lineHeight: lineHeightClamp, letterSpacing: letterSpacingClamp }];
 };
 
-type FontConfig = {
-  [key: string]: [
-    string,
-    {
-      lineHeight: string;
-      letterSpacing: string;
-    }
-  ];
-};
+type FontConfig = { [key: string]: [string, { lineHeight: string; letterSpacing: string }] };
 
 const tailwindFontSizeTokens: FontConfig = {
   ...Object.fromEntries(

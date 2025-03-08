@@ -17,52 +17,21 @@ const Overview = ({ overviewData, className, mediaType }) => {
 
   const gridItems = matches(mediaType, "movie")
     ? [
-        {
-          title: "Release Date",
-          copy: getReleaseDate(overviewData?.releaseDate)
-        },
-        {
-          title: "Status",
-          copy: status
-        },
-        {
-          title: "Runtime",
-          copy: getRuntime(overviewData?.runtime)
-        },
-        {
-          title: "Language",
-          copy: language
-        },
-        {
-          title: "Budget",
-          copy: overviewData?.budget ? formatCurrency({ value: overviewData?.budget }) : "-"
-        },
-        {
-          title: "Revenue",
-          copy: overviewData?.revenue ? formatCurrency({ value: overviewData?.revenue }) : "-"
-        }
+        { title: "Title", copy: title },
+        { title: "Release Date", copy: getReleaseDate(overviewData?.releaseDate) },
+        { title: "Status", copy: status },
+        { title: "Runtime", copy: getRuntime(overviewData?.runtime) },
+        { title: "Language", copy: language },
+        { title: "Budget", copy: overviewData?.budget ? formatCurrency({ value: overviewData?.budget }) : "-" },
+        { title: "Revenue", copy: overviewData?.revenue ? formatCurrency({ value: overviewData?.revenue }) : "-" }
       ]
     : [
-        {
-          title: "First Air Date",
-          copy: getReleaseDate(overviewData?.firstAirDate)
-        },
-        {
-          title: "Last Air Date",
-          copy: getReleaseDate(overviewData?.lastAirDate)
-        },
-        {
-          title: "Status",
-          copy: status
-        },
-        {
-          title: "Language",
-          copy: language
-        },
-        {
-          title: "Type",
-          copy: overviewData?.type
-        },
+        { title: "Title", copy: title },
+        { title: "First Air Date", copy: getReleaseDate(overviewData?.firstAirDate) },
+        { title: "Last Air Date", copy: getReleaseDate(overviewData?.lastAirDate) },
+        { title: "Status", copy: status },
+        { title: "Language", copy: language },
+        { title: "Type", copy: overviewData?.type },
         {
           title: "Network",
           copy: (
@@ -81,32 +50,10 @@ const Overview = ({ overviewData, className, mediaType }) => {
 
   const socialMediaLinks = [
     ...(socialIds.instagram_id
-      ? [
-          {
-            title: "Instagram",
-            url: `https://instagram.com/${socialIds.instagram_id}`,
-            icon: <Instagram size={28} />
-          }
-        ]
+      ? [{ title: "Instagram", url: `https://instagram.com/${socialIds.instagram_id}`, icon: <Instagram size={28} /> }]
       : []),
-    ...(socialIds.twitter_id
-      ? [
-          {
-            title: "Twitter",
-            url: `https://twitter.com/${socialIds.twitter_id}`,
-            icon: <Twitter size={28} />
-          }
-        ]
-      : []),
-    ...(homepage
-      ? [
-          {
-            title: "Website",
-            url: homepage,
-            icon: <LinkIcon size={28} />
-          }
-        ]
-      : [])
+    ...(socialIds.twitter_id ? [{ title: "Twitter", url: `https://twitter.com/${socialIds.twitter_id}`, icon: <Twitter size={28} /> }] : []),
+    ...(homepage ? [{ title: "Website", url: homepage, icon: <LinkIcon size={28} /> }] : [])
   ];
 
   return (

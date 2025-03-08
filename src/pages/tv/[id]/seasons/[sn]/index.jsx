@@ -68,9 +68,7 @@ const Seasons = ({
         <MediaHeroBackground backdropPath={randomBackdrop} posterPath={randomBackdrop} alt='episode-backdrop' />
 
         <LayoutContainer
-          className={cn("flex items-center gap-32 above-lg:py-4864 max-lg:pb-3248", {
-            "blank py-2464": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank)
-          })}
+          className={cn("flex items-center gap-32 above-lg:py-4864 max-lg:pb-3248", { "blank py-2464": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank) })}
           css={mediaDetailsWrapper}>
           <div
             className={cn("w-full max-w-full", {
@@ -130,7 +128,7 @@ const Seasons = ({
                     </div>
 
                     <div className='self-start'>
-                      <H4 className='mb-10 text-pretty'>
+                      <H4 className='mb-6 text-pretty above-md:mb-10'>
                         {item.episode_number}. {item.name}
                       </H4>
 
@@ -139,7 +137,7 @@ const Seasons = ({
                       {item.overview ? <P className='line-clamp-2'>{item.overview}</P> : null}
 
                       {getHasEpisodeReleased(item.air_date) ? (
-                        <Link href={`${routeRef.current}/${ROUTES.episodes}/${item.episode_number}`} className='mt-12 inline-block'>
+                        <Link href={`${routeRef.current}/${ROUTES.episodes}/${item.episode_number}`} className='mt-10 inline-block above-md:mt-12'>
                           <Button variant='primary' size='small' weight='semibold' className='flex items-center gap-8 rounded-full px-16'>
                             Episode Details
                             <MoveRight size={16} />
@@ -213,17 +211,11 @@ export const getServerSideProps = async (ctx) => {
         rating: res?.vote_average,
         episodes: res?.episodes,
         trailer,
-        tvData: {
-          id: ctx.query.id,
-          name: tvData?.name,
-          airDate: tvData?.first_air_date
-        }
+        tvData: { id: ctx.query.id, name: tvData?.name, airDate: tvData?.first_air_date }
       }
     };
   } catch {
-    return {
-      notFound: true
-    };
+    return { notFound: true };
   }
 };
 
