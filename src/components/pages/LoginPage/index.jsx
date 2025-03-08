@@ -55,9 +55,8 @@ const LoginPage = () => {
           src={posters}
           fill
           alt='login-page-background'
-          style={{ objectFit: "cover" }}
           priority
-          className='background'
+          className='background object-cover'
           placeholder='blur'
           blurDataURL={blurPlaceholder}
         />

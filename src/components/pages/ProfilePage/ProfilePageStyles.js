@@ -17,7 +17,7 @@ export const bannerStyles = css`
     inset: 0;
     margin: auto;
     z-index: ${theme.zIndex[5]};
-    background: url("/images/profileBG.jpg") no-repeat center center / cover;
+    background: url("/images/media-backdrops.jpg") no-repeat center center / cover;
     filter: brightness(50%);
   }
 

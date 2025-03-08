@@ -9,7 +9,7 @@ import H1 from "components/UI/Typography/H1";
 import H2 from "components/UI/Typography/H2";
 import P from "components/UI/Typography/P";
 import { ROUTES, blurPlaceholder, siteInfo } from "data/global";
-import aboutBackground from "images/ShowCase.webp";
+import aboutBackground from "images/media-backdrops.jpg";
 import { pageBackgroundStyles } from "styles/PageStyles/aboutPageStyles";
 
 const About = () => {
@@ -26,9 +26,8 @@ const About = () => {
           src={aboutBackground}
           fill
           alt='about-cinephiled-background'
-          style={{ objectFit: "cover" }}
           priority
-          className='background'
+          className='background object-cover'
           placeholder='blur'
           blurDataURL={blurPlaceholder}
         />

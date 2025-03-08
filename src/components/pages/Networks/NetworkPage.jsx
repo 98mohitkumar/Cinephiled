@@ -37,7 +37,9 @@ const NetworkPage = ({ details, media }) => {
   }
 
   // get posters of hero posters grid
-  const posters = media.map(({ poster_path }) => (poster_path ? `https://image.tmdb.org/t/p/w185${poster_path}` : null)).filter(Boolean);
+  const posters = media
+    .map(({ poster_path }) => (poster_path ? getTMDBImage({ path: poster_path, type: "poster", size: "w185" }) : null))
+    .filter(Boolean);
 
   if (posters.length % 2 !== 0 && posters.length > 10) {
     posters.pop();
@@ -65,11 +67,10 @@ const NetworkPage = ({ details, media }) => {
                   fill
                   src={poster}
                   alt={`${details?.name}-poster`}
-                  style={{ objectFit: "cover" }}
                   placeholder='blur'
                   priority
                   blurDataURL={blurPlaceholder}
-                  className='rounded-lg'
+                  className='rounded-lg object-cover'
                 />
               </div>
             ))}
@@ -82,8 +83,8 @@ const NetworkPage = ({ details, media }) => {
               src={`${getTMDBImage({ path: details?.images?.logos?.[0]?.file_path, type: "logo", size: "w300_filter(negate,000,111)" })}`}
               alt={`${details?.name}-poster`}
               fill
-              style={{ objectFit: "cover" }}
               priority
+              className='object-cover'
             />
           </div>
 
