@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-const tabsAtom = atomWithStorage("tabComponentStates", {
+const initialValues = {
   indexTab: "movies",
   movieTab: "overview",
   tvTab: "overview",
@@ -9,8 +9,11 @@ const tabsAtom = atomWithStorage("tabComponentStates", {
   profileMediaTab: "movies",
   searchTab: "movies",
   watchProvidersTab: "movies",
-  personPageTab: "movies"
-});
+  personPageTab: "movies",
+  keywordTab: "movies"
+};
+
+const tabsAtom = atomWithStorage("tabComponentStates", initialValues);
 
 const useTabs = ({ tabLocation }: { tabLocation: keyof typeof tabsAtom }) => {
   const [activeTabs, setActiveTabs] = useAtom(tabsAtom);
@@ -22,7 +25,7 @@ const useTabs = ({ tabLocation }: { tabLocation: keyof typeof tabsAtom }) => {
   };
 
   return {
-    activeTab: activeTabs[tabLocation as keyof typeof activeTabs],
+    activeTab: activeTabs[tabLocation as keyof typeof activeTabs] || initialValues[tabLocation as keyof typeof initialValues],
     setTab
   };
 };
