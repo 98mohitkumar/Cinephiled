@@ -1,7 +1,8 @@
+import { Fragment } from "react";
+
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import { apiEndpoints } from "data/apiEndpoints";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
-import { Fragment } from "react";
 import { removeDuplicates } from "utils/helper";
 
 const TVResults = ({ keywordId, tv }) => {
