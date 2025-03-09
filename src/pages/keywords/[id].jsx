@@ -1,11 +1,12 @@
 import { AnimatePresence, motion } from "motion/react";
 import { Fragment } from "react";
 
+import MovieResults from "components/pages/Keyword/MovieResults";
+import TVResults from "components/pages/Keyword/TVResults";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import PlaceholderText from "components/Shared/PlaceholderText";
 import { TabItem, Tabs } from "components/Shared/Tabs/Tabs";
-import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H3 from "components/UI/Typography/H3";
 import { apiEndpoints } from "data/apiEndpoints";
@@ -45,7 +46,7 @@ const Keyword = ({ movies, tv, name, id }) => {
             {matches(activeTab, "movies") && (
               <motion.div key='movies' {...opacityMotionTransition} className='mt-2440'>
                 {movies?.length > 0 ? (
-                  <MediaTemplateGrid media={movies} mediaType='movie' />
+                  <MovieResults keywordId={id} movies={movies} />
                 ) : (
                   <PlaceholderText height='large'>No Movies are available for this keyword.</PlaceholderText>
                 )}
@@ -55,7 +56,7 @@ const Keyword = ({ movies, tv, name, id }) => {
             {matches(activeTab, "tv") && (
               <motion.div key='tv' {...opacityMotionTransition} className='mt-3264'>
                 {tv?.length > 0 ? (
-                  <MediaTemplateGrid media={tv} mediaType='tv' />
+                  <TVResults keywordId={id} tv={tv} />
                 ) : (
                   <PlaceholderText height='large'>No TV shows are available for this keyword.</PlaceholderText>
                 )}
@@ -72,28 +73,24 @@ export const getServerSideProps = async (ctx) => {
   try {
     const keywordId = ctx.query.id;
 
-    const [keywordMoviesRes, keywordMoviesResNextPage, keywordTvRes, keywordTvResNextPage] = await Promise.all([
+    const [keywordMoviesRes, keywordTvRes] = await Promise.all([
       fetch(apiEndpoints.keywords.keywordMovies({ id: keywordId }), fetchOptions()),
-      fetch(apiEndpoints.keywords.keywordMovies({ id: keywordId, pageQuery: 2 }), fetchOptions()),
-      fetch(apiEndpoints.keywords.keywordTv({ id: keywordId }), fetchOptions()),
-      fetch(apiEndpoints.keywords.keywordTv({ id: keywordId, pageQuery: 2 }), fetchOptions())
+      fetch(apiEndpoints.keywords.keywordTv({ id: keywordId }), fetchOptions())
     ]);
 
-    if (![keywordMoviesRes.ok, keywordMoviesResNextPage.ok, keywordTvRes.ok, keywordTvResNextPage.ok].every(Boolean)) {
+    if (![keywordMoviesRes.ok, keywordTvRes.ok].every(Boolean)) {
       throw new Error("error fetch data");
     }
 
     const keywordMovies = await keywordMoviesRes.json();
-    const keywordMoviesNextPage = await keywordMoviesResNextPage.json();
     const keywordTv = await keywordTvRes.json();
-    const keywordTvNextPage = await keywordTvResNextPage.json();
 
     return {
       props: {
         id: keywordId.split("-")[0],
         name: keywordId.split("-").slice(1).join(" "),
-        movies: keywordMovies.results.concat(keywordMoviesNextPage.results),
-        tv: keywordTv.results.concat(keywordTvNextPage.results)
+        movies: keywordMovies.results,
+        tv: keywordTv.results
       }
     };
   } catch {
