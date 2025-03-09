@@ -14,7 +14,7 @@ const TVSeasons = ({ seasons, seriesName }) => {
   const router = useRouter();
 
   return (
-    <FlexBox className='mx-auto max-w-screen-lg flex-col gap-y-1620'>
+    <FlexBox className='mx-auto max-w-screen-lg flex-col gap-y-1620 drop-shadow'>
       {seasons.map(({ id, season_number, poster_path, name, episode_count, overview, air_date }) => (
         <motion.div key={id} whileTap={{ scale: 0.98 }}>
           <Link href={`${router.query.id}/${ROUTES.seasons}/${season_number}`} passHref>

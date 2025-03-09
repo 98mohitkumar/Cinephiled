@@ -24,7 +24,7 @@ const TVStats = ({ releaseDate, totalRuntime, rating, isSmall = false }) => {
       </P>
 
       <div className='flex items-center gap-6'>
-        <Star size={isSmall ? 16 : 18} fill='gold' stroke='gold' />
+        <Star size={isSmall ? 16 : 18} fill='gold' stroke='gold' className='mb-2' />
         <P size={isSmall ? "default" : "large"} weight='semibold' className='font-montserrat'>
           {getRating(rating)}
         </P>
