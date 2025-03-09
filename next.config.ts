@@ -1,7 +1,7 @@
+import { default as withPWAInit } from "@ducanh2912/next-pwa";
 import { NextConfig } from "next";
 
-/* eslint-disable @typescript-eslint/no-var-requires */
-const withPWA = require("@ducanh2912/next-pwa").default({
+const withPWA = withPWAInit({
   dest: "public",
   reloadOnOnline: true,
   register: true,
