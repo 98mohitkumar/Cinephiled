@@ -25,7 +25,8 @@ const MediaHeroTemplate = ({
   rating,
   crewData,
   easterEgg = null,
-  children
+  children,
+  voteCount
 }) => {
   let LAYOUT_TYPE = LAYOUT_TYPES.standard;
 
@@ -113,18 +114,15 @@ const MediaHeroTemplate = ({
           ) : null}
 
           {rating ? (
-            <FlexBox className='my-2032 items-baseline gap-8'>
+            <FlexBox className='my-2032 items-baseline gap-10'>
               <H1 tag='span' className='inline font-montserrat text-h1Static' weight='semibold'>
                 {getRating(rating)}
               </H1>
-              <FlexBox className='items-center gap-6 text-neutral-500'>
-                <P weight='semibold' tag='span' className='font-montserrat'>
-                  /
+              {voteCount && (
+                <P size='large' weight='semibold' tag='span' className='font-montserrat text-neutral-500'>
+                  based on {voteCount.toLocaleString()} ratings
                 </P>
-                <P size='large' weight='semibold' tag='span' className='font-montserrat'>
-                  10
-                </P>
-              </FlexBox>
+              )}
             </FlexBox>
           ) : null}
 

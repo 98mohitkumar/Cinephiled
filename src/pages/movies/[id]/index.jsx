@@ -42,7 +42,8 @@ const Movie = ({ movieData }) => {
     posters,
     recommendations,
     logo,
-    technicalDetails
+    technicalDetails,
+    voteCount
   } = movieData;
 
   return (
@@ -69,7 +70,8 @@ const Movie = ({ movieData }) => {
           crewData,
           logo,
           releaseDate,
-          isEasterMovie
+          isEasterMovie,
+          voteCount
         }}
       />
 
@@ -178,6 +180,7 @@ export const getServerSideProps = async (ctx) => {
           tagline: movieDetails?.tagline,
           overview: movieDetails?.overview,
           rating: movieDetails?.vote_average,
+          voteCount: movieDetails?.vote_count,
           posterPath: movieDetails?.poster_path,
           backdropPath: movieDetails?.backdrop_path,
           crewData,

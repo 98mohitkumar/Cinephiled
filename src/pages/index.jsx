@@ -105,10 +105,13 @@ export async function getStaticProps() {
         }))
     );
 
-    const extraSet = [...posters].splice(0, 20).map((item) => ({
-      src: item.src,
-      id: item.id + 1000 * 1000
-    }));
+    const extraSet = [...posters]
+      .splice(0, 20)
+      .reverse()
+      .map((item) => ({
+        src: item.src,
+        id: item.id + 1000 * 1000
+      }));
 
     return {
       props: {
@@ -117,7 +120,7 @@ export async function getStaticProps() {
         trendingMovies: trendingMovies.results,
         trendingTv: trendingTv.results,
         error,
-        posters: posters.concat(extraSet).sort((a, b) => a.id - b.id)
+        posters: posters.concat(extraSet).sort(() => Math.random() - 0.5)
       },
       revalidate: 60 * 60 * 24
     };

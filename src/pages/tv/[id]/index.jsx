@@ -42,7 +42,8 @@ const TvShow = ({ tvData }) => {
     trailer,
     logo,
     lastAirDate,
-    technicalDetails
+    technicalDetails,
+    voteCount
   } = tvData;
 
   return (
@@ -68,7 +69,8 @@ const TvShow = ({ tvData }) => {
           trailer,
           crewData,
           logo,
-          airDate
+          airDate,
+          voteCount
         }}
       />
 
@@ -181,6 +183,7 @@ export const getServerSideProps = async (ctx) => {
           tagline: tvData?.tagline,
           overview: tvData?.overview,
           rating: tvData?.vote_average,
+          voteCount: tvData?.vote_count,
           posterPath: tvData?.poster_path,
           backdropPath: tvData?.backdrop_path,
           crewData,
