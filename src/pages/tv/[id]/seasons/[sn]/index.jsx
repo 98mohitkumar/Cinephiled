@@ -61,7 +61,7 @@ const Seasons = ({
         title={`${name}: ${seasonName} (${getReleaseYear(releaseDate)}) - cinephiled`}
         description={overview}
         image={getTMDBImage({ path: randomBackdrop, type: "backdrop", size: "w1280" })}
-        url={`${siteInfo.url}/${ROUTES.tv}/${getNiceName({ id, name })}/seasons/${seasonNumber}`}
+        url={`${siteInfo.url}/${ROUTES.tv}/${getNiceName({ id, name })}/${ROUTES.seasons}/${seasonNumber}`}
       />
 
       <section className='relative'>
