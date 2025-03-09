@@ -29,5 +29,5 @@
     }
   },
   "include": ["next-env.d.ts", "styled.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "public/*.js"]
 }
