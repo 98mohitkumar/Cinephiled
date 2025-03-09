@@ -61,7 +61,7 @@ const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, 
         <section className='relative z-5'>
           <div className='mb-3248 text-center'>
             <FlexBox className='mb-2440 flex-wrap items-center justify-end gap-16'>
-              <div className='shrink-0 max-sm:w-full'>
+              <div className='w-[250px] max-sm:w-full'>
                 <Input type='text' placeholder='Search watch providers' onChange={searchHandler} fullWidth />
               </div>
 
@@ -98,7 +98,8 @@ const WatchProviders = ({ regions, movieProviders, tvProviders, selectedRegion, 
                 {currentRenderList.map((provider) => (
                   <Link
                     key={provider.provider_id}
-                    href={`/${ROUTES.watchProviders}/${getNiceName({ id: provider.provider_id, name: provider.provider_name })}/${activeTab}?watchregion=${selectedRegion || defaultRegion}`}>
+                    href={`/${ROUTES.watchProviders}/${getNiceName({ id: provider.provider_id, name: provider.provider_name })}/${activeTab}?watchregion=${selectedRegion || defaultRegion}`}
+                    title={provider.provider_name}>
                     <div className='block h-full w-full'>
                       <motion.div className='aspect-square w-full overflow-hidden rounded-lg' whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                         <Image
