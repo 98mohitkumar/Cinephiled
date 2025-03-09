@@ -95,10 +95,10 @@ export const apiEndpoints = {
   },
   keywords: {
     keywordMovies: ({ id, pageQuery = 1 }: { id: string; pageQuery: number }) =>
-      `${baseUrlV3}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&with_keywords=${id}`,
+      `${baseUrlV3}/discover/movie?include_adult=false&language=en-US&page=${pageQuery}&with_keywords=${id}`,
 
     keywordTv: ({ id, pageQuery = 1 }: { id: string; pageQuery: number }) =>
-      `${baseUrlV3}/discover/tv?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=popularity.desc&with_keywords=${id}`
+      `${baseUrlV3}/discover/tv?include_adult=false&language=en-US&page=${pageQuery}&with_keywords=${id}`
   },
   person: {
     personDetails: (id: string) =>
@@ -120,7 +120,7 @@ export const apiEndpoints = {
       providerId: string;
       sortBy: string;
     }) =>
-      `${baseUrlV3}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageQuery}&sort_by=${sortBy}&watch_region=${region}&with_watch_providers=${providerId}`,
+      `${baseUrlV3}/discover/movie?include_adult=false&language=en-US&page=${pageQuery}&sort_by=${sortBy}&watch_region=${region}&with_watch_providers=${providerId}`,
 
     watchProviderTv: ({
       region,
