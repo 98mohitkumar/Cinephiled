@@ -100,9 +100,9 @@ const staticFontSizeBuilder = ({ size, lineHeight, letterSpacing }: Record<strin
 
 const responsiveFontSizeBuilder = ({ minSize, maxSize, minHeight, maxHeight, minSpacing, maxSpacing }: Record<string, number>) => {
   // clamp(min, value, max)
-  const fontSizeClamp = cssClamp({ minSize, maxSize });
-  const lineHeightClamp = cssClamp({ minSize: minHeight, maxSize: maxHeight });
-  const letterSpacingClamp = cssClamp({ minSize: minSpacing, maxSize: maxSpacing });
+  const fontSizeClamp = cssClamp({ minSize, maxSize, convertToRem: true });
+  const lineHeightClamp = cssClamp({ minSize: minHeight, maxSize: maxHeight, convertToRem: true });
+  const letterSpacingClamp = cssClamp({ minSize: minSpacing, maxSize: maxSpacing, convertToRem: true });
 
   return [fontSizeClamp, { lineHeight: lineHeightClamp, letterSpacing: letterSpacingClamp }];
 };
