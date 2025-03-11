@@ -13,14 +13,14 @@ export const hero = css`
 
 const heroBannerAnimation = keyframes`
   to {
-    transform:  translateY(-250px) skewY(-15deg) scale(1.35) rotateZ(20deg) translateX(10%);
+    transform:  translateY(-250px) skewY(-15deg) scale(1.4) rotateZ(20deg) translateX(10%);
   }
 `;
 
 export const heroBanner = css`
   position: absolute;
   inset: 0;
-  filter: brightness(70%);
+  filter: brightness(80%);
   z-index: ${theme.zIndex[1]};
   transform: translateY(-250px) scale(1.8) rotateZ(5deg) translateX(10%);
   will-change: transform;
