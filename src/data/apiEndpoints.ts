@@ -143,6 +143,15 @@ export const apiEndpoints = {
     networkMedia: ({ id, pageQuery = 1, sortBy = "popularity.desc" }: { id: string; pageQuery?: number; sortBy: string }) =>
       `${baseUrlV3}/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${pageQuery}&sort_by=${sortBy}&with_networks=${id}`
   },
+  company: {
+    companyDetails: (id: string) => `${baseUrlV3}/company/${id}?append_to_response=images`,
+
+    companyMovies: ({ id, pageQuery = 1 }: { id: string; pageQuery?: number; sortBy: string }) =>
+      `${baseUrlV3}/discover/movie?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${pageQuery}&with_companies=${id}`,
+
+    companyTv: ({ id, pageQuery = 1 }: { id: string; pageQuery?: number; sortBy: string }) =>
+      `${baseUrlV3}/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=${pageQuery}&with_companies=${id}`
+  },
   lists: {
     getLists: ({ accountId, pageQuery = 1 }: { accountId: string; pageQuery?: number }) =>
       `${baseUrlV4}/account/${accountId}/lists?page=${pageQuery}`,

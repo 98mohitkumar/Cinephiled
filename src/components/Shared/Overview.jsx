@@ -1,16 +1,16 @@
 import { Instagram, Link as LinkIcon, Twitter } from "lucide-react";
-import Link from "next/link";
 
 import ShareButton from "components/Shared/ShareButton";
-import TechnicalDetails from "components/TechnicalDetails/TechnicalDetails";
+import TechnicalDetails from "components/Shared/TechnicalDetails";
 import FlexBox from "components/UI/FlexBox";
 import { Grid } from "components/UI/Grid";
 import H4 from "components/UI/Typography/H4";
 import P from "components/UI/Typography/P";
-import { ROUTES } from "data/global";
-import { formatCurrency, getNiceName, getReleaseDate, getRuntime, isEmptyObject, matches } from "utils/helper";
+import { formatCurrency, getReleaseDate, getRuntime, isEmptyObject, matches } from "utils/helper";
 
 import CollectionCard from "../pages/Movie/CollectionCard";
+
+import ProductionDetails from "./ProductionDetails";
 
 const Overview = ({ overviewData, className, mediaType }) => {
   const { socialIds, homepage, status, language, title, description, technicalDetails } = overviewData;
@@ -31,21 +31,7 @@ const Overview = ({ overviewData, className, mediaType }) => {
         { title: "Last Air Date", copy: getReleaseDate(overviewData?.lastAirDate) },
         { title: "Status", copy: status },
         { title: "Language", copy: language },
-        { title: "Type", copy: overviewData?.type },
-        {
-          title: "Network",
-          copy: (
-            <Link href={`/${ROUTES.networks}/${getNiceName({ id: overviewData?.network?.id, name: overviewData?.network?.name })}`}>
-              <P
-                tag='button'
-                weight='medium'
-                className='text-neutral-300 underline decoration-dotted underline-offset-4 transition-colors can-hover:text-cyan-300'>
-                {overviewData?.network?.name}
-              </P>
-            </Link>
-          ),
-          isLink: true
-        }
+        { title: "Type", copy: overviewData?.type }
       ];
 
   const socialMediaLinks = [
@@ -61,23 +47,24 @@ const Overview = ({ overviewData, className, mediaType }) => {
       <div className='max-2xl:max-w-screen-xl'>
         <H4 className='mb-16'>Overview</H4>
 
-        <Grid colConfig={{ xxs: 2, sm: 3, lg: 4, "2xl": 2 }} className='w-full'>
+        <Grid colConfig={{ xxs: 2, sm: 3, lg: 4, "2xl": 2 }} className='w-full gap-x-1624'>
           {gridItems.map((item) => (
             <div key={item.title}>
               <P weight='bold'>{item.title}</P>
-              {item.isLink ? (
-                item.copy
-              ) : (
-                <P weight='medium' className='text-neutral-300'>
-                  {item.copy}
-                </P>
-              )}
+              <P weight='medium' className='text-neutral-300'>
+                {item.copy}
+              </P>
             </div>
           ))}
 
           <div>
             <P weight='bold'>Technical Details</P>
             <TechnicalDetails technicalDetails={technicalDetails} />
+          </div>
+
+          <div>
+            <P weight='bold'>Production & Network</P>
+            <ProductionDetails productionCompanies={overviewData?.productionCompanies} networks={overviewData?.networks} />
           </div>
         </Grid>
 

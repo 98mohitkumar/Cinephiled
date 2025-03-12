@@ -268,3 +268,7 @@ export const isEmptyObject = (obj: object) => {
 
   return Object.keys(obj).length === 0;
 };
+
+export const randomizeItems = (items: []) => {
+  return items.sort(() => Math.random() - 0.5);
+};

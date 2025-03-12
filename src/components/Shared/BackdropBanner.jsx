@@ -1,10 +1,9 @@
-import Image from "next/image";
-
 import FlexBox from "components/UI/FlexBox";
 import { blurPlaceholder } from "data/global";
+import Image from "next/image";
 import { getTMDBImage } from "utils/imageHelper";
 
-import { heroBanner } from "./HeroStyles";
+import { heroBanner } from "./GlobalComponents";
 
 const BackdropBanner = ({ backdrops }) => {
   const backdropsArray = Array.from({ length: Math.ceil(backdrops.length / 7) }, (_, i) => backdrops.slice(i * 7, (i + 1) * 7));

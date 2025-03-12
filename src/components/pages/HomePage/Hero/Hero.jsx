@@ -1,9 +1,9 @@
 import { memo } from "react";
 
+import BackdropBanner from "components/Shared/BackdropBanner";
 import GlobalSearch from "components/Shared/GlobalSearch/GlobalSearch";
 import FlexBox from "components/UI/FlexBox";
 
-import BackdropBanner from "./BackdropBanner";
 import { hero } from "./HeroStyles";
 
 const Hero = ({ backdrops = [] }) => (

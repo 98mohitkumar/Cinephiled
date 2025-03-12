@@ -43,7 +43,8 @@ const Movie = ({ movieData }) => {
     recommendations,
     logo,
     technicalDetails,
-    voteCount
+    voteCount,
+    productionCompanies
   } = movieData;
 
   return (
@@ -97,7 +98,8 @@ const Movie = ({ movieData }) => {
               releaseDate,
               title,
               description: overview,
-              technicalDetails
+              technicalDetails,
+              productionCompanies
             }}
           />
 
@@ -140,6 +142,7 @@ export const getServerSideProps = async (ctx) => {
 
     const socialIds = movieDetails?.external_ids;
     const collection = movieDetails?.belongs_to_collection || {};
+    const productionCompanies = movieDetails?.production_companies;
 
     const isLogoDark = await isImageDark(logo?.file_path);
     let technicalDetails;
@@ -204,7 +207,8 @@ export const getServerSideProps = async (ctx) => {
           backdrops: movieDetails?.images?.backdrops ?? [],
           posters: movieDetails?.images?.posters ?? [],
           recommendations: movieDetails?.recommendations?.results,
-          technicalDetails
+          technicalDetails,
+          productionCompanies
         }
       }
     };

@@ -30,7 +30,7 @@ const TvShow = ({ tvData }) => {
     reviews,
     backdrops,
     posters,
-    network,
+    networks,
     socialIds,
     language,
     crewData,
@@ -43,7 +43,8 @@ const TvShow = ({ tvData }) => {
     logo,
     lastAirDate,
     technicalDetails,
-    voteCount
+    voteCount,
+    productionCompanies
   } = tvData;
 
   return (
@@ -91,13 +92,14 @@ const TvShow = ({ tvData }) => {
               lastAirDate: lastAirDate,
               status,
               type,
-              network,
+              networks,
               socialIds,
               language,
               homepage,
               title,
               description: overview,
-              technicalDetails
+              technicalDetails,
+              productionCompanies
             }}
           />
 
@@ -132,7 +134,8 @@ export const getServerSideProps = async (ctx) => {
     const language = languages.find((item) => matches(item.iso_639_1, tvData.original_language));
 
     const status = tvData?.status || "TBA";
-    const network = tvData.networks?.[0] || "TBA";
+    const networks = tvData.networks;
+    const productionCompanies = tvData?.production_companies;
     const creators = tvData?.created_by?.slice(0, 2).map((creator) => ({
       ...creator,
       job: "Creator"
@@ -192,7 +195,7 @@ export const getServerSideProps = async (ctx) => {
           homepage: tvData?.homepage,
           status,
           language: language?.english_name || language?.name || "TBA",
-          network,
+          networks,
           type: tvData?.type,
           endYear,
           cast: {
@@ -210,7 +213,8 @@ export const getServerSideProps = async (ctx) => {
             ...logo,
             isLogoDark
           },
-          technicalDetails
+          technicalDetails,
+          productionCompanies
         }
       }
     };

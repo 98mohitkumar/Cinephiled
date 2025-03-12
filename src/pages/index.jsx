@@ -10,7 +10,7 @@ import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
 import { mediaTypeTabList, opacityMotionTransition } from "data/global";
 import useTabs from "hooks/useTabs";
-import { fetchOptions, removeDuplicates, matches } from "utils/helper";
+import { fetchOptions, removeDuplicates, matches, randomizeItems } from "utils/helper";
 
 const SectionTitle = ({ title }) => <H2 className='mb-2432 text-center text-white'>{title}</H2>;
 
@@ -112,7 +112,7 @@ export async function getStaticProps() {
         trendingMovies: trendingMovies.results,
         trendingTv: trendingTv.results,
         error,
-        backdrops: backdrops.sort(() => Math.random() - 0.5)
+        backdrops: randomizeItems(backdrops)
       },
       revalidate: 60 * 60 * 24
     };

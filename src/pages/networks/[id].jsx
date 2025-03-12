@@ -2,12 +2,27 @@ import { Fragment } from "react";
 
 import NetworkPage from "components/pages/Networks/NetworkPage";
 import MetaWrapper from "components/Shared/MetaWrapper";
+import NetworkHero from "components/Shared/ProductionHero";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo } from "data/global";
-import { fetchOptions, getNiceName } from "utils/helper";
+import { fetchOptions, getNiceName, randomizeItems } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const Network = ({ networkDetails, networkMedia }) => {
+  const backdrops = networkMedia.concat(networkMedia).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
+  const logo = networkDetails?.images?.logos?.at(0);
+
+  const extendedBackdrops = randomizeItems(
+    backdrops.length < 40
+      ? [
+          ...backdrops,
+          ...Array(40 - backdrops.length)
+            .fill(0)
+            .map(() => ({ id: Math.random(), src: null }))
+        ]
+      : backdrops
+  );
+
   return (
     <Fragment>
       <MetaWrapper
@@ -17,7 +32,8 @@ const Network = ({ networkDetails, networkMedia }) => {
         image={getTMDBImage({ path: networkDetails?.logo_path, type: "logo", size: "original" })}
       />
 
-      <NetworkPage media={networkMedia} details={networkDetails} />
+      <NetworkHero details={networkDetails} backdrops={extendedBackdrops} logo={logo} />
+      <NetworkPage media={networkMedia} id={networkDetails?.id} />
     </Fragment>
   );
 };
