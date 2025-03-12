@@ -1,8 +1,9 @@
+import { Fragment } from "react";
+
 import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import P from "components/UI/Typography/P";
-import { Fragment } from "react";
 import { matches } from "utils/helper";
 
 const TechnicalDetails = ({ technicalDetails }) => {

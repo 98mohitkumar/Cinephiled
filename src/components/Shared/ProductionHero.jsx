@@ -1,8 +1,9 @@
+import { Link2, MapPin } from "lucide-react";
+import Image from "next/image";
+
 import BackdropBanner from "components/Shared/BackdropBanner";
 import FlexBox from "components/UI/FlexBox";
 import P from "components/UI/Typography/P";
-import { Link2, MapPin } from "lucide-react";
-import Image from "next/image";
 import { getTMDBImage } from "utils/imageHelper";
 
 import { productionHeroWrapper } from "./GlobalComponents";

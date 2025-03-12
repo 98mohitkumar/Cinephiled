@@ -1,6 +1,7 @@
+import Image from "next/image";
+
 import FlexBox from "components/UI/FlexBox";
 import { blurPlaceholder } from "data/global";
-import Image from "next/image";
 import { getTMDBImage } from "utils/imageHelper";
 
 import { heroBanner } from "./GlobalComponents";

@@ -1,9 +1,10 @@
+import { AnimatePresence, motion } from "motion/react";
+
 import PlaceholderText from "components/Shared/PlaceholderText";
 import { TabItem, Tabs } from "components/Shared/Tabs/Tabs";
 import LayoutContainer from "components/UI/LayoutContainer";
 import { mediaTypeTabList, opacityMotionTransition } from "data/global";
 import useTabs from "hooks/useTabs";
-import { AnimatePresence, motion } from "motion/react";
 import { matches } from "utils/helper";
 
 import CompanyMoviesTab from "./CompanyMoviesTab";

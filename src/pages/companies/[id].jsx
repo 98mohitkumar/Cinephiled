@@ -1,9 +1,10 @@
+import { Fragment } from "react";
+
 import CompanyPage from "components/pages/Companies/CompanyPage";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import CompanyHero from "components/Shared/ProductionHero";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo } from "data/global";
-import { Fragment } from "react";
 import { fetchOptions, getNiceName, randomizeItems } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
