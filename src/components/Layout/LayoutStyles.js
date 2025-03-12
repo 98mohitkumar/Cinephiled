@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
 import { MAX_WIDTH } from "data/global";
+import { theme } from "theme/theme";
 
 export const Wrapper = styled.main`
   max-width: ${MAX_WIDTH}px;
   margin: auto;
   position: relative;
-  animation: reveal 1s ease-in-out;
+  animation: reveal 1s ${theme.transitionTimings["in-out"]};
 
   @keyframes reveal {
     from {

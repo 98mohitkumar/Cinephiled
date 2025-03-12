@@ -21,7 +21,7 @@ const TechnicalDetails = ({ technicalDetails }) => {
         View Details
       </P>
 
-      <Modal isOpen={isModalVisible} closeModal={closeModal} width='max-w-2xl'>
+      <Modal isOpen={isModalVisible} closeModal={closeModal} className='max-w-2xl'>
         <FlexBox className='flex flex-col gap-24'>
           {noDataAvailable ? (
             <FlexBox className='min-h-24 items-center justify-center'>
@@ -48,7 +48,7 @@ const TechnicalDetails = ({ technicalDetails }) => {
                           <P tag='span' className='text-white'>
                             {text}
                           </P>{" "}
-                          {subText && <P tag='span' key={subText} className='text-neutral-400'>{` ${subText}`}</P>}
+                          {subText && <P tag='span' key={subText} className='text-neutral-400' weight='medium'>{` ${subText}`}</P>}
                           {index < item.listContent.length - 1 && <span className='inline-block whitespace-pre text-white'>{` • `}</span>}
                         </Fragment>
                       ))}

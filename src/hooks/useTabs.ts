@@ -10,7 +10,8 @@ const initialValues = {
   searchTab: "movies",
   watchProvidersTab: "movies",
   personPageTab: "movies",
-  keywordTab: "movies"
+  keywordTab: "movies",
+  companyTab: "movies"
 };
 
 const tabsAtom = atomWithStorage("tabComponentStates", initialValues);

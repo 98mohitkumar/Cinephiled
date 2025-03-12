@@ -3,6 +3,8 @@ Disallow: /movies/
 Disallow: /tv/
 Disallow: /person/
 Disallow: /collections/
+Disallow: /companies/
+Disallow: /networks/
 Disallow: /*.jpg$
 Disallow: /*.jpeg$
 Disallow: /*.png$

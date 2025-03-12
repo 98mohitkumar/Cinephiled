@@ -10,11 +10,11 @@ import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
 import { mediaTypeTabList, opacityMotionTransition } from "data/global";
 import useTabs from "hooks/useTabs";
-import { fetchOptions, removeDuplicates, matches } from "utils/helper";
+import { fetchOptions, removeDuplicates, matches, randomizeItems } from "utils/helper";
 
 const SectionTitle = ({ title }) => <H2 className='mb-2432 text-center text-white'>{title}</H2>;
 
-export default function Home({ popularMovies, popularTv, trendingMovies, trendingTv, posters }) {
+export default function Home({ popularMovies, popularTv, trendingMovies, trendingTv, backdrops }) {
   const { activeTab, setTab } = useTabs({ tabLocation: "indexTab" });
 
   const activeTabIndex = mediaTypeTabList.findIndex((tab) => matches(tab.key, activeTab));
@@ -24,7 +24,7 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
       <MetaWrapper />
 
       {/* hero section (memoized) */}
-      <Hero posters={posters} />
+      <Hero backdrops={backdrops} />
 
       {/* movies and tv shows tabs */}
       <LayoutContainer className='py-2440'>
@@ -96,22 +96,14 @@ export async function getStaticProps() {
       trendingTvRes.json()
     ]);
 
-    const { cleanedItems: posters } = removeDuplicates(
+    const { cleanedItems: backdrops } = removeDuplicates(
       [...popularMovies.results, ...trendingMovies.results, ...trendingTv.results]
-        .filter((item) => item.poster_path)
+        .filter((item) => item.backdrop_path)
         .map((item) => ({
-          src: item.poster_path,
+          src: item.backdrop_path,
           id: item.id
         }))
     );
-
-    const extraSet = [...posters]
-      .splice(0, 20)
-      .reverse()
-      .map((item) => ({
-        src: item.src,
-        id: item.id + 1000 * 1000
-      }));
 
     return {
       props: {
@@ -120,7 +112,7 @@ export async function getStaticProps() {
         trendingMovies: trendingMovies.results,
         trendingTv: trendingTv.results,
         error,
-        posters: posters.concat(extraSet).sort(() => Math.random() - 0.5)
+        backdrops: randomizeItems(backdrops)
       },
       revalidate: 60 * 60 * 24
     };
