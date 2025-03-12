@@ -58,13 +58,13 @@ const Overview = ({ overviewData, className, mediaType }) => {
           ))}
 
           <div>
-            <P weight='bold'>Technical Details</P>
-            <TechnicalDetails technicalDetails={technicalDetails} />
+            <P weight='bold'>Studios</P>
+            <ProductionDetails productionCompanies={overviewData?.productionCompanies} networks={overviewData?.networks} />
           </div>
 
           <div>
-            <P weight='bold'>Production & Network</P>
-            <ProductionDetails productionCompanies={overviewData?.productionCompanies} networks={overviewData?.networks} />
+            <P weight='bold'>Technical Details</P>
+            <TechnicalDetails technicalDetails={technicalDetails} />
           </div>
         </Grid>
 
