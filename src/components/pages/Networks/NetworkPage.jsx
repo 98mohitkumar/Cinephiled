@@ -8,12 +8,14 @@ import LayoutContainer from "components/UI/LayoutContainer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/UI/Select";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
-import { blurPlaceholder, sortOptions } from "data/global";
+import { sortOptions } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useSort from "hooks/useSort";
 import { getTMDBImage } from "utils/imageHelper";
 
-import { NetwrokDetailsWrapper, PostersGrid } from "./NetworkPageStyles";
+import BackdropBanner from "../HomePage/Hero/BackdropBanner";
+
+import { NetwrokDetailsWrapper } from "./NetworkPageStyles";
 
 const NetworkPage = ({ details, media }) => {
   const {
@@ -36,51 +38,21 @@ const NetworkPage = ({ details, media }) => {
     return <PlaceholderText height='large'>No TV Shows are available for this network</PlaceholderText>;
   }
 
-  // get posters of hero posters grid
-  const posters = media
-    .map(({ poster_path }) => (poster_path ? getTMDBImage({ path: poster_path, type: "poster", size: "w185" }) : null))
-    .filter(Boolean);
-
-  if (posters.length % 2 !== 0 && posters.length > 10) {
-    posters.pop();
-  }
-
-  let colCount;
-  const postersLength = posters?.length;
-
-  if (postersLength > 10) {
-    colCount = Math.ceil(postersLength / 2) % 2 === 0 ? Math.ceil(postersLength / 2) : Math.ceil(postersLength / 2) + 1;
-  } else {
-    colCount = postersLength;
-  }
-
+  const backdrops = media.concat(media).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
   const renderList = media.concat(list);
+  const logo = details?.images?.logos?.at(0);
 
   return (
     <div>
       <div css={NetwrokDetailsWrapper}>
-        {postersLength > 0 ? (
-          <div css={PostersGrid} className={postersLength <= 10 ? "alt-grid" : ""} $colCount={colCount || 10}>
-            {posters.map((poster, i) => (
-              <div key={`item -${i}`} className='poster-wrapper relative aspect-poster'>
-                <Image
-                  fill
-                  src={poster}
-                  alt={`${details?.name}-poster`}
-                  placeholder='blur'
-                  priority
-                  blurDataURL={blurPlaceholder}
-                  className='rounded-lg object-cover'
-                />
-              </div>
-            ))}
-          </div>
-        ) : null}
+        <div className='absolute inset-0 -z-1 overflow-hidden'>
+          <BackdropBanner backdrops={backdrops} />
+        </div>
 
         <div className='relative z-10 p-32 text-center'>
-          <div className='logo-wrapper m-auto' style={{ "--aspectRatio": details?.images?.logos?.[0]?.aspect_ratio }}>
+          <div className='logo-wrapper m-auto' style={{ "--aspectRatio": logo?.aspect_ratio }}>
             <Image
-              src={`${getTMDBImage({ path: details?.images?.logos?.[0]?.file_path, type: "logo", size: "w300_filter(negate,000,111)" })}`}
+              src={`${getTMDBImage({ path: logo?.file_path, type: "logo", size: "w300_filter(negate,555,000)" })}`}
               alt={`${details?.name}-poster`}
               fill
               priority
@@ -94,7 +66,7 @@ const NetworkPage = ({ details, media }) => {
             </P>
 
             {details?.headquarters || details?.origin_country ? (
-              <FlexBox className='items-center gap-4'>
+              <FlexBox className='items-center gap-6'>
                 <MapPin size={20} />
                 <P weight='semibold' size='large'>
                   {details.headquarters || details.origin_country}
@@ -103,14 +75,14 @@ const NetworkPage = ({ details, media }) => {
             ) : null}
 
             {details.homepage ? (
-              <FlexBox className='items-center gap-4'>
+              <FlexBox className='items-center gap-6'>
                 <Link2 size={20} />
                 <P
                   tag='a'
                   href={details?.homepage}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='underline decoration-dotted underline-offset-4'
+                  className='underline decoration-dotted underline-offset-4 transition-colors can-hover:text-cyan-300'
                   weight='semibold'
                   size='large'>
                   Homepage

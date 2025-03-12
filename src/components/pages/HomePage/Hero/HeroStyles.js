@@ -15,15 +15,15 @@ const heroBannerAnimation = keyframes`
   }
 `;
 
-const slideInRight = keyframes`
-  to {
-    transform: translateX(-150px);
-  }
-`;
-
 const slideInLeft = keyframes`
   to {
     transform: translateX(0);
+  }
+`;
+
+const slideInRight = keyframes`
+  to {
+    transform: translateX(-150px);
   }
 `;
 
@@ -33,8 +33,8 @@ export const heroBanner = css`
   will-change: transform;
   filter: brightness(80%);
   z-index: ${theme.zIndex[1]};
-  transform: translate(-70px, -325px) scale(1.6) rotateZ(-15deg);
-  animation: ${heroBannerAnimation} 1.25s 0.325s ${theme.transitionTimings["ease-out-quint"]} forwards;
+  transform: translate(-70px, -325px) scale(1.4) rotateZ(-15deg);
+  animation: ${heroBannerAnimation} 1.25s 0.35s ${theme.transitionTimings["ease-out-quint"]} forwards;
   object-position: center;
 
   .backdrop-wrapper {
@@ -43,11 +43,12 @@ export const heroBanner = css`
   }
 
   .backdrops-row:nth-child(even) {
-    animation: ${slideInLeft} 1.25s 0.325s ${theme.transitionTimings["ease-out-quint"]} forwards;
+    transform: translateX(-200px);
+    animation: ${slideInLeft} 1.25s 0.25s ${theme.transitionTimings["ease-out-quint"]} forwards;
   }
 
   .backdrops-row:nth-child(odd) {
-    transform: translateX(150px);
-    animation: ${slideInRight} 1.25s 0.325s ${theme.transitionTimings["ease-out-quint"]} forwards;
+    transform: translateX(50px);
+    animation: ${slideInRight} 1.25s 0.25s ${theme.transitionTimings["ease-out-quint"]} forwards;
   }
 `;
