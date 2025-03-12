@@ -1,28 +1,34 @@
 import Image from "next/image";
 
-import { Grid } from "components/UI/Grid";
+import FlexBox from "components/UI/FlexBox";
 import { blurPlaceholder } from "data/global";
 import { getTMDBImage } from "utils/imageHelper";
 
 import { heroBanner } from "./HeroStyles";
 
-const BackdropBanner = ({ posters }) => {
+const BackdropBanner = ({ backdrops }) => {
+  const backdropsArray = Array.from({ length: Math.ceil(backdrops.length / 7) }, (_, i) => backdrops.slice(i * 7, (i + 1) * 7));
+
   return (
-    <Grid css={heroBanner} className='gap-8' colConfig={{ xxs: 3, xs: 4, md: 6, xl: 8, "2xl": 10, "3xl": 12, "4xl": 14, "5xl": 16 }}>
-      {posters.map(({ src, id }, index) => (
-        <div key={`${id}-${index}`} className='poster-wrapper relative aspect-poster'>
-          <Image
-            fill
-            placeholder='blur'
-            priority
-            blurDataURL={blurPlaceholder}
-            src={getTMDBImage({ path: src, type: "poster", size: "w342" })}
-            alt='poster'
-            className='rounded-md object-cover'
-          />
-        </div>
+    <FlexBox className='flex-col items-center gap-10' css={heroBanner}>
+      {backdropsArray.map((backdrops, index) => (
+        <FlexBox key={index} className='backdrops-row w-full items-center justify-center gap-10'>
+          {backdrops.map(({ src, id }, index) => (
+            <div key={`${id}-${index}`} className='backdrop-wrapper relative aspect-backdrop w-full'>
+              <Image
+                fill
+                placeholder='blur'
+                priority
+                blurDataURL={blurPlaceholder}
+                src={getTMDBImage({ path: src, type: "backdrop", size: "w300" })}
+                alt='backdrop'
+                className='rounded-sm object-cover'
+              />
+            </div>
+          ))}
+        </FlexBox>
       ))}
-    </Grid>
+    </FlexBox>
   );
 };
 
