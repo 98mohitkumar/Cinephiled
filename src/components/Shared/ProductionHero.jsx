@@ -11,7 +11,7 @@ import { productionHeroWrapper } from "./GlobalComponents";
 const ProductionHero = ({ details, backdrops, logo }) => {
   return (
     <div css={productionHeroWrapper}>
-      <div className='absolute inset-0 -z-1 overflow-hidden'>
+      <div className='absolute inset-0 z-1 overflow-hidden'>
         <BackdropBanner backdrops={backdrops} />
       </div>
 

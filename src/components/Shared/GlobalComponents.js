@@ -112,9 +112,16 @@ export const productionHeroWrapper = css`
   position: relative;
   display: grid;
   place-items: center;
-  overflow: hidden;
   height: ${cssClamp({ minSize: 400, maxSize: 500 })};
-  background: ${`linear-gradient(180deg, ${hexToRgba(theme.colors.black, 0.5)} 0%, ${theme.colors.black} 95%)`};
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: ${theme.zIndex[5]};
+    bottom: -2px;
+    background: ${`linear-gradient(180deg, ${hexToRgba(theme.colors.black, 0.5)} 0%, ${theme.colors.black} 95%)`};
+  }
 
   & > * {
     grid-area: 1 / 1;
