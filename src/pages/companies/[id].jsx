@@ -8,19 +8,8 @@ import { ROUTES, siteInfo } from "data/global";
 import { fetchOptions, getNiceName, randomizeItems } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
-const Company = ({ companyDetails, movies, tvShows }) => {
+const Company = ({ companyDetails, movies, tvShows, backdrops }) => {
   const logo = companyDetails?.images?.logos?.at(0);
-  const backdrops = movies.concat(tvShows).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
-  const extendedBackdrops = randomizeItems(
-    backdrops.length < 40
-      ? [
-          ...backdrops,
-          ...Array(40 - backdrops.length)
-            .fill(0)
-            .map(() => ({ id: Math.random(), src: null }))
-        ]
-      : backdrops
-  );
 
   return (
     <Fragment>
@@ -31,7 +20,7 @@ const Company = ({ companyDetails, movies, tvShows }) => {
         image={getTMDBImage({ path: companyDetails?.logo_path, type: "logo", size: "original" })}
       />
 
-      <CompanyHero details={companyDetails} backdrops={extendedBackdrops} logo={logo} />
+      <CompanyHero details={companyDetails} backdrops={backdrops} logo={logo} />
       <CompanyPage movies={movies} tvShows={tvShows} id={companyDetails?.id} />
     </Fragment>
   );
@@ -42,7 +31,7 @@ export const getServerSideProps = async (context) => {
     const { id } = context.query;
     const companyId = id.split("-")[0];
 
-    const [res, companyMovies, companyTv] = await Promise.all([
+    const [res, companyMoviesRes, companyTvRes] = await Promise.all([
       fetch(apiEndpoints.company.companyDetails(companyId), fetchOptions()),
       fetch(apiEndpoints.company.companyMovies({ id: companyId }), fetchOptions()),
       fetch(apiEndpoints.company.companyTv({ id: companyId }), fetchOptions())
@@ -50,13 +39,27 @@ export const getServerSideProps = async (context) => {
 
     if (!res.ok) throw new Error("cannot fetch details");
 
-    const [data, movies, tvShows] = await Promise.all([res.json(), companyMovies.json(), companyTv.json()]);
+    const [data, movies, tvShows] = await Promise.all([res.json(), companyMoviesRes.json(), companyTvRes.json()]);
+    const companyMovies = movies?.results || [];
+    const companyTv = tvShows?.results || [];
+
+    const backdrops = companyMovies.concat(companyTv).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
+    const extendedBackdrops =
+      backdrops.length < 40
+        ? [
+            ...backdrops,
+            ...Array(40 - backdrops.length)
+              .fill(0)
+              .map(() => ({ id: Math.random(), src: null }))
+          ]
+        : backdrops;
 
     return {
       props: {
         companyDetails: data,
-        movies: movies?.results || [],
-        tvShows: tvShows?.results || []
+        movies: companyMovies,
+        tvShows: companyTv,
+        backdrops: randomizeItems(extendedBackdrops)
       }
     };
   } catch {

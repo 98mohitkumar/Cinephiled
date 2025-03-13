@@ -38,18 +38,16 @@ const Seasons = ({
   seasonName,
   seasonPoster,
   trailer,
+  backdrop,
   tvData: { id, name, airDate }
 }) => {
   const router = useRouter();
   const routeRef = useRef(router.asPath);
   const totalRuntime = episodes?.reduce((acc, item) => acc + item.runtime, 0);
 
-  const seasonBackdrops = episodes?.filter((item) => item.still_path).map((item) => item.still_path) || [];
-  const randomBackdrop = seasonBackdrops[Math.floor(Math.random() * seasonBackdrops.length)] || null;
-
   let LAYOUT_TYPE = LAYOUT_TYPES.standard;
 
-  if (randomBackdrop) {
+  if (backdrop) {
     LAYOUT_TYPE = LAYOUT_TYPES.standard;
   } else {
     LAYOUT_TYPE = LAYOUT_TYPES.blank;
@@ -60,12 +58,12 @@ const Seasons = ({
       <MetaWrapper
         title={`${name}: ${seasonName} (${getReleaseYear(releaseDate)}) - cinephiled`}
         description={overview}
-        image={getTMDBImage({ path: randomBackdrop, type: "backdrop", size: "w1280" })}
+        image={getTMDBImage({ path: backdrop, type: "backdrop", size: "w1280" })}
         url={`${siteInfo.url}/${ROUTES.tv}/${getNiceName({ id, name })}/${ROUTES.seasons}/${seasonNumber}`}
       />
 
       <section className='relative'>
-        <MediaHeroBackground backdropPath={randomBackdrop} posterPath={randomBackdrop} alt='episode-backdrop' />
+        <MediaHeroBackground backdropPath={backdrop} posterPath={backdrop} alt='episode-backdrop' />
 
         <LayoutContainer
           className={cn("flex items-center gap-32 above-lg:py-4864 max-lg:pb-3248", { "blank py-2464": matches(LAYOUT_TYPE, LAYOUT_TYPES.blank) })}
@@ -198,6 +196,10 @@ export const getServerSideProps = async (ctx) => {
     const [res, tvData] = await Promise.all([response.json(), tvRes.json()]);
 
     const trailer = getYouTubeTrailer(res?.videos?.results);
+    const episodes = res?.episodes;
+
+    const seasonBackdrops = episodes?.map((item) => item.still_path || null).filter(Boolean) || [];
+    const randomBackdrop = seasonBackdrops[Math.floor(Math.random() * seasonBackdrops.length)] || null;
 
     return {
       props: {
@@ -209,8 +211,9 @@ export const getServerSideProps = async (ctx) => {
         seasonName: res?.name,
         seasonNumber: res?.season_number,
         rating: res?.vote_average,
-        episodes: res?.episodes,
+        episodes,
         trailer,
+        backdrop: randomBackdrop,
         tvData: { id: ctx.query.id, name: tvData?.name, airDate: tvData?.first_air_date }
       }
     };
