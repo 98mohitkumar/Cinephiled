@@ -73,11 +73,11 @@ const GlobalSearch = () => {
   return (
     <form css={formStyles} onSubmit={searchHandler} className='flex items-center justify-center gap-16 px-20'>
       <div className='relative mb-64 w-full'>
-        <div className='border-animated flex items-end justify-between pb-6'>
+        <div className='border-animated flex items-center justify-between pb-6'>
           <input
             type='text'
             css={userInput}
-            className='heroSearchInput px-8 pt-10 text-h6'
+            className='heroSearchInput px-10 text-h6'
             placeholder='Search for a movie, tv show, person...'
             id='inputData'
             ref={userInputRef}

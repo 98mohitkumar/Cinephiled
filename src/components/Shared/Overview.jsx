@@ -1,4 +1,5 @@
 import { Instagram, Link as LinkIcon, Twitter } from "lucide-react";
+import Link from "next/link";
 
 import ShareButton from "components/Shared/ShareButton";
 import TechnicalDetails from "components/Shared/TechnicalDetails";
@@ -6,14 +7,15 @@ import FlexBox from "components/UI/FlexBox";
 import { Grid } from "components/UI/Grid";
 import H4 from "components/UI/Typography/H4";
 import P from "components/UI/Typography/P";
-import { formatCurrency, getReleaseDate, getRuntime, isEmptyObject, matches } from "utils/helper";
+import { ROUTES } from "data/global";
+import { formatCurrency, getNiceName, getReleaseDate, getRuntime, isEmptyObject, matches } from "utils/helper";
 
 import CollectionCard from "../pages/Movie/CollectionCard";
 
 import ProductionDetails from "./ProductionDetails";
 
 const Overview = ({ overviewData, className, mediaType }) => {
-  const { socialIds, homepage, status, language, title, description, technicalDetails } = overviewData;
+  const { socialIds, homepage, status, language, title, description, technicalDetails, keywords } = overviewData;
 
   const gridItems = matches(mediaType, "movie")
     ? [
@@ -47,7 +49,7 @@ const Overview = ({ overviewData, className, mediaType }) => {
       <div className='max-2xl:max-w-screen-xl'>
         <H4 className='mb-16'>Overview</H4>
 
-        <Grid colConfig={{ xxs: 2, sm: 3, lg: 4, "2xl": 2 }} className='w-full gap-x-1624'>
+        <Grid colConfig={{ xxs: 2, sm: 3, lg: 4, "2xl": 2 }} className='w-full gap-1624'>
           {gridItems.map((item) => (
             <div key={item.title}>
               <P weight='bold'>{item.title}</P>
@@ -67,6 +69,25 @@ const Overview = ({ overviewData, className, mediaType }) => {
             <TechnicalDetails technicalDetails={technicalDetails} />
           </div>
         </Grid>
+
+        {keywords?.length > 0 ? (
+          <div className='my-4048'>
+            <P weight='bold'>Keywords</P>
+            <FlexBox className='mt-8 flex-wrap gap-6'>
+              {keywords.map((keyword) => (
+                <Link key={keyword.id} href={`/${ROUTES.keywords}/${getNiceName({ id: keyword.id, name: keyword.name })}`}>
+                  <P
+                    key={keyword.id}
+                    size='tiny'
+                    weight='medium'
+                    className='whitespace-nowrap rounded-2xl bg-neutral-600/75 px-10 py-4 transition-colors can-hover:bg-neutral-800'>
+                    {keyword.name}
+                  </P>
+                </Link>
+              ))}
+            </FlexBox>
+          </div>
+        ) : null}
 
         <FlexBox className='mt-40 items-center gap-40'>
           {socialMediaLinks.some((link) => Boolean(link.url))

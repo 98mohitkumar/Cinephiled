@@ -10,6 +10,7 @@ export const formStyles = css`
 
   .border-animated {
     position: relative;
+    height: 46px;
 
     &::after {
       content: "";
