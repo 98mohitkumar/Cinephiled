@@ -31,14 +31,15 @@ export const getServerSideProps = async (context) => {
     const { id, sortBy } = context.query;
     const networkId = id.split("-")[0];
 
-    const [res, networkMedia] = await Promise.all([
+    const [res, networkMediaRes] = await Promise.all([
       fetch(apiEndpoints.network.networkDetails(networkId), fetchOptions()),
       fetch(apiEndpoints.network.networkMedia({ id: networkId, sortBy }), fetchOptions())
     ]);
 
     if (!res.ok) throw new Error("cannot fetch details");
 
-    const [data, networkMediaData] = await Promise.all([res.json(), networkMedia.json()]);
+    const [data, networkMediaData] = await Promise.all([res.json(), networkMediaRes.json()]);
+    const networkMedia = networkMediaData?.results || [];
 
     const backdrops = networkMedia.concat(networkMedia).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
     const extendedBackdrops =
@@ -54,7 +55,7 @@ export const getServerSideProps = async (context) => {
     return {
       props: {
         networkDetails: data,
-        networkMedia: networkMediaData?.results || [],
+        networkMedia,
         backdrops: randomizeItems(extendedBackdrops)
       }
     };

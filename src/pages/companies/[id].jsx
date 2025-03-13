@@ -31,7 +31,7 @@ export const getServerSideProps = async (context) => {
     const { id } = context.query;
     const companyId = id.split("-")[0];
 
-    const [res, companyMovies, companyTv] = await Promise.all([
+    const [res, companyMoviesRes, companyTvRes] = await Promise.all([
       fetch(apiEndpoints.company.companyDetails(companyId), fetchOptions()),
       fetch(apiEndpoints.company.companyMovies({ id: companyId }), fetchOptions()),
       fetch(apiEndpoints.company.companyTv({ id: companyId }), fetchOptions())
@@ -39,9 +39,11 @@ export const getServerSideProps = async (context) => {
 
     if (!res.ok) throw new Error("cannot fetch details");
 
-    const [data, movies, tvShows] = await Promise.all([res.json(), companyMovies.json(), companyTv.json()]);
+    const [data, movies, tvShows] = await Promise.all([res.json(), companyMoviesRes.json(), companyTvRes.json()]);
+    const companyMovies = movies?.results || [];
+    const companyTv = tvShows?.results || [];
 
-    const backdrops = movies.concat(tvShows).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
+    const backdrops = companyMovies.concat(companyTv).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
     const extendedBackdrops =
       backdrops.length < 40
         ? [
@@ -55,8 +57,8 @@ export const getServerSideProps = async (context) => {
     return {
       props: {
         companyDetails: data,
-        movies: movies?.results || [],
-        tvShows: tvShows?.results || [],
+        movies: companyMovies,
+        tvShows: companyTv,
         backdrops: randomizeItems(extendedBackdrops)
       }
     };
