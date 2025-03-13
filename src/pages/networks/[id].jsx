@@ -8,20 +8,8 @@ import { ROUTES, siteInfo } from "data/global";
 import { fetchOptions, getNiceName, randomizeItems } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
-const Network = ({ networkDetails, networkMedia }) => {
-  const backdrops = networkMedia.concat(networkMedia).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
+const Network = ({ networkDetails, networkMedia, backdrops }) => {
   const logo = networkDetails?.images?.logos?.at(0);
-
-  const extendedBackdrops = randomizeItems(
-    backdrops.length < 40
-      ? [
-          ...backdrops,
-          ...Array(40 - backdrops.length)
-            .fill(0)
-            .map(() => ({ id: Math.random(), src: null }))
-        ]
-      : backdrops
-  );
 
   return (
     <Fragment>
@@ -32,7 +20,7 @@ const Network = ({ networkDetails, networkMedia }) => {
         image={getTMDBImage({ path: networkDetails?.logo_path, type: "logo", size: "original" })}
       />
 
-      <NetworkHero details={networkDetails} backdrops={extendedBackdrops} logo={logo} />
+      <NetworkHero details={networkDetails} backdrops={backdrops} logo={logo} />
       <NetworkPage media={networkMedia} id={networkDetails?.id} />
     </Fragment>
   );
@@ -52,10 +40,22 @@ export const getServerSideProps = async (context) => {
 
     const [data, networkMediaData] = await Promise.all([res.json(), networkMedia.json()]);
 
+    const backdrops = networkMedia.concat(networkMedia).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
+    const extendedBackdrops =
+      backdrops.length < 40
+        ? [
+            ...backdrops,
+            ...Array(40 - backdrops.length)
+              .fill(0)
+              .map(() => ({ id: Math.random(), src: null }))
+          ]
+        : backdrops;
+
     return {
       props: {
         networkDetails: data,
-        networkMedia: networkMediaData?.results || []
+        networkMedia: networkMediaData?.results || [],
+        backdrops: randomizeItems(extendedBackdrops)
       }
     };
   } catch {
