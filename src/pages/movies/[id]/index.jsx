@@ -44,7 +44,8 @@ const Movie = ({ movieData }) => {
     logo,
     technicalDetails,
     voteCount,
-    productionCompanies
+    productionCompanies,
+    keywords
   } = movieData;
 
   return (
@@ -99,7 +100,8 @@ const Movie = ({ movieData }) => {
               title,
               description: overview,
               technicalDetails,
-              productionCompanies
+              productionCompanies,
+              keywords
             }}
           />
 
@@ -133,6 +135,7 @@ export const getServerSideProps = async (ctx) => {
     const language = languages.find((item) => matches(item.iso_639_1, movieDetails.original_language));
     const trailer = getYouTubeTrailer(movieDetails?.videos?.results);
     const logo = movieDetails?.images?.logos?.sort((a, b) => b.vote_average - a.vote_average).at(0) || null;
+    const keywords = movieDetails?.keywords?.keywords || [];
 
     const crewData = mergeCrewData([
       ...movieDetails?.credits?.crew?.filter((credit) => matches(credit?.job, "Director")).slice(0, 2),
@@ -174,6 +177,7 @@ export const getServerSideProps = async (ctx) => {
       props: {
         movieData: {
           id: movieDetails?.id,
+          keywords,
           title: movieDetails?.title,
           releaseYear,
           releaseDate,

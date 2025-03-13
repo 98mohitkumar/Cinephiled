@@ -44,7 +44,8 @@ const TvShow = ({ tvData }) => {
     lastAirDate,
     technicalDetails,
     voteCount,
-    productionCompanies
+    productionCompanies,
+    keywords
   } = tvData;
 
   return (
@@ -99,7 +100,8 @@ const TvShow = ({ tvData }) => {
               title,
               description: overview,
               technicalDetails,
-              productionCompanies
+              productionCompanies,
+              keywords
             }}
           />
 
@@ -128,10 +130,9 @@ export const getServerSideProps = async (ctx) => {
     const [tvData, languages] = await Promise.all([tvResponse.json(), languagesResponse.json()]);
 
     const releaseYear = getReleaseYear(tvData?.first_air_date);
-
     const endYear = matches(tvData?.status, "Ended") || matches(tvData.status, "Canceled") ? new Date(tvData?.last_air_date).getFullYear() : "";
-
     const language = languages.find((item) => matches(item.iso_639_1, tvData.original_language));
+    const keywords = tvData?.keywords?.results || [];
 
     const status = tvData?.status || "TBA";
     const networks = tvData.networks;
@@ -178,6 +179,7 @@ export const getServerSideProps = async (ctx) => {
       props: {
         tvData: {
           id: tvData?.id,
+          keywords,
           title: tvData?.name,
           airDate: tvData?.first_air_date,
           lastAirDate: tvData?.last_air_date,
