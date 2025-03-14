@@ -82,7 +82,7 @@ export const siteInfo = {
   description:
     "Cinephiled - A progressive web app (PWA) to preview any movie or tv show with reviews, ratings, description and posters. Acting as a TMDB client, Cinephiled gives you access to login into your TMDB account and add movies or tv shows to your watchlist, set as favorites, rate and get personalized recommendations.",
   url: "https://cinephiled.vercel.app",
-  image: "https://i.imgur.com/bnT3bYL.jpeg"
+  image: "https://i.imgur.com/hFORifQ.jpeg"
 } as const;
 
 export const LAYOUT_TYPES = {
