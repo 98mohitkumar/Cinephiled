@@ -37,7 +37,7 @@ const tabList = [
   }
 ];
 
-const TVTab = ({ cast, reviews, posters, backdrops, seasons, seriesName, overviewData }) => {
+const TVTab = ({ cast, reviews, posters, backdrops, seasons, title, overviewData }) => {
   const { activeTab, setTab } = useTabs({ tabLocation: "tvTab" });
   const activeTabIndex = tabList.findIndex((tab) => matches(tab.key, activeTab));
 
@@ -61,7 +61,7 @@ const TVTab = ({ cast, reviews, posters, backdrops, seasons, seriesName, overvie
         {matches(activeTab, "seasons") && (
           <motion.div key='seasons' {...opacityMotionTransition}>
             <LayoutContainer className='py-3248'>
-              {seasons?.length > 0 ? <TVSeasons seasons={seasons} seriesName={seriesName} /> : <PlaceholderText>TBA</PlaceholderText>}
+              {seasons?.length > 0 ? <TVSeasons seasons={seasons} title={title} /> : <PlaceholderText>TBA</PlaceholderText>}
             </LayoutContainer>
           </motion.div>
         )}

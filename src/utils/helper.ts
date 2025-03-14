@@ -272,3 +272,9 @@ export const isEmptyObject = (obj: object) => {
 export const randomizeItems = (items: []) => {
   return items.sort(() => Math.random() - 0.5);
 };
+
+export const getMediaLogo = (logos: { vote_average: number }[]) => {
+  if (!logos.length) return {};
+
+  return logos.sort((a, b) => b.vote_average - a.vote_average).at(0);
+};

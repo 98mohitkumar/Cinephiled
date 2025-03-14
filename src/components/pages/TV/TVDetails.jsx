@@ -3,8 +3,8 @@ import UserActions from "components/Shared/UserActions";
 import MediaHeroTemplate from "components/Templates/MediaHeroTemplate";
 import FlexBox from "components/UI/FlexBox";
 
-const TVDetails = ({ tvData }) => {
-  const { id, title, airDate, posterPath, rating, trailer, ...rest } = tvData;
+const TVDetails = ({ tvDetails }) => {
+  const { id, title, airDate, posterPath, rating, trailer, ...rest } = tvDetails;
 
   return (
     <MediaHeroTemplate posterPath={posterPath} title={title} mediaType='tv' rating={rating} {...rest}>

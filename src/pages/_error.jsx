@@ -1,5 +1,5 @@
+import { Error404 } from "components/Shared/GlobalComponents";
 import H1 from "components/UI/Typography/H1";
-import { Error404 } from "styles/PageStyles/404PageStyles";
 
 function Error({ statusCode }) {
   return (

@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 
+import { getTechnicalDetails } from "apiRoutes/media";
 import MovieDetails from "components/pages/Movie/MovieDetails";
 import MovieTab from "components/pages/Movie/MovieTab";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
@@ -9,45 +10,26 @@ import LayoutContainer from "components/UI/LayoutContainer";
 import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo } from "data/global";
-import { fetchOptions, getNiceName, getReleaseDate, getReleaseYear, getYouTubeTrailer, matches, mergeCrewData } from "utils/helper";
+import { fetchOptions, getMediaLogo, getNiceName, getReleaseDate, getReleaseYear, getYouTubeTrailer, matches, mergeCrewData } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 import { isImageDark } from "utils/server/helper";
 
-const Movie = ({ movieData }) => {
-  const {
-    id,
-    title,
-    overview,
-    releaseYear,
-    releaseDate,
-    runtime,
-    collection,
-    trailer,
-    genres,
-    tagline,
-    rating,
-    posterPath,
-    crewData,
-    socialIds,
-    homepage,
-    status,
-    backdropPath,
-    budget,
-    revenue,
-    language,
-    isEasterMovie,
-    cast,
-    reviews,
-    backdrops,
-    posters,
-    recommendations,
-    logo,
-    technicalDetails,
-    voteCount,
-    productionCompanies,
-    keywords
-  } = movieData;
-
+const Movie = ({
+  id,
+  title,
+  overview,
+  releaseDate,
+  releaseYear,
+  backdropPath,
+  posterPath,
+  cast,
+  reviews,
+  backdrops,
+  posters,
+  recommendations,
+  movieDetails,
+  overviewData
+}) => {
   return (
     <Fragment>
       <MetaWrapper
@@ -65,20 +47,13 @@ const Movie = ({ movieData }) => {
           overview,
           backdropPath,
           posterPath,
-          rating,
-          genres,
-          tagline,
-          trailer,
-          crewData,
-          logo,
           releaseDate,
-          isEasterMovie,
-          voteCount
+          ...movieDetails
         }}
       />
 
       <section className='relative'>
-        <DominantColor image={backdropPath} tint isUsingBackdrop angle='0deg' />
+        <DominantColor image={backdropPath || posterPath} tint isUsingBackdrop={!!backdropPath} angle='0deg' />
 
         <div className='relative z-10'>
           {/* movie tabs */}
@@ -88,20 +63,10 @@ const Movie = ({ movieData }) => {
             backdrops={backdrops}
             posters={posters}
             overviewData={{
-              runtime,
-              collection,
-              socialIds,
-              homepage,
-              status,
-              budget,
-              revenue,
-              language,
-              releaseDate,
               title,
+              releaseDate,
               description: overview,
-              technicalDetails,
-              productionCompanies,
-              keywords
+              ...overviewData
             }}
           />
 
@@ -129,90 +94,62 @@ export const getServerSideProps = async (ctx) => {
 
     const [movieDetails, languages] = await Promise.all([movieResponse.json(), languagesResponse.json()]);
 
-    const releaseYear = getReleaseYear(movieDetails?.release_date);
-    const releaseDate = getReleaseDate(movieDetails?.release_date);
-    const status = movieDetails?.status || "TBA";
-    const language = languages.find((item) => matches(item.iso_639_1, movieDetails.original_language));
-    const trailer = getYouTubeTrailer(movieDetails?.videos?.results);
-    const logo = movieDetails?.images?.logos?.sort((a, b) => b.vote_average - a.vote_average).at(0) || null;
-    const keywords = movieDetails?.keywords?.keywords || [];
-
-    const crewData = mergeCrewData([
-      ...movieDetails?.credits?.crew?.filter((credit) => matches(credit?.job, "Director")).slice(0, 2),
-      ...movieDetails?.credits?.crew?.filter((credit) => matches(credit?.job, "Writer")).slice(0, 3),
-      ...movieDetails?.credits?.crew?.filter((credit) => matches(credit?.job, "Characters")).slice(0, 2)
-    ]);
-
-    const socialIds = movieDetails?.external_ids;
-    const collection = movieDetails?.belongs_to_collection || {};
-    const productionCompanies = movieDetails?.production_companies;
+    const socialIds = movieDetails?.external_ids,
+      language = languages.find((item) => matches(item.iso_639_1, movieDetails.original_language)),
+      logo = getMediaLogo(movieDetails?.images?.logos),
+      crewData = mergeCrewData([
+        ...movieDetails?.credits?.crew?.filter((credit) => matches(credit?.job, "Director")).slice(0, 2),
+        ...movieDetails?.credits?.crew?.filter((credit) => matches(credit?.job, "Writer")).slice(0, 3),
+        ...movieDetails?.credits?.crew?.filter((credit) => matches(credit?.job, "Characters")).slice(0, 2)
+      ]);
 
     const isLogoDark = await isImageDark(logo?.file_path);
-    let technicalDetails;
-
-    try {
-      const response = await fetch(
-        apiEndpoints.cfWorker,
-        fetchOptions({
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: { id: socialIds?.imdb_id }
-        })
-      );
-
-      if (!response.ok) {
-        throw new Error("error fetching technical details");
-      }
-
-      technicalDetails = await response.json();
-    } catch {
-      technicalDetails = {
-        items: []
-      };
-    }
+    const technicalDetails = await getTechnicalDetails(socialIds?.imdb_id);
 
     return {
       props: {
-        movieData: {
-          id: movieDetails?.id,
-          keywords,
-          title: movieDetails?.title,
-          releaseYear,
-          releaseDate,
-          collection,
-          genres: movieDetails?.genres?.splice(0, 3),
-          runtime: movieDetails?.runtime,
-          tagline: movieDetails?.tagline,
-          overview: movieDetails?.overview,
+        id: movieDetails?.id,
+        title: movieDetails?.title,
+        overview: movieDetails?.overview,
+        releaseDate: getReleaseDate(movieDetails?.release_date),
+        releaseYear: getReleaseYear(movieDetails?.release_date),
+        backdropPath: movieDetails?.backdrop_path,
+        posterPath: movieDetails?.poster_path,
+        cast: {
+          totalCount: movieDetails?.credits?.cast?.length,
+          data: movieDetails?.credits?.cast?.slice(0, 15)
+        },
+        reviews: movieDetails?.reviews?.results || [],
+        backdrops: movieDetails?.images?.backdrops || [],
+        posters: movieDetails?.images?.posters || [],
+        recommendations: movieDetails?.recommendations?.results || [],
+
+        movieDetails: {
           rating: movieDetails?.vote_average,
-          voteCount: movieDetails?.vote_count,
-          posterPath: movieDetails?.poster_path,
-          backdropPath: movieDetails?.backdrop_path,
+          genres: movieDetails?.genres?.splice(0, 3),
+          tagline: movieDetails?.tagline,
+          trailer: getYouTubeTrailer(movieDetails?.videos?.results),
           crewData,
-          trailer,
           logo: {
             ...logo,
             isLogoDark
           },
+          isEasterMovie: matches(movieDetails?.id, parseInt(process.env.EASTER_MOVIE_ID)),
+          voteCount: movieDetails?.vote_count
+        },
+
+        overviewData: {
+          runtime: movieDetails?.runtime,
+          collection: movieDetails?.belongs_to_collection || {},
           socialIds,
           homepage: movieDetails?.homepage,
-          status,
-          language: language?.english_name || language?.name || "TBA",
+          status: movieDetails?.status || "TBA",
           budget: movieDetails?.budget,
           revenue: movieDetails?.revenue,
-          cast: {
-            totalCount: movieDetails?.credits?.cast?.length,
-            data: movieDetails?.credits?.cast?.slice(0, 15)
-          },
-          isEasterMovie: matches(movieDetails?.id, parseInt(process.env.EASTER_MOVIE_ID)),
-          reviews: movieDetails?.reviews?.results ?? [],
-          backdrops: movieDetails?.images?.backdrops ?? [],
-          posters: movieDetails?.images?.posters ?? [],
-          recommendations: movieDetails?.recommendations?.results,
+          language: language?.english_name || language?.name || "TBA",
           technicalDetails,
-          productionCompanies
+          productionCompanies: movieDetails?.production_companies || [],
+          keywords: movieDetails?.keywords?.keywords || []
         }
       }
     };

@@ -1,6 +1,6 @@
+import { Error404 } from "components/Shared/GlobalComponents";
 import H1 from "components/UI/Typography/H1";
 import P from "components/UI/Typography/P";
-import { Error404 } from "styles/PageStyles/404PageStyles";
 
 export default function Custom404() {
   return (

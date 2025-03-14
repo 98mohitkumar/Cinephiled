@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 
+import { getTechnicalDetails } from "apiRoutes/media";
 import TVDetails from "components/pages/TV/TVDetails";
 import TVTab from "components/pages/TV/TVTab";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
@@ -9,45 +10,28 @@ import LayoutContainer from "components/UI/LayoutContainer";
 import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo } from "data/global";
-import { fetchOptions, getNiceName, getReleaseYear, getYouTubeTrailer, matches, mergeCrewData, mergeEpisodeCount } from "utils/helper";
+import { fetchOptions, getMediaLogo, getNiceName, getReleaseYear, getYouTubeTrailer, matches, mergeCrewData, mergeEpisodeCount } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 import { isImageDark } from "utils/server/helper";
 
-const TvShow = ({ tvData }) => {
-  const {
-    id,
-    airDate,
-    title,
-    status,
-    type,
-    overview,
-    backdropPath,
-    posterPath,
-    releaseYear,
-    endYear,
-    cast,
-    seasons,
-    reviews,
-    backdrops,
-    posters,
-    networks,
-    socialIds,
-    language,
-    crewData,
-    genres,
-    rating,
-    recommendations,
-    homepage,
-    tagline,
-    trailer,
-    logo,
-    lastAirDate,
-    technicalDetails,
-    voteCount,
-    productionCompanies,
-    keywords
-  } = tvData;
-
+const TvShow = ({
+  id,
+  title,
+  overview,
+  backdropPath,
+  posterPath,
+  firstAirDate,
+  releaseYear,
+  endYear,
+  cast,
+  seasons,
+  reviews,
+  backdrops,
+  posters,
+  recommendations,
+  tvDetails,
+  overviewData
+}) => {
   return (
     <Fragment>
       <MetaWrapper
@@ -59,20 +43,14 @@ const TvShow = ({ tvData }) => {
 
       {/* tv info hero section */}
       <TVDetails
-        tvData={{
+        tvDetails={{
           id,
           title,
           overview,
           backdropPath,
           posterPath,
-          rating,
-          genres,
-          tagline,
-          trailer,
-          crewData,
-          logo,
-          airDate,
-          voteCount
+          airDate: firstAirDate,
+          ...tvDetails
         }}
       />
 
@@ -87,21 +65,12 @@ const TvShow = ({ tvData }) => {
             reviews={reviews}
             backdrops={backdrops}
             posters={posters}
-            seriesName={title}
+            title={title}
             overviewData={{
-              firstAirDate: airDate,
-              lastAirDate: lastAirDate,
-              status,
-              type,
-              networks,
-              socialIds,
-              language,
-              homepage,
               title,
               description: overview,
-              technicalDetails,
-              productionCompanies,
-              keywords
+              firstAirDate: firstAirDate,
+              ...overviewData
             }}
           />
 
@@ -127,96 +96,69 @@ export const getServerSideProps = async (ctx) => {
 
     if (!tvResponse.ok) throw new Error("error fetching details");
 
-    const [tvData, languages] = await Promise.all([tvResponse.json(), languagesResponse.json()]);
+    const [tvDetails, languages] = await Promise.all([tvResponse.json(), languagesResponse.json()]);
 
-    const releaseYear = getReleaseYear(tvData?.first_air_date);
-    const endYear = matches(tvData?.status, "Ended") || matches(tvData.status, "Canceled") ? new Date(tvData?.last_air_date).getFullYear() : "";
-    const language = languages.find((item) => matches(item.iso_639_1, tvData.original_language));
-    const keywords = tvData?.keywords?.results || [];
+    const socialIds = tvDetails?.external_ids,
+      logo = getMediaLogo(tvDetails?.images?.logos),
+      endYear = matches(tvDetails?.status, "Ended") || matches(tvDetails.status, "Canceled") ? new Date(tvDetails?.last_air_date).getFullYear() : "",
+      language = languages.find((item) => matches(item.iso_639_1, tvDetails.original_language)),
+      creators = tvDetails?.created_by?.slice(0, 2).map((creator) => ({
+        ...creator,
+        job: "Creator"
+      })),
+      characters = tvDetails?.aggregate_credits?.crew?.filter((credit) => matches(credit.job, "Characters")).slice(0, 2);
 
-    const status = tvData?.status || "TBA";
-    const networks = tvData.networks;
-    const productionCompanies = tvData?.production_companies;
-    const creators = tvData?.created_by?.slice(0, 2).map((creator) => ({
-      ...creator,
-      job: "Creator"
-    }));
-
-    const socialIds = tvData?.external_ids;
-    const characters = tvData?.aggregate_credits?.crew?.filter((credit) => matches(credit.job, "Characters")).slice(0, 2);
-    const crewData = mergeCrewData([...creators, ...characters]);
-    const trailer = getYouTubeTrailer(tvData?.videos?.results);
-    const logo = tvData?.images?.logos?.sort((a, b) => b.vote_average - a.vote_average).at(0) || null;
-
+    // check if logo is dark
     const isLogoDark = await isImageDark(logo?.file_path);
 
-    let technicalDetails;
-
-    try {
-      const response = await fetch(
-        apiEndpoints.cfWorker,
-        fetchOptions({
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: { id: socialIds?.imdb_id }
-        })
-      );
-
-      if (!response.ok) {
-        throw new Error("error fetching technical details");
-      }
-
-      technicalDetails = await response.json();
-    } catch {
-      technicalDetails = {
-        items: []
-      };
-    }
+    const technicalDetails = await getTechnicalDetails(socialIds?.imdb_id);
 
     return {
       props: {
-        tvData: {
-          id: tvData?.id,
-          keywords,
-          title: tvData?.name,
-          airDate: tvData?.first_air_date,
-          lastAirDate: tvData?.last_air_date,
-          releaseYear,
-          genres: tvData?.genres?.splice(0, 3),
-          tagline: tvData?.tagline,
-          overview: tvData?.overview,
-          rating: tvData?.vote_average,
-          voteCount: tvData?.vote_count,
-          posterPath: tvData?.poster_path,
-          backdropPath: tvData?.backdrop_path,
-          crewData,
-          trailer,
-          socialIds,
-          homepage: tvData?.homepage,
-          status,
-          language: language?.english_name || language?.name || "TBA",
-          networks,
-          type: tvData?.type,
-          endYear,
-          cast: {
-            totalCount: tvData?.aggregate_credits?.cast?.length,
-            data: mergeEpisodeCount(
-              tvData?.aggregate_credits?.cast?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role }))).flat()
-            ).slice(0, 15)
-          },
-          seasons: tvData?.seasons,
-          reviews: tvData?.reviews?.results || [],
-          backdrops: tvData?.images?.backdrops || [],
-          posters: tvData?.images?.posters || [],
-          recommendations: tvData?.recommendations?.results || [],
+        id: tvDetails?.id,
+        title: tvDetails?.name,
+        overview: tvDetails?.overview,
+        backdropPath: tvDetails?.backdrop_path,
+        posterPath: tvDetails?.poster_path,
+        firstAirDate: tvDetails?.first_air_date,
+        releaseYear: getReleaseYear(tvDetails?.first_air_date),
+        endYear,
+        cast: {
+          totalCount: tvDetails?.aggregate_credits?.cast?.length,
+          data: mergeEpisodeCount(
+            tvDetails?.aggregate_credits?.cast?.map(({ roles, ...rest }) => roles.map((role) => ({ ...rest, ...role }))).flat()
+          ).slice(0, 15)
+        },
+        seasons: tvDetails?.seasons,
+        reviews: tvDetails?.reviews?.results || [],
+        backdrops: tvDetails?.images?.backdrops || [],
+        posters: tvDetails?.images?.posters || [],
+        recommendations: tvDetails?.recommendations?.results || [],
+
+        tvDetails: {
+          rating: tvDetails?.vote_average,
+          genres: tvDetails?.genres?.splice(0, 3),
+          tagline: tvDetails?.tagline,
+          trailer: getYouTubeTrailer(tvDetails?.videos?.results),
+          crewData: mergeCrewData([...creators, ...characters]),
           logo: {
             ...logo,
             isLogoDark
           },
+          voteCount: tvDetails?.vote_count
+        },
+
+        overviewData: {
+          lastAirDate: tvDetails?.last_air_date,
+          status: tvDetails?.status || "TBA",
+          type: tvDetails?.type,
+          networks: tvDetails.networks,
+          socialIds,
+          language: language?.english_name || language?.name || "TBA",
+          homepage: tvDetails?.homepage,
           technicalDetails,
-          productionCompanies
+          productionCompanies: tvDetails?.production_companies,
+          keywords: tvDetails?.keywords?.results || []
         }
       }
     };

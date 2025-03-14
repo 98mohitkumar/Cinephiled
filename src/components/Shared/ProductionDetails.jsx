@@ -45,7 +45,7 @@ const DetailsBlock = ({ title, details, type, subtext }) => {
   );
 };
 
-const ProductionDetails = ({ productionCompanies = null, networks = null }) => {
+const ProductionDetails = ({ productionCompanies, networks }) => {
   const { isModalVisible, openModal, closeModal } = useModal();
 
   return (
