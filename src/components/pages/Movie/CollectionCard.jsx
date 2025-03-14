@@ -24,11 +24,11 @@ const CollectionCard = ({ collection, className }) => {
         </div>
 
         <FlexBox className='absolute bottom-0 left-0 right-0  w-full items-center justify-center gap-10 bg-neutral-100 py-8'>
-          <P weight='bold' className='text-black'>
+          <P weight='semibold' className='text-black'>
             View Collection
           </P>
 
-          <MoveRight size={24} className='text-black transition-all group-hover:translate-x-1' />
+          <MoveRight size={24} className='text-black transition-all group-hover:translate-x-1' strokeWidth={1.5} />
         </FlexBox>
 
         <P

@@ -15,7 +15,7 @@ export const px = (value: number) => value * pixelsPerRem;
 minSize and maxSize are the values of css properties, can be in px or rem
 minViewport and maxViewport are the viewport values, that are defined in rem in tokens
 
-when convertToRem is true, the values are converted to rem while breakpoints are in already inrem, when it's false the viewport values are converted to px
+when convertToRem is true, the values are converted to rem while breakpoints are in already in rem, when it's false the viewport values are converted to px
 */
 
 // ---- css clamp ---- //

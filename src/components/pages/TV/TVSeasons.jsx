@@ -10,7 +10,7 @@ import { ROUTES, blurPlaceholder } from "data/global";
 import { getHasEpisodeReleased, getReleaseDate } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
-const TVSeasons = ({ seasons, seriesName }) => {
+const TVSeasons = ({ seasons, title }) => {
   const router = useRouter();
 
   return (
@@ -49,7 +49,7 @@ const TVSeasons = ({ seasons, seriesName }) => {
                 </FlexBox>
 
                 <P className='mt-12 line-clamp-3 text-neutral-700' weight='medium'>
-                  {overview || `Season ${season_number} of ${seriesName} premiered on ${getReleaseDate(air_date)}.`}
+                  {overview || `Season ${season_number} of ${title} premiered on ${getReleaseDate(air_date)}.`}
                 </P>
               </div>
             </FlexBox>

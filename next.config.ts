@@ -3,8 +3,9 @@ import { NextConfig } from "next";
 
 const withPWA = withPWAInit({
   dest: "public",
+  disable: process.env.NODE_ENV !== "production",
   reloadOnOnline: true,
-  register: true,
+  register: process.env.NODE_ENV === "production",
   workboxOptions: {
     disableDevLogs: true,
     exclude: [/dynamic-css-manifest\.json$/]
@@ -17,7 +18,6 @@ const cspHeader = `
     style-src 'self' 'unsafe-inline';
     img-src * data:;
     font-src 'self' data:;
-    object-src 'none';
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';

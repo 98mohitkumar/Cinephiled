@@ -133,3 +133,54 @@ export const productionHeroWrapper = css`
     aspect-ratio: var(--aspectRatio);
   }
 `;
+
+const aboutAnimation = keyframes`
+  to {
+    transform: scale(1);
+  }
+`;
+
+export const pageBackgroundStyles = css`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex: 1;
+
+  .background {
+    filter: brightness(50%);
+    z-index: ${theme.zIndex[1]};
+    transform: scale(1.5);
+    animation: ${aboutAnimation} 1.5s ${theme.transitionTimings["ease-in-out-quart"]} forwards;
+  }
+
+  &::before {
+    content: "";
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: ${theme.zIndex[2]};
+    background: ${hexToRgba(theme.colors.black, 0.9)};
+  }
+`;
+
+const textGradient = keyframes`
+  to {
+    filter: hue-rotate(360deg);
+    -webkit-filter: hue-rotate(360deg);
+  }
+`;
+
+export const Error404 = css`
+  text-align: center;
+  background: ${`linear-gradient(
+    90deg,
+    ${theme.colors.accentPrimary},
+    ${theme.colors.accentSecondary}
+  )`};
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ${textGradient} 4s alternate-reverse linear infinite;
+`;

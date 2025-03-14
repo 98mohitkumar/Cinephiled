@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Fragment } from "react";
 
-import { TMDBCredit } from "components/Shared/GlobalComponents";
+import { TMDBCredit, pageBackgroundStyles } from "components/Shared/GlobalComponents";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
@@ -10,7 +10,6 @@ import H2 from "components/UI/Typography/H2";
 import P from "components/UI/Typography/P";
 import { ROUTES, blurPlaceholder, siteInfo } from "data/global";
 import aboutBackground from "images/media-backdrops.jpg";
-import { pageBackgroundStyles } from "styles/PageStyles/aboutPageStyles";
 
 const About = () => {
   return (

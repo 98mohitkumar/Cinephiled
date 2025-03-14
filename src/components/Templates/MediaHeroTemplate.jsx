@@ -91,7 +91,7 @@ const MediaHeroTemplate = ({
                   key={item.id}
                   href={`/${ROUTES.genres}/${getNiceName({ id: item.id, name: item.name })}/${matches(mediaType, "movie") ? "movies" : "tv"}`}
                   passHref>
-                  <GenreTag>
+                  <GenreTag className='shadow-sm'>
                     <P weight='medium'>{item.name}</P>
                   </GenreTag>
                 </Link>
