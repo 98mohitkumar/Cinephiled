@@ -1,7 +1,7 @@
 import { Star } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { getServerSession } from "next-auth";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { toast } from "sonner";
 
 import { authOptions } from "api/auth/[...nextauth]";
@@ -25,28 +25,21 @@ import H3 from "components/UI/Typography/H3";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
 import { LAYOUT_TYPES, ROUTES, opacityMotionTransition, siteInfo } from "data/global";
-import useRefreshData from "hooks/useRefreshData";
 import { cn, fetchOptions, getNiceName, getReleaseYear, matches, mergeCrewData } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const EpisodeRatingButton = ({ savedRating, title, seriesId, seasonNumber, episodeNumber }) => {
+  const [savedRatingState, setSavedRatingState] = useState(savedRating);
   const { isModalVisible, openModal, closeModal } = useModal();
   const { setEpisodeRating } = useSetEpisodeRating();
   const { deleteEpisodeRating } = useDeleteEpisodeRating();
-  const { revalidateData } = useRefreshData({ withQuery: true });
-
-  const refreshPageData = () => {
-    setTimeout(() => {
-      revalidateData();
-    }, 500);
-  };
 
   const setRatingHandler = async ({ rating }) => {
     const res = await setEpisodeRating({ seriesId, seasonNumber, episodeNumber, rating });
 
     if (res?.success) {
       toast.success("Rating updated successfully");
-      refreshPageData();
+      setSavedRatingState(rating);
     } else {
       toast.error("Something went wrong, please try again later");
     }
@@ -58,7 +51,7 @@ const EpisodeRatingButton = ({ savedRating, title, seriesId, seasonNumber, episo
     if (res?.success) {
       toast.success("Rating deleted successfully");
 
-      refreshPageData();
+      setSavedRatingState(0);
     } else {
       toast.error("Something went wrong, please try again later");
     }
@@ -66,10 +59,10 @@ const EpisodeRatingButton = ({ savedRating, title, seriesId, seasonNumber, episo
 
   return (
     <Fragment>
-      <Button onClick={openModal} shape='circle' size='small' title={savedRating ? "Update your rating" : "Rate this media"}>
+      <Button onClick={openModal} shape='circle' size='small' title={savedRatingState ? "Update your rating" : "Rate this media"}>
         <AnimatePresence mode='wait' initial={false}>
-          <motion.div key={`rating - ${savedRating.toString()}`} {...opacityMotionTransition}>
-            {savedRating ? <Star size={16} fill='currentColor' /> : <Star size={16} />}
+          <motion.div key={`rating - ${savedRatingState.toString()}`} {...opacityMotionTransition}>
+            {savedRatingState ? <Star size={16} fill='currentColor' /> : <Star size={16} />}
           </motion.div>
         </AnimatePresence>
       </Button>
@@ -77,7 +70,7 @@ const EpisodeRatingButton = ({ savedRating, title, seriesId, seasonNumber, episo
       <RatingModal
         isOpen={isModalVisible}
         closeModal={closeModal}
-        rating={savedRating}
+        rating={savedRatingState}
         title={title}
         mediaType='episode'
         setRatingFunc={setRatingHandler}
