@@ -93,6 +93,7 @@ export const heroBanner = css`
 
   .backdrop-wrapper {
     min-width: 260px;
+    max-width: 360px;
     will-change: transform;
   }
 
