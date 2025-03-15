@@ -13,7 +13,18 @@ import { useMediaContext } from "Store/MediaContext";
 import { theme } from "theme/theme";
 import { cn, getReleaseYear, matches } from "utils/helper";
 
-const RatingModal = ({ mediaType, mediaId, closeModal, posterPath, releaseDate, isOpen, title, rating: savedRating = 0 }) => {
+const RatingModal = ({
+  mediaType,
+  mediaId,
+  closeModal,
+  posterPath,
+  releaseDate,
+  isOpen,
+  title,
+  rating: savedRating = 0,
+  setRatingFunc,
+  deleteRatingFunc
+}) => {
   const [rating, updateRating] = useState(0);
   const [isUpdatingRating, setIsUpdatingRating] = useState(false);
   const { setRating } = useSetRating();
@@ -34,6 +45,12 @@ const RatingModal = ({ mediaType, mediaId, closeModal, posterPath, releaseDate, 
 
   const ratingSubmissionHandler = async () => {
     if (matches(rating, 0)) return;
+
+    if (matches(mediaType, "episode")) {
+      await setRatingFunc({ rating });
+      cancelButtonHandler();
+      return;
+    }
 
     const res = await setRating({ mediaType, mediaId, rating });
 
@@ -81,7 +98,7 @@ const RatingModal = ({ mediaType, mediaId, closeModal, posterPath, releaseDate, 
           media: updatedRatedTvShows
         });
       }
-      toast.success("Rating submitted successfully");
+      toast.success("Rating saved successfully");
     } else {
       toast.error("Something went wrong, please try again later");
     }
@@ -91,6 +108,12 @@ const RatingModal = ({ mediaType, mediaId, closeModal, posterPath, releaseDate, 
   };
 
   const deleteRatingHandler = async () => {
+    if (matches(mediaType, "episode")) {
+      await deleteRatingFunc();
+      closeDeleteConfirmationModal();
+      return;
+    }
+
     const res = await deleteRating({ mediaType, mediaId });
 
     if (res?.success) {
@@ -118,9 +141,7 @@ const RatingModal = ({ mediaType, mediaId, closeModal, posterPath, releaseDate, 
   return (
     <Fragment>
       <Modal isOpen={isOpen} closeModal={cancelButtonHandler} className='max-w-lg'>
-        <H5 weight='semibold'>
-          {title} ({getReleaseYear(releaseDate)})
-        </H5>
+        <H5 weight='semibold'>{matches(mediaType, "episode") ? title : `${title} (${getReleaseYear(releaseDate)})`}</H5>
 
         <div className='my-16'>
           {hasSavedRating && !isUpdatingRating ? (

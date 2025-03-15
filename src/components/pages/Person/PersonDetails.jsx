@@ -91,48 +91,41 @@ const PersonDetails = ({ personDetails }) => {
 
   const [sliderRef] = useKeenSlider({
     renderMode: "performance",
-    dragSpeed: 1.4,
+    dragSpeed: 1.75,
     breakpoints: {
       "(min-width: 0px)": {
         slides: {
-          perView: 1.75,
-          spacing: 16
+          perView: 1.75
         }
       },
       [`(min-width: ${theme.breakpoints.xs})`]: {
         slides: {
-          perView: 2.25,
-          spacing: 16
+          perView: 2.25
         }
       },
       [`(min-width: ${theme.breakpoints.sm})`]: {
         slides: {
-          perView: 3.25,
-          spacing: 16
+          perView: 3.25
         }
       },
       [`(min-width: ${theme.breakpoints.lg})`]: {
         slides: {
-          perView: 4.25,
-          spacing: 20
+          perView: 4.25
         }
       },
       [`(min-width: ${theme.breakpoints.xl})`]: {
         slides: {
-          perView: 4.75,
-          spacing: 20
+          perView: 4.75
         }
       },
       [`(min-width: ${theme.breakpoints["2xl"]})`]: {
         slides: {
-          perView: 5.75,
-          spacing: 20
+          perView: 5.75
         }
       },
       [`(min-width: ${theme.breakpoints["3xl"]})`]: {
         slides: {
-          perView: 7.75,
-          spacing: 20
+          perView: 7.75
         }
       }
     }
@@ -265,19 +258,21 @@ const PersonDetails = ({ personDetails }) => {
           </div>
         </LayoutContainer>
 
-        <LayoutContainer className='py-2448 pe-4'>
+        <LayoutContainer className='py-2448 pe-0'>
           <div ref={sliderRef} className='keen-slider'>
             {images?.profiles.map((item) => (
-              <div className='keen-slider__slide relative aspect-poster' key={item.file_path}>
-                <Image
-                  src={getTMDBImage({ path: item.file_path, type: "profile", size: "h632" })}
-                  alt='cast-image'
-                  fill
-                  placeholder='blur'
-                  className='rounded-xl object-cover shadow-xl'
-                  blurDataURL={blurPlaceholder}
-                />
-                <DownloadMediaButton item={item.file_path} />
+              <div className='keen-slider__slide' key={item.file_path}>
+                <div className='relative mr-1620 aspect-poster'>
+                  <Image
+                    src={getTMDBImage({ path: item.file_path, type: "profile", size: "h632" })}
+                    alt='cast-image'
+                    fill
+                    placeholder='blur'
+                    className='rounded-xl object-cover shadow-xl'
+                    blurDataURL={blurPlaceholder}
+                  />
+                  <DownloadMediaButton item={item.file_path} />
+                </div>
               </div>
             ))}
           </div>

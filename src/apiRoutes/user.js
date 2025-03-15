@@ -232,6 +232,35 @@ export const useSetRating = () => {
   };
 };
 
+export const useSetEpisodeRating = () => {
+  const { userInfo } = useUserContext();
+
+  const setEpisodeRating = async ({ seriesId, seasonNumber, episodeNumber, rating }) => {
+    const rated = await fetch(
+      apiEndpoints.user.episodeRating({ seriesId, seasonNumber, episodeNumber }),
+      fetchOptions({
+        method: "POST",
+        token: userInfo.accessToken,
+        body: {
+          value: rating
+        }
+      })
+    );
+
+    if (rated.ok) {
+      return await rated.json();
+    } else {
+      return {
+        success: false
+      };
+    }
+  };
+
+  return {
+    setEpisodeRating
+  };
+};
+
 export const useCreateList = () => {
   const { userInfo } = useUserContext();
 
@@ -331,6 +360,32 @@ export const useDeleteRating = () => {
 
   return {
     deleteRating
+  };
+};
+
+export const useDeleteEpisodeRating = () => {
+  const { userInfo } = useUserContext();
+
+  const deleteEpisodeRating = async ({ seriesId, seasonNumber, episodeNumber }) => {
+    const deleted = await fetch(
+      apiEndpoints.user.episodeRating({ seriesId, seasonNumber, episodeNumber }),
+      fetchOptions({
+        method: "DELETE",
+        token: userInfo.accessToken
+      })
+    );
+
+    if (deleted.ok) {
+      return await deleted.json();
+    } else {
+      return {
+        success: false
+      };
+    }
+  };
+
+  return {
+    deleteEpisodeRating
   };
 };
 

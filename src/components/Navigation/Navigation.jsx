@@ -86,7 +86,7 @@ const Navigation = () => {
     <header css={headerStyles} ref={navRef}>
       <LayoutContainer className='py-4' css={navBarStyles}>
         <FlexBox tag='nav' className='w-full items-center justify-between'>
-          <Link href='/'>
+          <Link href='/' title='cinephiled logo'>
             <div aria-label='cinephiled logo' role='link'>
               <Logo />
             </div>
@@ -94,7 +94,7 @@ const Navigation = () => {
 
           <div className='-mr-2432 hidden items-center md:flex' css={navLinksStyles}>
             {navLinks.map(({ text, link }) => (
-              <Link href={link} key={text}>
+              <Link href={link} key={text} title={`go to ${text} page`}>
                 <P size='large' weight='medium' className={`link ${matches(router.asPath, link) ? "active" : ""}`} aria-label={`go to ${text} page`}>
                   {text}
                 </P>
@@ -103,7 +103,11 @@ const Navigation = () => {
 
             <UserAvatar />
 
-            <FlexBox className='hover cursor-pointer items-center justify-center px-32 py-16 can-hover:text-accentPrimary' onClick={searchHandler}>
+            <FlexBox
+              className='hover cursor-pointer items-center justify-center px-32 py-16 can-hover:text-accentPrimary'
+              onClick={searchHandler}
+              aria-label='search icon'
+              title='search'>
               <Search size={28} />
             </FlexBox>
           </div>
@@ -112,7 +116,9 @@ const Navigation = () => {
             <FlexBox
               className='hover cursor-pointer items-center justify-center p-8 can-hover:text-accentPrimary'
               onClick={searchHandler}
-              key='search-icon'>
+              key='search-icon'
+              aria-label='search icon'
+              title='search'>
               <Search size={28} />
             </FlexBox>
 

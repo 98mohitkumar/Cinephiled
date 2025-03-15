@@ -16,60 +16,51 @@ import { getTMDBImage } from "utils/imageHelper";
 export const CastCarousel = ({ cast, children }) => {
   const [sliderRef] = useKeenSlider({
     renderMode: "performance",
-    dragSpeed: 1.4,
+    dragSpeed: 1.75,
     breakpoints: {
       "(min-width: 0px)": {
         slides: {
-          perView: 2.25,
-          spacing: 16
+          perView: 2.25
         }
       },
       [`(min-width: ${theme.breakpoints.xs})`]: {
         slides: {
-          perView: 2.75,
-          spacing: 16
+          perView: 2.75
         }
       },
       [`(min-width: ${theme.breakpoints.sm})`]: {
         slides: {
-          perView: 3.25,
-          spacing: 16
+          perView: 3.25
         }
       },
       [`(min-width: ${theme.breakpoints.md})`]: {
         slides: {
-          perView: 4.25,
-          spacing: 16
+          perView: 4.25
         }
       },
       [`(min-width: ${theme.breakpoints.lg})`]: {
         slides: {
-          perView: 5.25,
-          spacing: 20
+          perView: 5.25
         }
       },
       [`(min-width: ${theme.breakpoints.xl})`]: {
         slides: {
-          perView: 6.25,
-          spacing: 20
+          perView: 6.25
         }
       },
       [`(min-width: ${theme.breakpoints["2xl"]})`]: {
         slides: {
-          perView: 7.25,
-          spacing: 20
+          perView: 7.25
         }
       },
       [`(min-width: ${theme.breakpoints["3xl"]})`]: {
         slides: {
-          perView: 8.25,
-          spacing: 20
+          perView: 8.25
         }
       },
       [`(min-width: ${theme.breakpoints["4xl"]})`]: {
         slides: {
-          perView: 9.25,
-          spacing: 20
+          perView: 9.25
         }
       }
     }
@@ -79,32 +70,34 @@ export const CastCarousel = ({ cast, children }) => {
     <Fragment>
       <div ref={sliderRef} className='keen-slider'>
         {cast.map((item) => (
-          <div key={item.id} className='keen-slider__slide' title={item.name}>
-            <Link href={`/${ROUTES.person}/${getNiceName({ id: item.id, name: item.name })}`} passHref>
-              <motion.div className='relative aspect-profile' whileTap={{ scale: 0.95 }} title={item.name}>
-                <Image
-                  src={getTMDBImage({ path: item.profile_path, type: "profile", size: "w342" })}
-                  alt={item.name}
-                  fill
-                  className='rounded-xl object-cover object-top shadow-xl'
-                  placeholder='blur'
-                  blurDataURL={blurPlaceholder}
-                />
-              </motion.div>
+          <div key={item.id} className='keen-slider__slide'>
+            <div className='mr-1620'>
+              <Link href={`/${ROUTES.person}/${getNiceName({ id: item.id, name: item.name })}`} passHref>
+                <motion.div className='relative aspect-profile' whileTap={{ scale: 0.95 }} title={item.name}>
+                  <Image
+                    src={getTMDBImage({ path: item.profile_path, type: "profile", size: "w342" })}
+                    alt={item.name}
+                    fill
+                    className='rounded-xl object-cover object-top shadow-xl'
+                    placeholder='blur'
+                    blurDataURL={blurPlaceholder}
+                  />
+                </motion.div>
 
-              {children ? (
-                children(item)
-              ) : (
-                <div className='mt-12'>
-                  <P weight='bold' className='line-clamp-2' title={item.character}>
-                    {item.character}
-                  </P>
-                  <P className='text-neutral-400' title={item.name}>
-                    {item.name}
-                  </P>
-                </div>
-              )}
-            </Link>
+                {children ? (
+                  children(item)
+                ) : (
+                  <div className='mt-12'>
+                    <P weight='bold' className='line-clamp-2' title={item.character}>
+                      {item.character}
+                    </P>
+                    <P className='text-neutral-400' title={item.name}>
+                      {item.name}
+                    </P>
+                  </div>
+                )}
+              </Link>
+            </div>
           </div>
         ))}
       </div>
