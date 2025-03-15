@@ -59,7 +59,7 @@ const EpisodeRatingButton = ({ savedRating, title, seriesId, seasonNumber, episo
 
   return (
     <Fragment>
-      <Button onClick={openModal} shape='circle' size='small' title={savedRatingState ? "Update your rating" : "Rate this media"}>
+      <Button onClick={openModal} shape='circle' size='small' title={savedRatingState ? "Update your rating" : "Rate this episode"}>
         <AnimatePresence mode='wait' initial={false}>
           <motion.div key={`rating - ${savedRatingState.toString()}`} {...opacityMotionTransition}>
             {savedRatingState ? <Star size={16} fill='currentColor' /> : <Star size={16} />}
