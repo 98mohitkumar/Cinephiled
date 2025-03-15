@@ -32,10 +32,6 @@ const ProductionHero = ({ details, backdrops, logo }) => {
         )}
 
         <FlexBox className='flex-wrap items-center justify-center gap-x-1632 gap-y-8 max-sm:flex-col'>
-          <P weight='semibold' size='large'>
-            {details.name}
-          </P>
-
           {details?.headquarters || details?.origin_country ? (
             <FlexBox className='items-center gap-6'>
               <MapPin size={20} />
