@@ -1,5 +1,13 @@
+import { Star } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { getServerSession } from "next-auth";
 import { Fragment } from "react";
+import { toast } from "sonner";
 
+import { authOptions } from "api/auth/[...nextauth]";
+import { useDeleteEpisodeRating, useSetEpisodeRating } from "apiRoutes/user";
+import { useModal } from "components/Modal/Modal";
+import RatingModal from "components/RatingModal/RatingModal";
 import CrewCredits from "components/Shared/CrewCredits";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import { mediaDetailsWrapper } from "components/Shared/GlobalComponents";
@@ -9,14 +17,75 @@ import ShareButton from "components/Shared/ShareButton";
 import TVStats from "components/Shared/TVStats";
 import { CastCarousel } from "components/Templates/CastTemplate";
 import MediaImageTemplateGrid from "components/Templates/MediaImageTemplateGrid";
+import Button from "components/UI/Button";
+import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H2 from "components/UI/Typography/H2";
 import H3 from "components/UI/Typography/H3";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
-import { LAYOUT_TYPES, ROUTES, siteInfo } from "data/global";
+import { LAYOUT_TYPES, ROUTES, opacityMotionTransition, siteInfo } from "data/global";
+import useRefreshData from "hooks/useRefreshData";
 import { cn, fetchOptions, getNiceName, getReleaseYear, matches, mergeCrewData } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
+
+const EpisodeRatingButton = ({ savedRating, title, seriesId, seasonNumber, episodeNumber }) => {
+  const { isModalVisible, openModal, closeModal } = useModal();
+  const { setEpisodeRating } = useSetEpisodeRating();
+  const { deleteEpisodeRating } = useDeleteEpisodeRating();
+  const { revalidateData } = useRefreshData({ withQuery: true });
+
+  const refreshPageData = () => {
+    setTimeout(() => {
+      revalidateData();
+    }, 500);
+  };
+
+  const setRatingHandler = async ({ rating }) => {
+    const res = await setEpisodeRating({ seriesId, seasonNumber, episodeNumber, rating });
+
+    if (res?.success) {
+      toast.success("Rating updated successfully");
+      refreshPageData();
+    } else {
+      toast.error("Something went wrong, please try again later");
+    }
+  };
+
+  const deleteRatingHandler = async () => {
+    const res = await deleteEpisodeRating({ seriesId, seasonNumber, episodeNumber });
+
+    if (res?.success) {
+      toast.success("Rating deleted successfully");
+
+      refreshPageData();
+    } else {
+      toast.error("Something went wrong, please try again later");
+    }
+  };
+
+  return (
+    <Fragment>
+      <Button onClick={openModal} shape='circle' size='small' title={savedRating ? "Update your rating" : "Rate this media"}>
+        <AnimatePresence mode='wait' initial={false}>
+          <motion.div key={`rating - ${savedRating.toString()}`} {...opacityMotionTransition}>
+            {savedRating ? <Star size={16} fill='currentColor' /> : <Star size={16} />}
+          </motion.div>
+        </AnimatePresence>
+      </Button>
+
+      <RatingModal
+        isOpen={isModalVisible}
+        closeModal={closeModal}
+        rating={savedRating}
+        title={title}
+        mediaType='episode'
+        setRatingFunc={setRatingHandler}
+        deleteRatingFunc={deleteRatingHandler}
+      />
+    </Fragment>
+  );
+};
 
 const Episode = ({
   releaseDate,
@@ -30,6 +99,7 @@ const Episode = ({
   runtime,
   backdrops,
   crewData,
+  accountStates,
   tvData: { id, name, airDate }
 }) => {
   let LAYOUT_TYPE = LAYOUT_TYPES.standard;
@@ -39,6 +109,10 @@ const Episode = ({
   } else {
     LAYOUT_TYPE = LAYOUT_TYPES.blank;
   }
+
+  const savedRating = accountStates?.rated?.value || 0;
+
+  console.info(savedRating);
 
   return (
     <Fragment>
@@ -82,9 +156,18 @@ const Episode = ({
                 </P>
               ) : null}
 
-              {crewData?.length > 0 ? <CrewCredits crewData={crewData} className='mt-2032' /> : null}
+              {crewData?.length > 0 ? <CrewCredits crewData={crewData} className='my-2032' /> : null}
 
-              <ShareButton shape='circle' iconSize={16} size='small' className='mt-16' title={name} text={overview} />
+              <FlexBox className='mt-2032 flex-wrap items-center gap-10'>
+                <EpisodeRatingButton
+                  savedRating={savedRating}
+                  title={episodeName}
+                  seriesId={id}
+                  seasonNumber={seasonNumber}
+                  episodeNumber={episodeNumber}
+                />
+                <ShareButton shape='circle' iconSize={16} size='small' title={name} text={overview} />
+              </FlexBox>
             </div>
           </div>
         </LayoutContainer>
@@ -119,7 +202,9 @@ export default Episode;
 
 export const getServerSideProps = async (ctx) => {
   try {
-    const [response, tvRes] = await Promise.all([
+    const data = await getServerSession(ctx.req, ctx.res, authOptions);
+
+    const [response, tvRes, accountStatesRes] = await Promise.all([
       fetch(
         apiEndpoints.tv.episodeDetails({
           id: ctx.query.id,
@@ -128,12 +213,22 @@ export const getServerSideProps = async (ctx) => {
         }),
         fetchOptions()
       ),
-      fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id), fetchOptions())
+      fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id), fetchOptions()),
+      fetch(
+        apiEndpoints.tv.episodeAccountStates({
+          seriesId: ctx.query.id,
+          seasonNumber: ctx.query.sn,
+          episodeNumber: ctx.query.episode
+        }),
+        fetchOptions({
+          token: data?.user?.accessToken
+        })
+      )
     ]);
 
     if (!response.ok) throw new Error("error fetching details");
 
-    const [res, tvData] = await Promise.all([response.json(), tvRes.json()]);
+    const [res, tvData, accountStates] = await Promise.all([response.json(), tvRes.json(), accountStatesRes.json()]);
 
     const { cast, guest_stars } = res?.credits;
 
@@ -155,6 +250,7 @@ export const getServerSideProps = async (ctx) => {
         runtime: res?.runtime,
         backdrops: res?.images?.stills,
         crewData,
+        accountStates,
         tvData: {
           id: ctx.query.id,
           name: tvData?.name,

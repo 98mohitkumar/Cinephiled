@@ -25,6 +25,9 @@ export const apiEndpoints = {
 
     setRating: ({ mediaType, mediaId }: { mediaType: string; mediaId: string }) => `${baseUrlV3}/${mediaType}/${mediaId}/rating`,
 
+    episodeRating: ({ seriesId, seasonNumber, episodeNumber }: { seriesId: string; seasonNumber: number; episodeNumber: number }) =>
+      `${baseUrlV3}/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/rating`,
+
     getRated: ({ mediaType, accountId, pageQuery = 1 }: { mediaType: string; accountId: string; pageQuery?: number }) =>
       `${baseUrlV3}/account/${accountId}/rated/${mediaType}?language=en-US&sort_by=created_at.desc&page=${pageQuery}`,
 
@@ -84,6 +87,9 @@ export const apiEndpoints = {
 
     episodeDetails: ({ id, seasonNumber, episodeNumber }: { id: string; seasonNumber: number; episodeNumber: number }) =>
       `${baseUrlV3}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?language=en-US&append_to_response=images,credits&include_image_language=en,null`,
+
+    episodeAccountStates: ({ seriesId, seasonNumber, episodeNumber }: { seriesId: string; seasonNumber: number; episodeNumber: number }) =>
+      `${baseUrlV3}/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/account_states`,
 
     tvGenre: ({ genreId, pageQuery, sortBy = "popularity.desc" }: { genreId: string; pageQuery: number; sortBy: string }) =>
       `${baseUrlV3}/discover/tv?language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}
