@@ -151,7 +151,7 @@ const Seasons = ({
 
           {/* cast */}
           {cast?.length > 0 ? (
-            <LayoutContainer className='py-3248 pe-4'>
+            <LayoutContainer className='py-3248 pe-0'>
               <H3 className='mb-1620'>Cast</H3>
               <CastCarousel cast={cast}>
                 {(item) => (
