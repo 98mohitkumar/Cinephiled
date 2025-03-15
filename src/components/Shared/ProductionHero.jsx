@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import BackdropBanner from "components/Shared/BackdropBanner";
 import FlexBox from "components/UI/FlexBox";
+import H1 from "components/UI/Typography/H1";
 import P from "components/UI/Typography/P";
 import { getTMDBImage } from "utils/imageHelper";
 
@@ -16,17 +17,21 @@ const ProductionHero = ({ details, backdrops, logo }) => {
       </div>
 
       <div className='relative z-10 p-32 text-center'>
-        <div className='logo-wrapper m-auto' style={{ "--aspectRatio": logo?.aspect_ratio }}>
-          <Image
-            src={`${getTMDBImage({ path: logo?.file_path, type: "logo", size: "w300_filter(negate,555,000)" })}`}
-            alt={`${details?.name}-poster`}
-            fill
-            priority
-            className='object-contain'
-          />
-        </div>
+        {logo ? (
+          <div className='logo-wrapper m-auto mb-2440' style={{ "--aspectRatio": logo?.aspect_ratio }}>
+            <Image
+              src={`${getTMDBImage({ path: logo?.file_path, type: "logo", size: "w300_filter(negate,555,000)" })}`}
+              alt={`${details?.name}-poster`}
+              fill
+              priority
+              className='object-contain'
+            />
+          </div>
+        ) : (
+          <H1 className='mb-10 text-center'>{details.name}</H1>
+        )}
 
-        <FlexBox className='mt-2440 flex-wrap items-center justify-center gap-x-1632 gap-y-8 max-sm:flex-col'>
+        <FlexBox className='flex-wrap items-center justify-center gap-x-1632 gap-y-8 max-sm:flex-col'>
           <P weight='semibold' size='large'>
             {details.name}
           </P>

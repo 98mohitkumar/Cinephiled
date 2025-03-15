@@ -27,7 +27,7 @@ const DetailsBlock = ({ title, details, type, subtext }) => {
           <Link
             key={item.id}
             title={item.name}
-            className='flex items-center gap-10'
+            className='flex items-center gap-6'
             href={`/${type}/${getNiceName({ id: item?.id, name: item?.name })}`}>
             <P weight='semibold' className={linkStyles}>
               {item.name}
