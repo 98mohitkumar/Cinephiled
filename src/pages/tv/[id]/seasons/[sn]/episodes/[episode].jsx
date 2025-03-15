@@ -38,7 +38,7 @@ const EpisodeRatingButton = ({ savedRating, title, seriesId, seasonNumber, episo
     const res = await setEpisodeRating({ seriesId, seasonNumber, episodeNumber, rating });
 
     if (res?.success) {
-      toast.success("Rating updated successfully");
+      toast.success("Rating saved successfully");
       setSavedRatingState(rating);
     } else {
       toast.error("Something went wrong, please try again later");

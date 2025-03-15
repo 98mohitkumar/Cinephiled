@@ -98,7 +98,7 @@ const RatingModal = ({
           media: updatedRatedTvShows
         });
       }
-      toast.success("Rating submitted successfully");
+      toast.success("Rating saved successfully");
     } else {
       toast.error("Something went wrong, please try again later");
     }
