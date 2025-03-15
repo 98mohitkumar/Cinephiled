@@ -26,7 +26,7 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
           <DominantColor tint />
 
           {/* genres for movies and tv shows */}
-          <LayoutContainer className='relative z-5 py-2440 pe-4'>
+          <LayoutContainer className='relative z-5 py-2440 pe-8'>
             <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
           </LayoutContainer>
 

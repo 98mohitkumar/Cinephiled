@@ -91,7 +91,7 @@ const PersonDetails = ({ personDetails }) => {
 
   const [sliderRef] = useKeenSlider({
     renderMode: "performance",
-    dragSpeed: 1.4,
+    dragSpeed: 2,
     breakpoints: {
       "(min-width: 0px)": {
         slides: {
