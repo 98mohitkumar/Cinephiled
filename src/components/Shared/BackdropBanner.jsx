@@ -10,7 +10,7 @@ const BackdropBanner = ({ backdrops }) => {
   const backdropsArray = Array.from({ length: Math.ceil(backdrops.length / 7) }, (_, i) => backdrops.slice(i * 7, (i + 1) * 7));
 
   return (
-    <FlexBox className='flex-col items-center gap-10' css={heroBanner}>
+    <FlexBox className='min-h-full flex-col items-center gap-10' css={heroBanner}>
       {backdropsArray.map((backdrops, index) => (
         <FlexBox key={index} className='backdrops-row w-full items-center justify-center gap-10'>
           {backdrops.map(({ src, id }, index) => (
