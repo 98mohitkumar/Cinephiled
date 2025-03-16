@@ -63,12 +63,6 @@ export const reviewStyles = css`
   }
 `;
 
-const heroBannerAnimation = keyframes`
-  to {
-    transform: translate3d(-70px, -325px, 0) scale3d(1.2, 1.2, 1) rotate(-15deg);
-  }
-`;
-
 const slideInLeft = keyframes`
   to {
     transform: translate3d(0, 0, 0);
@@ -84,11 +78,9 @@ const slideInRight = keyframes`
 export const heroBanner = css`
   inset: 0;
   position: absolute;
-  will-change: transform;
   filter: brightness(80%);
   z-index: ${theme.zIndex[1]};
-  transform: translate3d(-70px, -325px, 0) scale3d(1.4, 1.4, 1) rotate(-15deg);
-  animation: ${heroBannerAnimation} 1.25s 0.35s ${theme.transitionTimings["snappy-out"]} forwards;
+  transform: translate3d(-70px, -325px, 0) scale3d(1.2, 1.2, 1) rotate(-15deg);
 
   .backdrop-wrapper {
     min-width: 260px;
@@ -97,13 +89,13 @@ export const heroBanner = css`
 
   .backdrops-row:nth-child(even) {
     will-change: transform;
-    transform: translate3d(-200px, 0, 0);
+    transform: translate3d(-250px, 0, 0);
     animation: ${slideInLeft} 1.25s 0.25s ${theme.transitionTimings["snappy-out"]} forwards;
   }
 
   .backdrops-row:nth-child(odd) {
     will-change: transform;
-    transform: translate3d(50px, 0, 0);
+    transform: translate3d(100px, 0, 0);
     animation: ${slideInRight} 1.25s 0.25s ${theme.transitionTimings["snappy-out"]} forwards;
   }
 `;
