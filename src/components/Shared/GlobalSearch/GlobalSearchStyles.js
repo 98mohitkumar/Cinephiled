@@ -4,7 +4,7 @@ import { css } from "styled-components";
 import { theme } from "theme/theme";
 import { hoverMediaQuery, mediaQuery } from "utils/mixins";
 
-export const formStyles = css`
+export const searchStyles = css`
   width: min(100%, 840px);
   margin: auto;
 

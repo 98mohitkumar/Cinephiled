@@ -15,8 +15,8 @@ import MediaHeroBackground from "components/Shared/MediaHeroBackground/MediaHero
 import MetaWrapper from "components/Shared/MetaWrapper";
 import ShareButton from "components/Shared/ShareButton";
 import TVStats from "components/Shared/TVStats";
-import { CastCarousel } from "components/Templates/CastTemplate";
 import MediaImageTemplateGrid from "components/Templates/MediaImageTemplateGrid";
+import { CastCarousel } from "components/Templates/PeopleTemplate";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";

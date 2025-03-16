@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
 import PlaceholderText from "components/Shared/PlaceholderText";
-import { PeopleTemplateGrid } from "components/Templates/CastTemplate";
+import { PeopleTemplateGrid } from "components/Templates/PeopleTemplate";
 import { apiEndpoints } from "data/apiEndpoints";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { removeDuplicates } from "utils/helper";
