@@ -1,4 +1,5 @@
 import { Link2, MapPin } from "lucide-react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 
 import FlexBox from "components/UI/FlexBox";
@@ -6,8 +7,9 @@ import H1 from "components/UI/Typography/H1";
 import P from "components/UI/Typography/P";
 import { getTMDBImage } from "utils/imageHelper";
 
-import BackdropBanner from "./BackdropBanner";
 import { productionHeroWrapper } from "./GlobalComponents";
+
+const BackdropBanner = dynamic(() => import("components/Shared/BackdropBanner"), { ssr: false });
 
 const ProductionHero = ({ details, backdrops, logo }) => {
   return (

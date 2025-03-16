@@ -13,6 +13,7 @@ import { apiEndpoints } from "data/apiEndpoints";
 import { mediaTypeTabList, opacityMotionTransition } from "data/global";
 import useTabs from "hooks/useTabs";
 import { fetchOptions, removeDuplicates, matches, randomizeItems } from "utils/helper";
+import { getTMDBImage } from "utils/imageHelper";
 
 const SectionTitle = ({ title }) => <H2 className='mb-2432 text-center text-white'>{title}</H2>;
 
@@ -20,12 +21,15 @@ const tabList = mediaTypeTabList.concat({ key: "people", title: "People" });
 
 export default function Home({ popularMovies, popularTv, trendingMovies, trendingTv, popularPeople, backdrops }) {
   const { activeTab, setTab } = useTabs({ tabLocation: "indexTab" });
-
   const activeTabIndex = tabList.findIndex((tab) => matches(tab.key, activeTab));
 
   return (
     <Fragment>
-      <MetaWrapper />
+      <MetaWrapper>
+        {backdrops.map(({ src, id }) => (
+          <link key={id} rel='preload' as='image' href={getTMDBImage({ path: src, type: "backdrop", size: "w300" })} />
+        ))}
+      </MetaWrapper>
 
       {/* hero section (memoized) */}
       <Hero backdrops={backdrops} />

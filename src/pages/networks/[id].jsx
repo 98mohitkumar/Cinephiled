@@ -17,8 +17,11 @@ const Network = ({ networkDetails, networkMedia, backdrops }) => {
         title={`${networkDetails?.name} - cinephiled`}
         description={`TV shows produced by ${networkDetails?.name}.`}
         url={`${siteInfo.url}/${ROUTES.networks}/${getNiceName({ id: networkDetails?.id, name: networkDetails?.name })}`}
-        image={getTMDBImage({ path: networkDetails?.logo_path, type: "logo", size: "original" })}
-      />
+        image={getTMDBImage({ path: networkDetails?.logo_path, type: "logo", size: "original" })}>
+        {backdrops.map(({ src, id }) => (
+          <link key={id} rel='preload' as='image' href={getTMDBImage({ path: src, type: "backdrop", size: "w300" })} />
+        ))}
+      </MetaWrapper>
 
       <NetworkHero details={networkDetails} backdrops={backdrops} logo={logo} />
       <NetworkPage media={networkMedia} id={networkDetails?.id} />

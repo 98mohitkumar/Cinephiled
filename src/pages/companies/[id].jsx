@@ -17,8 +17,11 @@ const Company = ({ companyDetails, movies, tvShows, backdrops }) => {
         title={`${companyDetails?.name} - cinephiled`}
         description={`Movies and TV shows produced by ${companyDetails?.name}.`}
         url={`${siteInfo.url}/${ROUTES.networks}/${getNiceName({ id: companyDetails?.id, name: companyDetails?.name })}`}
-        image={getTMDBImage({ path: companyDetails?.logo_path, type: "logo", size: "original" })}
-      />
+        image={getTMDBImage({ path: companyDetails?.logo_path, type: "logo", size: "original" })}>
+        {backdrops.map(({ src, id }) => (
+          <link key={id} rel='preload' as='image' href={getTMDBImage({ path: src, type: "backdrop", size: "w300" })} />
+        ))}
+      </MetaWrapper>
 
       <CompanyHero details={companyDetails} backdrops={backdrops} logo={logo} />
       <CompanyPage movies={movies} tvShows={tvShows} id={companyDetails?.id} />

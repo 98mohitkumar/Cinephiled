@@ -18,7 +18,6 @@ const BackdropBanner = ({ backdrops }) => {
               <Image
                 fill
                 placeholder='blur'
-                priority
                 blurDataURL={blurPlaceholder}
                 src={getTMDBImage({ path: src, type: "backdrop", size: "w300" })}
                 alt='backdrop'
