@@ -2,17 +2,17 @@
   "name": "cinephiled",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "set \"SERWIST_SUPPRESS_TURBOPACK_WARNING=1\" && next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint && prettier --check .",
     "lint-fix": "eslint --fix --ext .js,.jsx,.ts,.tsx . && prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
   "dependencies": {
-    "@ducanh2912/next-pwa": "^10.2.9",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-popover": "^1.1.5",
     "@radix-ui/react-select": "^2.1.2",
+    "@serwist/next": "^9.0.12",
     "@suyalcinkaya/gauge": "^0.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -52,7 +52,7 @@
     "postcss": "^8.4.49",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.3",
-    "tailwindcss": "^3.4.15",
-    "webpack": "^5.98.0"
+    "serwist": "^9.0.12",
+    "tailwindcss": "^3.4.15"
   }
 }
