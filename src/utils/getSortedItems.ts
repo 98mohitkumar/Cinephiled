@@ -5,8 +5,9 @@ type SortByArgs = {
     first_air_date: string;
     title: string;
     vote_average: number;
+    vote_count: number;
   }>;
-  sortBy: "popularity" | "release_date" | "title" | "vote_average";
+  sortBy: "popularity" | "release_date" | "title" | "vote_average" | "vote_count";
   order: "asc" | "desc";
 };
 
@@ -34,6 +35,9 @@ export const getSortedItems = ({ items, sortBy, order = "asc" }: SortByArgs) => 
           return b.title.localeCompare(a.title);
         }
       });
+
+    case "vote_count":
+      return itemsToSort.sort((a, b) => (order === "asc" ? a.vote_count - b.vote_count : b.vote_count - a.vote_count));
 
     case "vote_average":
       return itemsToSort.sort((a, b) => (order === "asc" ? a.vote_average - b.vote_average : b.vote_average - a.vote_average));

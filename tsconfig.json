@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2021",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "webworker"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -26,7 +26,8 @@
       "tokens/*": ["src/theme/tokens/*"],
       "utils/*": ["src/utils/*"],
       "api/*": ["src/pages/api/*"]
-    }
+    },
+    "types": ["@serwist/next/typings"]
   },
   "include": ["next-env.d.ts", "styled.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
   "exclude": ["node_modules", "public/*.js"]

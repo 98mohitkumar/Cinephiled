@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { PeopleTemplateGrid } from "components/Templates/CastTemplate";
+import { PeopleTemplateGrid } from "components/Templates/PeopleTemplate";
 import P from "components/UI/Typography/P";
 
 const MediaCastGrid = ({ cast, totalCount = 0, showEpisodeCount = false }) => {

@@ -1,15 +1,10 @@
-import { default as withPWAInit } from "@ducanh2912/next-pwa";
+import withSerwistInit from "@serwist/next";
 import { NextConfig } from "next";
 
-const withPWA = withPWAInit({
-  dest: "public",
-  disable: process.env.NODE_ENV !== "production",
-  reloadOnOnline: true,
-  register: process.env.NODE_ENV === "production",
-  workboxOptions: {
-    disableDevLogs: true,
-    exclude: [/dynamic-css-manifest\.json$/]
-  }
+const withSerwist = withSerwistInit({
+  swSrc: "src/service-worker/sw.ts", // file to be used for compiling service worker
+  swDest: "public/sw.js",
+  disable: process.env.VERCEL_ENV !== "production"
 });
 
 const cspHeader = `
@@ -79,4 +74,4 @@ const nextConfig: NextConfig = {
   }
 };
 
-module.exports = withPWA(nextConfig);
+module.exports = withSerwist(nextConfig);

@@ -177,6 +177,7 @@ export const apiEndpoints = {
     collectionDetails: (id: string) => `${baseUrlV3}/collection/${id}?language=en-US`,
     collectionImages: (id: string) => `${baseUrlV3}/collection/${id}/images`
   },
+  popularPeople: ({ pageQuery = 1 }: { pageQuery: number }) => `${baseUrlV3}/person/popular?language=en-US&page=${pageQuery}`,
   language: `${baseUrlV3}/configuration/languages`,
   cfWorker: `https://imdbtechnical.98mohitkumar.workers.dev?secret=${process.env.CF_WORKER_SECRET}`
 } as const;

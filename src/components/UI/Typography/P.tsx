@@ -13,6 +13,7 @@ type PProps = ComponentPropsWithRef<"p"> & {
     | "small"
     | "tiny"
     | "micro"
+    | "p-to-large"
     | "small-to-p"
     | "tiny-to-p"
     | "micro-to-p"
@@ -38,6 +39,7 @@ const P = ({ className, children, tag: Element = "p", size = "default", weight =
         "text-small": matches(size, "small"),
         "text-tiny": matches(size, "tiny"),
         "text-micro": matches(size, "micro"),
+        "text-p sm:text-h6": matches(size, "p-to-large"),
         "text-small-to-p": matches(size, "small-to-p"),
         "text-tiny-to-p": matches(size, "tiny-to-p"),
         "text-micro-to-p": matches(size, "micro-to-p"),
