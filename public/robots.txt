@@ -20,14 +20,10 @@ Allow: /logo192.png
 Allow: /logo256.png
 Allow: /logo384.png
 Allow: /logo512.png
-Allow: /favicon.ico
 Allow: /favicon-32x32.png
 Allow: /favicon-16x16.png
 Allow: /apple-touch-icon.png
-Allow: /android-chrome-192x192.png
-Allow: /android-chrome-512x512.png
 Allow: /maskable.png
-Allow: /navLogo.png
 
 # Allow images in the /images/ directory
 Allow: /images/*.jpg
@@ -37,3 +33,6 @@ Allow: /images/*.gif
 Allow: /images/*.bmp
 Allow: /images/*.webp
 Allow: /images/*.svg
+
+# Allow images in the /screenshots/ directory
+Allow: /screenshots/*.png

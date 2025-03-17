@@ -35,7 +35,6 @@ export default class MyDocument extends Document {
           <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png'></link>
           <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png'></link>
           <link rel='manifest' href='/manifest.json' />
-          <meta name='theme-color' content='#121212' />
           <meta name='keywords' content='Cinema, Tv, Movies'></meta>
           <meta property='og:type' content='website' />
           <meta property='twitter:card' content='summary_large_image' />

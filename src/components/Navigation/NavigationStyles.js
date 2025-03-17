@@ -44,8 +44,8 @@ export const navBarStyles = css`
 
 export const Logo = styled.div`
   min-width: ${cssClamp({ minSize: 42, maxSize: 50 })};
-  aspect-ratio: 1.69;
-  background: url("/navLogo.png") no-repeat center center / contain;
+  aspect-ratio: 1;
+  background: url("/logo512.png") no-repeat center center / contain;
 `;
 
 export const navLinksStyles = css`

@@ -4,4 +4,4 @@
 
 ## Previews
 
-![](https://i.imgur.com/hFORifQ.jpeg)
+![](https://i.imgur.com/zmq8tVR.jpeg)
