@@ -5,7 +5,7 @@ import MetaWrapper from "components/Shared/MetaWrapper";
 import NetworkHero from "components/Shared/ProductionHero";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo } from "data/global";
-import { fetchOptions, getNiceName, randomizeItems } from "utils/helper";
+import { fetchOptions, getNiceName, randomizeItems, removeDuplicates } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const Network = ({ networkDetails, networkMedia, backdrops }) => {
@@ -31,22 +31,23 @@ export const getServerSideProps = async (context) => {
     const { id, sortBy } = context.query;
     const networkId = id.split("-")[0];
 
-    const [res, networkMediaRes] = await Promise.all([
+    const [res, networkMediaRes, networkMediaResNext] = await Promise.all([
       fetch(apiEndpoints.network.networkDetails(networkId), fetchOptions()),
-      fetch(apiEndpoints.network.networkMedia({ id: networkId, sortBy }), fetchOptions())
+      fetch(apiEndpoints.network.networkMedia({ id: networkId, sortBy }), fetchOptions()),
+      fetch(apiEndpoints.network.networkMedia({ id: networkId, sortBy, pageQuery: 2 }), fetchOptions())
     ]);
 
     if (!res.ok) throw new Error("cannot fetch details");
 
-    const [data, networkMediaData] = await Promise.all([res.json(), networkMediaRes.json()]);
-    const networkMedia = networkMediaData?.results || [];
+    const [data, networkMediaData, networkMediaDataNext] = await Promise.all([res.json(), networkMediaRes.json(), networkMediaResNext.json()]);
+    const { cleanedItems: networkMedia } = removeDuplicates(networkMediaData?.results?.concat(networkMediaDataNext?.results));
 
-    const backdrops = networkMedia.concat(networkMedia).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
+    const backdrops = networkMedia.concat(networkMediaData?.results).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
     const extendedBackdrops =
-      backdrops.length < 40
+      backdrops.length < 60
         ? [
             ...backdrops,
-            ...Array(40 - backdrops.length)
+            ...Array(60 - backdrops.length)
               .fill(0)
               .map(() => ({ id: Math.random(), src: null }))
           ]

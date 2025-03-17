@@ -5,7 +5,7 @@ import MetaWrapper from "components/Shared/MetaWrapper";
 import CompanyHero from "components/Shared/ProductionHero";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo } from "data/global";
-import { fetchOptions, getNiceName, randomizeItems } from "utils/helper";
+import { fetchOptions, getNiceName, randomizeItems, removeDuplicates } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const Company = ({ companyDetails, movies, tvShows, backdrops }) => {
@@ -31,24 +31,33 @@ export const getServerSideProps = async (context) => {
     const { id } = context.query;
     const companyId = id.split("-")[0];
 
-    const [res, companyMoviesRes, companyTvRes] = await Promise.all([
+    const [res, companyMoviesRes, companyMoviesResNext, companyTvRes, companyTvResNext] = await Promise.all([
       fetch(apiEndpoints.company.companyDetails(companyId), fetchOptions()),
       fetch(apiEndpoints.company.companyMovies({ id: companyId }), fetchOptions()),
-      fetch(apiEndpoints.company.companyTv({ id: companyId }), fetchOptions())
+      fetch(apiEndpoints.company.companyMovies({ id: companyId, pageQuery: 2 }), fetchOptions()),
+      fetch(apiEndpoints.company.companyTv({ id: companyId }), fetchOptions()),
+      fetch(apiEndpoints.company.companyTv({ id: companyId, pageQuery: 2 }), fetchOptions())
     ]);
 
     if (!res.ok) throw new Error("cannot fetch details");
 
-    const [data, movies, tvShows] = await Promise.all([res.json(), companyMoviesRes.json(), companyTvRes.json()]);
-    const companyMovies = movies?.results || [];
-    const companyTv = tvShows?.results || [];
+    const [data, movies, moviesNext, tvShows, tvShowsNext] = await Promise.all([
+      res.json(),
+      companyMoviesRes.json(),
+      companyMoviesResNext.json(),
+      companyTvRes.json(),
+      companyTvResNext.json()
+    ]);
 
-    const backdrops = companyMovies.concat(companyTv).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
+    const { cleanedItems: cleanedMovies } = removeDuplicates(movies?.results?.concat(moviesNext?.results)) || [];
+    const { cleanedItems: cleanedTv } = removeDuplicates(tvShows?.results?.concat(tvShowsNext?.results)) || [];
+
+    const backdrops = cleanedMovies.concat(cleanedTv).map(({ id, backdrop_path }) => ({ id, src: backdrop_path }));
     const extendedBackdrops =
-      backdrops.length < 40
+      backdrops.length < 60
         ? [
             ...backdrops,
-            ...Array(40 - backdrops.length)
+            ...Array(60 - backdrops.length)
               .fill(0)
               .map(() => ({ id: Math.random(), src: null }))
           ]
@@ -57,8 +66,8 @@ export const getServerSideProps = async (context) => {
     return {
       props: {
         companyDetails: data,
-        movies: companyMovies,
-        tvShows: companyTv,
+        movies: cleanedMovies,
+        tvShows: cleanedTv,
         backdrops: randomizeItems(extendedBackdrops)
       }
     };

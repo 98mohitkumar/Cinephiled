@@ -65,7 +65,7 @@ export const reviewStyles = css`
 
 const heroBannerAnimation = keyframes`
   to {
-    transform: translate3d(-70px, -325px, 0) scale3d(1.2, 1.2, 1) rotate(-15deg);
+    transform: translate3d(-70px, -325px, 0) scale3d(1, 1, 1) rotate(-15deg);
   }
 `;
 
@@ -81,31 +81,37 @@ const slideInRight = keyframes`
   }
 `;
 
-export const heroBanner = css`
+export const heroBanner = ({ isHydrated }) => css`
   inset: 0;
   position: absolute;
   will-change: transform;
   filter: brightness(80%);
   z-index: ${theme.zIndex[1]};
-  transform: translate3d(-70px, -325px, 0) scale3d(1.4, 1.4, 1) rotate(-15deg);
-  animation: ${heroBannerAnimation} 1.25s 0.35s ${theme.transitionTimings["snappy-out"]} forwards;
+  transform: translate3d(-70px, -325px, 0) scale3d(1.25, 1.25, 1) rotate(-15deg);
 
   .backdrop-wrapper {
-    min-width: 260px;
-    max-width: 360px;
+    width: ${cssClamp({ minSize: 225, maxSize: 325 })};
   }
 
-  .backdrops-row:nth-child(even) {
+  .backdrops-row {
     will-change: transform;
-    transform: translate3d(-200px, 0, 0);
-    animation: ${slideInLeft} 1.25s 0.25s ${theme.transitionTimings["snappy-out"]} forwards;
   }
 
-  .backdrops-row:nth-child(odd) {
-    will-change: transform;
-    transform: translate3d(50px, 0, 0);
-    animation: ${slideInRight} 1.25s 0.25s ${theme.transitionTimings["snappy-out"]} forwards;
-  }
+  ${isHydrated
+    ? css`
+        animation: ${heroBannerAnimation} 1.25s 0.35s ${theme.transitionTimings["snappy-out"]} forwards;
+
+        .backdrops-row:nth-child(even) {
+          transform: translate3d(-200px, 0, 0);
+          animation: ${slideInLeft} 1.25s 0.25s ${theme.transitionTimings["snappy-out"]} forwards;
+        }
+
+        .backdrops-row:nth-child(odd) {
+          transform: translate3d(50px, 0, 0);
+          animation: ${slideInRight} 1.25s 0.25s ${theme.transitionTimings["snappy-out"]} forwards;
+        }
+      `
+    : null}
 `;
 
 export const productionHeroWrapper = css`

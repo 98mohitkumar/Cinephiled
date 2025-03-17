@@ -137,6 +137,8 @@ export async function getStaticProps() {
         }))
     );
 
+    const allBackdrops = randomizeItems(backdrops);
+
     const { cleanedItems: cleanedPopularPeople } = removeDuplicates(popularPeople?.results?.concat(popularPeopleNext?.results));
 
     return {
@@ -147,7 +149,7 @@ export async function getStaticProps() {
         trendingTv: trendingTv?.results || [],
         popularPeople: cleanedPopularPeople || [],
         error,
-        backdrops: randomizeItems(backdrops)
+        backdrops: allBackdrops.length % 2 !== 0 ? allBackdrops.slice(0, -1) : allBackdrops
       },
       revalidate: 60 * 60 * 24
     };
