@@ -1,8 +1,8 @@
 {
-  "id": "/",
+  "id": "https://cinephiled.vercel.app",
   "lang": "en",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "https://cinephiled.vercel.app",
+  "scope": "https://cinephiled.vercel.app",
   "name": "Cinephiled",
   "short_name": "Cinephiled",
   "description": "Cinephiled - A progressive web app (PWA) to preview any movie or tv show with reviews, ratings, description and posters.",
@@ -10,6 +10,13 @@
   "background_color": "#121212",
   "display": "standalone",
   "orientation": "portrait",
+  "categories": ["entertainment"],
+  "dir": "ltr",
+  "display_override": ["minimal-ui", "standalone", "window-controls-overlay"],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 412
+  },
   "icons": [
     {
       "src": "maskable.png",
@@ -17,12 +24,11 @@
       "type": "image/png",
       "purpose": "maskable"
     },
-    { "src": "logo192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "logo256.png", "sizes": "256x256", "type": "image/png" },
-    { "src": "logo384.png", "sizes": "384x384", "type": "image/png" },
-    { "src": "logo512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "logo192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "logo256.png", "sizes": "256x256", "type": "image/png", "purpose": "any" },
+    { "src": "logo384.png", "sizes": "384x384", "type": "image/png", "purpose": "any" },
+    { "src": "logo512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
   ],
-  "categories": ["entertainment", "movies", "tv shows", "cinema"],
   "screenshots": [
     {
       "src": "screenshots/mobile/ss-1.png",
