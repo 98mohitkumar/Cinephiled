@@ -36,7 +36,6 @@ const GlobalSearch = () => {
 
     if (isValidInput) {
       router.push(`/${ROUTES.search}/${query.replaceAll(" ", "+")}`);
-      userInputRef.current.value = "";
     }
   };
 
@@ -85,6 +84,7 @@ const GlobalSearch = () => {
               autoComplete='off'
               onChange={inputChangeHandler}
               onKeyDown={(e) => keyHandler(e, null, true)}
+              defaultValue={router?.query?.query || ""}
             />
 
             {isValidInput ? (

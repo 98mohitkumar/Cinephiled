@@ -8,7 +8,7 @@ import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo } from "data/global";
 import { fetchOptions } from "utils/helper";
 
-const Search = ({ movies, tv, searchQuery, keywords, people, collections, allResultsEmpty, year }) => {
+const Search = ({ movies, tv, searchQuery, keywords, people, collections, companies, allResultsEmpty, year }) => {
   return (
     <Fragment>
       <MetaWrapper
@@ -23,7 +23,16 @@ const Search = ({ movies, tv, searchQuery, keywords, people, collections, allRes
             {"Bad Query :("}
           </H1>
         ) : (
-          <SearchTab searchQuery={searchQuery} movies={movies} tv={tv} keywords={keywords} people={people} collections={collections} year={year} />
+          <SearchTab
+            searchQuery={searchQuery}
+            movies={movies}
+            tv={tv}
+            keywords={keywords}
+            people={people}
+            collections={collections}
+            year={year}
+            companies={companies}
+          />
         )}
       </LayoutContainer>
     </Fragment>
@@ -41,18 +50,25 @@ export const getServerSideProps = async (ctx) => {
     }
 
     const fetchCommonData = async () => {
-      const [keywordsResponse, peopleResponse, collectionResponse] = await Promise.all([
+      const [keywordsResponse, peopleResponse, collectionResponse, companyResponse] = await Promise.all([
         fetch(apiEndpoints.search.keywordSearch({ query: searchQuery }), fetchOptions()),
         fetch(apiEndpoints.search.personSearch({ query: searchQuery }), fetchOptions()),
-        fetch(apiEndpoints.search.collectionSearch({ query: searchQuery }), fetchOptions())
+        fetch(apiEndpoints.search.collectionSearch({ query: searchQuery }), fetchOptions()),
+        fetch(apiEndpoints.search.companySearch({ query: searchQuery }), fetchOptions())
       ]);
 
-      const [keywordsRes, peopleRes, collectionRes] = await Promise.all([keywordsResponse.json(), peopleResponse.json(), collectionResponse.json()]);
+      const [keywordsRes, peopleRes, collectionRes, companyRes] = await Promise.all([
+        keywordsResponse.json(),
+        peopleResponse.json(),
+        collectionResponse.json(),
+        companyResponse.json()
+      ]);
 
       return {
         keywords: { results: keywordsRes.results, count: keywordsRes.total_results },
         people: { results: peopleRes.results, count: peopleRes.total_results },
-        collections: { results: collectionRes.results, count: collectionRes.total_results }
+        collections: { results: collectionRes.results, count: collectionRes.total_results },
+        companies: { results: companyRes.results, count: companyRes.total_results }
       };
     };
 
@@ -78,9 +94,14 @@ export const getServerSideProps = async (ctx) => {
 
     const [commonData, searchData] = await Promise.all([fetchCommonData(), fetchSearchResults()]);
 
-    const allResultsEmpty = [searchData.movies, searchData.tv, commonData.keywords, commonData.people, commonData.collections].every(
-      (res) => res?.results?.length === 0
-    );
+    const allResultsEmpty = [
+      searchData.movies,
+      searchData.tv,
+      commonData.keywords,
+      commonData.people,
+      commonData.collections,
+      commonData.companies
+    ].every((res) => res?.results?.length === 0);
 
     return {
       props: {

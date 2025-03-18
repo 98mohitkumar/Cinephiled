@@ -9,12 +9,13 @@ import useTabs from "hooks/useTabs";
 import { matches } from "utils/helper";
 
 import CollectionsSearch from "./CollectionsSearch";
+import CompaniesSearch from "./CompaniesSearch";
 import KeywordSearch from "./KeywordSearch";
 import MoviesSearch from "./MoviesSearch";
 import PeopleSearch from "./PeopleSearch";
 import TVSearch from "./TVSearch";
 
-const SearchTab = ({ movies, tv, searchQuery, keywords, people, collections, year }) => {
+const SearchTab = ({ movies, tv, searchQuery, keywords, people, collections, year, companies }) => {
   const tabContainerRef = useRef(null);
 
   const { activeTab, setTab } = useTabs({
@@ -29,6 +30,10 @@ const SearchTab = ({ movies, tv, searchQuery, keywords, people, collections, yea
     {
       key: "tv",
       name: `TV (${tv.count})`
+    },
+    {
+      key: "companies",
+      name: `Companies (${companies.count})`
     },
     {
       key: "people",
@@ -87,6 +92,17 @@ const SearchTab = ({ movies, tv, searchQuery, keywords, people, collections, yea
                 </P>
               </div>
               <TVSearch searchQuery={searchQuery} tv={tv} year={year} />
+            </motion.div>
+          )}
+
+          {matches(activeTab, "companies") && (
+            <motion.div key='companies' {...opacityMotionTransition}>
+              {companies?.count > 0 && (
+                <H4 tag='p' weight='semibold' className='mb-3240 text-center'>
+                  Companies Matching : {searchQuery}
+                </H4>
+              )}
+              <CompaniesSearch searchQuery={searchQuery} companies={companies} />
             </motion.div>
           )}
 

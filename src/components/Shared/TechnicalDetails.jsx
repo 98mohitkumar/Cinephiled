@@ -6,6 +6,8 @@ import FlexBox from "components/UI/FlexBox";
 import P from "components/UI/Typography/P";
 import { matches } from "utils/helper";
 
+import { linkStyles } from "./GlobalComponents";
+
 const TechnicalDetails = ({ technicalDetails }) => {
   const { isModalVisible, openModal, closeModal } = useModal();
   const tableItems = technicalDetails?.items || [];
@@ -13,11 +15,7 @@ const TechnicalDetails = ({ technicalDetails }) => {
 
   return (
     <Fragment>
-      <P
-        tag='button'
-        weight='medium'
-        className='text-neutral-300 underline decoration-dotted underline-offset-4 transition-colors can-hover:text-cyan-300'
-        onClick={openModal}>
+      <P tag='button' weight='medium' className={linkStyles} onClick={openModal}>
         View Details
       </P>
 

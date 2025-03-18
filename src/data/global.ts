@@ -60,7 +60,8 @@ export const ROUTES = {
   about: "about",
   explore: "explore",
   login: "login",
-  profile: "profile"
+  profile: "profile",
+  companies: "companies"
 } as const;
 
 export const opacityMotionTransition = {

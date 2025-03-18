@@ -7,7 +7,7 @@ import FlexBox from "components/UI/FlexBox";
 import P from "components/UI/Typography/P";
 import { getNiceName } from "utils/helper";
 
-const linkStyles = "text-neutral-300 underline decoration-dotted underline-offset-4 transition-colors can-hover:text-cyan-300";
+import { linkStyles } from "./GlobalComponents";
 
 const DetailsBlock = ({ title, details, type, subtext }) => {
   return (

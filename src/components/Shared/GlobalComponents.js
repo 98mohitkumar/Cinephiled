@@ -5,6 +5,8 @@ import { theme } from "theme/theme";
 import { breakpointAsNumber } from "utils/helper";
 import { hoverMediaQuery, transition, cssClamp, mediaQuery } from "utils/mixins";
 
+export const linkStyles = "text-neutral-300 underline decoration-dotted underline-offset-4 transition-colors can-hover:text-cyan-300";
+
 export const mediaDetailsWrapper = css`
   min-height: ${cssClamp({ minSize: 400, maxSize: 700, minViewport: breakpointAsNumber("lg"), maxViewport: breakpointAsNumber("3xl") })};
 

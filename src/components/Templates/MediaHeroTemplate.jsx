@@ -48,19 +48,18 @@ const MediaHeroTemplate = ({
         })}
         css={mediaDetailsWrapper}>
         {/* poster image, if there is a poster path */}
-        <div
-          className={cn("relative hidden aspect-poster min-w-64", {
-            block: matches(LAYOUT_TYPE, LAYOUT_TYPES.poster)
-          })}>
-          <Image
-            src={getTMDBImage({ path: posterPath, type: "poster" })}
-            alt={title}
-            fill
-            className='rounded-xl object-cover shadow-xl'
-            placeholder='blur'
-            blurDataURL={blurPlaceholder}
-          />
-        </div>
+        {matches(LAYOUT_TYPE, LAYOUT_TYPES.poster) ? (
+          <div className='relative aspect-poster min-w-64'>
+            <Image
+              src={getTMDBImage({ path: posterPath, type: "poster" })}
+              alt={title}
+              fill
+              className='rounded-xl object-cover shadow-xl'
+              placeholder='blur'
+              blurDataURL={blurPlaceholder}
+            />
+          </div>
+        ) : null}
 
         <div
           className={cn("w-full max-w-full", {

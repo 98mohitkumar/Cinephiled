@@ -52,7 +52,10 @@ export const apiEndpoints = {
       `${baseUrlV3}/search/person?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
 
     collectionSearch: ({ query, pageQuery = 1 }: { query: string; pageQuery: number }) =>
-      `${baseUrlV3}/search/collection?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`
+      `${baseUrlV3}/search/collection?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`,
+
+    companySearch: ({ query, pageQuery = 1 }: { query: string; pageQuery: number }) =>
+      `${baseUrlV3}/search/company?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`
   },
   movie: {
     popularMovies: `${baseUrlV3}/movie/popular?language=en-US&page=1`,
