@@ -151,7 +151,7 @@ export async function getStaticProps() {
         error,
         backdrops: allBackdrops.length % 2 !== 0 ? allBackdrops.slice(0, -1) : allBackdrops
       },
-      revalidate: 60 * 60 * 24
+      revalidate: 3600
     };
   } catch {
     return {
