@@ -92,7 +92,7 @@ const GenreSection = ({ genres, genreType }) => {
   );
 };
 
-const Genres = ({ movieGenres, tvGenres }) => {
+const GenresCarousel = ({ movieGenres, tvGenres }) => {
   return (
     <Fragment>
       <div className='mb-2448'>
@@ -106,4 +106,4 @@ const Genres = ({ movieGenres, tvGenres }) => {
   );
 };
 
-export default Genres;
+export default GenresCarousel;
