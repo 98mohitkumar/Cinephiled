@@ -65,7 +65,7 @@ export const reviewStyles = css`
 
 const heroBannerAnimation = keyframes`
   to {
-    transform: translate3d(-70px, -325px, 0) scale3d(1, 1, 1) rotate(-15deg);
+    scale: 1;
   }
 `;
 
@@ -87,7 +87,8 @@ export const heroBanner = ({ isHydrated }) => css`
   will-change: transform;
   filter: brightness(80%);
   z-index: ${theme.zIndex[1]};
-  transform: translate3d(-70px, -325px, 0) scale3d(1.25, 1.25, 1) rotate(-15deg);
+  transform: translate3d(-70px, -325px, 0) rotate(-15deg);
+  scale: 1.25;
 
   .backdrop-wrapper {
     width: ${cssClamp({ minSize: 225, maxSize: 325 })};
