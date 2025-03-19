@@ -58,7 +58,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/search/company?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`
   },
   movie: {
-    popularMovies: `${baseUrlV3}/movie/popular?language=en-US&page=1`,
+    popularMovies: `${baseUrlV3}/discover/movie?language=en-US&include_adult=false&page=1&sort_by=popularity.desc`,
 
     trendingMovies: `${baseUrlV3}/trending/movie/day?language=en-US&page=1`,
 
@@ -76,7 +76,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/movie/now_playing?page=${pageQuery}&region=${region}`
   },
   tv: {
-    popularTv: `${baseUrlV3}/tv/popular?language=en-US&page=1`,
+    popularTv: `${baseUrlV3}/discover/tv?language=en-US&include_adult=false&page=1&sort_by=popularity.desc`,
 
     trendingTv: `${baseUrlV3}/trending/tv/day?language=en-US&page=1`,
 
