@@ -84,7 +84,7 @@ const GlobalSearch = () => {
               autoComplete='off'
               onChange={inputChangeHandler}
               onKeyDown={(e) => keyHandler(e, null, true)}
-              defaultValue={router?.query?.query || ""}
+              defaultValue={router?.query?.query?.replaceAll("+", " ") || ""}
             />
 
             {isValidInput ? (
