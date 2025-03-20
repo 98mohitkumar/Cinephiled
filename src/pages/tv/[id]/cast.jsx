@@ -38,7 +38,7 @@ export const getServerSideProps = async (ctx) => {
     return {
       props: {
         tvData: {
-          title: data?.name ?? "",
+          title: data?.name || "",
           year: releaseYear,
           backdrop: data?.backdrop_path,
           poster: data?.poster_path,
