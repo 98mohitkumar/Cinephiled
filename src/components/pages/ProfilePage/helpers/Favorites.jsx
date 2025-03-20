@@ -44,7 +44,7 @@ export const FavoritesCTA = ({ clickHandler, mediaData }) => {
         </FlexBox>
       </Modal>
 
-      <Button variant='danger' onClick={openModal} fullWidth className='mt-2432'>
+      <Button variant='danger' onClick={openModal} fullWidth className='mt-2432' title='Remove from favorites'>
         Remove
       </Button>
     </Fragment>
