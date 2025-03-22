@@ -10,7 +10,7 @@ import AddToListModal from "components/pages/Lists/AddToListModal";
 import RatingModal from "components/RatingModal/RatingModal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
-import { opacityMotionTransition } from "data/global";
+import { opacityMotionTransition, ROUTES } from "data/global";
 import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import { matches } from "utils/helper";
@@ -20,7 +20,7 @@ export const suggestLogin = () => {
     description: "Please login first to use this feature",
     cancel: {
       label: (
-        <Link href='/login' className='font-medium'>
+        <Link href={ROUTES.login} className='font-medium'>
           Login
         </Link>
       )

@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 
 import { apiEndpoints } from "data/apiEndpoints";
+import { isProduction } from "data/global";
 import { useUserContext } from "Store/UserContext";
 import { fetchOptions } from "utils/helper";
 
@@ -119,7 +120,7 @@ export const useGetListItemStatus = () => {
 
 export const getCountryCode = async (ip) => {
   try {
-    if (process.env.NODE_ENV === "production") {
+    if (isProduction) {
       const res = await fetch(apiEndpoints.user.getCountryCode(ip));
 
       if (res.ok && res.status === 200) {
