@@ -6,14 +6,14 @@ import Button from "components/UI/Button";
 import { Grid } from "components/UI/Grid";
 import H2 from "components/UI/Typography/H2";
 import P from "components/UI/Typography/P";
-import { blurPlaceholder } from "data/global";
+import { blurPlaceholder, ROUTES } from "data/global";
 import WatchProvidersImage from "images/watch-providers.webp";
 
 import { watchProvidersCard } from "./ExploreStyles";
 
 const WatchProviders = () => {
   return (
-    <Link href='/watch-providers' className='block'>
+    <Link href={ROUTES.watchProviders} className='block'>
       <div className='h-full overflow-hidden rounded-xl border border-neutral-700 bg-black' css={watchProvidersCard}>
         <Grid className='image-wrapper items-center justify-center' colConfig={{ xxs: 2 }}>
           {Array.from({ length: 4 }).map((_, index) => (
