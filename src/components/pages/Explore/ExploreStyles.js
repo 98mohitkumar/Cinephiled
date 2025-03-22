@@ -2,7 +2,7 @@ import hexToRgba from "hex-to-rgba";
 import { css } from "styled-components";
 
 import { theme } from "theme/theme";
-import { hoverMediaQuery, transition } from "utils/mixins";
+import { cssClamp, hoverMediaQuery, transition } from "utils/mixins";
 
 export const genreCardStyles = ({ backgroundColor, backgroundImage, backgroundBlendMode }) => css`
   display: grid;
@@ -58,15 +58,42 @@ export const genreCardStyles = ({ backgroundColor, backgroundImage, backgroundBl
 `;
 
 export const watchProvidersCard = css`
+  display: flex;
+  max-height: 500px;
+  position: relative;
+  align-items: center;
+
   .image-wrapper {
     position: relative;
+    transform: rotate(-15deg);
+    scale: 1.06;
+    gap: ${cssClamp({ minSize: 4, maxSize: 10 })};
+    min-width: 1400px;
+    transition: ${transition({ property: "scale", duration: 0.325, timingFunction: "ease-in-out-quint" })};
+  }
 
-    &:after {
-      content: "";
-      inset: 0;
-      background: ${`linear-gradient(0deg, ${theme.colors.black}, transparent 50%)`};
-      position: absolute;
-      z-index: 1;
+  &:after {
+    content: "";
+    inset: 0;
+    background: ${`linear-gradient(90deg, ${theme.colors.black}, transparent), linear-gradient(0deg, ${theme.colors.black}, transparent)`};
+    position: absolute;
+    z-index: 1;
+  }
+
+  .CTA-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: ${theme.zIndex[100]};
+    padding: ${theme.spacings.spacing2432};
+  }
+
+  ${hoverMediaQuery()} {
+    &:hover {
+      .image-wrapper {
+        scale: 1.1;
+      }
     }
   }
 `;

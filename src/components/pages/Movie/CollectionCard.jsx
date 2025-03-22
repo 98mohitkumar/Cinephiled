@@ -19,7 +19,7 @@ const CollectionCard = ({ collection, className }) => {
             fill
             placeholder='blur'
             blurDataURL={blurPlaceholder}
-            className='object-cover shadow-xl transition-all group-hover:saturate-[2]'
+            className='object-cover shadow-xl transition-all group-hover:saturate-150'
           />
         </div>
 

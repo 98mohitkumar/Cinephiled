@@ -4,6 +4,8 @@ export const CORS_PROXY = process.env.NEXT_PUBLIC_CORS_PROXY;
 const baseUrlV3 = "https://api.themoviedb.org/3";
 const baseUrlV4 = "https://api.themoviedb.org/4";
 
+const imageLanguages = "en,null";
+
 export const apiEndpoints = {
   auth: {
     requestToken: `${baseUrlV4}/auth/request_token`,
@@ -63,7 +65,7 @@ export const apiEndpoints = {
     trendingMovies: `${baseUrlV3}/trending/movie/day?language=en-US&page=1`,
 
     movieDetails: (id: string) =>
-      `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=keywords,images,videos,credits,reviews,recommendations,external_ids&include_image_language=en,null`,
+      `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=keywords,images,videos,credits,reviews,recommendations,external_ids&include_image_language=${imageLanguages}`,
 
     movieGenre: ({ genreId, pageQuery = 1, sortBy = "popularity.desc" }: { genreId: string; pageQuery?: number; sortBy: string }) =>
       `${baseUrlV3}/discover/movie?language=en-US&include_adult=false&page=${pageQuery}&with_genres=${genreId}&sort_by=${sortBy}`,
@@ -81,15 +83,15 @@ export const apiEndpoints = {
     trendingTv: `${baseUrlV3}/trending/tv/day?language=en-US&page=1`,
 
     tvDetails: (id: string) =>
-      `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=keywords,images,videos,aggregate_credits,reviews,recommendations,external_ids&include_image_language=en,null`,
+      `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=keywords,images,videos,aggregate_credits,reviews,recommendations,external_ids&include_image_language=${imageLanguages}`,
 
     tvDetailsNoAppend: (id: string) => `${baseUrlV3}/tv/${id}?language=en-US`,
 
     tvSeasonDetails: ({ id, seasonNumber }: { id: string; seasonNumber: number }) =>
-      `${baseUrlV3}/tv/${id}/season/${seasonNumber}?language=en-US&append_to_response=aggregate_credits,videos,images&include_image_language=en,null`,
+      `${baseUrlV3}/tv/${id}/season/${seasonNumber}?language=en-US&append_to_response=aggregate_credits,videos,images&include_image_language=${imageLanguages}`,
 
     episodeDetails: ({ id, seasonNumber, episodeNumber }: { id: string; seasonNumber: number; episodeNumber: number }) =>
-      `${baseUrlV3}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?language=en-US&append_to_response=images,credits&include_image_language=en,null`,
+      `${baseUrlV3}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?language=en-US&append_to_response=images,credits&include_image_language=${imageLanguages}`,
 
     episodeAccountStates: ({ seriesId, seasonNumber, episodeNumber }: { seriesId: string; seasonNumber: number; episodeNumber: number }) =>
       `${baseUrlV3}/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/account_states`,
@@ -178,7 +180,7 @@ export const apiEndpoints = {
   },
   collection: {
     collectionDetails: (id: string) => `${baseUrlV3}/collection/${id}?language=en-US`,
-    collectionImages: (id: string) => `${baseUrlV3}/collection/${id}/images`
+    collectionImages: (id: string) => `${baseUrlV3}/collection/${id}/images?include_image_language=${imageLanguages}`
   },
   popularPeople: ({ pageQuery = 1 }: { pageQuery: number }) => `${baseUrlV3}/person/popular?language=en-US&page=${pageQuery}`,
   language: `${baseUrlV3}/configuration/languages`,

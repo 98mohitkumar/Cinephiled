@@ -1,13 +1,11 @@
 import { Fragment } from "react";
 
 import { getCountryCode } from "apiRoutes/user";
-import DiscoverCard from "components/pages/Explore/DiscoverCard";
 import GenresCarousel from "components/pages/Explore/GenresCarousel";
-import WatchProviders from "components/pages/Explore/WatchProvidersCard";
+import WatchProvidersCard from "components/pages/Explore/WatchProvidersCard";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
-import { Grid, GridCol } from "components/UI/Grid";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
@@ -35,16 +33,7 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
           </LayoutContainer>
 
           <LayoutContainer className='relative z-5 py-4864'>
-            <Grid>
-              <GridCol colSizeConfig={{ xxs: 12, lg: 6, "3xl": 5, "5xl": 4 }}>
-                <WatchProviders />
-              </GridCol>
-
-              {/* todo: all filters */}
-              <GridCol colSizeConfig={{ xxs: 12, lg: 6, "3xl": 5, "5xl": 4 }}>
-                <DiscoverCard />
-              </GridCol>
-            </Grid>
+            <WatchProvidersCard />
           </LayoutContainer>
         </section>
 
