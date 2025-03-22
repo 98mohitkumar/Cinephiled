@@ -1,10 +1,12 @@
 import withSerwistInit from "@serwist/next";
 import { NextConfig } from "next";
 
+import { isProduction } from "data/global";
+
 const withSerwist = withSerwistInit({
   swSrc: "src/service-worker/sw.ts", // file to be used for compiling service worker
   swDest: "public/sw.js",
-  disable: process.env.VERCEL_ENV !== "production"
+  disable: !isProduction
 });
 
 const cspHeader = `

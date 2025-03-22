@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 
 import { getCountryCode } from "apiRoutes/user";
-import Genres from "components/pages/Explore/Genres";
-import WatchProviders from "components/pages/Explore/WatchProviders";
+import GenresCarousel from "components/pages/Explore/GenresCarousel";
+import WatchProvidersCard from "components/pages/Explore/WatchProvidersCard";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
@@ -10,9 +10,11 @@ import LayoutContainer from "components/UI/LayoutContainer";
 import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo } from "data/global";
-import { fetchOptions } from "utils/helper";
+import { fetchOptions, removeDuplicates } from "utils/helper";
 
 const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
+  const { cleanedItems: nowPlayingMovies } = removeDuplicates(nowPlaying);
+
   return (
     <Fragment>
       <MetaWrapper
@@ -27,11 +29,11 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
 
           {/* genres for movies and tv shows */}
           <LayoutContainer className='relative z-5 py-2440 pe-0'>
-            <Genres movieGenres={movieGenres} tvGenres={tvGenres} />
+            <GenresCarousel movieGenres={movieGenres} tvGenres={tvGenres} />
           </LayoutContainer>
 
           <LayoutContainer className='relative z-5 py-4864'>
-            <WatchProviders />
+            <WatchProvidersCard />
           </LayoutContainer>
         </section>
 
@@ -39,7 +41,7 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
         {nowPlaying.length > 0 ? (
           <LayoutContainer className='py-2440'>
             <H2 className='mb-2432 text-center text-white'>Movies playing in theaters</H2>
-            <MediaTemplateGrid media={nowPlaying} mediaType='movie' />
+            <MediaTemplateGrid media={nowPlayingMovies} mediaType='movie' />
           </LayoutContainer>
         ) : null}
       </Fragment>

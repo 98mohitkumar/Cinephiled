@@ -93,3 +93,5 @@ export const LAYOUT_TYPES = {
   poster: "poster",
   blank: "blank"
 };
+
+export const isProduction = process.env.VERCEL_ENV === "production";
