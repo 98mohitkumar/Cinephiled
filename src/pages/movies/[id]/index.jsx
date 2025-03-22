@@ -149,6 +149,7 @@ export const getServerSideProps = async (ctx) => {
           language: language?.english_name || language?.name || "TBA",
           technicalDetails,
           productionCompanies: movieDetails?.production_companies || [],
+          networks: [],
           keywords: movieDetails?.keywords?.keywords || []
         }
       }
