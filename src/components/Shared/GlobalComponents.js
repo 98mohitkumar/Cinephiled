@@ -162,7 +162,7 @@ export const pageBackgroundStyles = css`
     filter: brightness(50%);
     z-index: ${theme.zIndex[1]};
     transform: scale(1.5);
-    animation: ${aboutAnimation} 1.5s ${theme.transitionTimings["ease-in-out-quart"]} forwards;
+    animation: ${aboutAnimation} 1.5s ${theme.transitionTimings["ease-in-out-quint"]} forwards;
   }
 
   &::before {

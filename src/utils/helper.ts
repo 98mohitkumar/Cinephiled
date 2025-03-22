@@ -25,7 +25,7 @@ type Options = {
 };
 
 export const fetchOptions = (args?: FetchOptionsArgs): Options => {
-  const { method = "GET", body = null, token = null, signal = null } = args ?? {};
+  const { method = "GET", body = null, token = null, signal = null } = args || {};
 
   const options: Options = {
     method,

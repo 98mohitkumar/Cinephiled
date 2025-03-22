@@ -15,6 +15,7 @@ import MediaHeroBackground from "components/Shared/MediaHeroBackground/MediaHero
 import MetaWrapper from "components/Shared/MetaWrapper";
 import ShareButton from "components/Shared/ShareButton";
 import TVStats from "components/Shared/TVStats";
+import { suggestLogin } from "components/Shared/UserActions";
 import MediaImageTemplateGrid from "components/Templates/MediaImageTemplateGrid";
 import { CastCarousel } from "components/Templates/PeopleTemplate";
 import Button from "components/UI/Button";
@@ -25,10 +26,12 @@ import H3 from "components/UI/Typography/H3";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
 import { LAYOUT_TYPES, ROUTES, opacityMotionTransition, siteInfo } from "data/global";
+import { useUserContext } from "Store/UserContext";
 import { cn, fetchOptions, getNiceName, getReleaseYear, matches, mergeCrewData } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const EpisodeRatingButton = ({ savedRating, title, seriesId, seasonNumber, episodeNumber }) => {
+  const { userInfo } = useUserContext();
   const [savedRatingState, setSavedRatingState] = useState(savedRating);
   const { isModalVisible, openModal, closeModal } = useModal();
   const { setEpisodeRating } = useSetEpisodeRating();
@@ -57,9 +60,17 @@ const EpisodeRatingButton = ({ savedRating, title, seriesId, seasonNumber, episo
     }
   };
 
+  const ratingButtonHandler = () => {
+    if (userInfo?.accountId) {
+      openModal();
+    } else {
+      suggestLogin();
+    }
+  };
+
   return (
     <Fragment>
-      <Button onClick={openModal} shape='circle' size='small' title={savedRatingState ? "Update your rating" : "Rate this episode"}>
+      <Button onClick={ratingButtonHandler} shape='circle' size='small' title={savedRatingState ? "Update your rating" : "Rate this episode"}>
         <AnimatePresence mode='wait' initial={false}>
           <motion.div key={`rating - ${savedRatingState.toString()}`} {...opacityMotionTransition}>
             {savedRatingState ? <Star size={16} fill='currentColor' /> : <Star size={16} />}
@@ -195,7 +206,7 @@ export const getServerSideProps = async (ctx) => {
   try {
     const data = await getServerSession(ctx.req, ctx.res, authOptions);
 
-    const [response, tvRes, accountStatesRes] = await Promise.all([
+    const [response, tvRes] = await Promise.all([
       fetch(
         apiEndpoints.tv.episodeDetails({
           id: ctx.query.id,
@@ -204,8 +215,24 @@ export const getServerSideProps = async (ctx) => {
         }),
         fetchOptions()
       ),
-      fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id), fetchOptions()),
-      fetch(
+      fetch(apiEndpoints.tv.tvDetailsNoAppend(ctx.query.id), fetchOptions())
+    ]);
+
+    if (!response.ok) throw new Error("error fetching details");
+
+    const [res, tvData] = await Promise.all([response.json(), tvRes.json()]);
+
+    const { cast, guest_stars } = res?.credits;
+
+    const director = res?.credits?.crew?.find((item) => matches(item.job, "Director")) || {};
+    const writers = res?.credits?.crew?.filter((item) => matches(item.job, "Writer")).slice(0, 2) || [];
+
+    const crewData = mergeCrewData([{ ...director }, ...writers]);
+
+    let accountStates = null;
+
+    if (data) {
+      const accountStateRes = await fetch(
         apiEndpoints.tv.episodeAccountStates({
           seriesId: ctx.query.id,
           seasonNumber: ctx.query.sn,
@@ -214,19 +241,10 @@ export const getServerSideProps = async (ctx) => {
         fetchOptions({
           token: data?.user?.accessToken
         })
-      )
-    ]);
+      );
 
-    if (!response.ok) throw new Error("error fetching details");
-
-    const [res, tvData, accountStates] = await Promise.all([response.json(), tvRes.json(), accountStatesRes.json()]);
-
-    const { cast, guest_stars } = res?.credits;
-
-    const director = res?.credits?.crew?.find((item) => matches(item.job, "Director")) || {};
-    const writers = res?.credits?.crew?.filter((item) => matches(item.job, "Writer")).slice(0, 2) || [];
-
-    const crewData = mergeCrewData([{ ...director }, ...writers]);
+      accountStates = await accountStateRes.json();
+    }
 
     return {
       props: {

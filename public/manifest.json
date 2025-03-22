@@ -8,11 +8,11 @@
   "description": "Cinephiled - A progressive web app (PWA) to preview any movie or tv show with reviews, ratings, description and posters.",
   "theme_color": "#121212",
   "background_color": "#121212",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait",
   "categories": ["entertainment"],
   "dir": "ltr",
-  "display_override": ["fullscreen", "minimal-ui", "standalone", "window-controls-overlay"],
+  "display_override": ["standalone", "window-controls-overlay"],
   "prefer_related_applications": false,
   "edge_side_panel": {
     "preferred_width": 412

@@ -42,8 +42,8 @@ const MediaTemplateGrid = ({
   return (
     <Grid colConfig={gridConfig} className={cn("items-start gap-y-2032", className)}>
       {media.map(({ id, title, name, poster_path, vote_average, release_date, first_air_date, media_type, backdrop_path }, index) => (
-        <GridCol title={title || name} key={id}>
-          <Link href={`/${getMediaRoute(media_type || mediaType)}/${getNiceName({ id, name: title || name })}`} passHref>
+        <GridCol key={id}>
+          <Link href={`/${getMediaRoute(media_type || mediaType)}/${getNiceName({ id, name: title || name })}`} passHref title={title || name}>
             <motion.div whileHover={{ scale: 1.05, transition: { duration: 0.1 } }} whileTap={{ scale: 0.95 }}>
               <div className={cn("relative", matches(gridType, "poster") ? "aspect-poster" : "aspect-backdrop")}>
                 <Image

@@ -27,7 +27,7 @@ export const pageWrapperStyles = css`
   .background {
     filter: brightness(50%);
     z-index: ${theme.zIndex[1]};
-    animation: ${backgroundAnimation} 2s ${theme.transitionTimings["ease-in-out-quart"]} forwards;
+    animation: ${backgroundAnimation} 1.5s ${theme.transitionTimings["ease-in-out-quint"]} forwards;
   }
 
   &::before {

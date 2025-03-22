@@ -76,6 +76,7 @@ const MovieRecommendations = () => {
             return (
               <Button
                 key={movie?.id}
+                title={isAlreadyInWatchlist ? "Remove from watchlist" : "Add to watchlist"}
                 fullWidth
                 variant={isAlreadyInWatchlist ? "danger" : "outline"}
                 className='mt-32'
