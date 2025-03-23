@@ -1,7 +1,5 @@
 import LogRocket from "logrocket";
 
-import { isProduction } from "data/global";
-
-if (isProduction && typeof window !== "undefined") {
+if (process.env.NEXT_PUBLIC_LOGGING_ENABLED === "true" && typeof window !== "undefined") {
   LogRocket.init("ugzauv/cinephiled");
 }
