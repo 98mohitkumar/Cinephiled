@@ -60,9 +60,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/search/company?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`
   },
   movie: {
-    popularMovies: `${baseUrlV3}/discover/movie?language=en-US&include_adult=false&page=1&sort_by=popularity.desc`,
-
-    trendingMovies: `${baseUrlV3}/trending/movie/day?language=en-US&page=1`,
+    trendingMovies: ({ pageQuery = 1 }) => `${baseUrlV3}/trending/movie/day?language=en-US&page=${pageQuery}`,
 
     movieDetails: (id: string) =>
       `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=keywords,images,videos,credits,reviews,recommendations,external_ids&include_image_language=${imageLanguages}`,
@@ -78,9 +76,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/movie/now_playing?page=${pageQuery}&region=${region}`
   },
   tv: {
-    popularTv: `${baseUrlV3}/discover/tv?language=en-US&include_adult=false&page=1&sort_by=popularity.desc`,
-
-    trendingTv: `${baseUrlV3}/trending/tv/day?language=en-US&page=1`,
+    trendingTv: ({ pageQuery = 1 }) => `${baseUrlV3}/trending/tv/day?language=en-US&page=${pageQuery}`,
 
     tvDetails: (id: string) =>
       `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=keywords,images,videos,aggregate_credits,reviews,recommendations,external_ids&include_image_language=${imageLanguages}`,
