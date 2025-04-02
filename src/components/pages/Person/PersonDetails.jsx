@@ -260,7 +260,7 @@ const PersonDetails = ({ personDetails }) => {
 
         <LayoutContainer className='py-2448 pe-0'>
           <div ref={sliderRef} className='keen-slider'>
-            {images?.profiles.map((item) => (
+            {images?.profiles.map((item, index) => (
               <div className='keen-slider__slide' key={item.file_path}>
                 <div className='relative mr-1620 aspect-poster'>
                   <Image
@@ -271,7 +271,7 @@ const PersonDetails = ({ personDetails }) => {
                     className='rounded-xl object-cover shadow-xl'
                     blurDataURL={blurPlaceholder}
                   />
-                  <DownloadMediaButton item={item.file_path} />
+                  <DownloadMediaButton item={{ path: item.file_path, id: index + 1, name: personDetails.name }} />
                 </div>
               </div>
             ))}
