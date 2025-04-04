@@ -4,7 +4,7 @@ import Button from "components/UI/Button";
 import { CORS_PROXY } from "data/apiEndpoints";
 
 export const DownloadMediaButton = ({ item }) => {
-  const download = (id, url) => {
+  const download = (url) => {
     fetch(url, {
       method: "GET",
       headers: {}
@@ -14,7 +14,7 @@ export const DownloadMediaButton = ({ item }) => {
           const url = window.URL.createObjectURL(new Blob([buffer]));
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", `${id.replace("/", "")}`); //or any other extension
+          link.setAttribute("download", `cinephiled-${item.name}-${item.id}.jpg`); //or any other extension
           document.body.appendChild(link);
           link.click();
 
@@ -33,7 +33,7 @@ export const DownloadMediaButton = ({ item }) => {
       size='small'
       className='absolute bottom-4 right-4 shadow-sm'
       aria-label='download media'
-      onClick={() => download(item, `${CORS_PROXY}?q=https://image.tmdb.org/t/p/original${item}`)}>
+      onClick={() => download(`${CORS_PROXY}?q=https://image.tmdb.org/t/p/original${item.path}`)}>
       <Download size={14} className='text-neutral-800' />
     </Button>
   );
