@@ -35,6 +35,14 @@ const eslintConfig = [
         }
       }
     ],
+    settings: {
+      "import/resolver": {
+        typescript: {
+          alwaysTryTypes: true,
+          project: "./tsconfig.json"
+        }
+      }
+    },
     rules: {
       "import/no-unresolved": "error",
       "no-duplicate-imports": "error",
