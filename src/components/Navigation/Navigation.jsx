@@ -16,6 +16,8 @@ import { HamburgerIcon, hamburgerMenu, headerStyles, Logo, navBarStyles, navLink
 
 const navLinks = [
   { text: "Home", link: "/" },
+  { text: "Movies", link: "/movies" },
+  { text: "TV Shows", link: "/tv" },
   { text: "Explore", link: `/${ROUTES.explore}` },
   { text: "About", link: `/${ROUTES.about}` }
 ];
@@ -92,7 +94,7 @@ const Navigation = () => {
             </div>
           </Link>
 
-          <div className='-mr-2432 hidden items-center md:flex' css={navLinksStyles}>
+          <div className='-mr-2432 hidden items-center lg:flex' css={navLinksStyles}>
             {navLinks.map(({ text, link }) => (
               <Link href={link} key={text} title={`go to ${text} page`}>
                 <P size='large' weight='medium' className={`link ${matches(router.asPath, link) ? "active" : ""}`} aria-label={`go to ${text} page`}>
@@ -112,7 +114,7 @@ const Navigation = () => {
             </FlexBox>
           </div>
 
-          <div className='flex items-center gap-1648 md:hidden'>
+          <div className='flex items-center gap-16 lg:hidden'>
             <FlexBox
               className='hover cursor-pointer items-center justify-center p-8 can-hover:text-accentPrimary'
               onClick={searchHandler}
@@ -142,14 +144,11 @@ const Navigation = () => {
               duration: 0.6,
               ease: [0.77, 0, 0.175, 1]
             }}
-            className='block md:hidden'>
-            <div className='flex h-full w-full flex-col items-center justify-center'>
+            className='block lg:hidden'>
+            <div className='flex h-full w-full flex-col items-center justify-center gap-20'>
               {navLinks.map(({ text, link }) => (
                 <Link href={link} key={text}>
-                  <P
-                    className={`navlink ${matches(router.asPath, link) ? "active" : ""} px-20 py-16 text-h4Static`}
-                    weight='semibold'
-                    onClick={hamburgerHandler}>
+                  <P className={`navlink ${matches(router.asPath, link) ? "active" : ""} text-h5Static`} weight='semibold' onClick={hamburgerHandler}>
                     {text}
                   </P>
                 </Link>
