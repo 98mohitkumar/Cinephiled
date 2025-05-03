@@ -23,7 +23,7 @@ const footerLinks = [
 
 const Footer = () => {
   return (
-    <LayoutContainer className='py-20' css={footerWrapper}>
+    <LayoutContainer className='py-20' css={footerWrapper} id='footer'>
       <FlexBox tag='footer' className='items-center justify-between'>
         <H4 weight='medium'>Cinephiled</H4>
         <FlexBox className='items-center justify-between gap-3264'>

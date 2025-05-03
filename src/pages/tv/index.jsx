@@ -145,16 +145,14 @@ const TV = ({ initialTv, genres, languages, region }) => {
             Discover TV Shows
           </H2>
 
-          <div className='fixed bottom-10 right-0 z-100 flex w-full justify-end px-1664 xl:hidden'>
-            <MobileFilter
-              filters={filters}
-              onFilterChange={handleFilterChange}
-              onClearFilters={clearFilters}
-              sortOptions={sortOptions.tmdbOptions.tv}
-              languageOptions={languages}
-              genreOptions={genres}
-            />
-          </div>
+          <MobileFilter
+            filters={filters}
+            onFilterChange={handleFilterChange}
+            onClearFilters={clearFilters}
+            sortOptions={sortOptions.tmdbOptions.tv}
+            languageOptions={languages}
+            genreOptions={genres}
+          />
 
           <FlexBox className='items-start gap-1632'>
             <div className='sticky top-20 hidden max-w-80 xl:block'>
