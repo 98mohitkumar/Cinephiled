@@ -14,7 +14,7 @@ const NetworkPage = ({ id, media }) => {
   const defaultSortOption = tvSortOptions.find((option) => option?.isDefault)?.value;
   const { sortBy, handleSortSelection } = useSort({ shallow: false, defaultSortOption });
   const { list, resetQueryState } = useInfiniteQuery({
-    initialPage: 2,
+    initialPage: 3,
     getEndpoint: ({ page }) => apiEndpoints.network.networkMedia({ id, pageQuery: page, sortBy })
   });
 

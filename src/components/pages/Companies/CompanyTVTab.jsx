@@ -4,7 +4,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 
 const CompanyTVTab = ({ initialData, id }) => {
   const { list } = useInfiniteQuery({
-    initialPage: 2,
+    initialPage: 3,
     getEndpoint: ({ page }) => apiEndpoints.company.companyTv({ id, pageQuery: page })
   });
 
