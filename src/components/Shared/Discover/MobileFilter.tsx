@@ -18,7 +18,7 @@ const MobileFilter = (props: Omit<FilterPanelProps, "isMobile" | "className">) =
         </Button>
       </DrawerTrigger>
 
-      <DrawerContent className='min-h-96'>
+      <DrawerContent className='min-h-96' aria-describedby='filters-drawer'>
         <div className='mx-auto w-full max-w-screen-sm'>
           <DrawerFooter>
             <FilterPanel {...props} isMobile />
