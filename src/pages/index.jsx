@@ -1,4 +1,6 @@
+import { MoveRight } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
 import { Fragment } from "react";
 
 import Hero from "components/pages/HomePage/Hero/Hero";
@@ -6,11 +8,13 @@ import MetaWrapper from "components/Shared/MetaWrapper";
 import { TabItem, Tabs } from "components/Shared/Tabs/Tabs";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import { PeopleTemplateGrid } from "components/Templates/PeopleTemplate";
+import Button from "components/UI/Button";
+import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H2 from "components/UI/Typography/H2";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
-import { mediaTypeTabList, opacityMotionTransition } from "data/global";
+import { mediaTypeTabList, opacityMotionTransition, ROUTES } from "data/global";
 import useTabs from "hooks/useTabs";
 import { fetchOptions, removeDuplicates, matches, randomizeItems } from "utils/helper";
 
@@ -47,6 +51,19 @@ export default function Home({ trendingMovies, trendingTv, popularPeople, backdr
             <motion.div key='movies' {...opacityMotionTransition} className='mt-3264'>
               <SectionTitle title='Trending Movies' />
               <MediaTemplateGrid media={trendingMovies} mediaType='movie' />
+
+              <FlexBox className='mt-40 justify-center max-md:mb-8'>
+                <Link className='group' href={`/${ROUTES.movies}`}>
+                  <Button className='flex items-center gap-8 px-24' size='large' shape='pill' weight='semibold'>
+                    Explore more movies
+                    <MoveRight
+                      size={20}
+                      className='transition-transform duration-300 ease-ease-out-quint group-hover:translate-x-2'
+                      strokeWidth={1.75}
+                    />
+                  </Button>
+                </Link>
+              </FlexBox>
             </motion.div>
           )}
 
@@ -54,6 +71,19 @@ export default function Home({ trendingMovies, trendingTv, popularPeople, backdr
             <motion.div key='tv' {...opacityMotionTransition} className='mt-3264'>
               <SectionTitle title='Trending TV Shows' />
               <MediaTemplateGrid media={trendingTv} mediaType='tv' />
+
+              <FlexBox className='mt-40 justify-center max-md:mb-8'>
+                <Link className='group' href={`/${ROUTES.tv}`}>
+                  <Button className='flex items-center gap-8 px-24' size='large' shape='pill' weight='semibold'>
+                    Explore more TV shows
+                    <MoveRight
+                      size={20}
+                      className='transition-transform duration-300 ease-ease-out-quint group-hover:translate-x-2'
+                      strokeWidth={1.75}
+                    />
+                  </Button>
+                </Link>
+              </FlexBox>
             </motion.div>
           )}
 
@@ -110,8 +140,8 @@ export async function getStaticProps() {
       popularPeopleResNext.json()
     ]);
 
-    const trendingMoviesList = trendingMovies?.results.concat(trendingMoviesNext?.results) || [];
-    const trendingTvList = trendingTv?.results.concat(trendingTvNext?.results) || [];
+    const { cleanedItems: trendingMoviesList } = removeDuplicates(trendingMovies?.results.concat(trendingMoviesNext?.results)) || [];
+    const { cleanedItems: trendingTvList } = removeDuplicates(trendingTv?.results.concat(trendingTvNext?.results)) || [];
 
     const { cleanedItems: backdrops } = removeDuplicates(
       [...trendingMoviesList, ...trendingTvList]
@@ -124,13 +154,13 @@ export async function getStaticProps() {
 
     const allBackdrops = randomizeItems(backdrops);
 
-    const { cleanedItems: cleanedPopularPeople } = removeDuplicates(popularPeople?.results?.concat(popularPeopleNext?.results));
+    const { cleanedItems: cleanedPopularPeople } = removeDuplicates(popularPeople?.results?.concat(popularPeopleNext?.results)) || [];
 
     return {
       props: {
         trendingMovies: trendingMoviesList,
         trendingTv: trendingTvList,
-        popularPeople: cleanedPopularPeople || [],
+        popularPeople: cleanedPopularPeople,
         error,
         backdrops: allBackdrops.length % 2 !== 0 ? allBackdrops.slice(0, -1) : allBackdrops
       },

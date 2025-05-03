@@ -33,14 +33,17 @@ const MediaTemplateGrid = ({
   mediaType = "movie",
   gridType = "poster",
   imageSize = "w500",
-  className = ""
+  className = "",
+  gridConfig = null
 }) => {
-  const gridConfig = matches(gridType, "poster")
-    ? { xxs: 2, sm: 3, lg: 4, xl: 5, "2xl": "desktopAutoFillMedia" }
-    : { xxs: 1, xs: 2, lg: "desktopAutoFillMediaBackdrop" };
+  const gridSizeConfig =
+    gridConfig ||
+    (matches(gridType, "poster")
+      ? { xxs: 2, sm: 3, lg: 4, xl: 5, "2xl": "desktopAutoFillMedia" }
+      : { xxs: 1, xs: 2, lg: "desktopAutoFillMediaBackdrop" });
 
   return (
-    <Grid colConfig={gridConfig} className={cn("items-start gap-y-2032", className)}>
+    <Grid colConfig={gridSizeConfig} className={cn("items-start gap-y-2032", className)}>
       {media.map(({ id, title, name, poster_path, vote_average, release_date, first_air_date, media_type, backdrop_path }, index) => (
         <GridCol key={id}>
           <Link href={`/${getMediaRoute(media_type || mediaType)}/${getNiceName({ id, name: title || name })}`} passHref title={title || name}>

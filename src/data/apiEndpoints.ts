@@ -6,6 +6,21 @@ const baseUrlV4 = "https://api.themoviedb.org/4";
 
 const imageLanguages = "en,null";
 
+type discoverParams = {
+  pageQuery: number;
+  releaseDateMin: string;
+  releaseDateMax: string;
+  voteAverageMin: string | number;
+  voteAverageMax: string | number;
+  voteCountMin: string | number;
+  sortBy: string;
+  originalLanguage: string;
+  runtimeMin?: string | number;
+  runtimeMax?: string | number;
+  withGenres?: string;
+  region?: string;
+};
+
 export const apiEndpoints = {
   auth: {
     requestToken: `${baseUrlV4}/auth/request_token`,
@@ -99,6 +114,38 @@ export const apiEndpoints = {
     getTvCredits: ({ id }: { id: string }) => `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=aggregate_credits`,
 
     tvGenreList: `${baseUrlV3}/genre/tv/list?language=en-US`
+  },
+  discover: {
+    movies: ({
+      pageQuery = 1,
+      releaseDateMin = "",
+      releaseDateMax = "",
+      voteAverageMin = "",
+      voteAverageMax = "",
+      voteCountMin = "",
+      sortBy = "popularity.desc",
+      originalLanguage = "en",
+      runtimeMin = "",
+      runtimeMax = "",
+      withGenres = ""
+    }: discoverParams) =>
+      `${baseUrlV3}/discover/movie?page=${pageQuery}&primary_release_date.gte=${releaseDateMin}&primary_release_date.lte=${releaseDateMax}&vote_average.gte=${voteAverageMin}&vote_average.lte=${voteAverageMax}&vote_count.gte=${voteCountMin}&sort_by=${sortBy}&with_original_language=${originalLanguage}${runtimeMin ? `&with_runtime.gte=${runtimeMin}` : ""}${runtimeMax ? `&with_runtime.lte=${runtimeMax}` : ""}${withGenres ? `&with_genres=${withGenres}` : ""}&include_adult=false`,
+
+    tv: ({
+      pageQuery = 1,
+      releaseDateMin = "",
+      releaseDateMax = "",
+      voteAverageMin = "",
+      voteAverageMax = "",
+      voteCountMin = "",
+      sortBy = "popularity.desc",
+      originalLanguage = "en",
+      runtimeMin = "",
+      runtimeMax = "",
+      withGenres = "",
+      region = "US"
+    }: discoverParams) =>
+      `${baseUrlV3}/discover/tv?page=${pageQuery}&first_air_date.gte=${releaseDateMin}&first_air_date.lte=${releaseDateMax}&vote_average.gte=${voteAverageMin}&vote_average.lte=${voteAverageMax}&vote_count.gte=${voteCountMin}&sort_by=${sortBy}&with_original_language=${originalLanguage}${runtimeMin ? `&with_runtime.gte=${runtimeMin}` : ""}${runtimeMax ? `&with_runtime.lte=${runtimeMax}` : ""}${withGenres ? `&with_genres=${withGenres}` : ""}&watch_region=${region}&include_adult=false`
   },
   keywords: {
     keywordMovies: ({ id, pageQuery = 1 }: { id: string; pageQuery: number }) =>

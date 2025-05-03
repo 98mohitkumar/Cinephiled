@@ -1,0 +1,250 @@
+import { FilterX } from "lucide-react";
+import { useRouter } from "next/router";
+import { useQueryStates, parseAsString, parseAsArrayOf, parseAsInteger } from "nuqs";
+
+import FilterPanel from "components/Shared/Discover/FilterPanel";
+import MobileFilter from "components/Shared/Discover/MobileFilter";
+import DominantColor from "components/Shared/DominantColor/DominantColor";
+import MetaWrapper from "components/Shared/MetaWrapper";
+import PlaceholderText from "components/Shared/PlaceholderText";
+import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
+import Button from "components/UI/Button";
+import FlexBox from "components/UI/FlexBox";
+import LayoutContainer from "components/UI/LayoutContainer";
+import H2 from "components/UI/Typography/H2";
+import { apiEndpoints } from "data/apiEndpoints";
+import { ROUTES, siteInfo, sortOptions } from "data/global";
+import useInfiniteQuery from "hooks/useInfiniteQuery";
+import { fetchOptions, removeDuplicates } from "utils/helper";
+
+// Default filter values
+const DEFAULT_FILTERS = {
+  releaseDate: ["", `${new Date().getFullYear()}-12-31`],
+  voteAverage: [0, 10],
+  minVoteCount: 0,
+  runtime: [0, 300],
+  sortBy: "popularity.desc",
+  language: "en",
+  genres: []
+};
+
+const Movies = ({ initialMovies, genres, languages }) => {
+  const router = useRouter();
+  const [filterParams, setFilterParams] = useQueryStates(
+    {
+      release_date_min: parseAsString.withDefault(DEFAULT_FILTERS.releaseDate[0]),
+      release_date_max: parseAsString.withDefault(DEFAULT_FILTERS.releaseDate[1]),
+      vote_average_min: parseAsInteger.withDefault(DEFAULT_FILTERS.voteAverage[0]),
+      vote_average_max: parseAsInteger.withDefault(DEFAULT_FILTERS.voteAverage[1]),
+      vote_count_min: parseAsInteger.withDefault(DEFAULT_FILTERS.minVoteCount),
+      runtime_min: parseAsInteger.withDefault(DEFAULT_FILTERS.runtime[0]),
+      runtime_max: parseAsInteger.withDefault(DEFAULT_FILTERS.runtime[1]),
+      sort_by: parseAsString.withDefault(DEFAULT_FILTERS.sortBy),
+      language: parseAsString.withDefault(DEFAULT_FILTERS.language),
+      genres: parseAsArrayOf(parseAsInteger).withDefault(DEFAULT_FILTERS.genres)
+    },
+    {
+      shallow: false,
+      throttleMs: 1000,
+      history: "push"
+    }
+  );
+
+  const filters = {
+    releaseDate: [filterParams.release_date_min, filterParams.release_date_max],
+    voteAverage: [filterParams.vote_average_min, filterParams.vote_average_max],
+    minVoteCount: filterParams.vote_count_min,
+    runtime: [filterParams.runtime_min, filterParams.runtime_max],
+    sortBy: filterParams.sort_by,
+    language: filterParams.language,
+    genres: filterParams.genres
+  };
+
+  // Update query parameters when filters change
+  const handleFilterChange = (filterKey, value) => {
+    switch (filterKey) {
+      case "releaseDate":
+        setFilterParams({
+          release_date_min: value[0],
+          release_date_max: value[1]
+        });
+        break;
+      case "voteAverage":
+        setFilterParams({
+          vote_average_min: value[0],
+          vote_average_max: value[1]
+        });
+        break;
+      case "voteCount":
+        setFilterParams({
+          vote_count_min: value
+        });
+        break;
+      case "runtime":
+        setFilterParams({
+          runtime_min: value[0],
+          runtime_max: value[1]
+        });
+        break;
+      case "sortBy":
+        setFilterParams({ sort_by: value });
+        break;
+      case "language":
+        setFilterParams({ language: value });
+        break;
+      case "genres":
+        setFilterParams({ genres: value });
+        break;
+      default:
+        break;
+    }
+
+    resetQueryState();
+  };
+
+  const clearFilters = () => {
+    router.replace("/movies");
+  };
+
+  const { list, resetQueryState } = useInfiniteQuery({
+    initialPage: 2,
+    scrollAfterLoad: false,
+    getEndpoint: ({ page }) =>
+      apiEndpoints.discover.movies({
+        pageQuery: page,
+        sortBy: filterParams.sort_by,
+        originalLanguage: filterParams.language,
+        releaseDateMin: filterParams.release_date_min,
+        releaseDateMax: filterParams.release_date_max,
+        voteAverageMin: filterParams.vote_average_min,
+        voteAverageMax: filterParams.vote_average_max,
+        voteCountMin: filterParams.vote_count_min,
+        runtimeMin: filterParams.runtime_min,
+        runtimeMax: filterParams.runtime_max,
+        withGenres: filterParams.genres
+      })
+  });
+
+  const { cleanedItems: movies } = removeDuplicates(initialMovies.concat(list));
+
+  return (
+    <>
+      <MetaWrapper
+        title='Discover Movies - Cinephiled'
+        description='Explore and discover movies with advanced filters'
+        url={`${siteInfo.url}/${ROUTES.movies}`}
+      />
+
+      <LayoutContainer className='relative py-4864'>
+        <DominantColor tint />
+
+        <section className='relative z-10'>
+          <H2 tag='h1' className='mb-4864 text-center text-neutral-100'>
+            Discover Movies
+          </H2>
+
+          <div className='fixed bottom-8 right-0 z-100 flex w-full justify-end px-1664 xl:hidden'>
+            <MobileFilter
+              filters={filters}
+              onFilterChange={handleFilterChange}
+              onClearFilters={clearFilters}
+              sortOptions={sortOptions.tmdbOptions.movie}
+              languageOptions={languages}
+              genreOptions={genres}
+            />
+          </div>
+
+          <FlexBox className='items-start gap-1632'>
+            <div className='sticky top-20 hidden max-w-80 xl:block'>
+              <FilterPanel
+                filters={filters}
+                onFilterChange={handleFilterChange}
+                onClearFilters={clearFilters}
+                sortOptions={sortOptions.tmdbOptions.movie}
+                languageOptions={languages}
+                genreOptions={genres}
+              />
+            </div>
+
+            {/* Results */}
+            <div className='w-full'>
+              {movies?.length > 0 ? (
+                <MediaTemplateGrid media={movies} mediaType='movie' gridConfig={{ xxs: 2, sm: 3, lg: 4, xl: "desktopAutoFillMedia" }} />
+              ) : (
+                <PlaceholderText height='large'>
+                  No movies found with these filters.
+                  <Button variant='outline' size='small' className='mx-auto mt-16 flex items-center gap-8' onClick={clearFilters}>
+                    <FilterX size={16} />
+                    Clear Filters
+                  </Button>
+                </PlaceholderText>
+              )}
+            </div>
+          </FlexBox>
+        </section>
+      </LayoutContainer>
+    </>
+  );
+};
+
+export async function getServerSideProps(context) {
+  try {
+    const { query } = context;
+
+    const releaseDateMin = query.release_date_min || DEFAULT_FILTERS.releaseDate[0];
+    const releaseDateMax = query.release_date_max || DEFAULT_FILTERS.releaseDate[1];
+    const voteAverageMin = query.vote_average_min || DEFAULT_FILTERS.voteAverage[0];
+    const voteAverageMax = query.vote_average_max || DEFAULT_FILTERS.voteAverage[1];
+    const voteCountMin = query.vote_count_min || DEFAULT_FILTERS.minVoteCount;
+    const runtimeMin = query.runtime_min || DEFAULT_FILTERS.runtime[0];
+    const runtimeMax = query.runtime_max || DEFAULT_FILTERS.runtime[1];
+    const sortBy = query.sort_by || DEFAULT_FILTERS.sortBy;
+    const language = query.language || DEFAULT_FILTERS.language;
+    const genres = query.genres || "";
+
+    const endpoint = apiEndpoints.discover.movies({
+      pageQuery: 1,
+      sortBy,
+      originalLanguage: language,
+      releaseDateMin,
+      releaseDateMax,
+      voteAverageMin: voteAverageMin,
+      voteAverageMax: voteAverageMax,
+      voteCountMin: voteCountMin,
+      runtimeMin: runtimeMin,
+      runtimeMax: runtimeMax,
+      withGenres: genres
+    });
+
+    const moviesResponse = await fetch(endpoint, fetchOptions());
+    const initialMovies = await moviesResponse.json();
+
+    const genresResponse = await fetch(apiEndpoints.movie.movieGenreList, fetchOptions());
+    const genresData = await genresResponse.json();
+
+    const languagesResponse = await fetch(apiEndpoints.language, fetchOptions());
+    const languagesData = await languagesResponse.json();
+
+    const languages = languagesData
+      .sort((a, b) => a.english_name.localeCompare(b.english_name))
+      .map((lang) => ({
+        label: lang.english_name,
+        value: lang.iso_639_1
+      }));
+
+    return {
+      props: {
+        initialMovies: initialMovies.results,
+        genres: genresData.genres || [],
+        languages
+      }
+    };
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+    return {
+      notFound: true
+    };
+  }
+}
+
+export default Movies;
