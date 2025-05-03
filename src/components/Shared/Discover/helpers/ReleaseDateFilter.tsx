@@ -1,5 +1,6 @@
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
+import "react-multi-date-picker/styles/layouts/mobile.css";
 
 import Input from "components/UI/Input";
 import P from "components/UI/Typography/P";
@@ -10,6 +11,7 @@ interface ReleaseDateFilterProps {
   value?: [string, string];
   onChange: (value: [string, string]) => void;
   className?: string;
+  isMobile?: boolean;
 }
 
 const formatDate = (date: string): string => {
@@ -20,12 +22,14 @@ const formatDate = (date: string): string => {
 const DatePickerComponent = ({
   value,
   onChange,
-  id
+  id,
+  isMobile
 }: {
   id: string;
   value: string;
   onChange: (date: DateObject | null) => void;
   className?: string;
+  isMobile?: boolean;
 }) => {
   return (
     <DatePicker
@@ -33,6 +37,7 @@ const DatePickerComponent = ({
       value={value}
       onChange={onChange}
       render={<Input fullWidth suffix={<Calendar size={16} />} />}
+      className={isMobile ? "rmdp-mobile" : ""}
       containerStyle={{ width: "100%" }}
       format='DD-MM-YYYY'
       hideOnScroll
@@ -53,7 +58,12 @@ const DatePickerComponent = ({
   );
 };
 
-const ReleaseDateFilter = ({ value = ["1900-01-01", `${new Date().getFullYear()}-12-31`], onChange, className }: ReleaseDateFilterProps) => {
+const ReleaseDateFilter = ({
+  value = ["1900-01-01", `${new Date().getFullYear()}-12-31`],
+  onChange,
+  className,
+  isMobile
+}: ReleaseDateFilterProps) => {
   const handleFromDateChange = (date: DateObject | null) => {
     onChange([date?.format("YYYY-MM-DD") ?? "", value[1]]);
   };
@@ -74,7 +84,7 @@ const ReleaseDateFilter = ({ value = ["1900-01-01", `${new Date().getFullYear()}
             From:
           </P>
 
-          <DatePickerComponent value={formatDate(value[0])} onChange={handleFromDateChange} id='from-datepicker' />
+          <DatePickerComponent value={formatDate(value[0])} onChange={handleFromDateChange} id='from-datepicker' isMobile={isMobile} />
         </div>
 
         <div className='relative'>
@@ -82,7 +92,7 @@ const ReleaseDateFilter = ({ value = ["1900-01-01", `${new Date().getFullYear()}
             To:
           </P>
 
-          <DatePickerComponent value={formatDate(value[1])} onChange={handleToDateChange} id='to-datepicker' />
+          <DatePickerComponent value={formatDate(value[1])} onChange={handleToDateChange} id='to-datepicker' isMobile={isMobile} />
         </div>
       </DatePickerWrapper>
     </div>

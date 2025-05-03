@@ -145,7 +145,7 @@ const TV = ({ initialTv, genres, languages, region }) => {
             Discover TV Shows
           </H2>
 
-          <div className='fixed bottom-8 right-0 z-100 flex w-full justify-end px-1664 xl:hidden'>
+          <div className='fixed bottom-10 right-0 z-100 flex w-full justify-end px-1664 xl:hidden'>
             <MobileFilter
               filters={filters}
               onFilterChange={handleFilterChange}

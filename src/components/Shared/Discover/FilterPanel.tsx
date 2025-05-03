@@ -101,6 +101,7 @@ const FilterPanel = ({
           value={filters.releaseDate}
           onChange={(value) => onFilterChange("releaseDate", value)}
           className='border-b border-neutral-600 p-20'
+          isMobile={isMobile}
         />
 
         <VoteAverageFilter
