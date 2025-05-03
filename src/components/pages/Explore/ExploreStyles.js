@@ -75,7 +75,7 @@ export const watchProvidersCard = css`
   &:after {
     content: "";
     inset: 0;
-    background: ${`linear-gradient(90deg, ${theme.colors.black}, transparent), linear-gradient(0deg, ${theme.colors.black}, transparent)`};
+    background: ${`linear-gradient(90deg, ${theme.colors.neutral[950]}, transparent), linear-gradient(0deg, ${theme.colors.neutral[950]}, transparent)`};
     position: absolute;
     z-index: 1;
   }

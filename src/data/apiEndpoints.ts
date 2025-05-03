@@ -6,6 +6,21 @@ const baseUrlV4 = "https://api.themoviedb.org/4";
 
 const imageLanguages = "en,null";
 
+type discoverParams = {
+  pageQuery: number;
+  releaseDateMin: string;
+  releaseDateMax: string;
+  voteAverageMin: string | number;
+  voteAverageMax: string | number;
+  voteCountMin: string | number;
+  sortBy: string;
+  originalLanguage: string;
+  runtimeMin?: string | number;
+  runtimeMax?: string | number;
+  withGenres?: string;
+  region?: string;
+};
+
 export const apiEndpoints = {
   auth: {
     requestToken: `${baseUrlV4}/auth/request_token`,
@@ -60,9 +75,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/search/company?language=en-US&query=${query}&page=${pageQuery}&include_adult=false`
   },
   movie: {
-    popularMovies: `${baseUrlV3}/discover/movie?language=en-US&include_adult=false&page=1&sort_by=popularity.desc`,
-
-    trendingMovies: `${baseUrlV3}/trending/movie/day?language=en-US&page=1`,
+    trendingMovies: ({ pageQuery = 1 }) => `${baseUrlV3}/trending/movie/day?language=en-US&page=${pageQuery}`,
 
     movieDetails: (id: string) =>
       `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=keywords,images,videos,credits,reviews,recommendations,external_ids&include_image_language=${imageLanguages}`,
@@ -78,9 +91,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/movie/now_playing?page=${pageQuery}&region=${region}`
   },
   tv: {
-    popularTv: `${baseUrlV3}/discover/tv?language=en-US&include_adult=false&page=1&sort_by=popularity.desc`,
-
-    trendingTv: `${baseUrlV3}/trending/tv/day?language=en-US&page=1`,
+    trendingTv: ({ pageQuery = 1 }) => `${baseUrlV3}/trending/tv/day?language=en-US&page=${pageQuery}`,
 
     tvDetails: (id: string) =>
       `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=keywords,images,videos,aggregate_credits,reviews,recommendations,external_ids&include_image_language=${imageLanguages}`,
@@ -103,6 +114,38 @@ export const apiEndpoints = {
     getTvCredits: ({ id }: { id: string }) => `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=aggregate_credits`,
 
     tvGenreList: `${baseUrlV3}/genre/tv/list?language=en-US`
+  },
+  discover: {
+    movies: ({
+      pageQuery = 1,
+      releaseDateMin = "",
+      releaseDateMax = "",
+      voteAverageMin = "",
+      voteAverageMax = "",
+      voteCountMin = "",
+      sortBy = "popularity.desc",
+      originalLanguage = "en",
+      runtimeMin = "",
+      runtimeMax = "",
+      withGenres = ""
+    }: discoverParams) =>
+      `${baseUrlV3}/discover/movie?page=${pageQuery}&primary_release_date.gte=${releaseDateMin}&primary_release_date.lte=${releaseDateMax}&vote_average.gte=${voteAverageMin}&vote_average.lte=${voteAverageMax}&vote_count.gte=${voteCountMin}&sort_by=${sortBy}&with_original_language=${originalLanguage}${runtimeMin ? `&with_runtime.gte=${runtimeMin}` : ""}${runtimeMax ? `&with_runtime.lte=${runtimeMax}` : ""}${withGenres ? `&with_genres=${withGenres}` : ""}&include_adult=false`,
+
+    tv: ({
+      pageQuery = 1,
+      releaseDateMin = "",
+      releaseDateMax = "",
+      voteAverageMin = "",
+      voteAverageMax = "",
+      voteCountMin = "",
+      sortBy = "popularity.desc",
+      originalLanguage = "en",
+      runtimeMin = "",
+      runtimeMax = "",
+      withGenres = "",
+      region = "US"
+    }: discoverParams) =>
+      `${baseUrlV3}/discover/tv?page=${pageQuery}&first_air_date.gte=${releaseDateMin}&first_air_date.lte=${releaseDateMax}&vote_average.gte=${voteAverageMin}&vote_average.lte=${voteAverageMax}&vote_count.gte=${voteCountMin}&sort_by=${sortBy}&with_original_language=${originalLanguage}${runtimeMin ? `&with_runtime.gte=${runtimeMin}` : ""}${runtimeMax ? `&with_runtime.lte=${runtimeMax}` : ""}${withGenres ? `&with_genres=${withGenres}` : ""}&watch_region=${region}&with_watch_monetization_types=flatrate|free|ads|rent|buy&include_adult=false`
   },
   keywords: {
     keywordMovies: ({ id, pageQuery = 1 }: { id: string; pageQuery: number }) =>

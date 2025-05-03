@@ -40,6 +40,8 @@ export const useLogin = () => {
         setError({ error: true, message: "Server Error, Try again later" });
       }
     } catch (error) {
+      console.log(error);
+
       setIsWaiting(false);
       setError({ error: true, message: "Server Error, Try again later" });
     }

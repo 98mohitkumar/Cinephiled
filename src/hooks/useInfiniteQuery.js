@@ -3,7 +3,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { useUserContext } from "Store/UserContext";
 import { fetchOptions } from "utils/helper";
 
-const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint }) => {
+const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint, scrollAfterLoad = true }) => {
   const [pageToFetch, setPageToFetch] = useState(initialPage);
   const [extendedList, setExtendedList] = useState([]);
   const [isEmptyPage, setIsEmptyPage] = useState(false);
@@ -51,16 +51,19 @@ const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint }) =>
           if (data && data.results && data.results.length > 0) {
             setExtendedList((prev) => [...prev, ...data.results]);
             setPageToFetch((prev) => prev + 1);
-            requestAnimationFrame(() => {
-              window.scrollTo({ top: window.scrollY + 200, behavior: "smooth" });
-            });
+
+            if (scrollAfterLoad) {
+              requestAnimationFrame(() => {
+                window.scrollTo({ top: window.scrollY + 200, behavior: "smooth" });
+              });
+            }
           } else {
             setIsEmptyPage(true);
           }
         });
       }, 100);
     }
-  }, [fetchQuery, isLoading, isEmptyPage, pageToFetch]);
+  }, [fetchQuery, isLoading, isEmptyPage, pageToFetch, scrollAfterLoad]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);

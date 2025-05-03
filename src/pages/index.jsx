@@ -1,4 +1,6 @@
+import { MoveRight } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
 import { Fragment } from "react";
 
 import Hero from "components/pages/HomePage/Hero/Hero";
@@ -6,11 +8,13 @@ import MetaWrapper from "components/Shared/MetaWrapper";
 import { TabItem, Tabs } from "components/Shared/Tabs/Tabs";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import { PeopleTemplateGrid } from "components/Templates/PeopleTemplate";
+import Button from "components/UI/Button";
+import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H2 from "components/UI/Typography/H2";
 import P from "components/UI/Typography/P";
 import { apiEndpoints } from "data/apiEndpoints";
-import { mediaTypeTabList, opacityMotionTransition } from "data/global";
+import { mediaTypeTabList, opacityMotionTransition, ROUTES } from "data/global";
 import useTabs from "hooks/useTabs";
 import { fetchOptions, removeDuplicates, matches, randomizeItems } from "utils/helper";
 
@@ -18,7 +22,7 @@ const SectionTitle = ({ title }) => <H2 className='mb-2432 text-center text-whit
 
 const tabList = mediaTypeTabList.concat({ key: "people", title: "People" });
 
-export default function Home({ popularMovies, popularTv, trendingMovies, trendingTv, popularPeople, backdrops }) {
+export default function Home({ trendingMovies, trendingTv, popularPeople, backdrops }) {
   const { activeTab, setTab } = useTabs({ tabLocation: "indexTab" });
 
   const activeTabIndex = tabList.findIndex((tab) => matches(tab.key, activeTab));
@@ -45,33 +49,41 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
         <AnimatePresence initial={false} mode='wait'>
           {matches(activeTab, "movies") && (
             <motion.div key='movies' {...opacityMotionTransition} className='mt-3264'>
-              {/* Trending Movies */}
-              <section>
-                <SectionTitle title='Trending Today' />
-                <MediaTemplateGrid media={trendingMovies} mediaType='movie' />
-              </section>
+              <SectionTitle title='Trending Movies' />
+              <MediaTemplateGrid media={trendingMovies} mediaType='movie' />
 
-              {/* popular movies */}
-              <section className='mt-6480'>
-                <SectionTitle title='What&#39;s Popular' />
-                <MediaTemplateGrid media={popularMovies} mediaType='movie' />
-              </section>
+              <FlexBox className='mt-40 justify-center max-md:mb-8'>
+                <Link className='group' href={`/${ROUTES.movies}`}>
+                  <Button className='flex items-center gap-8 px-24' size='large' shape='pill' weight='semibold'>
+                    Explore more movies
+                    <MoveRight
+                      size={20}
+                      className='transition-transform duration-300 ease-ease-out-quint group-hover:translate-x-2'
+                      strokeWidth={1.75}
+                    />
+                  </Button>
+                </Link>
+              </FlexBox>
             </motion.div>
           )}
 
           {matches(activeTab, "tv") && (
             <motion.div key='tv' {...opacityMotionTransition} className='mt-3264'>
-              {/* Trending TV */}
-              <section>
-                <SectionTitle title='Trending Today' />
-                <MediaTemplateGrid media={trendingTv} mediaType='tv' />
-              </section>
+              <SectionTitle title='Trending TV Shows' />
+              <MediaTemplateGrid media={trendingTv} mediaType='tv' />
 
-              {/* popular TV */}
-              <section className='mt-6480'>
-                <SectionTitle title='What&#39;s Popular' />
-                <MediaTemplateGrid media={popularTv} mediaType='tv' />
-              </section>
+              <FlexBox className='mt-40 justify-center max-md:mb-8'>
+                <Link className='group' href={`/${ROUTES.tv}`}>
+                  <Button className='flex items-center gap-8 px-24' size='large' shape='pill' weight='semibold'>
+                    Explore more TV shows
+                    <MoveRight
+                      size={20}
+                      className='transition-transform duration-300 ease-ease-out-quint group-hover:translate-x-2'
+                      strokeWidth={1.75}
+                    />
+                  </Button>
+                </Link>
+              </FlexBox>
             </motion.div>
           )}
 
@@ -105,10 +117,10 @@ export default function Home({ popularMovies, popularTv, trendingMovies, trendin
 export async function getStaticProps() {
   try {
     const indexPageMedia = await Promise.all([
-      fetch(apiEndpoints.movie.popularMovies, fetchOptions()),
-      fetch(apiEndpoints.tv.popularTv, fetchOptions()),
-      fetch(apiEndpoints.movie.trendingMovies, fetchOptions()),
-      fetch(apiEndpoints.tv.trendingTv, fetchOptions()),
+      fetch(apiEndpoints.movie.trendingMovies({ pageQuery: 1 }), fetchOptions()),
+      fetch(apiEndpoints.movie.trendingMovies({ pageQuery: 2 }), fetchOptions()),
+      fetch(apiEndpoints.tv.trendingTv({ pageQuery: 1 }), fetchOptions()),
+      fetch(apiEndpoints.tv.trendingTv({ pageQuery: 2 }), fetchOptions()),
       fetch(apiEndpoints.popularPeople({ pageQuery: 1 }), fetchOptions()),
       fetch(apiEndpoints.popularPeople({ pageQuery: 2 }), fetchOptions())
     ]);
@@ -117,19 +129,22 @@ export async function getStaticProps() {
 
     if (error) throw new Error("Failed to fetch data");
 
-    const [popularMoviesRes, popularTvRes, trendingMoviesRes, trendingTvRes, popularPeopleRes, popularPeopleResNext] = indexPageMedia;
+    const [trendingMoviesRes, trendingMoviesResNext, trendingTvRes, trendingTvResNext, popularPeopleRes, popularPeopleResNext] = indexPageMedia;
 
-    const [popularMovies, popularTv, trendingMovies, trendingTv, popularPeople, popularPeopleNext] = await Promise.all([
-      popularMoviesRes.json(),
-      popularTvRes.json(),
+    const [trendingMovies, trendingMoviesNext, trendingTv, trendingTvNext, popularPeople, popularPeopleNext] = await Promise.all([
       trendingMoviesRes.json(),
+      trendingMoviesResNext.json(),
       trendingTvRes.json(),
+      trendingTvResNext.json(),
       popularPeopleRes.json(),
       popularPeopleResNext.json()
     ]);
 
+    const { cleanedItems: trendingMoviesList } = removeDuplicates(trendingMovies?.results.concat(trendingMoviesNext?.results)) || [];
+    const { cleanedItems: trendingTvList } = removeDuplicates(trendingTv?.results.concat(trendingTvNext?.results)) || [];
+
     const { cleanedItems: backdrops } = removeDuplicates(
-      [...popularMovies.results, ...trendingMovies.results, ...trendingTv.results]
+      [...trendingMoviesList, ...trendingTvList]
         .filter((item) => item.backdrop_path)
         .map((item) => ({
           src: item.backdrop_path,
@@ -139,15 +154,13 @@ export async function getStaticProps() {
 
     const allBackdrops = randomizeItems(backdrops);
 
-    const { cleanedItems: cleanedPopularPeople } = removeDuplicates(popularPeople?.results?.concat(popularPeopleNext?.results));
+    const { cleanedItems: cleanedPopularPeople } = removeDuplicates(popularPeople?.results?.concat(popularPeopleNext?.results)) || [];
 
     return {
       props: {
-        popularMovies: popularMovies?.results || [],
-        popularTv: popularTv?.results || [],
-        trendingMovies: trendingMovies?.results || [],
-        trendingTv: trendingTv?.results || [],
-        popularPeople: cleanedPopularPeople || [],
+        trendingMovies: trendingMoviesList,
+        trendingTv: trendingTvList,
+        popularPeople: cleanedPopularPeople,
         error,
         backdrops: allBackdrops.length % 2 !== 0 ? allBackdrops.slice(0, -1) : allBackdrops
       },

@@ -21,11 +21,12 @@ const DominantColor = ({ image, tint = false, isUsingBackdrop = false, angle, cl
         <motion.div
           css={tint ? tintedColorOverlayStyles : colorOverlayStyles}
           initial={{ opacity: 0 }}
-          animate={{
-            opacity: tint ? 0.4 : 1,
-            transition: { duration: 2.5, ease: [0.77, 0, 0.175, 1] }
+          animate={{ opacity: tint ? 0.4 : 1 }}
+          transition={{
+            duration: 2,
+            ease: "anticipate"
           }}
-          className={cn("absolute inset-0", className)}
+          className={cn("absolute inset-0 origin-top", className)}
           $angle={angle}
           $palette={palette}
         />

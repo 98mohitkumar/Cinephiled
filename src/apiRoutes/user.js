@@ -130,6 +130,7 @@ export const getCountryCode = async (ip) => {
     }
   } catch (error) {
     console.error("Error fetching country code:", error);
+    return "US";
   }
 
   return "US";

@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
 import { NavigationGuardProvider } from "next-navigation-guard";
+import { NuqsAdapter } from "nuqs/adapters/next/pages";
 import { Fragment, useEffect, useState } from "react";
 
 import Layout from "components/Layout/Layout";
@@ -61,7 +62,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
                 <MediaContextProvider>
                   {isLoading ? <Loader /> : null}
                   <Layout>
-                    <Component {...pageProps} />
+                    <NuqsAdapter>
+                      <Component {...pageProps} />
+                    </NuqsAdapter>
                   </Layout>
                 </MediaContextProvider>
               </ListsContextProvider>
