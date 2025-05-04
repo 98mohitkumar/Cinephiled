@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { cn } from "utils/helper";
 
 import { SliderRange, SliderThumb, SliderTrack, SliderRoot } from "./Slider";
@@ -16,8 +18,14 @@ interface RangeSliderProps {
 }
 
 const RangeSlider = ({ min, max, step = 1, value, onValueCommit, label, className }: RangeSliderProps) => {
+  const [sliderValue, setSliderValue] = useState<[number, number]>(value);
+
   const handleValueChange = (newValue: [number, number]) => {
     if (onValueCommit) onValueCommit(newValue);
+  };
+
+  const valueChangeHandler = (newValue: [number, number]) => {
+    setSliderValue(newValue);
   };
 
   return (
@@ -27,11 +35,18 @@ const RangeSlider = ({ min, max, step = 1, value, onValueCommit, label, classNam
           {label}
         </P>
         <P size='small' className='font-montserrat text-neutral-400' weight='medium'>
-          {value[0]} - {value[1]}
+          {sliderValue[0]} - {sliderValue[1]}
         </P>
       </div>
 
-      <SliderRoot defaultValue={value} onValueCommit={handleValueChange} min={min} max={max} step={step} minStepsBetweenThumbs={1}>
+      <SliderRoot
+        defaultValue={value}
+        onValueCommit={handleValueChange}
+        min={min}
+        max={max}
+        step={step}
+        minStepsBetweenThumbs={1}
+        onValueChange={valueChangeHandler}>
         <SliderTrack isDoubleRangeSlider>
           <SliderRange isDoubleRangeSlider />
         </SliderTrack>

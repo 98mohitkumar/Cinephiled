@@ -1,6 +1,7 @@
 import { FilterX } from "lucide-react";
 import { useRouter } from "next/router";
-import { useQueryStates, parseAsString, parseAsArrayOf, parseAsInteger } from "nuqs";
+import { useQueryStates, parseAsString, parseAsArrayOf, parseAsInteger, parseAsFloat } from "nuqs";
+import { Fragment } from "react";
 
 import { getCountryCode } from "apiRoutes/user";
 import FilterPanel from "components/Shared/Discover/FilterPanel";
@@ -25,7 +26,7 @@ const DEFAULT_FILTERS = {
   minVoteCount: 0,
   runtime: [0, 300],
   sortBy: "popularity.desc",
-  language: "en",
+  language: null,
   genres: []
 };
 
@@ -35,8 +36,8 @@ const TV = ({ initialTv, genres, languages, region }) => {
     {
       release_date_min: parseAsString.withDefault(DEFAULT_FILTERS.releaseDate[0]),
       release_date_max: parseAsString.withDefault(DEFAULT_FILTERS.releaseDate[1]),
-      vote_average_min: parseAsInteger.withDefault(DEFAULT_FILTERS.voteAverage[0]),
-      vote_average_max: parseAsInteger.withDefault(DEFAULT_FILTERS.voteAverage[1]),
+      vote_average_min: parseAsFloat.withDefault(DEFAULT_FILTERS.voteAverage[0]),
+      vote_average_max: parseAsFloat.withDefault(DEFAULT_FILTERS.voteAverage[1]),
       vote_count_min: parseAsInteger.withDefault(DEFAULT_FILTERS.minVoteCount),
       runtime_min: parseAsInteger.withDefault(DEFAULT_FILTERS.runtime[0]),
       runtime_max: parseAsInteger.withDefault(DEFAULT_FILTERS.runtime[1]),
@@ -101,6 +102,7 @@ const TV = ({ initialTv, genres, languages, region }) => {
     }
 
     resetQueryState();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const clearFilters = () => {
@@ -130,7 +132,7 @@ const TV = ({ initialTv, genres, languages, region }) => {
   const { cleanedItems: tv } = removeDuplicates(initialTv.concat(list));
 
   return (
-    <>
+    <Fragment>
       <MetaWrapper
         title='Discover TV Shows - Cinephiled'
         description='Explore and discover tv shows with advanced filters'
@@ -183,7 +185,7 @@ const TV = ({ initialTv, genres, languages, region }) => {
           </FlexBox>
         </section>
       </LayoutContainer>
-    </>
+    </Fragment>
   );
 };
 
@@ -239,7 +241,7 @@ export async function getServerSideProps(context) {
       props: {
         initialTv: initialTv.results,
         genres: genresData.genres || [],
-        languages,
+        languages: [{ label: "None Selected", value: null }].concat(languages),
         region
       }
     };

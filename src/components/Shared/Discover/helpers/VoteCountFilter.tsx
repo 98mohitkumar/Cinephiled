@@ -15,7 +15,7 @@ const VoteCountFilter = ({ value = 0, onChange, className }: VoteCountFilterProp
     <SingleSlider
       label='Minimum User Votes'
       min={0}
-      max={2000}
+      max={1000}
       step={50}
       value={value}
       className={className}

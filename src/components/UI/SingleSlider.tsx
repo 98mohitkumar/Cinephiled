@@ -1,8 +1,9 @@
+import { useState } from "react";
+
 import { cn } from "utils/helper";
 
 import { SliderRoot, SliderRange, SliderThumb, SliderTrack } from "./Slider";
 import P from "./Typography/P";
-
 interface SingleSliderProps {
   min: number;
   max: number;
@@ -15,9 +16,15 @@ interface SingleSliderProps {
 }
 
 const SingleSlider = ({ min, max, step = 1, value, onValueCommit, label, className }: SingleSliderProps) => {
+  const [sliderValue, setSliderValue] = useState<number>(0);
+
   const handleValueChange = (newValue: number[]) => {
     const newSingleValue = newValue[0];
     if (onValueCommit) onValueCommit(newSingleValue);
+  };
+
+  const valueChangeHandler = (newValue: number[]) => {
+    setSliderValue(newValue[0]);
   };
 
   return (
@@ -27,11 +34,11 @@ const SingleSlider = ({ min, max, step = 1, value, onValueCommit, label, classNa
           {label}
         </P>
         <P size='small' className='text-neutral-400'>
-          Min: {value}
+          Min: {sliderValue}
         </P>
       </div>
 
-      <SliderRoot defaultValue={[value, max]} onValueCommit={handleValueChange} min={min} max={max} step={step}>
+      <SliderRoot defaultValue={[value, max]} onValueChange={valueChangeHandler} onValueCommit={handleValueChange} min={min} max={max} step={step}>
         <SliderTrack>
           <SliderRange />
         </SliderTrack>

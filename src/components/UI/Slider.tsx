@@ -45,7 +45,7 @@ const SliderThumb = ({ className, ref, ...props }: React.ComponentPropsWithRef<t
   <SliderPrimitive.Thumb
     ref={ref}
     className={cn(
-      "focus-visible:ring-ring block h-4 w-4 rounded-full border-2 border-neutral-300 bg-neutral-900 shadow-lg focus:ring-neutral-300 focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50",
+      "focus-visible:ring-ring block h-4 w-4 cursor-pointer rounded-full border-2 border-neutral-300 bg-neutral-900 shadow-lg focus:ring-neutral-300 focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50",
       className
     )}
     {...props}
