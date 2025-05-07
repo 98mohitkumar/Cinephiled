@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Fragment } from "react";
 
-import FlexBox from "components/UI/FlexBox";
 import H6 from "components/UI/Typography/H6";
 import P from "components/UI/Typography/P";
 import { ROUTES } from "data/global";
@@ -62,30 +61,28 @@ const SearchSuggestion = ({ data, type, className, ...props }) => {
 
   return (
     <Fragment>
-      <Link href={`/${getMediaRoute(type)}/${getNiceName({ id: data.id, name: suggestedItem.title })}`} passHref legacyBehavior>
-        <FlexBox
-          tag='a'
-          className={`search-suggestion w-full items-center justify-between gap-24 px-12 py-8 ${className}`}
-          css={searchItem}
-          {...props}>
-          <H6 weight='medium' className='text-black'>
-            {suggestedItem.title} {suggestedItem.releaseYear ? `(${suggestedItem.releaseYear})` : null}
-          </H6>
+      <Link
+        href={`/${getMediaRoute(type)}/${getNiceName({ id: data.id, name: suggestedItem.title })}`}
+        className={cn(`search-suggestion flex w-full items-center justify-between gap-24 px-12 py-8`, className)}
+        css={searchItem}
+        {...props}>
+        <H6 weight='medium' className='text-black'>
+          {suggestedItem.title} {suggestedItem.releaseYear ? `(${suggestedItem.releaseYear})` : null}
+        </H6>
 
-          <P
-            weight='semibold'
-            size='small'
-            className={cn(
-              "grid w-20 shrink-0 place-items-center whitespace-nowrap rounded-2xl py-2",
-              "border border-cyan-800 bg-cyan-100 text-cyan-800",
-              {
-                "border-green-800 bg-green-100 text-green-800": matches(type, "tv"),
-                "border-amber-800 bg-amber-100 text-amber-800": matches(type, "person")
-              }
-            )}>
-            {suggestedItem.type}
-          </P>
-        </FlexBox>
+        <P
+          weight='semibold'
+          size='small'
+          className={cn(
+            "grid w-20 shrink-0 place-items-center whitespace-nowrap rounded-2xl py-2",
+            "border border-cyan-800 bg-cyan-100 text-cyan-800",
+            {
+              "border-green-800 bg-green-100 text-green-800": matches(type, "tv"),
+              "border-amber-800 bg-amber-100 text-amber-800": matches(type, "person")
+            }
+          )}>
+          {suggestedItem.type}
+        </P>
       </Link>
     </Fragment>
   );

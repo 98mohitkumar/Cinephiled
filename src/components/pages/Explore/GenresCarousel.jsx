@@ -71,18 +71,17 @@ const GenreSection = ({ genres, genreType }) => {
 
           return (
             <div key={genre.id} className='keen-slider__slide'>
-              <Link href={`/${ROUTES.genres}/${getNiceName({ id: genre.id, name: genre.name })}/${genreType}`} passHref legacyBehavior>
-                <a
-                  className='mr-1620'
-                  css={genreCardStyles({
-                    backgroundColor: colors.backgroundColor,
-                    backgroundImage: colors.backgroundImage,
-                    backgroundBlendMode: colors.backgroundBlendMode
-                  })}>
-                  <H4 className='genre-name relative z-10 leading-8' weight='semibold'>
-                    {genre.name}
-                  </H4>
-                </a>
+              <Link
+                href={`/${ROUTES.genres}/${getNiceName({ id: genre.id, name: genre.name })}/${genreType}`}
+                className='mr-1620'
+                css={genreCardStyles({
+                  backgroundColor: colors.backgroundColor,
+                  backgroundImage: colors.backgroundImage,
+                  backgroundBlendMode: colors.backgroundBlendMode
+                })}>
+                <H4 className='genre-name relative z-10 leading-8' weight='semibold'>
+                  {genre.name}
+                </H4>
               </Link>
             </div>
           );
