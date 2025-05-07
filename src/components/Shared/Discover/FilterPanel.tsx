@@ -21,6 +21,7 @@ export interface FilterPanelProps {
     runtime: [number, number];
     sortBy: string;
     language?: string;
+    originCountry?: string;
     genres?: number[];
   };
   isMobile?: boolean;
@@ -29,6 +30,7 @@ export interface FilterPanelProps {
   sortOptions: { label: string; value: string }[];
   languageOptions?: { label: string; value: string }[];
   genreOptions?: { id: number; name: string }[];
+  regionOptions?: { label: string; value: string }[];
 }
 
 const FilterPanel = ({
@@ -38,7 +40,8 @@ const FilterPanel = ({
   sortOptions,
   languageOptions = [],
   genreOptions,
-  isMobile = false
+  isMobile = false,
+  regionOptions = []
 }: FilterPanelProps) => {
   const router = useRouter();
 
@@ -87,6 +90,28 @@ const FilterPanel = ({
               </SelectTrigger>
               <SelectContent>
                 {languageOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
+        {/* Country */}
+        {regionOptions.length > 0 && (
+          <div className='border-b border-neutral-600 p-20'>
+            <P weight='medium' size='small' className='mb-12 text-neutral-300'>
+              Country
+            </P>
+
+            <Select value={filters.originCountry} onValueChange={(value) => onFilterChange("originCountry", value)}>
+              <SelectTrigger>
+                <SelectValue placeholder='Country' />
+              </SelectTrigger>
+              <SelectContent>
+                {regionOptions.map((option) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}
                   </SelectItem>

@@ -26,10 +26,11 @@ const DEFAULT_FILTERS = {
   runtime: [0, 300],
   sortBy: "popularity.desc",
   language: null,
-  genres: []
+  genres: [],
+  originCountry: null
 };
 
-const Movies = ({ initialMovies, genres, languages }) => {
+const Movies = ({ initialMovies, genres, languages, regions }) => {
   const router = useRouter();
   const [filterParams, setFilterParams] = useQueryStates(
     {
@@ -42,7 +43,8 @@ const Movies = ({ initialMovies, genres, languages }) => {
       runtime_max: parseAsInteger.withDefault(DEFAULT_FILTERS.runtime[1]),
       sort_by: parseAsString.withDefault(DEFAULT_FILTERS.sortBy),
       language: parseAsString.withDefault(DEFAULT_FILTERS.language),
-      genres: parseAsArrayOf(parseAsInteger).withDefault(DEFAULT_FILTERS.genres)
+      genres: parseAsArrayOf(parseAsInteger).withDefault(DEFAULT_FILTERS.genres),
+      originCountry: parseAsString.withDefault(DEFAULT_FILTERS.originCountry)
     },
     {
       shallow: false,
@@ -58,7 +60,8 @@ const Movies = ({ initialMovies, genres, languages }) => {
     runtime: [filterParams.runtime_min, filterParams.runtime_max],
     sortBy: filterParams.sort_by,
     language: filterParams.language,
-    genres: filterParams.genres
+    genres: filterParams.genres,
+    originCountry: filterParams.originCountry
   };
 
   // Update query parameters when filters change
@@ -96,6 +99,9 @@ const Movies = ({ initialMovies, genres, languages }) => {
       case "genres":
         setFilterParams({ genres: value });
         break;
+      case "originCountry":
+        setFilterParams({ originCountry: value });
+        break;
       default:
         break;
     }
@@ -123,7 +129,8 @@ const Movies = ({ initialMovies, genres, languages }) => {
         voteCountMin: filterParams.vote_count_min,
         runtimeMin: filterParams.runtime_min,
         runtimeMax: filterParams.runtime_max,
-        withGenres: filterParams.genres
+        withGenres: filterParams.genres,
+        originCountry: filterParams.originCountry
       })
   });
 
@@ -152,6 +159,7 @@ const Movies = ({ initialMovies, genres, languages }) => {
             sortOptions={sortOptions.tmdbOptions.movie}
             languageOptions={languages}
             genreOptions={genres}
+            regionOptions={regions}
           />
 
           <FlexBox className='items-start gap-1632'>
@@ -163,6 +171,7 @@ const Movies = ({ initialMovies, genres, languages }) => {
                 sortOptions={sortOptions.tmdbOptions.movie}
                 languageOptions={languages}
                 genreOptions={genres}
+                regionOptions={regions}
               />
             </div>
 
@@ -201,6 +210,7 @@ export async function getServerSideProps(context) {
     const sortBy = query.sort_by || DEFAULT_FILTERS.sortBy;
     const language = query.language || DEFAULT_FILTERS.language;
     const genres = query.genres || "";
+    const originCountry = query.originCountry || DEFAULT_FILTERS.originCountry;
 
     const endpoint = apiEndpoints.discover.movies({
       pageQuery: 1,
@@ -213,7 +223,8 @@ export async function getServerSideProps(context) {
       voteCountMin: voteCountMin,
       runtimeMin: runtimeMin,
       runtimeMax: runtimeMax,
-      withGenres: genres
+      withGenres: genres,
+      originCountry
     });
 
     const moviesResponse = await fetch(endpoint, fetchOptions());
@@ -225,6 +236,9 @@ export async function getServerSideProps(context) {
     const languagesResponse = await fetch(apiEndpoints.language, fetchOptions());
     const languagesData = await languagesResponse.json();
 
+    const regionsResponse = await fetch(apiEndpoints.watchProviders.regions, fetchOptions());
+    const regionsData = await regionsResponse.json();
+
     const languages = languagesData
       .sort((a, b) => a.english_name.localeCompare(b.english_name))
       .map((lang) => ({
@@ -232,11 +246,17 @@ export async function getServerSideProps(context) {
         value: lang.iso_639_1
       }));
 
+    const regions = regionsData.results.map((region) => ({
+      label: region.english_name,
+      value: region.iso_3166_1
+    }));
+
     return {
       props: {
         initialMovies: initialMovies.results,
         genres: genresData.genres || [],
-        languages: [{ label: "None Selected", value: null }].concat(languages)
+        languages: [{ label: "None Selected", value: null }].concat(languages),
+        regions: [{ label: "None Selected", value: null }].concat(regions)
       }
     };
   } catch (error) {

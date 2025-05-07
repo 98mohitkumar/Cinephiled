@@ -27,10 +27,11 @@ const DEFAULT_FILTERS = {
   runtime: [0, 300],
   sortBy: "popularity.desc",
   language: null,
-  genres: []
+  genres: [],
+  originCountry: null
 };
 
-const TV = ({ initialTv, genres, languages, region }) => {
+const TV = ({ initialTv, genres, languages, region, regions }) => {
   const router = useRouter();
   const [filterParams, setFilterParams] = useQueryStates(
     {
@@ -43,7 +44,8 @@ const TV = ({ initialTv, genres, languages, region }) => {
       runtime_max: parseAsInteger.withDefault(DEFAULT_FILTERS.runtime[1]),
       sort_by: parseAsString.withDefault(DEFAULT_FILTERS.sortBy),
       language: parseAsString.withDefault(DEFAULT_FILTERS.language),
-      genres: parseAsArrayOf(parseAsInteger).withDefault(DEFAULT_FILTERS.genres)
+      genres: parseAsArrayOf(parseAsInteger).withDefault(DEFAULT_FILTERS.genres),
+      originCountry: parseAsString.withDefault(DEFAULT_FILTERS.originCountry)
     },
     {
       shallow: false,
@@ -59,7 +61,8 @@ const TV = ({ initialTv, genres, languages, region }) => {
     runtime: [filterParams.runtime_min, filterParams.runtime_max],
     sortBy: filterParams.sort_by,
     language: filterParams.language,
-    genres: filterParams.genres
+    genres: filterParams.genres,
+    originCountry: filterParams.originCountry
   };
 
   // Update query parameters when filters change
@@ -97,6 +100,9 @@ const TV = ({ initialTv, genres, languages, region }) => {
       case "genres":
         setFilterParams({ genres: value });
         break;
+      case "originCountry":
+        setFilterParams({ originCountry: value });
+        break;
       default:
         break;
     }
@@ -125,7 +131,8 @@ const TV = ({ initialTv, genres, languages, region }) => {
         runtimeMin: filterParams.runtime_min,
         runtimeMax: filterParams.runtime_max,
         withGenres: filterParams.genres,
-        region
+        region,
+        originCountry: filterParams.originCountry
       })
   });
 
@@ -154,6 +161,7 @@ const TV = ({ initialTv, genres, languages, region }) => {
             sortOptions={sortOptions.tmdbOptions.tv}
             languageOptions={languages}
             genreOptions={genres}
+            regionOptions={regions}
           />
 
           <FlexBox className='items-start gap-1632'>
@@ -165,6 +173,7 @@ const TV = ({ initialTv, genres, languages, region }) => {
                 sortOptions={sortOptions.tmdbOptions.tv}
                 languageOptions={languages}
                 genreOptions={genres}
+                regionOptions={regions}
               />
             </div>
 
@@ -205,6 +214,7 @@ export async function getServerSideProps(context) {
     const sortBy = query.sort_by || DEFAULT_FILTERS.sortBy;
     const language = query.language || DEFAULT_FILTERS.language;
     const genres = query.genres || "";
+    const originCountry = query.originCountry || DEFAULT_FILTERS.originCountry;
 
     const endpoint = apiEndpoints.discover.tv({
       pageQuery: 1,
@@ -218,7 +228,8 @@ export async function getServerSideProps(context) {
       runtimeMin: runtimeMin,
       runtimeMax: runtimeMax,
       withGenres: genres,
-      region
+      region,
+      originCountry
     });
 
     const tvResponse = await fetch(endpoint, fetchOptions());
@@ -230,6 +241,9 @@ export async function getServerSideProps(context) {
     const languagesResponse = await fetch(apiEndpoints.language, fetchOptions());
     const languagesData = await languagesResponse.json();
 
+    const regionsResponse = await fetch(apiEndpoints.watchProviders.regions, fetchOptions());
+    const regionsData = await regionsResponse.json();
+
     const languages = languagesData
       .sort((a, b) => a.english_name.localeCompare(b.english_name))
       .map((lang) => ({
@@ -237,12 +251,18 @@ export async function getServerSideProps(context) {
         value: lang.iso_639_1
       }));
 
+    const regions = regionsData.results.map((region) => ({
+      label: region.english_name,
+      value: region.iso_3166_1
+    }));
+
     return {
       props: {
         initialTv: initialTv.results,
         genres: genresData.genres || [],
         languages: [{ label: "None Selected", value: null }].concat(languages),
-        region
+        region, // this is for default watch region
+        regions: [{ label: "None Selected", value: null }].concat(regions) // these are for origin country filter
       }
     };
   } catch (error) {
