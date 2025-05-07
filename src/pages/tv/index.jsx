@@ -251,10 +251,12 @@ export async function getServerSideProps(context) {
         value: lang.iso_639_1
       }));
 
-    const regions = regionsData.results.map((region) => ({
-      label: region.english_name,
-      value: region.iso_3166_1
-    }));
+    const regions = regionsData.results
+      .map((region) => ({
+        label: region.english_name,
+        value: region.iso_3166_1
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
 
     return {
       props: {
