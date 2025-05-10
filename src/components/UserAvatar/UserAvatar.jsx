@@ -42,7 +42,7 @@ const UserAvatar = () => {
   return (
     <Fragment>
       {userInfo?.accountId ? (
-        <FlexBox className='relative items-end justify-center p-8 md:px-32'>
+        <FlexBox className='relative items-end justify-center p-8 lg:px-32'>
           <div $avatar={userAvatar} css={avatar} ref={avatarRef} role='button' onClick={() => setShowPopup((prev) => !prev)} />
 
           <AnimatePresence mode='wait'>
@@ -80,13 +80,13 @@ const UserAvatar = () => {
         </FlexBox>
       ) : (
         <Fragment>
-          <Link href={`/${ROUTES.login}`} className='hidden md:block'>
+          <Link href={`/${ROUTES.login}`} className='hidden lg:block'>
             <P size='large' weight='medium' className={`link ${router.asPath === "/login" ? "active" : ""}`} aria-label='Login'>
               Login
             </P>
           </Link>
 
-          <Link href={`/${ROUTES.login}`} className='block p-8 md:hidden'>
+          <Link href={`/${ROUTES.login}`} className='block p-8 lg:hidden'>
             <div className='link' aria-label='Login'>
               <UserRound size={28} />
             </div>
