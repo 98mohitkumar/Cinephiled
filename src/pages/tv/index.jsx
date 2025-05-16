@@ -222,7 +222,7 @@ export async function getServerSideProps(context) {
       originalLanguage: language,
       releaseDateMin,
       releaseDateMax,
-      voteAverageMin: voteAverageMin,
+      voteAverageMin: Number(voteAverageMin),
       voteAverageMax: voteAverageMax,
       voteCountMin: voteCountMin,
       runtimeMin: runtimeMin,

@@ -16,7 +16,7 @@ interface SingleSliderProps {
 }
 
 const SingleSlider = ({ min, max, step = 1, value, onValueCommit, label, className }: SingleSliderProps) => {
-  const [sliderValue, setSliderValue] = useState<number>(0);
+  const [sliderValue, setSliderValue] = useState<number>(value);
 
   const handleValueChange = (newValue: number[]) => {
     const newSingleValue = newValue[0];

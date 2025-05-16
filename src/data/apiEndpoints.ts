@@ -10,7 +10,7 @@ type discoverParams = {
   pageQuery: number;
   releaseDateMin: string;
   releaseDateMax: string;
-  voteAverageMin: string | number;
+  voteAverageMin: number;
   voteAverageMax: string | number;
   voteCountMin: string | number;
   sortBy: string;
@@ -121,7 +121,7 @@ export const apiEndpoints = {
       pageQuery = 1,
       releaseDateMin = "",
       releaseDateMax = "",
-      voteAverageMin = "",
+      voteAverageMin = 0,
       voteAverageMax = "",
       voteCountMin = "",
       sortBy = "popularity.desc",
@@ -131,13 +131,13 @@ export const apiEndpoints = {
       withGenres = "",
       originCountry
     }: discoverParams) =>
-      `${baseUrlV3}/discover/movie?page=${pageQuery}&primary_release_date.gte=${releaseDateMin}&primary_release_date.lte=${releaseDateMax}&vote_average.gte=${voteAverageMin}&vote_average.lte=${voteAverageMax}&vote_count.gte=${voteCountMin}&sort_by=${sortBy}&with_original_language=${originalLanguage || ""}${runtimeMin ? `&with_runtime.gte=${runtimeMin}` : ""}${runtimeMax ? `&with_runtime.lte=${runtimeMax}` : ""}${withGenres ? `&with_genres=${withGenres}` : ""}${originCountry ? `&with_origin_country=${originCountry}` : ""}&include_adult=false`,
+      `${baseUrlV3}/discover/movie?page=${pageQuery}&primary_release_date.gte=${releaseDateMin}&primary_release_date.lte=${releaseDateMax}&vote_average.gte=${Math.max(0, voteAverageMin - 0.01)}&vote_average.lte=${voteAverageMax}&vote_count.gte=${voteCountMin}&sort_by=${sortBy}&with_original_language=${originalLanguage || ""}${runtimeMin ? `&with_runtime.gte=${runtimeMin}` : ""}${runtimeMax ? `&with_runtime.lte=${runtimeMax}` : ""}${withGenres ? `&with_genres=${withGenres}` : ""}${originCountry ? `&with_origin_country=${originCountry}` : ""}&include_adult=false`,
 
     tv: ({
       pageQuery = 1,
       releaseDateMin = "",
       releaseDateMax = "",
-      voteAverageMin = "",
+      voteAverageMin = 0,
       voteAverageMax = "",
       voteCountMin = "",
       sortBy = "popularity.desc",
@@ -148,7 +148,7 @@ export const apiEndpoints = {
       region = "US",
       originCountry
     }: discoverParams) =>
-      `${baseUrlV3}/discover/tv?page=${pageQuery}&first_air_date.gte=${releaseDateMin}&first_air_date.lte=${releaseDateMax}&vote_average.gte=${voteAverageMin}&vote_average.lte=${voteAverageMax}&vote_count.gte=${voteCountMin}&sort_by=${sortBy}&with_original_language=${originalLanguage || ""}${runtimeMin ? `&with_runtime.gte=${runtimeMin}` : ""}${runtimeMax ? `&with_runtime.lte=${runtimeMax}` : ""}${withGenres ? `&with_genres=${withGenres}` : ""}&watch_region=${region}&with_watch_monetization_types=flatrate|free|ads|rent|buy${originCountry ? `&with_origin_country=${originCountry}` : ""}&include_adult=false`
+      `${baseUrlV3}/discover/tv?page=${pageQuery}&first_air_date.gte=${releaseDateMin}&first_air_date.lte=${releaseDateMax}&vote_average.gte=${Math.max(0, voteAverageMin - 0.01)}&vote_average.lte=${voteAverageMax}&vote_count.gte=${voteCountMin}&sort_by=${sortBy}&with_original_language=${originalLanguage || ""}${runtimeMin ? `&with_runtime.gte=${runtimeMin}` : ""}${runtimeMax ? `&with_runtime.lte=${runtimeMax}` : ""}${withGenres ? `&with_genres=${withGenres}` : ""}&watch_region=${region}&with_watch_monetization_types=flatrate|free|ads|rent|buy${originCountry ? `&with_origin_country=${originCountry}` : ""}&include_adult=false`
   },
   keywords: {
     keywordMovies: ({ id, pageQuery = 1 }: { id: string; pageQuery: number }) =>
