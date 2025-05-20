@@ -1,10 +1,10 @@
-import { Error404 } from "components/Shared/GlobalComponents";
+import { error404 } from "components/Shared/GlobalComponents";
 import H1 from "components/UI/Typography/H1";
 
 function Error({ statusCode }) {
   return (
     <div className='grid grow place-items-center'>
-      <H1 css={Error404} weight='bold'>
+      <H1 css={error404} weight='bold'>
         {statusCode || 500}
       </H1>
     </div>

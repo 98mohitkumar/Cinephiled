@@ -183,7 +183,7 @@ const textGradient = keyframes`
   }
 `;
 
-export const Error404 = css`
+export const error404 = css`
   text-align: center;
   background: ${`linear-gradient(
     90deg,
@@ -193,4 +193,6 @@ export const Error404 = css`
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: ${textGradient} 4s alternate-reverse linear infinite;
+  padding-inline: 16px;
+  text-wrap: pretty;
 `;
