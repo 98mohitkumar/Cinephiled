@@ -16,7 +16,7 @@ const initialValues = {
 
 const tabsAtom = atomWithStorage("tabComponentStates", initialValues);
 
-const useTabs = ({ tabLocation }: { tabLocation: keyof typeof tabsAtom }) => {
+const useTabs = ({ tabLocation }: { tabLocation: keyof typeof initialValues }) => {
   const [activeTabs, setActiveTabs] = useAtom(tabsAtom);
 
   const setTab = (key: string) => {

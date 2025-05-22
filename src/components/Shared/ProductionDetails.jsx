@@ -75,9 +75,11 @@ const ProductionDetails = ({ productionCompanies, networks }) => {
           )}
 
           {productionCompanies?.length === 0 && networks?.length === 0 && (
-            <P className='text-neutral-400' weight='semibold' size='large'>
-              No production details available.
-            </P>
+            <FlexBox className='mt-24 items-center justify-center'>
+              <P className='text-neutral-400' weight='semibold' size='large'>
+                No production details available.
+              </P>
+            </FlexBox>
           )}
         </div>
 
