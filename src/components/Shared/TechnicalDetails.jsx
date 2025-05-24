@@ -4,13 +4,15 @@ import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import P from "components/UI/Typography/P";
+import getFormattedTechnicalDetails from "utils/getFormattedTechnicalDetails";
 import { matches } from "utils/helper";
 
 import { linkStyles } from "./GlobalComponents";
 
 const TechnicalDetails = ({ technicalDetails }) => {
   const { isModalVisible, openModal, closeModal } = useModal();
-  const tableItems = technicalDetails?.items || [];
+  const tableItems = getFormattedTechnicalDetails(technicalDetails);
+
   const noDataAvailable = matches(tableItems.length, 0);
 
   return (
