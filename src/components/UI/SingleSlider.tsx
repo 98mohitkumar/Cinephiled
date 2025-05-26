@@ -38,7 +38,7 @@ const SingleSlider = ({ min, max, step = 1, value, onValueCommit, label, classNa
         </P>
       </div>
 
-      <SliderRoot defaultValue={[value, max]} onValueChange={valueChangeHandler} onValueCommit={handleValueChange} min={min} max={max} step={step}>
+      <SliderRoot defaultValue={[value]} onValueChange={valueChangeHandler} onValueCommit={handleValueChange} min={min} max={max} step={step}>
         <SliderTrack>
           <SliderRange />
         </SliderTrack>

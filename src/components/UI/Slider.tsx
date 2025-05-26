@@ -9,36 +9,14 @@ const SliderRoot = ({ className, ref, children, ...props }: React.ComponentProps
   </SliderPrimitive.Root>
 );
 
-const SliderTrack = ({
-  className,
-  children,
-  ref,
-  isDoubleRangeSlider = false,
-  ...props
-}: React.ComponentPropsWithRef<typeof SliderPrimitive.Track> & {
-  isDoubleRangeSlider?: boolean;
-}) => (
-  <SliderPrimitive.Track
-    ref={ref}
-    className={cn("relative h-1.5 w-full grow overflow-hidden rounded-full", className, isDoubleRangeSlider ? "bg-neutral-700" : "bg-neutral-300")}
-    {...props}>
+const SliderTrack = ({ className, children, ref, ...props }: React.ComponentPropsWithRef<typeof SliderPrimitive.Track> & {}) => (
+  <SliderPrimitive.Track ref={ref} className={cn("relative h-1.5 w-full grow overflow-hidden rounded-full", "bg-neutral-700", className)} {...props}>
     {children}
   </SliderPrimitive.Track>
 );
 
-const SliderRange = ({
-  className,
-  ref,
-  isDoubleRangeSlider = false,
-  ...props
-}: React.ComponentPropsWithRef<typeof SliderPrimitive.Range> & {
-  isDoubleRangeSlider?: boolean;
-}) => (
-  <SliderPrimitive.Range
-    ref={ref}
-    className={cn("absolute h-full overflow-hidden rounded-full", className, isDoubleRangeSlider ? "bg-neutral-300" : "bg-neutral-700")}
-    {...props}
-  />
+const SliderRange = ({ className, ref, ...props }: React.ComponentPropsWithRef<typeof SliderPrimitive.Range> & {}) => (
+  <SliderPrimitive.Range ref={ref} className={cn("absolute h-full overflow-hidden rounded-full", "bg-neutral-300", className)} {...props} />
 );
 
 const SliderThumb = ({ className, ref, ...props }: React.ComponentPropsWithRef<typeof SliderPrimitive.Thumb>) => (

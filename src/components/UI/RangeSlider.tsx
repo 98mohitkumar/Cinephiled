@@ -47,8 +47,8 @@ const RangeSlider = ({ min, max, step = 1, value, onValueCommit, label, classNam
         step={step}
         minStepsBetweenThumbs={1}
         onValueChange={valueChangeHandler}>
-        <SliderTrack isDoubleRangeSlider>
-          <SliderRange isDoubleRangeSlider />
+        <SliderTrack>
+          <SliderRange />
         </SliderTrack>
 
         <SliderThumb aria-label='Min value' />
