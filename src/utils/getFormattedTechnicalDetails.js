@@ -3,7 +3,7 @@ import { getRuntime } from "./helper";
 const getFormattedTechnicalDetails = (apiResponse) => {
   const items = [];
 
-  if (!apiResponse) return { items };
+  if (!apiResponse) return items;
 
   // Runtime
   if (apiResponse.runtimes?.edges?.length > 0) {
@@ -21,7 +21,7 @@ const getFormattedTechnicalDetails = (apiResponse) => {
   }
 
   const techSpecs = apiResponse.technicalSpecifications;
-  if (!techSpecs) return { items };
+  if (!techSpecs) return items;
 
   // Aspect Ratios
   if (techSpecs.aspectRatios?.items?.length > 0) {

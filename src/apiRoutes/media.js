@@ -8,8 +8,8 @@ export const getTechnicalDetails = async (id) => {
   );
 
   if (!response.ok) {
-    return { items: [] };
+    return null;
   }
 
-  return response.json();
+  return await response.json();
 };
