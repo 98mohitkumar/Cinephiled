@@ -98,7 +98,7 @@ const Overview = ({ overviewData, className, mediaType }) => {
               ))
             : null}
 
-          <ShareButton iconSize={28} className='transition-colors can-hover:text-cyan-300' variant='icon' title={title} text={description} />
+          <ShareButton iconSize={28} variant='icon' title={title} text={description} />
         </FlexBox>
       </div>
 

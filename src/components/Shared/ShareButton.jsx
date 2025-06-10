@@ -28,7 +28,14 @@ const ShareButton = ({ title, text, url, iconSize = 20, variant = "", ...props }
   return (
     <Fragment>
       {matches(variant, "icon") ? (
-        <Share2 size={iconSize} onClick={shareHandler} title='Share link' role='button' {...props} />
+        <Share2
+          size={iconSize}
+          onClick={shareHandler}
+          title='Share link'
+          role='button'
+          className='transition-colors can-hover:text-cyan-300'
+          {...props}
+        />
       ) : (
         <Button onClick={shareHandler} title='Share link' {...props}>
           <Share2 size={iconSize} color='currentColor' />

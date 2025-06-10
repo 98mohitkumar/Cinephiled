@@ -252,7 +252,7 @@ const PersonDetails = ({ personDetails }) => {
                     ))
                   : null}
 
-                <ShareButton shape='circle' iconSize={16} size='small' title={personDetails?.name || ""} text={personDetails?.biography || ""} />
+                <ShareButton variant='icon' iconSize={28} title={personDetails?.name || ""} text={personDetails?.biography || ""} />
               </FlexBox>
             </div>
           </div>
