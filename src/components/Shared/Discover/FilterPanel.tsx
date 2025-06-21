@@ -48,8 +48,8 @@ const FilterPanel = ({
   const disableClearAll = Object.keys(router.query).length === 0;
 
   return (
-    <div className='overflow-hidden rounded-xl border border-neutral-700 bg-black'>
-      <FlexBox className='items-center justify-between gap-16 border-b border-neutral-600 p-20'>
+    <div className={cn("overflow-hidden bg-black", isMobile ? "" : "rounded-xl border border-neutral-700")}>
+      <FlexBox className={cn("items-center justify-between gap-16 border-b border-neutral-700", isMobile ? "px-10 py-20" : "p-20")}>
         <H5 weight='semibold'>Filters</H5>
 
         <Button variant='secondary' onClick={onClearFilters} size='small' disabled={disableClearAll}>
@@ -59,7 +59,7 @@ const FilterPanel = ({
 
       <div className={cn("overflow-y-auto", isMobile ? "max-h-[65vh]" : "max-h-[80vh]")}>
         {/* Sort By */}
-        <div className='border-b border-neutral-600 p-20'>
+        <div className={cn("border-b border-neutral-700", isMobile ? "px-10 py-20" : "p-20")}>
           <P weight='medium' size='small' className='mb-12 text-neutral-300'>
             Sort By
           </P>
@@ -79,7 +79,7 @@ const FilterPanel = ({
 
         {/* Language */}
         {languageOptions.length > 0 && (
-          <div className='border-b border-neutral-600 p-20'>
+          <div className={cn("border-b border-neutral-700", isMobile ? "px-10 py-20" : "p-20")}>
             <P weight='medium' size='small' className='mb-12 text-neutral-300'>
               Language
             </P>
@@ -101,7 +101,7 @@ const FilterPanel = ({
 
         {/* Country */}
         {regionOptions.length > 0 && (
-          <div className='border-b border-neutral-600 p-20'>
+          <div className={cn("border-b border-neutral-700", isMobile ? "px-10 py-20" : "p-20")}>
             <P weight='medium' size='small' className='mb-12 text-neutral-300'>
               Country
             </P>
@@ -125,30 +125,34 @@ const FilterPanel = ({
         <ReleaseDateFilter
           value={filters.releaseDate}
           onChange={(value) => onFilterChange("releaseDate", value)}
-          className='border-b border-neutral-600 p-20'
+          className={cn("border-b border-neutral-700", isMobile ? "px-10 py-20" : "p-20")}
           isMobile={isMobile}
         />
 
         <VoteAverageFilter
           value={filters.voteAverage}
           onChange={(value) => onFilterChange("voteAverage", value)}
-          className='border-b border-neutral-600 p-20'
+          className={cn("border-b border-neutral-700", isMobile ? "px-10 py-20" : "p-20")}
         />
 
         <VoteCountFilter
           value={filters.minVoteCount}
           onChange={(value) => onFilterChange("voteCount", value)}
-          className='border-b border-neutral-600 p-20'
+          className={cn("border-b border-neutral-700", isMobile ? "px-10 py-20" : "p-20")}
         />
 
-        <RuntimeFilter value={filters.runtime} onChange={(value) => onFilterChange("runtime", value)} className='border-b border-neutral-600 p-20' />
+        <RuntimeFilter
+          value={filters.runtime}
+          onChange={(value) => onFilterChange("runtime", value)}
+          className={cn("border-b border-neutral-700", isMobile ? "px-10 py-20" : "p-20")}
+        />
 
         {genreOptions && genreOptions.length > 0 && (
           <GenreSelector
             genres={genreOptions}
             selectedGenres={filters.genres || []}
             onChange={(value) => onFilterChange("genres", value)}
-            className='p-16'
+            className={cn(isMobile ? "px-10 py-16" : "p-16")}
           />
         )}
       </div>
