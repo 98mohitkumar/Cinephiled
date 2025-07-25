@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
+import H5 from "components/UI/Typography/H5";
 import P from "components/UI/Typography/P";
 import { getNiceName } from "utils/helper";
 
@@ -13,11 +14,9 @@ const DetailsBlock = ({ title, details, type, subtext }) => {
   return (
     <div>
       <div className='mb-10 border-b border-neutral-600 pb-10'>
-        <P weight='semibold' size='large'>
-          {title}
-        </P>
+        <H5>{title}</H5>
 
-        <P className='text-neutral-300' size='small'>
+        <P className='text-neutral-400' size='small'>
           {subtext}
         </P>
       </div>
@@ -55,7 +54,7 @@ const ProductionDetails = ({ productionCompanies, networks }) => {
       </P>
 
       <Modal isOpen={isModalVisible} closeModal={closeModal}>
-        <div className='mb-40 space-y-10'>
+        <div className='mb-40 space-y-12'>
           {productionCompanies?.length > 0 && (
             <DetailsBlock
               title='Production Companies'
