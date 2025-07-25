@@ -1,3 +1,4 @@
+import { Info } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/router";
 import { Fragment, useCallback, useRef, useState } from "react";
@@ -106,30 +107,37 @@ const GlobalSearch = () => {
           <AnimatePresence mode='wait'>
             {isValidInput && (
               <motion.div key='suggestions' {...opacityMotionTransition}>
-                <div className='suggestions mt-8 drop-shadow-md'>
-                  {isFetching ? (
-                    <div className='grid-center min-h-48'>
-                      <LoadingSpinner className='text-black' />
-                    </div>
-                  ) : searchSuggestions.length > 0 ? (
-                    <Fragment>
-                      {searchSuggestions.map((item, index) => (
-                        <SearchSuggestion
-                          key={item.id}
-                          type={item.type}
-                          data={item}
-                          className={`search-suggestion ${matches(index, 0) ? "first-suggestion-item" : ""}`}
-                          onKeyDown={(e) => keyHandler(e, index, false)}
-                        />
-                      ))}
-                    </Fragment>
-                  ) : (
-                    <div className='grid-center min-h-48'>
-                      <P className='text-black' size='large' weight='medium'>
-                        No results found
-                      </P>
-                    </div>
-                  )}
+                <div className='absolute w-full'>
+                  <P className='mt-8 gap-6 text-neutral-200' size='tiny'>
+                    <Info size={14} className='mr-6 inline align-text-bottom' />
+                    Use the &#39;y:&#39; filter to narrow your results by year. Example: <b>&#39;Sherlock y:2010&#39;</b>
+                  </P>
+
+                  <div className='suggestions mt-8 drop-shadow-md'>
+                    {isFetching ? (
+                      <div className='grid-center min-h-48'>
+                        <LoadingSpinner className='text-black' />
+                      </div>
+                    ) : searchSuggestions.length > 0 ? (
+                      <Fragment>
+                        {searchSuggestions.map((item, index) => (
+                          <SearchSuggestion
+                            key={item.id}
+                            type={item.type}
+                            data={item}
+                            className={`search-suggestion ${matches(index, 0) ? "first-suggestion-item" : ""}`}
+                            onKeyDown={(e) => keyHandler(e, index, false)}
+                          />
+                        ))}
+                      </Fragment>
+                    ) : (
+                      <div className='grid-center min-h-48'>
+                        <P className='text-black' size='large' weight='medium'>
+                          No results found
+                        </P>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             )}

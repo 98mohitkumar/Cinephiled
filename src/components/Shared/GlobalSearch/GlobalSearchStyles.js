@@ -39,7 +39,6 @@ export const searchStyles = css`
   }
 
   .suggestions {
-    position: absolute;
     width: 100%;
     background-color: ${theme.colors.neutral[200]};
     max-height: 240px;
@@ -48,10 +47,6 @@ export const searchStyles = css`
 
     ::-webkit-scrollbar {
       width: 4px;
-    }
-
-    & > a:last-child > div:last-child {
-      border: none;
     }
 
     ${mediaQuery({ breakpoint: "sm", type: "max" })} {
@@ -90,8 +85,11 @@ export const searchCTA = css`
 `;
 
 export const searchItem = css`
-  border-bottom: 1px solid ${theme.colors.black};
   transition: background-color 0.1s ease-in-out;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid ${theme.colors.black};
+  }
 
   ${hoverMediaQuery()} {
     &:hover {
