@@ -1,4 +1,5 @@
 import "styles/globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
@@ -14,6 +15,7 @@ import MediaContextProvider from "Store/MediaContext";
 import UserContextProvider from "Store/UserContext";
 import GlobalStyles from "styles/globals";
 import ErrorBoundary from "utils/ErrorBoundary";
+
 import "utils/logging";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
@@ -74,6 +76,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       </ErrorBoundary>
 
       <Toast />
+      <Analytics />
     </Fragment>
   );
 }
