@@ -161,6 +161,8 @@ const AddToListModal = ({ mediaId, mediaType }) => {
     }
   };
 
+  const hasAList = lists?.length > 0;
+
   return (
     <Fragment>
       <Modal isOpen={isModalVisible} closeModal={isWaiting ? () => {} : closeModalHandler} className='max-w-lg'>
@@ -169,7 +171,7 @@ const AddToListModal = ({ mediaId, mediaType }) => {
             Trailer
           </H4>
 
-          {lists?.length > 0 ? (
+          {hasAList ? (
             <div className='max-h-72 overflow-y-auto rounded-lg border border-neutral-700'>
               {lists?.map((list) => (
                 <ListSlice key={list.id} mediaId={mediaId} list={list} mediaType={mediaType} CTA={listSelectionHandler} />
@@ -187,13 +189,15 @@ const AddToListModal = ({ mediaId, mediaType }) => {
           )}
 
           <FlexBox className='mt-16 gap-16'>
-            <Button onClick={closeModal} disabled={isWaiting} type='button' className='w-1/2' variant='outline'>
+            <Button onClick={closeModal} disabled={isWaiting} type='button' className={cn(hasAList ? "w-1/2" : "w-full")} variant='outline'>
               Close
             </Button>
 
-            <Button type='submit' disabled={isWaiting} className='w-1/2' onClick={saveListHandler}>
-              {isWaiting ? "Saving..." : "Save"}
-            </Button>
+            {hasAList && (
+              <Button type='submit' disabled={isWaiting} className='w-1/2' onClick={saveListHandler}>
+                {isWaiting ? "Saving..." : "Save"}
+              </Button>
+            )}
           </FlexBox>
         </div>
       </Modal>
