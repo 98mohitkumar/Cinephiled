@@ -186,7 +186,7 @@ const PersonDetails = ({ personDetails }) => {
           {
             title: "Instagram",
             url: `https://instagram.com/${external_ids.instagram_id}`,
-            icon: <Instagram size={36} />
+            icon: <Instagram size={28} />
           }
         ]
       : []),
@@ -195,7 +195,7 @@ const PersonDetails = ({ personDetails }) => {
           {
             title: "Twitter",
             url: `https://twitter.com/${external_ids.twitter_id}`,
-            icon: <Twitter size={36} />
+            icon: <Twitter size={28} />
           }
         ]
       : []),
@@ -204,7 +204,7 @@ const PersonDetails = ({ personDetails }) => {
           {
             title: "Website",
             url: personDetails.homepage,
-            icon: <Link size={36} />
+            icon: <Link size={28} />
           }
         ]
       : [])
