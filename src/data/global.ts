@@ -8,7 +8,7 @@ export const sortOptions = {
     { value: "vote_average.asc", label: "Rating Ascending" },
     { value: "vote_average.desc", label: "Rating Descending" },
     // { value: "vote_count.asc", label: "Popularity Ascending" },
-    { value: "vote_count.desc", label: "Most Known For", isDefault: true },
+    { value: "known_for", label: "Most Known For", isDefault: true },
     { value: "popularity.asc", label: "Popularity Ascending" },
     { value: "popularity.desc", label: "Popularity Descending" },
     { value: "release_date.asc", label: "Release Date Ascending" },
