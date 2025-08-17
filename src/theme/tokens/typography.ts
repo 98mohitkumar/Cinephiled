@@ -51,7 +51,7 @@ const fontSizes = {
     },
     {
       key: "h6",
-      size: { minSize: 17, maxSize: 18.6 },
+      size: { minSize: 16, maxSize: 18 },
       lineHeight: { minHeight: 24, maxHeight: 28 },
       letterSpacing: { minSpacing: 0, maxSpacing: 0 }
     },

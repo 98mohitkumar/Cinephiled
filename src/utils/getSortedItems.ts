@@ -7,6 +7,7 @@ type SortByArgs = {
     vote_average: number;
     vote_count: number;
     order: number;
+    backdrop_path: string;
   }>;
   sortBy: "popularity" | "release_date" | "title" | "vote_average" | "vote_count" | "known_for";
   order: "asc" | "desc";
@@ -39,12 +40,29 @@ export const getSortedItems = ({ items, sortBy, order = "asc" }: SortByArgs) => 
 
     case "known_for":
       return itemsToSort.sort((a, b) => {
-        // First, prioritize items with order < 3
+        const aReleaseDate = a.release_date || a.first_air_date;
+        const bReleaseDate = b.release_date || b.first_air_date;
+
+        // Check if items meet the criteria (have release date, backdrop, and sufficient vote count)
+        const aMeetsCriteria = aReleaseDate && a.backdrop_path && a.vote_count >= 100;
+        const bMeetsCriteria = bReleaseDate && b.backdrop_path && b.vote_count >= 100;
+
+        // If one meets criteria and the other doesn't, prioritize the one that meets criteria
+        if (aMeetsCriteria !== bMeetsCriteria) {
+          return aMeetsCriteria ? -1 : 1; // Items meeting criteria come first
+        }
+
+        // If neither meets criteria, keep original order
+        if (!aMeetsCriteria && !bMeetsCriteria) {
+          return 0;
+        }
+
+        // Both meet criteria, so apply the priority and vote_count sorting
         const aPriority = a.order < 2 ? 1 : 0;
         const bPriority = b.order < 2 ? 1 : 0;
 
         if (aPriority !== bPriority) {
-          return bPriority - aPriority;
+          return bPriority - aPriority; // Items with order < 3 come first
         }
 
         // If both have same priority, sort by vote_count
