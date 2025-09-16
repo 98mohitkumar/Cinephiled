@@ -20,7 +20,7 @@ export const suggestLogin = () => {
     description: "Please login first to use this feature",
     cancel: {
       label: (
-        <Link href={ROUTES.login} className='font-medium'>
+        <Link href={`/${ROUTES.login}`} className='font-medium'>
           Login
         </Link>
       )
