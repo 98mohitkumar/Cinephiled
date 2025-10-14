@@ -1,19 +1,4 @@
 User-agent: *
-Disallow: /movies/
-Disallow: /tv/
-Disallow: /person/
-Disallow: /collections/
-Disallow: /companies/
-Disallow: /networks/
-Disallow: /*.jpg$
-Disallow: /*.jpeg$
-Disallow: /*.png$
-Disallow: /*.gif$
-Disallow: /*.bmp$
-Disallow: /*.webp$
-Disallow: /*.svg$
-Disallow: /en/
-Disallow: /m/
 
 # Allow these images
 Allow: /logo192.png
@@ -36,3 +21,6 @@ Allow: /images/*.svg
 
 # Allow images in the /screenshots/ directory
 Allow: /screenshots/*.png
+
+# Disallow everything else
+Disallow: /
