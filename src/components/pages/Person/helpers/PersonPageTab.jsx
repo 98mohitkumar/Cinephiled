@@ -36,14 +36,14 @@ const MobileFilterDrawer = (props) => {
             <DrawerTitle>Filters</DrawerTitle>
           </DrawerHeader>
 
-          <P className='mt-16 px-16 text-neutral-400'>
+          <P className='mt-16 text-neutral-400'>
             Sort and filter movie and TV show credits by department or other criteria to quickly find what you&apos;re looking for.
           </P>
 
-          <DrawerFooter>
+          <DrawerFooter className='px-0'>
             <MediaFilters className='w-full' {...props} />
 
-            <Button onClick={() => setDrawerOpen(false)} fullWidth weight='semibold' size='large'>
+            <Button onClick={() => setDrawerOpen(false)} fullWidth weight='semibold' size='large' className='mt-8'>
               Apply Filters
             </Button>
           </DrawerFooter>
