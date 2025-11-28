@@ -103,7 +103,7 @@ export const apiEndpoints = {
       `${baseUrlV3}/tv/${id}/season/${seasonNumber}?language=en-US&append_to_response=aggregate_credits,videos,images&include_image_language=${imageLanguages}`,
 
     episodeDetails: ({ id, seasonNumber, episodeNumber }: { id: string; seasonNumber: number; episodeNumber: number }) =>
-      `${baseUrlV3}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?language=en-US&append_to_response=images,credits&include_image_language=${imageLanguages}`,
+      `${baseUrlV3}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?language=en-US&append_to_response=images,credits,external_ids&include_image_language=${imageLanguages}`,
 
     episodeAccountStates: ({ seriesId, seasonNumber, episodeNumber }: { seriesId: string; seasonNumber: number; episodeNumber: number }) =>
       `${baseUrlV3}/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/account_states`,
