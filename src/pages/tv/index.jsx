@@ -115,7 +115,7 @@ const TV = ({ initialTv, genres, languages, region, regions }) => {
     router.replace("/tv");
   };
 
-  const { list, resetQueryState } = useInfiniteQuery({
+  const { list, resetQueryState, isLoading } = useInfiniteQuery({
     initialPage: 2,
     scrollAfterLoad: false,
     getEndpoint: ({ page }) =>
@@ -180,7 +180,12 @@ const TV = ({ initialTv, genres, languages, region, regions }) => {
             {/* Results */}
             <div className='w-full'>
               {tv?.length > 0 ? (
-                <MediaTemplateGrid media={tv} mediaType='tv' gridConfig={{ xxs: 2, sm: 3, lg: 4, xl: "desktopAutoFillMedia" }} />
+                <MediaTemplateGrid
+                  media={tv}
+                  mediaType='tv'
+                  gridConfig={{ xxs: 2, sm: 3, lg: 4, xl: "desktopAutoFillMedia" }}
+                  isLoadingNewItems={isLoading}
+                />
               ) : (
                 <PlaceholderText height='large'>
                   No tv shows found with these filters.

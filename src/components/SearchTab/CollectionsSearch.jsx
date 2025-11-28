@@ -8,7 +8,7 @@ import { ROUTES } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 
 const CollectionsSearch = ({ collections, searchQuery }) => {
-  const { list } = useInfiniteQuery({
+  const { list, isLoading } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) =>
       apiEndpoints.search.collectionSearch({
@@ -22,7 +22,7 @@ const CollectionsSearch = ({ collections, searchQuery }) => {
   return (
     <Fragment>
       {renderList?.length > 0 ? (
-        <MediaTemplateGrid media={renderList} gridType='backdrop' showRating={false} mediaType={ROUTES.collections}>
+        <MediaTemplateGrid media={renderList} gridType='backdrop' showRating={false} mediaType={ROUTES.collections} isLoadingNewItems={isLoading}>
           {(list) => (
             <H6 weight='medium' className='mt-12 text-pretty text-center'>
               {list.name}

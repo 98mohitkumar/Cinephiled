@@ -21,7 +21,7 @@ const TvShows = ({ renderList, genreName, genreId }) => {
   const defaultSortOption = tvSortOptions.find((option) => option?.isDefault)?.value;
   const { sortBy, handleSortSelection } = useSort({ shallow: false, defaultSortOption });
 
-  const { list, resetQueryState } = useInfiniteQuery({
+  const { list, resetQueryState, isLoading } = useInfiniteQuery({
     initialPage: 3,
     getEndpoint: ({ page }) => apiEndpoints.tv.tvGenre({ genreId, pageQuery: page, sortBy: sortBy })
   });
@@ -65,7 +65,7 @@ const TvShows = ({ renderList, genreName, genreId }) => {
                 </Select>
               </FlexBox>
 
-              <MediaTemplateGrid media={cleanedItems} mediaType='tv' />
+              <MediaTemplateGrid media={cleanedItems} mediaType='tv' isLoadingNewItems={isLoading} />
             </Fragment>
           ) : (
             <PlaceholderText height='large'>No TV Shows are available for this genre</PlaceholderText>

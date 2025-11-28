@@ -13,7 +13,7 @@ const NetworkPage = ({ id, media }) => {
   } = sortOptions;
   const defaultSortOption = tvSortOptions.find((option) => option?.isDefault)?.value;
   const { sortBy, handleSortSelection } = useSort({ shallow: false, defaultSortOption });
-  const { list, resetQueryState } = useInfiniteQuery({
+  const { list, resetQueryState, isLoading } = useInfiniteQuery({
     initialPage: 3,
     getEndpoint: ({ page }) => apiEndpoints.network.networkMedia({ id, pageQuery: page, sortBy })
   });
@@ -47,7 +47,7 @@ const NetworkPage = ({ id, media }) => {
         </Select>
       </div>
 
-      <MediaTemplateGrid media={renderList} mediaType='tv' />
+      <MediaTemplateGrid media={renderList} mediaType='tv' isLoadingNewItems={isLoading} />
     </LayoutContainer>
   );
 };

@@ -10,7 +10,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { getNiceName } from "utils/helper";
 
 const CompaniesSearch = ({ companies, searchQuery }) => {
-  const { list } = useInfiniteQuery({
+  const { list, isLoading } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) =>
       apiEndpoints.search.companySearch({
@@ -44,6 +44,12 @@ const CompaniesSearch = ({ companies, searchQuery }) => {
               )}
             </Link>
           ))}
+
+          {isLoading ? (
+            <H1 as='span' weight='medium' className='text-neutral-500'>
+              Loading...
+            </H1>
+          ) : null}
         </div>
       ) : (
         <PlaceholderText height='large'>No results found for this query.</PlaceholderText>

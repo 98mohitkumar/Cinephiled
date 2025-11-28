@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+import { LoadingSpinner } from "components/Loader/Loader";
 import RatingTag from "components/RatingTag/RatingTag";
 import { Grid, GridCol } from "components/UI/Grid";
 import H6 from "components/UI/Typography/H6";
@@ -28,6 +29,7 @@ const getMediaRoute = (type) => {
 
 const MediaTemplateGrid = ({
   media,
+  isLoadingNewItems = false,
   showRating = true,
   children = null,
   mediaType = "movie",
@@ -76,6 +78,12 @@ const MediaTemplateGrid = ({
           )}
         </GridCol>
       ))}
+
+      {isLoadingNewItems ? (
+        <div className='grid-center aspect-poster w-full'>
+          <LoadingSpinner />
+        </div>
+      ) : null}
     </Grid>
   );
 };

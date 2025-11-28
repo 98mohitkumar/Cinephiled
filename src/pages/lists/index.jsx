@@ -22,7 +22,7 @@ const Lists = ({ lists }) => {
     userInfo: { accountId }
   } = useUserContext();
 
-  const { list: infiniteQueryLists } = useInfiniteQuery({
+  const { list: infiniteQueryLists, isLoading } = useInfiniteQuery({
     initialPage: 2,
     useUserToken: true,
     getEndpoint: ({ page }) => apiEndpoints.lists.getLists({ pageQuery: page, accountId })
@@ -44,7 +44,7 @@ const Lists = ({ lists }) => {
           </FlexBox>
 
           {renderList?.length > 0 ? (
-            <MediaTemplateGrid media={renderList} gridType='backdrop' showRating={false} mediaType={ROUTES.lists}>
+            <MediaTemplateGrid media={renderList} gridType='backdrop' showRating={false} mediaType={ROUTES.lists} isLoadingNewItems={isLoading}>
               {(list) => (
                 <div className='mt-8'>
                   <P size='large' weight='semibold'>

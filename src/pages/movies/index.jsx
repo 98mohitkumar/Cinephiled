@@ -114,7 +114,7 @@ const Movies = ({ initialMovies, genres, languages, regions }) => {
     router.replace("/movies");
   };
 
-  const { list, resetQueryState } = useInfiniteQuery({
+  const { list, resetQueryState, isLoading } = useInfiniteQuery({
     initialPage: 2,
     scrollAfterLoad: false,
     getEndpoint: ({ page }) =>
@@ -178,7 +178,12 @@ const Movies = ({ initialMovies, genres, languages, regions }) => {
             {/* Results */}
             <div className='w-full'>
               {movies?.length > 0 ? (
-                <MediaTemplateGrid media={movies} mediaType='movie' gridConfig={{ xxs: 2, sm: 3, lg: 4, xl: "desktopAutoFillMedia" }} />
+                <MediaTemplateGrid
+                  media={movies}
+                  mediaType='movie'
+                  gridConfig={{ xxs: 2, sm: 3, lg: 4, xl: "desktopAutoFillMedia" }}
+                  isLoadingNewItems={isLoading}
+                />
               ) : (
                 <PlaceholderText height='large'>
                   No movies found with these filters.

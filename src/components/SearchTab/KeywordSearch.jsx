@@ -9,7 +9,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { getNiceName, removeDuplicates } from "utils/helper";
 
 const KeywordSearch = ({ searchQuery, keywords }) => {
-  const { list } = useInfiniteQuery({
+  const { list, isLoading } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) =>
       apiEndpoints.search.keywordSearch({
@@ -31,6 +31,12 @@ const KeywordSearch = ({ searchQuery, keywords }) => {
               </H1>
             </Link>
           ))}
+
+          {isLoading ? (
+            <H1 as='span' weight='medium' className='text-neutral-500'>
+              Loading...
+            </H1>
+          ) : null}
         </div>
       ) : (
         <PlaceholderText height='large'>No Keywords found for this query.</PlaceholderText>

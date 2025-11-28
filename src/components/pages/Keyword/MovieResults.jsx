@@ -6,7 +6,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { removeDuplicates } from "utils/helper";
 
 const MovieResults = ({ keywordId, movies }) => {
-  const { list } = useInfiniteQuery({
+  const { list, isLoading } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) => apiEndpoints.keywords.keywordMovies({ id: keywordId, pageQuery: page })
   });
@@ -15,7 +15,7 @@ const MovieResults = ({ keywordId, movies }) => {
 
   return (
     <Fragment>
-      <MediaTemplateGrid media={cleanedItems} mediaType='movie' />
+      <MediaTemplateGrid media={cleanedItems} mediaType='movie' isLoadingNewItems={isLoading} />
     </Fragment>
   );
 };

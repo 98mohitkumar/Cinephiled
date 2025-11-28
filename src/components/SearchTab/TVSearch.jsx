@@ -7,7 +7,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { removeDuplicates } from "utils/helper";
 
 const TVSearch = ({ searchQuery, tv, year }) => {
-  const { list } = useInfiniteQuery({
+  const { list, isLoading } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) =>
       apiEndpoints.search.tvSearch({
@@ -21,7 +21,7 @@ const TVSearch = ({ searchQuery, tv, year }) => {
   return (
     <Fragment>
       {cleanedItems?.length > 0 ? (
-        <MediaTemplateGrid media={cleanedItems} mediaType='tv' />
+        <MediaTemplateGrid media={cleanedItems} mediaType='tv' isLoadingNewItems={isLoading} />
       ) : (
         <PlaceholderText height='large'>No TV Shows found for this query.</PlaceholderText>
       )}

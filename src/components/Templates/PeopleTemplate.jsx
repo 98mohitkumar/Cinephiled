@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 
+import { LoadingSpinner } from "components/Loader/Loader";
 import { GridCol, Grid } from "components/UI/Grid";
 import P from "components/UI/Typography/P";
 import { ROUTES, blurPlaceholder } from "data/global";
@@ -105,7 +106,7 @@ export const CastCarousel = ({ cast, children }) => {
   );
 };
 
-export const PeopleTemplateGrid = ({ items, children, additionalGridItem }) => {
+export const PeopleTemplateGrid = ({ items, children, additionalGridItem, isLoadingNewItems = false }) => {
   return (
     <Grid
       colConfig={{
@@ -152,6 +153,11 @@ export const PeopleTemplateGrid = ({ items, children, additionalGridItem }) => {
       ))}
 
       {additionalGridItem || null}
+      {isLoadingNewItems ? (
+        <div className='grid-center aspect-profile w-full'>
+          <LoadingSpinner />
+        </div>
+      ) : null}
     </Grid>
   );
 };

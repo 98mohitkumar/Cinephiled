@@ -20,7 +20,7 @@ const Movies = ({ renderList, genreName, genreId }) => {
   const defaultSortOption = movieSortOptions.find((option) => option?.isDefault)?.value;
   const { sortBy, handleSortSelection } = useSort({ shallow: false, defaultSortOption });
 
-  const { list, resetQueryState } = useInfiniteQuery({
+  const { list, resetQueryState, isLoading } = useInfiniteQuery({
     initialPage: 3,
     getEndpoint: ({ page }) => apiEndpoints.movie.movieGenre({ genreId, pageQuery: page, sortBy: sortBy })
   });
@@ -64,7 +64,7 @@ const Movies = ({ renderList, genreName, genreId }) => {
                 </Select>
               </div>
 
-              <MediaTemplateGrid media={cleanedItems} mediaType='movie' />
+              <MediaTemplateGrid media={cleanedItems} mediaType='movie' isLoadingNewItems={isLoading} />
             </Fragment>
           ) : (
             <PlaceholderText height='large'>No Movies are available for this genre</PlaceholderText>

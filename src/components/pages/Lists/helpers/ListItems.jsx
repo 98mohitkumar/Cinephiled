@@ -29,7 +29,11 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
     userInfo: { accountId }
   } = useUserContext();
   const { openModal, closeModal, isModalVisible } = useModal();
-  const { list: infiniteQueryListMedia, resetQueryState } = useInfiniteQuery({
+  const {
+    list: infiniteQueryListMedia,
+    resetQueryState,
+    isLoading
+  } = useInfiniteQuery({
     initialPage: 2,
     useUserToken: true,
     getEndpoint: ({ page }) =>
@@ -111,7 +115,7 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
 
   return (
     <Fragment>
-      <MediaTemplateGrid media={renderList} gridType='poster'>
+      <MediaTemplateGrid media={renderList} gridType='poster' isLoadingNewItems={isLoading}>
         {({ id, title, name, release_date, first_air_date, media_type, backdrop_path }) => (
           <div className={cn("mt-2024", { "mt-2432": userCanEditList })}>
             <FlexBox className='items-start justify-between gap-16'>

@@ -18,6 +18,7 @@ const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint, scro
     setPageToFetch(initialPage);
     setExtendedList([]);
     setIsEmptyPage(false);
+    setIsLoading(false);
   };
 
   const fetchQuery = useCallback(
@@ -73,7 +74,7 @@ const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint, scro
     };
   }, [handleScroll]);
 
-  return { list: extendedList, resetQueryState };
+  return { list: extendedList, resetQueryState, isLoading };
 };
 
 export default useInfiniteQuery;

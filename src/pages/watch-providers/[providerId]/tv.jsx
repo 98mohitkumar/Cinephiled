@@ -20,7 +20,7 @@ const ProviderTV = ({ media, region, providerName, providerId }) => {
   const defaultSortOption = tvSortOptions.find((option) => option?.isDefault)?.value;
   const { sortBy, handleSortSelection } = useSort({ shallow: false, defaultSortOption });
 
-  const { list, resetQueryState } = useInfiniteQuery({
+  const { list, resetQueryState, isLoading } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) =>
       apiEndpoints.watchProviders.watchProviderTv({
@@ -75,7 +75,7 @@ const ProviderTV = ({ media, region, providerName, providerId }) => {
                 </Select>
               </div>
 
-              <MediaTemplateGrid media={renderList} mediaType='tv' />
+              <MediaTemplateGrid media={renderList} mediaType='tv' isLoadingNewItems={isLoading} />
             </Fragment>
           ) : (
             <PlaceholderText height='large'>

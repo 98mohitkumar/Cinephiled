@@ -20,7 +20,7 @@ const ProviderMovies = ({ media, region, providerName, providerId }) => {
   const defaultSortOption = movieSortOptions.find((option) => option?.isDefault)?.value;
   const { sortBy, handleSortSelection } = useSort({ shallow: false, defaultSortOption });
 
-  const { list, resetQueryState } = useInfiniteQuery({
+  const { list, resetQueryState, isLoading } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) =>
       apiEndpoints.watchProviders.watchProviderMovies({
@@ -75,7 +75,7 @@ const ProviderMovies = ({ media, region, providerName, providerId }) => {
                 </Select>
               </div>
 
-              <MediaTemplateGrid media={renderList} mediaType='movie' />
+              <MediaTemplateGrid media={renderList} mediaType='movie' isLoadingNewItems={isLoading} />
             </Fragment>
           ) : (
             <PlaceholderText height='large'>

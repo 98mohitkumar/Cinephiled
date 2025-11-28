@@ -7,7 +7,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { removeDuplicates } from "utils/helper";
 
 const PeopleSearch = ({ searchQuery, people }) => {
-  const { list } = useInfiniteQuery({
+  const { list, isLoading } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) =>
       apiEndpoints.search.personSearch({
@@ -20,7 +20,7 @@ const PeopleSearch = ({ searchQuery, people }) => {
   return (
     <Fragment>
       {cleanedItems?.length > 0 ? (
-        <PeopleTemplateGrid items={cleanedItems} />
+        <PeopleTemplateGrid items={cleanedItems} isLoadingNewItems={isLoading} />
       ) : (
         <PlaceholderText height='large'>No results found for this query.</PlaceholderText>
       )}

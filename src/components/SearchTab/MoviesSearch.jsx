@@ -7,7 +7,7 @@ import useInfiniteQuery from "hooks/useInfiniteQuery";
 import { removeDuplicates } from "utils/helper";
 
 const MoviesSearch = ({ searchQuery, movies, year }) => {
-  const { list } = useInfiniteQuery({
+  const { list, isLoading } = useInfiniteQuery({
     initialPage: 2,
     getEndpoint: ({ page }) =>
       apiEndpoints.search.movieSearch({
@@ -21,7 +21,7 @@ const MoviesSearch = ({ searchQuery, movies, year }) => {
   return (
     <Fragment>
       {cleanedItems?.length > 0 ? (
-        <MediaTemplateGrid media={cleanedItems} mediaType='movie' />
+        <MediaTemplateGrid media={cleanedItems} mediaType='movie' isLoadingNewItems={isLoading} />
       ) : (
         <PlaceholderText height='large'>No Movies found for this query.</PlaceholderText>
       )}
