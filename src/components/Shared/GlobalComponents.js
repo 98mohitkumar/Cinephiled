@@ -141,6 +141,7 @@ export const productionHeroWrapper = css`
     position: relative;
     width: ${cssClamp({ minSize: 200, maxSize: 250 })};
     aspect-ratio: var(--aspectRatio);
+    max-height: ${cssClamp({ minSize: 250, maxSize: 350 })};
   }
 `;
 
