@@ -24,9 +24,18 @@ export const getSortedItems = ({ items, sortBy, order = "asc" }: SortByArgs) => 
 
     case "release_date":
       return itemsToSort.sort((a, b) => {
-        const dateA = new Date(a.release_date || a.first_air_date);
-        const dateB = new Date(b.release_date || b.first_air_date);
-        return order === "asc" ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+        const dateA = a.release_date || a.first_air_date;
+        const dateB = b.release_date || b.first_air_date;
+
+        // If one item has a date and the other doesn't, push the one without a date to the end
+        if (!dateA && !dateB) return 0; // Both have no date, keep relative order
+        if (!dateA) return 1; // a has no date, push to end
+        if (!dateB) return -1; // b has no date, push to end
+
+        // Both have dates, sort normally
+        const timeA = new Date(dateA).getTime();
+        const timeB = new Date(dateB).getTime();
+        return order === "asc" ? timeA - timeB : timeB - timeA;
       });
 
     case "title":
