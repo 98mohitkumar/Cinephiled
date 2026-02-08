@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 
-import { getTechnicalDetails } from "apiRoutes/media";
 import MovieDetails from "components/pages/Movie/MovieDetails";
 import MovieTab from "components/pages/Movie/MovieTab";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
@@ -104,7 +103,6 @@ export const getServerSideProps = async (ctx) => {
       ]);
 
     const isLogoDark = await isImageDark(logo?.file_path);
-    const technicalDetails = await getTechnicalDetails(socialIds?.imdb_id);
 
     return {
       props: {
@@ -147,7 +145,7 @@ export const getServerSideProps = async (ctx) => {
           budget: movieDetails?.budget,
           revenue: movieDetails?.revenue,
           language: language?.english_name || language?.name || "TBA",
-          technicalDetails,
+          imdbId: socialIds?.imdb_id,
           productionCompanies: movieDetails?.production_companies || [],
           networks: [],
           keywords: movieDetails?.keywords?.keywords || []

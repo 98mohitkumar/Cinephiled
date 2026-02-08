@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 
-import { getTechnicalDetails } from "apiRoutes/media";
 import TVDetails from "components/pages/TV/TVDetails";
 import TVTab from "components/pages/TV/TVTab";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
@@ -111,8 +110,6 @@ export const getServerSideProps = async (ctx) => {
     // check if logo is dark
     const isLogoDark = await isImageDark(logo?.file_path);
 
-    const technicalDetails = await getTechnicalDetails(socialIds?.imdb_id);
-
     return {
       props: {
         id: tvDetails?.id,
@@ -156,7 +153,7 @@ export const getServerSideProps = async (ctx) => {
           socialIds,
           language: language?.english_name || language?.name || "TBA",
           homepage: tvDetails?.homepage,
-          technicalDetails,
+          imdbId: socialIds?.imdb_id,
           productionCompanies: tvDetails?.production_companies,
           keywords: tvDetails?.keywords?.results || []
         }

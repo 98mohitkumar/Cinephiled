@@ -1,27 +1,27 @@
 import { Fragment } from "react";
 
-import Modal, { useModal } from "components/Modal/Modal";
-import Button from "components/UI/Button";
-import FlexBox from "components/UI/FlexBox";
+// import Modal, { useModal } from "components/Modal/Modal";
+// import Button from "components/UI/Button";
+// import FlexBox from "components/UI/FlexBox";
 import P from "components/UI/Typography/P";
-import getFormattedTechnicalDetails from "utils/getFormattedTechnicalDetails";
-import { matches } from "utils/helper";
+// import getFormattedTechnicalDetails from "utils/getFormattedTechnicalDetails";
+// import { matches } from "utils/helper";
 
 import { linkStyles } from "./GlobalComponents";
 
-const TechnicalDetails = ({ technicalDetails }) => {
-  const { isModalVisible, openModal, closeModal } = useModal();
-  const tableItems = getFormattedTechnicalDetails(technicalDetails);
+const TechnicalDetails = ({ imdbId }) => {
+  // const { isModalVisible, openModal, closeModal } = useModal();
+  // const tableItems = getFormattedTechnicalDetails(technicalDetails);
 
-  const noDataAvailable = matches(tableItems.length, 0);
+  // const noDataAvailable = matches(tableItems.length, 0);
 
   return (
     <Fragment>
-      <P tag='button' weight='medium' className={linkStyles} onClick={openModal}>
+      <P tag='a' weight='medium' className={linkStyles} href={`https://www.imdb.com/title/${imdbId}/technical`} target='_blank'>
         View Details
       </P>
 
-      <Modal isOpen={isModalVisible} closeModal={closeModal} className='max-w-2xl'>
+      {/* <Modal isOpen={isModalVisible} closeModal={closeModal} className='max-w-2xl'>
         <FlexBox className='flex flex-col gap-24'>
           {noDataAvailable ? (
             <FlexBox className='min-h-24 items-center justify-center'>
@@ -67,7 +67,7 @@ const TechnicalDetails = ({ technicalDetails }) => {
             Close
           </Button>
         </FlexBox>
-      </Modal>
+      </Modal> */}
     </Fragment>
   );
 };

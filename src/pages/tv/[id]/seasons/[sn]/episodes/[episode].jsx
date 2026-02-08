@@ -5,7 +5,6 @@ import { Fragment, useState } from "react";
 import { toast } from "sonner";
 
 import { authOptions } from "api/auth/[...nextauth]";
-import { getTechnicalDetails } from "apiRoutes/media";
 import { useDeleteEpisodeRating, useSetEpisodeRating } from "apiRoutes/user";
 import { useModal } from "components/Modal/Modal";
 import RatingModal from "components/RatingModal/RatingModal";
@@ -94,7 +93,7 @@ const EpisodeRatingButton = ({ savedRating, title, seriesId, seasonNumber, episo
 };
 
 const Episode = ({
-  technicalDetails,
+  imdbId,
   releaseDate,
   overview,
   cast,
@@ -165,7 +164,7 @@ const Episode = ({
 
               <div>
                 <P weight='bold'>Technical Details</P>
-                <TechnicalDetails technicalDetails={technicalDetails} />
+                <TechnicalDetails imdbId={imdbId} />
               </div>
 
               <FlexBox className='mt-2032 flex-wrap items-center gap-10'>
@@ -239,8 +238,6 @@ export const getServerSideProps = async (ctx) => {
 
     let accountStates = null;
 
-    const technicalDetails = await getTechnicalDetails(res?.external_ids?.imdb_id || null);
-
     if (data) {
       const accountStateRes = await fetch(
         apiEndpoints.tv.episodeAccountStates({
@@ -258,7 +255,7 @@ export const getServerSideProps = async (ctx) => {
 
     return {
       props: {
-        technicalDetails,
+        imdbId: res?.external_ids?.imdb_id,
         releaseDate: res?.air_date,
         overview: res?.overview,
         cast: cast.concat(guest_stars) || [],

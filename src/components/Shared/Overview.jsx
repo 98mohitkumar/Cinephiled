@@ -15,7 +15,7 @@ import CollectionCard from "../pages/Movie/CollectionCard";
 import ProductionDetails from "./ProductionDetails";
 
 const Overview = ({ overviewData, className, mediaType }) => {
-  const { socialIds, homepage, status, language, title, description, technicalDetails, keywords } = overviewData;
+  const { socialIds, homepage, status, language, title, description, imdbId, keywords } = overviewData;
 
   const gridItems = matches(mediaType, "movie")
     ? [
@@ -66,7 +66,7 @@ const Overview = ({ overviewData, className, mediaType }) => {
 
           <div>
             <P weight='bold'>Technical Details</P>
-            <TechnicalDetails technicalDetails={technicalDetails} />
+            <TechnicalDetails imdbId={imdbId} />
           </div>
         </Grid>
 
