@@ -12,6 +12,7 @@ import { formatCurrency, getNiceName, getReleaseDate, getRuntime, isEmptyObject,
 
 import CollectionCard from "../pages/Movie/CollectionCard";
 
+import { linkStyles } from "./GlobalComponents";
 import ProductionDetails from "./ProductionDetails";
 
 const Overview = ({ overviewData, className, mediaType }) => {
@@ -67,6 +68,13 @@ const Overview = ({ overviewData, className, mediaType }) => {
           <div>
             <P weight='bold'>Technical Details</P>
             <TechnicalDetails imdbId={imdbId} />
+          </div>
+
+          <div>
+            <P weight='bold'>Parental Guide</P>
+            <P tag='a' weight='medium' className={linkStyles} href={`https://www.imdb.com/title/${imdbId}/parentalguide`} target='_blank'>
+              View Details
+            </P>
           </div>
         </Grid>
 
