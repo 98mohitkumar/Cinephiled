@@ -162,7 +162,9 @@ const Episode = ({
 
               {crewData?.length > 0 ? <CrewCredits crewData={crewData} className='my-2032' /> : null}
 
-              <ImdbLinks imdbId={imdbId} />
+              <FlexBox className='flex-row-reverse justify-end gap-2440'>
+                <ImdbLinks imdbId={imdbId} />
+              </FlexBox>
 
               <FlexBox className='mt-2032 flex-wrap items-center gap-10'>
                 <EpisodeRatingButton
