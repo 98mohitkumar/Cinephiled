@@ -11,10 +11,10 @@ import RatingModal from "components/RatingModal/RatingModal";
 import CrewCredits from "components/Shared/CrewCredits";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
 import { mediaDetailsWrapper } from "components/Shared/GlobalComponents";
+import ImdbLinks from "components/Shared/ImdbLinks";
 import MediaHeroBackground from "components/Shared/MediaHeroBackground/MediaHeroBackground";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import ShareButton from "components/Shared/ShareButton";
-import TechnicalDetails from "components/Shared/TechnicalDetails";
 import TVStats from "components/Shared/TVStats";
 import { suggestLogin } from "components/Shared/UserActions";
 import MediaImageTemplateGrid from "components/Templates/MediaImageTemplateGrid";
@@ -162,10 +162,7 @@ const Episode = ({
 
               {crewData?.length > 0 ? <CrewCredits crewData={crewData} className='my-2032' /> : null}
 
-              <div>
-                <P weight='bold'>Technical Details</P>
-                <TechnicalDetails imdbId={imdbId} />
-              </div>
+              <ImdbLinks imdbId={imdbId} />
 
               <FlexBox className='mt-2032 flex-wrap items-center gap-10'>
                 <EpisodeRatingButton

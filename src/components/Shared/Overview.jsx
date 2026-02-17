@@ -2,7 +2,6 @@ import { Instagram, Link as LinkIcon, Twitter } from "lucide-react";
 import Link from "next/link";
 
 import ShareButton from "components/Shared/ShareButton";
-import TechnicalDetails from "components/Shared/TechnicalDetails";
 import FlexBox from "components/UI/FlexBox";
 import { Grid } from "components/UI/Grid";
 import H4 from "components/UI/Typography/H4";
@@ -12,7 +11,7 @@ import { formatCurrency, getNiceName, getReleaseDate, getRuntime, isEmptyObject,
 
 import CollectionCard from "../pages/Movie/CollectionCard";
 
-import { linkStyles } from "./GlobalComponents";
+import ImdbLinks from "./ImdbLinks";
 import ProductionDetails from "./ProductionDetails";
 
 const Overview = ({ overviewData, className, mediaType }) => {
@@ -65,17 +64,7 @@ const Overview = ({ overviewData, className, mediaType }) => {
             <ProductionDetails productionCompanies={overviewData?.productionCompanies} networks={overviewData?.networks} />
           </div>
 
-          <div>
-            <P weight='bold'>Technical Details</P>
-            <TechnicalDetails imdbId={imdbId} />
-          </div>
-
-          <div>
-            <P weight='bold'>Parental Guide</P>
-            <P tag='a' weight='medium' className={linkStyles} href={`https://www.imdb.com/title/${imdbId}/parentalguide`} target='_blank'>
-              View Details
-            </P>
-          </div>
+          <ImdbLinks imdbId={imdbId} />
         </Grid>
 
         {keywords?.length > 0 ? (
