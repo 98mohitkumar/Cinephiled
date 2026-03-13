@@ -72,7 +72,7 @@ const GlobalSearch = () => {
 
   return (
     <search className='mb-64 w-full'>
-      <form css={searchStyles} onSubmit={searchHandler} className='flex items-center justify-center gap-16 px-20'>
+      <form css={searchStyles} onSubmit={searchHandler} className='flex items-center justify-center gap-16 px-16'>
         <div className='relative w-full'>
           <div className='border-animated flex items-center justify-between pb-6'>
             <input

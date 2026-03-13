@@ -1,6 +1,6 @@
 // These sizings are used in clamp() function, viewport values are in rem
 export const minViewportWidth = 30; // 480px
-export const maxViewportWidth = 80; // 1280px
+export const maxViewportWidth = 200; // 3200px
 export const pixelsPerRem = 16;
 
 // Media querie breakpoints

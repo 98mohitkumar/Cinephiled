@@ -41,7 +41,7 @@ const MediaTemplateGrid = ({
   const gridSizeConfig =
     gridConfig ||
     (matches(gridType, "poster")
-      ? { xxs: 2, sm: 3, lg: 4, xl: 5, "2xl": "desktopAutoFillMedia" }
+      ? { xxs: 2, sm: 3, md: 4, lg: 5, "2xl": "desktopAutoFillMedia" }
       : { xxs: 1, xs: 2, lg: "desktopAutoFillMediaBackdrop" });
 
   return (

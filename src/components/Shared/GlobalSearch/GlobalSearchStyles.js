@@ -41,7 +41,7 @@ export const searchStyles = css`
   .suggestions {
     width: 100%;
     background-color: ${theme.colors.neutral[200]};
-    max-height: 240px;
+    max-height: 300px;
     overflow-y: scroll;
     border-radius: 4px;
 
@@ -50,7 +50,7 @@ export const searchStyles = css`
     }
 
     ${mediaQuery({ breakpoint: "sm", type: "max" })} {
-      max-height: 200px;
+      max-height: 250px;
     }
   }
 `;
