@@ -56,7 +56,7 @@ const MediaContextProvider = ({ children }) => {
   const [renderKey, setRenderKey] = useState("media");
 
   const fetchData = useCallback(
-    async ({ endpoint, mediaType, key, currentPage = 1, maxPages, signal }) => {
+    async ({ endpoint, mediaType, key, currentPage = 1, maxPages = 9999, signal }) => {
       try {
         const abortController = new AbortController();
         const fetcher = fetchFunctions[endpoint];
@@ -75,7 +75,7 @@ const MediaContextProvider = ({ children }) => {
         if (results?.length > 0) {
           setState((prev) => ({ ...prev, [key]: prev[key].concat(results) }));
 
-          if (total_pages > currentPage) {
+          if (total_pages > currentPage && currentPage < maxPages) {
             // fetch next page
             fetchData({ endpoint, mediaType, key, currentPage: currentPage + 1, maxPages });
           }
