@@ -2,6 +2,7 @@ import { Download } from "lucide-react";
 
 import Button from "components/UI/Button";
 import { CORS_PROXY } from "data/apiEndpoints";
+import { TMDB_IMAGE_URL } from "data/global";
 
 export const DownloadMediaButton = ({ item }) => {
   const download = (url) => {
@@ -33,7 +34,7 @@ export const DownloadMediaButton = ({ item }) => {
       size='small'
       className='absolute bottom-4 right-4 shadow-sm'
       aria-label='download media'
-      onClick={() => download(`${CORS_PROXY}?q=https://image.tmdb.org/t/p/original${item.path}`)}>
+      onClick={() => download(`${CORS_PROXY}?q=${TMDB_IMAGE_URL}original${item.path}`)}>
       <Download size={14} className='text-neutral-800' />
     </Button>
   );

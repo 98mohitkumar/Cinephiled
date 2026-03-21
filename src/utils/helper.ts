@@ -2,6 +2,7 @@ import clsx, { ClassValue } from "clsx";
 import { extendTailwindMerge } from "tailwind-merge";
 
 import { apiEndpoints, read_access_token } from "data/apiEndpoints";
+import { DICEBEAR_URL, TMDB_IMAGE_URL } from "data/global";
 import { theme } from "theme/theme";
 import { tailwindFontSizeTokens } from "tokens/typography";
 
@@ -282,7 +283,5 @@ export const getMediaLogo = (logos: { vote_average: number }[]) => {
 export const getUserAvatar = (avatar: { type: string; src: string }) => {
   if (!avatar) return {};
 
-  return avatar.type === "tmdb"
-    ? `https://www.themoviedb.org/t/p/w100_and_h100_face${avatar.src}`
-    : `https://api.dicebear.com/6.x/bottts/svg?seed=${avatar.src}`;
+  return avatar.type === "tmdb" ? `${TMDB_IMAGE_URL}w100_and_h100_face${avatar.src}` : `${DICEBEAR_URL}/bottts/svg?seed=${avatar.src}`;
 };

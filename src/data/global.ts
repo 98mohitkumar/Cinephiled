@@ -95,3 +95,7 @@ export const LAYOUT_TYPES = {
 };
 
 export const isProduction = process.env.VERCEL_ENV === "production";
+
+export const DICEBEAR_URL = "https://api.dicebear.com/9.x/";
+
+export const TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/";

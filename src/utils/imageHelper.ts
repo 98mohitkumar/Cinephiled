@@ -1,5 +1,6 @@
 import { StaticImageData } from "next/image";
 
+import { TMDB_IMAGE_URL } from "data/global";
 import defaultProfile from "images/DefaultAvatar.png";
 import defaultBackdrop from "images/DefaultBackdrop.png";
 import defaultPoster from "images/DefaultImage.png";
@@ -37,7 +38,7 @@ export const getTMDBImage = <T extends keyof typeof defaultImages>({ path, type,
     return fallback || defaultImages[type];
   }
 
-  return `https://image.tmdb.org/t/p/${size || "w500"}${path}`;
+  return `${TMDB_IMAGE_URL}${size || "w500"}${path}`;
 };
 
 type ImageSizesProp<T extends keyof typeof defaultImages> = {
