@@ -59,6 +59,7 @@ const TvShow = ({
         <div className='relative z-10'>
           {/* tv tabs */}
           <TVTab
+            mediaId={id}
             cast={cast}
             seasons={seasons}
             reviews={reviews}
@@ -127,7 +128,7 @@ export const getServerSideProps = async (ctx) => {
           ).slice(0, 15)
         },
         seasons: tvDetails?.seasons,
-        reviews: tvDetails?.reviews?.results || [],
+        reviews: tvDetails?.reviews || null,
         backdrops: tvDetails?.images?.backdrops || [],
         posters: tvDetails?.images?.posters || [],
         recommendations: tvDetails?.recommendations?.results || [],

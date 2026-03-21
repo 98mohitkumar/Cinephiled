@@ -1,4 +1,5 @@
 import "styles/globals.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Analytics } from "@vercel/analytics/next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -21,6 +22,17 @@ import "utils/logging";
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000,
+            refetchOnWindowFocus: false
+          }
+        }
+      })
+  );
 
   useEffect(() => {
     const handleComplete = () => {
@@ -57,22 +69,24 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
       <GlobalStyles />
       <ErrorBoundary>
-        <SessionProvider session={session} refetchOnWindowFocus={false}>
-          <NavigationGuardProvider>
-            <UserContextProvider>
-              <ListsContextProvider>
-                <MediaContextProvider>
-                  {isLoading ? <Loader /> : null}
-                  <Layout>
-                    <NuqsAdapter>
-                      <Component {...pageProps} />
-                    </NuqsAdapter>
-                  </Layout>
-                </MediaContextProvider>
-              </ListsContextProvider>
-            </UserContextProvider>
-          </NavigationGuardProvider>
-        </SessionProvider>
+        <QueryClientProvider client={queryClient}>
+          <SessionProvider session={session} refetchOnWindowFocus={false}>
+            <NavigationGuardProvider>
+              <UserContextProvider>
+                <ListsContextProvider>
+                  <MediaContextProvider>
+                    {isLoading ? <Loader /> : null}
+                    <Layout>
+                      <NuqsAdapter>
+                        <Component {...pageProps} />
+                      </NuqsAdapter>
+                    </Layout>
+                  </MediaContextProvider>
+                </ListsContextProvider>
+              </UserContextProvider>
+            </NavigationGuardProvider>
+          </SessionProvider>
+        </QueryClientProvider>
       </ErrorBoundary>
 
       <Toast />

@@ -30,7 +30,7 @@ const tabList = [
   }
 ];
 
-const MovieTab = ({ cast, reviews, posters, backdrops, overviewData }) => {
+const MovieTab = ({ mediaId, cast, reviews, posters, backdrops, overviewData }) => {
   const { activeTab, setTab } = useTabs({ tabLocation: "movieTab" });
   const activeTabIndex = tabList.findIndex((tab) => matches(tab.key, activeTab));
 
@@ -54,7 +54,11 @@ const MovieTab = ({ cast, reviews, posters, backdrops, overviewData }) => {
         {matches(activeTab, "reviews") && (
           <motion.div key='reviews' {...opacityMotionTransition}>
             <LayoutContainer className='py-3248'>
-              {reviews?.length > 0 ? <MediaReviews reviews={reviews} /> : <PlaceholderText>No reviews found for this movie</PlaceholderText>}
+              {reviews?.total_results > 0 ? (
+                <MediaReviews key={mediaId} mediaType='movie' mediaId={mediaId} initialReviews={reviews} />
+              ) : (
+                <PlaceholderText>No reviews found for this movie</PlaceholderText>
+              )}
             </LayoutContainer>
           </motion.div>
         )}

@@ -59,10 +59,6 @@ export const reviewStyles = css`
     padding: 0 1em;
     border-left: 0.25em solid ${theme.colors.neutral[100]};
   }
-
-  .content-wrapper {
-    word-break: break-word;
-  }
 `;
 
 const heroBannerAnimation = keyframes`

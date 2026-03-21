@@ -57,6 +57,7 @@ const Movie = ({
         <div className='relative z-10'>
           {/* movie tabs */}
           <MovieTab
+            mediaId={id}
             cast={cast}
             reviews={reviews}
             backdrops={backdrops}
@@ -117,7 +118,7 @@ export const getServerSideProps = async (ctx) => {
           totalCount: movieDetails?.credits?.cast?.length,
           data: movieDetails?.credits?.cast?.slice(0, 15)
         },
-        reviews: movieDetails?.reviews?.results || [],
+        reviews: movieDetails?.reviews || null,
         backdrops: movieDetails?.images?.backdrops || [],
         posters: movieDetails?.images?.posters || [],
         recommendations: movieDetails?.recommendations?.results || [],

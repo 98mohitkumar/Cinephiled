@@ -86,6 +86,9 @@ export const apiEndpoints = {
 
     getMovieCredits: ({ id }: { id: string }) => `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=credits`,
 
+    movieReviews: ({ id, pageQuery = 1 }: { id: string; pageQuery?: number }) =>
+      `${baseUrlV3}/movie/${id}/reviews?language=en-US&page=${pageQuery}`,
+
     movieGenreList: `${baseUrlV3}/genre/movie/list?language=en-US`,
 
     nowPlaying: ({ region, pageQuery = 1 }: { region: string; pageQuery: number }) =>
@@ -113,6 +116,9 @@ export const apiEndpoints = {
       &sort_by=${sortBy}`,
 
     getTvCredits: ({ id }: { id: string }) => `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=aggregate_credits`,
+
+    tvReviews: ({ id, pageQuery = 1 }: { id: string; pageQuery?: number }) =>
+      `${baseUrlV3}/tv/${id}/reviews?language=en-US&page=${pageQuery}`,
 
     tvGenreList: `${baseUrlV3}/genre/tv/list?language=en-US`
   },
