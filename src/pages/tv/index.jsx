@@ -117,7 +117,6 @@ const TV = ({ initialTv, genres, languages, region, regions }) => {
 
   const { list, resetQueryState, isLoading } = useInfiniteQuery({
     initialPage: 2,
-    scrollAfterLoad: false,
     getEndpoint: ({ page }) =>
       apiEndpoints.discover.tv({
         pageQuery: page,

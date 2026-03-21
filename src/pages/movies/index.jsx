@@ -116,7 +116,6 @@ const Movies = ({ initialMovies, genres, languages, regions }) => {
 
   const { list, resetQueryState, isLoading } = useInfiniteQuery({
     initialPage: 2,
-    scrollAfterLoad: false,
     getEndpoint: ({ page }) =>
       apiEndpoints.discover.movies({
         pageQuery: page,

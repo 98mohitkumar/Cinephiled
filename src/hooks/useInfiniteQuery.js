@@ -1,70 +1,91 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useInfiniteQuery as useTanStackInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useUserContext } from "Store/UserContext";
 import { fetchOptions } from "utils/helper";
 
-const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint, scrollAfterLoad = true }) => {
-  const [pageToFetch, setPageToFetch] = useState(initialPage);
-  const [extendedList, setExtendedList] = useState([]);
-  const [isEmptyPage, setIsEmptyPage] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+/**
+ * Same outward API as useInfiniteQuery, backed by TanStack useInfiniteQuery.
+ * - Fetches the first client page (initialPageParam, e.g. page 2) on mount; further pages via scroll + fetchNextPage.
+ * - Cached per queryKey so revisiting a route can reuse data (staleTime / gcTime).
+ *
+ * Optional `queryKey` — pass a stable, memoized key when the feed identity is not fully captured
+ * by router.asPath (e.g. client-only search state). Defaults to ['infinite-scroll', router.asPath].
+ */
+export const useInfiniteQuery = ({
+  initialPage,
+  useUserToken = false,
+  getEndpoint,
+  queryKey: queryKeyProp,
+  staleTime = 1000 * 60 * 5,
+  gcTime = 1000 * 60 * 15
+}) => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const {
     userInfo: { accessToken }
   } = useUserContext();
 
+  const queryKey = useMemo(() => queryKeyProp ?? ["infinite-scroll", router.asPath], [queryKeyProp, router.asPath]);
+
+  const infiniteQuery = useTanStackInfiniteQuery({
+    queryKey,
+    queryFn: async ({ pageParam, signal }) => {
+      const res = await fetch(getEndpoint({ page: pageParam }), fetchOptions({ token: useUserToken ? accessToken : null, signal }));
+
+      if (!res.ok) {
+        throw new Error("Cannot fetch data");
+      }
+
+      return res.json();
+    },
+    initialPageParam: initialPage,
+    /**
+     * TMDB: stop when a page has no results or we're on the last page.
+     * Do not treat missing lastPage here — TanStack only calls this after a successful page fetch.
+     */
+    getNextPageParam: (lastPage) => {
+      if (!lastPage?.results?.length) {
+        return undefined;
+      }
+      if (lastPage.page >= lastPage.total_pages) {
+        return undefined;
+      }
+      return lastPage.page + 1;
+    },
+    staleTime,
+    gcTime,
+    refetchOnWindowFocus: false
+  });
+
+  const { fetchNextPage, hasNextPage, isFetching, data } = infiniteQuery;
+
+  const list = useMemo(() => data?.pages?.flatMap((p) => p.results ?? []) ?? [], [data?.pages]);
+
   const fetchTimeOut = useRef(null);
 
-  const resetQueryState = () => {
-    setPageToFetch(initialPage);
-    setExtendedList([]);
-    setIsEmptyPage(false);
-    setIsLoading(false);
-  };
-
-  const fetchQuery = useCallback(
-    async (page) => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(getEndpoint({ page }), fetchOptions({ token: useUserToken ? accessToken : null }));
-
-        if (!res.ok) {
-          throw new Error("Cannot fetch data");
-        }
-
-        const data = await res.json();
-        return data;
-      } catch (error) {
-        console.error(error.message);
-        return null;
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [accessToken, getEndpoint, useUserToken]
-  );
+  const resetQueryState = useCallback(() => {
+    queryClient.removeQueries({ queryKey });
+  }, [queryClient, queryKey]);
 
   const handleScroll = useCallback(() => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 700 && !isLoading && !isEmptyPage) {
-      clearTimeout(fetchTimeOut.current);
-
-      fetchTimeOut.current = setTimeout(() => {
-        fetchQuery(pageToFetch).then((data) => {
-          if (data && data.results && data.results.length > 0) {
-            setExtendedList((prev) => [...prev, ...data.results]);
-            setPageToFetch((prev) => prev + 1);
-
-            if (scrollAfterLoad) {
-              requestAnimationFrame(() => {
-                window.scrollTo({ top: window.scrollY + 200, behavior: "smooth" });
-              });
-            }
-          } else {
-            setIsEmptyPage(true);
-          }
-        });
-      }, 100);
+    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 700;
+    if (!nearBottom || isFetching) {
+      return;
     }
-  }, [fetchQuery, isLoading, isEmptyPage, pageToFetch, scrollAfterLoad]);
+    if (hasNextPage === false) {
+      return;
+    }
+
+    clearTimeout(fetchTimeOut.current);
+
+    fetchTimeOut.current = setTimeout(() => {
+      fetchNextPage().catch((err) => {
+        console.error(err?.message ?? err);
+      });
+    }, 100);
+  }, [fetchNextPage, hasNextPage, isFetching]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -74,7 +95,7 @@ const useInfiniteQuery = ({ initialPage, useUserToken = false, getEndpoint, scro
     };
   }, [handleScroll]);
 
-  return { list: extendedList, resetQueryState, isLoading };
+  return { list, resetQueryState, isLoading: isFetching };
 };
 
 export default useInfiniteQuery;
