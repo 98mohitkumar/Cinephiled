@@ -2,18 +2,15 @@ import hexToRgba from "hex-to-rgba";
 import { css } from "styled-components";
 
 import { theme } from "theme/theme";
+import { getUserAvatar } from "utils/helper";
 import { cssClamp, hoverMediaQuery } from "utils/mixins";
 
 export const avatar = css`
   width: ${cssClamp({ minSize: 30, maxSize: 34 })};
   aspect-ratio: 1 / 1;
   border-radius: 50%;
+  background: ${({ $avatar }) => `url(${getUserAvatar($avatar)})`} center center / contain;
   cursor: pointer;
-  background: ${({ $avatar }) =>
-      $avatar.type === "tmdb"
-        ? `url(https://www.themoviedb.org/t/p/w100_and_h100_face${$avatar.src})`
-        : `url(https://api.dicebear.com/6.x/bottts/svg?seed=${$avatar.src})`}
-    center center / contain;
 `;
 
 export const popup = css`

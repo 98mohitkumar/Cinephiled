@@ -278,3 +278,11 @@ export const getMediaLogo = (logos: { vote_average: number }[]) => {
 
   return logos.sort((a, b) => b.vote_average - a.vote_average).at(0);
 };
+
+export const getUserAvatar = (avatar: { type: string; src: string }) => {
+  if (!avatar) return {};
+
+  return avatar.type === "tmdb"
+    ? `https://www.themoviedb.org/t/p/w100_and_h100_face${avatar.src}`
+    : `https://api.dicebear.com/6.x/bottts/svg?seed=${avatar.src}`;
+};

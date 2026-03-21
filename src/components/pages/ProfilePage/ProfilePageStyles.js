@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { theme } from "theme/theme";
+import { getUserAvatar } from "utils/helper";
 import { cssClamp } from "utils/mixins";
 
 export const bannerStyles = css`
@@ -37,10 +38,6 @@ export const ProfileAvatar = styled.div`
   width: ${cssClamp({ minSize: 65, maxSize: 80 })};
   aspect-ratio: 1/1;
   border-radius: 50%;
-  background: ${({ $avatar }) =>
-      $avatar.type === "tmdb"
-        ? `url(https://www.themoviedb.org/t/p/w100_and_h100_face${$avatar.avatar})`
-        : `url(https://api.dicebear.com/6.x/bottts/svg?seed=${$avatar.avatar})`}
-    center center / contain;
+  background: ${({ $avatar }) => `url(${getUserAvatar($avatar)})`} center center / contain;
   filter: drop-shadow(0px 0px 5px 2px hsla(0, 0%, 0%, 0.14), 0px 0px 22px 4px hsla(0, 0%, 0%, 0.12), 0px 0px 8px -4px hsla(0, 0%, 0%, 0.2));
 `;

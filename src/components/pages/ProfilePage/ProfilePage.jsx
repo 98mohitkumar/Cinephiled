@@ -32,7 +32,7 @@ const Profile = () => {
 
   const userAvatar = {
     type: userInfo?.avatar?.tmdb?.avatar_path ? "tmdb" : "hash",
-    avatar: userInfo?.avatar?.tmdb?.avatar_path || userInfo?.avatar?.gravatar?.hash
+    src: userInfo?.avatar?.tmdb?.avatar_path || userInfo?.avatar?.gravatar?.hash
   };
 
   const stats = {
