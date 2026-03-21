@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { toast } from "sonner";
 
 import { useCreateList } from "apiRoutes/user";
@@ -10,21 +10,17 @@ import FlexBox from "components/UI/FlexBox";
 import H4 from "components/UI/Typography/H4";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES } from "data/global";
-import { useListsContext } from "Store/ListsContext";
 import { useUserContext } from "Store/UserContext";
 import { fetchOptions, getNiceName, matches } from "utils/helper";
 
 export const CreateList = () => {
   const router = useRouter();
-  const { createList } = useCreateList();
+  const { createList, isPending } = useCreateList();
   const { userInfo } = useUserContext();
-  const [submitting, setSubmitting] = useState(false);
-  const { updateList } = useListsContext();
   const { isModalVisible, openModal, closeModal } = useModal();
 
   const createListHandler = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
     const formData = new FormData(e.target);
     const listData = {};
 
@@ -55,13 +51,11 @@ export const CreateList = () => {
       );
 
       const listDetails = await res.json();
-      updateList((prev) => [listDetails, ...prev]);
 
       router.push(`/${ROUTES.lists}/${getNiceName({ id: listDetails.id, name: listDetails.name })}`);
 
       toast.success("List created successfully", { description: "List has been created successfully." });
     } else {
-      setSubmitting(false);
       toast.error("Error creating the list", {
         description: "An error occurred while creating the list. Please try again later."
       });
@@ -101,12 +95,12 @@ export const CreateList = () => {
 
         <ListBaseForm submitHandler={createListHandler}>
           <FlexBox className='gap-16'>
-            <Button onClick={closeModalHandler} disabled={submitting} type='button' className='w-1/2' variant='outline'>
+            <Button onClick={closeModalHandler} disabled={isPending} type='button' className='w-1/2' variant='outline'>
               Close
             </Button>
 
-            <Button type='submit' disabled={submitting} className='w-1/2'>
-              {submitting ? "Creating..." : "Create List"}
+            <Button type='submit' disabled={isPending} className='w-1/2'>
+              {isPending ? "Creating..." : "Create List"}
             </Button>
           </FlexBox>
         </ListBaseForm>

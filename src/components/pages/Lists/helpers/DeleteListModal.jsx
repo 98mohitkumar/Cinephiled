@@ -9,19 +9,16 @@ import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import H4 from "components/UI/Typography/H4";
 import P from "components/UI/Typography/P";
-import { useListsContext } from "Store/ListsContext";
 
 const DeleteListModal = ({ list }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
   const router = useRouter();
-  const { updateList } = useListsContext();
-  const { deleteList } = useDeleteList();
+  const { deleteList, isPending } = useDeleteList();
 
   const deleteListHandler = async () => {
     const { success } = await deleteList({ id: list.id });
 
     if (success) {
-      updateList((prev) => prev.filter((item) => item.id !== list.id));
       closeModal();
       toast.success("List has been deleted successfully.");
       router.push("/lists", undefined, { shallow: false });
@@ -39,7 +36,7 @@ const DeleteListModal = ({ list }) => {
         <Trash size={20} className='text-red-500' />
       </Button>
 
-      <Modal closeModal={closeModal} isOpen={isModalVisible} className='max-w-lg'>
+      <Modal closeModal={isPending ? () => {} : closeModal} isOpen={isModalVisible} className='max-w-lg'>
         <H4 weight='semibold'>Delete List</H4>
 
         <P className='my-16'>
@@ -47,11 +44,11 @@ const DeleteListModal = ({ list }) => {
         </P>
 
         <FlexBox className=' gap-16'>
-          <Button onClick={closeModal} type='button' className='w-1/2' variant='outline'>
+          <Button onClick={closeModal} disabled={isPending} type='button' className='w-1/2' variant='outline'>
             Close
           </Button>
-          <Button variant='danger' onClick={deleteListHandler} type='button' className='w-1/2'>
-            Delete
+          <Button variant='danger' onClick={deleteListHandler} disabled={isPending} type='button' className='w-1/2'>
+            {isPending ? "Deleting…" : "Delete"}
           </Button>
         </FlexBox>
       </Modal>

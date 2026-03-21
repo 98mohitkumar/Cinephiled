@@ -86,8 +86,7 @@ export const apiEndpoints = {
 
     getMovieCredits: ({ id }: { id: string }) => `${baseUrlV3}/movie/${id}?language=en-US&append_to_response=credits`,
 
-    movieReviews: ({ id, pageQuery = 1 }: { id: string; pageQuery?: number }) =>
-      `${baseUrlV3}/movie/${id}/reviews?language=en-US&page=${pageQuery}`,
+    movieReviews: ({ id, pageQuery = 1 }: { id: string; pageQuery?: number }) => `${baseUrlV3}/movie/${id}/reviews?language=en-US&page=${pageQuery}`,
 
     movieGenreList: `${baseUrlV3}/genre/movie/list?language=en-US`,
 
@@ -117,8 +116,7 @@ export const apiEndpoints = {
 
     getTvCredits: ({ id }: { id: string }) => `${baseUrlV3}/tv/${id}?language=en-US&append_to_response=aggregate_credits`,
 
-    tvReviews: ({ id, pageQuery = 1 }: { id: string; pageQuery?: number }) =>
-      `${baseUrlV3}/tv/${id}/reviews?language=en-US&page=${pageQuery}`,
+    tvReviews: ({ id, pageQuery = 1 }: { id: string; pageQuery?: number }) => `${baseUrlV3}/tv/${id}/reviews?language=en-US&page=${pageQuery}`,
 
     tvGenreList: `${baseUrlV3}/genre/tv/list?language=en-US`
   },
@@ -227,8 +225,8 @@ export const apiEndpoints = {
 
     listItems: ({ id }: { id: string }) => `${baseUrlV4}/list/${id}/items`,
 
-    listItemStatus: ({ id, mediaId, mediaType }: { id: string; mediaId: string; mediaType: string }) =>
-      `${baseUrlV4}/list/${id}/item_status?media_id=${mediaId}&media_type=${mediaType}`
+    listItemStatus: ({ listId, mediaId, mediaType }: { listId: string; mediaId: string; mediaType: string }) =>
+      `${baseUrlV4}/list/${listId}/item_status?media_id=${mediaId}&media_type=${mediaType}`
   },
   collection: {
     collectionDetails: (id: string) => `${baseUrlV3}/collection/${id}?language=en-US`,

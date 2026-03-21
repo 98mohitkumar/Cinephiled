@@ -6,7 +6,7 @@ import { Fragment, useCallback, useRef, useState } from "react";
 import { toast } from "sonner";
 import { throttle } from "throttle-debounce";
 
-import { useGetListItemStatus, useUpdateListItems } from "apiRoutes/user";
+import { fetchListItemStatus, useUpdateListItems } from "apiRoutes/user";
 import { LoadingSpinner } from "components/Loader/Loader";
 import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
@@ -18,20 +18,21 @@ import P from "components/UI/Typography/P";
 import { blurPlaceholder, opacityMotionTransition } from "data/global";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
 import useRefreshData from "hooks/useRefreshData";
-import { cn, getReleaseDate, matches } from "utils/helper";
+import { useUserContext } from "Store/UserContext";
+import { cn, getReleaseDate, listMediaKey, matches } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const AddListItems = ({ id }) => {
   // local state for list items
-  const [items, setItems] = useState([]);
+  const [stagedItems, setStagedItems] = useState([]);
   const [query, setQuery] = useState("");
   const { revalidateData } = useRefreshData();
+  const { userInfo } = useUserContext();
   const { openModal, closeModal, isModalVisible } = useModal();
-  const { getListItemStatus } = useGetListItemStatus();
   const { updateListItems } = useUpdateListItems();
 
   useNavigationGuard({
-    enabled: items.length > 0,
+    enabled: stagedItems.length > 0,
     confirm: () => window.confirm("You have unsaved changes. Are you sure you wish to leave this page?")
   });
 
@@ -59,27 +60,33 @@ const AddListItems = ({ id }) => {
 
   // close modal handler
   const closeModalHandler = () => {
-    setItems([]);
+    setStagedItems([]);
     closeInputHandler();
     closeModal();
   };
 
   // check for existing items and add to the local list items state
   const addItemHandler = async (item) => {
+    if (stagedItems.some((row) => listMediaKey(row) === listMediaKey(item))) {
+      toast.warning("Item already exists.", { description: "Item already added to the list." });
+      return;
+    }
+
     // check for existing item
-    const statusRes = await getListItemStatus({
+    const statusRes = await fetchListItemStatus({
+      token: userInfo.accessToken,
       listId: id,
       mediaId: item.id,
       mediaType: item.media_type
     });
 
-    if (statusRes.success || items.some(({ id }) => id === item.id)) {
+    if (statusRes.success) {
       toast.warning("Item already exists.", { description: "Item already added to the list." });
       return;
     }
 
     // add item to the list
-    setItems((prevState) => [item, ...prevState]);
+    setStagedItems((prevState) => [item, ...prevState]);
     toast.success("Item added.", { description: "Item has been added, please save your changes." });
   };
 
@@ -89,7 +96,7 @@ const AddListItems = ({ id }) => {
       id,
       method: "POST",
       itemsData: {
-        items: items.map(({ media_type, id }) => ({ media_type, media_id: id }))
+        items: stagedItems.map(({ media_type, id }) => ({ media_type, media_id: id }))
       }
     });
 
@@ -108,8 +115,8 @@ const AddListItems = ({ id }) => {
     }
   };
 
-  const removeItemHandler = (itemId) => {
-    setItems((prevState) => prevState.filter(({ id }) => id !== itemId));
+  const removeItemHandler = (row) => {
+    setStagedItems((prevState) => prevState.filter((item) => listMediaKey(item) !== listMediaKey(row)));
   };
 
   return (
@@ -161,7 +168,7 @@ const AddListItems = ({ id }) => {
                   <Fragment>
                     {searchSuggestions.length > 0 ? (
                       <Fragment>
-                        <P className='text-balance py-8 text-center text-neutral-300'>
+                        <P className='text-balance px-10 py-8 text-center text-neutral-300' size='small-to-p'>
                           <b>Tip</b>: You can use the &#39;y:&#39; filter to narrow your results by year. Example: <b>&#39;Avatar y:2009&#39;</b>
                         </P>
 
@@ -194,14 +201,19 @@ const AddListItems = ({ id }) => {
                                   />
                                 </div>
                                 <div className='grow'>
-                                  <P weight='medium' size='small' className={cn("mb-4 text-cyan-500", { "text-green-500": matches(type, "tv") })}>
+                                  <P
+                                    weight='medium'
+                                    size='tiny'
+                                    className={cn("mb-4 w-fit rounded-2xl border border-cyan-800 bg-cyan-800/50 px-10 py-2 text-cyan-500", {
+                                      "border border-green-800 bg-green-800/50 text-green-500": matches(type, "tv")
+                                    })}>
                                     {type === "tv" ? "TV Show" : "Movie"}
                                   </P>
 
-                                  <P weight='medium' className='line-clamp-2'>
+                                  <P weight='medium' className='line-clamp-2' size='small'>
                                     {title || name}
                                   </P>
-                                  <P weight='medium' size='small' className='text-neutral-300'>
+                                  <P weight='medium' size='tiny' className='text-neutral-300'>
                                     {getReleaseDate(release_date || first_air_date)}
                                   </P>
                                 </div>
@@ -219,7 +231,7 @@ const AddListItems = ({ id }) => {
         </div>
 
         <div className='mb-24'>
-          {items?.length > 0 ? (
+          {stagedItems?.length > 0 ? (
             <Grid
               colConfig={{
                 xxs: 2,
@@ -227,24 +239,27 @@ const AddListItems = ({ id }) => {
                 md: 4
               }}
               className='min-h-96 items-start gap-16'>
-              {items.map(({ id, title, name, poster_path, media_type }) => (
-                <GridCol title={title || name} key={id}>
-                  <div className='relative aspect-poster'>
-                    <Image
-                      src={getTMDBImage({ path: poster_path, type: "poster" })}
-                      alt={title || name || `${media_type}-poster`}
-                      fill
-                      className='rounded-lg object-cover shadow-xl'
-                      placeholder='blur'
-                      blurDataURL={blurPlaceholder}
-                    />
-                  </div>
+              {stagedItems.map((item) => {
+                const { title, name, poster_path, media_type } = item;
+                return (
+                  <GridCol title={title || name} key={listMediaKey(item)}>
+                    <div className='relative aspect-poster'>
+                      <Image
+                        src={getTMDBImage({ path: poster_path, type: "poster" })}
+                        alt={title || name || `${media_type}-poster`}
+                        fill
+                        className='rounded-lg object-cover shadow-xl'
+                        placeholder='blur'
+                        blurDataURL={blurPlaceholder}
+                      />
+                    </div>
 
-                  <Button fullWidth variant='danger' className='mt-12' onClick={() => removeItemHandler(id)}>
-                    Remove
-                  </Button>
-                </GridCol>
-              ))}
+                    <Button fullWidth variant='danger' className='mt-12' onClick={() => removeItemHandler(item)}>
+                      Remove
+                    </Button>
+                  </GridCol>
+                );
+              })}
             </Grid>
           ) : (
             <div className='grid-center min-h-96 text-center'>
@@ -261,7 +276,7 @@ const AddListItems = ({ id }) => {
           <Button variant='outline' onClick={closeModalHandler} type='button' title='Close add items modal'>
             Close
           </Button>
-          <Button onClick={saveItemsHandler} disabled={matches(items.length, 0)} title='Save items to list'>
+          <Button onClick={saveItemsHandler} disabled={matches(stagedItems.length, 0)} title='Save items to list'>
             Save Changes
           </Button>
         </FlexBox>

@@ -12,7 +12,6 @@ import { Fragment, useEffect, useState } from "react";
 import Layout from "components/Layout/Layout";
 import Loader from "components/Loader/Loader";
 import Toast from "components/Shared/Toast";
-import ListsContextProvider from "Store/ListsContext";
 import MediaContextProvider from "Store/MediaContext";
 import UserContextProvider from "Store/UserContext";
 import GlobalStyles from "styles/globals";
@@ -74,16 +73,14 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <SessionProvider session={session} refetchOnWindowFocus={false}>
             <NavigationGuardProvider>
               <UserContextProvider>
-                <ListsContextProvider>
-                  <MediaContextProvider>
-                    {isLoading ? <Loader /> : null}
-                    <Layout>
-                      <NuqsAdapter>
-                        <Component {...pageProps} />
-                      </NuqsAdapter>
-                    </Layout>
-                  </MediaContextProvider>
-                </ListsContextProvider>
+                <MediaContextProvider>
+                  {isLoading ? <Loader /> : null}
+                  <Layout>
+                    <NuqsAdapter>
+                      <Component {...pageProps} />
+                    </NuqsAdapter>
+                  </Layout>
+                </MediaContextProvider>
               </UserContextProvider>
             </NavigationGuardProvider>
           </SessionProvider>

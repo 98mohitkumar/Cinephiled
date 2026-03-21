@@ -4,7 +4,7 @@ import { useNavigationGuard } from "next-navigation-guard";
 import { Fragment, useState } from "react";
 import { toast } from "sonner";
 
-import { useUpdateList, useUpdateListItems } from "apiRoutes/user";
+import { listDetailsItemsInfiniteQueryKey, useUpdateList, useUpdateListItems } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import Button from "components/UI/Button";
@@ -18,7 +18,7 @@ import { opacityMotionTransition } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useRefreshData from "hooks/useRefreshData";
 import { useUserContext } from "Store/UserContext";
-import { cn, getReleaseDate, matches } from "utils/helper";
+import { cn, getReleaseDate, listMediaKey, matches } from "utils/helper";
 
 const ListItems = ({ listItems, id, userCanEditList }) => {
   const { revalidateData } = useRefreshData();
@@ -29,13 +29,14 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
     userInfo: { accountId }
   } = useUserContext();
   const { openModal, closeModal, isModalVisible } = useModal();
+
   const {
     list: infiniteQueryListMedia,
-    resetQueryState,
     isLoading
   } = useInfiniteQuery({
     initialPage: 2,
     useUserToken: true,
+    queryKey: listDetailsItemsInfiniteQueryKey(id),
     getEndpoint: ({ page }) =>
       apiEndpoints.lists.getListDetails({
         id,
@@ -51,18 +52,17 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
 
   const refreshData = () => {
     setTimeout(() => {
-      resetQueryState();
       revalidateData();
     }, 500);
   };
 
-  // items local state handler
+  // state handler for items to remove
   const itemsLocalStateHandler = ({ item, action = "add" }) => {
     if (matches(action, "add")) {
       setItemsToRemove((prev) => [item, ...prev]);
     } else {
       setItemsToRemove((prev) => {
-        const items = prev.filter((media) => media.id !== item.id);
+        const items = prev.filter((media) => listMediaKey(media) !== listMediaKey(item));
 
         if (matches(items.length, 0)) {
           closeModal();
@@ -73,7 +73,7 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
     }
   };
 
-  // remove item from list request handler
+  // remove items from list
   const removeItemsRequestHandler = async () => {
     const { success } = await updateListItems({
       id,
@@ -103,15 +103,15 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
     if (success) {
       window.scrollTo({ top: 0, behavior: "smooth" });
       toast.success("Success!", { description: "List cover added successfully." });
-      closeModal();
-      setItemsToRemove([]);
       refreshData();
     } else {
       toast.error("An error occured", { description: "Error updating the list details, please try again later." });
     }
   };
 
-  const renderList = listItems.concat(infiniteQueryListMedia).filter((item) => !itemsToRemove.some((media) => media.id === item.id));
+  const renderList = listItems
+    .concat(infiniteQueryListMedia)
+    .filter((item) => !itemsToRemove.some((media) => listMediaKey(media) === listMediaKey(item)));
 
   return (
     <Fragment>
@@ -181,7 +181,7 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
         {itemsToRemove.length > 0 ? (
           <div className='mt-16 overflow-hidden rounded-lg border border-neutral-600 bg-neutral-800'>
             {itemsToRemove.map((item) => (
-              <FlexBox key={item.id} className='items-center justify-between gap-24 border-b border-neutral-600 px-16 py-12 last:border-b-0'>
+              <FlexBox key={listMediaKey(item)} className='items-center justify-between gap-24 border-b border-neutral-600 px-16 py-12 last:border-b-0'>
                 <P weight='medium' className='line-clamp-2 text-neutral-300'>
                   {item.title || item.name}
                 </P>

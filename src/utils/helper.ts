@@ -285,3 +285,7 @@ export const getUserAvatar = (avatar: { type: string; src: string }) => {
 
   return avatar.type === "tmdb" ? `${TMDB_IMAGE_URL}w100_and_h100_face${avatar.src}` : `${DICEBEAR_URL}/bottts/svg?seed=${avatar.src}`;
 };
+
+/** TMDB list rows: movie and TV can share the same numeric id — pair with `media_type` for uniqueness. */
+export const listMediaKey = (item: { media_type?: string; id?: string | number }) =>
+  `${String(item.media_type ?? "")}:${String(item.id ?? "")}`;

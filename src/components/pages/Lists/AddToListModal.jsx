@@ -1,51 +1,37 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { List } from "lucide-react";
 import Link from "next/link";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { useGetListItemStatus, useUpdateListItems } from "apiRoutes/user";
+import { useAccountListsInfiniteQuery, listItemStatusQueryKey, useListItemStatusQuery, useUpdateListItems } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import { suggestLogin } from "components/Shared/UserActions";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import H4 from "components/UI/Typography/H4";
 import P from "components/UI/Typography/P";
-import { useListsContext } from "Store/ListsContext";
 import { useUserContext } from "Store/UserContext";
 import { cn } from "utils/helper";
 
 const ListSlice = ({ mediaId, list, mediaType, CTA }) => {
-  const [isAdded, setIsAdded] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const { getListItemStatus } = useGetListItemStatus();
+  const { data, isPending } = useListItemStatusQuery({
+    listId: list.id,
+    mediaId,
+    mediaType
+  });
+  const [optimistic, setOptimistic] = useState(null);
 
-  useEffect(() => {
-    setLoading(true);
-    const abortController = new AbortController();
-    getListItemStatus({ signal: abortController.signal, listId: list.id, mediaId, mediaType })
-      .then((data) => {
-        setIsAdded(data.success);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-
-    return () => {
-      abortController.abort("unmounted");
-      setIsAdded(false);
-      setLoading(false);
-    };
-  }, [getListItemStatus, list.id, mediaId, mediaType]);
+  const serverAdded = data?.success ?? false;
+  const isAdded = optimistic !== null ? optimistic : serverAdded;
+  const loading = isPending;
 
   const selectectionHandler = () => {
-    setIsAdded((prev) => !prev);
     CTA({
       listId: list.id,
       action: isAdded ? "remove" : "add"
     });
+    setOptimistic(!isAdded);
   };
 
   return (
@@ -75,12 +61,18 @@ const ListSlice = ({ mediaId, list, mediaType, CTA }) => {
 
 const AddToListModal = ({ mediaId, mediaType }) => {
   const { closeModal, isModalVisible, openModal } = useModal();
-  const { lists } = useListsContext();
   const { userInfo } = useUserContext();
   const [selectedList, setSelectedList] = useState([]);
   const [isWaiting, setIsWaiting] = useState(false);
 
+  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, isPending } = useAccountListsInfiniteQuery({
+    enabled: Boolean(isModalVisible)
+  });
+
+  const lists = useMemo(() => data?.pages?.flatMap((p) => p.results ?? []) ?? [], [data?.pages]);
+
   const { updateListItems } = useUpdateListItems();
+  const queryClient = useQueryClient();
 
   const openModalHandler = () => {
     if (userInfo?.accountId) {
@@ -91,11 +83,13 @@ const AddToListModal = ({ mediaId, mediaType }) => {
   };
 
   const listSelectionHandler = ({ listId, action }) => {
-    if (selectedList.includes(listId)) {
-      setSelectedList((prev) => prev.filter((id) => id !== listId));
-    } else {
-      setSelectedList((prev) => [...prev, { listId, action }]);
-    }
+    setSelectedList((prev) => {
+      const idx = prev.findIndex((item) => item.listId === listId);
+      if (idx >= 0) {
+        return prev.filter((_, i) => i !== idx);
+      }
+      return [...prev, { listId, action }];
+    });
   };
 
   const closeModalHandler = () => {
@@ -113,6 +107,7 @@ const AddToListModal = ({ mediaId, mediaType }) => {
 
     const addToList = selectedList.filter((list) => list.action === "add");
     const removeFromList = selectedList.filter((list) => list.action === "remove");
+    const listsToRefresh = [...selectedList];
 
     try {
       if (addToList.length) {
@@ -151,6 +146,10 @@ const AddToListModal = ({ mediaId, mediaType }) => {
         }
       }
 
+      for (const { listId } of listsToRefresh) {
+        queryClient.invalidateQueries({ queryKey: listItemStatusQueryKey(listId, mediaId, mediaType) });
+      }
+
       setIsWaiting(false);
       closeModalHandler();
       toast.success("List updated successfully");
@@ -161,23 +160,43 @@ const AddToListModal = ({ mediaId, mediaType }) => {
     }
   };
 
-  const hasAList = lists?.length > 0;
+  const showListsLoading = isPending || (isFetching && lists.length === 0);
+  const hasAList = lists.length > 0;
+  const showEmpty = !showListsLoading && !hasAList;
 
   return (
     <Fragment>
       <Modal isOpen={isModalVisible} closeModal={isWaiting ? () => {} : closeModalHandler} className='max-w-lg'>
         <div className={cn(isWaiting && "pointer-events-none")}>
           <H4 weight='semibold' className='mb-16'>
-            Trailer
+            Add to lists
           </H4>
 
-          {hasAList ? (
-            <div className='max-h-72 overflow-y-auto rounded-lg border border-neutral-700'>
-              {lists?.map((list) => (
-                <ListSlice key={list.id} mediaId={mediaId} list={list} mediaType={mediaType} CTA={listSelectionHandler} />
-              ))}
+          {showListsLoading ? (
+            <div className='grid place-items-center py-12'>
+              <P size='large' weight='semibold' className='text-neutral-400'>
+                Loading lists…
+              </P>
             </div>
-          ) : (
+          ) : hasAList ? (
+            <div className='flex flex-col gap-12'>
+              <div className='max-h-72 overflow-y-auto rounded-lg border border-neutral-700'>
+                {lists.map((list) => (
+                  <ListSlice key={list.id} mediaId={mediaId} list={list} mediaType={mediaType} CTA={listSelectionHandler} />
+                ))}
+              </div>
+              {hasNextPage ? (
+                <P
+                  tag='a'
+                  href='#'
+                  disabled={isFetchingNextPage}
+                  className='w-full text-center text-accentPrimary underline'
+                  onClick={(e) => (e.preventDefault(), fetchNextPage())}>
+                  {isFetchingNextPage ? "Loading…" : "Load more lists"}
+                </P>
+              ) : null}
+            </div>
+          ) : showEmpty ? (
             <div className='grid place-items-center gap-8 py-12'>
               <P size='large' weight='semibold'>
                 You don&apos;t have any lists yet.
@@ -186,15 +205,15 @@ const AddToListModal = ({ mediaId, mediaType }) => {
                 <P className='text-cyan-400 underline transition-colors hover:text-cyan-500'>Create a list</P>
               </Link>
             </div>
-          )}
+          ) : null}
 
           <FlexBox className='mt-16 gap-16'>
-            <Button onClick={closeModal} disabled={isWaiting} type='button' className={cn(hasAList ? "w-1/2" : "w-full")} variant='outline'>
+            <Button onClick={closeModalHandler} disabled={isWaiting} type='button' className={cn(hasAList ? "w-1/2" : "w-full")} variant='outline'>
               Close
             </Button>
 
             {hasAList && (
-              <Button type='submit' disabled={isWaiting} className='w-1/2' onClick={saveListHandler}>
+              <Button type='submit' className='w-1/2' onClick={saveListHandler} disabled={isWaiting || !selectedList.length}>
                 {isWaiting ? "Saving..." : "Save"}
               </Button>
             )}

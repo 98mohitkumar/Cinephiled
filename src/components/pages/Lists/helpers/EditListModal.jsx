@@ -8,15 +8,17 @@ import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import H4 from "components/UI/Typography/H4";
 import useRefreshData from "hooks/useRefreshData";
-import { useListsContext } from "Store/ListsContext";
 
 import ListBaseForm from "./ListBaseForm";
 
 const EditListModal = ({ list }) => {
   const { openModal, isModalVisible, closeModal } = useModal();
+
+  // use refresh data to refresh the list details
   const { revalidateData } = useRefreshData();
-  const { updateList: updateListContext, lists } = useListsContext();
-  const { updateList } = useUpdateList();
+
+  // use update list to update the list details
+  const { updateList, isPending } = useUpdateList();
 
   const formSubmitHandler = async (e) => {
     e.preventDefault();
@@ -42,14 +44,7 @@ const EditListModal = ({ list }) => {
     if (success) {
       closeModal();
       revalidateData();
-      const editedList = lists.find((item) => item.id === list.id);
 
-      // this is done so that the name of the list that appears in add to list modal is in sync
-      if (listData.name !== editedList.name) {
-        updateListContext((prev) => prev.map((item) => (item.id === list.id ? { ...item, name: listData.name } : item)));
-      }
-
-      // show success toast
       toast.success("List has been updated successfully.");
     } else {
       // show error toast
@@ -72,11 +67,11 @@ const EditListModal = ({ list }) => {
 
         <ListBaseForm id={list?.id} submitHandler={formSubmitHandler}>
           <FlexBox className='gap-16'>
-            <Button variant='outline' onClick={closeModal} type='button' className='w-1/2'>
+            <Button variant='outline' onClick={closeModal} disabled={isPending} type='button' className='w-1/2'>
               Close
             </Button>
-            <Button type='submit' className='w-1/2'>
-              Update
+            <Button type='submit' disabled={isPending} className='w-1/2'>
+              {isPending ? "Updating…" : "Update"}
             </Button>
           </FlexBox>
         </ListBaseForm>

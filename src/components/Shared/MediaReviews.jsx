@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 
-import { useMediaReviewsQuery } from "apiRoutes/media";
+import { useMediaReviewsQuery } from "apiRoutes/user";
 import { reviewStyles } from "components/Shared/GlobalComponents";
 import Pagination from "components/Shared/Pagination";
 import FlexBox from "components/UI/FlexBox";
