@@ -36,6 +36,10 @@ const GlobalStyles = createGlobalStyle`
     font-size: ${theme.fontSize.p};
     font-family: var(--manrope);
   }
+
+  .content-visibility-auto {
+    content-visibility: auto;
+  }
 `;
 
 export default GlobalStyles;

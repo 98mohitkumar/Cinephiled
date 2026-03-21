@@ -55,7 +55,7 @@ const MediaTemplateGrid = ({
                   src={getTMDBImage({ path: matches(gridType, "poster") ? poster_path : backdrop_path, type: gridType, size: imageSize })}
                   alt={title || name}
                   fill
-                  className='rounded-xl object-cover shadow-xl'
+                  className='content-visibility-auto rounded-xl object-cover shadow-xl'
                   placeholder='blur'
                   blurDataURL={blurPlaceholder}
                 />

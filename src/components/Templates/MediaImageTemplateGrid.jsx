@@ -22,7 +22,7 @@ const MediaImageTemplateGrid = ({ items, type = "backdrops" }) => {
           {items.map((item, index) => (
             <GridCol
               key={item.file_path}
-              className={cn("relative", {
+              className={cn("content-visibility-auto relative", {
                 "aspect-poster": matches(type, "posters"),
                 "aspect-backdrop": matches(type, "backdrops")
               })}>

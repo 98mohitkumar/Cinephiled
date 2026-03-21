@@ -124,7 +124,7 @@ export const PeopleTemplateGrid = ({ items, children, additionalGridItem, isLoad
                 transition: { duration: 0.1 }
               }}
               whileTap={{ scale: 0.95 }}>
-              <div className='relative aspect-profile'>
+              <div className='content-visibility-auto relative aspect-profile'>
                 <Image
                   src={getTMDBImage({ path: person.profile_path, type: "profile", size: "w342" })}
                   alt={person.name}
