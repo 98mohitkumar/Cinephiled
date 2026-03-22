@@ -19,7 +19,9 @@ export const useInfiniteQuery = ({
   getEndpoint,
   queryKey: queryKeyProp,
   staleTime = 1000 * 60 * 5,
-  gcTime = 1000 * 60 * 15
+  gcTime = 1000 * 60 * 15,
+  enabled = true,
+  maxPages = 9999
 }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -49,14 +51,15 @@ export const useInfiniteQuery = ({
       if (!lastPage?.results?.length) {
         return undefined;
       }
-      if (lastPage.page >= lastPage.total_pages) {
+      if (lastPage.page >= lastPage.total_pages || lastPage.page >= maxPages) {
         return undefined;
       }
       return lastPage.page + 1;
     },
     staleTime,
     gcTime,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    enabled
   });
 
   const { fetchNextPage, hasNextPage, isFetching, data } = infiniteQuery;

@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
-import { getFavorites, getRated, getRecommendations, getWatchlist } from "apiRoutes/user";
+import { getFavorites, getRated, getWatchlist } from "apiRoutes/user";
 
 import { useUserContext } from "./UserContext";
 
@@ -25,8 +25,7 @@ const MediaContext = createContext({
 const fetchFunctions = {
   watchlist: getWatchlist,
   ratings: getRated,
-  favorites: getFavorites,
-  recommendations: getRecommendations
+  favorites: getFavorites
 };
 
 const allEndpoints = [
@@ -35,9 +34,7 @@ const allEndpoints = [
   { key: "moviesWatchlist", endpoint: "watchlist", mediaType: "movies" },
   { key: "tvShowsWatchlist", endpoint: "watchlist", mediaType: "tv" },
   { key: "ratedMovies", endpoint: "ratings", mediaType: "movies" },
-  { key: "ratedTvShows", endpoint: "ratings", mediaType: "tv" },
-  { key: "movieRecommendations", endpoint: "recommendations", mediaType: "movie", maxPages: 5 },
-  { key: "tvRecommendations", endpoint: "recommendations", mediaType: "tv", maxPages: 5 }
+  { key: "ratedTvShows", endpoint: "ratings", mediaType: "tv" }
 ];
 
 export const useMediaContext = () => {
