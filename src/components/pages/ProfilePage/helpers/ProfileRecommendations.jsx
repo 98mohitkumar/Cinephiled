@@ -40,7 +40,7 @@ const MovieRecommendations = () => {
       {isLoading && cleanedItems.length === 0 ? (
         <LoadingSpinner />
       ) : cleanedItems.length > 0 ? (
-        <MediaTemplateGrid className='gap-y-3248' media={cleanedItems} mediaType='movie' gridType='poster' isLoadingNewItems={isLoading} />
+        <MediaTemplateGrid media={cleanedItems} mediaType='movie' gridType='poster' isLoadingNewItems={isLoading} />
       ) : (
         <PlaceholderText>No Movie recommendations available</PlaceholderText>
       )}
@@ -76,7 +76,7 @@ const TvRecommendations = () => {
       {isLoading && cleanedItems.length === 0 ? (
         <LoadingSpinner />
       ) : cleanedItems.length > 0 ? (
-        <MediaTemplateGrid className='gap-y-3248' media={cleanedItems} mediaType='tv' gridType='poster' isLoadingNewItems={isLoading} />
+        <MediaTemplateGrid media={cleanedItems} mediaType='tv' gridType='poster' isLoadingNewItems={isLoading} />
       ) : (
         <PlaceholderText>No TV Show recommendations available</PlaceholderText>
       )}
