@@ -128,8 +128,8 @@ export const getCountryCode = async (ip) => {
       const res = await fetch(apiEndpoints.user.getCountryCode(ip));
 
       if (res.ok && res.status === 200) {
-        const data = await res.json();
-        return data.country_code;
+        const { data } = await res.json();
+        return data?.countryCode;
       }
     }
   } catch (error) {

@@ -54,7 +54,7 @@ export const apiEndpoints = {
     getRecommendations: ({ mediaType, accountId, pageQuery = 1 }: { mediaType: string; accountId: string; pageQuery?: number }) =>
       `${baseUrlV4}/account/${accountId}/${mediaType}/recommendations?page=${pageQuery}&language=en-US`,
 
-    getCountryCode: (ip: string) => `https://ipwho.is/${ip}?fields=country_code`
+    getCountryCode: (ip: string) => `https://api.ipwho.org/ip/${ip}?apiKey=${process.env.IP_WHO_API_KEY}&get=countryCode`
   },
   search: {
     movieSearch: ({ query, pageQuery = 1, year = "" }: { query: string; pageQuery?: number; sortBy?: string; year?: string }) =>
