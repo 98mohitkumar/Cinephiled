@@ -92,10 +92,6 @@ export const heroBanner = ({ isHydrated }) => css`
     width: ${cssClamp({ minSize: 225, maxSize: 325 })};
   }
 
-  .backdrops-row {
-    will-change: transform;
-  }
-
   ${isHydrated
     ? css`
         animation: ${heroBannerAnimation} 1.25s 0.35s ${theme.transitionTimings["snappy-out"]} forwards;

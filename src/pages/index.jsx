@@ -143,14 +143,12 @@ export async function getStaticProps() {
     const { cleanedItems: trendingMoviesList } = removeDuplicates(trendingMovies?.results.concat(trendingMoviesNext?.results)) || [];
     const { cleanedItems: trendingTvList } = removeDuplicates(trendingTv?.results.concat(trendingTvNext?.results)) || [];
 
-    const { cleanedItems: backdrops } = removeDuplicates(
-      [...trendingMoviesList, ...trendingTvList]
-        .filter((item) => item.backdrop_path)
-        .map((item) => ({
-          src: item.backdrop_path,
-          id: item.id
-        }))
-    );
+    const backdrops = [...trendingMoviesList, ...trendingTvList]
+      .filter((item) => item.backdrop_path)
+      .map((item) => ({
+        src: item.backdrop_path,
+        id: item.id
+      }));
 
     const allBackdrops = randomizeItems(backdrops);
 

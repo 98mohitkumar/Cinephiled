@@ -24,10 +24,10 @@ const MediaReviews = ({ mediaType, mediaId, initialReviews }) => {
     initialReviews
   });
 
-  const reviews = data ?? initialReviews;
+  const reviews = data || initialReviews;
   const reviewsData = reviews?.results || [];
-  const totalPages = reviews?.total_pages ?? 0;
-  const currentPage = reviews?.page ?? page;
+  const totalPages = reviews?.total_pages || 0;
+  const currentPage = reviews?.page || page;
 
   const handlePageChange = (nextPage) => {
     setPage(nextPage);

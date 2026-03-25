@@ -29,7 +29,7 @@ export const useInfiniteQuery = ({
     userInfo: { accessToken }
   } = useUserContext();
 
-  const queryKey = useMemo(() => queryKeyProp ?? ["infinite-scroll", router.asPath], [queryKeyProp, router.asPath]);
+  const queryKey = useMemo(() => queryKeyProp || ["infinite-scroll", router.asPath], [queryKeyProp, router.asPath]);
 
   const infiniteQuery = useTanStackInfiniteQuery({
     queryKey,
@@ -64,7 +64,7 @@ export const useInfiniteQuery = ({
 
   const { fetchNextPage, hasNextPage, isFetching, data } = infiniteQuery;
 
-  const list = useMemo(() => data?.pages?.flatMap((p) => p.results ?? []) ?? [], [data?.pages]);
+  const list = useMemo(() => data?.pages?.flatMap((p) => p.results || []) || [], [data?.pages]);
 
   const fetchTimeOut = useRef(null);
 
@@ -85,7 +85,7 @@ export const useInfiniteQuery = ({
 
     fetchTimeOut.current = setTimeout(() => {
       fetchNextPage().catch((err) => {
-        console.error(err?.message ?? err);
+        console.error(err?.message || err);
       });
     }, 100);
   }, [fetchNextPage, hasNextPage, isFetching]);

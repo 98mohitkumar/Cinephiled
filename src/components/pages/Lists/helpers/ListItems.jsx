@@ -18,7 +18,7 @@ import { opacityMotionTransition } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
 import useRefreshData from "hooks/useRefreshData";
 import { useUserContext } from "Store/UserContext";
-import { cn, getReleaseDate, listMediaKey, matches } from "utils/helper";
+import { cn, getReleaseDate, uniqueMediaKey, matches } from "utils/helper";
 
 const ListItems = ({ listItems, id, userCanEditList }) => {
   const { revalidateData } = useRefreshData();
@@ -30,10 +30,7 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
   } = useUserContext();
   const { openModal, closeModal, isModalVisible } = useModal();
 
-  const {
-    list: infiniteQueryListMedia,
-    isLoading
-  } = useInfiniteQuery({
+  const { list: infiniteQueryListMedia, isLoading } = useInfiniteQuery({
     initialPage: 2,
     useUserToken: true,
     queryKey: listDetailsItemsInfiniteQueryKey(id),
@@ -62,7 +59,7 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
       setItemsToRemove((prev) => [item, ...prev]);
     } else {
       setItemsToRemove((prev) => {
-        const items = prev.filter((media) => listMediaKey(media) !== listMediaKey(item));
+        const items = prev.filter((media) => uniqueMediaKey(media) !== uniqueMediaKey(item));
 
         if (matches(items.length, 0)) {
           closeModal();
@@ -111,7 +108,7 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
 
   const renderList = listItems
     .concat(infiniteQueryListMedia)
-    .filter((item) => !itemsToRemove.some((media) => listMediaKey(media) === listMediaKey(item)));
+    .filter((item) => !itemsToRemove.some((media) => uniqueMediaKey(media) === uniqueMediaKey(item)));
 
   return (
     <Fragment>
@@ -181,7 +178,9 @@ const ListItems = ({ listItems, id, userCanEditList }) => {
         {itemsToRemove.length > 0 ? (
           <div className='mt-16 overflow-hidden rounded-lg border border-neutral-600 bg-neutral-800'>
             {itemsToRemove.map((item) => (
-              <FlexBox key={listMediaKey(item)} className='items-center justify-between gap-24 border-b border-neutral-600 px-16 py-12 last:border-b-0'>
+              <FlexBox
+                key={uniqueMediaKey(item)}
+                className='items-center justify-between gap-24 border-b border-neutral-600 px-16 py-12 last:border-b-0'>
                 <P weight='medium' className='line-clamp-2 text-neutral-300'>
                   {item.title || item.name}
                 </P>

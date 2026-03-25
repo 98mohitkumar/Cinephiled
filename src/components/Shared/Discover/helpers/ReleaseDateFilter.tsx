@@ -65,11 +65,11 @@ const ReleaseDateFilter = ({
   isMobile
 }: ReleaseDateFilterProps) => {
   const handleFromDateChange = (date: DateObject | null) => {
-    onChange([date?.format("YYYY-MM-DD") ?? "", value[1]]);
+    onChange([date?.format("YYYY-MM-DD") || "", value[1]]);
   };
 
   const handleToDateChange = (date: DateObject | null) => {
-    onChange([value[0], date?.format("YYYY-MM-DD") ?? ""]);
+    onChange([value[0], date?.format("YYYY-MM-DD") || ""]);
   };
 
   return (

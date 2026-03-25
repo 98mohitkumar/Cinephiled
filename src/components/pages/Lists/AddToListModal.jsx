@@ -22,7 +22,7 @@ const ListSlice = ({ mediaId, list, mediaType, CTA }) => {
   });
   const [optimistic, setOptimistic] = useState(null);
 
-  const serverAdded = data?.success ?? false;
+  const serverAdded = data?.success || false;
   const isAdded = optimistic !== null ? optimistic : serverAdded;
   const loading = isPending;
 
@@ -69,7 +69,7 @@ const AddToListModal = ({ mediaId, mediaType }) => {
     enabled: Boolean(isModalVisible)
   });
 
-  const lists = useMemo(() => data?.pages?.flatMap((p) => p.results ?? []) ?? [], [data?.pages]);
+  const lists = useMemo(() => data?.pages?.flatMap((p) => p.results || []) || [], [data?.pages]);
 
   const { updateListItems } = useUpdateListItems();
   const queryClient = useQueryClient();

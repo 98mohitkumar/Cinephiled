@@ -118,12 +118,12 @@ export const getGender = (gender: number) => {
   }
 };
 
-export const removeDuplicates = (items: Array<{ id: string }>) => {
+export const removeDuplicates = (items: Array<{ id: string; media_type?: string }>) => {
   const uniqueItemsMap = new Map();
 
   items.forEach((item) => {
-    if (!uniqueItemsMap.has(item.id)) {
-      uniqueItemsMap.set(item.id, item);
+    if (!uniqueItemsMap.has(uniqueMediaKey(item))) {
+      uniqueItemsMap.set(uniqueMediaKey(item), item);
     }
   });
 
@@ -287,5 +287,4 @@ export const getUserAvatar = (avatar: { type: string; src: string }) => {
 };
 
 /** TMDB list rows: movie and TV can share the same numeric id — pair with `media_type` for uniqueness. */
-export const listMediaKey = (item: { media_type?: string; id?: string | number }) =>
-  `${String(item.media_type ?? "")}:${String(item.id ?? "")}`;
+export const uniqueMediaKey = (item: { media_type?: string; id?: string | number }) => `${String(item.media_type || "")}:${String(item.id || "")}`;

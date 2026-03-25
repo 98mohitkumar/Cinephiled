@@ -173,7 +173,7 @@ export const useMediaReviewsQuery = ({ mediaType, mediaId, page, initialReviews 
 };
 
 /** Query key for TMDB v4 account lists (see `useAccountListsInfiniteQuery` and list mutations’ `onSettled`). */
-export const accountListsQueryKey = (accountId) => ["accountLists", String(accountId ?? "")];
+export const accountListsQueryKey = (accountId) => ["accountLists", String(accountId || "")];
 
 export const fetchAccountLists = async ({ accountId, pageQuery, token, signal }) => {
   const res = await fetch(apiEndpoints.lists.getLists({ accountId, pageQuery }), fetchOptions({ token, signal }));
@@ -376,7 +376,7 @@ export const useCreateList = () => {
 };
 
 /** TanStack infinite-query key for list detail pages (`useInfiniteQuery` + paginated list items). */
-export const listDetailsItemsInfiniteQueryKey = (listId) => ["listDetailsItems", String(listId ?? "")];
+export const listDetailsItemsInfiniteQueryKey = (listId) => ["listDetailsItems", String(listId || "")];
 
 export const useUpdateListItems = () => {
   const { userInfo } = useUserContext();

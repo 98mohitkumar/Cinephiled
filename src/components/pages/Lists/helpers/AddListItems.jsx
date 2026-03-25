@@ -19,7 +19,7 @@ import { blurPlaceholder, opacityMotionTransition } from "data/global";
 import useGetSearchSuggestions from "hooks/useGetSearchSuggestions";
 import useRefreshData from "hooks/useRefreshData";
 import { useUserContext } from "Store/UserContext";
-import { cn, getReleaseDate, listMediaKey, matches } from "utils/helper";
+import { cn, getReleaseDate, uniqueMediaKey, matches } from "utils/helper";
 import { getTMDBImage } from "utils/imageHelper";
 
 const AddListItems = ({ id }) => {
@@ -67,7 +67,7 @@ const AddListItems = ({ id }) => {
 
   // check for existing items and add to the local list items state
   const addItemHandler = async (item) => {
-    if (stagedItems.some((row) => listMediaKey(row) === listMediaKey(item))) {
+    if (stagedItems.some((row) => uniqueMediaKey(row) === uniqueMediaKey(item))) {
       toast.warning("Item already exists.", { description: "Item already added to the list." });
       return;
     }
@@ -116,7 +116,7 @@ const AddListItems = ({ id }) => {
   };
 
   const removeItemHandler = (row) => {
-    setStagedItems((prevState) => prevState.filter((item) => listMediaKey(item) !== listMediaKey(row)));
+    setStagedItems((prevState) => prevState.filter((item) => uniqueMediaKey(item) !== uniqueMediaKey(row)));
   };
 
   return (
@@ -242,7 +242,7 @@ const AddListItems = ({ id }) => {
               {stagedItems.map((item) => {
                 const { title, name, poster_path, media_type } = item;
                 return (
-                  <GridCol title={title || name} key={listMediaKey(item)}>
+                  <GridCol title={title || name} key={uniqueMediaKey(item)}>
                     <div className='relative aspect-poster'>
                       <Image
                         src={getTMDBImage({ path: poster_path, type: "poster" })}

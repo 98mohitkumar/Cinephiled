@@ -19,7 +19,7 @@ const BackdropBanner = ({ backdrops = [] }) => {
   return (
     <FlexBox className='flex-col items-center gap-10' css={heroBanner({ isHydrated })}>
       {backdropsArray.map((backdrops, index) => (
-        <FlexBox key={index} className='backdrops-row items-center justify-center gap-10'>
+        <FlexBox key={index} className='backdrops-row items-center justify-center gap-10 will-change-transform'>
           {backdrops.map(({ src, id }, index) => (
             <div key={`${id}-${index}`} className='backdrop-wrapper relative aspect-backdrop'>
               <Image

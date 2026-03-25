@@ -1,12 +1,18 @@
-import React, { ComponentPropsWithRef } from "react";
+import React, { ComponentPropsWithRef, ElementType } from "react";
 
 import { cn } from "utils/helper";
 
-const LayoutContainer = ({ children, className, ref, ...props }: ComponentPropsWithRef<"div">) => {
+type LayoutContainerProps = ComponentPropsWithRef<"div"> & {
+  tag?: ElementType;
+};
+
+const LayoutContainer = ({ children, className, ref, tag: Tag = "div", ...props }: LayoutContainerProps) => {
+  const Element = Tag as React.ElementType;
+
   return (
-    <div ref={ref} className={cn("mx-auto w-full px-1664", className)} {...props}>
+    <Element ref={ref} className={cn("mx-auto w-full px-1664", className)} {...props}>
       {children}
-    </div>
+    </Element>
   );
 };
 

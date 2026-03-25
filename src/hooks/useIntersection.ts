@@ -4,7 +4,7 @@ const useIntersection = ({
   ref,
   selector,
   rootMargin,
-  options = { root: null, rootMargin: rootMargin ?? "0px", threshold: 1.0 }
+  options = { root: null, rootMargin: rootMargin || "0px", threshold: 1.0 }
 }: {
   ref?: React.RefObject<HTMLElement>;
   selector?: string;
