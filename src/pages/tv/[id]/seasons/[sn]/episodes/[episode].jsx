@@ -85,8 +85,8 @@ const EpisodeRatingButton = ({ savedRating, title, seriesId, seasonNumber, episo
         rating={savedRatingState}
         title={title}
         mediaType='episode'
-        setRatingFunc={setRatingHandler}
-        deleteRatingFunc={deleteRatingHandler}
+        onSubmitRating={setRatingHandler}
+        onDeleteRating={deleteRatingHandler}
       />
     </Fragment>
   );

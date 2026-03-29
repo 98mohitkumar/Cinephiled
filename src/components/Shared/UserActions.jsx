@@ -4,14 +4,16 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { toast } from "sonner";
 
-import { useAddToWatchlist, useSetFavorite } from "apiRoutes/user";
+import { useSetFavorite } from "apiRoutes/favorites";
+import { useDeleteRating, useSetRating } from "apiRoutes/ratings";
+import { useMediaAccountStates } from "apiRoutes/user";
+import { useAddToWatchlist } from "apiRoutes/watchlist";
 import { useModal } from "components/Modal/Modal";
 import AddToListModal from "components/pages/Lists/AddToListModal";
 import RatingModal from "components/RatingModal/RatingModal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import { opacityMotionTransition, ROUTES } from "data/global";
-import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import { matches } from "utils/helper";
 
@@ -58,19 +60,22 @@ const UserActionButtons = ({ watchlistHandler, favoriteHandler, ratingModalHandl
   );
 };
 
-const UserMovieActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
+const UserMovieActions = ({ mediaId, mediaType, mediaDetails }) => {
   const { userInfo } = useUserContext();
+
   const { setFavorite } = useSetFavorite();
+  const { data: accountStates } = useMediaAccountStates({ mediaType: "movie", mediaId });
+
   const { addToWatchlist } = useAddToWatchlist();
-  const { favoriteMovies, moviesWatchlist, ratedMovies, validateMedia } = useMediaContext();
+  const { setRating } = useSetRating();
+  const { deleteRating } = useDeleteRating();
   const { isModalVisible, openModal, closeModal } = useModal();
 
-  const isAddedToWatchlist = moviesWatchlist?.some((item) => item.id === mediaId);
-  const isAddedToFavorites = favoriteMovies?.some((item) => item.id === mediaId);
-  const savedRating = ratedMovies?.find((item) => item?.id === mediaId)?.rating || false;
+  const isAddedToWatchlist = Boolean(accountStates?.watchlist);
+  const isAddedToFavorites = Boolean(accountStates?.favorite);
+  const savedRating = accountStates?.rated?.value || false;
 
   const title = mediaDetails?.title;
-  const poster = mediaDetails?.poster;
   const releaseDate = mediaDetails?.releaseDate;
 
   const favoriteHandler = async () => {
@@ -82,31 +87,6 @@ const UserMovieActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
       });
 
       if (response?.success) {
-        if (isAddedToFavorites) {
-          validateMedia({
-            state: "removed",
-            id: mediaId,
-            key: "favoriteMovies"
-          });
-        } else {
-          const updatedMedia = [...favoriteMovies];
-
-          updatedMedia.unshift({
-            id: mediaId,
-            poster_path: poster,
-            title,
-            release_date: releaseDate,
-            vote_average: rating
-          });
-
-          validateMedia({
-            state: "added",
-            id: mediaId,
-            key: "favoriteMovies",
-            media: updatedMedia
-          });
-        }
-
         toast.success(isAddedToFavorites ? "Removed from favorites" : "Added to favorites");
       } else {
         toast.error("Something went wrong, try again later");
@@ -125,30 +105,6 @@ const UserMovieActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
       });
 
       if (response?.success) {
-        if (isAddedToWatchlist) {
-          validateMedia({
-            state: "removed",
-            id: mediaId,
-            key: "moviesWatchlist"
-          });
-        } else {
-          const updatedMedia = [...moviesWatchlist];
-
-          updatedMedia.unshift({
-            id: mediaId,
-            poster_path: poster,
-            title,
-            release_date: releaseDate,
-            vote_average: rating
-          });
-
-          validateMedia({
-            state: "added",
-            id: mediaId,
-            key: "moviesWatchlist",
-            media: updatedMedia
-          });
-        }
         toast.success(isAddedToWatchlist ? "Removed from watchlist" : "Added to watchlist");
       } else {
         toast.error("Something went wrong, try again later");
@@ -163,6 +119,26 @@ const UserMovieActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
       openModal();
     } else {
       suggestLogin();
+    }
+  };
+
+  const handleSubmitRating = async ({ rating }) => {
+    const res = await setRating({ mediaType: "movie", mediaId, rating });
+
+    if (res?.success) {
+      toast.success("Rating saved successfully");
+    } else {
+      toast.error("Something went wrong, please try again later");
+    }
+  };
+
+  const handleDeleteRating = async () => {
+    const res = await deleteRating({ mediaType: "movie", mediaId });
+
+    if (res?.success) {
+      toast.success("Rating deleted successfully");
+    } else {
+      toast.error("Something went wrong, please try again later");
     }
   };
 
@@ -180,30 +156,31 @@ const UserMovieActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
       <RatingModal
         isOpen={isModalVisible}
         closeModal={closeModal}
-        mediaId={mediaId}
         title={title}
         rating={savedRating}
-        posterPath={poster}
         releaseDate={releaseDate}
         mediaType={mediaType}
+        onSubmitRating={handleSubmitRating}
+        onDeleteRating={handleDeleteRating}
       />
     </Fragment>
   );
 };
 
-const UserTVActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
+const UserTVActions = ({ mediaId, mediaType, mediaDetails }) => {
   const { userInfo } = useUserContext();
   const { setFavorite } = useSetFavorite();
   const { addToWatchlist } = useAddToWatchlist();
-  const { favoriteTvShows, tvShowsWatchlist, ratedTvShows, validateMedia } = useMediaContext();
+  const { data: accountStates } = useMediaAccountStates({ mediaType: "tv", mediaId });
+  const { setRating } = useSetRating();
+  const { deleteRating } = useDeleteRating();
   const { isModalVisible, openModal, closeModal } = useModal();
 
-  const isAddedToFavorites = favoriteTvShows?.some((item) => item.id === mediaId);
-  const isAddedToWatchlist = tvShowsWatchlist?.some((item) => item.id === mediaId);
-  const savedRating = ratedTvShows?.find((item) => item?.id === mediaId)?.rating || false;
+  const isAddedToFavorites = Boolean(accountStates?.favorite);
+  const isAddedToWatchlist = Boolean(accountStates?.watchlist);
+  const savedRating = accountStates?.rated?.value || false;
 
   const name = mediaDetails?.name;
-  const poster = mediaDetails?.poster;
   const airDate = mediaDetails?.airDate;
 
   const favoriteHandler = async () => {
@@ -214,28 +191,7 @@ const UserTVActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
         favoriteState: !isAddedToFavorites
       });
 
-      if (response.success) {
-        if (isAddedToFavorites) {
-          validateMedia({ state: "removed", id: mediaId, key: "favoriteTvShows" });
-        } else {
-          const updatedMedia = [...favoriteTvShows];
-
-          updatedMedia.unshift({
-            id: mediaId,
-            name,
-            poster_path: poster,
-            first_air_date: airDate,
-            vote_average: rating
-          });
-
-          validateMedia({
-            state: "added",
-            id: mediaId,
-            media: updatedMedia,
-            key: "favoriteTvShows"
-          });
-        }
-
+      if (response?.success) {
         toast.success(isAddedToFavorites ? "Removed from favorites" : "Added to favorites");
       } else {
         toast.error("Something went wrong, try again later");
@@ -253,28 +209,7 @@ const UserTVActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
         watchlistState: !isAddedToWatchlist
       });
 
-      if (response.success) {
-        if (isAddedToWatchlist) {
-          validateMedia({ state: "removed", id: mediaId, key: "tvShowsWatchlist" });
-        } else {
-          const updatedMedia = [...tvShowsWatchlist];
-
-          updatedMedia.unshift({
-            id: mediaId,
-            name,
-            poster_path: poster,
-            first_air_date: airDate,
-            vote_average: rating
-          });
-
-          validateMedia({
-            state: "added",
-            id: mediaId,
-            media: updatedMedia,
-            key: "tvShowsWatchlist"
-          });
-        }
-
+      if (response?.success) {
         toast.success(isAddedToWatchlist ? "Removed from watchlist" : "Added to watchlist");
       } else {
         toast.error("Something went wrong, try again later");
@@ -292,6 +227,26 @@ const UserTVActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
     }
   };
 
+  const handleSubmitRating = async ({ rating }) => {
+    const res = await setRating({ mediaType: "tv", mediaId, rating });
+
+    if (res?.success) {
+      toast.success("Rating saved successfully");
+    } else {
+      toast.error("Something went wrong, please try again later");
+    }
+  };
+
+  const handleDeleteRating = async () => {
+    const res = await deleteRating({ mediaType: "tv", mediaId });
+
+    if (res?.success) {
+      toast.success("Rating deleted successfully");
+    } else {
+      toast.error("Something went wrong, please try again later");
+    }
+  };
+
   return (
     <Fragment>
       <UserActionButtons
@@ -306,26 +261,26 @@ const UserTVActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
       <RatingModal
         isOpen={isModalVisible}
         closeModal={closeModal}
-        mediaId={mediaId}
         title={name}
         rating={savedRating}
         releaseDate={airDate}
-        posterPath={poster}
         mediaType={mediaType}
+        onSubmitRating={handleSubmitRating}
+        onDeleteRating={handleDeleteRating}
       />
     </Fragment>
   );
 };
 
-const UserActions = ({ mediaId, mediaType, mediaDetails, rating }) => {
+const UserActions = ({ mediaId, mediaType, mediaDetails }) => {
   return (
     <Fragment>
       <AddToListModal mediaType={mediaType} mediaId={mediaId} />
 
       {matches(mediaType, "movie") ? (
-        <UserMovieActions mediaId={mediaId} mediaType={mediaType} mediaDetails={mediaDetails} rating={rating} />
+        <UserMovieActions mediaId={mediaId} mediaType={mediaType} mediaDetails={mediaDetails} />
       ) : (
-        <UserTVActions mediaId={mediaId} mediaType={mediaType} mediaDetails={mediaDetails} rating={rating} />
+        <UserTVActions mediaId={mediaId} mediaType={mediaType} mediaDetails={mediaDetails} />
       )}
     </Fragment>
   );

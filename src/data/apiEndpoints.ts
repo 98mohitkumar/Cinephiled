@@ -91,7 +91,9 @@ export const apiEndpoints = {
     movieGenreList: `${baseUrlV3}/genre/movie/list?language=en-US`,
 
     nowPlaying: ({ region, pageQuery = 1 }: { region: string; pageQuery: number }) =>
-      `${baseUrlV3}/movie/now_playing?page=${pageQuery}&region=${region}`
+      `${baseUrlV3}/movie/now_playing?page=${pageQuery}&region=${region}`,
+
+    accountStates: (id: string) => `${baseUrlV3}/movie/${id}/account_states`
   },
   tv: {
     trendingTv: ({ pageQuery = 1 }) => `${baseUrlV3}/trending/tv/day?language=en-US&page=${pageQuery}`,
@@ -118,7 +120,9 @@ export const apiEndpoints = {
 
     tvReviews: ({ id, pageQuery = 1 }: { id: string; pageQuery?: number }) => `${baseUrlV3}/tv/${id}/reviews?language=en-US&page=${pageQuery}`,
 
-    tvGenreList: `${baseUrlV3}/genre/tv/list?language=en-US`
+    tvGenreList: `${baseUrlV3}/genre/tv/list?language=en-US`,
+
+    accountStates: (id: string) => `${baseUrlV3}/tv/${id}/account_states`
   },
   discover: {
     movies: ({

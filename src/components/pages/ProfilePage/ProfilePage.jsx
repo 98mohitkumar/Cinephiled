@@ -1,6 +1,9 @@
 import { AnimatePresence, motion } from "motion/react";
 import { Fragment } from "react";
 
+import { useProfileFavoriteMoviesCount, useProfileFavoriteTvCount } from "apiRoutes/favorites";
+import { useProfileRatedMoviesCount, useProfileRatedTvCount } from "apiRoutes/ratings";
+import { useProfileWatchlistMoviesCount, useProfileWatchlistTvCount } from "apiRoutes/watchlist";
 import MetaWrapper from "components/Shared/MetaWrapper";
 import { LinearTabs } from "components/Shared/Tabs/Tabs";
 import FlexBox from "components/UI/FlexBox";
@@ -9,7 +12,6 @@ import H2 from "components/UI/Typography/H2";
 import P from "components/UI/Typography/P";
 import { opacityMotionTransition } from "data/global";
 import useTabs from "hooks/useTabs";
-import { useMediaContext } from "Store/MediaContext";
 import { useUserContext } from "Store/UserContext";
 import { matches } from "utils/helper";
 
@@ -28,7 +30,12 @@ const linearTabsList = [
 
 const Profile = () => {
   const { userInfo } = useUserContext();
-  const { favoriteMovies, favoriteTvShows, moviesWatchlist, tvShowsWatchlist, ratedMovies, ratedTvShows } = useMediaContext();
+  const { data: favoriteMoviesTotal = 0 } = useProfileFavoriteMoviesCount();
+  const { data: favoriteTvTotal = 0 } = useProfileFavoriteTvCount();
+  const { data: watchlistMoviesTotal = 0 } = useProfileWatchlistMoviesCount();
+  const { data: watchlistTvTotal = 0 } = useProfileWatchlistTvCount();
+  const { data: ratedMoviesTotal = 0 } = useProfileRatedMoviesCount();
+  const { data: ratedTvTotal = 0 } = useProfileRatedTvCount();
 
   const userAvatar = {
     type: userInfo?.avatar?.tmdb?.avatar_path ? "tmdb" : "hash",
@@ -36,9 +43,9 @@ const Profile = () => {
   };
 
   const stats = {
-    Watchlist: moviesWatchlist?.length + tvShowsWatchlist?.length || 0,
-    Favorites: favoriteMovies?.length + favoriteTvShows?.length || 0,
-    Rated: ratedMovies?.length + ratedTvShows.length || 0
+    Watchlist: watchlistMoviesTotal + watchlistTvTotal,
+    Favorites: favoriteMoviesTotal + favoriteTvTotal,
+    Rated: ratedMoviesTotal + ratedTvTotal
   };
 
   const { activeTab, setTab } = useTabs({

@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 import { apiEndpoints } from "data/apiEndpoints";
 import { isProduction } from "data/global";
@@ -6,65 +7,6 @@ import { useUserContext } from "Store/UserContext";
 import { fetchOptions } from "utils/helper";
 
 // GET requsts
-
-export const getWatchlist = async ({ mediaType, pageQuery, accountId, token, signal }) => {
-  const watchlistRes = await fetch(
-    apiEndpoints.user.getWatchlist({
-      mediaType,
-      accountId,
-      pageQuery
-    }),
-    fetchOptions({
-      token,
-      signal
-    })
-  );
-
-  if (watchlistRes?.ok) {
-    const watchlist = await watchlistRes.json();
-    return watchlist;
-  } else {
-    throw Error("cannot fetch data");
-  }
-};
-
-export const getRated = async ({ mediaType, pageQuery, accountId, token, signal }) => {
-  const ratedRes = await fetch(
-    apiEndpoints.user.getRated({ mediaType, accountId, pageQuery }),
-    fetchOptions({
-      token,
-      signal
-    })
-  );
-
-  if (ratedRes?.ok) {
-    const rated = await ratedRes.json();
-    return rated;
-  } else {
-    throw Error("cannot fetch data");
-  }
-};
-
-export const getFavorites = async ({ mediaType, pageQuery, accountId, token, signal }) => {
-  const favoritesRes = await fetch(
-    apiEndpoints.user.getFavorites({
-      mediaType,
-      accountId,
-      pageQuery
-    }),
-    fetchOptions({
-      token,
-      signal
-    })
-  );
-
-  if (favoritesRes?.ok) {
-    const favoritesList = await favoritesRes.json();
-    return favoritesList;
-  } else {
-    throw Error("cannot fetch data");
-  }
-};
 
 export const getRecommendations = async ({ mediaType, pageQuery, accountId, token, signal }) => {
   const recommendationsRes = await fetch(
@@ -215,100 +157,55 @@ export const useAccountListsInfiniteQuery = ({ enabled = true } = {}) => {
 
 // POST requests
 
-export const useSetFavorite = () => {
-  const { userInfo } = useUserContext();
+/**
+ * TanStack Query key for TMDB per-title account states (`favorite`, `watchlist`, `rated`, …).
+ * Used by favorites / watchlist mutations and detail-page hooks for optimistic cache updates.
+ */
+export const mediaAccountStatesQueryKey = (mediaType, mediaId, accountId) => [
+  "mediaAccountStates",
+  mediaType,
+  String(mediaId),
+  String(accountId)
+];
 
-  const setFavorite = async ({ mediaType, mediaId, favoriteState }) => {
-    const favorite = await fetch(
-      apiEndpoints.user.setFavorite({
-        accountId: userInfo.accountId
-      }),
-      fetchOptions({
-        method: "POST",
-        token: userInfo.accessToken,
-        body: {
-          media_type: mediaType,
-          media_id: mediaId,
-          favorite: favoriteState
-        }
-      })
-    );
+/**
+ * After mutations that change favorite, watchlist, or rating, TMDB's `account_states` response can briefly lag.
+ * Invalidate that query after this delay so the refetch is less likely to show stale toggles.
+ */
+export const MEDIA_ACCOUNT_STATES_INVALIDATE_DELAY_MS = 1000;
 
-    if (favorite.ok) {
-      return await favorite.json();
-    } else {
-      return {
-        success: false
-      };
-    }
-  };
+/**
+ * TMDB `GET /movie/{id}/account_states` | `GET /tv/{id}/account_states`.
+ * Response includes `favorite`, `watchlist`, `rated` (and `id`). Requires user token.
+ */
+export const fetchMediaAccountStates = async ({ mediaType, mediaId, token, signal }) => {
+  const id = String(mediaId);
+  const url = mediaType === "movie" ? apiEndpoints.movie.accountStates(id) : apiEndpoints.tv.accountStates(id);
 
-  return {
-    setFavorite
-  };
+  const res = await fetch(url, fetchOptions({ token, signal }));
+
+  if (!res.ok) {
+    throw new Error("Cannot fetch media account states");
+  }
+
+  return res.json();
 };
 
-export const useAddToWatchlist = () => {
-  const { userInfo } = useUserContext();
+export const useMediaAccountStates = ({ mediaType, mediaId }) => {
+  const {
+    userInfo: { accountId, accessToken }
+  } = useUserContext();
 
-  const addToWatchlist = async ({ mediaType, mediaId, watchlistState }) => {
-    const watchlist = await fetch(
-      apiEndpoints.user.addToWatchlist({
-        accountId: userInfo.accountId
-      }),
-      fetchOptions({
-        method: "POST",
-        token: userInfo.accessToken,
-        body: {
-          media_type: mediaType,
-          media_id: mediaId,
-          watchlist: watchlistState
-        }
-      })
-    );
+  const queryKey = useMemo(() => mediaAccountStatesQueryKey(mediaType, mediaId, accountId), [mediaType, mediaId, accountId]);
 
-    if (watchlist.ok) {
-      return await watchlist.json();
-    } else {
-      return {
-        success: false
-      };
-    }
-  };
-
-  return { addToWatchlist };
-};
-
-export const useSetRating = () => {
-  const { userInfo } = useUserContext();
-
-  const setRating = async ({ mediaType, mediaId, rating }) => {
-    const rated = await fetch(
-      apiEndpoints.user.setRating({
-        mediaType,
-        mediaId
-      }),
-      fetchOptions({
-        method: "POST",
-        token: userInfo.accessToken,
-        body: {
-          value: rating
-        }
-      })
-    );
-
-    if (rated.ok) {
-      return await rated.json();
-    } else {
-      return {
-        success: false
-      };
-    }
-  };
-
-  return {
-    setRating
-  };
+  return useQuery({
+    queryKey,
+    queryFn: ({ signal }) => fetchMediaAccountStates({ mediaType, mediaId, token: accessToken, signal }),
+    enabled: Boolean(accountId && accessToken && mediaId != null),
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 30,
+    refetchOnWindowFocus: false
+  });
 };
 
 export const useSetEpisodeRating = () => {
@@ -449,35 +346,6 @@ export const useUpdateList = () => {
 };
 
 // DELETE requests
-export const useDeleteRating = () => {
-  const { userInfo } = useUserContext();
-
-  const deleteRating = async ({ mediaType, mediaId }) => {
-    const deleted = await fetch(
-      apiEndpoints.user.deleteRating({
-        mediaType,
-        mediaId
-      }),
-      fetchOptions({
-        method: "DELETE",
-        token: userInfo.accessToken
-      })
-    );
-
-    if (deleted.ok) {
-      return await deleted.json();
-    } else {
-      return {
-        success: false
-      };
-    }
-  };
-
-  return {
-    deleteRating
-  };
-};
-
 export const useDeleteEpisodeRating = () => {
   const { userInfo } = useUserContext();
 

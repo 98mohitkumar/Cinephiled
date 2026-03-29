@@ -1,5 +1,9 @@
+import { QueryClient, dehydrate } from "@tanstack/react-query";
+import { getServerSession } from "next-auth";
 import { Fragment } from "react";
 
+import { authOptions } from "api/auth/[...nextauth]";
+import { fetchMediaAccountStates, mediaAccountStatesQueryKey } from "apiRoutes/user";
 import MovieDetails from "components/pages/Movie/MovieDetails";
 import MovieTab from "components/pages/Movie/MovieTab";
 import DominantColor from "components/Shared/DominantColor/DominantColor";
@@ -85,14 +89,32 @@ const Movie = ({
 
 export const getServerSideProps = async (ctx) => {
   try {
-    const [movieResponse, languagesResponse] = await Promise.all([
+    const [movieResponse, languagesResponse, session] = await Promise.all([
       fetch(apiEndpoints.movie.movieDetails(ctx.query.id), fetchOptions()),
-      fetch(apiEndpoints.language, fetchOptions())
+      fetch(apiEndpoints.language, fetchOptions()),
+      getServerSession(ctx.req, ctx.res, authOptions)
     ]);
 
     if (!movieResponse.ok) throw new Error("error fetching details");
 
     const [movieDetails, languages] = await Promise.all([movieResponse.json(), languagesResponse.json()]);
+
+    const queryClient = new QueryClient();
+    const mediaId = movieDetails?.id ?? ctx.query.id;
+    const token = session?.user?.accessToken;
+    const accountId = session?.user?.accountId;
+
+    if (token && accountId && mediaId != null) {
+      try {
+        await queryClient.prefetchQuery({
+          queryKey: mediaAccountStatesQueryKey("movie", mediaId, accountId),
+          queryFn: ({ signal }) =>
+            fetchMediaAccountStates({ mediaType: "movie", mediaId, token, signal })
+        });
+      } catch (prefetchErr) {
+        console.error("prefetch media account states (movie) failed", prefetchErr);
+      }
+    }
 
     const socialIds = movieDetails?.external_ids,
       language = languages.find((item) => matches(item.iso_639_1, movieDetails.original_language)),
@@ -150,7 +172,9 @@ export const getServerSideProps = async (ctx) => {
           productionCompanies: movieDetails?.production_companies || [],
           networks: [],
           keywords: movieDetails?.keywords?.keywords || []
-        }
+        },
+
+        dehydratedState: dehydrate(queryClient)
       }
     };
   } catch (err) {

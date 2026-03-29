@@ -1,5 +1,5 @@
 import "styles/globals.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Analytics } from "@vercel/analytics/next";
 import Head from "next/head";
@@ -12,14 +12,13 @@ import { Fragment, useEffect, useState } from "react";
 import Layout from "components/Layout/Layout";
 import Loader from "components/Loader/Loader";
 import Toast from "components/Shared/Toast";
-import MediaContextProvider from "Store/MediaContext";
 import UserContextProvider from "Store/UserContext";
 import GlobalStyles from "styles/globals";
 import ErrorBoundary from "utils/ErrorBoundary";
 
 import "utils/logging";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+function MyApp({ Component, pageProps: { session, dehydratedState, ...pageProps } }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [queryClient] = useState(
@@ -70,22 +69,22 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <GlobalStyles />
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
-          <SessionProvider session={session} refetchOnWindowFocus={false}>
-            <NavigationGuardProvider>
-              <UserContextProvider>
-                <MediaContextProvider>
+          <HydrationBoundary state={dehydratedState}>
+            <SessionProvider session={session} refetchOnWindowFocus={false}>
+              <NavigationGuardProvider>
+                <UserContextProvider>
                   {isLoading ? <Loader /> : null}
                   <Layout>
                     <NuqsAdapter>
                       <Component {...pageProps} />
                     </NuqsAdapter>
                   </Layout>
-                </MediaContextProvider>
-              </UserContextProvider>
-            </NavigationGuardProvider>
-          </SessionProvider>
+                </UserContextProvider>
+              </NavigationGuardProvider>
+            </SessionProvider>
 
-          {process.env.NODE_ENV === "development" ? <ReactQueryDevtools initialIsOpen={false} /> : null}
+            {process.env.NODE_ENV === "development" ? <ReactQueryDevtools initialIsOpen={false} /> : null}
+          </HydrationBoundary>
         </QueryClientProvider>
       </ErrorBoundary>
 

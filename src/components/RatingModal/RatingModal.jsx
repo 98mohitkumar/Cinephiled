@@ -1,35 +1,33 @@
 import { Star } from "lucide-react";
 import { useState, Fragment } from "react";
-import { toast } from "sonner";
 
-import { useDeleteRating, useSetRating } from "apiRoutes/user";
 import Modal, { useModal } from "components/Modal/Modal";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import H4 from "components/UI/Typography/H4";
 import H5 from "components/UI/Typography/H5";
 import P from "components/UI/Typography/P";
-import { useMediaContext } from "Store/MediaContext";
 import { theme } from "theme/theme";
 import { cn, getReleaseYear, matches } from "utils/helper";
 
+/**
+ * @param {object} props
+ * @param {string} props.mediaType — `"movie"` | `"tv"` | `"episode"`
+ * @param {() => Promise<void>} props.onSubmitRating — called with `{ rating }` (1–10)
+ * @param {() => Promise<void>} props.onDeleteRating
+ */
 const RatingModal = ({
   mediaType,
-  mediaId,
   closeModal,
-  posterPath,
   releaseDate,
   isOpen,
   title,
   rating: savedRating = 0,
-  setRatingFunc,
-  deleteRatingFunc
+  onSubmitRating,
+  onDeleteRating
 }) => {
   const [rating, updateRating] = useState(0);
   const [isUpdatingRating, setIsUpdatingRating] = useState(false);
-  const { setRating } = useSetRating();
-  const { deleteRating } = useDeleteRating();
-  const { ratedMovies, ratedTvShows, validateMedia } = useMediaContext();
 
   const {
     isModalVisible: isDeleteConfirmationModalVisible,
@@ -46,88 +44,12 @@ const RatingModal = ({
   const ratingSubmissionHandler = async () => {
     if (matches(rating, 0)) return;
 
-    if (matches(mediaType, "episode")) {
-      await setRatingFunc({ rating });
-      cancelButtonHandler();
-      return;
-    }
-
-    const res = await setRating({ mediaType, mediaId, rating });
-
-    if (res?.success) {
-      if (mediaType === "movie") {
-        let updatedRatedMovies = [...ratedMovies];
-        const index = updatedRatedMovies.findIndex((item) => item?.id === mediaId);
-
-        if (index > -1) {
-          updatedRatedMovies[index].rating = rating;
-        } else {
-          updatedRatedMovies.unshift({
-            id: mediaId,
-            rating,
-            poster_path: posterPath,
-            release_date: releaseDate,
-            title
-          });
-        }
-        validateMedia({
-          state: "added",
-          id: mediaId,
-          key: "ratedMovies",
-          media: updatedRatedMovies
-        });
-      } else {
-        let updatedRatedTvShows = [...ratedTvShows];
-        const index = updatedRatedTvShows.findIndex((item) => item?.id === mediaId);
-
-        if (index > -1) {
-          updatedRatedTvShows[index].rating = rating;
-        } else {
-          updatedRatedTvShows.unshift({
-            id: mediaId,
-            rating,
-            poster_path: posterPath,
-            first_air_date: releaseDate,
-            name: title
-          });
-        }
-        validateMedia({
-          state: "added",
-          id: mediaId,
-          key: "ratedTvShows",
-          media: updatedRatedTvShows
-        });
-      }
-      toast.success("Rating saved successfully");
-    } else {
-      toast.error("Something went wrong, please try again later");
-    }
-
-    // clear the states
+    await onSubmitRating({ rating });
     cancelButtonHandler();
   };
 
   const deleteRatingHandler = async () => {
-    if (matches(mediaType, "episode")) {
-      await deleteRatingFunc();
-      closeDeleteConfirmationModal();
-      return;
-    }
-
-    const res = await deleteRating({ mediaType, mediaId });
-
-    if (res?.success) {
-      validateMedia({
-        state: "removed",
-        id: mediaId,
-        key: mediaType === "movie" ? "ratedMovies" : "ratedTvShows"
-      });
-
-      toast.success("Rating deleted successfully");
-    } else {
-      toast.error("Something went wrong, please try again later");
-    }
-
+    await onDeleteRating();
     closeDeleteConfirmationModal();
   };
 
@@ -207,7 +129,6 @@ const RatingModal = ({
         </FlexBox>
       </Modal>
 
-      {/* delete rating modal */}
       <Modal isOpen={isDeleteConfirmationModalVisible} closeModal={closeDeleteConfirmationModal} className='max-w-lg'>
         <H4 weight='semibold' className='mb-16'>
           Delete Rating
