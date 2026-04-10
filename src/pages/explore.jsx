@@ -28,7 +28,7 @@ const Explore = ({ movieGenres, tvGenres, nowPlaying }) => {
           <DominantColor tint />
 
           {/* genres for movies and tv shows */}
-          <LayoutContainer className='relative z-5 py-2440 pe-0'>
+          <LayoutContainer className='relative z-5 py-2440'>
             <GenresCarousel movieGenres={movieGenres} tvGenres={tvGenres} />
           </LayoutContainer>
 

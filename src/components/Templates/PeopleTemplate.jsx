@@ -4,7 +4,6 @@ import { useKeenSlider } from "keen-slider/react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment } from "react";
 
 import { LoadingSpinner } from "components/Loader/Loader";
 import { GridCol, Grid } from "components/UI/Grid";
@@ -21,88 +20,95 @@ export const CastCarousel = ({ cast, children }) => {
     breakpoints: {
       "(min-width: 0px)": {
         slides: {
-          perView: 2.25
+          perView: 2.25,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints.xs})`]: {
         slides: {
-          perView: 2.75
+          perView: 2.75,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints.sm})`]: {
         slides: {
-          perView: 3.25
+          perView: 3.25,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints.md})`]: {
         slides: {
-          perView: 4.25
+          perView: 4.25,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints.lg})`]: {
         slides: {
-          perView: 5.25
+          perView: 5.25,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints.xl})`]: {
         slides: {
-          perView: 6.25
+          perView: 6.25,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints["2xl"]})`]: {
         slides: {
-          perView: 7.25
+          perView: 7.25,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints["3xl"]})`]: {
         slides: {
-          perView: 8.25
+          perView: 8.25,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints["4xl"]})`]: {
         slides: {
-          perView: 9.25
+          perView: 10.25,
+          spacing: 16
         }
       }
     }
   });
 
   return (
-    <Fragment>
-      <div ref={sliderRef} className='keen-slider'>
+    <div className='-mx-1664 overflow-clip px-1664'>
+      <div ref={sliderRef} className='keen-slider !overflow-visible'>
         {cast.map((item) => (
           <div key={item.id} className='keen-slider__slide'>
-            <div className='mr-1620'>
-              <Link href={`/${ROUTES.person}/${getNiceName({ id: item.id, name: item.name })}`} passHref>
-                <motion.div className='relative aspect-profile' whileTap={{ scale: 0.95 }} title={item.name}>
-                  <Image
-                    src={getTMDBImage({ path: item.profile_path, type: "profile", size: "w342" })}
-                    alt={item.name}
-                    fill
-                    className='rounded-xl object-cover object-top shadow-xl'
-                    placeholder='blur'
-                    blurDataURL={blurPlaceholder}
-                  />
-                </motion.div>
+            <Link href={`/${ROUTES.person}/${getNiceName({ id: item.id, name: item.name })}`} passHref>
+              <motion.div className='relative aspect-profile' whileTap={{ scale: 0.95 }} title={item.name}>
+                <Image
+                  src={getTMDBImage({ path: item.profile_path, type: "profile", size: "w342" })}
+                  alt={item.name}
+                  fill
+                  className='rounded-xl object-cover object-top shadow-xl'
+                  placeholder='blur'
+                  blurDataURL={blurPlaceholder}
+                />
+              </motion.div>
 
-                {children ? (
-                  children(item)
-                ) : (
-                  <div className='mt-12'>
-                    <P weight='bold' className='line-clamp-2' title={item.character}>
-                      {item.character}
-                    </P>
-                    <P className='text-neutral-400' title={item.name}>
-                      {item.name}
-                    </P>
-                  </div>
-                )}
-              </Link>
-            </div>
+              {children ? (
+                children(item)
+              ) : (
+                <div className='mt-12'>
+                  <P weight='bold' className='line-clamp-2' title={item.character}>
+                    {item.character}
+                  </P>
+                  <P className='text-neutral-400' title={item.name}>
+                    {item.name}
+                  </P>
+                </div>
+              )}
+            </Link>
           </div>
         ))}
       </div>
-    </Fragment>
+    </div>
   );
 };
 

@@ -95,37 +95,44 @@ const PersonDetails = ({ personDetails }) => {
     breakpoints: {
       "(min-width: 0px)": {
         slides: {
-          perView: 1.75
+          perView: 1.75,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints.xs})`]: {
         slides: {
-          perView: 2.25
+          perView: 2.25,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints.sm})`]: {
         slides: {
-          perView: 3.25
+          perView: 3.25,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints.lg})`]: {
         slides: {
-          perView: 4.25
+          perView: 4.25,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints.xl})`]: {
         slides: {
-          perView: 4.75
+          perView: 4.75,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints["2xl"]})`]: {
         slides: {
-          perView: 5.75
+          perView: 5.75,
+          spacing: 16
         }
       },
       [`(min-width: ${theme.breakpoints["3xl"]})`]: {
         slides: {
-          perView: 7.75
+          perView: 7.75,
+          spacing: 16
         }
       }
     }
@@ -258,23 +265,25 @@ const PersonDetails = ({ personDetails }) => {
           </div>
         </LayoutContainer>
 
-        <LayoutContainer className='py-2448 pe-0'>
-          <div ref={sliderRef} className='keen-slider'>
-            {images?.profiles.map((item, index) => (
-              <div className='keen-slider__slide' key={item.file_path}>
-                <div className='relative mr-1620 aspect-poster'>
-                  <Image
-                    src={getTMDBImage({ path: item.file_path, type: "profile", size: "h632" })}
-                    alt='cast-image'
-                    fill
-                    placeholder='blur'
-                    className='rounded-xl object-cover shadow-xl'
-                    blurDataURL={blurPlaceholder}
-                  />
-                  <DownloadMediaButton item={{ path: item.file_path, id: index + 1, name: personDetails.name }} />
+        <LayoutContainer className='py-2448'>
+          <div className='-mx-1664 overflow-clip px-1664'>
+            <div ref={sliderRef} className='keen-slider !overflow-visible'>
+              {images?.profiles.map((item, index) => (
+                <div className='keen-slider__slide' key={item.file_path}>
+                  <div className='relative aspect-poster'>
+                    <Image
+                      src={getTMDBImage({ path: item.file_path, type: "profile", size: "h632" })}
+                      alt='cast-image'
+                      fill
+                      placeholder='blur'
+                      className='rounded-xl object-cover shadow-xl'
+                      blurDataURL={blurPlaceholder}
+                    />
+                    <DownloadMediaButton item={{ path: item.file_path, id: index + 1, name: personDetails.name }} />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </LayoutContainer>
 

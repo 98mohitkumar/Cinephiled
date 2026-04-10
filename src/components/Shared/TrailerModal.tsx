@@ -6,8 +6,6 @@ import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import H4 from "components/UI/Typography/H4";
 
-import "keen-slider/keen-slider.min.css";
-
 type trailer = {
   iso_639_1: string;
   iso_3166_1: string;
