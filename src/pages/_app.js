@@ -83,7 +83,7 @@ function MyApp({ Component, pageProps: { session, dehydratedState, ...pageProps 
               </NavigationGuardProvider>
             </SessionProvider>
 
-            {process.env.NODE_ENV === "development" ? <ReactQueryDevtools initialIsOpen={false} /> : null}
+            <ReactQueryDevtools initialIsOpen={false} />
           </HydrationBoundary>
         </QueryClientProvider>
       </ErrorBoundary>

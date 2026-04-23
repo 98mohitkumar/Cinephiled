@@ -21,6 +21,7 @@ import MediaImageTemplateGrid from "components/Templates/MediaImageTemplateGrid"
 import { CastCarousel } from "components/Templates/PeopleTemplate";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
+import { Grid } from "components/UI/Grid";
 import LayoutContainer from "components/UI/LayoutContainer";
 import H2 from "components/UI/Typography/H2";
 import H3 from "components/UI/Typography/H3";
@@ -160,11 +161,11 @@ const Episode = ({
                 </P>
               ) : null}
 
-              {crewData?.length > 0 ? <CrewCredits crewData={crewData} className='my-2032' /> : null}
+              <Grid className='my-2032 max-w-max gap-x-40' colConfig={{ xxs: 2 }}>
+                {crewData?.length > 0 ? <CrewCredits crewData={crewData} className='contents' /> : null}
 
-              <FlexBox className='flex-row-reverse justify-end gap-2440'>
                 <ImdbLinks imdbId={imdbId} />
-              </FlexBox>
+              </Grid>
 
               <FlexBox className='mt-2032 flex-wrap items-center gap-10'>
                 <EpisodeRatingButton
