@@ -123,10 +123,20 @@ const CELL_W = 60;
 const CELL_H = 40;
 const GAP = 8;
 const PAD_TOP = 44;
-const PAD_LEFT = 48;
+const DEFAULT_PAD_LEFT = 48;
 const PAD_RIGHT = 16;
 const AVG_ROW_H = 44;
 const PAD_BOTTOM = 24;
+
+/**
+ * Left gutter sized to fit the widest episode label ("E<digits>") right-anchored 14px from the cells.
+ * Rough ink: "E" ≈ 10px + each digit ≈ 9px @ 15px bold, plus 14px gap + 14px cushion.
+ * Floored at DEFAULT_PAD_LEFT so short shows keep the original layout.
+ */
+const getPadLeft = (maxEpisodes) => {
+  const digits = String(Math.max(1, maxEpisodes || 1)).length;
+  return Math.max(DEFAULT_PAD_LEFT, 10 + digits * 9 + 14 + 14);
+};
 
 const TOOLTIP_OFFSET = 14;
 const TOOLTIP_MAX_W = 280;
@@ -243,6 +253,8 @@ const EpisodeRatingsGrid = ({ tvId, tvName, seasons, posterPath, overallRating, 
   const [isExporting, setIsExporting] = useState(false);
   const rafRef = useRef(0);
   const svgRef = useRef(null);
+  // Render-time SVG layout values the export callback needs to line up with the actual SVG bitmap.
+  const layoutRef = useRef({ padLeft: DEFAULT_PAD_LEFT });
 
   // cancel any pending rAF position update on unmount
   useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
@@ -345,9 +357,9 @@ const EpisodeRatingsGrid = ({ tvId, tvName, seasons, posterPath, overallRating, 
         (acc, item, i) => acc + LEGEND_DOT_R * 2 + LEGEND_TEXT_GAP + item.textW + (i < legendItems.length - 1 ? LEGEND_ITEM_GAP : 0),
         0
       );
-      // SVG reserves PAD_LEFT for episode labels; rating cells start at x = PAD_LEFT. Draw the export
+      // SVG reserves padLeft for episode labels; rating cells start at x = padLeft. Draw the export
       // legend from that x so dots line up with the grid, not with the SVG bitmap’s left gutter.
-      const legendOffsetX = PAD_LEFT;
+      const legendOffsetX = layoutRef.current.padLeft;
 
       const hasRating = typeof overallRating === "number" && overallRating > 0;
       const ratingBucket = hasRating ? getBucket(overallRating) : null;
@@ -535,7 +547,9 @@ const EpisodeRatingsGrid = ({ tvId, tvName, seasons, posterPath, overallRating, 
   }
 
   const maxEpisodes = Math.max(...validSeasons.map((s) => s.episodes.length));
-  const width = PAD_LEFT + validSeasons.length * (CELL_W + GAP) - GAP + PAD_RIGHT;
+  const padLeft = getPadLeft(maxEpisodes);
+  layoutRef.current.padLeft = padLeft;
+  const width = padLeft + validSeasons.length * (CELL_W + GAP) - GAP + PAD_RIGHT;
   const height = PAD_TOP + maxEpisodes * (CELL_H + GAP) - GAP + AVG_ROW_H + PAD_BOTTOM;
 
   const hrefPrefix = `/${ROUTES.tv}/${getNiceName({ id: tvId, name: tvName })}/${ROUTES.seasons}`;
@@ -578,7 +592,7 @@ const EpisodeRatingsGrid = ({ tvId, tvName, seasons, posterPath, overallRating, 
           {/* season labels on top */}
           <g fill='#f5f5f5' fontSize='16' fontWeight='700' textAnchor='middle'>
             {validSeasons.map((s, i) => (
-              <text key={s.id || s.season_number} x={PAD_LEFT + i * (CELL_W + GAP) + CELL_W / 2} y={PAD_TOP - 18}>
+              <text key={s.id || s.season_number} x={padLeft + i * (CELL_W + GAP) + CELL_W / 2} y={PAD_TOP - 18}>
                 S{s.season_number}
               </text>
             ))}
@@ -587,7 +601,7 @@ const EpisodeRatingsGrid = ({ tvId, tvName, seasons, posterPath, overallRating, 
           {/* episode labels on left */}
           <g fill='#f5f5f5' fontSize='15' fontWeight='700' textAnchor='end'>
             {Array.from({ length: maxEpisodes }).map((_, i) => (
-              <text key={i} x={PAD_LEFT - 14} y={PAD_TOP + i * (CELL_H + GAP) + CELL_H / 2 + 5}>
+              <text key={i} x={padLeft - 14} y={PAD_TOP + i * (CELL_H + GAP) + CELL_H / 2 + 5}>
                 E{i + 1}
               </text>
             ))}
@@ -597,7 +611,7 @@ const EpisodeRatingsGrid = ({ tvId, tvName, seasons, posterPath, overallRating, 
           {validSeasons.map((season, col) => (
             <Fragment key={season.id || season.season_number}>
               {season.episodes.map((ep, row) => {
-                const x = PAD_LEFT + col * (CELL_W + GAP);
+                const x = padLeft + col * (CELL_W + GAP);
                 const y = PAD_TOP + row * (CELL_H + GAP);
                 const bucket = getBucket(ep.vote_average);
                 const fill = bucket ? bucket.color : UNKNOWN_FILL;
@@ -640,7 +654,7 @@ const EpisodeRatingsGrid = ({ tvId, tvName, seasons, posterPath, overallRating, 
           {/* AVG row */}
           <g>
             <text
-              x={PAD_LEFT - 14}
+              x={padLeft - 14}
               y={avgRowY + AVG_ROW_H / 2 + 4}
               fill='#b4b4b4'
               fontSize='12'
@@ -650,7 +664,7 @@ const EpisodeRatingsGrid = ({ tvId, tvName, seasons, posterPath, overallRating, 
               AVG.
             </text>
             {seasonAverages.map((avg, i) => {
-              const cx = PAD_LEFT + i * (CELL_W + GAP) + CELL_W / 2;
+              const cx = padLeft + i * (CELL_W + GAP) + CELL_W / 2;
               const avgBucket = getBucket(avg);
               const barFill = avgBucket ? avgBucket.color : UNKNOWN_FILL;
               const barW = CELL_W - 12;
