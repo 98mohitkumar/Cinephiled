@@ -66,6 +66,27 @@ const pathRoundedRect = (ctx, x, y, w, h, r) => {
   ctx.closePath();
 };
 
+/** Upright 5-point star for PNG export — avoids font side-bearings on Unicode ★ */
+const fillFivePointStar = (ctx, cx, cy, outerR, innerR, fill) => {
+  ctx.beginPath();
+  // -π/2 puts the first outer vertex at the top (standard point-up star)
+  const startAngle = -Math.PI / 2;
+  for (let i = 0; i < 10; i += 1) {
+    const angle = startAngle + (i * Math.PI) / 5;
+    const rad = i % 2 === 0 ? outerR : innerR;
+    const px = cx + Math.cos(angle) * rad;
+    const py = cy + Math.sin(angle) * rad;
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fillStyle = fill;
+  ctx.fill();
+};
+
+// horizontal ink half-width of an upright 5-point star: sin(72°) × outerR
+const STAR_INK_HALF_W = Math.sin((72 * Math.PI) / 180);
+
 // greedy word-wrap with ellipsis on the last line when it overflows
 const wrapText = (ctx, text, maxWidth, maxLines) => {
   if (!text) return [];
@@ -332,13 +353,21 @@ const EpisodeRatingsGrid = ({ tvId, tvName, seasons, posterPath, overallRating, 
       const ratingBucket = hasRating ? getBucket(overallRating) : null;
       const ratingText = hasRating ? formatRating(overallRating) : "";
 
+      const textBlockH = (hasRating ? 36 : 0) + titleLines.length * TITLE_LINE_H + (yearRange ? 22 : 0);
+      const textEndY = PAD + POSTER_H + 24 + textBlockH;
+      const gridTopY = PAD + LEGEND_H + LEGEND_GAP;
+      const episodeBandH = svgH - PAD_TOP - AVG_ROW_H - PAD_BOTTOM;
+      const maxEpisodesExport = Math.max(1, Math.round((episodeBandH + GAP) / (CELL_H + GAP)));
+      const avgRowYSvg = PAD_TOP + maxEpisodesExport * (CELL_H + GAP);
+      const avgRowCenterCanvasY = gridTopY + avgRowYSvg + AVG_ROW_H / 2 + 6;
+      const brandLogoPx = 36;
+      const brandY = Math.max(textEndY + 12, avgRowCenterCanvasY - brandLogoPx / 2);
+
       // --- 5. Canvas size ---
       const rightColW = Math.max(svgW, legendOffsetX + legendW);
       const rightH = LEGEND_H + LEGEND_GAP + svgH;
-      const textBlockH = (hasRating ? 36 : 0) + titleLines.length * TITLE_LINE_H + (yearRange ? 22 : 0);
-      const brandBlockH = 26; // single row: logo + wordmark
-      const leftMinH = POSTER_H + 24 + textBlockH + 32 + brandBlockH;
-      const contentH = Math.max(leftMinH, rightH);
+      const leftStackH = POSTER_H + 24 + textBlockH;
+      const contentH = Math.max(rightH, leftStackH, brandY + brandLogoPx - PAD);
       // Ceil to integers so the canvas pixel buffer matches the logical fill region exactly.
       // Without this, legendW (from measureText) is fractional → fillRect leaves a sub-pixel gap
       // on the right/bottom edge that renders as transparent (shows white on light viewers).
@@ -401,24 +430,35 @@ const EpisodeRatingsGrid = ({ tvId, tvName, seasons, posterPath, overallRating, 
       let y = posterY + POSTER_H + 24;
 
       if (hasRating) {
+        ctx.textAlign = "left";
+        // One shared center line for the star, rating, and vote count — all drawn with textBaseline "middle"
+        const ROW_H = 28;
+        const rowCy = y + ROW_H / 2;
+        ctx.textBaseline = "middle";
+
         const starColor = ratingBucket ? ratingBucket.color : "#facc15";
-        ctx.fillStyle = starColor;
-        ctx.font = exportFont(700, 20);
-        const star = "★";
-        ctx.fillText(star, leftX, y);
-        const starW = ctx.measureText(star).width;
+        const STAR_OUTER = 10;
+        const STAR_INNER = STAR_OUTER * 0.42;
+        const starHalfW = STAR_OUTER * STAR_INK_HALF_W;
+        const starCx = leftX + starHalfW;
+        fillFivePointStar(ctx, starCx, rowCy, STAR_OUTER, STAR_INNER, starColor);
+        const starInkRight = starCx + starHalfW;
 
         ctx.fillStyle = "#ffffff";
         ctx.font = exportFont(700, 18);
-        ctx.fillText(ratingText, leftX + starW + 8, y + 1);
-        const ratingW = ctx.measureText(ratingText).width;
+        const gapAfterStar = 8;
+        const ratingX = starInkRight + gapAfterStar;
+        ctx.fillText(ratingText, ratingX, rowCy);
+        const ratingInkRight = ratingX + ctx.measureText(ratingText).width;
 
         if (voteCount) {
           ctx.fillStyle = "#9ca3af";
           ctx.font = exportFont(500, 14);
-          ctx.fillText(`(${voteCount.toLocaleString()})`, leftX + starW + 8 + ratingW + 8, y + 5);
+          ctx.fillText(`(${voteCount.toLocaleString()})`, ratingInkRight + 8, rowCy);
         }
-        y += 36;
+
+        ctx.textBaseline = "top";
+        y += ROW_H + 8;
       }
 
       // Title (up to 2 lines, ellipsized if needed)
@@ -435,19 +475,18 @@ const EpisodeRatingsGrid = ({ tvId, tvName, seasons, posterPath, overallRating, 
         ctx.fillText(yearRange, leftX, y + 2);
       }
 
-      // Branding pinned to the bottom of the canvas: logo mark + wordmark on a single row
-      const brandY = canvasH - PAD - brandBlockH;
-      const LOGO_SIZE = 36;
+      // Branding: same vertical band as the SVG AVG row (not pinned to canvas bottom — avoids a floating footer gap)
       const LOGO_GAP = 10;
       let wordmarkX = leftX;
       if (logoImg) {
-        ctx.drawImage(logoImg, leftX, brandY, LOGO_SIZE, LOGO_SIZE);
-        wordmarkX = leftX + LOGO_SIZE + LOGO_GAP;
+        ctx.drawImage(logoImg, leftX, brandY, brandLogoPx, brandLogoPx);
+        wordmarkX = leftX + brandLogoPx + LOGO_GAP;
       }
       ctx.textBaseline = "middle";
+      ctx.textAlign = "left";
       ctx.font = exportFont(800, 22);
       ctx.fillStyle = "#ffffff";
-      ctx.fillText("Cinephiled", wordmarkX, brandY + LOGO_SIZE / 2 + 1);
+      ctx.fillText("Cinephiled", wordmarkX, brandY + brandLogoPx / 2 + 1);
       ctx.textBaseline = "top";
 
       // --- 7. Right column: legend + grid ---
