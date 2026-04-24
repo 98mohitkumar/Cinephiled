@@ -98,8 +98,8 @@ const wrapText = (ctx, text, maxWidth, maxLines) => {
   return lines;
 };
 
-const CELL_W = 64;
-const CELL_H = 44;
+const CELL_W = 60;
+const CELL_H = 40;
 const GAP = 8;
 const PAD_TOP = 44;
 const PAD_LEFT = 48;
@@ -142,7 +142,7 @@ const Legend = () => (
   <FlexBox className='flex-wrap items-center gap-x-1624 gap-y-12'>
     {RATING_BUCKETS.map((b) => (
       <FlexBox key={b.label} className='items-center gap-4'>
-        <span aria-hidden className='inline-block h-6 w-6 rounded-full' style={{ backgroundColor: b.color }} />
+        <span aria-hidden className='inline-block h-5 w-5 rounded-full' style={{ backgroundColor: b.color }} />
         <P size='small' weight='semibold' className='text-neutral-200'>
           {b.label}
         </P>
