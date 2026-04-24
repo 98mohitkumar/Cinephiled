@@ -49,6 +49,7 @@ export const ROUTES = {
   tv: "tv",
   seasons: "seasons",
   episodes: "episodes",
+  episodeRatings: "episode-ratings",
   person: "person",
   collections: "collections",
   networks: "networks",
