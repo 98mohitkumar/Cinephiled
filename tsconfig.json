@@ -11,24 +11,28 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
-    "baseUrl": ".",
     "paths": {
-      "components/*": ["src/components/*"],
-      "images/*": ["public/images/*"],
-      "styles/*": ["src/styles/*"],
-      "theme/*": ["src/theme/*"],
-      "data/*": ["src/data/*"],
-      "hooks/*": ["src/hooks/*"],
-      "apiRoutes/*": ["src/apiRoutes/*"],
-      "Store/*": ["src/Store/*"],
-      "tokens/*": ["src/theme/tokens/*"],
-      "utils/*": ["src/utils/*"],
-      "api/*": ["src/pages/api/*"]
+      "components/*": ["./src/components/*"],
+      "images/*": ["./public/images/*"],
+      "styles/*": ["./src/styles/*"],
+      "theme/*": ["./src/theme/*"],
+      "data/*": ["./src/data/*"],
+      "hooks/*": ["./src/hooks/*"],
+      "apiRoutes/*": ["./src/apiRoutes/*"],
+      "Store/*": ["./src/Store/*"],
+      "tokens/*": ["./src/theme/tokens/*"],
+      "utils/*": ["./src/utils/*"],
+      "api/*": ["./src/pages/api/*"]
     },
-    "types": ["@serwist/next/typings"]
+    "types": ["@serwist/next/typings"],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "styled.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  "include": ["next-env.d.ts", "styled.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],
   "exclude": ["node_modules", "public/*.js"]
 }

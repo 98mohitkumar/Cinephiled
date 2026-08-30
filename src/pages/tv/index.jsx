@@ -13,7 +13,6 @@ import MediaTemplateGrid from "components/Templates/MediaTemplateGrid";
 import Button from "components/UI/Button";
 import FlexBox from "components/UI/FlexBox";
 import LayoutContainer from "components/UI/LayoutContainer";
-import H2 from "components/UI/Typography/H2";
 import { apiEndpoints } from "data/apiEndpoints";
 import { ROUTES, siteInfo, sortOptions } from "data/global";
 import useInfiniteQuery from "hooks/useInfiniteQuery";
@@ -145,14 +144,10 @@ const TV = ({ initialTv, genres, languages, region, regions }) => {
         url={`${siteInfo.url}/${ROUTES.tv}`}
       />
 
-      <LayoutContainer className='relative py-4864'>
+      <LayoutContainer className='relative pt-4864'>
         <DominantColor tint />
 
         <section className='relative z-10'>
-          <H2 tag='h1' className='mb-4864 text-center text-neutral-100'>
-            Discover TV Shows
-          </H2>
-
           <MobileFilter
             filters={filters}
             onFilterChange={handleFilterChange}
@@ -164,7 +159,7 @@ const TV = ({ initialTv, genres, languages, region, regions }) => {
           />
 
           <FlexBox className='items-start gap-1632'>
-            <div className='sticky top-20 hidden max-w-80 xl:block'>
+            <div className='sticky bottom-20 top-20 hidden max-w-80 xl:block'>
               <FilterPanel
                 filters={filters}
                 onFilterChange={handleFilterChange}
@@ -177,7 +172,7 @@ const TV = ({ initialTv, genres, languages, region, regions }) => {
             </div>
 
             {/* Results */}
-            <div className='w-full'>
+            <div className='w-full pb-4864'>
               {tv?.length > 0 ? (
                 <MediaTemplateGrid
                   media={tv}

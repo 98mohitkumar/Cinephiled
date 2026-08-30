@@ -57,7 +57,7 @@ const FilterPanel = ({
         </Button>
       </FlexBox>
 
-      <div className={cn("overflow-y-auto", isMobile ? "max-h-[65vh]" : "max-h-[80vh]")}>
+      <div className={cn("overflow-y-auto", isMobile ? "max-h-[65vh]" : "max-h-[74vh]")}>
         {/* Sort By */}
         <div className={cn("border-b border-neutral-700", isMobile ? "px-10 py-20" : "p-20")}>
           <P weight='medium' size='small' className='mb-12 text-neutral-300'>
