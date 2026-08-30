@@ -16,6 +16,7 @@
     "paths": {
       "components/*": ["./src/components/*"],
       "images/*": ["./public/images/*"],
+      "public/*": ["./public/*"],
       "styles/*": ["./src/styles/*"],
       "theme/*": ["./src/theme/*"],
       "data/*": ["./src/data/*"],
