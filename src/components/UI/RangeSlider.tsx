@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { cn } from "utils/helper";
 
@@ -19,6 +19,11 @@ interface RangeSliderProps {
 
 const RangeSlider = ({ min, max, step = 1, value, onValueCommit, label, className }: RangeSliderProps) => {
   const [sliderValue, setSliderValue] = useState<[number, number]>(value);
+  const [from, to] = value;
+
+  useEffect(() => {
+    setSliderValue([from, to]);
+  }, [from, to]);
 
   const handleValueChange = (newValue: [number, number]) => {
     if (onValueCommit) onValueCommit(newValue);
@@ -40,7 +45,7 @@ const RangeSlider = ({ min, max, step = 1, value, onValueCommit, label, classNam
       </div>
 
       <SliderRoot
-        defaultValue={value}
+        value={sliderValue}
         onValueCommit={handleValueChange}
         min={min}
         max={max}

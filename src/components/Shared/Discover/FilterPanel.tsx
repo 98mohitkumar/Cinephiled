@@ -63,7 +63,7 @@ const FilterPanel = ({
           <P weight='medium' size='small' className='mb-12 text-neutral-300'>
             Sort By
           </P>
-          <Select defaultValue={filters.sortBy} onValueChange={(value) => onFilterChange("sortBy", value)}>
+          <Select value={filters.sortBy} onValueChange={(value) => onFilterChange("sortBy", value)}>
             <SelectTrigger>
               <SelectValue placeholder='Sort By' />
             </SelectTrigger>

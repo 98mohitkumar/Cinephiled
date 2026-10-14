@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { cn } from "utils/helper";
 
@@ -17,6 +17,10 @@ interface SingleSliderProps {
 
 const SingleSlider = ({ min, max, step = 1, value, onValueCommit, label, className }: SingleSliderProps) => {
   const [sliderValue, setSliderValue] = useState<number>(value);
+
+  useEffect(() => {
+    setSliderValue(value);
+  }, [value]);
 
   const handleValueChange = (newValue: number[]) => {
     const newSingleValue = newValue[0];
@@ -38,7 +42,7 @@ const SingleSlider = ({ min, max, step = 1, value, onValueCommit, label, classNa
         </P>
       </div>
 
-      <SliderRoot defaultValue={[value]} onValueChange={valueChangeHandler} onValueCommit={handleValueChange} min={min} max={max} step={step}>
+      <SliderRoot value={[sliderValue]} onValueChange={valueChangeHandler} onValueCommit={handleValueChange} min={min} max={max} step={step}>
         <SliderTrack>
           <SliderRange />
         </SliderTrack>
